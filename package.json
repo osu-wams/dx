@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/router": "^1.1.1",
     "express": "^4.16.3",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
@@ -37,6 +38,8 @@
   },
   "proxy": "http://localhost:4000",
   "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   }
 }
