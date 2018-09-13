@@ -21,6 +21,10 @@
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "concurrently": "^4.0.1",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "@types/enzyme": "^3.1.0",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.0.1",
@@ -31,5 +35,8 @@
     "nodemon": "^1.18.4",
     "prettier": "^1.14.2"
   },
-  "proxy": "http://localhost:4000"
+  "proxy": "http://localhost:4000",
+  "jest": {
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
+  }
 }
