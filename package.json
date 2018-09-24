@@ -6,15 +6,16 @@
     "express": "^4.16.3",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "winston": "^3.1.0"
   },
   "scripts": {
-    "start": "concurrently -k -c \"blue,magenta\" --names \"SERVER,CLIENT\" \"npm:start-client\" \"npm:start-server\"",
-    "start-client": "react-scripts start",
+    "start": "concurrently -k -c \"blue,magenta\" --names \"CLIENT,SERVER\" \"npm:start:client\" \"npm:start:server\"",
+    "start:client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "start-server": "nodemon server/index.js",
+    "start:server": "nodemon server/index.js",
     "lint": "eslint \"**/*.js\"",
     "lint:fix": "eslint \"**/*.js\" --fix"
   },
