@@ -1,5 +1,9 @@
 node_modules/
 build/
+.DS_STORE
+.idea
+npm-debug.log
+logs/
 .gitignore
 logs/
 .DS_STORE
