@@ -1,7 +1,10 @@
 /* eslint-disable no-console */
 
-const app = require('express')();
+const express = require('express');
+const logger = require('./logger');
+
+const app = express();
 
 const PORT = process.env.port || 4000;
 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+app.listen(PORT, () => logger.info(`Server listening on port ${PORT}`));
