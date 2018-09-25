@@ -16,6 +16,9 @@
     "prettier/prettier": ["error", {
       "printWidth": 100,
       "singleQuote": true
+    }],
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": true
     }]
   }
 }
