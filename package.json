@@ -3,11 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.1.0",
+    "@material-ui/icons": "^3.0.1",
     "@reach/router": "^1.1.1",
+    "classnames": "^2.2.6",
     "express": "^4.16.3",
+    "jss": "^9.8.7",
+    "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "react-scripts": "1.1.5"
+    "react-jss": "^8.6.1",
+    "react-scripts": "1.1.5",
+    "styled-components": "^4.0.0-beta.9",
+    "webpack-bundle-analyzer": "^3.0.2"
   },
   "scripts": {
     "start": "concurrently -k -c \"blue,magenta\" --names \"SERVER,CLIENT\" \"npm:start-client\" \"npm:start-server\"",
@@ -17,7 +25,8 @@
     "eject": "react-scripts eject",
     "start-server": "nodemon server/index.js",
     "lint": "eslint \"**/*.js\"",
-    "lint:fix": "eslint \"**/*.js\" --fix"
+    "lint:fix": "eslint \"**/*.js\" --fix",
+    "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
