@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const { Router } = require('express');
 const axios = require('axios');
 const Parser = require('rss-parser');
@@ -18,7 +20,7 @@ localist.get('/', async (req, res) => {
         .map(key => `${key}=${req.query[key]}`)
         .join('&');
     }
-    console.log(urlParams)
+    console.log(urlParams);
     const { data } = await axios.get(`${BASE_URL}/events?${urlParams}`);
     res.send(data.events);
   } catch (err) {

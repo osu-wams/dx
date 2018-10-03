@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 const PORT = process.env.port || 4000;
 
 // Import API Routes
-const router = require('./api')(app);
+require('./api')(app);
 
 // Start Server
 app.listen(PORT, () => logger.info(`Server listening on port ${PORT}`));

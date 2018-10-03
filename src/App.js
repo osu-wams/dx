@@ -1,3 +1,5 @@
+/* eslint-disable react/forbid-prop-types */
+
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -83,7 +85,7 @@ const styles = theme => ({
   cardActions: {
     [theme.breakpoints.up('sm')]: {
       paddingBottom: theme.spacing.unit * 2
-    },
+    }
   },
   avatar: {
     backgroundColor: osuTheme.palette.primary.main
@@ -101,7 +103,7 @@ const generateClassName = createGenerateClassName();
 const jss = create({
   ...jssPreset(),
   // We define a custom insertion point that JSS will look for injecting the styles in the DOM.
-  insertionPoint: document.getElementById('jss-insertion-point'),
+  insertionPoint: document.getElementById('jss-insertion-point')
 });
 
 function App(props) {
@@ -117,7 +119,9 @@ function App(props) {
               <Typography variant="title" color="inherit" noWrap className={classes.toolbarTitle}>
                 Oregon State University
               </Typography>
-              <Button color="secondary" active>Dashboard</Button>
+              <Button color="secondary" active>
+                Dashboard
+              </Button>
               <Button color="secondary">Academics</Button>
               <Button color="secondary">Finances</Button>
               <Button color="secondary">Tools</Button>
@@ -147,7 +151,10 @@ function App(props) {
                       <ListItemText primary="11/01 - ENG 111: paper due" />
                     </ListItem>
                     <ListItem divider button component="a" href="#testo">
-                      <ListItemText primary="11/01 - Math 101: homework" secondary="An example with further description..." />
+                      <ListItemText
+                        primary="11/01 - Math 101: homework"
+                        secondary="An example with further description..."
+                      />
                     </ListItem>
                     <ListItem divider button component="a" href="#testo">
                       <ListItemText primary="11/01 - Math 101: Assignment" />
@@ -167,11 +174,7 @@ function App(props) {
             </div>
             <div className="Events">
               <Card>
-                <CardHeader
-                  title="Events"
-                  action={<EventIcon />}
-                  color="black"
-                />
+                <CardHeader title="Events" action={<EventIcon />} color="black" />
                 <CardContent>
                   <Grid container spacing={24}>
                     <Grid item xs={6}>
@@ -205,9 +208,7 @@ function App(props) {
                         />
                         <CardContent>
                           <div className={classes.cardPricing}>
-                            <Typography color="textPrimary">
-                              Corvallis Fall Festival
-                            </Typography>
+                            <Typography color="textPrimary">Corvallis Fall Festival</Typography>
                           </div>
                         </CardContent>
                       </Card>
@@ -224,9 +225,7 @@ function App(props) {
                         />
                         <CardContent>
                           <div className={classes.cardPricing}>
-                            <Typography color="textPrimary">
-                              OSUsed Store Sale
-                            </Typography>
+                            <Typography color="textPrimary">OSUsed Store Sale</Typography>
                           </div>
                         </CardContent>
                       </Card>
@@ -244,9 +243,7 @@ function App(props) {
                         />
                         <CardContent>
                           <div className={classes.cardPricing}>
-                            <Typography color="textPrimary">
-                              Beaver Football v. Arizona
-                            </Typography>
+                            <Typography color="textPrimary">Beaver Football v. Arizona</Typography>
                           </div>
                         </CardContent>
                       </Card>
@@ -257,11 +254,7 @@ function App(props) {
             </div>
             <div className="Tools">
               <Card>
-                <CardHeader
-                  title="Tools and Services"
-                  action={<WorkIcon />}
-                  color="charcoal"
-                />
+                <CardHeader title="Tools and Services" action={<WorkIcon />} color="charcoal" />
                 <CardContent>
                   <List component="nav" dense>
                     <ListItem divider button component="a" href="#testo">
@@ -274,7 +267,10 @@ function App(props) {
                       <ListItemText primary="Email" />
                     </ListItem>
                     <ListItem divider button component="a" href="#testo">
-                      <ListItemText primary="Calendar" secondary="An example with further description..." />
+                      <ListItemText
+                        primary="Calendar"
+                        secondary="An example with further description..."
+                      />
                     </ListItem>
                     <ListItem divider button component="a" href="#testo">
                       <ListItemText primary="Banner" />
@@ -303,23 +299,14 @@ function App(props) {
             </div>
             <div className="BennyBot">
               <Card>
-                <CardHeader
-                  title="BennyBot"
-                  color="orange"
-                />
+                <CardHeader title="BennyBot" color="orange" />
                 <CardContent>
-                  <Paper className={classes.me}>
-                    My question
-                  </Paper>
+                  <Paper className={classes.me}>My question</Paper>
+                  <Paper className={classes.benny}>Benny response</Paper>
+                  <Paper className={classes.me}>When can I buy a parking permit?</Paper>
                   <Paper className={classes.benny}>
-                    Benny response
-                  </Paper>
-                  <Paper className={classes.me}>
-                    When can I buy a parking permit?
-                  </Paper>
-                  <Paper className={classes.benny}>
-                    Permit sales begin September 5, 2018 for new annual permit holders.
-                    Permits will be available for pick up or will be mailed on September 5.
+                    Permit sales begin September 5, 2018 for new annual permit holders. Permits will
+                    be available for pick up or will be mailed on September 5.
                   </Paper>
                   <FormControl fullWidth className={classes.margin}>
                     <InputLabel htmlFor="input-with-icon-adornment">
@@ -335,14 +322,11 @@ function App(props) {
                     />
                   </FormControl>
                 </CardContent>
-            </Card>
+              </Card>
             </div>
             <div className="DidYouKnow">
               <Card>
-                <CardHeader
-                  title="Did You Know..."
-                  action={<StarIcon />}
-                />
+                <CardHeader title="Did You Know..." action={<StarIcon />} />
                 <CardContent>
                   <p>As a student you can get a free copy of Microsoft Office 365!</p>
                 </CardContent>
@@ -361,7 +345,7 @@ function App(props) {
 }
 
 App.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(App);
