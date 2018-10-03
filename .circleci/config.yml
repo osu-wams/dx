@@ -27,8 +27,8 @@ jobs:
           - v1-dependencies-
 
       - run:
-        name: init
-        command: npm install
+          name: init
+          command: npm install
 
       - save_cache:
           paths:
@@ -37,15 +37,15 @@ jobs:
         
       # Run linter
       - run:
-        name: lint
-        command: npm run lint
+          name: lint
+          command: npm run lint
 
       # Run tests
       - run:
-        name: test
-        command: npm run test
+          name: test
+          command: npm run test
 
       # Build client app
       - run:
-        name: build
-        command: npm run build
+          name: build
+          command: npm run build
