@@ -19,20 +19,24 @@ const osuTheme = createMuiTheme({
     // error: will use the default color
   },
   typography: {
-    fontFamily: '"Open Sans"'
+    fontFamily: '"Open Sans", "sans-serif"'
   },
   overrides: {
     // Permanently override card styles
     MuiCardHeader: {
       root: {
-        backgroundColor: '#f2f2f2'
+        backgroundColor: '#f2f2f2',
+        paddingTop: '8px',
+        paddingBottom: '8px'
       },
       title: {
         color: '#252525',
-        fontFamily: '""'
+        fontSize: '1.4rem'
       },
       action: {
-        color: '#d73f09'
+        color: '#d73f09',
+        marginTop: '0',
+        alignSelf: 'auto'
       }
     }
   }
