@@ -35,7 +35,8 @@ function titleColor(color) {
 
 const CardHeader = styled(MUICardHeader)`
   & {
-    background-color: ${({ color }) => bgColor(color)} div > span {
+    background-color: ${({ color }) => bgColor(color)};
+    div > span {
       /* targets header title */
       color: ${({ color }) => titleColor(color)};
     }
