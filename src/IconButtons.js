@@ -1,3 +1,5 @@
+/* eslint-disable react/forbid-prop-types */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -6,23 +8,22 @@ import { withStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import KeyboardVoiceICon from '@material-ui/icons/KeyboardVoice';
-import Icon from '@material-ui/core/Icon';
 import SaveIcon from '@material-ui/icons/Save';
 import SendIcon from '@material-ui/icons/Send';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   leftIcon: {
     // marginRight: theme.spacing.unit,
   },
   rightIcon: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing.unit
   },
   iconSmall: {
-    fontSize: 20,
-  },
+    fontSize: 20
+  }
 });
 
 function IconLabelButtons(props) {
@@ -31,13 +32,13 @@ function IconLabelButtons(props) {
     <div>
       <Button variant="contained" color="secondary" className={classes.button}>
         Delete
-        <DeleteIcon className='rightIcon' />
+        <DeleteIcon className="rightIcon" />
       </Button>
-      <Button variant="contained" color="secondary" className={classes.button, "bgStratosphere"}>
+      <Button variant="contained" color="secondary" className={(classes.button, 'bgStratosphere')}>
         Send
         <SendIcon className={classes.rightIcon}>send</SendIcon>
       </Button>
-      <Button variant="contained" color="secondary" className={classes.button, "bgPineStand"}>
+      <Button variant="contained" color="secondary" className={(classes.button, 'bgPineStand')}>
         Upload
         <CloudUploadIcon className="rightIcon" />
       </Button>
@@ -54,7 +55,7 @@ function IconLabelButtons(props) {
 }
 
 IconLabelButtons.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(IconLabelButtons);
