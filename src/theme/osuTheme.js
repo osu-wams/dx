@@ -11,10 +11,13 @@ const osuTheme = createMuiTheme({
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      main: '#ffffff',
+      main: '#555',
       light: '#f2f2f2',
       // dark: will be calculated from palette.secondary.main,
-      contrastText: '#ffcc00'
+      contrastText: '#ffffff'
+    },
+    error: {
+      main: '#000'
     }
     // error: will use the default color
   },
