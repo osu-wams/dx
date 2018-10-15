@@ -33,6 +33,9 @@ import { withStyles, createGenerateClassName, jssPreset } from '@material-ui/cor
 import osuTheme from './theme/osuTheme';
 import CardHeader from './theme/CardHeader';
 // import ClassNames from 'docs/src/pages/customization/overrides/ClassNames';
+import Contained from './Contained';
+import IconButtons from './IconButtons';
+import PageTitle from './theme/PageTitle';
 
 const styles = theme => ({
   '@global': {
@@ -119,18 +122,19 @@ function App(props) {
               <Typography variant="title" color="inherit" noWrap className={classes.toolbarTitle}>
                 Oregon State University
               </Typography>
-              <Button color="secondary" active>
+              <Button color="inherit" active>
                 Dashboard
               </Button>
-              <Button color="secondary">Academics</Button>
-              <Button color="secondary">Finances</Button>
-              <Button color="secondary">Tools</Button>
-              <Button color="secondary">Events</Button>
-              <Button color="secondary" variant="outlined">
+              <Button color="inherit">Academics</Button>
+              <Button color="inherit">Finances</Button>
+              <Button color="inherit">Tools</Button>
+              <Button color="inherit">Events</Button>
+              <Button color="inherit" variant="outlined">
                 Login
               </Button>
             </Toolbar>
           </AppBar>
+          <PageTitle>Dashboard</PageTitle>
           <div className="grid-container">
             <div className="Academics">
               <Card>
@@ -329,6 +333,8 @@ function App(props) {
                 <CardHeader title="Did You Know..." action={<StarIcon />} />
                 <CardContent>
                   <p>As a student you can get a free copy of Microsoft Office 365!</p>
+                  <Contained />
+                  <IconButtons />
                 </CardContent>
               </Card>
             </div>
