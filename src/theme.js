@@ -34,6 +34,10 @@ const theme = {
     fg: colors.white,
     bg: colors.black
   },
+  academic: {
+    fg: colors.white,
+    bg: colors.stratosphere
+  },
   spacing: {
     unit: 8
   }
