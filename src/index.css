@@ -2,6 +2,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: #e8e8e8 !important;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .grid-container {
