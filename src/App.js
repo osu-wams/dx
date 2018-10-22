@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import Card, { CardHeader, CardContent } from './components/Card';
+import Card, { CardHeader, CardContent } from './components/layout/Card';
 import theme from './theme';
-import Navbar from './components/Navbar';
+import Navbar from './components/layout/Navbar';
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
   TableRow,
   TableHeader,
   TableHeaderCell
-} from './components/Table';
+} from './components/layout/Table';
 
 const App = () => (
   <ThemeProvider theme={theme}>
