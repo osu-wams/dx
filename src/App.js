@@ -59,9 +59,15 @@ const App = () => (
                 </TableRow>
               </TableBody>
             </Table>
-            <Button variant="primary" outline size="small">Button!</Button>
-            <Button variant="academic" size="large">Testo Large</Button>
-            <Button variant="academic" size="normal">Testo Normal</Button>
+            <Button variant="primary" outline size="small">
+              Button!
+            </Button>
+            <Button variant="academic" size="large">
+              Testo Large
+            </Button>
+            <Button variant="academic" size="normal">
+              Testo Normal
+            </Button>
             <Button>Default</Button>
           </CardContent>
         </Card>
