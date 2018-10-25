@@ -10,7 +10,7 @@ const CardHeader = styled.div`
 `;
 
 CardHeader.propTypes = {
-  variant: PropTypes.oneOf(['default', 'primary', 'secondary'])
+  variant: PropTypes.oneOf(['default', 'primary', 'secondary', 'academic', 'finance'])
 };
 
 CardHeader.defaultProps = {

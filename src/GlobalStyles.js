@@ -12,11 +12,14 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-size: 1.6rem;
+    font-size: ${props => props.theme.fontSize.normal};
     line-height: 1.8;
   }
+  input, select, textarea, button {
+    font-size: inherit;
+  }
   a {
-    color: 
+    
   }
 `;
 

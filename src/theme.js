@@ -18,13 +18,26 @@ export const colors = {
   till: '#b7a99a',
   coastline: '#a7aca2',
   highDesert: '#7a6855',
-  crater: '#8e9089'
+  crater: '#8e9089',
+  // Web errors, gray scales
+  lava: '#af292e',
+  vulcan: '#e69198',
+  basalt: '#5e131a',
+  mist: '#f0f0f0',
+  fog: '#e0e0e0',
+  overcast: '#999',
+  dusk: '#444',
+  charcoal: '#252525'
 };
 
 const theme = {
   default: {
     fg: colors.black,
     bg: colors.white
+  },
+  mist: {
+    fg: colors.charcoal,
+    bg: colors.mist
   },
   primary: {
     fg: colors.white,
@@ -38,8 +51,21 @@ const theme = {
     fg: colors.white,
     bg: colors.stratosphere
   },
+  finance: {
+    fg: colors.white,
+    bg: colors.pineStand
+  },
   spacing: {
     unit: 8
+  },
+  rounded: {
+    normal: '0.8rem',
+    subtle: '0.3rem'
+  },
+  fontSize: {
+    small: '1.4rem',
+    normal: '1.6rem',
+    large: '1.8rem'
   }
 };
 
