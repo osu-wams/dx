@@ -3,6 +3,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { faBookReader } from '@fortawesome/free-solid-svg-icons';
+import GlobalStyles from './GlobalStyles';
 import Card from './components/layout/Card';
 import theme from './theme';
 import Navbar from './components/layout/Navbar';
@@ -19,6 +20,7 @@ import Badge from './components/layout/Badge';
 const App = () => (
   <ThemeProvider theme={theme}>
     <div>
+      <GlobalStyles />
       <Navbar />
       <div style={{ padding: `${theme.spacing.unit * 2}px` }}>
         <Card
