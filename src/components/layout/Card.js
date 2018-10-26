@@ -65,7 +65,8 @@ const CardHeaderSubtitle = styled.div`
 const CardContent = styled.div`
   overflow: hidden;
   max-height: ${props => (props.collapsed ? '0' : '100%')};
-  padding: ${({ theme }) => `0 ${theme.spacing.unit * 2}px`};
+  padding: ${({ theme, collapsed }) => (collapsed ? 0 : `${theme.spacing.unit * 2}px`)};
+  padding-top: 0;
 `;
 
 class Card extends Component {
