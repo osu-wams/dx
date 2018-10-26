@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 // TODO: Non-inline style needs refining. Test with other components.

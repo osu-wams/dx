@@ -1,16 +1,7 @@
-import React, { Component, ReactDOM } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Dialog as ReachDialog, DialogOverlay, DialogContent } from '@reach/dialog';
-import '@reach/dialog/styles.css';
-
-const Dialog = styled(ReachDialog)`
-  left: 0;
-  top: 0;
-  height: 100%;
-  margin: 0 !important;
-`;
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const NavbarWrapper = styled.header`
   height: 64px;
@@ -37,9 +28,7 @@ export const NavbarButton = styled.button`
 `;
 
 class Navbar extends Component {
-  state = {
-    showMenu: false
-  };
+  state = {};
 
   render() {
     return (
