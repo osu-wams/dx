@@ -1,7 +1,7 @@
 /* eslint-disable react/forbid-prop-types */
 
 import React from 'react';
-import { Router } from '@reach/router';
+import { Router as ReachRouter } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from './GlobalStyles';
 import theme from './theme';
@@ -13,7 +13,7 @@ import Events from './components/pages/Events';
 import Finances from './components/pages/Finances';
 import Services from './components/pages/Services';
 
-const ContentWrapper = styled.div`
+const Router = styled(ReachRouter)`
   padding: ${props => props.theme.spacing.unit * 2}px;
 `;
 
@@ -22,16 +22,14 @@ const App = () => (
     <div>
       <GlobalStyles />
       <Navbar />
-      <ContentWrapper>
-        <Router>
-          <Dashboard path="/" />
-          <Profile path="profile" />
-          <Academics path="academics" />
-          <Events path="events" />
-          <Finances path="finances" />
-          <Services path="services" />
-        </Router>
-      </ContentWrapper>
+      <Router>
+        <Dashboard default />
+        <Profile path="profile" />
+        <Academics path="academics" />
+        <Events path="events" />
+        <Finances path="finances" />
+        <Services path="services" />
+      </Router>
     </div>
   </ThemeProvider>
 );
