@@ -77,7 +77,8 @@ const theme = {
     small: '1.4rem',
     normal: '1.6rem',
     large: '1.8rem'
-  }
+  },
+  colors
 };
 
 export default theme;

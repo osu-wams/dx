@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { Link as ReachLink } from '@reach/router';
 
 const NavbarWrapper = styled.header`
   height: 64px;
@@ -27,6 +28,13 @@ export const NavbarButton = styled.button`
   }
 `;
 
+const Nav = styled.nav`
+  display: flex;
+  flex-direction: row;
+  height: 4rem;
+  margin-top: 1.6rem;
+`;
+
 class Navbar extends Component {
   state = {};
 
@@ -38,40 +46,50 @@ class Navbar extends Component {
             <FontAwesomeIcon icon={faUser} size="2x" />
           </NavbarButton>
         </NavbarWrapper>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            height: '40px',
-            overflow: 'hidden',
-            marginTop: '16px'
-          }}
-        >
-          <SwipeNavItem>Dashboard</SwipeNavItem>
-          <SwipeNavItem>Academics</SwipeNavItem>
-          <SwipeNavItem>Finances</SwipeNavItem>
-          <SwipeNavItem>Services</SwipeNavItem>
-          <SwipeNavItem>Events</SwipeNavItem>
-        </div>
+        <Nav>
+          <NavLink to="/">Dashboard</NavLink>
+          <NavLink to="academics">Academics</NavLink>
+          <NavLink to="finances">Finances</NavLink>
+          <NavLink to="services">Services</NavLink>
+          <NavLink to="events">Events</NavLink>
+        </Nav>
       </div>
     );
   }
 }
 
-const SwipeNavItem = styled.div`
-  text-transform: uppercase;
-  font-family: Stratum2;
-  font-weight: lighter;
+const NavLink = styled(ReachLink)`
+  font-family: Stratum2, sans-serif;
   margin: 0 4px;
   padding: 0 4px;
-  height: 40px;
-  line-height: 44px;
-  :first-child {
-    margin-left: 16px;
-    border-bottom: 2px solid ${({ theme }) => theme.primary.bg};
-    color: ${({ theme }) => theme.primary.bg};
+  height: 30px;
+  line-height: 30px;
+  text-decoration: none;
+  font-size: ${props => props.theme.fontSize.large};
+  color: ${props => props.theme.colors.charcoal};
+  &[aria-current] {
+    color: ${props => props.theme.colors.orange};
     font-weight: bold;
   }
+  /* select and hover styles */
+  &:active::after,
+  &:focus::after,
+  &:hover::after,
+  &[aria-current]::after {
+    width: 100%;
+  }
+  :first-child {
+    margin-left: 16px;
+  }
+  &::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: ${props => props.theme.colors.orange};
+    transition: width .3s;
+  }
+}
 `;
 
 export default Navbar;

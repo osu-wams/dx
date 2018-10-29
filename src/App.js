@@ -1,73 +1,37 @@
 /* eslint-disable react/forbid-prop-types */
 
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import { faBookReader } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@reach/router';
+import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from './GlobalStyles';
-import Card from './components/layout/Card';
 import theme from './theme';
 import Navbar from './components/layout/Navbar';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableHeader,
-  TableHeaderCell
-} from './components/layout/Table';
-import Badge from './components/layout/Badge';
+import Dashboard from './components/pages/Dashboard';
+import Profile from './components/pages/Profile';
+import Academics from './components/pages/Academics';
+import Events from './components/pages/Events';
+import Finances from './components/pages/Finances';
+import Services from './components/pages/Services';
+
+const ContentWrapper = styled.div`
+  padding: ${props => props.theme.spacing.unit * 2}px;
+`;
 
 const App = () => (
   <ThemeProvider theme={theme}>
     <div>
       <GlobalStyles />
       <Navbar />
-      <div style={{ padding: `${theme.spacing.unit * 2}px` }}>
-        <Card
-          title="Assignments"
-          headerIcon={faBookReader}
-          subtitle={
-            <Badge inline badgeContent={3}>
-              Due Soon
-            </Badge>
-          }
-        >
-          <Table>
-            <TableHeader>
-              <TableHeaderCell>1</TableHeaderCell>
-              <TableHeaderCell>1</TableHeaderCell>
-              <TableHeaderCell>1</TableHeaderCell>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>3</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>3</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>3</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>3</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>1</TableCell>
-                <TableCell>2</TableCell>
-                <TableCell>3</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Card>
-      </div>
+      <ContentWrapper>
+        <Router>
+          <Dashboard path="/" />
+          <Profile path="profile" />
+          <Academics path="academics" />
+          <Events path="events" />
+          <Finances path="finances" />
+          <Services path="services" />
+        </Router>
+      </ContentWrapper>
     </div>
   </ThemeProvider>
 );

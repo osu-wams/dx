@@ -37,7 +37,7 @@ const Table = styled.table`
   `};
 `;
 
-Table.PropTypes = {
+Table.propTypes = {
   variant: PropTypes.oneOf(['default', 'basic']),
   striped: PropTypes.bool
 };
