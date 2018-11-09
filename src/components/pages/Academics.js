@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Courses from '../Courses';
 
 export default class Academics extends Component {
   constructor(props) {
@@ -8,6 +9,11 @@ export default class Academics extends Component {
 
   render() {
     const { api } = this.state;
-    return <div>Academic {api} </div>;
+    return (
+      <div>
+        <Courses />
+        <p>Thisis: {api}</p>
+      </div>
+    );
   }
 }

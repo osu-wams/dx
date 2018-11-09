@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: inherit;
   }
   a {
-    
+    color: ${props => props.theme.colors.stratosphere};
   }
 `;
 

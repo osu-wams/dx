@@ -106,7 +106,7 @@ class Card extends Component {
 Card.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.node,
-  variant: PropTypes.oneOf(['primary', 'secondary']),
+  variant: PropTypes.oneOf(['primary', 'secondary', 'academic']),
   elevation: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8])
 };
 

@@ -26,6 +26,7 @@ export const colors = {
   mist: '#f0f0f0',
   fog: '#e0e0e0',
   overcast: '#999',
+  nimbus: '#757575',
   dusk: '#444',
   charcoal: '#252525'
 };
