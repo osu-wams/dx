@@ -1,14 +1,19 @@
-
 @font-face {
-  font-family: 'Stratum2Web';
-  src:  url('./theme/fonts/Stratum2WebBold.woff2') format('woff2'),
-  url('./theme/fonts/Stratum2WebBold.woff') format('woff');
+  font-family: Stratum2;
+  src: url('./assets/Stratum2WebRegular.woff2');
+  font-weight: 400;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+@font-face {
+  font-family: Stratum2;
+  src: url('./assets/Stratum2WebLight.woff2');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: Stratum2;
+  src: url('./assets/Stratum2WebMedium.woff2');
+  font-weight: bold;
 }
 
 .grid-container {
