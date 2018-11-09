@@ -1,6 +1,6 @@
 @font-face {
   font-family: Stratum2;
-  src: url(./assets/Stratum2WebRegular.woff2);
+  src: url('./assets/Stratum2WebRegular.woff2');
   font-weight: 400;
 }
 
@@ -39,3 +39,18 @@
 .BennyBot { grid-area: BennyBot; }
 
 .DidYouKnow { grid-area: DidYouKnow; }
+
+.rightIcon {
+  margin-left: 12px;
+}
+.leftIcon {
+  margin-right: 12px;
+}
+
+.bgStratosphere {
+  background-color: #006A8E;
+}
+
+.bgPineStand {
+  background-color: #4A773C;
+}
