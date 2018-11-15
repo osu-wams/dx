@@ -20,11 +20,11 @@
     "passport": "^0.4.0",
     "passport-saml": "^0.35.0",
     "prop-types": "^15.6.2",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
     "react-jss": "^8.6.1",
     "react-responsive": "^5.0.0",
-    "react-scripts": "1.1.5",
+    "react-scripts": "^2.1.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "rss-parser": "^3.4.3",
@@ -45,12 +45,10 @@
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.14",
-    "babel-eslint": "^9.0.0",
     "concurrently": "^4.0.1",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "enzyme-to-json": "^3.3.4",
-    "eslint": "^5.8.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
@@ -66,5 +64,11 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
