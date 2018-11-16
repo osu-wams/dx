@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChalkboardTeacher } from '@fortawesome/free-solid-svg-icons';
-import Card from './layout/Card';
+import { Card, CardHeader, CardHeaderTitle, CardHeaderSubtitle, CardContent } from './layout/Card';
+import Icon from './layout/Icon';
 import Badge from './layout/Badge';
 import List from './layout/List';
 import Course from './Course';
@@ -152,35 +153,39 @@ export default class Courses extends Component {
     const { courses, showCourse, courseAttributes } = this.state;
     const term = courses[0].attributes.termDescription;
     return (
-      <Card
-        variant="academic"
-        title="Courses"
-        headerIcon={faChalkboardTeacher}
-        subtitle={
-          <Badge inline badgeContent={totalCredits}>
-            Credits
-          </Badge>
-        }
-      >
-        {term}
-        <List>
-          {courses.map(
-            ({ id, attributes, attributes: { courseTitle, courseNumber, courseSubject } }) => (
-              <li key={id}>
-                <button type="button" onClick={() => this.toggleCourse(attributes)}>
-                  <span>
-                    {titleCase(courseTitle)}
-                    <div>
-                      {courseSubject} {courseNumber}
-                    </div>
-                  </span>
-                  <FontAwesomeIcon icon={faChevronRight} />
-                </button>
-              </li>
-            )
-          )}
-        </List>
-        {showCourse && <Course attributes={courseAttributes} toggleCourse={this.toggleCourse} />}
+      <Card color="stratosphere">
+        <CardHeader>
+          <CardHeaderTitle>
+            <Icon icon={faChalkboardTeacher} color="stratosphere" />
+            Courses
+          </CardHeaderTitle>
+          <CardHeaderSubtitle>
+            <Badge inline badgeContent={totalCredits} bg="stratosphere">
+              Credits
+            </Badge>
+          </CardHeaderSubtitle>
+        </CardHeader>
+        <CardContent>
+          {term}
+          <List>
+            {courses.map(
+              ({ id, attributes, attributes: { courseTitle, courseNumber, courseSubject } }) => (
+                <li key={id}>
+                  <button type="button" onClick={() => this.toggleCourse(attributes)}>
+                    <span>
+                      {titleCase(courseTitle)}
+                      <div>
+                        {courseSubject} {courseNumber}
+                      </div>
+                    </span>
+                    <FontAwesomeIcon icon={faChevronRight} />
+                  </button>
+                </li>
+              )
+            )}
+          </List>
+          {showCourse && <Course attributes={courseAttributes} toggleCourse={this.toggleCourse} />}
+        </CardContent>
       </Card>
     );
   }

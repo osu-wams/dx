@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { colors } from '../../theme';
 
 // TODO: Non-inline style needs refining. Test with other components.
 
@@ -10,7 +11,8 @@ const BadgeWrapper = styled.span`
   line-height: 22px;
   text-align: center;
   font-weight: 600;
-  background-color: ${({ theme, variant }) => theme[variant].bg};
+  background-color: ${({ theme, bg }) => theme.colors[bg]};
+  color: ${({ theme, fg }) => theme.colors[fg]};
   border-radius: 2rem;
   font-size: 14px;
   display: flex;
@@ -49,13 +51,15 @@ const Badge = ({ badgeContent, children, inline, ...props }) => (
 );
 
 Badge.propTypes = {
-  variant: PropTypes.oneOf(['primary', 'secondary']),
+  fg: PropTypes.oneOf(Object.keys(colors)),
+  bg: PropTypes.oneOf(Object.keys(colors)),
   inline: PropTypes.bool
 };
 
 Badge.defaultProps = {
-  variant: 'primary',
+  fg: 'white',
+  bg: 'orange',
   inline: false
 };
 
-export default styled(Badge)``;
+export default Badge;
