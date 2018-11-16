@@ -5,7 +5,7 @@ import { Router as ReachRouter } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from './GlobalStyles';
 import theme from './theme';
-import Navbar from './components/layout/Navbar';
+import Header from './components/layout/Header';
 import Dashboard from './components/pages/Dashboard';
 import Profile from './components/pages/Profile';
 import Academics from './components/pages/Academics';
@@ -21,7 +21,7 @@ const App = () => (
   <ThemeProvider theme={theme}>
     <div>
       <GlobalStyles />
-      <Navbar />
+      <Header />
       <Router>
         <Dashboard default />
         <Profile path="profile" />

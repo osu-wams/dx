@@ -38,9 +38,8 @@ const NavLink = styled(Link)`
     width: 0;
     height: 2px;
     background: ${props => props.theme.colors.orange};
-    transition: width .3s;
+    transition: width 0.3s;
   }
-}
 `;
 
 const MainNav = () => (
