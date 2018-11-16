@@ -15,7 +15,7 @@ import Label from './Label';
 
 const NavbarWrapper = styled.header`
   height: 64px;
-  background-color: ${({ theme }) => theme.primary.bg};
+  background-color: ${({ theme }) => theme.colors.orange};
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -85,9 +85,7 @@ class Navbar extends Component {
           </Label>
           <br />
           <br />
-          <Button type="submit" variant="primary">
-            Masquerade
-          </Button>
+          <Button type="submit">Masquerade</Button>
           <Button type="cancel" onClick={() => this.toggleMask()}>
             Cancel
           </Button>

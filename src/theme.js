@@ -43,30 +43,6 @@ export const shadows = {
 };
 
 const theme = {
-  default: {
-    fg: colors.black,
-    bg: colors.white
-  },
-  mist: {
-    fg: colors.charcoal,
-    bg: colors.mist
-  },
-  primary: {
-    fg: colors.white,
-    bg: colors.orange
-  },
-  secondary: {
-    fg: colors.white,
-    bg: colors.black
-  },
-  academic: {
-    fg: colors.white,
-    bg: colors.stratosphere
-  },
-  finance: {
-    fg: colors.white,
-    bg: colors.pineStand
-  },
   spacing: {
     unit: 8
   },

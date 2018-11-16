@@ -1,16 +1,46 @@
-import React, { Component } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import MediaQuery from 'react-responsive';
-import { shadows } from '../../theme';
-import Badge from './Badge';
+import { shadows, colors } from '../../theme';
+import useMediaQuery from '../../util/useMediaQuery';
+
+const CardContext = React.createContext();
+
+/*===========================================
+                    CARD
+===========================================*/
+const Card = ({ children, color, ...props }) => {
+  const [collapsed, setCollapsed] = useState(true);
+
+  return (
+    <CardContext.Provider
+      value={{
+        collapsed,
+        toggleCollapsed: () => setCollapsed(!collapsed)
+      }}
+    >
+      <CardWrapper color={color} {...props}>
+        {children}
+      </CardWrapper>
+    </CardContext.Provider>
+  );
+};
+
+Card.propTypes = {
+  color: PropTypes.oneOf(Object.keys(colors)),
+  elevation: PropTypes.number
+};
+
+Card.defaultProps = {
+  color: 'orange',
+  elevation: 1
+};
 
 const CardWrapper = styled.div`
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: ${({ elevation }) => shadows[elevation]},
-    0px -8px 0px 0px ${({ theme, variant }) => theme[variant].bg};
+  box-shadow: ${({ elevation, theme, color }) =>
+    `${shadows[elevation]}, 0px -8px 0px 0px ${theme.colors[color]}`};
   overflow: hidden;
   transition: box-shadow 0.1s linear;
   margin-top: 8px;
@@ -22,18 +52,48 @@ const CardWrapper = styled.div`
       margin-bottom: 0;
     }
   }
-
-  ${Badge} {
-    background-color: ${({ variant, theme }) => theme[variant].bg};
-    color: ${({ variant, theme }) => theme[variant].fg};
-  }
-
-  svg {
-    color: ${({ variant, theme }) => theme[variant].bg};
-  }
 `;
 
-const CardHeader = styled.div`
+/*===========================================
+                 CARD HEADER
+===========================================*/
+const CardHeader = props => {
+  const isMobile = !useMediaQuery('(min-width: 768px)');
+  const { toggleCollapsed, collapsed } = useContext(CardContext);
+  const cardHeaderEl = useRef(null);
+
+  // Auto-expand cards when switching to desktop
+  useEffect(() => {
+    if (!isMobile && collapsed) {
+      toggleCollapsed();
+    }
+  });
+
+  const handleClick = e => {
+    // Remove focus ring on mouse click
+    if (e.detail > 0) {
+      cardHeaderEl.current.blur();
+    }
+    toggleCollapsed();
+  };
+
+  return isMobile ? (
+    <CardHeaderWrapper
+      as="button"
+      ref={cardHeaderEl}
+      className="cardheader-clickable"
+      onClick={handleClick}
+      {...props}
+    />
+  ) : (
+    <CardHeaderWrapper {...props} />
+  );
+};
+
+const CardHeaderWrapper = styled.div`
+  border: 0;
+  background: transparent;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: ${({ theme }) => `0 ${theme.spacing.unit * 2}px`};
@@ -45,6 +105,10 @@ const CardHeader = styled.div`
 
   svg {
     margin-right: ${({ theme }) => `${theme.spacing.unit * 2}px`};
+  }
+
+  &.cardheader-clickable {
+    cursor: pointer;
   }
 `;
 
@@ -62,58 +126,19 @@ const CardHeaderSubtitle = styled.div`
   align-items: center;
 `;
 
-const CardContent = styled.div`
+/*===========================================
+                 CARD CONTENT
+===========================================*/
+const CardContentWrapper = styled.div`
   overflow: hidden;
   max-height: ${props => (props.collapsed ? '0' : '100%')};
   padding: ${({ theme, collapsed }) => (collapsed ? 0 : `${theme.spacing.unit * 2}px`)};
   padding-top: 0;
 `;
 
-class Card extends Component {
-  state = {
-    isCollapsed: true
-  };
-
-  collapseContent = isCollapsible => {
-    if (isCollapsible) {
-      this.setState(state => ({ isCollapsed: !state.isCollapsed }));
-    }
-  };
-
-  render() {
-    const { title, subtitle, headerIcon, variant, children, ...props } = this.props;
-    const { isCollapsed } = this.state;
-
-    return (
-      <MediaQuery minWidth={768}>
-        {isDesktop => (
-          <CardWrapper variant={variant} {...props}>
-            <CardHeader variant={variant} onClick={this.collapseContent} clickable={!isDesktop}>
-              <CardHeaderTitle>
-                {headerIcon && <FontAwesomeIcon icon={headerIcon} />}
-                {title}
-              </CardHeaderTitle>
-              <CardHeaderSubtitle>{subtitle}</CardHeaderSubtitle>
-            </CardHeader>
-            <CardContent collapsed={isCollapsed && !isDesktop}>{children}</CardContent>
-          </CardWrapper>
-        )}
-      </MediaQuery>
-    );
-  }
-}
-
-Card.propTypes = {
-  title: PropTypes.string.isRequired,
-  subtitle: PropTypes.node,
-  variant: PropTypes.oneOf(['primary', 'secondary', 'academic']),
-  elevation: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8])
+const CardContent = props => {
+  const { collapsed } = useContext(CardContext);
+  return <CardContentWrapper {...props} collapsed={collapsed} aria-expanded={!collapsed} />;
 };
 
-Card.defaultProps = {
-  subtitle: '',
-  variant: 'primary',
-  elevation: 1
-};
-
-export default Card;
+export { Card, CardHeader, CardHeaderTitle, CardHeaderSubtitle, CardContent };

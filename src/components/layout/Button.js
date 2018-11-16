@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { colors } from '../../theme';
 
 // Outputs the padding size in pixel for the component
 function btnSize(size, theme) {
@@ -22,12 +23,11 @@ function btnSize(size, theme) {
 }
 
 const Button = styled.button`
-  background-color: ${({ outline, theme, variant }) =>
-    outline ? 'transparent' : theme[variant].bg};
-  color: ${({ outline, theme, variant }) => (outline ? theme[variant].bg : theme[variant].fg)};
+  background-color: ${({ outline, theme, bg }) => (outline ? 'transparent' : theme.colors[bg])};
+  color: ${({ outline, theme, fg, bg }) => (outline ? theme.colors[bg] : theme.colors[fg])};
   text-decoration: none;
   border-radius: 0.4rem;
-  border: 1px solid ${({ theme, variant }) => theme[variant].bg};
+  border: 1px solid ${({ theme, bg }) => theme.colors[bg]};
   ${({ theme, size }) => btnSize(size, theme)};
   & + & {
     margin-left: ${props => props.theme.spacing.unit}px;
@@ -35,12 +35,14 @@ const Button = styled.button`
 `;
 
 Button.propTypes = {
-  variant: PropTypes.oneOf(['mist', 'primary', 'secondary', 'academic', 'finance']),
+  fg: PropTypes.oneOf(Object.keys(colors)),
+  bg: PropTypes.oneOf(Object.keys(colors)),
   size: PropTypes.oneOf(['small', 'normal', 'large'])
 };
 
 Button.defaultProps = {
-  variant: 'mist',
+  fg: 'white',
+  bg: 'orange',
   size: 'normal',
   outline: false
 };

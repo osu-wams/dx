@@ -6,10 +6,12 @@ import {
   faChevronRight,
   faChalkboardTeacher,
   faCalendarAlt,
-  faEdit
+  faEdit,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import Button from './layout/Button';
 import MyDialog from './layout/MyDialog';
+import Icon from './layout/Icon';
 import { titleCase, formatTime, formatDate } from '../util/helpers';
 
 const Course = ({
@@ -28,18 +30,19 @@ const Course = ({
   toggleCourse
 }) => (
   <MyDialog isOpen={showCourse} color="stratosphere">
-    <Button type="cancel" onClick={() => toggleCourse()}>
-      X <VisuallyHidden>Close</VisuallyHidden>
+    <Button type="cancel" onClick={() => toggleCourse()} bg="stratosphere" outline>
+      <Icon icon={faTimes} />
+      <VisuallyHidden>Close</VisuallyHidden>
     </Button>
     <h2>{titleCase(courseTitle)}</h2>
     <div className="details">
       {courseSubject} {courseNumber} &bull; CRN: {courseReferenceNumber} &bull; Section{' '}
       {sectionNumber} &bull; {creditHours} Credits
     </div>
-    <Button as="a" href="#canvasDeepLink" variant="academic">
+    <Button as="a" href="#canvasDeepLink" bg="stratosphere">
       View in canvas
     </Button>
-    <Button outline href="#canvasDeepLink" variant="academic">
+    <Button outline href="#canvasDeepLink" bg="stratosphere">
       Actions <FontAwesomeIcon icon={faChevronRight} />
     </Button>
 
