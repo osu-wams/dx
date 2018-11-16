@@ -25,7 +25,7 @@ const MyDialog = styled(Dialog)`
   @media screen and (max-width: 767px) {
     &[data-reach-dialog-content] {
       width: 100%;
-      margin: 0;
+      margin: 64px 0 0 0;
       padding-top: 0.5rem;
     }
   }
