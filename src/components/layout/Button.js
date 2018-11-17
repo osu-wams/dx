@@ -24,7 +24,17 @@ function btnSize(size, theme) {
 
 const Button = styled.button`
   background-color: ${({ outline, theme, bg }) => (outline ? 'transparent' : theme.colors[bg])};
-  color: ${({ outline, theme, fg, bg }) => (outline && !fg ? theme.colors[bg] : theme.colors[fg])};
+  color: ${({ outline, theme, fg, bg }) =>
+    // outline && !theme.colors[fg] ? theme.colors[bg] : theme.colors[fg]};
+    {
+      let color;
+      if ((outline && fg !== 'white') || !outline) {
+        color = theme.colors[fg];
+      } else {
+        color = theme.colors[bg];
+      }
+      return color;
+    }};
   text-decoration: none;
   border-radius: 0.4rem;
   border: 1px solid ${({ theme, bg }) => theme.colors[bg]};
