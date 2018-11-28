@@ -1,74 +1,34 @@
 {
   "name": "dx",
-  "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.7",
-    "@fortawesome/free-regular-svg-icons": "^5.4.2",
-    "@fortawesome/free-solid-svg-icons": "^5.4.2",
-    "@fortawesome/react-fontawesome": "^0.1.3",
-    "@reach/dialog": "^0.1.2",
-    "@reach/menu-button": "^0.1.7",
-    "@reach/router": "^1.2.1",
-    "@reach/visually-hidden": "^0.1.1",
-    "axios": "^0.18.0",
-    "body-parser": "^1.18.3",
-    "date-fns": "^1.29.0",
-    "express": "^4.16.4",
-    "express-session": "^1.15.6",
-    "form-data": "^2.3.3",
-    "passport": "^0.4.0",
-    "passport-saml": "^0.35.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2",
-    "react-jss": "^8.6.1",
-    "react-responsive": "^5.0.0",
-    "react-scripts": "^2.1.1",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "rss-parser": "^3.4.3",
-    "styled-components": "^4.0.2",
-    "webpack-bundle-analyzer": "^3.0.3",
-    "winston": "^3.1.0"
-  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "start": "concurrently -k -c \"blue,magenta\" --names \"CLIENT,SERVER\" \"npm:start:client\" \"npm:start:server\"",
-    "start:client": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "start:server": "nodemon server/index.js",
-    "lint": "eslint \"**/*.js\"",
-    "lint:fix": "eslint \"**/*.js\" --fix",
-    "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json"
+    "start": "concurrently -k -c \"blue,magenta\" --names \"CLIENT,SERVER\" \"yarn:start:client\" \"yarn:start:server\"",
+    "start:client": "yarn workspace client start",
+    "start:server": "yarn workspace server start",
+    "lint": "yarn run lint:client && yarn run lint:server",
+    "lint:fix": "yarn workspace client run lint:fix && yarn workspace server run lint:fix",
+    "lint:client": "yarn workspace client run lint",
+    "lint:server": "yarn workspace server run lint"
+  },
+  "dependencies": {
+    "concurrently": "^4.1.0"
   },
   "devDependencies": {
-    "@types/enzyme": "^3.1.14",
-    "concurrently": "^4.0.1",
-    "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0",
-    "enzyme-to-json": "^3.3.4",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.1.0",
+    "babel-eslint": "^9",
+    "eslint": "5.6.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-react-app": "^3.0.5",
+    "eslint-plugin-flowtype": "^3.2.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-prettier": "^2.7.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
-    "nodemon": "^1.18.5",
-    "prettier": "^1.14.3",
-    "passport-dev": "^1.0.1"
-  },
-  "proxy": "http://localhost:4000",
-  "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "prettier": "^1.15.2",
+    "rimraf": "^2.6.2"
+  }
 }

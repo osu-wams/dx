@@ -1,0 +1,29 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "form-data": "^2.3.3",
+    "passport": "^0.4.0",
+    "passport-saml": "^0.35.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "rss-parser": "^3.4.3",
+    "winston": "^3.1.0"
+  },
+  "scripts": {
+    "start": "nodemon server/index.js",
+    "lint": "eslint \"**/*.js\"",
+    "lint:fix": "eslint \"**/*.js\" --fix"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.5",
+    "passport-dev": "^1.0.1"
+  }
+}
