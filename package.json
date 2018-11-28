@@ -38,7 +38,7 @@
     }
   },
   "lint-staged": {
-    "client/**/*.js": ["eslint -c server/.eslintrc --fix", "git add"],
-    "server/**/*.js": ["eslint -c client/.eslintrc --fix", "git add"]
+    "client/**/*.js": ["eslint -c ./client/.eslintrc --fix", "git add"],
+    "server/**/*.js": ["eslint -c ./server/.eslintrc --fix", "git add"]
   }
 }
