@@ -6,13 +6,15 @@
     "server"
   ],
   "scripts": {
+    "build": "yarn workspace client run build",
     "start": "concurrently -k -c \"blue,magenta\" --names \"CLIENT,SERVER\" \"yarn:start:client\" \"yarn:start:server\"",
     "start:client": "yarn workspace client start",
     "start:server": "yarn workspace server start",
     "lint": "yarn run lint:client && yarn run lint:server",
     "lint:fix": "yarn workspace client run lint:fix && yarn workspace server run lint:fix",
     "lint:client": "yarn workspace client run lint",
-    "lint:server": "yarn workspace server run lint"
+    "lint:server": "yarn workspace server run lint",
+    "test": "yarn workspace client run test"
   },
   "dependencies": {
     "concurrently": "^4.1.0"
