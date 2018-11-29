@@ -48,4 +48,4 @@ jobs:
       # Build client app
       - run:
           name: Build Client
-          command: yarn bun build
+          command: yarn run build
