@@ -1,7 +1,10 @@
 .gitignore
 .DS_STORE
 .idea
-build/
+client/build
 logs/
 node_modules/
+**/node_modules
 npm-debug.log
+config.js
+yarn-error.log

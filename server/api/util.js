@@ -1,4 +1,4 @@
-/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-unresolved, node/no-unpublished-require, node/no-missing-require */
 
 const request = require('request-promise');
 const config = require('../../config');

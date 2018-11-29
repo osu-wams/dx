@@ -21,31 +21,31 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - yarn-packages-{{ checksum "yarn.lock" }}
 
       - run:
-          name: init
-          command: npm install
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
 
       - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - ~/.cache/yarn
         
       # Run linter
       - run:
           name: lint
-          command: npm run lint
+          command: yarn run lint
 
       # Run tests
       - run:
-          name: test
-          command: npm run test
+          name: Run Tests
+          command: yarn run test
 
       # Build client app
       - run:
-          name: build
-          command: npm run build
+          name: Build Client
+          command: yarn run build

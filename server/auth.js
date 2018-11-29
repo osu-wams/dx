@@ -1,4 +1,4 @@
-/* eslint-disable consistent-return */
+/* eslint-disable consistent-return, node/no-unpublished-require, node/no-missing-require */
 
 const SamlStrategy = require('passport-saml').Strategy;
 const DevStrategy = require('passport-dev').Strategy;
