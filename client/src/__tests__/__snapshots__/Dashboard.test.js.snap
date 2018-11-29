@@ -1,0 +1,335 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+.c0 {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 2px 1px -1px rgba(0,0,0,0.12),0px -8px 0px 0px #d73f09;
+  overflow: hidden;
+  -webkit-transition: box-shadow 0.1s linear;
+  transition: box-shadow 0.1s linear;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.c1 {
+  border: 0;
+  background: transparent;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 16px;
+  min-height: 68px;
+  line-height: 68px;
+}
+
+.c1:hover {
+  cursor: initial;
+}
+
+.c1 svg {
+  margin-right: 16px;
+}
+
+.c1.cardheader-clickable {
+  cursor: pointer;
+}
+
+.c2 {
+  font-size: 24px;
+  font-family: 'Stratum2',sans-serif;
+  font-weight: bold;
+}
+
+.c4 {
+  font-family: 'Open Sans',sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c7 {
+  overflow: hidden;
+  max-height: 0;
+  padding: 0;
+  padding-top: 0;
+}
+
+.c3 {
+  color: #d73f09;
+}
+
+.c8 {
+  border: 1px solid rgba(34,36,38,0.15);
+  border-radius: 0.28571429rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.c8 td {
+  padding: 0.4em 0.8em;
+}
+
+.c8 td:not(:first-child) {
+  border-left: 1px solid rgba(34,36,38,0.15);
+}
+
+.c8 tr:not(:first-child) td {
+  border-top: 1px solid rgba(34,36,38,0.15);
+}
+
+.c9 {
+  font-weight: bold;
+  border-bottom: 1px solid rgba(34,36,38,0.15);
+}
+
+.c9:not(:first-child) {
+  border-left: 1px solid rgba(34,36,38,0.15);
+}
+
+.c6 {
+  height: 22px;
+  min-width: 22px;
+  line-height: 22px;
+  text-align: center;
+  font-weight: 600;
+  background-color: #d73f09;
+  color: #ffffff;
+  border-radius: 2rem;
+  font-size: 14px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 8px;
+  margin-right: 8px;
+}
+
+.c5 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  position: relative;
+  vertical-align: middle;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+@media screen and (min-width:768px) {
+  .c0 {
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+}
+
+<div
+  data-testid="dashboard-page"
+>
+  <div
+    style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+  >
+    <h2>
+      My OSU Dashboard
+    </h2>
+  </div>
+  <div
+    class="c0"
+    color="orange"
+    elevation="1"
+  >
+    <button
+      class="cardheader-clickable c1"
+    >
+      <div
+        class="c2"
+      >
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-book-reader fa-w-16 c3"
+          color="orange"
+          data-icon="book-reader"
+          data-prefix="fas"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M352 96c0-53.02-42.98-96-96-96s-96 42.98-96 96 42.98 96 96 96 96-42.98 96-96zM233.59 241.1c-59.33-36.32-155.43-46.3-203.79-49.05C13.55 191.13 0 203.51 0 219.14v222.8c0 14.33 11.59 26.28 26.49 27.05 43.66 2.29 131.99 10.68 193.04 41.43 9.37 4.72 20.48-1.71 20.48-11.87V252.56c-.01-4.67-2.32-8.95-6.42-11.46zm248.61-49.05c-48.35 2.74-144.46 12.73-203.78 49.05-4.1 2.51-6.41 6.96-6.41 11.63v245.79c0 10.19 11.14 16.63 20.54 11.9 61.04-30.72 149.32-39.11 192.97-41.4 14.9-.78 26.49-12.73 26.49-27.06V219.14c-.01-15.63-13.56-28.01-29.81-27.09z"
+            fill="currentColor"
+          />
+        </svg>
+        Assignments
+      </div>
+      <div
+        class="c4"
+      >
+        <span
+          class="c5"
+        >
+          <span
+            class="c6"
+          >
+            3
+          </span>
+          Due Soon
+        </span>
+      </div>
+    </button>
+    <div
+      aria-expanded="false"
+      class="c7"
+    >
+      <table
+        class="c8"
+      >
+        <thead
+          class=""
+        >
+          <tr
+            class=""
+          >
+            <th
+              class="c9"
+            >
+              1 Header
+            </th>
+            <th
+              class="c9"
+            >
+              Another Header
+            </th>
+            <th
+              class="c9"
+            >
+              This is it
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class=""
+        >
+          <tr
+            class=""
+          >
+            <td
+              class=""
+            >
+              1
+            </td>
+            <td
+              class=""
+            >
+              2
+            </td>
+            <td
+              class=""
+            >
+              3
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td
+              class=""
+            >
+              1
+            </td>
+            <td
+              class=""
+            >
+              2
+            </td>
+            <td
+              class=""
+            >
+              3
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td
+              class=""
+            >
+              1
+            </td>
+            <td
+              class=""
+            >
+              2
+            </td>
+            <td
+              class=""
+            >
+              3
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td
+              class=""
+            >
+              1
+            </td>
+            <td
+              class=""
+            >
+              2
+            </td>
+            <td
+              class=""
+            >
+              3
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td
+              class=""
+            >
+              1
+            </td>
+            <td
+              class=""
+            >
+              2
+            </td>
+            <td
+              class=""
+            >
+              3
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

@@ -12,6 +12,7 @@ import Academics from './components/pages/Academics';
 import Events from './components/pages/Events';
 import Finances from './components/pages/Finances';
 import Services from './components/pages/Services';
+import PageNotFound from './components/pages/PageNotFound';
 
 const Router = styled(ReachRouter)`
   padding: ${props => props.theme.spacing.unit * 2}px;
@@ -23,12 +24,13 @@ const App = () => (
       <GlobalStyles />
       <Header />
       <Router>
-        <Dashboard default />
+        <Dashboard path="/" />
         <Profile path="profile" />
         <Academics path="academics" />
         <Events path="events" />
         <Finances path="finances" />
         <Services path="services" />
+        <PageNotFound default />
       </Router>
     </div>
   </ThemeProvider>

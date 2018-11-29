@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div
+  data-testid="events-page"
+>
+  <div
+    style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+  >
+    <h2>
+      Events
+    </h2>
+  </div>
+  <p>
+    Events 
+    Api
+     
+  </p>
+</div>
+`;

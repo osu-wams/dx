@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PageTitle from '../layout/PageTitle';
 
 export default class Services extends Component {
   constructor(props) {
@@ -8,6 +9,11 @@ export default class Services extends Component {
 
   render() {
     const { api } = this.state;
-    return <div>Services {api} </div>;
+    return (
+      <div data-testid="services-page">
+        <PageTitle title="Tools and Services" />
+        <p>Services {api} </p>
+      </div>
+    );
   }
 }

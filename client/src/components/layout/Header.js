@@ -23,7 +23,7 @@ const NavbarWrapper = styled.header`
   padding: ${({ theme }) => `0 ${theme.spacing.unit * 2}px`};
 `;
 
-const ProfileButton = styled(MenuButton)`
+const UserButton = styled(MenuButton)`
   color: ${props => props.theme.colors.white};
   background: transparent;
   border: none;
@@ -65,10 +65,10 @@ const Header = () => {
         </ChatButton>
         <Logo src={logo} alt="Oregon State University" />
         <Menu>
-          <ProfileButton>
+          <UserButton data-testid="user-btn">
             <VisuallyHidden>User menu</VisuallyHidden>
             <FontAwesomeIcon icon={faUserCircle} size="2x" />
-          </ProfileButton>
+          </UserButton>
           <ProfileMenuList>
             <MenuItem onSelect={() => logout()}>Logout</MenuItem>
             <MenuItem onSelect={() => toggleMask()}>Masquerade</MenuItem>
