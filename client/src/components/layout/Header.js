@@ -81,7 +81,7 @@ const Header = () => {
       <MainNav />
 
       {/* Masquerade Dialg Box */}
-      <MyDialog isOpen={mask}>
+      <MyDialog isOpen={mask} data-testid="masquerade-dialog">
         <h2>Log in as another user</h2>
         <Label htmlFor="uuid">
           Enter user OSU uuid

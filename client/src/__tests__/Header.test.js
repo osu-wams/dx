@@ -8,7 +8,7 @@ test('renders', () => {
   render(<Header />);
 });
 test('Masquerade Overlay opens from the user menu dropdown', async () => {
-  const { getByText, getByTestId } = render(<App />);
+  const { getByText, getByTestId, queryByTestId } = render(<App />);
 
   expect(getByTestId('dashboard-page')).toBeInTheDocument();
 
@@ -17,8 +17,13 @@ test('Masquerade Overlay opens from the user menu dropdown', async () => {
   const maskLink = await waitForElement(() => getByText('Masquerade'));
   fireEvent.click(maskLink);
 
-  const maskOverlay = await waitForElement(() => getByText('Log in as another user'));
+  const maskOverlay = await waitForElement(() => getByTestId('masquerade-dialog'));
 
   // Masquerade overlay shows up
   expect(maskOverlay).toBeInTheDocument();
+
+  // Make sure we can close to overlay too
+  const cancelBtn = getByText('Cancel');
+  fireEvent.click(cancelBtn);
+  expect(queryByTestId('masquerade-dialog')).toBeNull();
 });
