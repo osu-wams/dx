@@ -4,11 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faComment } from '@fortawesome/free-solid-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuList, MenuButton, MenuItem, MenuLink } from '@reach/menu-button';
-import MyDialog from './MyDialog';
-// Reach styles
 import logo from '../../assets/logo.svg';
 import '@reach/menu-button/styles.css';
 import '@reach/dialog/styles.css';
+import MyDialog from './MyDialog';
 import MainNav from './MainNav';
 import Button from './Button';
 import Input from './Input';
@@ -72,7 +71,9 @@ const Header = () => {
           <ProfileMenuList>
             <MenuItem onSelect={() => logout()}>Logout</MenuItem>
             <MenuItem onSelect={() => toggleMask()}>Masquerade</MenuItem>
-            <MenuLink to="profile">View Profile</MenuLink>
+            <MenuLink to="profile" data-testid="profile-link">
+              View Profile
+            </MenuLink>
           </ProfileMenuList>
         </Menu>
       </NavbarWrapper>
