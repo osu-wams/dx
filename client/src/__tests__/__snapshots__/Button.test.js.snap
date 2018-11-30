@@ -1,0 +1,217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CancelButton gets rendered with FG prop, BG prop and outline prop 1`] = `
+.c2 + .c0 {
+  margin-left: 8px;
+}
+
+.c3 + .c0 {
+  margin-left: 8px;
+}
+
+.c4 + .c0 {
+  margin-left: 8px;
+}
+
+.c5 + .c0 {
+  margin-left: 8px;
+}
+
+.c6 + .c0 {
+  margin-left: 8px;
+}
+
+.c1 {
+  background-color: transparent;
+  color: #444;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  border: 1px solid #444;
+  padding: 8px 16px;
+  font-size: 1.6rem;
+}
+
+.c1 + .c0 {
+  margin-left: 8px;
+}
+
+<div>
+  <button
+    class="c0 c1"
+    type="button"
+  >
+    BG, FG and outline
+  </button>
+</div>
+`;
+
+exports[`LargeButton gets rendered with large font size CSS 1`] = `
+.c2 + .c0 {
+  margin-left: 8px;
+}
+
+.c3 + .c0 {
+  margin-left: 8px;
+}
+
+.c1 {
+  background-color: #d73f09;
+  color: #ffffff;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  border: 1px solid #d73f09;
+  padding: 16px 32px;
+  font-size: 1.8rem;
+}
+
+.c1 + .c0 {
+  margin-left: 8px;
+}
+
+<div>
+  <button
+    class="c0 c1"
+    type="button"
+  >
+    Large
+  </button>
+</div>
+`;
+
+exports[`NormalButton gets rendered with default font size CSS 1`] = `
+.c2 + .c0 {
+  margin-left: 8px;
+}
+
+.c1 {
+  background-color: #d73f09;
+  color: #ffffff;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  border: 1px solid #d73f09;
+  padding: 8px 16px;
+  font-size: 1.6rem;
+}
+
+.c1 + .c0 {
+  margin-left: 8px;
+}
+
+<div>
+  <button
+    class="c0 c1"
+    type="button"
+  >
+    Normal
+  </button>
+</div>
+`;
+
+exports[`OutlineButton gets rendered with transparent background and colored border 1`] = `
+.c2 + .c0 {
+  margin-left: 8px;
+}
+
+.c3 + .c0 {
+  margin-left: 8px;
+}
+
+.c4 + .c0 {
+  margin-left: 8px;
+}
+
+.c1 {
+  background-color: transparent;
+  color: #d73f09;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  border: 1px solid #d73f09;
+  padding: 8px 16px;
+  font-size: 1.6rem;
+}
+
+.c1 + .c0 {
+  margin-left: 8px;
+}
+
+<div>
+  <button
+    class="c0 c1"
+    type="button"
+  >
+    Outline Normal
+  </button>
+</div>
+`;
+
+exports[`SmallButton gets rendered with small font size CSS 1`] = `
+.c1 {
+  background-color: #d73f09;
+  color: #ffffff;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  border: 1px solid #d73f09;
+  padding: 2px 4px;
+  font-size: 1.4rem;
+}
+
+.c1 + .c0 {
+  margin-left: 8px;
+}
+
+<div>
+  <button
+    class="c0 c1"
+    type="button"
+  >
+    Small
+  </button>
+</div>
+`;
+
+exports[`StratBgButton gets rendered with stratosphere background color 1`] = `
+.c2 + .c0 {
+  margin-left: 8px;
+}
+
+.c3 + .c0 {
+  margin-left: 8px;
+}
+
+.c4 + .c0 {
+  margin-left: 8px;
+}
+
+.c5 + .c0 {
+  margin-left: 8px;
+}
+
+.c1 {
+  background-color: #006a8e;
+  color: #ffffff;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  border: 1px solid #006a8e;
+  padding: 8px 16px;
+  font-size: 1.6rem;
+}
+
+.c1 + .c0 {
+  margin-left: 8px;
+}
+
+<div>
+  <button
+    class="c0 c1"
+    type="button"
+  >
+    Stratosphere
+  </button>
+</div>
+`;
