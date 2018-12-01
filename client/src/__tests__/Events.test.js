@@ -3,6 +3,6 @@ import { render } from '../componentTestUtils';
 import Events from '../components/pages/Events';
 
 test('renders', () => {
-  const { container } = render(<Events />);
-  expect(container.firstChild).toMatchSnapshot();
+  const { getByTestId } = render(<Events />);
+  expect(getByTestId('events-page')).toBeInTheDocument();
 });

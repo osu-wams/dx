@@ -3,6 +3,6 @@ import { render } from '../componentTestUtils';
 import Profile from '../components/pages/Profile';
 
 test('renders', () => {
-  const { container } = render(<Profile />);
-  expect(container.firstChild).toMatchSnapshot();
+  const { getByTestId } = render(<Profile />);
+  expect(getByTestId('profile-page')).toBeInTheDocument();
 });

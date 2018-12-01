@@ -3,6 +3,6 @@ import { render } from '../componentTestUtils';
 import Academics from '../components/pages/Academics';
 
 test('renders', () => {
-  const { container } = render(<Academics />);
-  expect(container.firstChild).toMatchSnapshot();
+  const { getByTestId } = render(<Academics />);
+  expect(getByTestId('academics-page')).toBeInTheDocument();
 });
