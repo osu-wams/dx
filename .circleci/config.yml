@@ -43,7 +43,7 @@ jobs:
       # Run tests
       - run:
           name: Run Tests
-          command: yarn run test:coverage
+          command: yarn run test
 
       # Build client app
       - run:

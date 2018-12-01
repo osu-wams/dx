@@ -14,7 +14,7 @@
     "lint:fix": "yarn workspace client run lint:fix && yarn workspace server run lint:fix",
     "lint:client": "yarn workspace client run lint",
     "lint:server": "yarn workspace server run lint",
-    "test": "yarn workspace client run test"
+    "test": "yarn workspace client run test:coverage"
   },
   "dependencies": {
     "concurrently": "^4.1.0"
