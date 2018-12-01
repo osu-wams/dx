@@ -29,7 +29,7 @@ const Course = ({
   showCourse,
   toggleCourse
 }) => (
-  <MyDialog isOpen={showCourse} color="stratosphere">
+  <MyDialog isOpen={showCourse} color="stratosphere" data-testid="course-dialog">
     <Button type="cancel" onClick={() => toggleCourse()} bg="stratosphere" outline>
       <Icon icon={faTimes} />
       <VisuallyHidden>Close</VisuallyHidden>
