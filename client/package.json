@@ -47,6 +47,7 @@
     "collectCoverageFrom": [
       "**/*.js",
       "!**/coverage/**",
+      "!src/index.js",
       "!src/registerServiceWorker.js",
       "!src/setupTests.js",
       "!src/componentTestUtils.js"
