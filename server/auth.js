@@ -6,6 +6,8 @@ const DevStrategy = require('passport-dev').Strategy;
 const config = require('config');
 
 const ENV = config.get('env');
+const SAML_CERT = config.get('saml.cert');
+const SAML_PVK = config.get('saml.pvk');
 
 const Auth = {};
 
@@ -36,9 +38,9 @@ if (ENV === 'production') {
       logoutUrl: 'https://login.oregonstate.edu/idp-dev/profile/Logout',
       entryPoint: 'https://login.oregonstate.edu/idp-dev/profile/SAML2/Redirect/SSO',
       issuer: 'https://my.oregonstate.edu',
-      cert: config.saml.cert,
-      privateCert: config.saml.pvk,
-      decryptionPvk: config.saml.pvk
+      cert: SAML_CERT,
+      privateCert: SAML_PVK,
+      decryptionPvk: SAML_PVK
     },
     parseSamlResult
   );

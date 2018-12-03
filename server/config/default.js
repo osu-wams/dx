@@ -4,5 +4,9 @@ module.exports = {
     clientId: '',
     clientSecret: '',
     baseUrl: 'https://oregonstateuniversity-dev.apigee.net/v1'
+  },
+  saml: {
+    cert: '',
+    pvk: ''
   }
 };
