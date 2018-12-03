@@ -42,5 +42,14 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/coverage/**",
+      "!src/registerServiceWorker.js",
+      "!src/setupTests.js",
+      "!src/componentTestUtils.js"
+    ]
+  }
 }
