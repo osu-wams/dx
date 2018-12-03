@@ -40,9 +40,7 @@ passport.use(auth.passportStrategy);
 passport.serializeUser(auth.serializeUser);
 passport.deserializeUser(auth.deserializeUser);
 
-app.get('/login', passport.authenticate('saml'), (req, res) => {
-  res.redirect('/');
-});
+app.get('/login', auth.login);
 app.get('/logout', auth.logout);
 
 app.post('/login/saml', passport.authenticate('saml'), (req, res) => {
@@ -53,5 +51,9 @@ app.post('/login/saml', passport.authenticate('saml'), (req, res) => {
 require('./api')(app);
 
 // Start Server
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => logger.info(`Server listening on port ${PORT}`));
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => logger.info(`Server listening on port ${PORT}`));
+}
+
+module.exports = app;
