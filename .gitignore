@@ -9,3 +9,4 @@ node_modules/
 npm-debug.log
 config.js
 yarn-error.log
+server/config/local.js
