@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LargeList gets rendered with large font size CSS 1`] = `
+.c0 {
+  color: #252525;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+.c0 li {
+  list-style-type: none;
+  border-top: 1px solid #e0e0e0;
+}
+
+.c0 li:last-child {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.c0 li button {
+  width: 100%;
+  background: transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 16px 32px;
+  font-size: 1.8rem;
+  border: none;
+}
+
+.c0 li button div {
+  color: #757575;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  text-align: left;
+}
+
+.c0 li button svg {
+  margin-left: auto;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  color: #e0e0e0;
+}
+
+<div>
+  <ul
+    class="c0"
+  >
+    <li>
+      Large
+    </li>
+    <li>
+      Large
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`NormalList gets rendered with default font size CSS 1`] = `
+.c0 {
+  color: #252525;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+.c0 li {
+  list-style-type: none;
+  border-top: 1px solid #e0e0e0;
+}
+
+.c0 li:last-child {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.c0 li button {
+  width: 100%;
+  background: transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 1.6rem;
+  border: none;
+}
+
+.c0 li button div {
+  color: #757575;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  text-align: left;
+}
+
+.c0 li button svg {
+  margin-left: auto;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  color: #e0e0e0;
+}
+
+<div>
+  <ul
+    class="c0"
+  >
+    <li>
+      Normal
+    </li>
+    <li>
+      Normal
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`SmallList gets rendered with small font size CSS 1`] = `
+.c0 {
+  color: #252525;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+.c0 li {
+  list-style-type: none;
+  border-top: 1px solid #e0e0e0;
+}
+
+.c0 li:last-child {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.c0 li button {
+  width: 100%;
+  background: transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 2px 4px;
+  font-size: 1.4rem;
+  border: none;
+}
+
+.c0 li button div {
+  color: #757575;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  text-align: left;
+}
+
+.c0 li button svg {
+  margin-left: auto;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  color: #e0e0e0;
+}
+
+<div>
+  <ul
+    class="c0"
+  >
+    <li>
+      Small
+    </li>
+    <li>
+      Small
+    </li>
+  </ul>
+</div>
+`;
