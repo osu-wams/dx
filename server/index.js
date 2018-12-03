@@ -4,10 +4,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
+const config = require('config');
 const logger = require('./logger');
 const auth = require('./auth');
 
-const ENV = process.env.NODE_ENV || 'development';
+const ENV = config.get('env');
 
 // App Configuration
 const app = express();

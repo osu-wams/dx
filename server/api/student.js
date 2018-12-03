@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const request = require('request-promise');
+const config = require('config');
 const { getToken } = require('./util');
 
-const BASE_URL = 'https://oregonstateuniversity-dev.apigee.net/v1/students';
+const BASE_URL = `${config.get('osuApi.baseUrl')}/students`;
 
 const router = new Router();
 

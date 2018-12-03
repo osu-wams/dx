@@ -2,8 +2,9 @@
 
 const SamlStrategy = require('passport-saml').Strategy;
 const DevStrategy = require('passport-dev').Strategy;
+const config = require('config');
 
-const ENV = process.env.NODE_ENV || 'development';
+const ENV = config.get('env');
 
 const Auth = {};
 
