@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Courses from '../Courses';
+import PageTitle from '../layout/PageTitle';
 
 export default class Academics extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ export default class Academics extends Component {
   render() {
     const { api } = this.state;
     return (
-      <div>
+      <div data-testid="academics-page">
+        <PageTitle title="Academics" />
         <Courses />
         <p>Thisis: {api}</p>
       </div>

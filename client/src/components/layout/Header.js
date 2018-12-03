@@ -4,11 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faComment } from '@fortawesome/free-solid-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuList, MenuButton, MenuItem, MenuLink } from '@reach/menu-button';
-import MyDialog from './MyDialog';
-// Reach styles
 import logo from '../../assets/logo.svg';
 import '@reach/menu-button/styles.css';
 import '@reach/dialog/styles.css';
+import MyDialog from './MyDialog';
 import MainNav from './MainNav';
 import Button from './Button';
 import Input from './Input';
@@ -23,7 +22,7 @@ const NavbarWrapper = styled.header`
   padding: ${({ theme }) => `0 ${theme.spacing.unit * 2}px`};
 `;
 
-const ProfileButton = styled(MenuButton)`
+const UserButton = styled(MenuButton)`
   color: ${props => props.theme.colors.white};
   background: transparent;
   border: none;
@@ -65,14 +64,16 @@ const Header = () => {
         </ChatButton>
         <Logo src={logo} alt="Oregon State University" />
         <Menu>
-          <ProfileButton>
+          <UserButton data-testid="user-btn">
             <VisuallyHidden>User menu</VisuallyHidden>
             <FontAwesomeIcon icon={faUserCircle} size="2x" />
-          </ProfileButton>
+          </UserButton>
           <ProfileMenuList>
             <MenuItem onSelect={() => logout()}>Logout</MenuItem>
             <MenuItem onSelect={() => toggleMask()}>Masquerade</MenuItem>
-            <MenuLink to="profile">View Profile</MenuLink>
+            <MenuLink to="profile" data-testid="profile-link">
+              View Profile
+            </MenuLink>
           </ProfileMenuList>
         </Menu>
       </NavbarWrapper>
@@ -80,7 +81,7 @@ const Header = () => {
       <MainNav />
 
       {/* Masquerade Dialg Box */}
-      <MyDialog isOpen={mask}>
+      <MyDialog isOpen={mask} data-testid="masquerade-dialog">
         <h2>Log in as another user</h2>
         <Label htmlFor="uuid">
           Enter user OSU uuid

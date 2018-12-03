@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PageTitle from '../layout/PageTitle';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -8,6 +9,11 @@ export default class Profile extends Component {
 
   render() {
     const { api } = this.state;
-    return <div>Profile {api} </div>;
+    return (
+      <div data-testid="profile-page">
+        <PageTitle title="My Profile" />
+        <p>Profile {api} </p>
+      </div>
+    );
   }
 }

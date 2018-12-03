@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PageTitle from '../layout/PageTitle';
 
 export default class Events extends Component {
   constructor(props) {
@@ -8,6 +9,11 @@ export default class Events extends Component {
 
   render() {
     const { api } = this.state;
-    return <div>Events {api} </div>;
+    return (
+      <div data-testid="events-page">
+        <PageTitle title="Events" />
+        <p>Events {api} </p>
+      </div>
+    );
   }
 }

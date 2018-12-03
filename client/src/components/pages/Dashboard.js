@@ -2,6 +2,7 @@ import React from 'react';
 import { faBookReader } from '@fortawesome/free-solid-svg-icons';
 import { Card, CardHeader, CardHeaderTitle, CardHeaderSubtitle, CardContent } from '../layout/Card';
 import Icon from '../layout/Icon';
+import PageTitle from '../layout/PageTitle';
 import {
   Table,
   TableBody,
@@ -13,7 +14,8 @@ import {
 import Badge from '../layout/Badge';
 
 const Dashboard = () => (
-  <React.Fragment>
+  <div data-testid="dashboard-page">
+    <PageTitle title="My OSU Dashboard" />
     <Card color="orange">
       <CardHeader>
         <CardHeaderTitle>
@@ -65,7 +67,7 @@ const Dashboard = () => (
         </Table>
       </CardContent>
     </Card>
-  </React.Fragment>
+  </div>
 );
 
 export default Dashboard;

@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.12.0
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -34,7 +34,7 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-        
+
       # Run linter
       - run:
           name: lint
@@ -49,3 +49,8 @@ jobs:
       - run:
           name: Build Client
           command: yarn run build
+
+      # Send code coverage report to Codecov.io
+      - run:
+          name: Report to CodeCov
+          command: npx codecov@3

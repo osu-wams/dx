@@ -14,13 +14,15 @@
     "lint:fix": "yarn workspace client run lint:fix && yarn workspace server run lint:fix",
     "lint:client": "yarn workspace client run lint",
     "lint:server": "yarn workspace server run lint",
-    "test": "yarn workspace client run test"
+    "test": "yarn workspace client run test:coverage"
   },
   "dependencies": {
     "concurrently": "^4.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^9",
+    "codecov": "^3.1.0",
+    "cross-env": "^5.2.0",
     "eslint": "5.6.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-config-react-app": "^3.0.5",
@@ -40,7 +42,14 @@
     }
   },
   "lint-staged": {
-    "client/**/*.js": ["eslint -c ./client/.eslintrc --fix", "git add"],
-    "server/**/*.js": ["eslint -c ./server/.eslintrc --fix", "git add"]
+    "client/**/*.js": [
+      "eslint -c ./client/.eslintrc --fix",
+      "git add",
+      "cross-env CI=true yarn workspace client run test"
+    ],
+    "server/**/*.js": [
+      "eslint -c ./server/.eslintrc --fix",
+      "git add"
+    ]
   }
 }
