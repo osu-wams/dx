@@ -1,10 +1,13 @@
 /* eslint-disable consistent-return, node/no-unpublished-require, node/no-missing-require */
 
+const passport = require('passport');
 const SamlStrategy = require('passport-saml').Strategy;
 const DevStrategy = require('passport-dev').Strategy;
 const config = require('config');
 
 const ENV = config.get('env');
+const SAML_CERT = config.get('saml.cert');
+const SAML_PVK = config.get('saml.pvk');
 
 const Auth = {};
 
@@ -30,11 +33,14 @@ if (ENV === 'production') {
     {
       acceptedClockSkewMs: 500,
       disableRequestedAuthnContext: true,
-      callbackUrl: '/login/saml',
+      identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+      callbackUrl: 'https://my.oregonstate.edu/login/saml',
       logoutUrl: 'https://login.oregonstate.edu/idp-dev/profile/Logout',
       entryPoint: 'https://login.oregonstate.edu/idp-dev/profile/SAML2/Redirect/SSO',
-      issuer: '',
-      cert: ''
+      issuer: 'https://my.oregonstate.edu',
+      cert: SAML_CERT,
+      privateCert: SAML_PVK,
+      decryptionPvk: SAML_PVK
     },
     parseSamlResult
   );
@@ -55,6 +61,28 @@ Auth.serializeUser = (user, done) => {
 
 Auth.deserializeUser = (user, done) => {
   done(null, user);
+};
+
+Auth.login = function(req, res, next) {
+  return passport.authenticate('saml', function(err, user) {
+    if (err) {
+      console.log(err);
+      return next(err);
+    }
+    if (!user) {
+      return res.send(400, {
+        message: 'Bad username or password'
+      });
+    }
+
+    req.login(user, function(err) {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      res.json(200, user);
+    });
+  })(req, res, next);
 };
 
 Auth.logout = (req, res) => {

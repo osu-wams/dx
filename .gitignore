@@ -2,7 +2,7 @@
 .DS_STORE
 .idea
 client/build
-client/coverage
+**/coverage
 logs/
 node_modules/
 **/node_modules
