@@ -14,7 +14,7 @@
     "lint:fix": "yarn workspace client run lint:fix && yarn workspace server run lint:fix",
     "lint:client": "yarn workspace client run lint",
     "lint:server": "yarn workspace server run lint",
-    "test": "yarn workspace client run test:coverage"
+    "test": "yarn workspace client run test:coverage && yarn workspace server run test:coverage"
   },
   "dependencies": {
     "concurrently": "^4.1.0"
@@ -33,7 +33,6 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^1.2.0",
-    "jest": "^23.6.0",
     "lint-staged": "^8.1.0",
     "nock": "^10.0.2",
     "prettier": "^1.15.2",
