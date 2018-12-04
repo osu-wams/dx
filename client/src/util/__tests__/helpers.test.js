@@ -1,4 +1,4 @@
-import { titleCase, formatTime, formatDate } from '../util/helpers';
+import { titleCase, formatTime, formatDate } from '../helpers';
 
 describe('titleCase', () => {
   it('should transform sentences to title case', () => {
