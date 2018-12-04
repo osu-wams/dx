@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '../componentTestUtils';
-import Dashboard from '../components/pages/Dashboard';
+import { render } from '../../../componentTestUtils';
+import Dashboard from '../Dashboard';
 
 test('renders', () => {
   const { getByTestId } = render(<Dashboard />);

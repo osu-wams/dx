@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '../componentTestUtils';
-import Button from '../components/layout/Button';
+import { render } from '../../../componentTestUtils';
+import Button from '../Button';
 
 const SmallButton = () => (
   <div>

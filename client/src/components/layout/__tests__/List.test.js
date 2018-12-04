@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '../componentTestUtils';
-import List from '../components/layout/List';
+import { render } from '../../../componentTestUtils';
+import List from '../List';
 
 const SmallList = () => (
   <div>

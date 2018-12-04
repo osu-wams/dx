@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '../componentTestUtils';
-import Profile from '../components/pages/Profile';
+import { render } from '../../../componentTestUtils';
+import Profile from '../Profile';
 
 test('renders', () => {
   const { getByTestId } = render(<Profile />);
