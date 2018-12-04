@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '../componentTestUtils';
-import { Table, TableBody, TableRow, TableCell } from '../components/layout/Table';
+import { render } from '../../../componentTestUtils';
+import { Table, TableBody, TableRow, TableCell } from '../Table';
 
 const DefaultTable = () => (
   <div>

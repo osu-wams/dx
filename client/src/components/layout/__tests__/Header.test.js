@@ -1,8 +1,8 @@
 import React from 'react';
-import { render } from '../componentTestUtils';
+import { render } from '../../../componentTestUtils';
 import { fireEvent, waitForElement } from 'react-testing-library';
-import Header from '../components/layout/Header';
-import App from '../App';
+import Header from '../Header';
+import App from '../../../App';
 
 test('renders', () => {
   render(<Header />);

@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '../componentTestUtils';
-import Finances from '../components/pages/Finances';
+import { render } from '../../../componentTestUtils';
+import Finances from '../Finances';
 
 test('renders', () => {
   const { getByTestId } = render(<Finances />);

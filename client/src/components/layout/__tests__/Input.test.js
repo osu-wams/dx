@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '../componentTestUtils';
-import Label from '../components/layout/Label';
-import Input from '../components/layout/Input';
+import { render } from '../../../componentTestUtils';
+import Label from '../Label';
+import Input from '../Input';
 
 const SmallInput = () => (
   <div>

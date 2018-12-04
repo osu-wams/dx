@@ -1,10 +1,4 @@
-import React from 'react';
-import { render } from '../componentTestUtils';
-import { fireEvent, waitForElement } from 'react-testing-library';
-import Academics from '../components/pages/Academics';
-
-// This will be our mock data to be used later and what the tests are based on
-const allCourses = [
+export default [
   {
     id: 'BOGUS-DATA',
     type: 'class-schedule',
@@ -124,24 +118,3 @@ const allCourses = [
     }
   }
 ];
-
-test('renders', () => {
-  render(<Academics />);
-});
-
-test('Specific course loads on click, close button closes', async () => {
-  const { getByText, getByTestId, queryByTestId } = render(<Academics />);
-
-  const OpSysBtn = getByText('Operating Systems I');
-
-  // Dialgo is present and matches the particular course CRN
-  fireEvent.click(OpSysBtn);
-  const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
-  expect(courseDialog).toBeInTheDocument();
-  expect(courseDialog).toHaveTextContent(/CRN: 17851/i);
-
-  // Close dialog
-  const closeBtn = getByText('Close');
-  fireEvent.click(closeBtn);
-  expect(queryByTestId('course-dialog')).toBeNull();
-});
