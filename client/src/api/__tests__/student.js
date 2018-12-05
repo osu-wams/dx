@@ -10,6 +10,7 @@ import {
 } from '../student';
 import courses from '../__mocks__/courses.data';
 import grades from '../__mocks__/grades.data';
+import holds from '../__mocks__/holds.data';
 import accountTransactions from '../__mocks__/accountTransactions.data';
 import accountBalance from '../__mocks__/accountBalance.data';
 
@@ -43,5 +44,12 @@ describe('Student API', () => {
     mockAxios.onGet('/api/student/account-balance').replyOnce(200, accountBalance);
     const res = await getAccountBalance();
     expect(res).toEqual(accountBalance);
+  });
+
+  // Account Holds
+  it('should get the account hold(s) and details for the current user', async () => {
+    mockAxios.onGet('/api/student/holds').replyOnce(200, holds);
+    const res = await getAccountHolds();
+    expect(res).toEqual(holds);
   });
 });
