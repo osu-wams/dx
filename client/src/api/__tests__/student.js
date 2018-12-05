@@ -9,6 +9,7 @@ import {
   getGrades
 } from '../student';
 import courses from '../__mocks__/courses.data';
+import grades from '../__mocks__/grades.data';
 import accountTransactions from '../__mocks__/accountTransactions.data';
 
 jest.unmock('../student');
@@ -27,5 +28,12 @@ describe('Student API', () => {
     mockAxios.onGet('/api/student/account-transactions').replyOnce(200, accountTransactions);
     const res = await getAccountTransactions();
     expect(res).toEqual(accountTransactions);
+  });
+
+  // Grades
+  it('should get the course schedule for the current user', async () => {
+    mockAxios.onGet(/\/api\/student\/grades/).replyOnce(200, grades);
+    const res = await getGrades();
+    expect(res).toEqual(grades);
   });
 });
