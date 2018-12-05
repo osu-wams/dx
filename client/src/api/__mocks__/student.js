@@ -3,15 +3,13 @@ import grades from './grades.data';
 import holds from './holds.data';
 import accountBalance from './accountBalance.data';
 import accountTransactions from './accountTransactions.data';
-
-// Other test files rely on these to pass the mock data
-//   axios.get(`/api/student/academic-status`).then(res => res.data);
+import academicStatus from './academicStatus.data';
 
 export const getAccountTransactions = () => Promise.resolve(accountTransactions);
 
 export const getAccountBalance = () => Promise.resolve(accountBalance);
 
-//   axios.get('/api/student/account-transactions').then(res => res.data);
+export const getAcademicStatus = () => Promise.resolve(academicStatus);
 
 export const getCourseSchedule = () => Promise.resolve(courses);
 

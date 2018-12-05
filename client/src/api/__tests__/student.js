@@ -13,6 +13,7 @@ import grades from '../__mocks__/grades.data';
 import holds from '../__mocks__/holds.data';
 import accountTransactions from '../__mocks__/accountTransactions.data';
 import accountBalance from '../__mocks__/accountBalance.data';
+import academicStatus from '../__mocks__/academicStatus.data';
 
 jest.unmock('../student');
 const mockAxios = new MockAdapter(axios);
@@ -51,5 +52,12 @@ describe('Student API', () => {
     mockAxios.onGet('/api/student/holds').replyOnce(200, holds);
     const res = await getAccountHolds();
     expect(res).toEqual(holds);
+  });
+
+  // Academic Status
+  it('should get the academic status for the current user', async () => {
+    mockAxios.onGet(/\/api\/student\/academic-status/).replyOnce(200, academicStatus);
+    const res = await getAcademicStatus();
+    expect(res).toEqual(academicStatus);
   });
 });
