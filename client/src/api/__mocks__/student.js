@@ -1,12 +1,12 @@
 import courses from './courses.data';
-
+import accountTransactions from './accountTransactions.data';
 // export const getAcademicStatus = () =>
 //   axios.get(`/api/student/academic-status`).then(res => res.data);
 
 // export const getAccountBalance = () =>
 //   axios.get('/api/student/account-balance').then(res => res.data);
 
-// export const getAccountTransactions = () =>
+export const getAccountTransactions = () => Promise.resolve(accountTransactions);
 //   axios.get('/api/student/account-transactions').then(res => res.data);
 
 // export const getCourseSchedule = (term = 'current') =>
