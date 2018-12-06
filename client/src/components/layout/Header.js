@@ -8,7 +8,6 @@ import logo from '../../assets/logo.svg';
 import '@reach/menu-button/styles.css';
 import '@reach/dialog/styles.css';
 import MyDialog from './MyDialog';
-import MainNav from './MainNav';
 import Button from './Button';
 import Input from './Input';
 import Label from './Label';
@@ -77,8 +76,6 @@ const Header = () => {
           </ProfileMenuList>
         </Menu>
       </NavbarWrapper>
-
-      <MainNav />
 
       {/* Masquerade Dialg Box */}
       <MyDialog isOpen={mask} data-testid="masquerade-dialog">

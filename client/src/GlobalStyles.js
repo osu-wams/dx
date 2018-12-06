@@ -15,6 +15,12 @@ const GlobalStyle = createGlobalStyle`
     font-size: ${props => props.theme.fontSize.normal};
     line-height: 1.8;
   }
+  html, body, #root {
+    min-height: 100vh;
+  }
+  #root {
+    background-color: #E5E5E5;
+  }
   input, select, textarea, button {
     font-size: inherit;
   }
