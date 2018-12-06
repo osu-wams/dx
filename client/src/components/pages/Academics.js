@@ -1,21 +1,60 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Courses from '../Courses';
 import PageTitle from '../layout/PageTitle';
+import {
+  Overview,
+  OverviewHeader,
+  OverviewContent,
+  OverviewSection,
+  OverviewItem,
+  OverviewItemLabel
+} from '../layout/Overview';
 
-export default class Academics extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { api: 'Api' };
-  }
+const AcademicOverview = () => {
+  return (
+    <Overview>
+      <OverviewHeader>Academic Overview</OverviewHeader>
+      <OverviewContent>
+        <OverviewSection>
+          <OverviewItem style={{ lineHeight: 1 }}>
+            <OverviewItemLabel color="stratosphere">Current GPA</OverviewItemLabel>
+            <span style={{ fontWeight: 'bold', fontSize: '80px' }}>3.8</span>
+          </OverviewItem>
+          <OverviewItem>
+            <span>
+              Week 10
+              <br />
+              Fall Term
+            </span>
+          </OverviewItem>
+        </OverviewSection>
+        <OverviewSection>
+          <OverviewItem>
+            <OverviewItemLabel color="stratosphere">Major</OverviewItemLabel>
+            <span>Graphic Design</span>
+          </OverviewItem>
+          <OverviewItem>
+            <OverviewItemLabel color="stratosphere">Minor</OverviewItemLabel>
+            <span>French</span>
+          </OverviewItem>
+          <OverviewItem>
+            <OverviewItemLabel color="stratosphere">Academic Standing</OverviewItemLabel>
+            <span>Honor Roll</span>
+          </OverviewItem>
+        </OverviewSection>
+      </OverviewContent>
+    </Overview>
+  );
+};
 
-  render() {
-    const { api } = this.state;
-    return (
-      <div data-testid="academics-page">
-        <PageTitle title="Academics" />
-        <Courses />
-        <p>Thisis: {api}</p>
-      </div>
-    );
-  }
-}
+const Academics = () => {
+  return (
+    <div data-testid="academics-page">
+      <AcademicOverview />
+      <PageTitle title="Academics" />
+      <Courses />
+    </div>
+  );
+};
+
+export default Academics;
