@@ -49,7 +49,6 @@ const CardWrapper = styled.div`
   @media screen and (min-width: 768px) {
     & {
       margin-top: 8px;
-      margin-bottom: 0;
     }
   }
 `;
@@ -96,15 +95,11 @@ const CardHeaderWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: ${({ theme }) => `0 ${theme.spacing.unit * 2}px`};
   min-height: 68px;
-  line-height: 68px;
   :hover {
     cursor: ${props => (props.clickable ? 'pointer' : 'initial')};
-  }
-
-  svg {
-    margin-right: ${({ theme }) => `${theme.spacing.unit * 2}px`};
   }
 
   &.cardheader-clickable {
@@ -133,7 +128,7 @@ const CardContentWrapper = styled.div`
   overflow: hidden;
   max-height: ${props => (props.collapsed ? '0' : '100%')};
   padding: ${({ theme, collapsed }) => (collapsed ? 0 : `${theme.spacing.unit * 2}px`)};
-  padding-top: 0;
+  padding-top: ${({ theme, collapsed }) => (collapsed ? 0 : `${theme.spacing.unit}px`)};
 `;
 
 const CardContent = props => {

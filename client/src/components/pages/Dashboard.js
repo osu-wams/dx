@@ -18,15 +18,15 @@ const Dashboard = () => (
     <PageTitle title="My OSU Dashboard" />
     <Card color="orange">
       <CardHeader>
-        <CardHeaderTitle>
-          <Icon icon={faBookReader} color="orange" />
-          Assignments
-        </CardHeaderTitle>
-        <CardHeaderSubtitle>
-          <Badge inline badgeContent={3}>
-            Due Soon
-          </Badge>
-        </CardHeaderSubtitle>
+        <div>
+          <CardHeaderTitle>Assignments</CardHeaderTitle>
+          <CardHeaderSubtitle>
+            <Badge inline badgeContent={3}>
+              Due Soon
+            </Badge>
+          </CardHeaderSubtitle>
+        </div>
+        <Icon icon={faBookReader} color="orange" size="2x" />
       </CardHeader>
       <CardContent>
         <Table>

@@ -43,15 +43,15 @@ export default class Courses extends Component {
     return (
       <Card color="stratosphere">
         <CardHeader>
-          <CardHeaderTitle>
-            <Icon icon={faChalkboardTeacher} color="stratosphere" />
-            Courses
-          </CardHeaderTitle>
-          <CardHeaderSubtitle>
-            <Badge inline badgeContent={totalCredits} bg="stratosphere">
-              Credits
-            </Badge>
-          </CardHeaderSubtitle>
+          <div>
+            <CardHeaderTitle>Courses</CardHeaderTitle>
+            <CardHeaderSubtitle>
+              <Badge inline badgeContent={totalCredits} bg="stratosphere">
+                Credits
+              </Badge>
+            </CardHeaderSubtitle>
+          </div>
+          <Icon icon={faChalkboardTeacher} color="stratosphere" size="2x" />
         </CardHeader>
         <CardContent>
           <List>

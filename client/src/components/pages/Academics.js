@@ -9,11 +9,12 @@ import {
   OverviewItem,
   OverviewItemLabel
 } from '../layout/Overview';
+import UpcomingAssignments from '../UpcomingAssignments';
+import ServiceCard from '../ServiceCard';
 
 const AcademicOverview = () => {
   return (
     <Overview>
-      <OverviewHeader>Academic Overview</OverviewHeader>
       <OverviewContent>
         <OverviewSection>
           <OverviewItem style={{ lineHeight: 1 }}>
@@ -52,7 +53,9 @@ const Academics = () => {
     <div data-testid="academics-page">
       <AcademicOverview />
       <PageTitle title="Academics" />
+      <UpcomingAssignments />
       <Courses />
+      <ServiceCard title="Academic Services" serviceType="academic" />
     </div>
   );
 };
