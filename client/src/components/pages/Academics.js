@@ -3,7 +3,6 @@ import Courses from '../Courses';
 import PageTitle from '../layout/PageTitle';
 import {
   Overview,
-  OverviewHeader,
   OverviewContent,
   OverviewSection,
   OverviewItem,
