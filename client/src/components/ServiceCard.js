@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { faThList, faLink } from '@fortawesome/free-solid-svg-icons';
-import { Card, CardHeader, CardHeaderTitle, CardHeaderSubtitle, CardContent } from './layout/Card';
+import { Card, CardHeader, CardHeaderTitle, CardContent } from './layout/Card';
 import List from './layout/List';
 import Icon from './layout/Icon';
 
@@ -21,7 +21,7 @@ const ServiceCard = ({ title }) => (
       <List style={{ margin: 0 }}>
         <ListItem>
           <div>
-            <a href="#">Add/Drop a Class</a>
+            <a href="/test">Add/Drop a Class</a>
             <br />
             <span>A description... I guess?</span>
           </div>
@@ -29,7 +29,7 @@ const ServiceCard = ({ title }) => (
         </ListItem>
         <ListItem>
           <div>
-            <a href="#">MyDegrees</a>
+            <a href="/test">MyDegrees</a>
             <br />
             <span>Another description</span>
           </div>
@@ -37,7 +37,7 @@ const ServiceCard = ({ title }) => (
         </ListItem>
         <ListItem>
           <div>
-            <a href="#">Course Catalog</a>
+            <a href="/test">Course Catalog</a>
             <br />
             <span>Wow this is fun</span>
           </div>
