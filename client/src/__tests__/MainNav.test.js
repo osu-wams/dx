@@ -46,19 +46,15 @@ test('Click navigation', async () => {
 
   fireEvent.click(getByText(/finances/i));
   await wait(() => expect(getByTestId('finances-page')).toBeInTheDocument());
-  expect(queryByTestId('academics-page')).not.toBeInTheDocument();
 
   fireEvent.click(getByText(/events/i));
   await wait(() => expect(getByTestId('events-page')).toBeInTheDocument());
-  expect(queryByTestId('finances-page')).not.toBeInTheDocument();
 
   fireEvent.click(getByText(/services/i));
   await wait(() => expect(getByTestId('services-page')).toBeInTheDocument());
-  expect(queryByTestId('events-page')).not.toBeInTheDocument();
 
   fireEvent.click(getByText(/Dashboard/i));
   await wait(() => expect(getByTestId('dashboard-page')).toBeInTheDocument());
-  expect(queryByTestId('services-page')).not.toBeInTheDocument();
 });
 
 test('404 page or other broken link within app', () => {

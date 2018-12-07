@@ -16,6 +16,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
+    "react-pose": "^4.0.4",
     "react-responsive": "^5.0.0",
     "react-scripts": "^2.1.1",
     "styled-components": "^4.0.2"

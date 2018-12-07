@@ -1,8 +1,9 @@
 /* eslint-disable react/forbid-prop-types */
 
 import React from 'react';
-import { Router as ReachRouter } from '@reach/router';
+import { Router as ReachRouter, Location } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components';
+import posed, { PoseGroup } from 'react-pose';
 import GlobalStyles from './GlobalStyles';
 import theme from './theme';
 import Header from './components/layout/Header';
@@ -19,6 +20,11 @@ const Router = styled(ReachRouter)`
   padding: ${props => props.theme.spacing.unit * 2}px;
   width: 100%;
 `;
+
+const RouteContainer = posed.div({
+  enter: { opacity: 1, delay: 100, beforeChildren: true },
+  exit: { opacity: 0 }
+});
 
 const App = () => (
   <ThemeProvider theme={theme}>
@@ -39,15 +45,23 @@ const App = () => (
           }}
         >
           <MainNav />
-          <Router>
-            <Dashboard path="/" />
-            <Profile path="profile" />
-            <Academics path="academics" />
-            <Events path="events" />
-            <Finances path="finances" />
-            <Services path="services" />
-            <PageNotFound default />
-          </Router>
+          <Location>
+            {({ location }) => (
+              <PoseGroup>
+                <RouteContainer key={location.key} style={{ width: '100%' }}>
+                  <Router location={location}>
+                    <Dashboard path="/" />
+                    <Profile path="profile" />
+                    <Academics path="academics" />
+                    <Events path="events" />
+                    <Finances path="finances" />
+                    <Services path="services" />
+                    <PageNotFound default />
+                  </Router>
+                </RouteContainer>
+              </PoseGroup>
+            )}
+          </Location>
         </div>
       </div>
     </div>
