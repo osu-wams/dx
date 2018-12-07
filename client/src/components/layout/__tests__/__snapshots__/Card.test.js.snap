@@ -24,17 +24,16 @@ exports[`DefaultCard card styles and structure are present 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   padding: 0 16px;
   min-height: 68px;
-  line-height: 68px;
 }
 
 .c1:hover {
   cursor: initial;
-}
-
-.c1 svg {
-  margin-right: 16px;
 }
 
 .c1.cardheader-clickable {
@@ -71,7 +70,6 @@ exports[`DefaultCard card styles and structure are present 1`] = `
 @media screen and (min-width:768px) {
   .c0 {
     margin-top: 8px;
-    margin-bottom: 0;
   }
 }
 
@@ -83,15 +81,17 @@ exports[`DefaultCard card styles and structure are present 1`] = `
   <button
     class="cardheader-clickable c1"
   >
-    <div
-      class="c2"
-    >
-      Default Card
-    </div>
-    <div
-      class="c3"
-    >
-      Subtitle
+    <div>
+      <div
+        class="c2"
+      >
+        Default Card
+      </div>
+      <div
+        class="c3"
+      >
+        Subtitle
+      </div>
     </div>
   </button>
   <div
@@ -129,17 +129,16 @@ exports[`SimpleCard Orange card styles and structure are present 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   padding: 0 16px;
   min-height: 68px;
-  line-height: 68px;
 }
 
 .c1:hover {
   cursor: initial;
-}
-
-.c1 svg {
-  margin-right: 16px;
 }
 
 .c1.cardheader-clickable {
@@ -176,7 +175,6 @@ exports[`SimpleCard Orange card styles and structure are present 1`] = `
 @media screen and (min-width:768px) {
   .c0 {
     margin-top: 8px;
-    margin-bottom: 0;
   }
 }
 
@@ -188,15 +186,17 @@ exports[`SimpleCard Orange card styles and structure are present 1`] = `
   <button
     class="cardheader-clickable c1"
   >
-    <div
-      class="c2"
-    >
-      Header Button
-    </div>
-    <div
-      class="c3"
-    >
-      Subtitle
+    <div>
+      <div
+        class="c2"
+      >
+        Header Button
+      </div>
+      <div
+        class="c3"
+      >
+        Subtitle
+      </div>
     </div>
   </button>
   <div
@@ -234,17 +234,16 @@ exports[`Stratosphere card styles and structure are present 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   padding: 0 16px;
   min-height: 68px;
-  line-height: 68px;
 }
 
 .c1:hover {
   cursor: initial;
-}
-
-.c1 svg {
-  margin-right: 16px;
 }
 
 .c1.cardheader-clickable {
@@ -281,7 +280,6 @@ exports[`Stratosphere card styles and structure are present 1`] = `
 @media screen and (min-width:768px) {
   .c0 {
     margin-top: 8px;
-    margin-bottom: 0;
   }
 }
 
@@ -293,15 +291,17 @@ exports[`Stratosphere card styles and structure are present 1`] = `
   <button
     class="cardheader-clickable c1"
   >
-    <div
-      class="c2"
-    >
-      Stratosphere Card
-    </div>
-    <div
-      class="c3"
-    >
-      Subtitle
+    <div>
+      <div
+        class="c2"
+      >
+        Stratosphere Card
+      </div>
+      <div
+        class="c3"
+      >
+        Subtitle
+      </div>
     </div>
   </button>
   <div

@@ -1,12 +1,14 @@
-import { render, fireEvent } from '../../../componentTestUtils';
+import { render, fireEvent, wait } from '../../../componentTestUtils';
 import React from 'react';
 import { Card, CardHeader, CardHeaderTitle, CardHeaderSubtitle, CardContent } from '../Card';
 
 const DefaultCard = () => (
   <Card>
     <CardHeader>
-      <CardHeaderTitle>Default Card</CardHeaderTitle>
-      <CardHeaderSubtitle>Subtitle</CardHeaderSubtitle>
+      <div>
+        <CardHeaderTitle>Default Card</CardHeaderTitle>
+        <CardHeaderSubtitle>Subtitle</CardHeaderSubtitle>
+      </div>
     </CardHeader>
     <CardContent>
       <p>DefaultCard Content</p>
@@ -17,8 +19,10 @@ const DefaultCard = () => (
 const StratosphereCard = () => (
   <Card color="stratosphere">
     <CardHeader>
-      <CardHeaderTitle>Stratosphere Card</CardHeaderTitle>
-      <CardHeaderSubtitle>Subtitle</CardHeaderSubtitle>
+      <div>
+        <CardHeaderTitle>Stratosphere Card</CardHeaderTitle>
+        <CardHeaderSubtitle>Subtitle</CardHeaderSubtitle>
+      </div>
     </CardHeader>
     <CardContent>
       <p>DefaultCard Content</p>
@@ -29,8 +33,10 @@ const StratosphereCard = () => (
 const SimpleCard = () => (
   <Card>
     <CardHeader>
-      <CardHeaderTitle>Header Button</CardHeaderTitle>
-      <CardHeaderSubtitle>Subtitle</CardHeaderSubtitle>
+      <div>
+        <CardHeaderTitle>Header Button</CardHeaderTitle>
+        <CardHeaderSubtitle>Subtitle</CardHeaderSubtitle>
+      </div>
     </CardHeader>
     <CardContent>
       <p>Card Content</p>
@@ -53,13 +59,12 @@ it('SimpleCard Orange card styles and structure are present', () => {
   expect(container.firstChild).toMatchSnapshot();
 });
 
-it('aria-expanded toggles on click', () => {
+it('aria-expanded toggles on click', async () => {
   const { getByText } = render(<SimpleCard />);
 
   // Confirm the cardheader-clickable class is present on the button
-  const button = getByText('Header Button').parentElement;
-  expect(button).toHaveClass('cardheader-clickable');
-
+  const button = getByText(/header button/i).parentElement.parentElement;
+  await wait(() => expect(button).toHaveClass('cardheader-clickable'));
   // Card content is hidden by default
   const cardContent = getByText('Card Content').parentElement;
   expect(cardContent).toHaveAttribute('aria-expanded', 'false');
