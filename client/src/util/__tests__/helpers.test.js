@@ -54,7 +54,7 @@ describe('formatDollars', () => {
     ${'Bogus not a number'} | ${'Not a dollar amount'}
     ${'24.24.43'}           | ${'Not a dollar amount'}
   `(
-    'transform long integeres to dollar amounts with appropriate formatting',
+    'transform long integers to dollar amounts with appropriate formatting',
     ({ input, expected }) => {
       expect(formatDollars(input)).toBe(expected);
     }
