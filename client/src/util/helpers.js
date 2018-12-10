@@ -49,7 +49,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 export function formatDollars(amount) {
   let result = formatter.format(amount);
 
-  // More userfriendly text if we the return is NaN
+  // More user-friendly text if the return is NaN
   if (result === 'NaN' || result === '$NaN') {
     result = 'Not a dollar amount';
   }
