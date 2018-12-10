@@ -1,16 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BasicTable no border around table element 1`] = `
+exports[`<Table /> BasicTable no border around table element 1`] = `
 .c0 {
-  border: 1px solid rgba(34,36,38,0.15);
+  border: none;
   border-radius: 0.28571429rem;
   border-collapse: separate;
   border-spacing: 0;
-  border: none;
+  font-size: inherit;
+  overflow-x: scroll;
 }
 
 .c0 td {
-  padding: 0.4em 0.8em;
+  padding: 0.4rem 0.8rem;
 }
 
 .c0 td:not(:first-child) {
@@ -28,7 +29,9 @@ exports[`BasicTable no border around table element 1`] = `
     <caption>
       Basic Table
     </caption>
-    <tbody>
+    <tbody
+      class=""
+    >
       <tr
         class=""
       >
@@ -48,16 +51,69 @@ exports[`BasicTable no border around table element 1`] = `
 </div>
 `;
 
-exports[`DefaultTable gets rendered with border around table 1`] = `
+exports[`<Table /> CompactTable smaller paddings and font size 1`] = `
+.c0 {
+  border: none;
+  border-radius: 0.28571429rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 1.4rem;
+  overflow-x: scroll;
+}
+
+.c0 td {
+  padding: .2rem .4rem;
+}
+
+.c0 td:not(:first-child) {
+  border-left: 1px solid rgba(34,36,38,0.15);
+}
+
+.c0 tr:not(:first-child) td {
+  border-top: 1px solid rgba(34,36,38,0.15);
+}
+
+<div>
+  <table
+    class="c0"
+  >
+    <caption>
+      Compact Table
+    </caption>
+    <tbody
+      class=""
+    >
+      <tr
+        class=""
+      >
+        <td
+          class=""
+        >
+          One col
+        </td>
+        <td
+          class=""
+        >
+          Two col
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`<Table /> DefaultTable gets rendered with border around table 1`] = `
 .c0 {
   border: 1px solid rgba(34,36,38,0.15);
   border-radius: 0.28571429rem;
   border-collapse: separate;
   border-spacing: 0;
+  font-size: inherit;
+  overflow-x: scroll;
 }
 
 .c0 td {
-  padding: 0.4em 0.8em;
+  padding: 0.4rem 0.8rem;
 }
 
 .c0 td:not(:first-child) {
@@ -97,17 +153,18 @@ exports[`DefaultTable gets rendered with border around table 1`] = `
 </div>
 `;
 
-exports[`StripedTable alternates background color on rows 1`] = `
+exports[`<Table /> StripedTable alternates background color on rows 1`] = `
 .c0 {
-  border: 1px solid rgba(34,36,38,0.15);
+  border: none;
   border-radius: 0.28571429rem;
   border-collapse: separate;
   border-spacing: 0;
-  border: none;
+  font-size: inherit;
+  overflow-x: scroll;
 }
 
 .c0 td {
-  padding: 0.4em 0.8em;
+  padding: 0.4rem 0.8rem;
 }
 
 .c0 td:not(:first-child) {

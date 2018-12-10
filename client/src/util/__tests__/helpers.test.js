@@ -1,4 +1,4 @@
-import { titleCase, formatTime, formatDate } from '../helpers';
+import { titleCase, formatTime, formatDate, formatDollars } from '../helpers';
 
 describe('titleCase', () => {
   it('should transform sentences to title case', () => {
@@ -28,7 +28,35 @@ describe('formatDate', () => {
     ${'2018-12-06'} | ${'December 06, 2018'}
     ${'2018-09-26'} | ${'September 26, 2018'}
     ${'2018-01-11'} | ${'January 11, 2018'}
-  `('converts dates from API from numbers to human readabele', ({ input, expected }) => {
+  `('converts dates from API to human readable', ({ input, expected }) => {
     expect(formatDate(input)).toBe(expected);
   });
+
+  test.each`
+    input           | expected
+    ${'2018-12-06'} | ${'12/06/18'}
+    ${'2018-09-26'} | ${'09/26/18'}
+    ${'2018-01-11'} | ${'01/11/18'}
+  `('converts dates from API to compact human readable', ({ input, expected }) => {
+    expect(formatDate(input, 'compact')).toBe(expected);
+  });
+});
+
+describe('formatDollars', () => {
+  test.each`
+    input                   | expected
+    ${'2560'}               | ${'$2,560.00'}
+    ${'400'}                | ${'$400.00'}
+    ${'75'}                 | ${'$75.00'}
+    ${'00'}                 | ${'$0.00'}
+    ${'12450'}              | ${'$12,450.00'}
+    ${'50.50'}              | ${'$50.50'}
+    ${'Bogus not a number'} | ${'Not a dollar amount'}
+    ${'24.24.43'}           | ${'Not a dollar amount'}
+  `(
+    'transform long integeres to dollar amounts with appropriate formatting',
+    ({ input, expected }) => {
+      expect(formatDollars(input)).toBe(expected);
+    }
+  );
 });
