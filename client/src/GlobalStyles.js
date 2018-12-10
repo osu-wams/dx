@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-size: ${props => props.theme.fontSize.normal};
     line-height: 1.8;
+    color: ${props => props.theme.colors.charcoal};
   }
   html, body, #root {
     min-height: 100vh;

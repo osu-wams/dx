@@ -19,7 +19,8 @@
     "react-pose": "^4.0.4",
     "react-responsive": "^5.0.0",
     "react-scripts": "^2.1.1",
-    "styled-components": "^4.0.2"
+    "styled-components": "^4.0.2",
+    "styled-map": "^3.2.0-rc.1"
   },
   "scripts": {
     "start": "react-scripts start",

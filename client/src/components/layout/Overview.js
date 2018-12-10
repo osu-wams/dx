@@ -60,7 +60,15 @@ const OverviewSection = ({ children, ...props }) => {
   return children;
 };
 
-const OverviewItem = styled.div``;
+// Consider doing our own font component globally
+const OverviewItem = styled.div`
+  .l {
+    font-size: 3rem;
+  }
+  .xl {
+    font-size: 4rem;
+  }
+`;
 
 const OverviewItemLabel = styled.div`
   color: ${({ theme, color }) => theme.colors[color]};
