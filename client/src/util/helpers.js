@@ -50,7 +50,7 @@ export function formatDollars(amount) {
   let result = formatter.format(amount);
 
   // More userfriendly text if we the return is NaN
-  if (result === ('$NaN' || NaN)) {
+  if (result === ('$NaN' || 'NaN')) {
     result = 'Not a dollar amount';
   }
 
