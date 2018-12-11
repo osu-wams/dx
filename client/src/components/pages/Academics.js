@@ -10,6 +10,7 @@ import {
 } from '../layout/Overview';
 import UpcomingAssignments from '../UpcomingAssignments';
 import ServiceCard from '../ServiceCard';
+import { DesktopGrid, MainColumn } from '../layout/DesktopGrid';
 
 const AcademicOverview = () => {
   return (
@@ -52,9 +53,13 @@ const Academics = () => {
     <div data-testid="academics-page">
       <AcademicOverview />
       <PageTitle title="Academics" />
-      <UpcomingAssignments />
-      <Courses />
-      <ServiceCard title="Academic Services" serviceType="academic" />
+      <DesktopGrid>
+        <MainColumn>
+          <UpcomingAssignments />
+          <Courses />
+        </MainColumn>
+        <ServiceCard title="Academic Services" serviceType="academic" />
+      </DesktopGrid>
     </div>
   );
 };
