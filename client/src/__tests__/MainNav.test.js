@@ -36,7 +36,7 @@ test('All routes working and rendering content', async () => {
 });
 
 test('Click navigation', async () => {
-  const { container, getByText, getByTestId, queryByTestId, debug } = render(<App />);
+  const { container, getByText, getByTestId } = render(<App />);
 
   // maybe switch to test ids for the pages
   expect(container.innerHTML).toMatch('<h2>My OSU Dashboard</h2>');

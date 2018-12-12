@@ -30,6 +30,29 @@ export function formatTime(hours) {
 /* Format our day and time into preferred format
 using the npm package date-fns. We change number dates to:
 "December 09, 2018" format. */
-export function formatDate(date) {
+export function formatDate(date, type = 'long') {
+  // Compact format returns 10/20/19
+  if (type === 'compact') {
+    return format(date, 'MM/DD/YY');
+  }
   return format(date, 'MMMM DD, YYYY');
+}
+
+/* Preferred Money format for simple strings to dollars
+@input 2600.50 output $2,600.50  */
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 2
+});
+
+export function formatDollars(amount) {
+  let result = formatter.format(amount);
+
+  // More user-friendly text if the return is NaN
+  if (result === 'NaN' || result === '$NaN') {
+    result = 'Not a dollar amount';
+  }
+
+  return result;
 }
