@@ -6,7 +6,7 @@ const tablet = `@media (min-width: 768px)`;
 const DesktopGrid = styled.div`
   ${tablet} {
     display: flex;
-    justify-content: flex-start;
+    align-items: flex-start;
   }
 `;
 
