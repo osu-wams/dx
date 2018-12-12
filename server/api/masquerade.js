@@ -15,4 +15,11 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/', (req, res) => {
+  if (req.session.passport.user.masqueradeId) {
+    return res.send({ masqueradeId: req.session.passport.user.masqueradeId });
+  }
+  return res.send({ masqueradeId: null });
+});
+
 module.exports = router;

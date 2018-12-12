@@ -80,7 +80,7 @@ Auth.login = function(req, res, next) {
         console.log(err);
         return next(err);
       }
-      res.json(200, user);
+      res.redirect('/');
     });
   })(req, res, next);
 };
