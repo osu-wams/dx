@@ -22,6 +22,18 @@ const Router = styled(ReachRouter)`
   width: 100%;
 `;
 
+const ContentWrapper = styled.div`
+  max-width: 1024px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  flex-grow: 1;
+`;
+
 const RouteContainer = posed.div({
   enter: { opacity: 1, delay: 100, beforeChildren: true },
   exit: { opacity: 0 }
@@ -46,43 +58,28 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={user}>
-        <div style={{ minHeight: '100vh' }}>
-          <GlobalStyles />
-          <Header />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div
-              style={{
-                maxWidth: '1024px',
-                width: '100%',
-                backgroundColor: '#fff',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                height: '100%',
-                minHeight: '100vh'
-              }}
-            >
-              <MainNav />
-              <Location>
-                {({ location }) => (
-                  <PoseGroup>
-                    <RouteContainer key={location.key} style={{ width: '100%' }}>
-                      <Router location={location}>
-                        <Dashboard path="/" />
-                        <Profile path="profile" />
-                        <Academics path="academics" />
-                        <Events path="events" />
-                        <Finances path="finances" />
-                        <Services path="services" />
-                        <PageNotFound default />
-                      </Router>
-                    </RouteContainer>
-                  </PoseGroup>
-                )}
-              </Location>
-            </div>
-          </div>
-        </div>
+        <GlobalStyles />
+        <Header />
+        <ContentWrapper>
+          <MainNav />
+          <Location>
+            {({ location }) => (
+              <PoseGroup>
+                <RouteContainer key={location.key} style={{ width: '100%' }}>
+                  <Router location={location}>
+                    <Dashboard path="/" />
+                    <Profile path="profile" />
+                    <Academics path="academics" />
+                    <Events path="events" />
+                    <Finances path="finances" />
+                    <Services path="services" />
+                    <PageNotFound default />
+                  </Router>
+                </RouteContainer>
+              </PoseGroup>
+            )}
+          </Location>
+        </ContentWrapper>
       </UserContext.Provider>
     </ThemeProvider>
   );
