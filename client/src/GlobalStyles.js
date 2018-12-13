@@ -16,11 +16,11 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.8;
     color: ${props => props.theme.colors.charcoal};
   }
-  html, body, #root {
-    min-height: 100vh;
-  }
   #root {
     background-color: #E5E5E5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   input, select, textarea, button {
     font-size: inherit;
