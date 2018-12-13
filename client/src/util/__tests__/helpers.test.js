@@ -1,9 +1,19 @@
 import { titleCase, formatTime, formatDate, formatDollars } from '../helpers';
 
 describe('titleCase', () => {
-  it('should transform sentences to title case', () => {
+  it('should transform UPPERCASE', () => {
     const input = 'WHAT IS GOING ON HERE';
     const expected = 'What Is Going On Here';
+    expect(titleCase(input)).toBe(expected);
+  });
+  it('should ignore random characters to start', () => {
+    const input = '*WHAT IS GOING ON HERE';
+    const expected = '*What Is Going On Here';
+    expect(titleCase(input)).toBe(expected);
+  });
+  it('should allow contractions', () => {
+    const input = `WHAT'S GOING ON HERE`;
+    const expected = `What's Going On Here`;
     expect(titleCase(input)).toBe(expected);
   });
 });

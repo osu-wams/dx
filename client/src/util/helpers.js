@@ -1,12 +1,9 @@
 import format from 'date-fns/format';
 
 // Format any WORDS SENTENCE/word sentence/wOrD sEnTenCe to Title Case: Word Sentence
-export const titleCase = phrase =>
-  phrase
-    .toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+export const titleCase = phrase => {
+  return phrase.toLowerCase().replace(/(\b[a-z](?!\s))/g, match => match.toUpperCase());
+};
 
 // Format API time values to human friendly 12 hour am/pm format
 export function formatTime(hours) {
