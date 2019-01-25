@@ -14,14 +14,30 @@ import MyDialog from './MyDialog';
 import Button from './Button';
 import Input from './Input';
 import Label from './Label';
+import MainNav from './MainNav';
+import { colors } from '../theme';
 
-const NavbarWrapper = styled.header`
-  height: 64px;
-  background-color: ${props => props.theme.colors.orange};
+const HeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 184px;
+  background-color: ${colors['orange-400']};
+`;
+
+const HeaderTopSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${({ theme }) => `0 ${theme.spacing.unit * 2}px`};
+  padding: 12px 16px 0;
+`;
+
+const HeaderBottomSection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow-x: auto;
 `;
 
 const UserButton = styled(MenuButton)`
@@ -107,28 +123,30 @@ const Header = () => {
 
   return (
     <>
-      <ToastContainer />
-      <NavbarWrapper>
-        <ChatButton>
-          <FontAwesomeIcon icon={faComment} size="2x" color="white" />
-        </ChatButton>
-        <Logo src={logo} alt="Oregon State University" />
-        <Menu>
-          <UserButton data-testid="user-btn">
-            <VisuallyHidden>User menu</VisuallyHidden>
-            <FontAwesomeIcon icon={faUserCircle} size="2x" />
-          </UserButton>
-          <ProfileMenuList>
-            <MenuItem onSelect={() => logout()}>Logout</MenuItem>
-            <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
-            <MenuLink to="profile" data-testid="profile-link">
-              View Profile
-            </MenuLink>
-          </ProfileMenuList>
-        </Menu>
-      </NavbarWrapper>
-
-      {/* Masquerade Dialog Box */}
+      <HeaderWrapper>
+        <HeaderTopSection>
+          <ChatButton>
+            <FontAwesomeIcon icon={faComment} size="2x" color="white" />
+          </ChatButton>
+          <Logo src={logo} alt="Oregon State University" />
+          <Menu>
+            <UserButton data-testid="user-btn">
+              <VisuallyHidden>User menu</VisuallyHidden>
+              <FontAwesomeIcon icon={faUserCircle} size="2x" />
+            </UserButton>
+            <ProfileMenuList>
+              <MenuItem onSelect={() => logout()}>Logout</MenuItem>
+              <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
+              <MenuLink to="profile" data-testid="profile-link">
+                View Profile
+              </MenuLink>
+            </ProfileMenuList>
+          </Menu>
+        </HeaderTopSection>
+        <HeaderBottomSection>
+          <MainNav />
+        </HeaderBottomSection>
+      </HeaderWrapper>
       <MyDialog isOpen={showMasqueradeDialog} data-testid="masquerade-dialog">
         <h2>Log in as another user</h2>
         <Label htmlFor="osu-id">

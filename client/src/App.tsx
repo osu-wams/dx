@@ -18,6 +18,7 @@ import Services from './pages/Services';
 import PageNotFound from './pages/PageNotFound';
 
 const Router = styled(ReachRouter)`
+  margin-top: -70px;
   padding: ${props => props.theme.spacing.unit * 2}px;
   width: 100%;
 `;
@@ -26,7 +27,6 @@ const ContentWrapper = styled.div`
   max-width: 1024px;
   width: 100%;
   margin: 0 auto;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,6 +60,28 @@ const App = () => {
       .catch(() => {
         window.location.href = '/login';
       });
+
+
+    // Manage focus styles on keyboard navigable elements.
+    //   - Add focus styles if tab used to navigate.
+    //   - Start listening for clicks to remove focus styles.
+    const handleTabOnce = (e) => {
+      if (e.key === 'Tab') {
+        document.body.classList.add('user-is-tabbing');
+        window.removeEventListener('keydown', handleTabOnce);
+        window.addEventListener('mousedown', handleMouseDownOnce);
+      }
+    }
+    //   - Remove focus styles if mouse used to navigate.
+    //   - Start listening for keydown to add focus styles.
+    const handleMouseDownOnce = () => {
+      document.body.classList.remove('user-is-tabbing');
+      window.removeEventListener('mousedown', handleMouseDownOnce);
+      window.addEventListener('keydown', handleTabOnce);
+    }
+
+    //   - Listen for keyboard navigation to start.
+    window.addEventListener('keydown', handleTabOnce);
   }, []);
 
   return (
@@ -68,7 +90,6 @@ const App = () => {
         <GlobalStyles />
         <Header />
         <ContentWrapper>
-          <MainNav />
           <Location>
             {({ location }) => (
               <PoseGroup>

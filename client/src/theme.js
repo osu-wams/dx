@@ -1,55 +1,51 @@
 export const colors = {
-  // OSU Brand Colours
-  orange: '#d73f09',
-  black: '#000000',
   white: '#ffffff',
-  pineStand: '#4a773c',
-  highTide: '#00859b',
-  luminance: '#ffb500',
-  stratosphere: '#006a8e',
-  reindeerMoss: '#c4d6a4',
-  seafoam: '#b8dde1',
-  candela: '#fdd26e',
-  moondust: '#c6dae7',
-  hopBine: '#aa9d2e',
-  rogueWave: '#0d5257',
-  solarFlare: '#d3832b',
-  starCanvas: '003b5c',
-  till: '#b7a99a',
-  coastline: '#a7aca2',
-  highDesert: '#7a6855',
-  crater: '#8e9089',
-  // Web errors, gray scales
-  lava: '#af292e',
-  vulcan: '#e69198',
-  basalt: '#5e131a',
-  mist: '#f0f0f0',
-  fog: '#e0e0e0',
-  overcast: '#999',
-  nimbus: '#757575',
-  dusk: '#444',
-  charcoal: '#252525'
+  black: '#000000',
+  // Neutral Palette
+  'neutral-100': '#F7F5F5',
+  'neutral-200': '#E9E5E4',
+  'neutral-300': '#D4CFCD',
+  'neutral-400': '#B7B1AF',
+  'neutral-500': '#8F8582',
+  'neutral-600': '#696361',
+  'neutral-700': '#423E3C',
+  // Primary
+  'orange-100': '#FFE7DE',
+  'orange-200': '#F79572',
+  'orange-300': '#E85F2E',
+  'orange-400': '#D73F09',
+  'orange-500': '#B22F00',
+  'orange-600': '#7D2100',
+  'orange-700': '#611A00',
+  // Accents
+  'stratum-100': '#ECF1F4',
+  'stratum-200': '#C6DAE7',
+  'stratum-300': '#2490B5',
+  'stratum-400': '#006A8E',
+  'stratum-500': '#005875',
+  'stratum-600': '#003B5C',
+  'stratum-700': '#002235',
+  'pine-100': '#EDF3E3',
+  'pine-200': '#C4D6A4',
+  'pine-300': '#73A663',
+  'pine-400': '#4A773C',
+  'pine-500': '#3C692E',
+  'pine-600': '#254A1A',
+  'pine-700': '#142E0C'
 };
 
 export const shadows = {
   1: '0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12)',
   2: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)',
   3: '0px 1px 8px 0px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 3px 3px -2px rgba(0, 0, 0, 0.12)',
-  4: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
-  5: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12)',
-  6: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)',
-  7: '0px 4px 5px -2px rgba(0, 0, 0, 0.2), 0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12)',
-  8: '0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)'
+  4: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
 };
 
 const theme = {
   spacing: {
     unit: 8
   },
-  rounded: {
-    normal: '0.8rem',
-    subtle: '0.3rem'
-  },
+  borderRadius: '8px',
   fontSize: {
     small: '1.4rem',
     normal: '1.6rem',

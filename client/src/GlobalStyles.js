@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { colors } from './theme';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -16,8 +17,14 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.8;
     color: ${props => props.theme.colors.charcoal};
   }
+  body:not(.user-is-tabbing) button:focus,
+  body:not(.user-is-tabbing) input:focus,
+  body:not(.user-is-tabbing) select:focus,
+  body:not(.user-is-tabbing) textarea:focus {
+    outline: none;
+  }
   #root {
-    background-color: #E5E5E5;
+    background-color: ${colors['neutral-100']};
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -26,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: inherit;
   }
   a {
-    color: ${props => props.theme.colors.stratosphere};
+    color: ${colors['stratum-400']};
   }
 `;
 

@@ -1,19 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PageTitle from '../ui/PageTitle';
 
-export default class Events extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { api: 'Api' };
-  }
+const Events = () => (
+  <div data-testid="events-page">
+    <PageTitle title="Events" />
+  </div>
+);
 
-  render() {
-    const { api } = this.state;
-    return (
-      <div data-testid="events-page">
-        <PageTitle title="Events" />
-        <p>Events {api} </p>
-      </div>
-    );
-  }
-}
+export default Events;

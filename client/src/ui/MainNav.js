@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import { colors } from '../theme';
 
 const Nav = styled.nav`
   display: flex;
@@ -10,16 +11,13 @@ const Nav = styled.nav`
 `;
 
 const NavLink = styled(Link)`
-  font-family: Stratum2, sans-serif;
   margin: 0 4px;
   padding: 0 4px;
   height: 30px;
   line-height: 30px;
   text-decoration: none;
-  font-size: ${props => props.theme.fontSize.large};
-  color: ${props => props.theme.colors.charcoal};
+  color: ${colors.white};
   &[aria-current] {
-    color: ${props => props.theme.colors.orange};
     font-weight: bold;
   }
   /* select and hover styles */
@@ -37,7 +35,7 @@ const NavLink = styled(Link)`
     display: block;
     width: 0;
     height: 2px;
-    background: ${props => props.theme.colors.orange};
+    background: ${colors.white};
     transition: width 0.3s;
   }
 `;
