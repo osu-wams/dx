@@ -1,31 +1,32 @@
 import styled from 'styled-components';
 import { Dialog } from '@reach/dialog';
+import { theme, colors } from '../theme';
 
 const MyDialog = styled(Dialog)`
-  border-top: 8px solid ${props => props.theme.colors[props.color]};
+  border-radius: ${theme.roundedCorners};
   [type='cancel'] {
     float: right;
   }
   h2 {
     font-family: Stratum2, sans-serif;
-    color: ${props => props.theme.colors[props.color]};
+    color: ${props => colors[props.color]};
     margin-bottom: 0;
   }
   h3 {
-    font-size: ${props => props.theme.fontSize.normal};
-    color: ${props => props.theme.colors.nimbus};
+    font-size: ${theme.fontSize.normal};
+    color: ${colors['neutral-200']};
     margin-bottom: 0.5rem;
   }
   .details {
-    color: ${props => props.theme.colors.nimbus};
-    font-size: ${props => props.theme.fontSize.small};
+    color: ${colors['neutral-200']};
+    font-size: ${theme.fontSize.small};
     margin-top: -1rem;
     margin-bottom: 2rem;
   }
   @media screen and (max-width: 767px) {
     &[data-reach-dialog-content] {
-      width: 100%;
-      margin: 64px 0 0 0;
+      width: 92%;
+      margin: 2rem auto;
       padding-top: 0.5rem;
     }
   }

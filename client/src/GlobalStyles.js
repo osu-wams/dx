@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { colors } from './theme';
+import { colors, theme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -13,9 +13,9 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-size: ${props => props.theme.fontSize.normal};
+    font-size: ${props => theme.fontSize.normal};
     line-height: 1.8;
-    color: ${props => props.theme.colors.charcoal};
+    color: ${props => theme.colors.charcoal};
   }
   body:not(.user-is-tabbing) button:focus,
   body:not(.user-is-tabbing) input:focus,

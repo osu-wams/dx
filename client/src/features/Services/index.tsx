@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from 'react';
 import { createClient, Entry } from 'contentful';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { colors, shadows } from '../../theme';
+import { theme, colors, shadows } from '../../theme';
 import { titleCase } from '../../util/helpers';
 import Icon from '../../ui/Icon';
 import Card from '../../ui/Card';
@@ -24,7 +24,7 @@ const CategoryItem = styled.button<CategoryItemProps>`
   background: none;
   border: none;
   padding: 4px 8px;
-  margin-bottom: ${props => props.theme.spacing.unit}px;
+  margin-bottom: ${theme.spacing.unit}px;
   color: ${colors['neutral-600']};
   cursor: pointer;
   &:focus:not(:focus-visible) {
@@ -121,7 +121,9 @@ const ServiceCardList = ({ services, selectedCategory }) => {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       {selectedServices.map(service => (
-        <Card style={{ minWidth: '240px', flex: 1 }} key={service.sys.id}>{service.fields.name}</Card>
+        <Card style={{ minWidth: '240px', flex: 1 }} key={service.sys.id}>
+          {service.fields.name}
+        </Card>
       ))}
     </div>
   );

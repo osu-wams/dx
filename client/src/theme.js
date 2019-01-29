@@ -2,13 +2,13 @@ export const colors = {
   white: '#ffffff',
   black: '#000000',
   // Neutral Palette
-  'neutral-100': '#F7F5F5',
-  'neutral-200': '#E9E5E4',
-  'neutral-300': '#D4CFCD',
-  'neutral-400': '#B7B1AF',
-  'neutral-500': '#8F8582',
-  'neutral-600': '#696361',
-  'neutral-700': '#423E3C',
+  'neutral-100': '#F7F5F5', // only use as an off white background
+  'neutral-200': '#E9E5E4', // use as a light gray background with dark text
+  'neutral-300': '#D4CFCD', // use as a gray background with very dark text
+  'neutral-400': '#B7B1AF', // use carefully
+  'neutral-500': '#8F8582', // minimum contrast for dark ui elements on white
+  'neutral-600': '#696361', // minimum for dark text  with background up to neutral-200
+  'neutral-700': '#423E3C', // use as a text color for backgrounds as dark as neutral-400
   // Primary
   'orange-100': '#FFE7DE',
   'orange-200': '#F79572',
@@ -18,13 +18,14 @@ export const colors = {
   'orange-600': '#7D2100',
   'orange-700': '#611A00',
   // Accents
-  'stratum-100': '#ECF1F4',
-  'stratum-200': '#C6DAE7',
-  'stratum-300': '#2490B5',
-  'stratum-400': '#006A8E',
-  'stratum-500': '#005875',
-  'stratum-600': '#003B5C',
-  'stratum-700': '#002235',
+  strat: '#006A8E',
+  'strat-100': '#ECF1F4',
+  'strat-200': '#C6DAE7',
+  'strat-300': '#2490B5',
+  'strat-400': '#006A8E',
+  'strat-500': '#005875',
+  'strat-600': '#003B5C',
+  'strat-700': '#002235',
   'pine-100': '#EDF3E3',
   'pine-200': '#C4D6A4',
   'pine-300': '#73A663',
@@ -41,11 +42,13 @@ export const shadows = {
   4: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
 };
 
-const theme = {
+export const theme = {
   spacing: {
     unit: 8
   },
-  borderRadius: '8px',
+  roundedCorners: '6px',
+  'roundedCorners-small': '4px',
+  'roundedCorners-large': '8px',
   fontSize: {
     small: '1.4rem',
     normal: '1.6rem',
@@ -54,4 +57,4 @@ const theme = {
   colors
 };
 
-export default theme;
+//export default theme;

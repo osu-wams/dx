@@ -15,7 +15,7 @@ import Button from './Button';
 import Input from './Input';
 import Label from './Label';
 import MainNav from './MainNav';
-import { colors } from '../theme';
+import { theme, colors } from '../theme';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ const HeaderBottomSection = styled.div`
 `;
 
 const UserButton = styled(MenuButton)`
-  color: ${props => props.theme.colors.white};
+  color: ${colors.white};
   background: transparent;
   border: none;
   cursor: pointer;
@@ -49,7 +49,7 @@ const UserButton = styled(MenuButton)`
 
 const ProfileMenuList = styled(MenuList)`
   [data-reach-menu-item][data-selected] {
-    background-color: ${props => props.theme.colors.charcoal};
+    background-color: ${colors['neutral-600']};
   }
 `;
 

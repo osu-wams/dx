@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-
+import { theme, colors } from '../theme';
 // Outputs the padding size in pixel for the component
-function inputSize(size, theme) {
+function inputSize(size) {
   if (size === 'small') {
     return `
       padding: ${theme.spacing.unit / 4}px ${theme.spacing.unit / 2}px;
@@ -22,19 +21,11 @@ function inputSize(size, theme) {
 }
 
 const Input = styled.input`
-  color: ${props => props.theme.colors.charcoal};
+  color: ${colors.charcoal};
   text-decoration: none;
   border-radius: 0.4rem;
-  border: 1px solid ${props => props.theme.colors.dusk};
-  ${({ theme, size }) => inputSize(size, theme)};
+  border: 1px solid ${colors.dusk};
+  ${({ size }) => inputSize(size)};
 `;
-
-Input.propTypes = {
-  size: PropTypes.oneOf(['small', 'normal', 'large'])
-};
-
-Input.defaultProps = {
-  size: 'normal'
-};
 
 export default Input;

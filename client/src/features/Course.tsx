@@ -1,18 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import VisuallyHidden from '@reach/visually-hidden';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronRight,
   faChalkboardTeacher,
   faCalendarAlt,
-  faEdit,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
-import Button from '../ui/Button';
+import Button, { CloseButton } from '../ui/Button';
 import MyDialog from '../ui/MyDialog';
 import Icon from '../ui/Icon';
 import { titleCase, formatTime, formatDate } from '../util/helpers';
+import { colors } from '../theme';
 
 const Course = ({
   attributes: {
@@ -29,23 +28,13 @@ const Course = ({
   showCourse,
   toggleCourse
 }) => (
-  <MyDialog isOpen={showCourse} color="stratosphere" data-testid="course-dialog">
-    <Button type="cancel" onClick={() => toggleCourse()} bg="stratosphere" outline>
-      <Icon icon={faTimes} />
-      <VisuallyHidden>Close</VisuallyHidden>
-    </Button>
+  <MyDialog isOpen={showCourse} data-testid="course-dialog">
+    <CloseButton onClick={toggleCourse} />
     <h2>{titleCase(courseTitle)}</h2>
     <div className="details">
       {courseSubject} {courseNumber} &bull; CRN: {courseReferenceNumber} &bull; Section{' '}
       {sectionNumber} &bull; {creditHours} Credits
     </div>
-    <Button as="a" href="#canvasDeepLink" bg="stratosphere">
-      View in canvas
-    </Button>
-    <Button outline href="#canvasDeepLink" bg="stratosphere">
-      Actions <FontAwesomeIcon icon={faChevronRight} />
-    </Button>
-
     <h3>
       <FontAwesomeIcon icon={faChalkboardTeacher} /> Instructor(s)
     </h3>
@@ -95,22 +84,8 @@ const Course = ({
       )
     )}
 
-    <h3>
-      <FontAwesomeIcon icon={faEdit} /> Grading
-    </h3>
+    <Button bg={colors.strat}>See Course in Canvas</Button>
   </MyDialog>
 );
-
-Course.propTypes = {
-  attributes: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.array])
-  ).isRequired,
-  showCourse: PropTypes.bool,
-  toggleCourse: PropTypes.func.isRequired
-};
-
-Course.defaultProps = {
-  showCourse: true
-};
 
 export default Course;

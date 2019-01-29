@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChalkboardTeacher } from '@fortawesome/free-solid-svg-icons';
 import { getCourseSchedule } from '../api/student';
-import { Card, CardHeader, CardHeaderTitle, CardHeaderSubtitle, CardContent } from '../ui/Card';
+import Card from '../ui/Card';
 import Icon from '../ui/Icon';
 import Badge from '../ui/Badge';
 import List from '../ui/List';
-import Course from '../features//Course';
+import Course from '../features/Course';
 import { titleCase } from '../util/helpers';
+import courses from '../api/__mocks__/courses.data';
 
 export default class Courses extends Component {
   state = {
-    courses: [],
+    courses: courses,
+    //course: [],
     courseAttributes: null,
     showCourse: false
   };
@@ -42,18 +44,16 @@ export default class Courses extends Component {
 
     return (
       <Card color="stratosphere">
-        <CardHeader>
+        <div>
+          <h3>Courses</h3>
           <div>
-            <CardHeaderTitle>Courses</CardHeaderTitle>
-            <CardHeaderSubtitle>
-              <Badge inline badgeContent={totalCredits} bg="stratosphere">
-                Credits
-              </Badge>
-            </CardHeaderSubtitle>
+            <Badge inline badgeContent={totalCredits} bg="stratosphere">
+              Credits
+            </Badge>
           </div>
-          <Icon icon={faChalkboardTeacher} color="stratosphere" size="2x" />
-        </CardHeader>
-        <CardContent>
+        </div>
+        <Icon icon={faChalkboardTeacher} color="stratosphere" size="2x" />
+        <div>
           <List>
             {courses.map(
               ({ id, attributes, attributes: { courseTitle, courseNumber, courseSubject } }) => (
@@ -72,7 +72,7 @@ export default class Courses extends Component {
             )}
           </List>
           {showCourse && <Course attributes={courseAttributes} toggleCourse={this.toggleCourse} />}
-        </CardContent>
+        </div>
       </Card>
     );
   }
