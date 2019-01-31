@@ -22,7 +22,7 @@ const HeaderWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   min-height: 184px;
-  background-color: ${Color["orange-400"]};
+  background-color: ${Color['orange-400']};
 `;
 
 const HeaderTopSection = styled.div`
@@ -55,13 +55,6 @@ const ProfileMenuList = styled(MenuList)`
 
 const Logo = styled.img`
   height: 58px;
-`;
-
-const ChatButton = styled.button`
-  color: #fff;
-  background: transparent;
-  border: none;
-  cursor: pointer;
 `;
 
 const Header = () => {
@@ -125,9 +118,6 @@ const Header = () => {
     <>
       <HeaderWrapper>
         <HeaderTopSection>
-          <ChatButton>
-            <FontAwesomeIcon icon={faComment} size="2x" color="white" />
-          </ChatButton>
           <Logo src={logo} alt="Oregon State University" />
           <Menu>
             <UserButton data-testid="user-btn">
@@ -165,7 +155,12 @@ const Header = () => {
         <Button type="submit" onClick={masquerade}>
           Masquerade
         </Button>
-        <Button type="cancel" bg={Color["neutral-200"]} fg={Color["neutral-700"]} onClick={toggleMasqueradeDialog}>
+        <Button
+          type="cancel"
+          bg={Color['neutral-200']}
+          fg={Color['neutral-700']}
+          onClick={toggleMasqueradeDialog}
+        >
           Cancel
         </Button>
       </MyDialog>
