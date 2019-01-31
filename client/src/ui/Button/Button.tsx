@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { theme, colors } from '../../theme';
-import { Color } from 'csstype';
+import { theme, Color } from '../../theme';
 
 export enum Sizes {
   small,
@@ -12,11 +11,11 @@ function btnSize(value?: Sizes) {
   let fontSize = '';
   if (value == Sizes.small) {
     padding = '.2rem .3rem;';
-    fontSize = theme.fontSize.small;
+    fontSize = theme.fontSize[14];
   }
   if (value == Sizes.large) {
     padding = '1rem 1.8rem;';
-    fontSize = theme.fontSize.large;
+    fontSize = theme.fontSize[18];
   }
   if (fontSize) {
     fontSize = 'font-size: ' + fontSize;
@@ -31,9 +30,9 @@ type Props = {
   size?: Sizes;
 };
 
-const Button = styled.button<Props>`
-  background-color: ${props => props.bg || colors['orange-400']};
-  color: ${props => props.fg || colors['white']};
+const Button = styled('button')<Props & React.HTMLProps<HTMLButtonElement>>`
+  background-color: ${props => props.bg || Color["orange-400"]};
+  color: ${props => props.fg || Color.white};
   & + & {
     margin-left: ${theme.spacing.unit}px;
   }

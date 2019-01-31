@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
-import { colors } from '../theme';
+import { Color } from '../theme';
 
 const Nav = styled.nav`
   display: flex;
@@ -16,7 +16,7 @@ const NavLink = styled(Link)`
   height: 30px;
   line-height: 30px;
   text-decoration: none;
-  color: ${colors.white};
+  color: ${Color.white};
   &[aria-current] {
     font-weight: bold;
   }
@@ -35,7 +35,7 @@ const NavLink = styled(Link)`
     display: block;
     width: 0;
     height: 2px;
-    background: ${colors.white};
+    background: ${Color.white};
     transition: width 0.3s;
   }
 `;

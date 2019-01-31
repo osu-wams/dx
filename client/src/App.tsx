@@ -18,7 +18,7 @@ import Services from './pages/Services';
 import PageNotFound from './pages/PageNotFound';
 
 const Router = styled(ReachRouter)`
-  margin-top: -70px;
+  margin-top: -58px;
   padding: ${theme.spacing.unit * 2}px;
   width: 100%;
 `;

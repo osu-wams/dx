@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChalkboardTeacher } from '@fortawesome/free-solid-svg-icons';
 import { getCourseSchedule } from '../api/student';
-import Card from '../ui/Card';
+import { Card } from '../ui/Card';
 import Icon from '../ui/Icon';
-import Badge from '../ui/Badge';
 import List from '../ui/List';
 import Course from '../features/Course';
 import { titleCase } from '../util/helpers';
@@ -46,11 +45,6 @@ export default class Courses extends Component {
       <Card color="stratosphere">
         <div>
           <h3>Courses</h3>
-          <div>
-            <Badge inline badgeContent={totalCredits} bg="stratosphere">
-              Credits
-            </Badge>
-          </div>
         </div>
         <Icon icon={faChalkboardTeacher} color="stratosphere" size="2x" />
         <div>

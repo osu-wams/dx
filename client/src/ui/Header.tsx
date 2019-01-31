@@ -15,14 +15,14 @@ import Button from './Button';
 import Input from './Input';
 import Label from './Label';
 import MainNav from './MainNav';
-import { theme, colors } from '../theme';
+import { Color } from '../theme';
 
 const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   min-height: 184px;
-  background-color: ${colors['orange-400']};
+  background-color: ${Color["orange-400"]};
 `;
 
 const HeaderTopSection = styled.div`
@@ -41,7 +41,7 @@ const HeaderBottomSection = styled.div`
 `;
 
 const UserButton = styled(MenuButton)`
-  color: ${colors.white};
+  color: ${Color.white};
   background: transparent;
   border: none;
   cursor: pointer;
@@ -49,7 +49,7 @@ const UserButton = styled(MenuButton)`
 
 const ProfileMenuList = styled(MenuList)`
   [data-reach-menu-item][data-selected] {
-    background-color: ${colors['neutral-600']};
+    background-color: ${Color['neutral-600']};
   }
 `;
 
@@ -165,7 +165,7 @@ const Header = () => {
         <Button type="submit" onClick={masquerade}>
           Masquerade
         </Button>
-        <Button type="cancel" bg="nimbus" fg="charcoal" outline onClick={toggleMasqueradeDialog}>
+        <Button type="cancel" bg={Color["neutral-200"]} fg={Color["neutral-700"]} onClick={toggleMasqueradeDialog}>
           Cancel
         </Button>
       </MyDialog>

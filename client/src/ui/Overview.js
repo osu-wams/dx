@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import useMediaQuery from '../util/useMediaQuery';
-import { colors } from '../theme';
+import { Color } from '../theme';
 
 const Overview = styled.div`
   line-height: 1.4;
@@ -71,18 +70,10 @@ const OverviewItem = styled.div`
 `;
 
 const OverviewItemLabel = styled.div`
-  color: ${({ theme, color }) => theme.colors[color]};
+  color: ${props => props.color || Color['orange-400']};
   font-size: 14px;
   font-weight: bold;
 `;
-
-OverviewItemLabel.propTypes = {
-  color: PropTypes.oneOf(Object.keys(colors))
-};
-
-OverviewItemLabel.defaultProps = {
-  color: 'orange'
-};
 
 export {
   Overview,

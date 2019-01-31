@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { colors } from '../theme';
+import { Color } from '../theme';
 
 const Icon = styled(FontAwesomeIcon)`
-  color: ${({ color }) => colors[color]};
+  color: ${props => props.color || Color['orange-400']};
 `;
 
 export default Icon;

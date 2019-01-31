@@ -11,7 +11,7 @@ import Button, { CloseButton } from '../ui/Button';
 import MyDialog from '../ui/MyDialog';
 import Icon from '../ui/Icon';
 import { titleCase, formatTime, formatDate } from '../util/helpers';
-import { colors } from '../theme';
+import { Color } from '../theme';
 
 const Course = ({
   attributes: {
@@ -84,7 +84,7 @@ const Course = ({
       )
     )}
 
-    <Button bg={colors.strat}>See Course in Canvas</Button>
+    <Button bg={Color["stratosphere-400"]}>See Course in Canvas</Button>
   </MyDialog>
 );
 

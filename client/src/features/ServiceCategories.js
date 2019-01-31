@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { faCookieBite, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import Icon from '../ui/Icon';
+import { Color } from '../theme';
 
 // Temporary while the API that feeds this data is ready
 const categories = [
@@ -74,9 +75,9 @@ const CategoryGrid = styled.div`
     &:hover,
     &:active,
     &:focus {
-      background: ${props => props.theme.colors.mist};
+      background: ${Color['neutral-200']};
       svg {
-        color: ${props => props.theme.colors.orange};
+        color: ${Color['neutral-600']};
       }
     }
   }

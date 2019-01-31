@@ -1,7 +1,6 @@
 import Button from './Button';
 import React from 'react';
 import styled from 'styled-components';
-import { colors } from '../../theme';
 import Icon from '../../ui/Icon';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';

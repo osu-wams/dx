@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { colors } from '../theme';
+import { Color } from '../theme';
 
 const Label = styled.label`
-  color: ${colors.charcoal};
+  color: ${Color["neutral-700"]};
 `;
 
 export default Label;

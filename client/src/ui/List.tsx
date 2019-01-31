@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme, colors } from '../theme';
+import { theme, Color } from '../theme';
 
 export enum Size {
   small,
@@ -15,30 +15,30 @@ function liSize(size?: Size) {
   if (size === Size.small) {
     return `
       padding: ${theme.spacing.unit / 4}px ${theme.spacing.unit / 2}px;
-      font-size: ${theme.fontSize.small};
+      font-size: ${theme.fontSize[14]};
     `;
   }
   if (size === Size.large) {
     return `
       padding: ${theme.spacing.unit * 2}px ${theme.spacing.unit * 4}px;
-      font-size: ${theme.fontSize.large};
+      font-size: ${theme.fontSize[18]};
     `;
   }
   return `
       padding: ${theme.spacing.unit}px ${theme.spacing.unit * 2}px;
-      font-size: ${theme.fontSize.normal};
+      font-size: ${theme.fontSize[16]};
     `;
 }
 
 const List = styled.ul<Props>`
-  color: ${colors.charcoal};
+  color: ${Color["neutral-700"]};
   text-decoration: none;
   padding: 0;
   li {
     list-style-type: none;
-    border-top: 1px solid ${colors.fog};
+    border-top: 1px solid ${Color["neutral-200"]};
     &:last-child {
-      border-bottom: 1px solid ${colors.fog};
+      border-bottom: 1px solid ${Color["neutral-200"]};
     }
     button {
       width: 100%;
@@ -51,14 +51,14 @@ const List = styled.ul<Props>`
       ${({ size }) => liSize(size)};
       border: none;
       div {
-        color: ${colors.nimbus};
+        color: ${Color["neutral-100"]};
         flex: 2;
         text-align: left;
       }
       svg {
         margin-left: auto;
         align-self: center;
-        color: ${colors.fog};
+        color: ${Color["neutral-200"]};
       }
     }
   }

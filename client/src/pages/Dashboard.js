@@ -1,14 +1,35 @@
-import React from 'react';
-import Card from '../ui/Card';
+import React, { useState, useEffect } from 'react';
 import PageTitle from '../ui/PageTitle';
-import Services from '../features/Services';
+import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
+import Button from '../ui/Button';
+import { getServices, getFeaturedServices } from '../api/services';
 
-const Dashboard = () => (
-  <div data-testid="dashboard-page">
-    <PageTitle title="My OSU Dashboard" />
-    <Card>Test</Card>
-    <Services />
-  </div>
-);
+const Dashboard = () => {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    getFeaturedServices()
+      .then(items => {
+        const dashboardServices = items.filter(e =>
+          e.fields.categories.find(e => e.fields.title === 'featured-home')
+        );
+        setServices(dashboardServices);
+      })
+      .catch(console.log);
+  }, []);
+
+  return (
+    <div data-testid="dashboard-page">
+      <PageTitle title="My OSU Dashboard" />
+      <Card>
+        <CardHeader title="Canvas To Dos" badge={<Badge>{8}</Badge>} />
+        <CardContent>Test</CardContent>
+        <CardFooter>
+          <Button>See more in Canvas</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+};
 
 export default Dashboard;

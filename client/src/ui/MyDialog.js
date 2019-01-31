@@ -1,25 +1,25 @@
 import styled from 'styled-components';
 import { Dialog } from '@reach/dialog';
-import { theme, colors } from '../theme';
+import { theme, Color } from '../theme';
 
 const MyDialog = styled(Dialog)`
-  border-radius: ${theme.roundedCorners};
+  border-radius: ${theme.borderRadius};
   [type='cancel'] {
     float: right;
   }
   h2 {
     font-family: Stratum2, sans-serif;
-    color: ${props => colors[props.color]};
+    color: ${props => props.color || Color['stratosphere-400']};
     margin-bottom: 0;
   }
   h3 {
-    font-size: ${theme.fontSize.normal};
-    color: ${colors['neutral-200']};
+    font-size: ${theme.fontSize[16]};
+    color: ${Color['neutral-200']};
     margin-bottom: 0.5rem;
   }
   .details {
-    color: ${colors['neutral-200']};
-    font-size: ${theme.fontSize.small};
+    color: ${Color['neutral-200']};
+    font-size: ${theme.fontSize[14]};
     margin-top: -1rem;
     margin-bottom: 2rem;
   }
