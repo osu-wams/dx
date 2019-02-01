@@ -23,6 +23,7 @@ const CardBase = styled.div`
   box-shadow: ${shadows[1]};
   background-color: ${Color.white};
   overflow: hidden;
+  margin-bottom: ${theme.spacing.unit * 2}px;
 `;
 
 const CardHeader = ({ badge, title, ...props }) => {
