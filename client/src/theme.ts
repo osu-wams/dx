@@ -47,6 +47,7 @@ export const theme = {
   },
   borderRadius: '8px',
   fontSize: {
+    '12': '1.2rem',
     '14': '1.4rem',
     '15': '1.5rem',
     '16': '1.6rem',
