@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { CardBase } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { theme, Color } from '../theme';
+import excitedCalendarIcon from '../assets/excited-calendar.svg';
 
-const testCourses = [
+const testCourses: any = [
   {
     courseCode: 'CS 171',
     sectionType: 'Recitation',
@@ -59,24 +60,40 @@ const CourseScheduleCard = () => {
           <span>12</span>
         </Day>
       </DayList>
-      <List>
-        {courses.map(course => (
-          <ListItem>
-            <div style={{ lineHeight: '1.8rem' }}>
-              <div style={{ fontWeight: 'bold', color: Color['neutral-700'] }}>
-                {course.courseCode}
+      {courses && courses.length ? (
+        <List>
+          {courses.map(course => (
+            <ListItem>
+              <div style={{ lineHeight: '1.8rem' }}>
+                <div style={{ fontWeight: 'bold', color: Color['neutral-700'] }}>
+                  {course.courseCode}
+                </div>
+                <div style={{ color: Color['neutral-500'], fontSize: theme.fontSize[14] }}>
+                  {course.sectionType} &bull; {course.location}
+                </div>
+                <div style={{ color: Color['neutral-500'], fontSize: theme.fontSize[14] }}>
+                  {course.time}
+                </div>
               </div>
-              <div style={{ color: Color['neutral-500'], fontSize: theme.fontSize[14] }}>
-                {course.sectionType} &bull; {course.location}
-              </div>
-              <div style={{ color: Color['neutral-500'], fontSize: theme.fontSize[14] }}>
-                {course.time}
-              </div>
-            </div>
-            <Icon icon={faMapMarkerAlt} />
-          </ListItem>
-        ))}
-      </List>
+              <Icon icon={faMapMarkerAlt} />
+            </ListItem>
+          ))}
+        </List>
+      ) : (
+        <>
+          <NoCoursesImage src={excitedCalendarIcon} />
+          <NoCoursesText>
+            Nice! You don't have any courses scheduled on this day.
+            <a href="#">
+              Check out the OSU calendar
+              <Icon
+                icon={faArrowRight}
+                color={Color['orange-400']}
+              />
+            </a>
+          </NoCoursesText>
+        </>
+      )}
     </Card>
   );
 };
@@ -120,6 +137,35 @@ const DayList = styled.div`
   justify-content: space-around;
   align-items: center;
   margin-bottom: ${theme.spacing.unit * 3}px;
+`;
+
+const NoCoursesImage = styled.img`
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: ${theme.spacing.unit * 2}px;
+  height: 100px;
+`;
+
+const NoCoursesText = styled.div`
+  font-size: ${theme.fontSize[14]};
+  text-align: center;
+  padding: 0 ${theme.spacing.unit * 2}px;
+
+  & > a {
+    color: ${Color['orange-400']};
+    margin-left: ${theme.spacing.unit / 2}px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  & > a:hover {
+    text-decoration: underline;
+  }
+
+  & > a > svg {
+    margin-left: ${theme.spacing.unit}px;
+  }
 `;
 
 const List = styled.ul`
