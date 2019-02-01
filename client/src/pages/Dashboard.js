@@ -3,6 +3,7 @@ import PageTitle from '../ui/PageTitle';
 import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
 import Button from '../ui/Button';
 import { getServices, getFeaturedServices } from '../api/services';
+import CourseScheduleCard from '../features/CourseScheduleCard';
 
 const Dashboard = () => {
   const [services, setServices] = useState([]);
@@ -21,6 +22,7 @@ const Dashboard = () => {
   return (
     <div data-testid="dashboard-page">
       <PageTitle title="My OSU Dashboard" />
+      <CourseScheduleCard />
       <Card>
         <CardHeader title="Canvas To Dos" badge={<Badge>{8}</Badge>} />
         <CardContent>Test</CardContent>
