@@ -1,23 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LargeList gets rendered with large font size CSS 1`] = `
+exports[`An icon on the right 1`] = `
 .c0 {
-  color: #252525;
+  color: #423E3C;
   -webkit-text-decoration: none;
   text-decoration: none;
   padding: 0;
 }
 
-.c0 li {
+.c1 {
   list-style-type: none;
-  border-top: 1px solid #e0e0e0;
 }
 
-.c0 li:last-child {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.c0 li button {
+.c2 {
   width: 100%;
   background: transparent;
   display: -webkit-box;
@@ -35,177 +30,310 @@ exports[`LargeList gets rendered with large font size CSS 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 16px 32px;
-  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 16px 8px;
   border: none;
 }
 
-.c0 li button div {
-  color: #757575;
+.c2 svg {
+  font-size: 20px;
+}
+
+.c2 svg + div {
+  padding-left: 1.5rem;
+}
+
+.c3 {
   -webkit-flex: 2;
   -ms-flex: 2;
   flex: 2;
   text-align: left;
 }
 
-.c0 li button svg {
-  margin-left: auto;
-  -webkit-align-self: center;
-  -ms-flex-item-align: center;
-  align-self: center;
-  color: #e0e0e0;
+.c4 {
+  margin: 0;
+  font-weight: normal;
 }
 
-<div>
-  <ul
-    class="c0"
-  >
-    <li>
-      Large
-    </li>
-    <li>
-      Large
-    </li>
-  </ul>
-</div>
-`;
-
-exports[`NormalList gets rendered with default font size CSS 1`] = `
-.c0 {
-  color: #252525;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  padding: 0;
-}
-
-.c0 li {
-  list-style-type: none;
-  border-top: 1px solid #e0e0e0;
-}
-
-.c0 li:last-child {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.c0 li button {
-  width: 100%;
-  background: transparent;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 8px 16px;
-  font-size: 1.6rem;
-  border: none;
-}
-
-.c0 li button div {
-  color: #757575;
-  -webkit-flex: 2;
-  -ms-flex: 2;
-  flex: 2;
-  text-align: left;
-}
-
-.c0 li button svg {
-  margin-left: auto;
-  -webkit-align-self: center;
-  -ms-flex-item-align: center;
-  align-self: center;
-  color: #e0e0e0;
-}
-
-<div>
-  <ul
-    class="c0"
-  >
-    <li>
-      Normal
-    </li>
-    <li>
-      Normal
-    </li>
-  </ul>
-</div>
-`;
-
-exports[`SmallList gets rendered with small font size CSS 1`] = `
-.c0 {
-  color: #252525;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  padding: 0;
-}
-
-.c0 li {
-  list-style-type: none;
-  border-top: 1px solid #e0e0e0;
-}
-
-.c0 li:last-child {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.c0 li button {
-  width: 100%;
-  background: transparent;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 2px 4px;
+.c5 {
+  color: #8F8582;
   font-size: 1.4rem;
+  line-height: 1.6rem;
+}
+
+.c6 {
+  color: #F79572;
+}
+
+<ul
+  class="c0"
+>
+  <li
+    class="c1"
+  >
+    <div
+      class="c2"
+    >
+      <div
+        class="c3"
+      >
+        <h4
+          class="c4"
+        >
+          What is this
+        </h4>
+        <div
+          class="c5"
+        >
+          Deiscription
+        </div>
+      </div>
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-file-alt fa-w-12 fa-lg c6"
+        color="#F79572"
+        data-icon="file-alt"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+          fill="currentColor"
+        />
+      </svg>
+    </div>
+  </li>
+</ul>
+`;
+
+exports[`Default style with icon on left 1`] = `
+.c0 {
+  color: #423E3C;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+.c1 {
+  list-style-type: none;
+}
+
+.c2 {
+  width: 100%;
+  background: transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 16px 8px;
   border: none;
 }
 
-.c0 li button div {
-  color: #757575;
+.c2 svg {
+  font-size: 20px;
+}
+
+.c2 svg + div {
+  padding-left: 1.5rem;
+}
+
+.c4 {
   -webkit-flex: 2;
   -ms-flex: 2;
   flex: 2;
   text-align: left;
 }
 
-.c0 li button svg {
-  margin-left: auto;
-  -webkit-align-self: center;
-  -ms-flex-item-align: center;
-  align-self: center;
-  color: #e0e0e0;
+.c5 {
+  margin: 0;
+  font-weight: normal;
 }
 
-<div>
-  <ul
-    class="c0"
+.c6 {
+  color: #8F8582;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+}
+
+.c3 {
+  color: #D4CFCD;
+}
+
+<ul
+  class="c0"
+>
+  <li
+    class="c1"
   >
-    <li>
-      Small
-    </li>
-    <li>
-      Small
-    </li>
-  </ul>
-</div>
+    <div
+      class="c2"
+    >
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-file-alt fa-w-12 c3"
+        data-icon="file-alt"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+          fill="currentColor"
+        />
+      </svg>
+      <div
+        class="c4"
+      >
+        <h4
+          class="c5"
+        >
+          What is this
+        </h4>
+        <div
+          class="c6"
+        >
+          Deiscription
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+`;
+
+exports[`Icon on both left and right 1`] = `
+.c0 {
+  color: #423E3C;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+.c1 {
+  list-style-type: none;
+}
+
+.c2 {
+  width: 100%;
+  background: transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 16px 8px;
+  border: none;
+}
+
+.c2 svg {
+  font-size: 20px;
+}
+
+.c2 svg + div {
+  padding-left: 1.5rem;
+}
+
+.c4 {
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  text-align: left;
+}
+
+.c5 {
+  margin: 0;
+  font-weight: normal;
+}
+
+.c6 {
+  color: #8F8582;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+}
+
+.c3 {
+  color: #D4CFCD;
+}
+
+<ul
+  class="c0"
+>
+  <li
+    class="c1"
+  >
+    <div
+      class="c2"
+    >
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-file-alt fa-w-12 fa-lg c3"
+        data-icon="file-alt"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+          fill="currentColor"
+        />
+      </svg>
+      <div
+        class="c4"
+      >
+        <h4
+          class="c5"
+        >
+          Turn inj the assignment
+        </h4>
+        <div
+          class="c6"
+        >
+          CAS171 - Due Feb 15 at 11:59pm
+          <br />
+          What is going on
+        </div>
+      </div>
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-file-alt fa-w-12 fa-lg c3"
+        data-icon="file-alt"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+          fill="currentColor"
+        />
+      </svg>
+    </div>
+  </li>
+</ul>
 `;

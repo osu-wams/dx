@@ -1,67 +1,48 @@
 import styled from 'styled-components';
 import { theme, Color } from '../theme';
 
-export enum Size {
-  small,
-  large
-}
-
-type Props = {
-  size?: Size;
-};
-
-// Outputs the padding size in pixel for the component
-function liSize(size?: Size) {
-  if (size === Size.small) {
-    return `
-      padding: ${theme.spacing.unit / 4}px ${theme.spacing.unit / 2}px;
-      font-size: ${theme.fontSize[14]};
-    `;
-  }
-  if (size === Size.large) {
-    return `
-      padding: ${theme.spacing.unit * 2}px ${theme.spacing.unit * 4}px;
-      font-size: ${theme.fontSize[18]};
-    `;
-  }
-  return `
-      padding: ${theme.spacing.unit}px ${theme.spacing.unit * 2}px;
-      font-size: ${theme.fontSize[16]};
-    `;
-}
-
-const List = styled.ul<Props>`
-  color: ${Color["neutral-700"]};
+const List = styled.ul`
+  color: ${Color['neutral-700']};
   text-decoration: none;
   padding: 0;
-  li {
-    list-style-type: none;
-    border-top: 1px solid ${Color["neutral-200"]};
-    &:last-child {
-      border-bottom: 1px solid ${Color["neutral-200"]};
-    }
-    button {
-      width: 100%;
-      background: transparent;
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      align-items: center;
-      cursor: pointer;
-      ${({ size }) => liSize(size)};
-      border: none;
-      div {
-        color: ${Color["neutral-100"]};
-        flex: 2;
-        text-align: left;
-      }
-      svg {
-        margin-left: auto;
-        align-self: center;
-        color: ${Color["neutral-200"]};
-      }
+`;
+
+const ListItem = styled.li`
+  list-style-type: none;
+`;
+
+const ListItemContent = styled.div`
+  width: 100%;
+  background: transparent;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  cursor: pointer;
+  padding: ${theme.spacing.unit * 2}px ${theme.spacing.unit}px;
+  border: none;
+  svg {
+    font-size: 20px;
+    & + div {
+      padding-left: 1.5rem;
     }
   }
 `;
 
-export default List;
+const ListItemText = styled.div`
+  flex: 2;
+  text-align: left;
+`;
+
+const ListItemHeader = styled.h4`
+  margin: 0;
+  font-weight: normal;
+`;
+
+const ListItemDescription = styled.div`
+  color: ${Color['neutral-500']};
+  font-size: ${theme.fontSize[14]};
+  line-height: 1.6rem;
+`;
+
+export { List, ListItem, ListItemContent, ListItemText, ListItemHeader, ListItemDescription };

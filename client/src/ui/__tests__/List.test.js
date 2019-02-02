@@ -1,45 +1,75 @@
 import React from 'react';
-import { render } from '../../componentTestUtils';
-import List from '../List';
+import { render } from 'react-testing-library';
+import {
+  List,
+  ListItem,
+  ListItemContent,
+  ListItemDescription,
+  ListItemHeader,
+  ListItemText
+} from '../List';
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import Icon from '../Icon';
+import { Color } from '../../theme';
 
-const SmallList = () => (
-  <div>
-    <List size="small">
-      <li>Small</li>
-      <li>Small</li>
-    </List>
-  </div>
+const RightIcon = () => (
+  <List>
+    <ListItem>
+      <ListItemContent>
+        <ListItemText>
+          <ListItemHeader>What is this</ListItemHeader>
+          <ListItemDescription>Deiscription</ListItemDescription>
+        </ListItemText>
+        <Icon icon={faFileAlt} size="lg" color={Color['orange-200']} />
+      </ListItemContent>
+    </ListItem>
+  </List>
 );
 
-const NormalList = () => (
-  <div>
-    <List>
-      <li>Normal</li>
-      <li>Normal</li>
-    </List>
-  </div>
+const LeftRightIcons = () => (
+  <List>
+    <ListItem>
+      <ListItemContent>
+        <Icon icon={faFileAlt} size="lg" />
+        <ListItemText>
+          <ListItemHeader>Turn inj the assignment</ListItemHeader>
+          <ListItemDescription>
+            CAS171 - Due Feb 15 at 11:59pm
+            <br />
+            What is going on
+          </ListItemDescription>
+        </ListItemText>
+        <Icon icon={faFileAlt} size="lg" />
+      </ListItemContent>
+    </ListItem>
+  </List>
 );
 
-const LargeList = () => (
-  <div>
-    <List size="large">
-      <li>Large</li>
-      <li>Large</li>
-    </List>
-  </div>
+const LeftIcon = () => (
+  <List>
+    <ListItem>
+      <ListItemContent>
+        <Icon icon={faFileAlt} />
+        <ListItemText>
+          <ListItemHeader>What is this</ListItemHeader>
+          <ListItemDescription>Deiscription</ListItemDescription>
+        </ListItemText>
+      </ListItemContent>
+    </ListItem>
+  </List>
 );
 
-test('SmallList gets rendered with small font size CSS', () => {
-  const { container } = render(<SmallList />);
+test('An icon on the right', () => {
+  const { container } = render(<RightIcon />);
   expect(container.firstChild).toMatchSnapshot();
 });
 
-test('NormalList gets rendered with default font size CSS', () => {
-  const { container } = render(<NormalList />);
+test('Icon on both left and right', () => {
+  const { container } = render(<LeftRightIcons />);
   expect(container.firstChild).toMatchSnapshot();
 });
 
-test('LargeList gets rendered with large font size CSS', () => {
-  const { container } = render(<LargeList />);
+test('Default style with icon on left', () => {
+  const { container } = render(<LeftIcon />);
   expect(container.firstChild).toMatchSnapshot();
 });

@@ -4,7 +4,7 @@ import { faChevronRight, faChalkboardTeacher } from '@fortawesome/free-solid-svg
 import { getCourseSchedule } from '../api/student';
 import { Card } from '../ui/Card';
 import Icon from '../ui/Icon';
-import List from '../ui/List';
+import { List } from '../ui/List';
 import Course from '../features/Course';
 import { titleCase } from '../util/helpers';
 import courses from '../api/__mocks__/courses.data';

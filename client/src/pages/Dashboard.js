@@ -5,6 +5,19 @@ import Button from '../ui/Button';
 import { getServices, getFeaturedServices } from '../api/services';
 import CourseScheduleCard from '../features/CourseScheduleCard';
 
+// Sample list for testing purposes
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  List,
+  ListItem,
+  ListItemContent,
+  ListItemDescription,
+  ListItemHeader,
+  ListItemText
+} from '../ui/List';
+import Icon from '../ui/Icon';
+import { Color } from '../theme';
+
 const Dashboard = () => {
   const [services, setServices] = useState([]);
 
@@ -25,7 +38,42 @@ const Dashboard = () => {
       <CourseScheduleCard />
       <Card>
         <CardHeader title="Canvas To Dos" badge={<Badge>{8}</Badge>} />
-        <CardContent>Test</CardContent>
+        <CardContent>
+          <List>
+            <ListItem>
+              <ListItemContent>
+                <ListItemText>
+                  <ListItemHeader>What is this</ListItemHeader>
+                  <ListItemDescription>Deiscription</ListItemDescription>
+                </ListItemText>
+                <Icon icon={faFileAlt} size="6x" color={Color['orange-200']} />
+              </ListItemContent>
+            </ListItem>
+            <ListItem>
+              <ListItemContent>
+                <Icon icon={faFileAlt} size="lg" />
+                <ListItemText>
+                  <ListItemHeader>Turn inj the assignment</ListItemHeader>
+                  <ListItemDescription>
+                    CAS171 - Due Feb 15 at 11:59pm
+                    <br />
+                    What is going on
+                  </ListItemDescription>
+                </ListItemText>
+                <Icon icon={faFileAlt} size="2x" />
+              </ListItemContent>
+            </ListItem>
+            <ListItem>
+              <ListItemContent>
+                <Icon icon={faFileAlt} />
+                <ListItemText>
+                  <ListItemHeader>What is this</ListItemHeader>
+                  <ListItemDescription>Deiscription</ListItemDescription>
+                </ListItemText>
+              </ListItemContent>
+            </ListItem>
+          </List>
+        </CardContent>
         <CardFooter>
           <Button>See more in Canvas</Button>
         </CardFooter>
