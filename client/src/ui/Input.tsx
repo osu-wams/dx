@@ -6,7 +6,7 @@ function inputSize(size) {
     return `
       padding: ${theme.spacing.unit / 4}px ${theme.spacing.unit / 2}px;
       font-size: ${theme.fontSize[14]};
-      color: ${Color["stratosphere-400"]}
+      color: ${Color['stratosphere-400']}
     `;
   }
   if (size === 'large') {
@@ -22,10 +22,10 @@ function inputSize(size) {
 }
 
 const Input = styled.input`
-  color: ${Color["neutral-700"]};
+  color: ${Color['neutral-700']};
   text-decoration: none;
   border-radius: ${theme.borderRadius};
-  border: 1px solid ${Color["neutral-300"]};
+  border: 1px solid ${Color['neutral-300']};
   ${({ size }) => inputSize(size)};
 `;
 

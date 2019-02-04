@@ -2,15 +2,15 @@
 
 exports[`LargeInput gets rendered with large font size CSS 1`] = `
 .c0 {
-  color: #252525;
+  color: #423E3C;
 }
 
 .c1 {
-  color: #252525;
+  color: #423E3C;
   -webkit-text-decoration: none;
   text-decoration: none;
-  border-radius: 0.4rem;
-  border: 1px solid #444;
+  border-radius: 8px;
+  border: 1px solid #D4CFCD;
   padding: 16px 32px;
   font-size: 1.8rem;
 }
@@ -32,15 +32,15 @@ exports[`LargeInput gets rendered with large font size CSS 1`] = `
 
 exports[`NormalInput gets rendered with default font size CSS 1`] = `
 .c0 {
-  color: #252525;
+  color: #423E3C;
 }
 
 .c1 {
-  color: #252525;
+  color: #423E3C;
   -webkit-text-decoration: none;
   text-decoration: none;
-  border-radius: 0.4rem;
-  border: 1px solid #444;
+  border-radius: 8px;
+  border: 1px solid #D4CFCD;
   padding: 8px 16px;
   font-size: 1.6rem;
 }
@@ -62,17 +62,18 @@ exports[`NormalInput gets rendered with default font size CSS 1`] = `
 
 exports[`SmallInput gets rendered with small font size CSS 1`] = `
 .c0 {
-  color: #252525;
+  color: #423E3C;
 }
 
 .c1 {
-  color: #252525;
+  color: #423E3C;
   -webkit-text-decoration: none;
   text-decoration: none;
-  border-radius: 0.4rem;
-  border: 1px solid #444;
+  border-radius: 8px;
+  border: 1px solid #D4CFCD;
   padding: 2px 4px;
   font-size: 1.4rem;
+  color: #006A8E;
 }
 
 <div>
