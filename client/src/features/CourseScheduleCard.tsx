@@ -15,9 +15,9 @@ const testCourses: any = [
   },
   {
     courseCode: 'CS 171',
-    sectionType: 'Recitation',
+    sectionType: 'Lecture',
     location: '112 Cordley Hall',
-    time: '3:00pm - 5:00pm'
+    time: '4:00pm - 5:00pm'
   }
 ];
 
@@ -63,7 +63,7 @@ const CourseScheduleCard = () => {
       {courses && courses.length ? (
         <List>
           {courses.map(course => (
-            <ListItem>
+            <ListItem key={course.courseCode + course.sectionType}>
               <div style={{ lineHeight: '1.8rem' }}>
                 <div style={{ fontWeight: 'bold', color: Color['neutral-700'] }}>
                   {course.courseCode}
@@ -86,10 +86,7 @@ const CourseScheduleCard = () => {
             Nice! You don't have any courses scheduled on this day.
             <a href="#">
               Check out the OSU calendar
-              <Icon
-                icon={faArrowRight}
-                color={Color['orange-400']}
-              />
+              <Icon icon={faArrowRight} color={Color['orange-400']} />
             </a>
           </NoCoursesText>
         </>

@@ -38,7 +38,8 @@ const CardHeader = ({ badge, title, ...props }) => {
       collapsed={collapsed}
       onClick={toggleCollapsed}
       onKeyDown={handleKeyDown}
-      aria-role="button"
+      role="button"
+      aria-pressed={!collapsed}
       tabIndex={0}
       {...props}
     >
