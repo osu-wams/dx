@@ -5,10 +5,14 @@ const List = styled.ul`
   color: ${Color['neutral-700']};
   text-decoration: none;
   padding: 0;
+  margin: 0;
 `;
 
 const ListItem = styled.li`
   list-style-type: none;
+  &:not(:last-child) {
+    margin-bottom: ${theme.spacing.unit * 2}px;
+  }
 `;
 
 const ListItemContent = styled.div`
@@ -19,7 +23,6 @@ const ListItemContent = styled.div`
   flex-wrap: wrap;
   align-items: center;
   cursor: pointer;
-  padding: ${theme.spacing.unit * 2}px ${theme.spacing.unit}px;
   border: none;
   svg {
     font-size: 20px;
