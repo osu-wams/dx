@@ -1,100 +1,159 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { faMapMarkerAlt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faUsersClass, faMapMarkerAlt, faArrowRight } from '@fortawesome/pro-light-svg-icons';
+import { addDays, eachDay, format, isSameDay } from 'date-fns';
 import { CardBase } from '../ui/Card';
+import {
+  List,
+  ListItem,
+  ListItemHeader,
+  ListItemContent,
+  ListItemDescription,
+  ListItemText
+} from '../ui/List';
 import Icon from '../ui/Icon';
 import { theme, Color } from '../theme';
 import excitedCalendarIcon from '../assets/excited-calendar.svg';
+import { getCourseSchedule } from '../api/student';
+import { CourseSchedule, MeetingTime } from '../api/student/course-schedule';
+import { formatTime } from '../util/helpers';
 
-const testCourses: any = [
-  {
-    courseCode: 'CS 171',
-    sectionType: 'Recitation',
-    location: '112 Cordley Hall',
-    time: '3:00pm - 5:00pm'
-  },
-  {
-    courseCode: 'CS 171',
-    sectionType: 'Lecture',
-    location: '112 Cordley Hall',
-    time: '4:00pm - 5:00pm'
-  }
-];
-
-// Todo:
-//  - Connect to data source
-//  - Generate days programmatically from data
-//  - Filter courses based on selected day
-//  - Replace List/ListItem with implementations from ../ui when they're finished
-//  - Add link to course location on campus map to location pin icon
-
+/**
+ * Course Schedule Card
+ * 
+ * Displays courses for the next 5 days, filterable by day.
+ */
 const CourseScheduleCard = () => {
-  const [courses, setCourses] = useState(testCourses);
+  const nextFiveDays = getNextFiveDays();
+  const [courses, setCourses] = useState<CourseSchedule[]>([]);
+  const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
+  const [selectedCourses, setSelectedCourses] = useState<CourseSchedule[]>([]);
 
-  if (!courses) {
-    return null;
-  }
+  // Populate user courseses
+  useEffect(() => {
+    getCourseSchedule()
+      .then(setCourses)
+      .catch(console.log);
+  }, []);
+
+  // Filter courses based on selected day
+  useEffect(
+    () => {
+      const coursesOnSelectedDay = getCoursesOnSelectedDay();
+      console.log(coursesOnSelectedDay);
+      setSelectedCourses(coursesOnSelectedDay);
+    },
+    // Re-run filter when selected day changes or when courses change (on inital load)
+    [selectedDay, courses]
+  );
+
+  const getCoursesOnSelectedDay = () => {
+    let selectedDayShortcode = getDayShortcode(selectedDay);
+    const coursesOnSelectedDay = courses.filter(course =>
+      course.attributes.meetingTimes.find(meetingTime =>
+        meetingTime.weeklySchedule.includes(selectedDayShortcode)
+      )
+    );
+    return coursesOnSelectedDay;
+  };
+
+  const getMeetingTimesOnSelectedDay = (course): MeetingTime[] => {
+    return course.attributes.meetingTimes.filter(meetingTime => {
+      let selectedDayShortcode = getDayShortcode(selectedDay);
+      return meetingTime.weeklySchedule.includes(selectedDayShortcode);
+    });
+  };
+
+  // Todo: replace null render with loading animation inside card.
+  if (!courses) return null;
 
   return (
     <Card>
       <Header>This Week</Header>
       <DayList>
-        <Day>
-          <span>mon</span>
-          <span>8</span>
-        </Day>
-        <Day>
-          <span>tue</span>
-          <span>9</span>
-        </Day>
-        <Day>
-          <span>wed</span>
-          <span>10</span>
-        </Day>
-        <Day>
-          <span>thu</span>
-          <span>11</span>
-        </Day>
-        <Day>
-          <span>fri</span>
-          <span>12</span>
-        </Day>
+        {nextFiveDays.map(day => (
+          <Day onClick={() => setSelectedDay(day)} selected={isSameDay(day, selectedDay)}>
+            <span>{format(day, 'ddd')}</span>
+            <span>{format(day, 'D')}</span>
+          </Day>
+        ))}
       </DayList>
-      {courses && courses.length ? (
+      {/* Show courses for the selected day if any exist, otherwise show empty state. */}
+      {selectedCourses.length ? (
         <List>
-          {courses.map(course => (
-            <ListItem key={course.courseCode + course.sectionType}>
-              <div style={{ lineHeight: '1.8rem' }}>
-                <div style={{ fontWeight: 'bold', color: Color['neutral-700'] }}>
-                  {course.courseCode}
-                </div>
-                <div style={{ color: Color['neutral-500'], fontSize: theme.fontSize[14] }}>
-                  {course.sectionType} &bull; {course.location}
-                </div>
-                <div style={{ color: Color['neutral-500'], fontSize: theme.fontSize[14] }}>
-                  {course.time}
-                </div>
-              </div>
-              <Icon icon={faMapMarkerAlt} />
-            </ListItem>
-          ))}
+          {selectedCourses.map(course => {
+            let selectedMeetingTimes = getMeetingTimesOnSelectedDay(course);
+            return (
+              <>
+                {/* 
+                  Map over the meeting times rather than just the course itself,
+                  as courses can have more than one valid meeting time per day.
+                */}
+                {selectedMeetingTimes.map(meetingTime => (
+                  <ListItem key={`${course.id}${meetingTime.beginTime}`}>
+                    <ListItemContent>
+                      <Icon icon={faUsersClass} color={Color['orange-200']} />
+                      <ListItemText>
+                        <ListItemHeader>
+                          {course.attributes.courseSubject} {course.attributes.courseNumber}
+                        </ListItemHeader>
+                        <ListItemDescription>
+                          {course.attributes.scheduleDescription}
+                        </ListItemDescription>
+                        <ListItemDescription>
+                          {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
+                        </ListItemDescription>
+                      </ListItemText>
+                      <Icon icon={faMapMarkerAlt} />
+                    </ListItemContent>
+                  </ListItem>
+                ))}
+              </>
+            );
+          })}
         </List>
       ) : (
-        <>
-          <NoCoursesImage src={excitedCalendarIcon} />
-          <NoCoursesText>
-            Nice! You don't have any courses scheduled on this day.
-            <a href="#">
-              Check out the OSU calendar
-              <Icon icon={faArrowRight} color={Color['orange-400']} />
-            </a>
-          </NoCoursesText>
-        </>
+        <EmptyState />
       )}
     </Card>
   );
 };
 
+/**
+ * Utility functions
+ */
+const getNextFiveDays = () => {
+  let rangeStart = new Date();
+  let rangeEnd = addDays(rangeStart, 4);
+  let nextFiveDays = eachDay(rangeStart, rangeEnd);
+
+  return nextFiveDays;
+};
+
+const getDayShortcode = (date: Date) => {
+  let twoLetterShortcodes = ['Th', 'Sa', 'Su'];
+
+  let shortcode = format(date, 'dddd').substr(0, 2);
+  shortcode = twoLetterShortcodes.includes(shortcode) ? shortcode : shortcode.substr(0, 1);
+  return shortcode;
+};
+
+const EmptyState = () => (
+  <>
+    <NoCoursesImage src={excitedCalendarIcon} />
+    <NoCoursesText>
+      Nice! You don't have any courses scheduled on this day.
+      <a href="#">
+        Check out the OSU calendar
+        <Icon icon={faArrowRight} color={Color['orange-400']} />
+      </a>
+    </NoCoursesText>
+  </>
+);
+
+/**
+ * Styling
+ */
 const Card = styled(CardBase)`
   padding: ${theme.spacing.unit * 2}px;
 `;
@@ -102,38 +161,44 @@ const Card = styled(CardBase)`
 const Header = styled.div`
   color: ${Color['neutral-600']};
   font-size: ${theme.fontSize[18]};
-  font-weight: 600;
-  margin-bottom: ${theme.spacing.unit}px;
+  margin-bottom: ${theme.spacing.unit * 2}px;
 `;
 
-const Day = styled.button`
+const Day = styled.button<{ selected: boolean }>`
   background: none;
   border: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+
   & > span:first-child {
     color: ${Color['neutral-500']};
     font-weight: bold;
     font-size: ${theme.fontSize[12]};
     text-transform: uppercase;
+    margin-bottom: ${theme.spacing.unit * 0.5}px;
   }
+
   & > span:last-child {
     color: ${Color['neutral-700']};
     line-height: 20px;
     font-size: ${theme.fontSize[24]};
   }
-  &:first-child > span {
-    color: ${Color['orange-400']} !important;
-  }
+
+  ${props => props.selected && `
+    & > span {
+      color: ${Color['orange-400']} !important;
+    }
+  `}
 `;
 
 const DayList = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: ${theme.spacing.unit * 3}px;
+  margin-bottom: ${theme.spacing.unit * 2}px;
 `;
 
 const NoCoursesImage = styled.img`
@@ -162,26 +227,6 @@ const NoCoursesText = styled.div`
 
   & > a > svg {
     margin-left: ${theme.spacing.unit}px;
-  }
-`;
-
-const List = styled.ul`
-  margin-block-start: 0;
-  list-style-type: none;
-  margin-left: 0;
-  padding-left: 0;
-`;
-
-const ListItem = styled.li`
-  & > svg {
-    font-size: 24px;
-    float: right;
-  }
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  &:not(:last-child) {
-    margin-bottom: ${theme.spacing.unit * 3}px;
   }
 `;
 
