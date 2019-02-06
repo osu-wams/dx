@@ -33,6 +33,7 @@ const ListItemContent = styled.div`
 `;
 
 const ListItemText = styled.div`
+  padding-right: 1.5rem;
   flex: 2;
   text-align: left;
 `;

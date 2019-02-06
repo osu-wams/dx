@@ -26,7 +26,7 @@ const CardBase = styled.div`
   margin-bottom: ${theme.spacing.unit * 2}px;
 `;
 
-const CardHeader = ({ badge, title, ...props }) => {
+const CardHeader = ({ badge = '', title, ...props }) => {
   const { collapsed, toggleCollapsed } = useContext(CardContext);
   const handleKeyDown = e => {
     if (e.key === 'Enter' || e.key === ' ') {

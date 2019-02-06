@@ -53,3 +53,7 @@ export function formatDollars(amount: number) {
 
   return result;
 }
+
+export function singularPlural(quantity: number, word: string) {
+  return quantity != 1 ? word + 's' : word;
+}

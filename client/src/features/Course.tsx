@@ -1,15 +1,14 @@
 import React from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Icon from '../ui/Icon';
 import {
   faChevronRight,
   faChalkboardTeacher,
   faCalendarAlt,
   faTimes
-} from '@fortawesome/free-solid-svg-icons';
+} from '@fortawesome/pro-light-svg-icons';
 import Button, { CloseButton } from '../ui/Button';
 import MyDialog from '../ui/MyDialog';
-import Icon from '../ui/Icon';
 import { titleCase, formatTime, formatDate } from '../util/helpers';
 import { Color } from '../theme';
 
@@ -25,10 +24,10 @@ const Course = ({
     meetingTimes,
     scheduleDescription
   },
-  showCourse,
+  isOpen,
   toggleCourse
 }) => (
-  <MyDialog isOpen={showCourse} data-testid="course-dialog">
+  <MyDialog isOpen={isOpen} data-testid="course-dialog">
     <CloseButton onClick={toggleCourse} />
     <h2>{titleCase(courseTitle)}</h2>
     <div className="details">
@@ -36,7 +35,7 @@ const Course = ({
       {sectionNumber} &bull; {creditHours} Credits
     </div>
     <h3>
-      <FontAwesomeIcon icon={faChalkboardTeacher} /> Instructor(s)
+      <Icon icon={faChalkboardTeacher} /> Instructor(s)
     </h3>
     {faculty.map(fac => (
       <div key={fac.osuID}>
@@ -48,7 +47,7 @@ const Course = ({
     ))}
 
     <h3>
-      <FontAwesomeIcon icon={faCalendarAlt} /> Meeting Times(s)
+      <Icon icon={faCalendarAlt} /> Meeting Times(s)
     </h3>
     {meetingTimes.map(
       ({
@@ -84,7 +83,7 @@ const Course = ({
       )
     )}
 
-    <Button bg={Color["stratosphere-400"]}>See Course in Canvas</Button>
+    <Button bg={Color['stratosphere-400']}>See Course in Canvas</Button>
   </MyDialog>
 );
 

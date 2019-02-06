@@ -4,6 +4,7 @@ import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
 import Button from '../ui/Button';
 import { getServices, getFeaturedServices } from '../api/services';
 import CourseScheduleCard from '../features/CourseScheduleCard';
+import { faComments } from '@fortawesome/pro-regular-svg-icons';
 
 // Sample list for testing purposes
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
@@ -51,7 +52,7 @@ const Dashboard = () => {
             </ListItem>
             <ListItem>
               <ListItemContent>
-                <Icon icon={faFileAlt} size="lg" />
+                <Icon icon={faComments} size="lg" />
                 <ListItemText>
                   <ListItemHeader>Turn inj the assignment</ListItemHeader>
                   <ListItemDescription>
