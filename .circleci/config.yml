@@ -59,15 +59,12 @@ jobs:
           name: Report to CodeCov
           command: npx codecov@3
 
-  - aws-ecr/build_and_push_image:
-    repo: dx
-
 workflows:
-  version: 2
   build_test_deploy:
     jobs:
       - build_test
       - aws-ecr/build_and_push_image:
-          tag: ${CIRCLE_BUILD_NUM}
+          repo: 'dx'
+          tag: '${CIRCLE_BUILD_NUM}'
           requires:
             - build_test
