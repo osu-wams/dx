@@ -30,6 +30,7 @@ const ListItemContent = styled.div`
       padding-left: 1.5rem;
     }
   }
+  text-decoration: none;
 `;
 
 const ListItemText = styled.div`
@@ -39,6 +40,7 @@ const ListItemText = styled.div`
 `;
 
 const ListItemHeader = styled.h4`
+  color: ${Color['neutral-700']};
   margin: 0;
   font-weight: normal;
 `;
