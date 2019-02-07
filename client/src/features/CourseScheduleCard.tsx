@@ -17,10 +17,12 @@ import excitedCalendarIcon from '../assets/excited-calendar.svg';
 import { getCourseSchedule } from '../api/student';
 import { CourseSchedule, MeetingTime } from '../api/student/course-schedule';
 import { formatTime } from '../util/helpers';
+import { CourseIcons as courseIcons } from './CourseIcons';
+import VisuallyHidden from '@reach/visually-hidden';
 
 /**
  * Course Schedule Card
- * 
+ *
  * Displays courses for the next 5 days, filterable by day.
  */
 const CourseScheduleCard = () => {
@@ -98,13 +100,20 @@ const CourseScheduleCard = () => {
                           {course.attributes.courseSubject} {course.attributes.courseNumber}
                         </ListItemHeader>
                         <ListItemDescription>
-                          {course.attributes.scheduleDescription}
+                          {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
+                          {meetingTime.buildingDescription}
                         </ListItemDescription>
                         <ListItemDescription>
                           {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
                         </ListItemDescription>
                       </ListItemText>
-                      <Icon icon={faMapMarkerAlt} />
+                      <a
+                        href={`https://map.oregonstate.edu/?building=${meetingTime.building}`}
+                        target="blank"
+                      >
+                        <VisuallyHidden>View on map</VisuallyHidden>
+                        <Icon icon={faMapMarkerAlt} />
+                      </a>
                     </ListItemContent>
                   </ListItem>
                 ))}
@@ -187,7 +196,9 @@ const Day = styled.button<{ selected: boolean }>`
     font-size: ${theme.fontSize[24]};
   }
 
-  ${props => props.selected && `
+  ${props =>
+    props.selected &&
+    `
     & > span {
       color: ${Color['orange-400']} !important;
     }
