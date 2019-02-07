@@ -81,7 +81,6 @@ const CardFooterWrapper = styled.div<{ collapsed: boolean }>`
   overflow: hidden;
   padding: ${props =>
     props.collapsed ? 0 : `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`};
-  background-color: ${Color['neutral-100']};
   display: flex;
   justify-content: flex-end;
   align-items: center;
