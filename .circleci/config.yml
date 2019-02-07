@@ -2,9 +2,13 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: 2.1
+
+orbs:
+  aws-ecr: circleci/aws-ecr@3.0.0
+
 jobs:
-  build:
+  build_test:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.12.0
@@ -54,3 +58,16 @@ jobs:
       - run:
           name: Report to CodeCov
           command: npx codecov@3
+
+  - aws-ecr/build_and_push_image:
+    repo: dx
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - build_test
+      - aws-ecr/build_and_push_image:
+          tag: ${CIRCLE_BUILD_NUM}
+          requires:
+            - build_test
