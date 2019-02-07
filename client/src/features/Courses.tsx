@@ -4,7 +4,7 @@ import { getCourseSchedule } from '../api/student';
 import { Card, CardHeader, CardContent } from '../ui/Card';
 import { CourseSchedule, CourseScheduleAttributes } from '../api/student/course-schedule';
 import Icon from '../ui/Icon';
-import { CourseIcons } from './CourseIcons';
+import { getIconByScheduleType } from './course-utils';
 import {
   List,
   ListItem,
@@ -67,7 +67,7 @@ let Courses: FC<Props> = ({ initialCourses, courseOpen, courseAttr }) => {
             }) => (
               <ListItem key={id}>
                 <ListItemContent as="button" onClick={() => toggleCourse(attributes)}>
-                  <Icon icon={CourseIcons[scheduleType]} color={Color['orange-400']} />
+                  <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-400']} />
                   <ListItemText>
                     <ListItemHeader>
                       {courseSubject} {courseNumber}

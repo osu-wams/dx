@@ -17,7 +17,7 @@ import excitedCalendarIcon from '../assets/excited-calendar.svg';
 import { getCourseSchedule } from '../api/student';
 import { CourseSchedule, MeetingTime } from '../api/student/course-schedule';
 import { formatTime } from '../util/helpers';
-import { CourseIcons as courseIcons } from './CourseIcons';
+import { getIconByScheduleType } from './course-utils';
 import VisuallyHidden from '@reach/visually-hidden';
 
 /**
@@ -39,15 +39,11 @@ const CourseScheduleCard = () => {
   }, []);
 
   // Filter courses based on selected day
-  useEffect(
-    () => {
-      const coursesOnSelectedDay = getCoursesOnSelectedDay();
-      console.log(coursesOnSelectedDay);
-      setSelectedCourses(coursesOnSelectedDay);
-    },
-    // Re-run filter when selected day changes or when courses change (on inital load)
-    [selectedDay, courses]
-  );
+  useEffect(() => {
+    const coursesOnSelectedDay = getCoursesOnSelectedDay();
+    console.log(coursesOnSelectedDay);
+    setSelectedCourses(coursesOnSelectedDay);
+  }, [selectedDay, courses]); // Re-run filter when selected day changes or when courses change (on inital load)
 
   const getCoursesOnSelectedDay = () => {
     let selectedDayShortcode = getDayShortcode(selectedDay);
@@ -94,7 +90,10 @@ const CourseScheduleCard = () => {
                 {selectedMeetingTimes.map(meetingTime => (
                   <ListItem key={`${course.id}${meetingTime.beginTime}`}>
                     <ListItemContent>
-                      <Icon icon={faUsersClass} color={Color['orange-200']} />
+                      <Icon
+                        icon={getIconByScheduleType(meetingTime.scheduleType)}
+                        color={Color['orange-200']}
+                      />
                       <ListItemText>
                         <ListItemHeader>
                           {course.attributes.courseSubject} {course.attributes.courseNumber}
