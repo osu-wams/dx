@@ -5,6 +5,9 @@ export { getCourseSchedule };
 
 // Todo: Replace rest of API calls with properly-typed versions.
 
+export const getUpcomingAssignments = () =>
+  axios.get('/api/student/assignments').then(res => res.data);
+
 export const getAcademicStatus = () =>
   axios.get(`/api/student/academic-status`).then(res => res.data);
 
