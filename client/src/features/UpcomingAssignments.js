@@ -1,53 +1,68 @@
-import React from 'react';
-import { faBookReader } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components';
-import { Card, CardHeader, CardHeaderTitle, CardHeaderSubtitle, CardContent } from '../ui/Card';
-import Badge from '../ui/Badge';
+import React, { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
+import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
-import List from '../ui/List';
+import {
+  List,
+  ListItem,
+  ListItemContent,
+  ListItemDescription,
+  ListItemHeader,
+  ListItemText
+} from '../ui/List';
+import { getUpcomingAssignments } from '../api/student';
+import Button from '../ui/Button';
+import { Color } from '../theme';
 
-const ListItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
+/**
+ * Upcoming Assignments Card
+ *
+ * Displays upcoming assignments from Canvas.
+ */
 const UpcomingAssignments = () => {
+  const [assignments, setAssignments] = useState([]);
+
+  // Populate assignment data for current user
+  useEffect(() => {
+    getUpcomingAssignments()
+      .then(setAssignments)
+      .catch(console.log);
+  }, []);
+
   return (
-    <Card color="stratosphere">
-      <CardHeader>
-        <div>
-          <CardHeaderTitle>Upcoming Assignments</CardHeaderTitle>
-          <CardHeaderSubtitle>
-            <Badge inline badgeContent={3} bg="stratosphere">
-              Due Soon
-            </Badge>
-          </CardHeaderSubtitle>
-        </div>
-        <Icon icon={faBookReader} color="stratosphere" size="2x" />
-      </CardHeader>
+    <Card>
+      <CardHeader title="Canvas To Dos" badge={<Badge>{assignments.length}</Badge>} />
       <CardContent>
-        <List style={{ margin: 0 }}>
-          <ListItem>
-            <div>
-              <span>Assignment #3</span>
-              <br />
-              <span style={{ fontWeight: 300 }}>CS274</span>
-            </div>
-            <div style={{ fontWeight: 300 }}>Jan. 6th - 11:59pm</div>
-          </ListItem>
-          <ListItem>
-            <div>
-              <span>Quiz #6</span>
-              <br />
-              <span style={{ fontWeight: 300 }}>CS360</span>
-            </div>
-            <div style={{ fontWeight: 300 }}>Jan. 11th - 2:00pm</div>
-          </ListItem>
-        </List>
+        {/* Show upcoming assignments if any exist, otherwise show empty state. */}
+        {assignments.length ? (
+          <List>
+            {assignments.map(({ id, assignment: { name, html_url: url, due_at: dueDate } }) => (
+              <ListItem key={id}>
+                <ListItemContent as="a" href={url} target="_blank">
+                  <Icon icon={faFileEdit} color={Color['orange-200']} />
+                  <ListItemText>
+                    <ListItemHeader>{name}</ListItemHeader>
+                    <ListItemDescription>
+                      Due {format(dueDate, 'MMM Do [at] h:mma')}
+                    </ListItemDescription>
+                  </ListItemText>
+                </ListItemContent>
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <EmptyState />
+        )}
       </CardContent>
+      <CardFooter>
+        <Button>See more in Canvas</Button>
+      </CardFooter>
     </Card>
   );
 };
+
+// Todo: Replace with actual empty state when ready in mockups.
+const EmptyState = () => <span>NO ASSIGNMENTS</span>;
 
 export default UpcomingAssignments;
