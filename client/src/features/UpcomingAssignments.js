@@ -1,5 +1,5 @@
 import React from 'react';
-import { faBookReader } from '@fortawesome/free-solid-svg-icons';
+import { faBookReader } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
 import { Card, CardHeader, CardHeaderTitle, CardHeaderSubtitle, CardContent } from '../ui/Card';
 import Badge from '../ui/Badge';

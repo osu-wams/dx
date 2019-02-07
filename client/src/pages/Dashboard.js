@@ -7,7 +7,7 @@ import CourseScheduleCard from '../features/CourseScheduleCard';
 import { faComments } from '@fortawesome/pro-regular-svg-icons';
 
 // Sample list for testing purposes
-import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt } from '@fortawesome/pro-light-svg-icons';
 import {
   List,
   ListItem,

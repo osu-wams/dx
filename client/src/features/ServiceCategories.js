@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { faCookieBite, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCookieBite, faCalendarAlt } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../ui/Icon';
 import { Color } from '../theme';
 

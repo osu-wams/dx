@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { faThList, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faThList, faLink } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardHeaderTitle, CardContent } from '../ui/Card';
 import List from '../ui/List';
 import Icon from '../ui/Icon';

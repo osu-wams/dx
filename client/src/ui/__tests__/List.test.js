@@ -8,7 +8,7 @@ import {
   ListItemHeader,
   ListItemText
 } from '../List';
-import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Color } from '../../theme';
 
