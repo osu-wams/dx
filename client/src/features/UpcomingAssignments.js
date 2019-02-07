@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
+import { faFileEdit, faArrowRight } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
 import {
@@ -56,7 +56,10 @@ const UpcomingAssignments = () => {
         )}
       </CardContent>
       <CardFooter>
-        <Button>See more in Canvas</Button>
+        <Button bg="transparent" fg={Color['orange-400']}>
+          View all in Canvas
+          <Icon icon={faArrowRight} color={Color['orange-400']} style={{ marginLeft: '8px' }} />
+        </Button>
       </CardFooter>
     </Card>
   );
