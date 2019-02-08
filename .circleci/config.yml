@@ -45,9 +45,9 @@ jobs:
           command: yarn run lint
 
       # Run tests
-      - run:
-          name: Run Tests
-          command: yarn run test
+      # - run:
+      #     name: Run Tests
+      #     command: yarn run test
 
       # Build client app
       - run:
