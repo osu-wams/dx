@@ -36,7 +36,7 @@ jobs:
             - ~/.cache/yarn
 
       - persist_to_workspace:
-          root: .
+          root: /home/circleci
           paths: project
 
   lint_test_coverage:
@@ -58,7 +58,7 @@ jobs:
           command: npx codecov@3
 
       - persist_to_workspace:
-          root: .
+          root: /home/circleci
           paths: project
 
   build_client:
@@ -72,7 +72,7 @@ jobs:
           command: yarn run build
 
       - persist_to_workspace:
-          root: .
+          root: /home/circleci
           paths: project/client/build
 
   deploy_client:
