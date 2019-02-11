@@ -95,10 +95,13 @@ workflows:
       - build_client:
           requires:
             - lint_test_coverage
-      - deploy_client:
+      - approve_deploy_client:
           type: approval
           requires:
             - build_client
+      - deploy_client:
+          requires:
+            - approve_deploy_client
       - aws-ecr/build_and_push_image:
           repo: 'dx'
           tag: '${CIRCLE_BUILD_NUM}'
