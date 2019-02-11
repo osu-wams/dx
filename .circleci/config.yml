@@ -76,7 +76,8 @@ jobs:
           paths: project/client/build
 
   deploy_client:
-    executor: node-executor
+    docker:
+      - image: circleci/python:2.7
     steps:
       - attach_workspace:
           at: ~/
