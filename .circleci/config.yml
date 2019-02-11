@@ -6,24 +6,20 @@ version: 2.1
 
 orbs:
   aws-ecr: circleci/aws-ecr@3.0.0
+  aws-s3: circleci/aws-s3@1.0.3
+
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:8.12.0
+    working_directory: ~/project
 
 jobs:
-  build_test:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.12.0
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+  install:
+    executor: node-executor
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -39,32 +35,76 @@ jobs:
           paths:
             - ~/.cache/yarn
 
-      # Run linter
+      - persist_to_workspace:
+          root: /home/circleci/project
+          paths: .
+
+  lint_test_coverage:
+    executor: node-executor
+    steps:
+      - attach_workspace:
+          at: ~/project
+
       - run:
-          name: lint
+          name: Run Linter
           command: yarn run lint
 
-      # Run tests
-      # - run:
-      #     name: Run Tests
-      #     command: yarn run test
-
-      # Build client app
       - run:
-          name: Build Client
-          command: yarn run build
+          name: Run Tests
+          command: yarn run test
 
-      # Send code coverage report to Codecov.io
       - run:
           name: Report to CodeCov
           command: npx codecov@3
 
+      - persist_to_workspace:
+          root: ./
+          paths: project
+
+  build_client:
+    executor: node-executor
+    steps:
+      - attach_workspace:
+          at: ~/project
+      
+      - run:
+          name: Build Client
+          command: yarn run build
+
+      - persist_to_workspace:
+          root: ./
+          paths: client/build
+
+  deploy_client:
+    executor: node-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      
+      - aws-s3/sync:
+          from: ~/client/build
+          to: 's3://dx-portal'
+
 workflows:
   build_test_deploy:
     jobs:
-      - build_test
+      - install
+      - lint_test_coverage:
+          requires:
+            - install
+      - build_client:
+          requires:
+            - lint_test_coverage
+      - deploy_client:
+          type: approval
+          requires:
+            - build_client
       - aws-ecr/build_and_push_image:
           repo: 'dx'
           tag: '${CIRCLE_BUILD_NUM}'
           requires:
-            - build_test
+            - lint_test_coverage
+          filters:
+            branches:
+              only:
+                - master
