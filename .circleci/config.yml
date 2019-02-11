@@ -49,9 +49,9 @@ jobs:
           name: Run Linter
           command: yarn run lint
 
-      - run:
-          name: Run Tests
-          command: yarn run test
+      # - run:
+      #     name: Run Tests
+      #     command: yarn run test
 
       - run:
           name: Report to CodeCov
