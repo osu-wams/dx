@@ -43,7 +43,7 @@ jobs:
     executor: node-executor
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
 
       - run:
           name: Run Linter
@@ -65,7 +65,7 @@ jobs:
     executor: node-executor
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
       
       - run:
           name: Build Client
@@ -79,7 +79,7 @@ jobs:
     executor: node-executor
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
       
       - aws-s3/sync:
           from: ~/project/client/build
