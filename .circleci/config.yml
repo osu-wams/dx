@@ -100,9 +100,17 @@ workflows:
           type: approval
           requires:
             - build_client
+          filters:
+            branches:
+              only:
+                - master
       - deploy_client:
           requires:
             - approve_deploy_client
+          filters:
+            branches:
+              only:
+                - master
       - aws-ecr/build_and_push_image:
           repo: 'dx'
           tag: '${CIRCLE_BUILD_NUM}'
