@@ -36,8 +36,8 @@ jobs:
             - ~/.cache/yarn
 
       - persist_to_workspace:
-          root: /home/circleci/project
-          paths: .
+          root: .
+          paths: project
 
   lint_test_coverage:
     executor: node-executor
@@ -58,7 +58,7 @@ jobs:
           command: npx codecov@3
 
       - persist_to_workspace:
-          root: ./
+          root: .
           paths: project
 
   build_client:
@@ -72,17 +72,17 @@ jobs:
           command: yarn run build
 
       - persist_to_workspace:
-          root: ./
-          paths: client/build
+          root: .
+          paths: project/client/build
 
   deploy_client:
     executor: node-executor
     steps:
       - attach_workspace:
-          at: ~/
+          at: ~/project
       
       - aws-s3/sync:
-          from: ~/client/build
+          from: ~/project/client/build
           to: 's3://dx-portal'
 
 workflows:
