@@ -31,7 +31,7 @@ type Props = {
 };
 
 const Button = styled('button')<Props & React.HTMLProps<HTMLButtonElement>>`
-  background-color: ${props => props.bg || Color["orange-400"]};
+  background-color: ${props => props.bg || Color['orange-400']};
   color: ${props => props.fg || Color.white};
   & + & {
     margin-left: ${theme.spacing.unit}px;

@@ -10,6 +10,7 @@ const Btn = styled(Button)`
     color: black;
     background: transparent;
     padding: 1rem 2rem;
+    font-size: 2.4rem;
   }
 `;
 const CloseButton = ({ ...props }) => (
