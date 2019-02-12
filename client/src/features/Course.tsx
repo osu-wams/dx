@@ -1,89 +1,92 @@
 import React from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import Icon from '../ui/Icon';
-import {
-  faChevronRight,
-  faChalkboardTeacher,
-  faCalendarAlt,
-  faTimes
-} from '@fortawesome/pro-light-svg-icons';
+import { faMapMarkerAlt, faEnvelope, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import Button, { CloseButton } from '../ui/Button';
-import MyDialog from '../ui/MyDialog';
+import {
+  List,
+  ListItem,
+  ListItemContent,
+  ListItemText,
+  ListItemHeader,
+  ListItemDescription
+} from '../ui/List';
+import MyDialog, { MyDialogFooter } from '../ui/MyDialog';
 import { titleCase, formatTime, formatDate } from '../util/helpers';
+import { getIconByScheduleType } from './course-utils';
 import { Color } from '../theme';
+import Divider from '../ui/Divider';
+import MoreInfoLink from '../ui/MoreInfoLink';
 
 const Course = ({
-  attributes: {
-    courseTitle,
-    courseNumber,
-    courseSubject,
-    courseReferenceNumber,
-    sectionNumber,
-    creditHours,
-    faculty,
-    meetingTimes,
-    scheduleDescription
-  },
+  attributes: { courseTitle, courseNumber, courseSubject, faculty, meetingTimes },
   isOpen,
   toggleCourse
 }) => (
   <MyDialog isOpen={isOpen} data-testid="course-dialog">
     <CloseButton onClick={toggleCourse} />
-    <h2>{titleCase(courseTitle)}</h2>
-    <div className="details">
-      {courseSubject} {courseNumber} &bull; CRN: {courseReferenceNumber} &bull; Section{' '}
-      {sectionNumber} &bull; {creditHours} Credits
-    </div>
-    <h3>
-      <Icon icon={faChalkboardTeacher} /> Instructor(s)
-    </h3>
-    {faculty.map(fac => (
-      <div key={fac.osuID}>
-        {fac.name}{' '}
-        <a href={`mailto:${fac.email}`}>
-          Contact <VisuallyHidden>{fac.name}</VisuallyHidden>
-        </a>
-      </div>
-    ))}
-
-    <h3>
-      <Icon icon={faCalendarAlt} /> Meeting Times(s)
-    </h3>
-    {meetingTimes.map(
-      ({
-        beginDate,
-        endDate,
-        beginTime,
-        endTime,
-        room,
-        weeklySchedule,
-        building,
-        buildingDescription
-      }) => (
-        <div key={beginDate + beginTime}>
-          <div>
-            <strong>{scheduleDescription}</strong>
-          </div>
-          <div>
-            <div>
-              {weeklySchedule.map((day, index) => (index ? ', ' : '') + day)}{' '}
-              {formatTime(beginTime)} - {formatTime(endTime)}
-            </div>
-            <div>
-              {formatDate(beginDate)} - {formatDate(endDate)}
-            </div>
-            <div>
-              <a href={`https://map.oregonstate.edu/?building=${building}`}>
-                <VisuallyHidden>View</VisuallyHidden>
-                {room} {buildingDescription} ({building}) <VisuallyHidden>on map</VisuallyHidden>
+    <h2>
+      {courseSubject} {courseNumber}
+    </h2>
+    <div className="details">{titleCase(courseTitle)}</div>
+    <List>
+      {meetingTimes.map(
+        ({
+          beginDate,
+          endDate,
+          beginTime,
+          endTime,
+          room,
+          weeklySchedule,
+          building,
+          buildingDescription,
+          scheduleDescription,
+          scheduleType
+        }) => (
+          <ListItem key={beginDate + beginTime}>
+            <ListItemContent>
+              <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
+              <ListItemText>
+                <ListItemHeader>{scheduleDescription}</ListItemHeader>
+                <ListItemDescription>
+                  {room} {building} <br />
+                  {beginDate != endDate
+                    ? weeklySchedule.map((day, index) => day)
+                    : formatDate(beginDate, 'noYear')}{' '}
+                  &middot; {formatTime(beginTime)} - {formatTime(endTime)}
+                </ListItemDescription>
+              </ListItemText>
+              <a href={`https://map.oregonstate.edu/?building=${building}`} target="blank">
+                <VisuallyHidden>View {buildingDescription} on map</VisuallyHidden>
+                <Icon icon={faMapMarkerAlt} />
               </a>
-            </div>
-          </div>
-        </div>
-      )
-    )}
-
-    <Button bg={Color['stratosphere-400']}>See Course in Canvas</Button>
+            </ListItemContent>
+          </ListItem>
+        )
+      )}
+    </List>
+    <Divider />
+    <List>
+      {faculty.map(fac => (
+        <ListItem key={fac.osuId}>
+          <ListItemContent>
+            <Icon icon={faChalkboardTeacher} color={Color['neutral-600']} />
+            <ListItemText>
+              <ListItemHeader>{fac.name}</ListItemHeader>
+              <ListItemDescription>Instructor</ListItemDescription>
+            </ListItemText>
+            <a href={`mailto:${fac.email}`}>
+              <VisuallyHidden>E-mail {fac.name}</VisuallyHidden>
+              <Icon icon={faEnvelope} />
+            </a>
+          </ListItemContent>
+        </ListItem>
+      ))}
+    </List>
+    {/* TODO: Add appropriate link */}
+    <MyDialogFooter>
+      <MoreInfoLink text="View Courses" href="https://UPDATEME.edu" />
+    </MyDialogFooter>
   </MyDialog>
 );
 

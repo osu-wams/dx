@@ -1,10 +1,11 @@
 import React, { FC, useState, useEffect } from 'react';
-import { faChevronRight } from '@fortawesome/pro-light-svg-icons';
+import { faChevronRight, faInfoCircle, faArrowRight } from '@fortawesome/pro-light-svg-icons';
 import { getCourseSchedule } from '../api/student';
-import { Card, CardHeader, CardContent } from '../ui/Card';
+import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
 import { CourseSchedule, CourseScheduleAttributes } from '../api/student/course-schedule';
 import Icon from '../ui/Icon';
-import { CourseIcons } from './CourseIcons';
+import Button from '../ui/Button';
+import { getIconByScheduleType } from './course-utils';
 import {
   List,
   ListItem,
@@ -17,6 +18,7 @@ import Course from '../features/Course';
 import { titleCase, singularPlural } from '../util/helpers';
 import course_list from '../api/__mocks__/courses.data';
 import { Color } from '../theme';
+// import MoreInfoLink from '../ui/MoreInfoLink';
 
 type Props = {
   initialCourses: CourseSchedule;
@@ -67,7 +69,7 @@ let Courses: FC<Props> = ({ initialCourses, courseOpen, courseAttr }) => {
             }) => (
               <ListItem key={id}>
                 <ListItemContent as="button" onClick={() => toggleCourse(attributes)}>
-                  <Icon icon={CourseIcons[scheduleType]} color={Color['orange-400']} />
+                  <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
                   <ListItemText>
                     <ListItemHeader>
                       {courseSubject} {courseNumber}
@@ -86,6 +88,14 @@ let Courses: FC<Props> = ({ initialCourses, courseOpen, courseAttr }) => {
         </List>
         {isOpen && <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />}
       </CardContent>
+      <CardFooter>
+        <Icon icon={faInfoCircle} />
+        {/* <Button as="a" bg={Color['transparent']} fg={Color['orange-400']}>
+          <Icon icon={faArrowRight} color={Color['orange-400']} />
+          <span></span>
+          <Icon icon={faArrowRight} color={Color['orange-400']} />
+        </Button> */}
+      </CardFooter>
     </Card>
   );
 };

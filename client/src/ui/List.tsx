@@ -25,7 +25,8 @@ const ListItemContent = styled.div`
   cursor: pointer;
   border: none;
   svg {
-    font-size: 20px;
+    font-size: 2.4rem;
+    width: 3rem !important; /* overwrite fontawsome class to have equal spacing of icons */
     & + div {
       padding-left: 1.5rem;
     }
