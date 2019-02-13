@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
-import { faHome } from '@fortawesome/pro-solid-svg-icons';
+import { faHome } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Color } from '../theme';
 import Icon from './Icon';
