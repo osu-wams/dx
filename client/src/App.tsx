@@ -12,9 +12,9 @@ import MainNav from './ui/MainNav';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Academics from './pages/Academics';
-import Events from './pages/Events';
+import Experience from './pages/Experience';
 import Finances from './pages/Finances';
-import Services from './pages/Services';
+import Tools from './pages/Tools';
 import PageNotFound from './pages/PageNotFound';
 
 const Router = styled(ReachRouter)`
@@ -96,9 +96,9 @@ const App = () => {
                   <RouterPage path="/" pageComponent={<Dashboard />} />
                   <RouterPage path="profile" pageComponent={<Profile />} />
                   <RouterPage path="academics" pageComponent={<Academics />} />
-                  <RouterPage path="events" pageComponent={<Events />} />
+                  <RouterPage path="experience" pageComponent={<Experience />} />
                   <RouterPage path="finances" pageComponent={<Finances />} />
-                  <RouterPage path="services" pageComponent={<Services />} />
+                  <RouterPage path="tools" pageComponent={<Tools />} />
                   <RouterPage default pageComponent={<PageNotFound />} />
                 </Router>
               </RouteContainer>

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import { faHome } from '@fortawesome/pro-solid-svg-icons';
+import VisuallyHidden from '@reach/visually-hidden';
 import { Color } from '../theme';
+import Icon from './Icon';
 
 const Nav = styled.nav`
   display: flex;
@@ -11,15 +14,14 @@ const Nav = styled.nav`
 `;
 
 const NavLink = styled(Link)`
-  margin: 0 4px;
-  padding: 0 4px;
+  /* margin: 0 4px; */
+  padding: 4px 8px;
   height: 30px;
   line-height: 30px;
   text-decoration: none;
   color: ${Color.white};
-  &[aria-current] {
-    font-weight: bold;
-  }
+  display: inline-block;
+  text-align: center;
   /* select and hover styles */
   &:active::after,
   &:focus::after,
@@ -42,11 +44,14 @@ const NavLink = styled(Link)`
 
 const MainNav = () => (
   <Nav>
-    <NavLink to="/">Dashboard</NavLink>
+    <NavLink title="Home" to="/">
+      <Icon icon={faHome} color={Color.white} />
+      <VisuallyHidden>Dashboard</VisuallyHidden>
+    </NavLink>
     <NavLink to="academics">Academics</NavLink>
     <NavLink to="finances">Finances</NavLink>
-    <NavLink to="services">Services</NavLink>
-    <NavLink to="events">Events</NavLink>
+    <NavLink to="experience">Experience</NavLink>
+    <NavLink to="tools">Tools</NavLink>
   </Nav>
 );
 
