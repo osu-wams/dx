@@ -13,6 +13,10 @@ const ListItem = styled.li`
   &:not(:last-child) {
     margin-bottom: ${theme.spacing.unit * 2}px;
   }
+  & > button {
+    /* cursor only on buttons, not divs */
+    cursor: pointer;
+  }
 `;
 
 const ListItemContent = styled.div`
@@ -22,7 +26,6 @@ const ListItemContent = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   align-items: center;
-  cursor: pointer;
   border: none;
   svg {
     font-size: 2.4rem;

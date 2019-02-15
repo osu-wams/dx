@@ -51,8 +51,8 @@ const MainNav = () => (
     <NavLink to="/"><Icon icon={faHome} />Home</NavLink>
     <NavLink to="academics"><Icon icon={faGraduationCap} />Academics</NavLink>
     <NavLink to="finances"><Icon icon={faHandsUsd} />Finances</NavLink>
-    <NavLink to="events"><Icon icon={faHiking} />Experience</NavLink>
-    <NavLink to="services"><Icon icon={faToolbox} />Tools</NavLink>
+    <NavLink to="experience"><Icon icon={faHiking} />Experience</NavLink>
+    <NavLink to="tools"><Icon icon={faToolbox} />Tools</NavLink>
   </Nav>
 );
 
