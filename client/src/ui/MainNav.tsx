@@ -20,7 +20,7 @@ const NavLink = styled(Link)`
   line-height: 30px;
   text-decoration: none;
   color: ${Color["neutral-500"]};
-  &[aria-current] {
+  &[aria-current], &[aria-current] > svg {
     color: ${Color["orange-400"]};
   }
   /* select and hover styles */
