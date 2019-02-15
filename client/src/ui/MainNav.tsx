@@ -1,24 +1,27 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
+import { faHome, faGraduationCap, faHandsUsd, faHiking, faToolbox } from '@fortawesome/pro-light-svg-icons';
 import { Color } from '../theme';
+import Icon from './Icon';
 
 const Nav = styled.nav`
   display: flex;
   flex-direction: row;
-  height: 4rem;
-  margin-top: 1.6rem;
+  margin-top: 24px;
 `;
 
 const NavLink = styled(Link)`
-  margin: 0 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 12px;
   padding: 0 4px;
-  height: 30px;
   line-height: 30px;
   text-decoration: none;
-  color: ${Color.white};
+  color: ${Color["neutral-500"]};
   &[aria-current] {
-    font-weight: bold;
+    color: ${Color["orange-400"]};
   }
   /* select and hover styles */
   &:active::after,
@@ -38,15 +41,18 @@ const NavLink = styled(Link)`
     background: ${Color.white};
     transition: width 0.3s;
   }
+  & > svg {
+    font-size: 24px;
+  }
 `;
 
 const MainNav = () => (
   <Nav>
-    <NavLink to="/">Dashboard</NavLink>
-    <NavLink to="academics">Academics</NavLink>
-    <NavLink to="finances">Finances</NavLink>
-    <NavLink to="services">Services</NavLink>
-    <NavLink to="events">Events</NavLink>
+    <NavLink to="/"><Icon icon={faHome} />Home</NavLink>
+    <NavLink to="academics"><Icon icon={faGraduationCap} />Academics</NavLink>
+    <NavLink to="finances"><Icon icon={faHandsUsd} />Finances</NavLink>
+    <NavLink to="events"><Icon icon={faHiking} />Experience</NavLink>
+    <NavLink to="services"><Icon icon={faToolbox} />Tools</NavLink>
   </Nav>
 );
 

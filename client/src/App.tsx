@@ -8,7 +8,6 @@ import axios from 'axios';
 import GlobalStyles from './GlobalStyles';
 import { theme } from './theme';
 import Header from './ui/Header';
-import MainNav from './ui/MainNav';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Academics from './pages/Academics';
@@ -18,7 +17,6 @@ import Services from './pages/Services';
 import PageNotFound from './pages/PageNotFound';
 
 const Router = styled(ReachRouter)`
-  margin-top: -58px;
   padding: ${theme.spacing.unit * 2}px;
   width: 100%;
 `;

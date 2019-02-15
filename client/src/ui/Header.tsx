@@ -7,7 +7,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuList, MenuButton, MenuItem, MenuLink } from '@reach/menu-button';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 import '@reach/menu-button/styles.css';
 import '@reach/dialog/styles.css';
 import MyDialog from './MyDialog';
@@ -21,8 +21,8 @@ const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 184px;
-  background-color: ${Color['orange-400']};
+  height: 140px;
+  background-color: ${Color.white};
 `;
 
 const HeaderTopSection = styled.div`
@@ -34,14 +34,13 @@ const HeaderTopSection = styled.div`
 
 const HeaderBottomSection = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
   overflow-x: auto;
 `;
 
 const UserButton = styled(MenuButton)`
-  color: ${Color.white};
+  color: ${Color["neutral-500"]};
   background: transparent;
   border: none;
   cursor: pointer;
@@ -54,7 +53,7 @@ const ProfileMenuList = styled(MenuList)`
 `;
 
 const Logo = styled.img`
-  height: 58px;
+  height: 44px;
 `;
 
 const Header = () => {
