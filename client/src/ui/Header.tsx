@@ -15,7 +15,9 @@ import Button from './Button';
 import Input from './Input';
 import Label from './Label';
 import MainNav from './MainNav';
+import Icon from './Icon';
 import { Color } from '../theme';
+import ServiceSearchButton from '../features/services/ServiceSearchButton';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -40,7 +42,7 @@ const HeaderBottomSection = styled.div`
 `;
 
 const UserButton = styled(MenuButton)`
-  color: ${Color["neutral-500"]};
+  color: ${Color['neutral-500']};
   background: transparent;
   border: none;
   cursor: pointer;
@@ -118,19 +120,22 @@ const Header = () => {
       <HeaderWrapper>
         <HeaderTopSection>
           <Logo src={logo} alt="Oregon State University" />
-          <Menu>
-            <UserButton data-testid="user-btn">
-              <VisuallyHidden>User menu</VisuallyHidden>
-              <FontAwesomeIcon icon={faUserCircle} size="2x" />
-            </UserButton>
-            <ProfileMenuList>
-              <MenuItem onSelect={() => logout()}>Logout</MenuItem>
-              <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
-              <MenuLink to="profile" data-testid="profile-link">
-                View Profile
-              </MenuLink>
-            </ProfileMenuList>
-          </Menu>
+          <div>
+            <ServiceSearchButton />
+            <Menu>
+              <UserButton data-testid="user-btn">
+                <VisuallyHidden>User menu</VisuallyHidden>
+                <FontAwesomeIcon icon={faUserCircle} size="2x" />
+              </UserButton>
+              <ProfileMenuList>
+                <MenuItem onSelect={() => logout()}>Logout</MenuItem>
+                <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
+                <MenuLink to="profile" data-testid="profile-link">
+                  View Profile
+                </MenuLink>
+              </ProfileMenuList>
+            </Menu>
+          </div>
         </HeaderTopSection>
         <HeaderBottomSection>
           <MainNav />
