@@ -3,13 +3,16 @@ import styled from 'styled-components';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
 import { Color, shadows, theme } from '../theme';
+import useMediaQuery from '../util/useMediaQuery';
 
 const CardContext = React.createContext<any>(null);
 
 const Card = ({ children, ...props }) => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleCollapsed = () => setCollapsed(!collapsed);
-  const value = { collapsed, toggleCollapsed };
+  const isMobile = !useMediaQuery('(min-width: 768px)');
+  const collapsible = isMobile;
+  const value = { collapsed, toggleCollapsed, collapsible };
 
   return (
     <CardBase style={{ padding: 0 }} {...props}>
@@ -19,6 +22,8 @@ const Card = ({ children, ...props }) => {
 };
 
 const CardBase = styled.div`
+  display: flex;
+  flex-direction: column;
   border-radius: ${theme.borderRadius};
   box-shadow: ${shadows[1]};
   background-color: ${Color.white};
@@ -27,7 +32,7 @@ const CardBase = styled.div`
 `;
 
 const CardHeader = ({ badge = '', title, ...props }) => {
-  const { collapsed, toggleCollapsed } = useContext(CardContext);
+  const { collapsed, toggleCollapsed, collapsible } = useContext(CardContext);
   const handleKeyDown = e => {
     if (e.key === 'Enter' || e.key === ' ') {
       toggleCollapsed();
@@ -35,52 +40,62 @@ const CardHeader = ({ badge = '', title, ...props }) => {
   };
   return (
     <CardHeaderWrapper
+      collapsible={collapsible}
       collapsed={collapsed}
-      onClick={toggleCollapsed}
-      onKeyDown={handleKeyDown}
-      role="button"
-      aria-pressed={!collapsed}
-      tabIndex={0}
+      onClick={collapsible ? toggleCollapsed : undefined}
+      onKeyDown={collapsible ? handleKeyDown : undefined}
+      role={collapsible ? 'button' : ''}
+      aria-pressed={collapsible ? !collapsed : undefined}
+      tabIndex={collapsible ? 0 : -1}
       {...props}
     >
       {badge}
       <span>{title}</span>
-      <Icon icon={collapsed ? faChevronDown : faChevronUp} style={{ marginLeft: 'auto' }} />
+      {collapsible && (
+        <Icon icon={collapsed ? faChevronDown : faChevronUp} style={{ marginLeft: 'auto' }} />
+      )}
     </CardHeaderWrapper>
   );
 };
 
-const CardHeaderWrapper = styled.div<{ collapsed: boolean }>`
+const CardHeaderWrapper = styled.div<{ collapsed: boolean, collapsible: boolean }>`
   height: 64px;
   width: 100%;
   padding: ${theme.spacing.unit * 2}px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  border-bottom: ${props => (props.collapsed ? 'none' : `1px solid ${Color['neutral-200']}`)};
+  border-bottom: ${props => (props.collapsed && props.collapsible ? 'none' : `1px solid ${Color['neutral-200']}`)};
 `;
 
 const CardContent = ({ ...props }) => {
-  const { collapsed } = useContext(CardContext);
-  return <CardContentWrapper collapsed={collapsed} {...props} />;
+  const { collapsed, _, collapsible } = useContext(CardContext);
+  return <CardContentWrapper collapsed={collapsed} collapsible={collapsible} {...props} />;
 };
 
-const CardContentWrapper = styled.div<{ collapsed: boolean }>`
-  height: ${props => (props.collapsed ? 0 : 'auto')};
+const CardContentWrapper = styled.div<{ collapsed: boolean, collapsible: boolean }>`
+  flex: 1;
+  padding: ${theme.spacing.unit * 2}px;
+  ${props => props.collapsible && `
+    height: ${props.collapsed ? 0 : 'auto'};
+    padding: ${props.collapsed ? 0 : theme.spacing.unit * 2}px;
+  `}
   overflow: hidden;
-  padding: ${props => (props.collapsed ? 0 : theme.spacing.unit * 2)}px;
 `;
 
 const CardFooter = ({ ...props }) => {
-  const { collapsed } = useContext(CardContext);
-  return <CardFooterWrapper collapsed={collapsed} {...props} />;
+  const { collapsed, _, collapsible } = useContext(CardContext);
+  return <CardFooterWrapper collapsed={collapsed} collapsible={collapsible} {...props} />;
 };
 
-const CardFooterWrapper = styled.div<{ collapsed: boolean }>`
-  height: ${props => (props.collapsed ? 0 : 'auto')};
+const CardFooterWrapper = styled.div<{ collapsed: boolean, collapsible: boolean }>`
+  padding: ${`${theme.spacing.unit}px ${theme.spacing.unit * 2}px`};
+
+  ${props => props.collapsible && `
+    height: ${props.collapsed ? 0 : 'auto'};
+    padding: ${props.collapsed ? 0 : `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`};
+  `}
   overflow: hidden;
-  padding: ${props =>
-    props.collapsed ? 0 : `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`};
   display: flex;
   justify-content: flex-end;
   align-items: center;
