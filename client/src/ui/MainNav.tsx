@@ -32,6 +32,12 @@ const Nav = styled.nav`
     background: linear-gradient(to left, white 0.5rem, transparent);
     right: 0;
   }
+  @media (min-width: 541px) {
+    &:before,
+    &:after {
+      background: none;
+    }
+  }
 `;
 
 const NavLink = styled(Link)`
