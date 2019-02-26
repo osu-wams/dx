@@ -16,21 +16,25 @@ import {
 
 const placeholderServices = [
   {
+    id: 0,
     name: 'Register for courses',
     url: '#',
     shortDescription: 'Add, drop and change grading modes'
   },
   {
+    id: 1,
     name: 'Register for courses',
     url: '#',
     shortDescription: 'Add, drop and change grading modes'
   },
   {
+    id: 2,
     name: 'Register for courses',
     url: '#',
     shortDescription: 'Add, drop and change grading modes'
   },
   {
+    id: 3,
     name: 'Register for courses',
     url: '#',
     shortDescription: 'Add, drop and change grading modes'
@@ -55,7 +59,7 @@ const ServiceSearchButton = () => {
         {services.length && (
           <List>
             {services.map(service => (
-              <ListItem>
+              <ListItem key={service.id}>
                 <ListItemContent>
                   <ListItemText>
                     <ListItemHeader>{service.name}</ListItemHeader>
@@ -97,7 +101,7 @@ const SearchInput = styled.input`
   }
   padding: 6px 8px;
   flex: 1;
-  margin-left: 16px; 
+  margin-left: 16px;
 `;
 
 export default ServiceSearchButton;
