@@ -39,11 +39,14 @@ const CourseScheduleCard = () => {
   }, []);
 
   // Filter courses based on selected day
-  useEffect(() => {
-    const coursesOnSelectedDay = getCoursesOnSelectedDay();
-    console.log(coursesOnSelectedDay);
-    setSelectedCourses(coursesOnSelectedDay);
-  }, [selectedDay, courses]); // Re-run filter when selected day changes or when courses change (on inital load)
+  useEffect(
+    () => {
+      const coursesOnSelectedDay = getCoursesOnSelectedDay();
+      console.log(coursesOnSelectedDay);
+      setSelectedCourses(coursesOnSelectedDay);
+    },
+    [selectedDay, courses]
+  ); // Re-run filter when selected day changes or when courses change (on inital load)
 
   const getCoursesOnSelectedDay = () => {
     let selectedDayShortcode = getDayShortcode(selectedDay);
@@ -70,7 +73,11 @@ const CourseScheduleCard = () => {
       <Header>This Week</Header>
       <DayList>
         {nextFiveDays.map(day => (
-          <Day onClick={() => setSelectedDay(day)} selected={isSameDay(day, selectedDay)}>
+          <Day
+            key={day.toUTCString()}
+            onClick={() => setSelectedDay(day)}
+            selected={isSameDay(day, selectedDay)}
+          >
             <span>{format(day, 'ddd')}</span>
             <span>{format(day, 'D')}</span>
           </Day>
