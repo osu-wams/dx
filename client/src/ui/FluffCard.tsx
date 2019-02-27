@@ -62,6 +62,7 @@ const FluffCard = ({ items }) => {
       <CarouselButtons>
         {items.map((item, index) => (
           <CarouselButton
+            key={index}
             onClick={() => {
               setCurrentItemIndex(index);
               clearInterval(timer);

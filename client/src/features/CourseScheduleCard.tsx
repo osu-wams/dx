@@ -39,14 +39,10 @@ const CourseScheduleCard = () => {
   }, []);
 
   // Filter courses based on selected day
-  useEffect(
-    () => {
-      const coursesOnSelectedDay = getCoursesOnSelectedDay();
-      console.log(coursesOnSelectedDay);
-      setSelectedCourses(coursesOnSelectedDay);
-    },
-    [selectedDay, courses]
-  ); // Re-run filter when selected day changes or when courses change (on inital load)
+  useEffect(() => {
+    const coursesOnSelectedDay = getCoursesOnSelectedDay();
+    setSelectedCourses(coursesOnSelectedDay);
+  }, [selectedDay, courses]); // Re-run filter when selected day changes or when courses change (on inital load)
 
   const getCoursesOnSelectedDay = () => {
     let selectedDayShortcode = getDayShortcode(selectedDay);

@@ -16,7 +16,7 @@ import {
 } from '../ui/List';
 import Course from '../features/Course';
 import { titleCase, singularPlural } from '../util/helpers';
-import course_list from '../api/__mocks__/courses.data';
+import course_list from '../api/student/__mocks__/courses.data';
 import { Color } from '../theme';
 // import MoreInfoLink from '../ui/MoreInfoLink';
 

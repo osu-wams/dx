@@ -7,7 +7,7 @@ import {
   getAccountTransactions,
   getCourseSchedule,
   getGrades
-} from '../student';
+} from '..';
 import courses from '../__mocks__/courses.data';
 import grades from '../__mocks__/grades.data';
 import holds from '../__mocks__/holds.data';
@@ -15,7 +15,7 @@ import accountTransactions from '../__mocks__/accountTransactions.data';
 import accountBalance from '../__mocks__/accountBalance.data';
 import academicStatus from '../__mocks__/academicStatus.data';
 
-jest.unmock('../student');
+jest.unmock('..');
 const mockAxios = new MockAdapter(axios);
 
 describe('Student API', () => {

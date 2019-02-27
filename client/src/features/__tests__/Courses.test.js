@@ -9,13 +9,13 @@ test('renders', () => {
 test('Specific course loads on click, close button closes', async () => {
   const { getByText, getByTestId, queryByTestId } = render(<Courses />);
 
-  const OpSysBtn = await waitForElement(() => getByText('Operating Systems I'));
+  const OpSysBtn = await waitForElement(() => getByText(/data structures/i));
   fireEvent.click(OpSysBtn);
 
-  // Dialg is present and matches the particular course CRN
+  // Dialg is present and displays the corrent course
   const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
   expect(courseDialog).toBeInTheDocument();
-  expect(courseDialog).toHaveTextContent(/CRN: 17851/i);
+  expect(courseDialog).toHaveTextContent(/data structures/i);
 
   // Close dialog
   const closeBtn = await waitForElement(() => getByText('Close'));
@@ -26,7 +26,7 @@ test('Specific course loads on click, close button closes', async () => {
 describe('<Courses />', () => {
   it('renders a list of courses for the current user', async () => {
     const { getByText } = render(<Courses />);
-    const courseTitle = await waitForElement(() => getByText(/operating systems i/i));
+    const courseTitle = await waitForElement(() => getByText(/data structures/i));
     expect(courseTitle).toBeInTheDocument();
   });
 });
