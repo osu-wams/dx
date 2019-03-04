@@ -9995,6 +9995,13 @@ react-scripts@2.1.3:
   optionalDependencies:
     fsevents "1.2.4"
 
+react-swipeable@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-swipeable/-/react-swipeable-5.0.1.tgz#e2876b27f31bd4b95a4cd273befa093c74b1fd7b"
+  integrity sha512-TRBBlAA5xJi5ISqhhxYA+K/6r+ibsMXI3l/en7XbiqzAMC8CqAH3v44Al7OND0lWMT6jAUkC2WKPtQSX6CUKPQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-testing-library@^5.5.3:
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-5.9.0.tgz#e1c8a586d2f2cbd5f0035474ca90258eef1fece6"
