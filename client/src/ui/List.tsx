@@ -37,6 +37,9 @@ const ListItemContent = styled.div`
   text-decoration: none;
 `;
 
+const ListItemContentButton = styled(ListItemContent).attrs({ as: 'button' })`
+`
+
 const ListItemText = styled.div`
   padding-right: 1.5rem;
   flex: 2;
@@ -55,4 +58,4 @@ const ListItemDescription = styled.div`
   line-height: 1.6rem;
 `;
 
-export { List, ListItem, ListItemContent, ListItemText, ListItemHeader, ListItemDescription };
+export { List, ListItem, ListItemContent, ListItemContentButton, ListItemText, ListItemHeader, ListItemDescription };

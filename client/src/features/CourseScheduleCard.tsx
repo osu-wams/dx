@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemHeader,
   ListItemContent,
+  ListItemContentButton,
   ListItemDescription,
   ListItemText
 } from '../ui/List';
@@ -92,7 +93,7 @@ const CourseScheduleCard = () => {
                 */}
                 {selectedMeetingTimes.map(meetingTime => (
                   <ListItem key={`${course.id}${meetingTime.beginTime}`}>
-                    <ListItemContent>
+                    <ListItemContentButton>
                       <Icon
                         icon={getIconByScheduleType(meetingTime.scheduleType)}
                         color={Color['orange-200']}
@@ -116,7 +117,7 @@ const CourseScheduleCard = () => {
                         <VisuallyHidden>View on map</VisuallyHidden>
                         <Icon icon={faMapMarkerAlt} />
                       </a>
-                    </ListItemContent>
+                    </ListItemContentButton>
                   </ListItem>
                 ))}
               </>

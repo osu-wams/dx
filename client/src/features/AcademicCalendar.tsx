@@ -12,6 +12,7 @@ import {
   List,
   ListItem,
   ListItemContent,
+  ListItemContentButton,
   ListItemDescription,
   ListItemHeader,
   ListItemText
@@ -44,13 +45,13 @@ const AcademicCalendar = () => {
           <List>
             {calEvents.map(({ title, link, pubDate }) => (
               <ListItem key={title}>
-                <ListItemContent as="a" href={link} target="_blank">
+                <ListItemContentButton>
                   <Icon icon={faCalendarAlt} color={Color['orange-200']} />
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>
                     <ListItemDescription>{format(pubDate, 'MMMM D, YYYY')}</ListItemDescription>
                   </ListItemText>
-                </ListItemContent>
+                </ListItemContentButton>
               </ListItem>
             ))}
           </List>
@@ -59,7 +60,7 @@ const AcademicCalendar = () => {
         )}
       </CardContent>
       <CardFooter>
-        <Button bg="transparent" fg={Color['orange-400']}>
+        <Button bg={Color.transparent} fg={Color['orange-400']}>
           View more in Localist
           <Icon icon={faArrowRight} color={Color['orange-400']} style={{ marginLeft: '8px' }} />
         </Button>

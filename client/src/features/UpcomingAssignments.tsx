@@ -39,7 +39,7 @@ const UpcomingAssignments = () => {
           <List>
             {assignments.map(({ id, assignment: { name, html_url: url, due_at: dueDate } }) => (
               <ListItem key={id}>
-                <ListItemContent as="a" href={url} target="_blank">
+                <ListItemContent>
                   <Icon icon={faFileEdit} color={Color['orange-200']} />
                   <ListItemText>
                     <ListItemHeader>{name}</ListItemHeader>
@@ -56,7 +56,7 @@ const UpcomingAssignments = () => {
         )}
       </CardContent>
       <CardFooter>
-        <Button bg="transparent" fg={Color['orange-400']}>
+        <Button bg={Color.transparent} fg={Color['orange-400']}>
           View all in Canvas
           <Icon icon={faArrowRight} color={Color['orange-400']} style={{ marginLeft: '8px' }} />
         </Button>
@@ -64,6 +64,8 @@ const UpcomingAssignments = () => {
     </Card>
   );
 };
+
+// <ListItemContent as="a" href={url} target="_blank">
 
 // Todo: Replace with actual empty state when ready in mockups.
 const EmptyState = () => <span>NO ASSIGNMENTS</span>;

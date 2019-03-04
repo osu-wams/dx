@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import useMediaQuery from '../util/useMediaQuery';
 import { Color } from '../theme';
@@ -8,7 +8,7 @@ const Overview = styled.div`
   margin-bottom: 40px;
 `;
 
-const OverviewHeaderWrapper = styled.div`
+const OverviewHeaderWrapper = styled.div<{ isMobile: boolean }>`
   width: 100%;
   text-align: ${props => (props.isMobile ? 'left' : 'center')};
   font-weight: bold;
@@ -22,7 +22,7 @@ const OverviewHeader = ({ ...props }) => {
   return <OverviewHeaderWrapper isMobile={isMobile} {...props} />;
 };
 
-const OverviewContentWrapper = styled.div`
+const OverviewContentWrapper = styled.div<{ isMobile: boolean }>`
   display: flex;
   justify-content: ${props => (props.isMobile ? 'normal' : 'space-around')};
   align-items: ${props => (props.isMobile ? 'normal' : 'center')};

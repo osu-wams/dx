@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import styledMap from 'styled-map';
 
-const Table = styled.table`
+const Table = styled.table<{ striped: boolean; variant: 'basic' | 'compact' | 'default' }>`
   border: ${styledMap('variant', {
     basic: 'none',
     compact: 'none',
@@ -37,15 +37,5 @@ const Table = styled.table`
     }
   `};
 `;
-
-Table.propTypes = {
-  variant: PropTypes.oneOf(['default', 'compact', 'basic']),
-  striped: PropTypes.bool
-};
-
-Table.defaultProps = {
-  variant: 'default',
-  striped: false
-};
 
 export default Table;

@@ -2,6 +2,7 @@ import React from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import Icon from '../ui/Icon';
 import { faMapMarkerAlt, faEnvelope, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
+import { parse } from 'date-fns';
 import Button, { CloseButton } from '../ui/Button';
 import {
   List,
@@ -17,8 +18,14 @@ import { getIconByScheduleType } from './course-utils';
 import { Color } from '../theme';
 import Divider from '../ui/Divider';
 import MoreInfoLink from '../ui/MoreInfoLink';
+import { CourseScheduleAttributes } from '../api/student/course-schedule';
+import { FC } from 'react';
 
-const Course = ({
+const Course: FC<{
+  attributes: CourseScheduleAttributes;
+  isOpen: boolean;
+  toggleCourse: Function;
+}> = ({
   attributes: { courseTitle, courseNumber, courseSubject, faculty, meetingTimes },
   isOpen,
   toggleCourse
@@ -52,7 +59,7 @@ const Course = ({
                   {room} {building} <br />
                   {beginDate != endDate
                     ? weeklySchedule.map((day, index) => day)
-                    : formatDate(beginDate, 'noYear')}{' '}
+                    : formatDate(parse(beginDate), 'noYear')}{' '}
                   &middot; {formatTime(beginTime)} - {formatTime(endTime)}
                 </ListItemDescription>
               </ListItemText>

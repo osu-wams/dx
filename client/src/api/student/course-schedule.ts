@@ -34,7 +34,7 @@ export type CourseScheduleAttributes = {
 export type Faculty = {
   email: string;
   name: string;
-  osuID: string;
+  osuId: string;
   primary: boolean;
 };
 
@@ -50,6 +50,7 @@ export type MeetingTime = {
   hoursPerWeek: number;
   room: string;
   scheduleType: string;
+  scheduleDescription: string;
   weeklySchedule: string[];
 };
 

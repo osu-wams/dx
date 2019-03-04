@@ -20,17 +20,11 @@ import course_list from '../api/student/__mocks__/courses.data';
 import { Color } from '../theme';
 // import MoreInfoLink from '../ui/MoreInfoLink';
 
-type Props = {
-  initialCourses: CourseSchedule;
-  courseOpen: boolean;
-  courseAttr: CourseScheduleAttributes;
-};
-
 // TODO: set initialCourses to call api instead of mock data
-let Courses: FC<Props> = ({ initialCourses, courseOpen, courseAttr }) => {
+let Courses = () => {
   const [courses, setCourses] = useState<CourseSchedule[]>([]);
-  const [isOpen, setOpen] = useState(courseOpen);
-  const [courseAttributes, setCourseAttributes] = useState(courseAttr);
+  const [isOpen, setOpen] = useState(false);
+  const [courseAttributes, setCourseAttributes] = useState<CourseScheduleAttributes | null>(null);
 
   // Hides or shows course details
   const toggleCourse = courseAttributes => {
@@ -68,7 +62,7 @@ let Courses: FC<Props> = ({ initialCourses, courseOpen, courseAttr }) => {
               }
             }) => (
               <ListItem key={id}>
-                <ListItemContent as="button" onClick={() => toggleCourse(attributes)}>
+                <ListItemContent onClick={() => toggleCourse(attributes)}>
                   <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
                   <ListItemText>
                     <ListItemHeader>
@@ -86,7 +80,7 @@ let Courses: FC<Props> = ({ initialCourses, courseOpen, courseAttr }) => {
             )
           )}
         </List>
-        {isOpen && <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />}
+        {isOpen && courseAttributes && <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />}
       </CardContent>
       <CardFooter>
         <Icon icon={faInfoCircle} />
@@ -99,5 +93,7 @@ let Courses: FC<Props> = ({ initialCourses, courseOpen, courseAttr }) => {
     </Card>
   );
 };
+
+// <ListItemContent as="button" onClick={() => toggleCourse(attributes)}>
 
 export default Courses;
