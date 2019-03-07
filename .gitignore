@@ -2,6 +2,8 @@
 .DS_STORE
 .idea
 client/build
+cypress/videos
+cypress/screenshots
 **/coverage
 logs/
 node_modules/

@@ -1,3 +1,5 @@
+// Note: This needs to be a .js file. Using a .ts won't work with CRA.
+
 const proxy = require('http-proxy-middleware');
 
 module.exports = app => {

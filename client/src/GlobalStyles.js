@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { Color, theme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -12,12 +13,18 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-size: ${props => props.theme.fontSize.normal};
+    font-size: ${theme.fontSize[16]};
     line-height: 1.8;
-    color: ${props => props.theme.colors.charcoal};
+    color: ${Color['neutral-700']};
+  }
+  body:not(.user-is-tabbing) button:focus,
+  body:not(.user-is-tabbing) input:focus,
+  body:not(.user-is-tabbing) select:focus,
+  body:not(.user-is-tabbing) textarea:focus {
+    outline: none;
   }
   #root {
-    background-color: #E5E5E5;
+    background-color: ${Color['neutral-100']};
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -26,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: inherit;
   }
   a {
-    color: ${props => props.theme.colors.stratosphere};
+    color: ${Color['stratosphere-400']};
   }
 `;
 

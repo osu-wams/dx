@@ -1,8 +1,14 @@
 import React from 'react';
-import { render } from '../../componentTestUtils';
-import { fireEvent, waitForElement } from 'react-testing-library';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { render, fireEvent, waitForElement } from 'react-testing-library';
 import Header from '../Header';
 import App from '../../App';
+
+const mockAxios = new MockAdapter(axios);
+
+mockAxios.onGet(/\/api\/masquerade/).reply(200, { masqueradeId: null });
+mockAxios.onPost(/\/api\/masquerade/).reply(200, '');
 
 test('renders', () => {
   render(<Header />);

@@ -2,10 +2,20 @@ const { Router } = require('express');
 const request = require('request-promise');
 const config = require('config');
 const { getToken } = require('./util');
+const { getUpcomingAssignments } = require('./modules/canvas');
 
 const BASE_URL = `${config.get('osuApi.baseUrl')}/students`;
 
 const router = new Router();
+
+router.get('/assignments', async (req, res) => {
+  try {
+    const apiResponse = await getUpcomingAssignments(req.user.masqueradeId || req.user.osuId);
+    res.send(apiResponse);
+  } catch (err) {
+    res.status(500).send('Unable to retrieve assignments.');
+  }
+});
 
 router.get('/academic-status', async (req, res) => {
   try {

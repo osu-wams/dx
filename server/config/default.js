@@ -5,6 +5,10 @@ module.exports = {
     clientSecret: '',
     baseUrl: 'https://oregonstateuniversity-dev.apigee.net/v1'
   },
+  canvasApi: {
+    token: '',
+    baseUrl: 'https://oregonstate.test.instructure.com/api/v1'
+  },
   saml: {
     cert: '',
     pvk: ''

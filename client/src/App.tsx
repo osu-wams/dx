@@ -6,19 +6,18 @@ import styled, { ThemeProvider } from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import axios from 'axios';
 import GlobalStyles from './GlobalStyles';
-import theme from './theme';
+import { theme } from './theme';
 import Header from './ui/Header';
-import MainNav from './ui/MainNav';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Academics from './pages/Academics';
-import Events from './pages/Events';
+import Experience from './pages/Experience';
 import Finances from './pages/Finances';
-import Services from './pages/Services';
+import Tools from './pages/Tools';
 import PageNotFound from './pages/PageNotFound';
 
 const Router = styled(ReachRouter)`
-  padding: ${props => props.theme.spacing.unit * 2}px;
+  padding: ${theme.spacing.unit * 2}px;
   width: 100%;
 `;
 
@@ -26,7 +25,6 @@ const ContentWrapper = styled.div`
   max-width: 1024px;
   width: 100%;
   margin: 0 auto;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,35 +58,53 @@ const App = () => {
       .catch(() => {
         window.location.href = '/login';
       });
+
+    // Manage focus styles on keyboard navigable elements.
+    //   - Add focus styles if tab used to navigate.
+    //   - Start listening for clicks to remove focus styles.
+    const handleTabOnce = e => {
+      if (e.key === 'Tab') {
+        document.body.classList.add('user-is-tabbing');
+        window.removeEventListener('keydown', handleTabOnce);
+        window.addEventListener('mousedown', handleMouseDownOnce);
+      }
+    };
+    //   - Remove focus styles if mouse used to navigate.
+    //   - Start listening for keydown to add focus styles.
+    const handleMouseDownOnce = () => {
+      document.body.classList.remove('user-is-tabbing');
+      window.removeEventListener('mousedown', handleMouseDownOnce);
+      window.addEventListener('keydown', handleTabOnce);
+    };
+
+    //   - Listen for keyboard navigation to start.
+    window.addEventListener('keydown', handleTabOnce);
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <UserContext.Provider value={user}>
-        <GlobalStyles />
-        <Header />
-        <ContentWrapper>
-          <MainNav />
-          <Location>
-            {({ location }) => (
-              <PoseGroup>
-                <RouteContainer key={location.key} style={{ width: '100%' }}>
-                  <Router location={location}>
-                    <RouterPage path="/" pageComponent={<Dashboard />} />
-                    <RouterPage path="profile" pageComponent={<Profile />} />
-                    <RouterPage path="academics" pageComponent={<Academics />} />
-                    <RouterPage path="events" pageComponent={<Events />} />
-                    <RouterPage path="finances" pageComponent={<Finances />} />
-                    <RouterPage path="services" pageComponent={<Services />} />
-                    <RouterPage default pageComponent={<PageNotFound />} />
-                  </Router>
-                </RouteContainer>
-              </PoseGroup>
-            )}
-          </Location>
-        </ContentWrapper>
-      </UserContext.Provider>
-    </ThemeProvider>
+    <UserContext.Provider value={user}>
+      <GlobalStyles />
+      <Header />
+      <ContentWrapper>
+        <Location>
+          {({ location }) => (
+            <PoseGroup>
+              <RouteContainer key={location.key} style={{ width: '100%' }}>
+                <Router location={location}>
+                  <RouterPage path="/" pageComponent={<Dashboard />} />
+                  <RouterPage path="profile" pageComponent={<Profile />} />
+                  <RouterPage path="academics" pageComponent={<Academics />} />
+                  <RouterPage path="experience" pageComponent={<Experience />} />
+                  <RouterPage path="finances" pageComponent={<Finances />} />
+                  <RouterPage path="tools" pageComponent={<Tools />} />
+                  <RouterPage default pageComponent={<PageNotFound />} />
+                </Router>
+              </RouteContainer>
+            </PoseGroup>
+          )}
+        </Location>
+      </ContentWrapper>
+    </UserContext.Provider>
   );
 };
 

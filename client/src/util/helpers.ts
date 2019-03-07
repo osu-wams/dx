@@ -27,10 +27,13 @@ export function formatTime(hours: string) {
 /* Format our day and time into preferred format
 using the npm package date-fns. We change number dates to:
 "December 09, 2018" format. */
-export function formatDate(date: number, type: string = 'long') {
+export function formatDate(date: Date, type: string = 'long') {
   // Compact format returns 10/20/19
   if (type === 'compact') {
     return format(date, 'MM/DD/YY');
+  }
+  if (type === 'noYear') {
+    return format(date, 'MMMM D');
   }
   return format(date, 'MMMM DD, YYYY');
 }
@@ -52,4 +55,8 @@ export function formatDollars(amount: number) {
   }
 
   return result;
+}
+
+export function singularPlural(quantity: number, word: string) {
+  return quantity != 1 ? word + 's' : word;
 }

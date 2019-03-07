@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../componentTestUtils';
+import { render } from 'react-testing-library';
 import Academics from '../Academics';
 
 test('renders', () => {
