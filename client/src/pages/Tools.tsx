@@ -16,8 +16,10 @@ import { Color, theme, shadows } from '../theme';
 import useMediaQuery from '../util/useMediaQuery';
 import { CardBase } from '../ui/Card';
 import osuIcon from '../assets/logo.png';
+import useDebounce from '../util/useDebounce';
 
-const getServices = (query) => axios.get('/api/services').then(res => res.data);
+const getServices = query =>
+  axios.get(`/api/services${query ? `?query=${query}` : ''}`).then(res => res.data);
 const getServicesByCategory = categoryId =>
   axios.get(`/api/services?category=${categoryId}`).then(res => res.data);
 const getCategories = () => axios.get('/api/services/categories').then(res => res.data);
@@ -28,6 +30,7 @@ const Tools = () => {
   const [categories, setCategories] = useState<any>([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 300);
   const [isInputActive, setIsInputActive] = useState(false);
 
   // Load category data on initial render
@@ -55,6 +58,16 @@ const Tools = () => {
         .catch(console.log);
     }
   }, [selectedCategory]);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      getServices(debouncedQuery)
+        .then(res => {
+          setServices(res.data);
+        })
+        .catch(console.log);
+    }
+  }, [debouncedQuery]);
 
   const getCategoryById = categoryId => categories.find(e => e.id === categoryId);
 
