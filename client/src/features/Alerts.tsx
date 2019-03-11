@@ -45,7 +45,6 @@ const AlertContent = styled(CardContent)`
 const Alerts = () => {
   const [alert, setAlert] = useState<RaveAlert[]>([]);
 
-  // Populate assignment data for current user
   useEffect(() => {
     getAlerts()
       .then(setAlert)
@@ -55,7 +54,6 @@ const Alerts = () => {
   if (alert.length) {
     return (
       <AlertWrapper>
-        {console.log(alert[0].title)}
         <AlertCard>
           <AlertHeader
             title={alert[0].title}

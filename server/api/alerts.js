@@ -12,7 +12,6 @@ alerts.get('/', async (req, res) => {
     // Rave Alerts come as an RSS feed
     const { items } = await parser.parseURL(BASE_URL);
     res.send(items);
-    console.log(items);
   } catch (err) {
     res.status(500).send('Unable to retrieve alerts.');
   }
