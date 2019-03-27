@@ -32,7 +32,8 @@ export enum Color {
   'pine-400' = '#4A773C', // Base shade
   'pine-500' = '#3C692E',
   'pine-600' = '#254A1A',
-  'pine-700' = '#142E0C'
+  'pine-700' = '#142E0C',
+  'lava-400' = '#C72127'
 }
 
 export const shadows = {
@@ -42,9 +43,17 @@ export const shadows = {
   4: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
 };
 
+export const breakpoints = {
+  '768': '768px',
+  '1024': '1024px'
+};
+
 export const theme = {
   spacing: {
     unit: 8
+  },
+  widths: {
+    contentMax: '1024px'
   },
   borderRadius: '8px',
   fontSize: {

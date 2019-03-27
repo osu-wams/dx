@@ -32,9 +32,11 @@ export function formatDate(date: Date, type: string = 'long') {
   if (type === 'compact') {
     return format(date, 'MM/DD/YY');
   }
+  // noYear returns: November 6
   if (type === 'noYear') {
     return format(date, 'MMMM D');
   }
+  // Default returns: November 06, 2018
   return format(date, 'MMMM DD, YYYY');
 }
 

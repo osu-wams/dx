@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     font-size: ${theme.fontSize[16]};
-    line-height: 1.8;
+    line-height: 1.5;
     color: ${Color['neutral-700']};
   }
   body:not(.user-is-tabbing) button:focus,

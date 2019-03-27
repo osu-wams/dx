@@ -6,7 +6,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import axios from 'axios';
 import GlobalStyles from './GlobalStyles';
-import { theme } from './theme';
+import { theme, breakpoints } from './theme';
 import Header from './ui/Header';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
@@ -15,6 +15,7 @@ import Experience from './pages/Experience';
 import Finances from './pages/Finances';
 import Tools from './pages/Tools';
 import PageNotFound from './pages/PageNotFound';
+import Alerts from './features/Alerts';
 
 const Router = styled(ReachRouter)`
   padding: ${theme.spacing.unit * 2}px;
@@ -22,7 +23,7 @@ const Router = styled(ReachRouter)`
 `;
 
 const ContentWrapper = styled.div`
-  max-width: 1024px;
+  max-width: ${breakpoints[1024]};
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -85,6 +86,7 @@ const App = () => {
     <UserContext.Provider value={user}>
       <GlobalStyles />
       <Header />
+      <Alerts />
       <ContentWrapper>
         <Location>
           {({ location }) => (

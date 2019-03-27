@@ -1,9 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
 import PageTitle from '../ui/PageTitle';
 import CourseScheduleCard from '../features/CourseScheduleCard';
 import UpcomingAssignments from '../features/UpcomingAssignments';
 import FluffCard from '../ui/FluffCard';
-import styled from 'styled-components';
 
 // Todo: Refactor out to new component
 const PageContent = styled.div`
