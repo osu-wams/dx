@@ -23,19 +23,7 @@ const Dashboard = () => {
       <PageContent>
         <CourseScheduleCard />
         <UpcomingAssignments />
-        <FluffCard
-          items={[
-            {
-              title: 'Fluff Title 1',
-              text:
-                'Let us wax poetic about the beauty of the cheeseburger. The flavour gracefully dances across your palate like a majestic figure skater on ice.'
-            },
-            {
-              title: 'Fluff Title 2',
-              text: 'This is a shorter description.'
-            }
-          ]}
-        />
+        <FluffCard />
       </PageContent>
     </div>
   );

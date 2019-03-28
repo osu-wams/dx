@@ -12,7 +12,10 @@ announcements.get('/', async (req, res) => {
     if (included) {
       included.forEach(item => {
         const matchingAnnouncement = data.find(e => {
-          return e.relationships.field_announcement_image.data.id === item.id;
+          return (
+            e.relationships.field_announcement_image.data &&
+            e.relationships.field_announcement_image.data.id === item.id
+          );
         });
         if (matchingAnnouncement) {
           data[data.indexOf(matchingAnnouncement)].attributes.background_image = `${baseUrl}${
