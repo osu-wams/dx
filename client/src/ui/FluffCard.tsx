@@ -1,30 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import { faChevronCircleLeft, faChevronCircleRight } from '@fortawesome/pro-light-svg-icons';
+/* eslint-disable no-use-before-define */
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { faArrowLeft, faArrowRight, faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
-import { useSwipeable, Swipeable } from 'react-swipeable';
+import { Swipeable } from 'react-swipeable';
 import { CardBase } from './Card';
 import Icon from '../ui/Icon';
 import { Color, theme } from '../theme';
 import useMediaQuery from '../util/useMediaQuery';
+import { getAnnouncements } from '../api/announcements';
+import Button from '../ui/Button';
 
-const FluffCardWrapper = styled(CardBase)`
-  background-color: ${Color['stratosphere-100']};
-  padding: ${theme.spacing.unit * 2}px;
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+const ButtonWithIcon = styled(Button)`
+  & > svg {
+    margin-left: ${theme.spacing.unit * 2}px;
+  }
 `;
 
 const FluffCardTitle = styled.div`
-  color: ${Color['stratosphere-600']};
   font-size: ${theme.fontSize['18']};
   font-weight: 600;
 `;
 
 const FluffCardText = styled.div`
-  color: ${Color['stratosphere-500']};
   font-size: ${theme.fontSize['16']};
+  margin-bottom: ${theme.spacing.unit}px;
+`;
+
+const FluffCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
+  color: ${Color['neutral-600']};
+  background-color: ${Color.white};
+  padding: ${theme.spacing.unit * 2}px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  & ${FluffCardTitle} {
+    color: ${Color['neutral-700']};
+  }
+  & ${FluffCardText} {
+    color: ${Color['neutral-600']};
+  }
+  ${props => {
+    if (props.imageUrl) {
+      return `
+        color: ${Color.white};
+        background:
+          /* top, transparent black, faked with gradient */ 
+          linear-gradient(
+            rgba(0, 0, 0, 0.55), 
+            rgba(0, 0, 0, 0.55)
+          ),
+          /* bottom, image */
+          url(${props.imageUrl}) no-repeat center;
+        background-size: cover;
+        & ${FluffCardTitle} {
+          color: ${Color.white}
+        }
+        & ${FluffCardText} {
+          color: ${Color.white}
+        }
+      `;
+    }
+  }}
+`;
+
+const ActionLink = styled.a`
+  :link,
+  :visited,
+  :hover,
+  :active {
+    text-decoration: none;
+  }
+  cursor: default;
 `;
 
 const CarouselButtons = styled.div`
@@ -46,88 +95,149 @@ const FluffCardBody = styled.div`
 `;
 
 const FluffCardClickableIcon = styled.div`
+  font-size: ${theme.fontSize['12']};
   display: inline;
   cursor: pointer;
+  margin: ${theme.spacing.unit * 2}px;
 `;
 
 const CarouselButton = styled.button<{ active: boolean }>`
   outline: none;
-  border: 1px solid ${Color['stratosphere-200']};
+  border: 1px solid ${props => (props.active ? Color['neutral-500'] : Color['neutral-300'])};
   padding: 0;
   margin: 4px;
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  background-color: ${props =>
-    props.active ? Color['stratosphere-400'] : Color['stratosphere-100']};
+  background-color: ${props => (props.active ? Color['neutral-300'] : Color['neutral-200'])};
 `;
 
-const FluffCardContent = ({ item }) => (
-  <FluffCardContentWrapper>
-    <FluffCardBody>
-      <FluffCardTitle>{item.title}</FluffCardTitle>
-      <FluffCardText>{item.text}</FluffCardText>
-    </FluffCardBody>
-  </FluffCardContentWrapper>
-);
-
-const FluffCard = ({ items }) => {
-  // Set up some state for keeping track of which item to display
-  const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  const [timer, setTimer] = useState<number | undefined>(undefined);
-  const isMobile = !useMediaQuery('(min-width: 768px)');
-
-  const startTimer = () => {
-    setTimer(
-      window.setInterval(() => {
-        setCurrentItemIndex(currentItemIndex => (currentItemIndex + 1) % items.length);
-      }, 5000)
-    );
-  };
-
-  useEffect(() => {
-    startTimer();
-    return () => window.clearInterval(timer);
-  }, []);
+const ActionButton = ({ item }) => {
+  if (!item || !item.attributes || !item.attributes.field_announcement_action) {
+    return null;
+  }
 
   return (
-    <FluffCardWrapper>
+    <ButtonWithIcon>
+      {item.attributes.field_announcement_action.title}
+      <Icon icon={faLongArrowRight} color={Color.white} />
+    </ButtonWithIcon>
+  );
+};
+
+const FluffCardContent = ({ item }) => {
+  if (!item) {
+    return null;
+  }
+
+  if (item.attributes.field_announcement_action) {
+    return (
+      <FluffCardContentWrapper>
+        <ActionLink href={item.attributes.field_announcement_action.uri}>
+          <FluffCardBody>
+            <FluffCardTitle>{item.attributes.title}</FluffCardTitle>
+            <FluffCardText>{item.attributes.field_announcement_body}</FluffCardText>
+            <ActionButton item={item} />
+          </FluffCardBody>
+        </ActionLink>
+      </FluffCardContentWrapper>
+    );
+  }
+
+  return (
+    <FluffCardContentWrapper>
+      <FluffCardBody>
+        <FluffCardTitle>{item.attributes.title}</FluffCardTitle>
+        <FluffCardText>{item.attributes.field_announcement_body}</FluffCardText>
+        <ActionButton item={item} />
+      </FluffCardBody>
+    </FluffCardContentWrapper>
+  );
+};
+
+const FluffCard = () => {
+  // Set up some state for keeping track of which item to display
+  const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  const [items, setItems] = useState<any>([]);
+  const isMobile = !useMediaQuery('(min-width: 768px)');
+  const timer = useRef<null | number>(null);
+
+  // Fetch data on load
+  useEffect(() => {
+    getAnnouncements()
+      .then(data => {
+        setItems(data);
+      })
+      .catch(console.log);
+  }, []);
+
+  // When items loaded, set a timer to show next item
+  useEffect(() => {
+    // Initialize timer if items exist and no prev timer set
+    if (items.length && !timer.current) {
+      timer.current = setInterval(showNextItem, 5000);
+    }
+    return () => {
+      stopTimer();
+    };
+  }, [items]);
+
+  const showNextItem = useCallback(() => {
+    setCurrentItemIndex(currentItemIndex => (currentItemIndex + 1) % items.length);
+  }, [items]);
+
+  const showPrevItem = useCallback(() => {
+    setCurrentItemIndex(currentItemIndex => (currentItemIndex + items.length - 1) % items.length);
+  }, [items]);
+
+  const stopTimer = () => {
+    if (timer.current) {
+      window.clearInterval(timer.current);
+    }
+  };
+
+  if (!items.length) {
+    return null;
+  }
+
+  return (
+    <div>
       {isMobile && (
         <Swipeable
           onSwipedLeft={() => {
-            setCurrentItemIndex(currentItemIndex === 0 ? items.length - 1 : currentItemIndex - 1);
-            clearInterval(timer);
-            startTimer();
+            showPrevItem();
+            stopTimer();
           }}
           onSwipedRight={() => {
-            setCurrentItemIndex((currentItemIndex + 1) % items.length);
-            clearInterval(timer);
-            startTimer();
+            showNextItem();
+            stopTimer();
           }}
         >
-          <FluffCardContent item={items[currentItemIndex]} />
+          <FluffCardWrapper imageUrl={items[currentItemIndex].attributes.background_image}>
+            <FluffCardContent item={items[currentItemIndex]} />
+          </FluffCardWrapper>
         </Swipeable>
       )}
       {!isMobile && (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <FluffCardClickableIcon
             onClick={() => {
-              setCurrentItemIndex(currentItemIndex === 0 ? items.length - 1 : currentItemIndex - 1);
-              clearInterval(timer);
-              startTimer();
+              showPrevItem();
+              stopTimer();
             }}
           >
-            <Icon icon={faChevronCircleLeft} color={Color['stratosphere-400']} size="2x" />
+            <Icon icon={faArrowLeft} color={Color['neutral-600']} size="2x" />
           </FluffCardClickableIcon>
-          <FluffCardContent item={items[currentItemIndex]} />
+          <FluffCardWrapper imageUrl={items[currentItemIndex].attributes.background_image}>
+            <FluffCardContent item={items[currentItemIndex]} />
+          </FluffCardWrapper>
           <FluffCardClickableIcon
             onClick={() => {
-              setCurrentItemIndex((currentItemIndex + 1) % items.length);
-              clearInterval(timer);
-              startTimer();
+              showNextItem();
+              stopTimer();
             }}
           >
-            <Icon icon={faChevronCircleRight} color={Color['stratosphere-400']} size="2x" />
+            <Icon icon={faArrowRight} color={Color['neutral-600']} size="2x" />
           </FluffCardClickableIcon>
         </div>
       )}
@@ -137,14 +247,13 @@ const FluffCard = ({ items }) => {
             key={index}
             onClick={() => {
               setCurrentItemIndex(index);
-              clearInterval(timer);
-              startTimer();
+              stopTimer();
             }}
             active={index === currentItemIndex}
           />
         ))}
       </CarouselButtons>
-    </FluffCardWrapper>
+    </div>
   );
 };
 
