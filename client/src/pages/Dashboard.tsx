@@ -13,6 +13,10 @@ const PageContent = styled.div`
   @media screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 16px;
+    .two-col {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
   }
 `;
 
@@ -23,7 +27,9 @@ const Dashboard = () => {
       <PageContent>
         <CourseScheduleCard />
         <UpcomingAssignments />
-        <FluffCard />
+        <div className="two-col">
+          <FluffCard />
+        </div>
       </PageContent>
     </div>
   );
