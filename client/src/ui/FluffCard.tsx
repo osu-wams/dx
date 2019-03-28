@@ -11,7 +11,15 @@ import useMediaQuery from '../util/useMediaQuery';
 import { getAnnouncements } from '../api/announcements';
 import Button from '../ui/Button';
 
-const ButtonWithIcon = styled(Button)`
+const ButtonWithIcon = styled(Button).attrs({
+  as: 'a'
+})`
+  :link,
+  :visited,
+  :hover,
+  :active {
+    text-decoration: none;
+  }
   & > svg {
     margin-left: ${theme.spacing.unit * 2}px;
   }
@@ -24,7 +32,7 @@ const FluffCardTitle = styled.div`
 
 const FluffCardText = styled.div`
   font-size: ${theme.fontSize['16']};
-  margin-bottom: ${theme.spacing.unit}px;
+  margin-bottom: ${theme.spacing.unit * 2}px;
 `;
 
 const FluffCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
@@ -66,16 +74,6 @@ const FluffCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   }}
 `;
 
-const ActionLink = styled.a`
-  :link,
-  :visited,
-  :hover,
-  :active {
-    text-decoration: none;
-  }
-  cursor: default;
-`;
-
 const CarouselButtons = styled.div`
   display: flex;
   justify-content: center;
@@ -112,44 +110,27 @@ const CarouselButton = styled.button<{ active: boolean }>`
   background-color: ${props => (props.active ? Color['neutral-300'] : Color['neutral-200'])};
 `;
 
-const ActionButton = ({ item }) => {
-  if (!item || !item.attributes || !item.attributes.field_announcement_action) {
-    return null;
-  }
-
-  return (
-    <ButtonWithIcon>
-      {item.attributes.field_announcement_action.title}
-      <Icon icon={faLongArrowRight} color={Color.white} />
-    </ButtonWithIcon>
-  );
-};
-
 const FluffCardContent = ({ item }) => {
   if (!item) {
     return null;
   }
 
-  if (item.attributes.field_announcement_action) {
-    return (
-      <FluffCardContentWrapper>
-        <ActionLink href={item.attributes.field_announcement_action.uri}>
-          <FluffCardBody>
-            <FluffCardTitle>{item.attributes.title}</FluffCardTitle>
-            <FluffCardText>{item.attributes.field_announcement_body}</FluffCardText>
-            <ActionButton item={item} />
-          </FluffCardBody>
-        </ActionLink>
-      </FluffCardContentWrapper>
-    );
-  }
+  const announcementAction =
+    item.attributes && item.attributes.field_announcement_action
+      ? item.attributes.field_announcement_action
+      : null;
 
   return (
     <FluffCardContentWrapper>
       <FluffCardBody>
         <FluffCardTitle>{item.attributes.title}</FluffCardTitle>
         <FluffCardText>{item.attributes.field_announcement_body}</FluffCardText>
-        <ActionButton item={item} />
+        {announcementAction && (
+          <ButtonWithIcon href={announcementAction.uri}>
+            {item.attributes.field_announcement_action.title}
+            <Icon icon={faLongArrowRight} color={Color.white} />
+          </ButtonWithIcon>
+        )}
       </FluffCardBody>
     </FluffCardContentWrapper>
   );
