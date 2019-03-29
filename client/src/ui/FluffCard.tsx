@@ -92,10 +92,9 @@ const FluffCardBody = styled.div`
   text-align: left;
 `;
 
-const FluffCardClickableIcon = styled.div`
+const FluffCardClickableIcon = styled(Button)`
+  background: transparent;
   font-size: ${theme.fontSize['12']};
-  display: inline;
-  cursor: pointer;
   margin: ${theme.spacing.unit * 2}px;
 `;
 
@@ -122,7 +121,7 @@ const FluffCardContent = ({ item }) => {
 
   return (
     <FluffCardContentWrapper>
-      <FluffCardBody>
+      <FluffCardBody aria-live="polite">
         <FluffCardTitle>{item.attributes.title}</FluffCardTitle>
         <FluffCardText>{item.attributes.field_announcement_body}</FluffCardText>
         {announcementAction && (
@@ -202,6 +201,7 @@ const FluffCard = () => {
       {!isMobile && (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <FluffCardClickableIcon
+            aria-label="previous announcement"
             onClick={() => {
               showPrevItem();
               stopTimer();
@@ -213,6 +213,7 @@ const FluffCard = () => {
             <FluffCardContent item={items[currentItemIndex]} />
           </FluffCardWrapper>
           <FluffCardClickableIcon
+            aria-label="next announcement"
             onClick={() => {
               showNextItem();
               stopTimer();
@@ -225,6 +226,7 @@ const FluffCard = () => {
       <CarouselButtons>
         {items.map((item, index) => (
           <CarouselButton
+            aria-label={item.attributes.title}
             key={index}
             onClick={() => {
               setCurrentItemIndex(index);
