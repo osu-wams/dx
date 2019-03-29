@@ -140,7 +140,6 @@ const FluffCard = () => {
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [items, setItems] = useState<any>([]);
   const isMobile = !useMediaQuery('(min-width: 768px)');
-  const timer = useRef<null | number>(null);
 
   // Fetch data on load
   useEffect(() => {
@@ -151,17 +150,6 @@ const FluffCard = () => {
       .catch(console.log);
   }, []);
 
-  // When items loaded, set a timer to show next item
-  useEffect(() => {
-    // Initialize timer if items exist and no prev timer set
-    if (items.length && !timer.current) {
-      timer.current = setInterval(showNextItem, 5000);
-    }
-    return () => {
-      stopTimer();
-    };
-  }, [items]);
-
   const showNextItem = useCallback(() => {
     setCurrentItemIndex(currentItemIndex => (currentItemIndex + 1) % items.length);
   }, [items]);
@@ -169,12 +157,6 @@ const FluffCard = () => {
   const showPrevItem = useCallback(() => {
     setCurrentItemIndex(currentItemIndex => (currentItemIndex + items.length - 1) % items.length);
   }, [items]);
-
-  const stopTimer = () => {
-    if (timer.current) {
-      window.clearInterval(timer.current);
-    }
-  };
 
   if (!items.length) {
     return null;
@@ -186,11 +168,9 @@ const FluffCard = () => {
         <Swipeable
           onSwipedLeft={() => {
             showPrevItem();
-            stopTimer();
           }}
           onSwipedRight={() => {
             showNextItem();
-            stopTimer();
           }}
         >
           <FluffCardWrapper imageUrl={items[currentItemIndex].attributes.background_image}>
@@ -204,7 +184,6 @@ const FluffCard = () => {
             aria-label="previous announcement"
             onClick={() => {
               showPrevItem();
-              stopTimer();
             }}
           >
             <Icon icon={faArrowLeft} color={Color['neutral-600']} size="2x" />
@@ -216,7 +195,6 @@ const FluffCard = () => {
             aria-label="next announcement"
             onClick={() => {
               showNextItem();
-              stopTimer();
             }}
           >
             <Icon icon={faArrowRight} color={Color['neutral-600']} size="2x" />
@@ -230,7 +208,6 @@ const FluffCard = () => {
             key={index}
             onClick={() => {
               setCurrentItemIndex(index);
-              stopTimer();
             }}
             active={index === currentItemIndex}
           />
