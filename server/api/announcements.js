@@ -2,7 +2,7 @@ const { Router } = require('express');
 const request = require('request-promise');
 
 const baseUrl = 'http://dev-api-dx.pantheonsite.io';
-const announcementsUrl = `${baseUrl}/jsonapi/node/announcement?include=field_announcement_image`;
+const announcementsUrl = `${baseUrl}/jsonapi/node/announcement?include=field_announcement_image&sort=-created`;
 
 const announcements = Router();
 
