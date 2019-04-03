@@ -1,12 +1,12 @@
 /* eslint-disable no-use-before-define */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { faArrowLeft, faArrowRight, faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
 import { Swipeable } from 'react-swipeable';
 import { CardBase } from './Card';
 import Icon from '../ui/Icon';
-import { Color, theme } from '../theme';
+import { Color, theme, breakpoints } from '../theme';
 import useMediaQuery from '../util/useMediaQuery';
 import { getAnnouncements } from '../api/announcements';
 import Button from '../ui/Button';
@@ -55,12 +55,10 @@ const FluffCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
       return `
         color: ${Color.white};
         background:
-          /* top, transparent black, faked with gradient */ 
           linear-gradient(
             rgba(0, 0, 0, 0.55), 
             rgba(0, 0, 0, 0.55)
           ),
-          /* bottom, image */
           url(${props.imageUrl}) no-repeat center;
         background-size: cover;
         & ${FluffCardTitle} {
@@ -139,7 +137,7 @@ const FluffCard = () => {
   // Set up some state for keeping track of which item to display
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [items, setItems] = useState<any>([]);
-  const isMobile = !useMediaQuery('(min-width: 768px)');
+  const isMobile = !useMediaQuery(`(min-width: ${breakpoints[768]})`);
 
   // Fetch data on load
   useEffect(() => {
@@ -163,7 +161,7 @@ const FluffCard = () => {
   }
 
   return (
-    <div>
+    <>
       {isMobile && (
         <Swipeable
           onSwipedLeft={() => {
@@ -213,7 +211,7 @@ const FluffCard = () => {
           />
         ))}
       </CarouselButtons>
-    </div>
+    </>
   );
 };
 

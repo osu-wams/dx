@@ -52,9 +52,6 @@ export const theme = {
   spacing: {
     unit: 8
   },
-  widths: {
-    contentMax: '1024px'
-  },
   borderRadius: '8px',
   fontSize: {
     '12': '1.2rem',
