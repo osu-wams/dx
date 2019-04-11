@@ -3,9 +3,9 @@
 exports[`<Table /> BasicTable no border around table element 1`] = `
 .c0 {
   border: none;
-  border-radius: 0.28571429rem;
   border-collapse: separate;
   border-spacing: 0;
+  color: #696361;
   font-size: inherit;
   overflow-x: scroll;
 }
@@ -14,8 +14,9 @@ exports[`<Table /> BasicTable no border around table element 1`] = `
   padding: 0.4rem 0.8rem;
 }
 
-.c0 td:not(:first-child) {
-  border-left: 1px solid rgba(34,36,38,0.15);
+.c0 td:not(:first-child),
+.c0 th:not(:first-child) {
+  border-left: none;
 }
 
 .c0 tr:not(:first-child) td {
@@ -54,9 +55,9 @@ exports[`<Table /> BasicTable no border around table element 1`] = `
 exports[`<Table /> CompactTable smaller paddings and font size 1`] = `
 .c0 {
   border: none;
-  border-radius: 0.28571429rem;
   border-collapse: separate;
   border-spacing: 0;
+  color: #696361;
   font-size: 1.4rem;
   overflow-x: scroll;
 }
@@ -65,8 +66,9 @@ exports[`<Table /> CompactTable smaller paddings and font size 1`] = `
   padding: .2rem .4rem;
 }
 
-.c0 td:not(:first-child) {
-  border-left: 1px solid rgba(34,36,38,0.15);
+.c0 td:not(:first-child),
+.c0 th:not(:first-child) {
+  border-left: none;
 }
 
 .c0 tr:not(:first-child) td {
@@ -105,9 +107,9 @@ exports[`<Table /> CompactTable smaller paddings and font size 1`] = `
 exports[`<Table /> DefaultTable gets rendered with border around table 1`] = `
 .c0 {
   border: 1px solid rgba(34,36,38,0.15);
-  border-radius: 0.28571429rem;
   border-collapse: separate;
   border-spacing: 0;
+  color: #696361;
   font-size: inherit;
   overflow-x: scroll;
 }
@@ -116,7 +118,8 @@ exports[`<Table /> DefaultTable gets rendered with border around table 1`] = `
   padding: 0.4rem 0.8rem;
 }
 
-.c0 td:not(:first-child) {
+.c0 td:not(:first-child),
+.c0 th:not(:first-child) {
   border-left: 1px solid rgba(34,36,38,0.15);
 }
 
@@ -153,12 +156,77 @@ exports[`<Table /> DefaultTable gets rendered with border around table 1`] = `
 </div>
 `;
 
+exports[`<Table /> Stetch table gets 100% width 1`] = `
+.c0 {
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #696361;
+  font-size: inherit;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+.c0 td {
+  padding: 0.4rem 0.8rem;
+}
+
+.c0 td:not(:first-child),
+.c0 th:not(:first-child) {
+  border-left: none;
+}
+
+.c0 tr:not(:first-child) td {
+  border-top: 1px solid rgba(34,36,38,0.15);
+}
+
+<div>
+  <table
+    class="c0"
+  >
+    <caption>
+      Basic Table
+    </caption>
+    <tbody>
+      <tr
+        class=""
+      >
+        <td
+          class=""
+        >
+          One col
+        </td>
+        <td
+          class=""
+        >
+          Two col
+        </td>
+      </tr>
+      <tr
+        class=""
+      >
+        <td
+          class=""
+        >
+          One col
+        </td>
+        <td
+          class=""
+        >
+          Two col
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
 exports[`<Table /> StripedTable alternates background color on rows 1`] = `
 .c0 {
   border: none;
-  border-radius: 0.28571429rem;
   border-collapse: separate;
   border-spacing: 0;
+  color: #696361;
   font-size: inherit;
   overflow-x: scroll;
 }
@@ -167,8 +235,9 @@ exports[`<Table /> StripedTable alternates background color on rows 1`] = `
   padding: 0.4rem 0.8rem;
 }
 
-.c0 td:not(:first-child) {
-  border-left: 1px solid rgba(34,36,38,0.15);
+.c0 td:not(:first-child),
+.c0 th:not(:first-child) {
+  border-left: none;
 }
 
 .c0 tr:not(:first-child) td {

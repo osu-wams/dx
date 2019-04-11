@@ -89,9 +89,9 @@ const MainNav = () => (
       <Icon icon={faHiking} />
       Experience
     </NavLink>
-    <NavLink to="tools">
+    <NavLink to="resources">
       <Icon icon={faToolbox} />
-      Tools
+      Resources
     </NavLink>
   </Nav>
 );

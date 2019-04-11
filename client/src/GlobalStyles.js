@@ -35,6 +35,9 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: ${Color['stratosphere-400']};
   }
+  strong {
+    font-weight: 600;
+  }
 `;
 
 export default GlobalStyle;

@@ -13,9 +13,7 @@ import {
 import Icon from '../ui/Icon';
 import { faChevronDown, faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Color, theme, shadows } from '../theme';
-import useMediaQuery from '../util/useMediaQuery';
 import { CardBase } from '../ui/Card';
-import osuIcon from '../assets/logo.png';
 import useDebounce from '../util/useDebounce';
 
 const getServices = query =>
@@ -24,7 +22,7 @@ const getServicesByCategory = categoryId =>
   axios.get(`/api/services?category=${categoryId}`).then(res => res.data);
 const getCategories = () => axios.get('/api/services/categories').then(res => res.data);
 
-const Tools = () => {
+const Resources = () => {
   const isMounted = useRef(true);
   const [services, setServices] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
@@ -72,10 +70,10 @@ const Tools = () => {
   const getCategoryById = categoryId => categories.find(e => e.id === categoryId);
 
   return (
-    <div>
+    <div data-testid="resources-page">
       <SearchWrapper>
         <InputLabel>
-          <Icon icon={faSearch} /> {!isInputActive && !query && 'Find tools'}
+          <Icon icon={faSearch} /> {!isInputActive && !query && 'Find resources'}
         </InputLabel>
         <Input
           onFocus={() => setIsInputActive(true)}
@@ -172,4 +170,4 @@ const ServiceCardDescription = styled.div`
   color: ${Color.black};
 `;
 
-export default Tools;
+export default Resources;

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Router as ReachRouter, Location, RouteComponentProps } from '@reach/router';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import axios from 'axios';
 import GlobalStyles from './GlobalStyles';
@@ -13,7 +13,7 @@ import Profile from './pages/Profile';
 import Academics from './pages/Academics';
 import Experience from './pages/Experience';
 import Finances from './pages/Finances';
-import Tools from './pages/Tools';
+import Resources from './pages/Resources';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 
@@ -95,10 +95,10 @@ const App = () => {
                 <Router location={location}>
                   <RouterPage path="/" pageComponent={<Dashboard />} />
                   <RouterPage path="profile" pageComponent={<Profile />} />
-                  <RouterPage path="academics" pageComponent={<Academics />} />
+                  <RouterPage path="academics/*" pageComponent={<Academics />} />
                   <RouterPage path="experience" pageComponent={<Experience />} />
                   <RouterPage path="finances" pageComponent={<Finances />} />
-                  <RouterPage path="tools" pageComponent={<Tools />} />
+                  <RouterPage path="resources" pageComponent={<Resources />} />
                   <RouterPage default pageComponent={<PageNotFound />} />
                 </Router>
               </RouteContainer>

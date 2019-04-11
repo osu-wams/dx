@@ -1,6 +1,6 @@
 import { Link } from '@reach/router';
 import styled from 'styled-components';
-import { theme, Color } from '../../theme';
+import { theme, Color } from '../theme';
 
 const SubNav = styled.nav`
   display: flex;
