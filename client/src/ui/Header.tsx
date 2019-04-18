@@ -18,7 +18,7 @@ import MainNav from './MainNav';
 import Icon from './Icon';
 import { Color } from '../theme';
 import ServiceSearchButton from '../features/services/ServiceSearchButton';
-import UserContext from '../App';
+import { UserContext } from '../App';
 
 const HeaderWrapper = styled.div`
   display: flex;
