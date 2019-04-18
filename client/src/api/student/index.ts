@@ -1,7 +1,8 @@
 import axios from 'axios';
 import getCourseSchedule from './course-schedule';
+import getGrades from './grades';
 
-export { getCourseSchedule };
+export { getCourseSchedule, getGrades };
 
 // Todo: Replace rest of API calls with properly-typed versions.
 
@@ -16,8 +17,5 @@ export const getAccountBalance = () =>
 
 export const getAccountTransactions = () =>
   axios.get('/api/student/account-transactions').then(res => res.data);
-
-export const getGrades = (term = 'current') =>
-  axios.get(`/api/student/grades?term=${term}`).then(res => res.data);
 
 export const getAccountHolds = () => axios.get('/api/student/holds').then(res => res.data);

@@ -26,11 +26,11 @@ describe('Main navigation', () => {
       .getByTestId('experience-page');
   });
 
-  it('Can navigate to the Tools page', () => {
+  it('Can navigate to the Resources page', () => {
     //cy.visit('/');
-    cy.get('[href="/tools"]')
+    cy.get('[href="/resources"]')
       .click()
-      .getByTestId('tools-page');
+      .getByTestId('resources-page');
   });
 
   it('Can navigate back to the Homepage', () => {

@@ -96,11 +96,15 @@ router.get('/gpa', async (req, res) => {
 
 router.get('/grades', async (req, res) => {
   try {
-    const term = req.query.term || 'current';
+    const term = req.query.term;
+    let termParam = '';
+    if (term) {
+      termParam = `?term=${term}`;
+    }
     const bearerToken = await getToken();
     const apiResponse = await request({
       method: 'GET',
-      url: `${BASE_URL}/${req.user.masqueradeId || req.user.osuId}/grades?term=${term}`,
+      url: `${BASE_URL}/${req.user.masqueradeId || req.user.osuId}/grades${termParam}`,
       auth: { bearer: bearerToken },
       json: true
     });
