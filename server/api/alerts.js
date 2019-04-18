@@ -1,20 +1,18 @@
+//==========================================//
+//                /api/alerts               //
+//==========================================//
 const { Router } = require('express');
-const Parser = require('rss-parser');
-
-const parser = new Parser();
-
-const BASE_URL = 'https://www.getrave.com/rss/oregonstate/channel2';
+const { getAlerts } = require('./modules/rave-alerts');
 
 const alerts = Router();
 
-alerts.get('/', async (req, res) => {
-  try {
-    // Rave Alerts come as an RSS feed
-    const { items } = await parser.parseURL(BASE_URL);
-    res.send(items);
-  } catch (err) {
-    res.status(500).send('Unable to retrieve alerts.');
-  }
+alerts.get('/', (req, res) => {
+  getAlerts()
+    .then(data => res.send(data))
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Unable to retrieve alerts.');
+    });
 });
 
 module.exports = alerts;
