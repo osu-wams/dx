@@ -62,7 +62,7 @@ const Logo = styled.img`
 const Header = () => {
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
   const [masqueradeId, setMasqueradeId] = useState('');
-  const user = useContext(UserContext);
+  const user = useContext<any>(UserContext);
 
   useEffect(() => {
     loadMasqueradeId();
