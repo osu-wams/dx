@@ -42,7 +42,7 @@ interface User {
   email: String;
 }
 
-const UserContext = React.createContext<User>({} as User);
+export const UserContext = React.createContext<any>(null);
 
 const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
   props.pageComponent;

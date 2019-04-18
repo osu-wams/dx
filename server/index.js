@@ -4,11 +4,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
-const config = require('config');
+// const config = require('config');
 const logger = require('./logger');
 const auth = require('./auth');
 
-const ENV = config.get('env');
+// const ENV = config.get('env');
 
 // App Configuration
 const app = express();
@@ -26,10 +26,10 @@ const sessionOptions = {
   cookie: {}
 };
 
-if (ENV === 'production') {
-  sessionOptions.cookie.secure = true;
-  // TODO: Configure Redis session store
-}
+// if (ENV === 'production') {
+//   sessionOptions.cookie.secure = true;
+//   // TODO: Configure Redis session store
+// }
 
 app.use(session(sessionOptions));
 

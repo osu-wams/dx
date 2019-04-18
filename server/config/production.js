@@ -1,4 +1,5 @@
 module.exports = {
+  env: 'production',
   osuApi: {
     baseUrl: 'https://api.oregonstate.edu/v1'
   },
