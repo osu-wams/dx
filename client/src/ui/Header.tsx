@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +18,7 @@ import MainNav from './MainNav';
 import Icon from './Icon';
 import { Color } from '../theme';
 import ServiceSearchButton from '../features/services/ServiceSearchButton';
+import UserContext from '../App';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -61,6 +62,7 @@ const Logo = styled.img`
 const Header = () => {
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
   const [masqueradeId, setMasqueradeId] = useState('');
+  const user = useContext(UserContext);
 
   useEffect(() => {
     loadMasqueradeId();
@@ -129,7 +131,9 @@ const Header = () => {
               </UserButton>
               <ProfileMenuList>
                 <MenuItem onSelect={() => logout()}>Logout</MenuItem>
-                <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
+                {user && user.isAdmin && (
+                  <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
+                )}
                 <MenuLink to="profile" data-testid="profile-link">
                   View Profile
                 </MenuLink>

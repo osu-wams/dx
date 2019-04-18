@@ -26,10 +26,10 @@ const sessionOptions = {
   cookie: {}
 };
 
-if (ENV === 'production') {
-  sessionOptions.cookie.secure = true;
-  // TODO: Configure Redis session store
-}
+// if (ENV === 'production') {
+//   sessionOptions.cookie.secure = true;
+//   // TODO: Configure Redis session store
+// }
 
 app.use(session(sessionOptions));
 
