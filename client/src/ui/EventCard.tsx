@@ -20,13 +20,7 @@ const ButtonWithIcon = styled(Button).attrs({
   }
 `;
 
-const EventCardTitle = styled.a`
-  :link,
-  :visited,
-  :hover,
-  :active {
-    text-decoration: none;
-  }
+const EventCardTitle = styled.div`
   & > svg {
     margin-left: ${theme.spacing.unit * 2}px;
   }
@@ -73,27 +67,32 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   }}
 `;
 
-const EventCardBody = styled.div`
+const EventCardBody = styled.a`
+  :link,
+  :visited,
+  :hover,
+  :active {
+    text-decoration: none;
+  }
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
   flex: 2;
   text-align: left;
+  justify-content: center;
 `;
 
 const EventCardContent = ({ item }) => {
   return (
     <>
       {!item.body && (
-        <EventCardTitle aria-live="polite" href={item.action.link} target="_blank">
-          {item.title}
-        </EventCardTitle>
+        <EventCardBody href={item.action.link} target="_blank">
+          <EventCardTitle aria-live="polite">{item.title}</EventCardTitle>
+        </EventCardBody>
       )}
       {item.body && (
-        <EventCardBody>
-          <EventCardTitle as="div" aria-live="polite">
-            {item.title}
-          </EventCardTitle>
+        <EventCardBody as="div">
+          <EventCardTitle aria-live="polite">{item.title}</EventCardTitle>
           <EventCardText>{item.body}</EventCardText>
           <>
             {item.action.title && (
