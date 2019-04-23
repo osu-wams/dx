@@ -70,7 +70,6 @@ Auth.deserializeUser = (user, done) => {
 Auth.login = function(req, res, next) {
   return passport.authenticate('saml', function(err, user) {
     if (err) {
-      console.log(err);
       return next(err);
     }
     if (!user) {
@@ -81,7 +80,6 @@ Auth.login = function(req, res, next) {
 
     req.login(user, function(err) {
       if (err) {
-        console.log(err);
         return next(err);
       }
       res.redirect('/');

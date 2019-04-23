@@ -12,5 +12,9 @@ module.exports = {
   saml: {
     cert: '',
     pvk: ''
+  },
+  redis: {
+    host: '',
+    port: ''
   }
 };
