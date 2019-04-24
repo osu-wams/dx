@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2.1
+version: 2.2
 
 orbs:
   aws-ecr: circleci/aws-ecr@3.0.0
@@ -11,7 +11,7 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: circleci/node:8.12.0
+      - image: circleci/node:10.15.3
     working_directory: ~/project
 
 jobs:
@@ -19,22 +19,18 @@ jobs:
     executor: node-executor
     steps:
       - checkout
-
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
-
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-
       - persist_to_workspace:
           root: /home/circleci
           paths: project
@@ -44,47 +40,60 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-
       - run:
           name: Run Linter
           command: yarn run lint
-
       # - run:
       #     name: Run Tests
       #     command: yarn run test
-
       - run:
           name: Report to CodeCov
           command: npx codecov@3
-
       - persist_to_workspace:
           root: /home/circleci
           paths: project
 
-  build_client:
+  build_client: &build_client
     executor: node-executor
     steps:
       - attach_workspace:
           at: ~/
-      
       - run:
           name: Build Client
           command: yarn run build
-
       - persist_to_workspace:
           root: /home/circleci
           paths: project/client/build
 
-  deploy_client:
+  build_client-dev:
+    <<: *build_client
+  build_client-prod:
+    <<: *build_client
+
+  deploy_client: &deploy_client
     docker:
       - image: circleci/python:2.7
     steps:
       - attach_workspace:
           at: ~/
-      
       - aws-s3/sync:
           from: ~/project/client/build
-          to: 's3://dx-portal'
+          to: ${AWS_S3_BUCKET_URL}
+
+  deploy_client-dev:
+    <<: *deploy_client
+  deploy_client-prod:
+    <<: *deploy_client
+
+master-only: &master-only
+  branches:
+    only:
+      - master
+
+not-master: &not-master
+  branches:
+    ignore:
+      - master
 
 workflows:
   build_test_deploy:
@@ -93,30 +102,34 @@ workflows:
       - lint_test_coverage:
           requires:
             - install
-      - build_client:
+      - build_client-dev:
+          context: my-osu-dashboard-dev
           requires:
             - lint_test_coverage
+          filters: *not-master
+      - deploy_client-dev:
+          context: my-osu-dashboard-dev
+          requires:
+            - build_client-dev
+          filters: *not-master
+      - build_client-prod:
+          context: my-osu-dashboard-prod
+          requires:
+            - lint_test_coverage
+          filters: *master-only
       - approve_deploy_client:
           type: approval
+          context: my-osu-dashboard-prod
           requires:
-            - build_client
-          filters:
-            branches:
-              only:
-                - master
-      - deploy_client:
+            - build_client-prod
+          filters: *master-only
+      - deploy_client-prod:
+          context: my-osu-dashboard-prod
           requires:
             - approve_deploy_client
-          filters:
-            branches:
-              only:
-                - master
+          filters: *master-only
       - aws-ecr/build_and_push_image:
           repo: 'dx'
-          tag: '${CIRCLE_BUILD_NUM}'
+          tag: ${CIRCLE_BUILD_NUM}
           requires:
             - lint_test_coverage
-          filters:
-            branches:
-              only:
-                - master
