@@ -11,7 +11,8 @@ module.exports = {
   },
   saml: {
     cert: '',
-    pvk: ''
+    pvk: '',
+    callbackUrl: ''
   },
   redis: {
     host: '',

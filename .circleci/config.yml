@@ -85,6 +85,20 @@ jobs:
   deploy_client-prod:
     <<: *deploy_client
 
+  flush-cache: &flush-cache
+      executor: aws-cli/default
+      steps:
+        - aws-cli/install
+        - aws-cli/configure
+        - run:
+            name: Invalidate Index
+            command: aws cloudfront create-invalidation --distribution-id ${AWS_CLOUDFRONT_DISTRIBUTION_ID} --paths /index.html
+
+    flush-cache-dev:
+      <<: *flush-cache
+    flush-cache-prod:
+      <<: *flush-cache
+
 master-only: &master-only
   branches:
     only:
@@ -112,6 +126,11 @@ workflows:
           requires:
             - build_client-dev
           filters: *not-master
+      - flush-cache-dev:
+          requires:
+            - deploy_client-dev
+          context: my-osu-dashboard-dev
+          filters: *master-only
       - build_client-prod:
           context: my-osu-dashboard-prod
           requires:
@@ -133,3 +152,8 @@ workflows:
           tag: ${CIRCLE_BUILD_NUM}
           requires:
             - lint_test_coverage
+      - flush-cache-prod:
+          requires:
+            - deploy_client-prod
+          context: my-osu-dashboard-prod
+          filters: *master-only
