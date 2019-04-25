@@ -7,6 +7,7 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@3.0.0
   aws-s3: circleci/aws-s3@1.0.3
+  aws-cli: circleci/aws-cli@0.1.13
 
 executors:
   node-executor:
@@ -99,11 +100,15 @@ jobs:
   flush-cache-prod:
     <<: *flush-cache
 
+# /End of Jobs
+
+# For production only push master
 master-only: &master-only
   branches:
     only:
       - master
 
+#For development we are pushing all other branches except master
 not-master: &not-master
   branches:
     ignore:
