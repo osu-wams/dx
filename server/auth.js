@@ -11,7 +11,7 @@ let SAML_PVK = config.get('saml.pvk');
 // Need to replace the newlines pulled from environment variable with actual
 // newlines, otherwise passport-saml breaks.
 SAML_PVK = SAML_PVK.replace(/\\n/g, '\n');
-
+const SAML_CALLBACK_URL = config.get('saml.callbackUrl');
 const Auth = {};
 
 function parseSamlResult(user, done) {
@@ -36,9 +36,9 @@ if (ENV === 'production') {
       acceptedClockSkewMs: 500,
       disableRequestedAuthnContext: true,
       identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
-      callbackUrl: 'https://dev.my.oregonstate.edu/login/saml',
-      logoutUrl: 'https://login.oregonstate.edu/idp-dev/profile/Logout',
-      entryPoint: 'https://login.oregonstate.edu/idp-dev/profile/SAML2/Redirect/SSO',
+      callbackUrl: SAML_CALLBACK_URL,
+      logoutUrl: 'https://login.oregonstate.edu/idp/profile/Logout',
+      entryPoint: 'https://login.oregonstate.edu/idp/profile/SAML2/Redirect/SSO',
       issuer: 'https://my.oregonstate.edu',
       cert: SAML_CERT,
       privateCert: SAML_PVK,

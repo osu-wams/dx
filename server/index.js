@@ -51,6 +51,12 @@ passport.deserializeUser(auth.deserializeUser);
 app.get('/login', auth.login);
 app.get('/logout', auth.logout);
 
+// Health Check (path configured in cloudformation template)
+app.get('/healthcheck', (req, res) => {
+  console.log('Health Check Request');
+  res.status(200).end();
+});
+
 app.post('/login/saml', passport.authenticate('saml'), (req, res) => {
   res.redirect('/');
 });
