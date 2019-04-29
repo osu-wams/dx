@@ -14,6 +14,10 @@ SAML_PVK = SAML_PVK.replace(/\\n/g, '\n');
 const SAML_CALLBACK_URL = config.get('saml.callbackUrl');
 const Auth = {};
 
+// OSU SSO url (saml)
+const samlUrl = 'https://login.oregonstate.edu/idp/profile/';
+const samlLogout = samlUrl + 'Logout';
+
 function parseSamlResult(user, done) {
   const samlUser = {
     email: user['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'],
@@ -37,8 +41,8 @@ if (ENV === 'production') {
       disableRequestedAuthnContext: true,
       identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
       callbackUrl: SAML_CALLBACK_URL,
-      logoutUrl: 'https://login.oregonstate.edu/idp/profile/Logout',
-      entryPoint: 'https://login.oregonstate.edu/idp/profile/SAML2/Redirect/SSO',
+      logoutUrl: samlLogout,
+      entryPoint: samlUrl + 'Redirect/SSO',
       issuer: 'https://my.oregonstate.edu',
       cert: SAML_CERT,
       privateCert: SAML_PVK,
@@ -90,7 +94,7 @@ Auth.login = function(req, res, next) {
 Auth.logout = (req, res) => {
   req.logout();
   req.session.destroy();
-  res.redirect('https://login.oregonstate.edu/idp-dev/profile/Logout');
+  res.redirect(samlLogout);
 };
 
 Auth.ensureAuthenticated = (req, res, next) => {
