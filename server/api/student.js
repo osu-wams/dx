@@ -15,7 +15,9 @@ const router = new Router();
 router.get('/assignments', async (req, res) => {
   try {
     const apiResponse = await getUpcomingAssignments(req.user.masqueradeId || req.user.osuId);
-    res.send(apiResponse);
+    // Filter out just assignments
+    const assignments = apiResponse.filter(item => item.assignment !== undefined);
+    res.send(assignments);
   } catch (err) {
     res.status(500).send('Unable to retrieve assignments.');
   }
