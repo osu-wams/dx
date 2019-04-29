@@ -16,7 +16,7 @@ const ACADEMIC_CALENDAR_URL =
 const getEvents = async query => {
   try {
     const urlParams = querystring.stringify(query);
-    const { data } = await request(`${LOCALIST_BASE_URL}/events?${urlParams}`);
+    const data = await request(`${LOCALIST_BASE_URL}/events?${urlParams}`, { json: true });
 
     return data.events;
   } catch (err) {

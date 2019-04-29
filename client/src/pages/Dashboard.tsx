@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PageTitle from '../ui/PageTitle';
 import CourseScheduleCard from '../features/CourseScheduleCard';
 import UpcomingAssignments from '../features/UpcomingAssignments';
-import FluffCard from '../ui/FluffCard';
+import EventCardContainer from '../ui/EventCardContainer';
 
 // Todo: Refactor out to new component
 const PageContent = styled.div`
@@ -13,6 +13,10 @@ const PageContent = styled.div`
   @media screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 16px;
+    .two-col {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
   }
 `;
 
@@ -23,19 +27,9 @@ const Dashboard = () => {
       <PageContent>
         <CourseScheduleCard />
         <UpcomingAssignments />
-        <FluffCard
-          items={[
-            {
-              title: 'Fluff Title 1',
-              text:
-                'Let us wax poetic about the beauty of the cheeseburger. The flavour gracefully dances across your palate like a majestic figure skater on ice.'
-            },
-            {
-              title: 'Fluff Title 2',
-              text: 'This is a shorter description.'
-            }
-          ]}
-        />
+        <div className="two-col">
+          <EventCardContainer />
+        </div>
       </PageContent>
     </div>
   );
