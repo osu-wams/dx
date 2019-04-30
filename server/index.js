@@ -2,9 +2,11 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
-// const config = require('config');
+const RedisStore = require('connect-redis')(session);
+const config = require('config');
 const logger = require('./logger');
 const auth = require('./auth');
 
@@ -14,6 +16,7 @@ const auth = require('./auth');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Configure Sessions
 const sessionOptions = {
@@ -23,13 +26,18 @@ const sessionOptions = {
   secret: process.env.SESSION_SECRET || 'dx',
   saveUninitialized: false,
   resave: false,
-  cookie: {}
+  cookie: {
+    httpOnly: false
+  }
 };
 
-// if (ENV === 'production') {
-//   sessionOptions.cookie.secure = true;
-//   // TODO: Configure Redis session store
-// }
+if (config.get('env') === 'production') {
+  sessionOptions.store = new RedisStore({
+    host: config.get('redis.host'),
+    port: config.get('redis.port'),
+    logErrors: true
+  });
+}
 
 app.use(session(sessionOptions));
 
@@ -42,6 +50,12 @@ passport.deserializeUser(auth.deserializeUser);
 
 app.get('/login', auth.login);
 app.get('/logout', auth.logout);
+
+// Health Check (path configured in cloudformation template)
+app.get('/healthcheck', (req, res) => {
+  console.log('Health Check Request');
+  res.status(200).end();
+});
 
 app.post('/login/saml', passport.authenticate('saml'), (req, res) => {
   res.redirect('/');

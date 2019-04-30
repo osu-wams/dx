@@ -8,6 +8,11 @@ module.exports = {
   },
   saml: {
     cert: 'SAML_CERT',
-    pvk: 'SAML_PVK'
+    pvk: 'SAML_PVK',
+    callbackUrl: 'SAML_CALLBACK_URL'
+  },
+  redis: {
+    host: 'REDIS_HOST',
+    port: 'REDIS_PORT'
   }
 };
