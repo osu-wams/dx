@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import { faUsersClass, faMapMarkerAlt, faArrowRight } from '@fortawesome/pro-light-svg-icons';
+import { faFileAlt, faMapMarkerAlt, faArrowRight } from '@fortawesome/pro-light-svg-icons';
 import { addDays, eachDay, format, isSameDay } from 'date-fns';
+import generateId from 'uuid/v4';
 import { CardBase } from '../ui/Card';
 import {
   List,
@@ -15,8 +16,7 @@ import {
 import Icon from '../ui/Icon';
 import { theme, Color } from '../theme';
 import excitedCalendarIcon from '../assets/excited-calendar.svg';
-import { getCourseSchedule } from '../api/student';
-import { CourseSchedule, MeetingTime } from '../api/student/course-schedule';
+import { getCourseSchedule, getUpcomingAssignments } from '../api/student';
 import { formatTime } from '../util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -28,42 +28,71 @@ import VisuallyHidden from '@reach/visually-hidden';
  */
 const CourseScheduleCard = () => {
   const nextFiveDays = getNextFiveDays();
-  const [courses, setCourses] = useState<CourseSchedule[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
-  const [selectedCourses, setSelectedCourses] = useState<CourseSchedule[]>([]);
+  const [assignments, setAssignments] = useState<any[]>([]);
 
-  // Populate user courseses
+  // Populate user courses
   useEffect(() => {
     getCourseSchedule()
-      .then(setCourses)
+      .then(data => {
+        // Course data has individual meeting times (recitation, lab, lecture, etc.)
+        // as an array in attributes. We actually want a list of meeting times, but still
+        // need other relevant course data. Transform data prior to setting state.
+        const _courses: any = [];
+        data.forEach(item => {
+          const {
+            attributes: { meetingTimes, ...otherAttributes }
+          } = item;
+          meetingTimes.forEach(meetingTime => {
+            const course: any = {
+              id: generateId(),
+              ...meetingTime,
+              ...otherAttributes
+            };
+            _courses.push(course);
+          });
+        });
+        setCourses(_courses);
+      })
       .catch(console.log);
   }, []);
 
-  // Filter courses based on selected day
   useEffect(() => {
-    const coursesOnSelectedDay = getCoursesOnSelectedDay();
-    setSelectedCourses(coursesOnSelectedDay);
-  }, [selectedDay, courses]); // Re-run filter when selected day changes or when courses change (on inital load)
+    getUpcomingAssignments()
+      .then(data => {
+        setAssignments(data);
+      })
+      .catch(console.log);
+  }, []);
 
   const getCoursesOnSelectedDay = () => {
     let selectedDayShortcode = getDayShortcode(selectedDay);
     const coursesOnSelectedDay = courses.filter(course =>
-      course.attributes.meetingTimes.find(meetingTime =>
-        meetingTime.weeklySchedule.includes(selectedDayShortcode)
-      )
+      course.weeklySchedule.includes(selectedDayShortcode)
     );
     return coursesOnSelectedDay;
   };
 
-  const getMeetingTimesOnSelectedDay = (course): MeetingTime[] => {
-    return course.attributes.meetingTimes.filter(meetingTime => {
-      let selectedDayShortcode = getDayShortcode(selectedDay);
-      return meetingTime.weeklySchedule.includes(selectedDayShortcode);
-    });
-  };
+  // Get courses and assignments matching selected day.
+  const selectedCourses = getCoursesOnSelectedDay();
+  const selectedAssignments = assignments.filter(item =>
+    isSameDay(item.assignment.due_at, selectedDay)
+  );
+  // Get a list of days with courses or assignments.
+  // Used to display the orange dots above days to indicate
+  // which days have events at a quick glance.
+  const daysWithEvents = useMemo(
+    () =>
+      nextFiveDays.filter(day => {
+        let dayShortcode = getDayShortcode(day);
+        const coursesOnDay = courses.filter(course => course.weeklySchedule.includes(dayShortcode));
+        const assignmentsOnDay = assignments.filter(item => isSameDay(item.assignment.due_at, day));
 
-  // Todo: replace null render with loading animation inside card.
-  if (!courses) return null;
+        return coursesOnDay.length > 0 || assignmentsOnDay.length > 0;
+      }),
+    [nextFiveDays, assignments, courses]
+  );
 
   return (
     <Card>
@@ -75,57 +104,65 @@ const CourseScheduleCard = () => {
             onClick={() => setSelectedDay(day)}
             selected={isSameDay(day, selectedDay)}
           >
+            <span>{daysWithEvents.includes(day) ? '\u2022' : ''}</span>
             <span>{format(day, 'ddd')}</span>
             <span>{format(day, 'D')}</span>
           </Day>
         ))}
       </DayList>
-      {/* Show courses for the selected day if any exist, otherwise show empty state. */}
-      {selectedCourses.length ? (
-        <List>
-          {selectedCourses.map(course => {
-            let selectedMeetingTimes = getMeetingTimesOnSelectedDay(course);
-            return (
-              <>
-                {/* 
-                  Map over the meeting times rather than just the course itself,
-                  as courses can have more than one valid meeting time per day.
-                */}
-                {selectedMeetingTimes.map(meetingTime => (
-                  <ListItem key={`${course.id}${meetingTime.beginTime}`}>
-                    <ListItemContentButton>
-                      <Icon
-                        icon={getIconByScheduleType(meetingTime.scheduleType)}
-                        color={Color['orange-200']}
-                      />
-                      <ListItemText>
-                        <ListItemHeader>
-                          {course.attributes.courseSubject} {course.attributes.courseNumber}
-                        </ListItemHeader>
-                        <ListItemDescription>
-                          {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
-                          {meetingTime.buildingDescription}
-                        </ListItemDescription>
-                        <ListItemDescription>
-                          {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
-                        </ListItemDescription>
-                      </ListItemText>
-                      <a
-                        href={`https://map.oregonstate.edu/?building=${meetingTime.building}`}
-                        target="blank"
-                      >
-                        <VisuallyHidden>View on map</VisuallyHidden>
-                        <Icon icon={faMapMarkerAlt} />
-                      </a>
-                    </ListItemContentButton>
-                  </ListItem>
-                ))}
-              </>
-            );
-          })}
-        </List>
-      ) : (
-        <EmptyState />
+      {selectedCourses.length === 0 && selectedAssignments.length === 0 && <EmptyState />}
+      {selectedCourses.length > 0 && (
+        <div style={{ marginBottom: '16px' }}>
+          <SectionHeader>Courses</SectionHeader>
+          <List>
+            {selectedCourses.map(course => (
+              <ListItem key={`${course.id}${course.beginTime}`}>
+                <ListItemContentButton>
+                  <Icon
+                    icon={getIconByScheduleType(course.scheduleType)}
+                    color={Color['orange-200']}
+                  />
+                  <ListItemText>
+                    <ListItemHeader>
+                      {course.courseSubject} {course.courseNumber}
+                    </ListItemHeader>
+                    <ListItemDescription>
+                      {course.scheduleDescription} &bull; {course.room} {course.buildingDescription}
+                    </ListItemDescription>
+                    <ListItemDescription>
+                      {formatTime(course.beginTime)} - {formatTime(course.endTime)}
+                    </ListItemDescription>
+                  </ListItemText>
+                  <a
+                    href={`https://map.oregonstate.edu/?building=${course.building}`}
+                    target="blank"
+                  >
+                    <VisuallyHidden>View on map</VisuallyHidden>
+                    <Icon icon={faMapMarkerAlt} />
+                  </a>
+                </ListItemContentButton>
+              </ListItem>
+            ))}
+          </List>
+        </div>
+      )}
+      {selectedAssignments.length > 0 && (
+        <div>
+          <SectionHeader>Assignments</SectionHeader>
+          <List>
+            {selectedAssignments.map(({ title, assignment: { id, due_at } }) => (
+              <ListItem key={id}>
+                <ListItemContent>
+                  <Icon icon={faFileAlt} color={Color['orange-200']} />
+                  <ListItemText>
+                    <ListItemHeader>{title}</ListItemHeader>
+                    <ListItemDescription>Due at {format(due_at, 'hh:mma')}</ListItemDescription>
+                  </ListItemText>
+                </ListItemContent>
+              </ListItem>
+            ))}
+          </List>
+        </div>
       )}
     </Card>
   );
@@ -154,7 +191,7 @@ const EmptyState = () => (
   <>
     <NoCoursesImage src={excitedCalendarIcon} />
     <NoCoursesText>
-      Nice! You don't have any courses scheduled on this day.
+      Nice! You don't have any assignments due or courses scheduled on this day.
       <a href="#">
         Check out the OSU calendar
         <Icon icon={faArrowRight} color={Color['orange-400']} />
@@ -186,6 +223,13 @@ const Day = styled.button<{ selected: boolean }>`
   cursor: pointer;
 
   & > span:first-child {
+    color: ${Color['orange-500']};
+    font-weight: bold;
+    font-size: ${theme.fontSize[20]};
+    line-height: 18px;
+  }
+
+  & > span:nth-child(2) {
     color: ${Color['neutral-500']};
     font-weight: bold;
     font-size: ${theme.fontSize[12]};
@@ -242,6 +286,12 @@ const NoCoursesText = styled.div`
   & > a > svg {
     margin-left: ${theme.spacing.unit}px;
   }
+`;
+
+const SectionHeader = styled.div`
+  color: ${Color['neutral-500']};
+  font-weight: 600;
+  margin-bottom: ${theme.spacing.unit}px;
 `;
 
 export default CourseScheduleCard;
