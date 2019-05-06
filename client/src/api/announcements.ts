@@ -1,4 +1,4 @@
 import axios from 'axios';
 
-export const getAnnouncements = (): Promise<any> =>
-  axios.get('/api/announcements').then(res => res.data);
+export const getAnnouncements = (type): Promise<any> =>
+  axios.get(`/api/announcements/${type}`).then(res => res.data);
