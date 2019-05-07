@@ -30,7 +30,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
         <>
           <CustomRadioBtn
             icon=""
-            text="all"
+            text="All"
             id="all"
             className="testo"
             name="categories"
