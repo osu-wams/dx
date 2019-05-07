@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle, faComment } from '@fortawesome/pro-light-svg-icons';
+import { faUserCircle } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuList, MenuButton, MenuItem, MenuLink } from '@reach/menu-button';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
@@ -15,9 +15,7 @@ import Button from './Button';
 import Input from './Input';
 import Label from './Label';
 import MainNav from './MainNav';
-import Icon from './Icon';
 import { Color } from '../theme';
-import ServiceSearchButton from '../features/services/ServiceSearchButton';
 import { UserContext } from '../App';
 
 const HeaderWrapper = styled.div`
@@ -123,7 +121,6 @@ const Header = () => {
         <HeaderTopSection>
           <Logo src={logo} alt="Oregon State University" />
           <div>
-            <ServiceSearchButton />
             <Menu>
               <UserButton data-testid="user-btn">
                 <VisuallyHidden>User menu</VisuallyHidden>

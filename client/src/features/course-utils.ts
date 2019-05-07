@@ -28,7 +28,6 @@ import {
 // You can get the icon for a course type (Lecture, Lab, Final exam, etc.)
 // You need the scheduleType value from the API.
 // Example usage: <Icon icon={CourseIcons[scheduleType]} />
-// TODO: maybe make this a funciton that returns data. Basically we default icon if we can't match letter
 export const CourseIcons = {
   A: faUsersClass,
   B: faComments,
