@@ -15,7 +15,7 @@ const getResourcesByCategory = categoryId =>
 
 const Resources = () => {
   const [resources, setResources] = useState<any>([]);
-  const [selectedCategory, setSelectedCategory] = useState<String>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const fetchResources = query => {
     getResources(query)
