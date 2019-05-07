@@ -28,6 +28,7 @@
     "test:coverage": "jest --coverage"
   },
   "devDependencies": {
+    "babel-jest": "24.7.1",
     "jest": "24.7.1",
     "nodemon": "^1.18.5",
     "passport-dev": "^1.0.1"
