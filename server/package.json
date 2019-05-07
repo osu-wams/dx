@@ -13,7 +13,6 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "form-data": "^2.3.3",
-    "jest": "^23.6.0",
     "passport": "^0.4.0",
     "passport-saml": "^0.35.0",
     "request": "^2.88.0",
@@ -29,6 +28,7 @@
     "test:coverage": "jest --coverage"
   },
   "devDependencies": {
+    "jest": "24.7.1",
     "nodemon": "^1.18.5",
     "passport-dev": "^1.0.1"
   },

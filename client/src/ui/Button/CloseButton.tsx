@@ -14,7 +14,7 @@ const Btn = styled(Button)`
   }
 `;
 const CloseButton = ({ ...props }) => (
-  <Btn type="cancel" {...props}>
+  <Btn {...props}>
     <Icon icon={faTimes} />
     <VisuallyHidden>Close</VisuallyHidden>
   </Btn>

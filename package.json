@@ -22,12 +22,10 @@
     "concurrently": "^4.1.0"
   },
   "devDependencies": {
-    "babel-eslint": "^9",
     "codecov": "^3.1.0",
     "cross-env": "^5.2.0",
     "cypress": "^3.1.5",
     "cypress-testing-library": "^2.3.6",
-    "eslint": "5.12.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-config-react-app": "^3.0.5",
     "eslint-plugin-flowtype": "2.x",

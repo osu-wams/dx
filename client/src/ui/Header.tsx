@@ -161,7 +161,6 @@ const Header = () => {
           Masquerade
         </Button>
         <Button
-          type="cancel"
           bg={Color['neutral-200']}
           fg={Color['neutral-700']}
           onClick={toggleMasqueradeDialog}
