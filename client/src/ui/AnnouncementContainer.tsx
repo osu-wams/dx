@@ -52,7 +52,7 @@ const AnnouncementContainer = ({ type }) => {
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [type]);
 
   if (!events.length) {
     return null;

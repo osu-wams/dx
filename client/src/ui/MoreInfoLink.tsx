@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { faArrowRight, faCloudShowers } from '@fortawesome/pro-light-svg-icons';
+import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
 
 import Icon from '../ui/Icon';
 import { Color } from '../theme';

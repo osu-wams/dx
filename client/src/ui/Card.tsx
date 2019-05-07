@@ -103,7 +103,7 @@ const CardContentWrapper = styled.div<{ collapsed: boolean; collapsible: boolean
 `;
 
 const CardFooter = ({ ...props }) => {
-  const { collapsed, _, collapsible } = useContext(CardContext);
+  const { collapsed, collapsible } = useContext(CardContext);
   return <CardFooterWrapper collapsed={collapsed} collapsible={collapsible} {...props} />;
 };
 

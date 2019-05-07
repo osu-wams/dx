@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CustomRadioBtn from '../../ui/CustomRadioBtn';
 
@@ -6,7 +6,6 @@ import CustomRadioBtn from '../../ui/CustomRadioBtn';
 const getCategories = () => axios.get('/api/services/categories').then(res => res.data);
 
 const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedCategory }) => {
-  const isMounted = useRef(true);
   const [categories, setCategories] = useState<any>([]);
 
   // Load category data on initial render
@@ -18,11 +17,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
         setCategories(data);
       })
       .catch(console.log);
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
+  }, [onCategorySelected]);
 
   return (
     <>

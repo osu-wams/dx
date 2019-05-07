@@ -1,6 +1,8 @@
+/* eslint-disable no-unexpected-multiline */
 import styled from 'styled-components';
 import styledMap from 'styled-map';
 import { Color } from '../../theme';
+
 const Table = styled.table<{
   striped?: boolean;
   stretch?: boolean;

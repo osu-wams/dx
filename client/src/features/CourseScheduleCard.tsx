@@ -192,7 +192,7 @@ const EmptyState = () => (
     <NoCoursesImage src={excitedCalendarIcon} />
     <NoCoursesText>
       Nice! You don't have any assignments due or courses scheduled on this day.
-      <a href="#">
+      <a href="http://REPLACE_WITH_CALENDAR_LINK.oregonstate.edu">
         Check out the OSU calendar
         <Icon icon={faArrowRight} color={Color['orange-400']} />
       </a>

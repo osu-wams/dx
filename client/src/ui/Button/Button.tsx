@@ -9,11 +9,11 @@ export enum Sizes {
 function btnSize(value?: Sizes) {
   let padding = '.6rem .8rem';
   let fontSize = '';
-  if (value == Sizes.small) {
+  if (value === Sizes.small) {
     padding = '.2rem .3rem;';
     fontSize = theme.fontSize[14];
   }
-  if (value == Sizes.large) {
+  if (value === Sizes.large) {
     padding = '1rem 1.8rem;';
     fontSize = theme.fontSize[18];
   }

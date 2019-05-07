@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import PageTitle from '../ui/PageTitle';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
@@ -10,7 +10,7 @@ const getResources = query =>
 
 const getResourcesByCategory = categoryId =>
   axios
-    .get(`/api/services${categoryId != 'all' ? `?category=${categoryId}` : ''}`)
+    .get(`/api/services${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
     .then(res => res.data);
 
 const Resources = () => {

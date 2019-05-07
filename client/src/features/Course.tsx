@@ -3,7 +3,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import Icon from '../ui/Icon';
 import { faMapMarkerAlt, faEnvelope, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { parse } from 'date-fns';
-import Button, { CloseButton } from '../ui/Button';
+import { CloseButton } from '../ui/Button';
 import {
   List,
   ListItem,
@@ -57,8 +57,8 @@ const Course: FC<{
                 <ListItemHeader>{scheduleDescription}</ListItemHeader>
                 <ListItemDescription>
                   {room} {building} <br />
-                  {beginDate != endDate
-                    ? weeklySchedule.map((day, index) => day)
+                  {beginDate !== endDate
+                    ? weeklySchedule.map(day => day)
                     : formatDate(parse(beginDate), 'noYear')}{' '}
                   &middot; {formatTime(beginTime)} - {formatTime(endTime)}
                 </ListItemDescription>

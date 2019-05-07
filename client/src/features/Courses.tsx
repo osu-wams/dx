@@ -1,10 +1,8 @@
-import React, { FC, useState, useEffect } from 'react';
-import { faChevronRight, faInfoCircle, faArrowRight } from '@fortawesome/pro-light-svg-icons';
-import { getCourseSchedule } from '../api/student';
+import React, { useState, useEffect } from 'react';
+import { faChevronRight, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
 import { CourseSchedule, CourseScheduleAttributes } from '../api/student/course-schedule';
 import Icon from '../ui/Icon';
-import Button from '../ui/Button';
 import { getIconByScheduleType } from './course-utils';
 import {
   List,
@@ -80,7 +78,9 @@ let Courses = () => {
             )
           )}
         </List>
-        {isOpen && courseAttributes && <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />}
+        {isOpen && courseAttributes && (
+          <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />
+        )}
       </CardContent>
       <CardFooter>
         <Icon icon={faInfoCircle} />

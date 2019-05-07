@@ -60,5 +60,5 @@ export function formatDollars(amount: number) {
 }
 
 export function singularPlural(quantity: number, word: string) {
-  return quantity != 1 ? word + 's' : word;
+  return quantity !== 1 ? word + 's' : word;
 }

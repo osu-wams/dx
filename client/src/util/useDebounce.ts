@@ -11,7 +11,7 @@ const useDebounce = (value, delay) => {
     return () => {
       clearTimeout(handler);
     };
-  }, [value]);
+  }, [value, delay]);
 
   return debouncedValue;
 };
@@ -24,7 +24,7 @@ const useDebounceFunction = (fn: () => any, ms: number = 0, args: any[] = []) =>
       // if args change then clear timeout
       clearTimeout(handle);
     };
-  }, args);
+  }, [fn, ms, args]);
 };
 
 export default useDebounce;
