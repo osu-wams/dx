@@ -42,7 +42,7 @@ if (ENV === 'production') {
       identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
       callbackUrl: SAML_CALLBACK_URL,
       logoutUrl: samlLogout,
-      entryPoint: samlUrl + 'Redirect/SSO',
+      entryPoint: samlUrl + 'SAML2/Redirect/SSO',
       issuer: 'https://my.oregonstate.edu',
       cert: SAML_CERT,
       privateCert: SAML_PVK,
