@@ -135,7 +135,7 @@ workflows:
           requires:
             - deploy_client-dev
           context: my-osu-dashboard-dev
-          filters: *master-only
+          filters: *not-master
       - build_client-prod:
           context: my-osu-dashboard-prod
           requires:
