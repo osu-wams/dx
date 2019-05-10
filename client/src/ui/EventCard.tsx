@@ -1,6 +1,7 @@
 import React from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
+import { format } from 'date-fns';
 import { CardBase } from './Card';
 import Icon from './Icon';
 import { Color, theme } from '../theme';
@@ -24,8 +25,16 @@ const EventCardTitle = styled.div`
   & > svg {
     margin-left: ${theme.spacing.unit * 2}px;
   }
+  color: ${Color['white']};
   font-size: ${theme.fontSize['18']};
   font-weight: 600;
+`;
+
+const EventCardLargeTitle = styled.div`
+  color: ${Color['white']};
+  font-size: ${theme.fontSize['24']};
+  font-weight: 300;
+  text-align: center;
 `;
 
 const EventCardText = styled.div`
@@ -82,12 +91,51 @@ const EventCardBody = styled.a`
   justify-content: center;
 `;
 
+const EventCardDateStyling = styled.div`
+  background: ${Color['white']};
+  border: none;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+
+  & > span:first-child {
+    color: ${Color['neutral-500']};
+    font-weight: bold;
+    font-size: ${theme.fontSize[12]};
+    text-transform: uppercase;
+    margin-bottom: ${theme.spacing.unit * 0.5}px;
+  }
+
+  & > span:last-child {
+    color: ${Color['neutral-700']};
+    line-height: 20px;
+    font-size: ${theme.fontSize[24]};
+  }
+`;
+
+const EventCardDate = ({ month, day }) => {
+  return (
+    <EventCardDateStyling>
+      <span>{month}</span>
+      <span>{day}</span>
+    </EventCardDateStyling>
+  );
+};
+
 const EventCardContent = ({ item }) => {
   return (
     <>
       {!item.body && (
         <EventCardBody href={item.action.link} target="_blank">
-          <EventCardTitle aria-live="polite">{item.title}</EventCardTitle>
+          <EventCardDate month={format(item.date, 'MMM')} day={format(item.date, 'D')} />
+          <EventCardLargeTitle aria-live="polite">{item.title}</EventCardLargeTitle>
         </EventCardBody>
       )}
       {item.body && (
