@@ -18,11 +18,16 @@ test('Masquerade Overlay opens from the user menu dropdown', async () => {
   const { getByText, getByTestId, queryByTestId } = render(<App />);
 
   //Profile icon click - this text is visually hidden
-  await act(async () => {
+  await (async () => {
     expect(getByTestId('dashboard-page')).toBeInTheDocument();
-    fireEvent.click(getByTestId('user-btn'));
+    act(() => {
+      fireEvent.click(getByTestId('user-btn'));
+    });
     const maskLink = await waitForElement(() => getByText('Masquerade'));
-    fireEvent.click(maskLink);
+
+    act(() => {
+      fireEvent.click(maskLink);
+    });
 
     const maskOverlay = await waitForElement(() => getByTestId('masquerade-dialog'));
 
