@@ -5,7 +5,7 @@ export const getJobs = (): Promise<IJobsWrapper> => axios.get(`/api/jobs`).then(
 
 export interface IJobsWrapper {
   success: boolean;
-  jobs: Array<IJobs>;
+  jobs: IJobs[];
 }
 
 export type IJobs = {

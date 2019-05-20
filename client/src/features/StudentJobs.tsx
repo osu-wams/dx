@@ -14,8 +14,8 @@ import {
 } from '../ui/List';
 import Button from '../ui/Button';
 
-const StudentJobs = () => {
-  const [jobs, setJobs] = useState<Array<IJobs>>([]);
+const StudentJobs: React.FC = () => {
+  const [jobs, setJobs] = useState<IJobs[]>([]);
   const openUrl = (id: number) => {
     const url = 'https://oregonstate.joinhandshake.com/jobs/' + id;
     window.open(url, '_blank');
