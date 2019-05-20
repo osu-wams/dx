@@ -5,5 +5,8 @@ module.exports = {
   },
   canvasApi: {
     baseUrl: 'https://oregonstate.instructure.com/api/v1'
+  },
+  handshakeApi: {
+    baseUrl: 'https://app.joinhandshake.com/api/v1/'
   }
 };

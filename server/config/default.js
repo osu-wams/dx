@@ -9,6 +9,10 @@ module.exports = {
     token: '',
     baseUrl: 'https://oregonstate.test.instructure.com/api/v1'
   },
+  handshakeApi: {
+    token: '',
+    baseUrl: 'https://app.joinhandshake.com/api/v1/'
+  },
   saml: {
     cert: '',
     pvk: '',
