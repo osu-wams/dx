@@ -15,34 +15,3 @@
   src: url('./assets/Stratum2WebMedium.woff2');
   font-weight: bold;
 }
-
-.grid-container {
-  margin: 20px 20px 0 20px;
-  display: grid;
-  height: 100%;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-gap: 20px;
-  grid-template-areas: 
-    "Academics Academics Events Events DidYouKnow DidYouKnow" 
-    "Academics Academics Events Events Tools Tools" 
-    "BennyBot BennyBot BennyBot BennyBot Tools Tools" 
-    "BennyBot BennyBot BennyBot BennyBot Tools Tools";
-}
-
-.Academics { grid-area: Academics; }
-
-.Events { grid-area: Events; }
-
-.Tools { grid-area: Tools; }
-
-.BennyBot { grid-area: BennyBot; }
-
-.DidYouKnow { grid-area: DidYouKnow; }
-
-.rightIcon {
-  margin-left: 12px;
-}
-.leftIcon {
-  margin-right: 12px;
-}
