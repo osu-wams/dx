@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../../ui/Icon';
 import { Color, theme } from '../../theme';
 import { useDebounceFunction } from '../../util/useDebounce';
 
-const ResourcesSearch = ({ onQueryChanged, setSelectedCategory }) => {
-  const [query, setQuery] = useState('');
+const ResourcesSearch: React.FC<any> = ({ onQueryChanged, setSelectedCategory }) => {
+  const [query, setQuery] = useState<string>('');
 
   useDebounceFunction(
     () => {

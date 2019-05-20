@@ -42,7 +42,12 @@ const Resources = () => {
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
-      <ResourcesList resources={resources} />
+      {resources.length > 0 ? (
+        <ResourcesList resources={resources} />
+      ) : (
+        /* @TODO need mockup styling to do and messaging for no results */
+        <div>No results </div>
+      )}
     </div>
   );
 };
