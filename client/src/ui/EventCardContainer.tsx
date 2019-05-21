@@ -15,7 +15,7 @@ const EventCardContainerWrapper = styled.div`
   }
 `;
 
-const EventCardContainer = () => {
+const EventCardContainer = ({ ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const isMounted = useRef(true);
 
@@ -86,7 +86,7 @@ const EventCardContainer = () => {
   }
 
   return (
-    <EventCardContainerWrapper>
+    <EventCardContainerWrapper {...props}>
       {events.map(item => (
         <EventCard key={item.id} itemContent={item} />
       ))}
