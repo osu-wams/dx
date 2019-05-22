@@ -11,7 +11,7 @@ module.exports = {
   },
   handshakeApi: {
     token: '',
-    baseUrl: 'https://app.joinhandshake.com/api/v1/'
+    baseUrl: 'https://app.joinhandshake.com/api/v1'
   },
   saml: {
     cert: '',
