@@ -96,7 +96,7 @@ const EventCardContent = ({ item }) => {
           <EventCardText>{item.body}</EventCardText>
           <>
             {item.action.title && (
-              <ButtonWithIcon href={item.action.link} target="_blank">
+              <ButtonWithIcon fg={Color.white} href={item.action.link} target="_blank">
                 {item.action.title}
                 <Icon icon={faLongArrowRight} color={Color.white} />
               </ButtonWithIcon>

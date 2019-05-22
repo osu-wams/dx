@@ -48,7 +48,7 @@ const NavLink = styled(Link)`
   padding: 0 4px;
   line-height: 30px;
   text-decoration: none;
-  color: ${Color['neutral-500']};
+  color: ${Color['neutral-550']};
   /* select and hover styles */
   &[aria-current],
   &[aria-current] > svg,

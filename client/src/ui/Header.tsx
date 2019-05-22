@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuList, MenuButton, MenuItem, MenuLink } from '@reach/menu-button';
-import { ToastContainer, toast, Zoom } from 'react-toastify';
+import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../assets/logo.png';
 import '@reach/menu-button/styles.css';
@@ -41,7 +41,7 @@ const HeaderBottomSection = styled.div`
 `;
 
 const UserButton = styled(MenuButton)`
-  color: ${Color['neutral-500']};
+  color: ${Color['neutral-550']};
   background: transparent;
   border: none;
   cursor: pointer;

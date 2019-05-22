@@ -37,8 +37,7 @@ const ListItemContent = styled.div`
   text-decoration: none;
 `;
 
-const ListItemContentButton = styled(ListItemContent).attrs({ as: 'button' })`
-`
+const ListItemContentButton = styled(ListItemContent).attrs({ as: 'button' })``;
 
 const ListItemText = styled.div`
   padding-right: 1.5rem;
@@ -53,9 +52,17 @@ const ListItemHeader = styled.h4`
 `;
 
 const ListItemDescription = styled.div`
-  color: ${Color['neutral-500']};
+  color: ${Color['neutral-550']};
   font-size: ${theme.fontSize[14]};
   line-height: 1.6rem;
 `;
 
-export { List, ListItem, ListItemContent, ListItemContentButton, ListItemText, ListItemHeader, ListItemDescription };
+export {
+  List,
+  ListItem,
+  ListItemContent,
+  ListItemContentButton,
+  ListItemText,
+  ListItemHeader,
+  ListItemDescription
+};

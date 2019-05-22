@@ -21,7 +21,7 @@ const Highlight = styled.div`
 
 const HighlightTitle = styled.h2`
   font-size: ${theme.fontSize[14]};
-  color: ${Color['neutral-500']};
+  color: ${Color['neutral-550']};
   font-weight: 600;
   margin-bottom: 0;
   padding: 0 1.6rem;
@@ -35,7 +35,7 @@ const HighlightEmphasis = styled.div<{ color: Color }>`
 
 const HighlightDescription = styled.div`
   font-size: ${theme.fontSize[12]};
-  color: ${Color['neutral-500']};
+  color: ${Color['neutral-550']};
   padding: 0 1.6rem 1.6rem;
 `;
 
