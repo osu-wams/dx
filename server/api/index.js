@@ -7,6 +7,7 @@ const services = require('./services');
 const alerts = require('./alerts');
 const jobs = require('./jobs');
 const announcements = require('./announcements');
+const persons = require('./persons');
 
 // Mount sub-routers onto /api/[resource-name]
 module.exports = app => {
@@ -14,6 +15,7 @@ module.exports = app => {
   app.use('/api/masquerade', auth.ensureAdmin, masquerade);
   app.use('/api/student', auth.ensureAuthenticated, student);
   app.use('/api/jobs', auth.ensureAuthenticated, jobs);
+  app.use('/api/persons', auth.ensureAuthenticated, persons);
   app.use('/api/events', events);
   app.use('/api/services', services);
   app.use('/api/alerts', alerts);
