@@ -29,7 +29,6 @@ const AccountBalance: React.FC = () => {
         {accountBalance ? formatDollars(accountBalance.currentBalance) : '0'}
       </HighlightEmphasis>
       <HighlightDescription>Current account balance might be 24 hours behind</HighlightDescription>
-      {console.log(accountBalance)}
     </Highlight>
   );
 };

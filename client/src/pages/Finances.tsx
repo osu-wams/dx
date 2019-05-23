@@ -4,6 +4,7 @@ import AnnouncementContainer from '../ui/AnnouncementContainer';
 import StudentJobs from '../features/StudentJobs';
 import { HighlightsCard } from '../ui/Highlights';
 import AccountBalance from '../features/AccountBalance';
+import MealPlans from '../features/MealPlans';
 import PageGrid from '../ui/PageGrid';
 
 const Finances = () => {
@@ -14,7 +15,7 @@ const Finances = () => {
         <StudentJobs />
         <HighlightsCard className="row-span-1">
           <AccountBalance />
-          <AccountBalance />
+          <MealPlans />
         </HighlightsCard>
         <AnnouncementContainer className="col-span-2" type="financial" />
       </PageGrid>
