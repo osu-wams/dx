@@ -17,4 +17,4 @@ export interface IMealPlansAttributes {
   lastUsedPlace: string | null;
 }
 
-export default getMealPlans;
+export { getMealPlans };

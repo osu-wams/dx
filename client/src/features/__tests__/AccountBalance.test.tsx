@@ -15,13 +15,12 @@ describe('<AccountBalance />', () => {
     mockGetAccountBalance.mockResolvedValue(Promise.resolve(mockAccountBalance));
   });
 
-  it('should render an have the approriate title', async () => {
+  it('should render and have the approriate title', async () => {
     const { getByText } = render(<AccountBalance />);
     expect(getByText('OSU Account Balance')).toBeInTheDocument;
   });
 
-  it('should a $2,356.00 balance from our mock data', async () => {
-    mockGetAccountBalance.mockResolvedValue(Promise.resolve(mockAccountBalance));
+  it('should have a $2,356.00 balance from our mock data', async () => {
     const { getByText } = render(<AccountBalance />);
     await waitForElement(() => getByText('$2,356.00'));
   });

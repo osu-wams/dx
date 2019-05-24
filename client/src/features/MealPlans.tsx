@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import getMealPlans, { IMealPlans } from '../api/persons/meal-plans';
+import { getMealPlans, IMealPlans } from '../api/persons/meal-plans';
 import { Color } from '../theme';
 import { formatDollars } from '../util/helpers';
 import {
