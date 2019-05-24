@@ -25,7 +25,6 @@ const SubNavLink = styled(Link)`
   &:hover,
   &[aria-current] {
     background: transparent;
-    color: ${Color['neutral-500']};
   }
   :first-child {
     border-radius: 8px 0 0 8px;

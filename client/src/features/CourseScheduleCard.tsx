@@ -230,7 +230,7 @@ const Day = styled.button<{ selected: boolean }>`
   }
 
   & > span:nth-child(2) {
-    color: ${Color['neutral-500']};
+    color: ${Color['neutral-550']};
     font-weight: bold;
     font-size: ${theme.fontSize[12]};
     text-transform: uppercase;
@@ -289,7 +289,7 @@ const NoCoursesText = styled.div`
 `;
 
 const SectionHeader = styled.div`
-  color: ${Color['neutral-500']};
+  color: ${Color['neutral-550']};
   font-weight: 600;
   margin-bottom: ${theme.spacing.unit}px;
 `;

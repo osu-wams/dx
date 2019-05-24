@@ -14,7 +14,7 @@ const AnnouncementContainerWrapper = styled.div`
   }
 `;
 
-const AnnouncementContainer = ({ type }) => {
+const AnnouncementContainer = ({ type, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const isMounted = useRef(true);
 
@@ -59,7 +59,7 @@ const AnnouncementContainer = ({ type }) => {
   }
 
   return (
-    <AnnouncementContainerWrapper>
+    <AnnouncementContainerWrapper {...props}>
       {events.map(item => (
         <EventCard key={item.id} itemContent={item} />
       ))}

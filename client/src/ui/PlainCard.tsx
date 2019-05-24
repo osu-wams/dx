@@ -7,7 +7,7 @@ const Card = styled(CardBase)`
   padding: ${theme.spacing.unit * 2}px;
 `;
 const Header = styled.h2`
-  color: ${Color['neutral-500']};
+  color: ${Color['neutral-550']};
   font-weight: normal;
   font-size: ${theme.fontSize[18]};
   margin: 0 0 ${theme.spacing.unit * 2}px 0;

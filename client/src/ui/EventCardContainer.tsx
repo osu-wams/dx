@@ -15,7 +15,7 @@ const EventCardContainerWrapper = styled.div`
   }
 `;
 
-const EventCardContainer = () => {
+const EventCardContainer = ({ ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const isMounted = useRef(true);
 
@@ -38,6 +38,7 @@ const EventCardContainer = () => {
                 };
             return {
               id: item.id,
+              date: null,
               title: item.attributes.title,
               body: item.attributes.field_announcement_body,
               bg_image: item.attributes.background_image,
@@ -47,6 +48,7 @@ const EventCardContainer = () => {
           const newLocalist = item => {
             return {
               id: item.event.event_instances[0].event_instance.id,
+              date: item.event.event_instances[0].event_instance.start,
               title: item.event.title,
               body: null,
               bg_image: item.event.photo_url,
@@ -86,7 +88,7 @@ const EventCardContainer = () => {
   }
 
   return (
-    <EventCardContainerWrapper>
+    <EventCardContainerWrapper {...props}>
       {events.map(item => (
         <EventCard key={item.id} itemContent={item} />
       ))}

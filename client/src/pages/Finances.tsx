@@ -2,13 +2,23 @@ import React from 'react';
 import PageTitle from '../ui/PageTitle';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import StudentJobs from '../features/StudentJobs';
+import { HighlightsCard } from '../ui/Highlights';
+import AccountBalance from '../features/AccountBalance';
+import MealPlans from '../features/MealPlans';
+import PageGrid from '../ui/PageGrid';
 
 const Finances = () => {
   return (
     <div data-testid="finances-page">
       <PageTitle title="Financial Information" />
-      <StudentJobs />
-      <AnnouncementContainer type="financial" />
+      <PageGrid>
+        <StudentJobs />
+        <HighlightsCard className="row-span-1">
+          <AccountBalance />
+          <MealPlans />
+        </HighlightsCard>
+        <AnnouncementContainer className="col-span-2" type="financial" />
+      </PageGrid>
     </div>
   );
 };

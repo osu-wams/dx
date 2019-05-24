@@ -7,8 +7,9 @@ export enum Color {
   'neutral-200' = '#E9E5E4', // use as a light gray background with dark text
   'neutral-300' = '#D4CFCD', // use as a gray background with very dark text
   'neutral-400' = '#B7B1AF', // use carefully
-  'neutral-500' = '#8F8582', // minimum contrast for dark ui elements on white
-  'neutral-600' = '#696361', // minimum for dark text  with background up to neutral-200
+  'neutral-500' = '#8F8582', // minimum contrast for dark ui (non-text) elements on white - WCAG 2.1
+  'neutral-550' = '#7B746F', // minimum contrast for dark text with white background
+  'neutral-600' = '#696361', // minimum for dark text with background up to neutral-200
   'neutral-700' = '#423E3C', // use as a text color for backgrounds as dark as neutral-400
   // Primary
   'orange-100' = '#FFE7DE',
