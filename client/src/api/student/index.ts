@@ -1,7 +1,7 @@
 import axios from 'axios';
 import getCourseSchedule from './course-schedule';
 import getGrades from './grades';
-import getAccountBalance from './account-balance';
+import { getAccountBalance } from './account-balance';
 
 export { getCourseSchedule, getGrades, getAccountBalance };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
+import { render, waitForElement } from 'react-testing-library';
 import EventCardContainer from '../EventCardContainer';
 
 jest.unmock('../../api/announcements');
@@ -62,22 +62,23 @@ jest.mock('../../api/events', () => {
   };
 });
 
-const desktop = () => {
-  const spy = jest.spyOn(window, 'matchMedia');
-  spy.mockImplementation(query => {
-    return {
-      matches: true,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn()
-    };
-  });
-  return spy;
-};
+// @OTODO - Whate were we planning on doing with this?
+// const desktop = () => {
+//   const spy = jest.spyOn(window, 'matchMedia');
+//   spy.mockImplementation(query => {
+//     return {
+//       matches: true,
+//       media: query,
+//       onchange: null,
+//       addListener: jest.fn(),
+//       removeListener: jest.fn(),
+//       addEventListener: jest.fn(),
+//       removeEventListener: jest.fn(),
+//       dispatchEvent: jest.fn()
+//     };
+//   });
+//   return spy;
+// };
 
 describe('<EventCardContainer />', () => {
   // Set mock function result before running any tests
@@ -87,9 +88,11 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should render all cards', async () => {
-    const { getAllByTestId } = render(<EventCardContainer />);
+    const { debug, getAllByTestId } = render(<EventCardContainer />);
+    debug();
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
+
     expect(getAllByTestId('eventcard')).toHaveLength(3);
   });
 

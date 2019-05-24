@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import getAccountBalance, { IAccountBalanceAttributes } from '../api/student/account-balance';
+import { getAccountBalance, IAccountBalanceAttributes } from '../api/student/account-balance';
 import { Color } from '../theme';
 import { formatDollars } from '../util/helpers';
 import {
@@ -26,7 +26,7 @@ const AccountBalance: React.FC = () => {
     <Highlight>
       <HighlightTitle>OSU Account Balance</HighlightTitle>
       <HighlightEmphasis color={Color['pine-400']}>
-        {accountBalance ? formatDollars(accountBalance.currentBalance) : '0'}
+        {accountBalance ? formatDollars(accountBalance.currentBalance) : 'No data'}
       </HighlightEmphasis>
       <HighlightDescription>Current account balance might be 24 hours behind</HighlightDescription>
     </Highlight>
