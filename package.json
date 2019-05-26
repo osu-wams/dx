@@ -48,14 +48,15 @@
     }
   },
   "lint-staged": {
-    "client/**/*.js": [
+    "client/**/*.{js,jsx,ts,tsx}": [
       "eslint -c ./client/.eslintrc --fix",
       "git add",
-      "cross-env CI=true yarn workspace client run test --passWithNoTests"
+      "cross-env CI=true yarn workspace client run test --findRelatedTests"
     ],
     "server/**/*.js": [
       "eslint -c ./server/.eslintrc --fix",
-      "git add"
+      "git add",
+      "cross-env CI=true yarn workspace server run test --findRelatedTests"
     ]
   }
 }
