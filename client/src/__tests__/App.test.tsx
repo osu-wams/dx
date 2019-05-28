@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import { LocationProvider, createHistory, createMemorySource } from '@reach/router';
 import App from '../App';
 
+// Automated tests were passing, but reporting problems with this code. Commented out for now.
 // const mockAxios = new MockAdapter(axios);
-
 // mockAxios.onGet(/\/api\/masquerade/).reply(200, { masqueradeId: null });
 // mockAxios.onPost(/\/api\/masquerade/).reply(200, '');
 

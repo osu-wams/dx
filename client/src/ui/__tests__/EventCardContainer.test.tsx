@@ -88,8 +88,7 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should render all cards', async () => {
-    const { debug, getAllByTestId } = render(<EventCardContainer />);
-    debug();
+    const { getAllByTestId } = render(<EventCardContainer />);
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
 

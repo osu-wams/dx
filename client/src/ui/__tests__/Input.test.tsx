@@ -7,7 +7,7 @@ const SmallInput = () => (
   <div>
     <Label htmlFor="small">
       Small
-      <Input type="text" id="small" size="small" />
+      <Input type="text" id="small" osuSize="small" />
     </Label>
   </div>
 );
@@ -25,7 +25,7 @@ const LargeInput = () => (
   <div>
     <Label htmlFor="large">
       Large
-      <Input type="text" id="large" size="large" />
+      <Input type="text" id="large" osuSize="large" />
     </Label>
   </div>
 );
