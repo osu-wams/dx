@@ -8,5 +8,8 @@ module.exports = {
   },
   handshakeApi: {
     baseUrl: 'https://app.joinhandshake.com/api/v1'
+  },
+  raveApi: {
+    baseUrl: 'https://www.getrave.com/rss/oregonstate/channel2'
   }
 };
