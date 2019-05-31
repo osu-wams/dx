@@ -1,9 +1,9 @@
 import axios from 'axios';
 import getCourseSchedule from './course-schedule';
-import getGrades from './grades';
+import { getGrades } from './grades';
 import { getAccountBalance } from './account-balance';
 
-export { getCourseSchedule, getGrades, getAccountBalance };
+export { getGrades, getCourseSchedule, getAccountBalance };
 
 // Todo: Replace rest of API calls with properly-typed versions.
 

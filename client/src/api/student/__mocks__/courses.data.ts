@@ -191,7 +191,7 @@ export default [
         {
           osuId: '123456789',
           name: 'Hess, Robin',
-          email: 'hessro@oregonstate.edu',
+          email: 'testo@oregonstate.edu',
           primary: true
         }
       ],
@@ -240,8 +240,8 @@ export default [
       faculty: [
         {
           osuId: '123456789',
-          name: 'Hess, Robin',
-          email: 'hessro@oregonstate.edu',
+          name: 'LAstBame, Robin',
+          email: 'testo@oregonstate.edu',
           primary: true
         }
       ],

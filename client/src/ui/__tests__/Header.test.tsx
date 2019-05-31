@@ -1,13 +1,12 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
+import { render, fireEvent, waitForElement, act } from 'react-testing-library';
 import Header from '../Header';
 import App from '../../App';
-
 
 test('renders', () => {
   render(<Header />);
 });
+
 test('Masquerade Overlay opens from the user menu dropdown', async () => {
   const { getByText, getByTestId, queryByTestId } = render(<App />);
 
