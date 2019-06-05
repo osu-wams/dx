@@ -1,7 +1,8 @@
 const Parser = require('rss-parser');
+const config = require('config');
 
 const parser = new Parser();
-const BASE_URL = 'https://www.getrave.com/rss/oregonstate/channel2';
+const BASE_URL = config.get('raveApi.baseUrl');
 
 /**
  * Gets active alerts from RAVE.
@@ -17,7 +18,6 @@ const getAlerts = async () => {
     // 'all clear' indicates that an alert is NOT active and should not be displayed.
     const isAlertActive = !alert.title.match(/all clear/im) && !alert.content.match(/all clear/im);
     const data = isAlertActive ? [alert] : [];
-
     return data;
   } catch (err) {
     throw err;

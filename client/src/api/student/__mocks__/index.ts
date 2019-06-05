@@ -1,4 +1,3 @@
-import getCourseSchedule from './course-schedule';
 import courses from './courses.data';
 import grades from './grades.data';
 import holds from './holds.data';
@@ -19,4 +18,4 @@ export const getAccountHolds = () => Promise.resolve(holds);
 
 export const getUpcomingAssignments = () => Promise.resolve(assignments);
 
-export { getCourseSchedule };
+export const getCourseSchedule = () => Promise.resolve(courses);

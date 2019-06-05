@@ -4,7 +4,7 @@ import { theme, Color } from '../theme';
 
 const MyDialog = styled(Dialog)`
   border-radius: ${theme.borderRadius};
-  [type='cancel'] {
+  .closeButton {
     float: right;
     margin-right: -2rem;
   }

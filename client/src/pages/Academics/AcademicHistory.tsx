@@ -69,45 +69,49 @@ const AcademicHistory = () => {
           onChange={e => setQuery(e.target.value)}
         />
       </SearchWrapper>
-      <div aria-live="polite">
-        {Object.keys(gradesByTerm).map((key, index) => (
-          <PlainCard title={key} key={index}>
-            <Table variant="basic" stretch>
-              <TableHeader>
-                <TableRow>
-                  <TableHeaderCell>Course Code</TableHeaderCell>
-                  <TableHeaderCell>Final Grade</TableHeaderCell>
-                  <TableHeaderCell>Course Title</TableHeaderCell>
-                  <TableHeaderCell>Credits</TableHeaderCell>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {gradesByTerm[key].map(
-                  (
-                    { courseNumber, courseSubject, creditHours, gradeFinal, courseTitle },
-                    subindex
-                  ) => {
-                    return (
-                      <TableRow key={subindex}>
-                        <TableCell>
-                          <strong>
-                            {courseSubject} {courseNumber}
-                          </strong>
-                        </TableCell>
-                        <TableCell>{gradeFinal}</TableCell>
-                        <TableCell>{titleCase(courseTitle)}</TableCell>
-                        <TableCell>
-                          {creditHours} {singularPlural(creditHours, 'Credit')}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                )}
-              </TableBody>
-            </Table>
-          </PlainCard>
-        ))}
-      </div>
+      {grades.length > 1 ? (
+        <div aria-live="polite">
+          {Object.keys(gradesByTerm).map((key, index) => (
+            <PlainCard title={key} key={index}>
+              <Table variant="basic" stretch>
+                <TableHeader>
+                  <TableRow>
+                    <TableHeaderCell>Course Code</TableHeaderCell>
+                    <TableHeaderCell>Final Grade</TableHeaderCell>
+                    <TableHeaderCell>Course Title</TableHeaderCell>
+                    <TableHeaderCell>Credits</TableHeaderCell>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {gradesByTerm[key].map(
+                    (
+                      { courseNumber, courseSubject, creditHours, gradeFinal, courseTitle },
+                      subindex
+                    ) => {
+                      return (
+                        <TableRow key={subindex}>
+                          <TableCell>
+                            <strong>
+                              {courseSubject} {courseNumber}
+                            </strong>
+                          </TableCell>
+                          <TableCell>{gradeFinal}</TableCell>
+                          <TableCell>{titleCase(courseTitle)}</TableCell>
+                          <TableCell>
+                            {creditHours} {singularPlural(creditHours, 'Credit')}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  )}
+                </TableBody>
+              </Table>
+            </PlainCard>
+          ))}
+        </div>
+      ) : (
+        <div>No course history yet</div>
+      )}
     </>
   );
 };

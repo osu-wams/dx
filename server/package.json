@@ -38,7 +38,8 @@
       "**/*.js"
     ],
     "coveragePathIgnorePatterns": [
-      "/config/"
+      "/config/",
+      "/coverage/"
     ],
     "coverageDirectory": "./coverage"
   }

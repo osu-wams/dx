@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const getGrades = (): Promise<Grades[]> => axios.get(`/api/student/grades`).then(res => res.data);
+export const getGrades = (): Promise<Grades[]> =>
+  axios.get(`/api/student/grades`).then(res => res.data);
 
 export type Grades = {
   type: string;
@@ -27,5 +28,3 @@ export type GradesAttributes = {
   registrationStatus: string;
   courseLevel: string;
 };
-
-export default getGrades;

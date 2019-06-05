@@ -61,23 +61,20 @@
   ],
   "jest": {
     "collectCoverageFrom": [
-      "**/*.js",
+      "**/*.{js,jsx,ts,tsx}",
       "!**/coverage/**",
-      "!src/index.js",
+      "!src/index.tsx",
       "!src/registerServiceWorker.js",
-      "!src/setupTests.js",
-      "!src/componentTestUtils.js"
+      "!src/setupTests.ts",
+      "!src/setupProxy.js"
     ],
     "coverageThreshold": {
       "global": {
         "branches": 30,
         "functions": 30,
         "lines": 30,
-        "statements": -100
+        "statements": 10
       }
-    },
-    "coverageReporters": [
-      "json"
-    ]
+    }
   }
 }
