@@ -3,6 +3,10 @@ const nock = require('nock');
 const config = require('config');
 const app = require('../../index');
 const { personsData } = require('../__mocks__/persons.data');
+const {
+  personsAddressesData,
+  personsMailingAddressData
+} = require('../__mocks__/persons-addresses.data');
 
 jest.mock('../util.js');
 
@@ -44,6 +48,39 @@ describe('/api/persons', () => {
 
       const res = await request.get('/api/persons');
       expect(res.error.text).toEqual('Unable to retrieve person information.');
+    });
+  });
+
+  // Addresses
+  describe('/addresses', () => {
+    it('should return the mailing address only', async () => {
+      // Mock response from apigee
+      nock(APIGEE_BASE_URL)
+        .get(/persons\/[0-9]+\/addresses/)
+        .query(true)
+        .reply(200, personsAddressesData);
+
+      const res = await request.get('/api/persons/addresses');
+      expect(res.statusCode).toEqual(200);
+      expect(res.body).toEqual(personsMailingAddressData);
+    });
+
+    it('should return an error if the user is not logged in', async () => {
+      // Clear session data - we don't want to be logged in
+      request = supertest.agent(app);
+
+      const res = await request.get('/api/persons/addresses');
+      expect(res.statusCode).toEqual(401);
+      expect(res.error.text).toEqual('Unauthorized');
+    });
+
+    it('should return "Unable to retrieve addresses" when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/persons\/[0-9]+\/addresses/)
+        .reply(500);
+
+      const res = await request.get('/api/persons/addresses');
+      expect(res.error.text).toEqual('Unable to retrieve addresses');
     });
   });
 

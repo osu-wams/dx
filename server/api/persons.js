@@ -26,7 +26,7 @@ persons.get('/', async (req, res) => {
   }
 });
 
-// Meal Plan by osuuid - Apigee endpoint
+// Meal Plan by osu id - Apigee endpoint
 persons.get('/meal-plans', async (req, res) => {
   try {
     const bearerToken = await getToken();
@@ -39,6 +39,25 @@ persons.get('/meal-plans', async (req, res) => {
     res.send(apiResponse.data);
   } catch (err) {
     res.status(500).send('Unable to retrieve meal plans.');
+  }
+});
+
+// Addresses by osu id - Apigee endpoint
+persons.get('/addresses', async (req, res) => {
+  try {
+    const bearerToken = await getToken();
+    const apiResponse = await request({
+      method: 'GET',
+      url: `${BASE_URL}/${req.user.masqueradeId || req.user.osuId}/addresses`,
+      auth: { bearer: bearerToken },
+      json: true
+    });
+    const mailingAddress = apiResponse.data.find(address => {
+      return address.attributes.addressType === 'CM';
+    });
+    res.send(mailingAddress);
+  } catch (err) {
+    res.status(500).send('Unable to retrieve addresses');
   }
 });
 
