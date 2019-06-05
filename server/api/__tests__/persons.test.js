@@ -36,6 +36,15 @@ describe('/api/persons', () => {
       expect(res.statusCode).toEqual(401);
       expect(res.error.text).toEqual('Unauthorized');
     });
+
+    it('should return "Unable to retrieve person information." when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/persons\/[0-9]/)
+        .reply(500);
+
+      const res = await request.get('/api/persons');
+      expect(res.error.text).toEqual('Unable to retrieve person information.');
+    });
   });
 
   // Meal Plan Balances
@@ -59,6 +68,15 @@ describe('/api/persons', () => {
       const res = await request.get('/api/persons/meal-plans');
       expect(res.statusCode).toEqual(401);
       expect(res.error.text).toEqual('Unauthorized');
+    });
+
+    it('should return "Unable to retrieve meal plans." when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/persons\/[0-9]+\/meal-plans/)
+        .reply(500);
+
+      const res = await request.get('/api/persons/meal-plans');
+      expect(res.error.text).toEqual('Unable to retrieve meal plans.');
     });
   });
 });
