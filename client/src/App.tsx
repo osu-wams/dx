@@ -11,7 +11,6 @@ import Header from './ui/Header';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Academics from './pages/Academics';
-import Experience from './pages/Experience';
 import Finances from './pages/Finances';
 import Resources from './pages/Resources';
 import PageNotFound from './pages/PageNotFound';
@@ -48,7 +47,7 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
   props.pageComponent;
 
 const App = () => {
-  const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<User | {}>({});
 
   useEffect(() => {
     axios
@@ -96,7 +95,6 @@ const App = () => {
                   <RouterPage path="/" pageComponent={<Dashboard />} />
                   <RouterPage path="profile" pageComponent={<Profile />} />
                   <RouterPage path="academics/*" pageComponent={<Academics />} />
-                  <RouterPage path="experience" pageComponent={<Experience />} />
                   <RouterPage path="finances" pageComponent={<Finances />} />
                   <RouterPage path="resources" pageComponent={<Resources />} />
                   <RouterPage default pageComponent={<PageNotFound />} />
