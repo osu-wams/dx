@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from '@reach/router';
 import styled from 'styled-components';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -131,7 +132,7 @@ const Header = () => {
                 {user && user.isAdmin && (
                   <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
                 )}
-                <MenuLink to="profile" data-testid="profile-link">
+                <MenuLink as={Link} to="profile" data-testid="profile-link">
                   View Profile
                 </MenuLink>
               </ProfileMenuList>
