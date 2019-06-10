@@ -1,4 +1,11 @@
-import { titleCase, formatTime, formatDate, formatDollars } from '../helpers';
+import {
+  titleCase,
+  formatTime,
+  formatDate,
+  formatDollars,
+  singularPlural,
+  formatPhone
+} from '../helpers';
 
 describe('titleCase', () => {
   it('should transform UPPERCASE', () => {
@@ -67,6 +74,33 @@ describe('formatDollars', () => {
     'transform long integers to dollar amounts with appropriate formatting',
     ({ input, expected }) => {
       expect(formatDollars(input)).toBe(expected);
+    }
+  );
+});
+
+describe('singularPlural', () => {
+  const input = 'student';
+  it('should return singular student', () => {
+    expect(singularPlural(1, input)).toBe('student');
+  });
+  it('should return plural students', () => {
+    const input = 'student';
+    expect(singularPlural(5, input)).toBe('students');
+  });
+});
+
+describe('formatPhone', () => {
+  test.each`
+    input              | expected
+    ${'+15417312345'}  | ${'(541) 731-2345'}
+    ${'5417312345'}    | ${'5417312345'}
+    ${'+5721234567'}   | ${'+57 2 1234567'}
+    ${'+861012345678'} | ${'+86 10 1234 5678'}
+    ${null}            | ${undefined}
+  `(
+    'transform phones from various countries into clear, national formats with country code if outside US',
+    ({ input, expected }) => {
+      expect(formatPhone(input)).toBe(expected);
     }
   );
 });
