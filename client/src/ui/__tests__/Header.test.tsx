@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitForElement, act } from 'react-testing-library';
+import { render, fireEvent, waitForElement, act } from '@testing-library/react';
 import Header from '../Header';
 import App from '../../App';
 

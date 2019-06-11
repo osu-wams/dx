@@ -1,0 +1,135 @@
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import VisuallyHidden from '@reach/visually-hidden';
+import { faEnvelope, faMapMarkerAlt, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
+import { theme, Color } from '../../theme';
+import { formatPhone } from '../../util/helpers';
+import Icon from '../../ui/Icon';
+import { getPerson, IPersons } from '../../api/persons/persons';
+import { getMailingAddress, IMailingAddress } from '../../api/persons/addresses';
+import PlainCard from '../../ui/PlainCard';
+
+const OSUProfile = () => {
+  const [person, setPerson] = useState<IPersons | null>(null);
+  useEffect(() => {
+    getPerson()
+      .then(data => {
+        setPerson(data);
+      })
+      .catch(console.log);
+  }, []);
+
+  const [address, setAddress] = useState<IMailingAddress | null>(null);
+  useEffect(() => {
+    getMailingAddress()
+      .then(data => {
+        setAddress(data);
+      })
+      .catch(console.log);
+  }, []);
+
+  return (
+    <PlainCard title="OSU Profile">
+      {person && Object.keys(person).length ? (
+        <>
+          <PersonName>
+            {person.attributes.firstName} {person.attributes.lastName}
+          </PersonName>
+          <PairData>
+            <div>
+              <dt>ONID</dt>
+              <dd>{person.attributes.username}</dd>
+            </div>
+            <div>
+              <dt>OSU ID</dt>
+              <dd>{person.id}</dd>
+            </div>
+          </PairData>
+          <ContactInfo>
+            {person.attributes.primaryPhone !== person.attributes.mobilePhone &&
+              renderInfoIcons(
+                'Primary phone',
+                formatPhone(person.attributes.primaryPhone),
+                faPhone
+              )}
+            {person.attributes.homePhone !== person.attributes.mobilePhone &&
+              person.attributes.homePhone !== person.attributes.mobilePhone &&
+              renderInfoIcons('Home phone', formatPhone(person.attributes.homePhone), faPhone)}
+            {renderInfoIcons(
+              'Mobile phone',
+              formatPhone(person.attributes.mobilePhone),
+              faMobileAlt
+            )}
+            {renderInfoIcons('Email', person.attributes.email, faEnvelope)}
+            {address && (
+              <div>
+                <dt>
+                  <Icon icon={faMapMarkerAlt} color={Color['orange-400']} />{' '}
+                  <VisuallyHidden>{address.attributes.addressTypeDescription}</VisuallyHidden>
+                </dt>
+                <dd>
+                  {address.attributes.addressLine1}
+                  <br />
+                  {address.attributes.city}, {address.attributes.stateCode}{' '}
+                  {address.attributes.postalCode}
+                </dd>
+              </div>
+            )}
+          </ContactInfo>
+        </>
+      ) : (
+        <p>Cannot find your information</p>
+      )}
+    </PlainCard>
+  );
+};
+
+const renderInfoIcons = (title: string, field: any | null, icon: any) => {
+  if (field) {
+    return (
+      <div>
+        <dt>
+          <Icon icon={icon} color={Color['orange-400']} /> <VisuallyHidden>{title}</VisuallyHidden>
+        </dt>
+        <dd>{field}</dd>
+      </div>
+    );
+  }
+};
+
+const PersonName = styled.h3`
+  color: ${Color['orange-400']};
+  margin: 0;
+  font-weight: 500;
+  font-size: ${theme.fontSize[24]};
+`;
+
+const PairData = styled.dl`
+  margin: 0.5rem 0;
+  display: flex;
+  & > div {
+    margin-right: 4rem;
+  }
+  dt {
+    font-size: ${theme.fontSize[12]};
+    font-weight: 600;
+    color: ${Color['neutral-550']};
+  }
+  dd {
+    margin-left: 0;
+  }
+`;
+
+const ContactInfo = styled.dl`
+  dt,
+  dd {
+    display: inline-block;
+    vertical-align: top;
+    padding-bottom: 1.8rem;
+    svg {
+      font-size: ${theme.fontSize[24]};
+    }
+  }
+`;
+
+export default OSUProfile;
