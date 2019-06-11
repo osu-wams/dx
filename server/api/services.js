@@ -16,9 +16,7 @@ services.get('/', async (req, res) => {
   try {
     let requestUrl = servicesUrl;
     if (req.query.query) {
-      requestUrl = `${servicesUrl}&filter[title-filter][condition][path]=title&filter[title-filter][condition][operator]=CONTAINS&filter[title-filter][condition][value]=${
-        req.query.query
-      }`;
+      requestUrl = `${servicesUrl}&filter[title-filter][condition][path]=title&filter[title-filter][condition][operator]=CONTAINS&filter[title-filter][condition][value]=${req.query.query}`;
     } else if (req.query.category) {
       requestUrl = `${servicesByCategoryUrl}${req.query.category}`;
     }

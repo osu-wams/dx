@@ -23,9 +23,9 @@ const getData = async url => {
           return e.id === item.relationships.field_media_image.data.id;
         });
         if (matchingMedia) {
-          data[data.indexOf(matchingAnnouncement)].attributes.background_image = `${baseUrl}${
-            matchingMedia.attributes.uri.url
-          }`;
+          data[
+            data.indexOf(matchingAnnouncement)
+          ].attributes.background_image = `${baseUrl}${matchingMedia.attributes.uri.url}`;
         }
       }
     });
