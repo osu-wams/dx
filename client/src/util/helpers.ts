@@ -1,4 +1,5 @@
 import format from 'date-fns/format';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 // Format any WORDS SENTENCE/word sentence/wOrD sEnTenCe to Title Case: Word Sentence
 export const titleCase = (phrase: string) => {
@@ -59,6 +60,25 @@ export function formatDollars(amount: number) {
   return result;
 }
 
+// Simple function to change between singular and plural by adding an s
 export function singularPlural(quantity: number, word: string) {
   return quantity != 1 ? word + 's' : word;
 }
+
+// Formats phones with Google library. International numbers get full string. US numbers just national format
+export const formatPhone = (phone: string | null) => {
+  if (phone) {
+    const phoneNumber = parsePhoneNumberFromString(phone);
+    if (phoneNumber && phoneNumber.countryCallingCode) {
+      if (phoneNumber.country !== 'US') {
+        // Return Internation Format
+        return phoneNumber.formatInternational();
+      }
+      // US Number
+      return phoneNumber.formatNational();
+    } else {
+      // We can't tell what this phone is, so we pass the numbers as is
+      return phone;
+    }
+  }
+};

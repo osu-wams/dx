@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement } from 'react-testing-library';
+import { render, waitForElement } from '@testing-library/react';
 import EventCardContainer from '../EventCardContainer';
 
 jest.unmock('../../api/announcements');
@@ -110,8 +110,8 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should display text', async () => {
-    const { getByTestId, getByText } = render(<EventCardContainer />);
-    await waitForElement(() => getByTestId('eventcard'));
+    const { getAllByTestId, getByText } = render(<EventCardContainer />);
+    await waitForElement(() => getAllByTestId('eventcard'));
     expect(getByText(/Announcement test body text 2/i)).toBeInTheDocument();
     expect(getByText(/Announcement link title/i)).toBeInTheDocument();
     expect(getByText(/Localist test title 1/i)).toBeInTheDocument();

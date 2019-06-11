@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement } from 'react-testing-library';
+import { render, waitForElement } from '@testing-library/react';
 import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
 import MealPlans from '../MealPlans';
 
@@ -17,7 +17,7 @@ describe('<MealPlans />', () => {
 
   it('should render the approriate title', async () => {
     const { getByText } = render(<MealPlans />);
-    expect(getByText('No meal plans')).toBeInTheDocument;
+    expect(getByText('No meal plans')).toBeInTheDocument();
   });
 
   it('should have a $16.88 balance from our mock data', async () => {

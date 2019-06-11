@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement } from 'react-testing-library';
+import { render, waitForElement } from '@testing-library/react';
 import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
 import AccountBalance from '../AccountBalance';
 
@@ -17,7 +17,7 @@ describe('<AccountBalance />', () => {
 
   it('should render and have the approriate title', async () => {
     const { getByText } = render(<AccountBalance />);
-    expect(getByText('OSU Account Balance')).toBeInTheDocument;
+    expect(getByText('OSU Account Balance')).toBeInTheDocument();
   });
 
   it('should have a $2,356.00 balance from our mock data', async () => {

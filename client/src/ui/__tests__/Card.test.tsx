@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from 'react-testing-library';
+import { render, fireEvent } from '@testing-library/react';
 import { Card, CardContent, CardHeader, CardFooter, Badge } from '../Card';
 import Button from '../Button';
 import { Color } from '../../theme';
@@ -34,7 +34,7 @@ const CardNoBadge = () => (
 describe('<Card />', () => {
   it('should render', () => {
     const { getByTestId } = render(<StandardCard />);
-    expect(getByTestId(/standardcard/i)).toBeInTheDocument();
+    expect(getByTestId(/StandardCardContent/i)).toBeInTheDocument();
   });
 
   it('should display a title in the header', () => {
@@ -58,11 +58,11 @@ describe('<Card />', () => {
   });
 
   it('should display card content when expanded', () => {
-    const { getByRole, getByTestId } = render(<StandardCard />);
+    const { getByTestId } = render(<StandardCard />);
     expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
-    fireEvent.click(getByRole('button'));
+    fireEvent.click(getByTestId('StandardCardHeader'));
     expect(getByTestId(/standardcardcontent/i)).toBeVisible();
-    fireEvent.click(getByRole('button'));
+    fireEvent.click(getByTestId('StandardCardHeader'));
     expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
   });
 

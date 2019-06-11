@@ -112,7 +112,7 @@ export default [
       courseSubject: 'CS',
       courseSubjectDescription: 'Computer Science',
       courseNumber: '261',
-      courseTitle: 'DATA STRUCTURES',
+      courseTitle: 'DATA SUPER STRUCTURES',
       sectionNumber: '002',
       term: '201801',
       termDescription: 'Fall 2017',
