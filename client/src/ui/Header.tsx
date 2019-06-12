@@ -113,7 +113,6 @@ const Header = () => {
       masquerade();
     }
   };
-
   return (
     <>
       <HeaderWrapper>
