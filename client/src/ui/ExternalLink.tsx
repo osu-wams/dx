@@ -14,7 +14,7 @@ const ExternaLinkStyles = styled.a<StyleProps>`
   display: inline-block;
   padding: 0.4rem 0.8rem;
   background-color: ${props => props.bg || 'transparent'};
-  color: ${props => props.fg || Color['neutral-550']};
+  color: ${props => props.fg || Color['orange-400']};
   & > svg {
     margin-left: 1.2rem;
   }
@@ -29,7 +29,7 @@ const ExternalLink = ({ children, ...props }) => {
   return (
     <ExternaLinkStyles {...props} target="_blank">
       {children}
-      <Icon icon={faLongArrowRight} color={Color['neutral-550']} />
+      <Icon icon={faLongArrowRight} color={props.fg ? props.fg : Color['orange-400']} />
     </ExternaLinkStyles>
   );
 };
