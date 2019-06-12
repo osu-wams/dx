@@ -112,8 +112,7 @@ const Header = () => {
   };
 
   const logout = () => {
-    // logout logic needed
-    logout();
+    axios.post('/logout').catch(err => console.log(err));
   };
 
   return (
