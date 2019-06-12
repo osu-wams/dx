@@ -115,7 +115,7 @@ const Header = () => {
   };
 
   const logout = () => {
-    axios.post('/logout').catch(err => console.log(err));
+    axios.get('/logout').catch(err => console.log(err));
   };
 
   return (
