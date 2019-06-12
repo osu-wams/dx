@@ -13,6 +13,8 @@ import {
   ListItemText
 } from '../ui/List';
 import Button from '../ui/Button';
+import ExternalLink from '../ui/ExternalLink';
+import Url from '../util/externalUrls.data';
 
 const StudentJobs: React.FC = () => {
   const [jobs, setJobs] = useState<IJobs[]>([]);
@@ -56,15 +58,9 @@ const StudentJobs: React.FC = () => {
         )}
       </CardContent>
       <CardFooter>
-        <Button
-          as="a"
-          href="https://app.joinhandshake.com/postings"
-          bg={Color.transparent}
-          fg={Color['pine-400']}
-        >
+        <ExternalLink fg={Color['pine-400']} href={Url.handshake.postings}>
           View all jobs in Handshake
-          <Icon icon={faArrowRight} color={Color['pine-400']} style={{ marginLeft: '8px' }} />
-        </Button>
+        </ExternalLink>
       </CardFooter>
     </Card>
   );
