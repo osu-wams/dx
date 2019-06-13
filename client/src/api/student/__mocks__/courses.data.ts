@@ -277,7 +277,7 @@ export default [
       courseSubject: 'PH',
       courseSubjectDescription: 'Physics',
       courseNumber: '212',
-      courseTitle: '*GENERAL PHYSICS WITH CALCULUS',
+      courseTitle: 'TESTO PHYSICS',
       sectionNumber: '070',
       term: '201801',
       termDescription: 'Fall 2017',

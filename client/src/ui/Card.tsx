@@ -63,7 +63,12 @@ const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props
   );
 };
 
-const CardHeaderWrapper = styled.div<{ collapsed: boolean; collapsible: boolean }>`
+interface ICollapse {
+  collapsed: boolean;
+  collapsible: boolean;
+}
+
+const CardHeaderWrapper = styled.div<ICollapse>`
   height: 64px;
   width: 100%;
   padding: ${theme.spacing.unit * 2}px;
@@ -89,7 +94,7 @@ const CardContent = ({ ...props }) => {
   );
 };
 
-const CardContentWrapper = styled.div<{ collapsed: boolean; collapsible: boolean }>`
+const CardContentWrapper = styled.div<ICollapse>`
   padding: ${theme.spacing.unit * 2}px;
   ${props =>
     props.collapsible &&
@@ -107,9 +112,8 @@ const CardFooter = ({ ...props }) => {
   return <CardFooterWrapper collapsed={collapsed} collapsible={collapsible} {...props} />;
 };
 
-const CardFooterWrapper = styled.div<{ collapsed: boolean; collapsible: boolean }>`
+const CardFooterWrapper = styled.div<ICollapse>`
   padding: ${`${theme.spacing.unit}px ${theme.spacing.unit * 2}px`};
-
   ${props =>
     props.collapsible &&
     `
@@ -119,11 +123,20 @@ const CardFooterWrapper = styled.div<{ collapsed: boolean; collapsible: boolean 
   `}
   overflow: hidden;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
+  /* If we only have 1 link, align it right */
+  a:only-child {
+    margin-left: auto;
+  }
 `;
 
-const Badge = styled.div<{ fg?: Color; bg?: Color }>`
+interface IBadge {
+  fg?: Color;
+  bg?: Color;
+}
+
+const Badge = styled.div<IBadge>`
   height: 32px;
   width: 32px;
   display: flex;

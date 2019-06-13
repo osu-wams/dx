@@ -1,10 +1,9 @@
-import React, { FC, useState, useEffect } from 'react';
-import { faChevronRight, faInfoCircle, faArrowRight } from '@fortawesome/pro-light-svg-icons';
+import React, { useState, useEffect } from 'react';
+import { faChevronRight, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import { getCourseSchedule } from '../api/student';
-import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
+import { Card, CardHeader, Badge, CardContent, CardFooter } from '../ui/Card';
 import { CourseSchedule, CourseScheduleAttributes } from '../api/student/course-schedule';
 import Icon from '../ui/Icon';
-import Button from '../ui/Button';
 import { getIconByScheduleType } from './course-utils';
 import {
   List,
@@ -16,12 +15,11 @@ import {
 } from '../ui/List';
 import Course from '../features/Course';
 import { titleCase, singularPlural } from '../util/helpers';
-import course_list from '../api/student/__mocks__/courses.data';
 import { Color } from '../theme';
-// import MoreInfoLink from '../ui/MoreInfoLink';
+import ExternalLink from '../ui/ExternalLink';
+import Url from '../util/externalUrls.data';
 
-// TODO: set initialCourses to call api instead of mock data
-let Courses = () => {
+const Courses = () => {
   const [courses, setCourses] = useState<CourseSchedule[]>([]);
   const [isOpen, setOpen] = useState(false);
   const [courseAttributes, setCourseAttributes] = useState<CourseScheduleAttributes | null>(null);
@@ -33,19 +31,21 @@ let Courses = () => {
   };
 
   // Populate user courses
-  // TODO: api call for data / add types
   useEffect(() => {
-    setCourses(course_list as any);
+    getCourseSchedule()
+      .then(res => {
+        setCourses(res);
+      })
+      .catch(console.log);
   }, []);
 
-  // TODO: loader for empty...
   if (!courses.length) {
     return null;
   }
 
   return (
     <Card>
-      <CardHeader title="Current Courses" />
+      <CardHeader title="Current Courses" badge={<Badge>{courses.length}</Badge>} />
       <CardContent>
         <List>
           {courses.map(
@@ -80,20 +80,18 @@ let Courses = () => {
             )
           )}
         </List>
-        {isOpen && courseAttributes && <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />}
+        {isOpen && courseAttributes && (
+          <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />
+        )}
       </CardContent>
       <CardFooter>
         <Icon icon={faInfoCircle} />
-        {/* <Button as="a" bg={Color['transparent']} fg={Color['orange-400']}>
-          <Icon icon={faArrowRight} color={Color['orange-400']} />
-          <span></span>
-          <Icon icon={faArrowRight} color={Color['orange-400']} />
-        </Button> */}
+        <ExternalLink href={Url.canvas.main} fg={Color['orange-400']}>
+          View more in Canvas
+        </ExternalLink>
       </CardFooter>
     </Card>
   );
 };
-
-// <ListItemContent as="button" onClick={() => toggleCourse(attributes)}>
 
 export default Courses;

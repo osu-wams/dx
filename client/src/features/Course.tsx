@@ -50,20 +50,20 @@ const Course: FC<{
           scheduleDescription,
           scheduleType
         }) => (
-          <ListItem key={beginDate + beginTime}>
+          <ListItem key={beginDate + beginTime + weeklySchedule}>
             <ListItemContent>
               <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
               <ListItemText>
                 <ListItemHeader>{scheduleDescription}</ListItemHeader>
                 <ListItemDescription>
                   {room} {building} <br />
-                  {beginDate != endDate
+                  {beginDate !== endDate
                     ? weeklySchedule.map((day, index) => day)
                     : formatDate(parse(beginDate), 'noYear')}{' '}
                   &middot; {formatTime(beginTime)} - {formatTime(endTime)}
                 </ListItemDescription>
               </ListItemText>
-              <a href={`https://map.oregonstate.edu/?building=${building}`} target="blank">
+              <a href={Url.campusMap.building + building} target="blank">
                 <VisuallyHidden>View {buildingDescription} on map</VisuallyHidden>
                 <Icon icon={faMapMarkerAlt} />
               </a>
