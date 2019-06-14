@@ -114,10 +114,6 @@ const Header = () => {
     }
   };
 
-  const logout = () => {
-    axios.get('/logout').catch(err => console.log(err));
-  };
-
   return (
     <>
       <HeaderWrapper>
@@ -130,7 +126,9 @@ const Header = () => {
                 <FontAwesomeIcon icon={faUserCircle} size="2x" />
               </UserButton>
               <ProfileMenuList>
-                <MenuItem onSelect={() => logout()}>Logout</MenuItem>
+                <MenuLink as="a" href="/logout">
+                  Logout
+                </MenuLink>
                 {user && user.isAdmin && (
                   <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
                 )}
