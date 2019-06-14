@@ -1,6 +1,17 @@
 import axios from 'axios';
 
-const getAcademicCalendarEvents = () =>
+interface IEvent {
+  content: string;
+  contentSnippet: string;
+  isoDate: string;
+  link: string;
+  pubDate: string;
+  title: string;
+}
+
+export type IEvents = [IEvent];
+
+const getAcademicCalendarEvents = (): Promise<IEvents> =>
   axios.get('/api/events/academic-calendar').then(res => res.data);
 
 const getStudentExperienceEvents = () =>

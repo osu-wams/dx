@@ -1,33 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import {
-  faFileEdit,
-  faArrowRight,
-  faCalendar,
-  faCalendarAlt
-} from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
-import Icon from '../ui/Icon';
-import {
-  List,
-  ListItem,
-  ListItemContent,
-  ListItemContentButton,
-  ListItemDescription,
-  ListItemHeader,
-  ListItemText
-} from '../ui/List';
-import Button from '../ui/Button';
-import { Color } from '../theme';
-import { getAcademicCalendarEvents } from '../api/events';
+import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../ui/List';
+import { getAcademicCalendarEvents, IEvents } from '../api/events';
+import { Date, DateDay, DateMonth } from '../ui/Date';
+import ExternalLink from '../ui/ExternalLink';
+import Url from '../util/externalUrls.data';
 
 /**
  * Upcoming Assignments Card
- *
  * Displays upcoming assignments from Canvas.
  */
 const AcademicCalendar = () => {
-  const [calEvents, setCalEvents] = useState([]);
+  const [calEvents, setCalEvents] = useState<IEvents | []>([]);
 
   // Populate assignment data for current user
   useEffect(() => {
@@ -38,20 +23,25 @@ const AcademicCalendar = () => {
 
   return (
     <Card>
-      <CardHeader title="Academic Calendar" badge={<Badge>{calEvents.length}</Badge>} />
+      <CardHeader
+        title="Academic Calendar"
+        badge={<Badge>{calEvents.length < 5 ? calEvents.length : 5}</Badge>}
+      />
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
         {calEvents.length ? (
           <List>
-            {calEvents.map(({ title, link, pubDate }) => (
+            {calEvents.slice(0, 5).map(({ title, link, pubDate }) => (
               <ListItem key={title}>
-                <ListItemContentButton>
-                  <Icon icon={faCalendarAlt} color={Color['orange-200']} />
+                <ListItemContentLink href={link}>
+                  <Date>
+                    <DateDay>{format(pubDate, 'D')}</DateDay>
+                    <DateMonth>{format(pubDate, 'MMM')}</DateMonth>
+                  </Date>
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>
-                    <ListItemDescription>{format(pubDate, 'MMMM D, YYYY')}</ListItemDescription>
                   </ListItemText>
-                </ListItemContentButton>
+                </ListItemContentLink>
               </ListItem>
             ))}
           </List>
@@ -60,16 +50,13 @@ const AcademicCalendar = () => {
         )}
       </CardContent>
       <CardFooter>
-        <Button bg={Color.transparent} fg={Color['orange-400']}>
-          View more in Localist
-          <Icon icon={faArrowRight} color={Color['orange-400']} style={{ marginLeft: '8px' }} />
-        </Button>
+        <ExternalLink href={Url.events.academicCalendar}>View academic calendar</ExternalLink>
       </CardFooter>
     </Card>
   );
 };
 
 // Todo: Replace with actual empty state when ready in mockups.
-const EmptyState = () => <span>NO ASSIGNMENTS</span>;
+const EmptyState = () => <span>No Calendar Events</span>;
 
 export default AcademicCalendar;
