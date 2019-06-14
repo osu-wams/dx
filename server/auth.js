@@ -21,6 +21,8 @@ const samlLogout = samlUrl + 'Logout';
 function parseSamlResult(user, done) {
   const samlUser = {
     email: user['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'],
+    nameID: user['nameID'],
+    nameIDFormat: user['nameIDFormat'],
     firstName: user['urn:oid:2.5.4.42'],
     lastName: user['urn:oid:2.5.4.4'],
     isAdmin: false
@@ -92,9 +94,12 @@ Auth.login = function(req, res, next) {
 };
 
 Auth.logout = (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.redirect(samlLogout);
+  if (!req.user) res.redirect('/');
+  return Auth.passportStrategy.logout(req, (err, uri) => {
+    // req.session.destroy();
+    req.logout();
+    return res.redirect(uri);
+  });
 };
 
 Auth.ensureAuthenticated = (req, res, next) => {
