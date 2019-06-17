@@ -1,5 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 import PageTitle from '../ui/PageTitle';
+import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import StudentJobs from '../features/StudentJobs';
 import { HighlightsCard } from '../ui/Highlights';
@@ -17,6 +19,7 @@ const Finances = () => {
           <AccountBalance />
           <MealPlans />
         </HighlightsCard>
+        <ResourcesCard categ="financial" />
         <AnnouncementContainer className="col-span-2" type="financial" />
       </PageGrid>
     </div>
