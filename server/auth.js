@@ -96,7 +96,6 @@ Auth.login = function(req, res, next) {
 Auth.logout = (req, res) => {
   if (!req.user) res.redirect('/');
   return Auth.passportStrategy.logout(req, (err, uri) => {
-    // req.session.destroy();
     req.logout();
     return res.redirect(uri);
   });
