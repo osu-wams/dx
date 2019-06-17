@@ -30,7 +30,9 @@ const MealPlans: React.FC = () => {
           {formatDollars(mealPlans[0].attributes.balance)}
         </HighlightEmphasis>
         <HighlightDescription>
-          <ExternalLink href="http://mycard.oregonstate.edu/">View and Add Balance</ExternalLink>
+          <ExternalLink fg={Color['pine-400']} href="http://mycard.oregonstate.edu/">
+            View and Add Balance
+          </ExternalLink>
         </HighlightDescription>
       </Highlight>
     );

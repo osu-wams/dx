@@ -57,6 +57,15 @@ describe('/api/student', () => {
       expect(res.statusCode).toEqual(401);
       expect(res.error.text).toEqual('Unauthorized');
     });
+
+    it('should return "Unable to retrieve academic status." when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/v1\/students\/[0-9]+\/academic-status/)
+        .reply(500);
+
+      const res = await request.get('/api/student/academic-status');
+      expect(res.error.text).toEqual('Unable to retrieve academic status.');
+    });
   });
 
   describe('/account-balance', () => {
@@ -79,6 +88,15 @@ describe('/api/student', () => {
       expect(res.statusCode).toEqual(401);
       expect(res.error.text).toEqual('Unauthorized');
     });
+
+    it('should return "Unable to retrieve account balance." when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/v1\/students\/[0-9]+\/account-balance/)
+        .reply(500);
+
+      const res = await request.get('/api/student/account-balance');
+      expect(res.error.text).toEqual('Unable to retrieve account balance.');
+    });
   });
 
   describe('/class-schedule', () => {
@@ -91,6 +109,15 @@ describe('/api/student', () => {
       const res = await request.get('/api/student/class-schedule');
       expect(res.statusCode).toEqual(200);
       expect(res.body).toEqual(['class-schedule']);
+    });
+
+    it('should return "Unable to retrieve class schedule." when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/v1\/students\/[0-9]+\/class-schedule/)
+        .reply(500);
+
+      const res = await request.get('/api/student/class-schedule');
+      expect(res.error.text).toEqual('Unable to retrieve class schedule.');
     });
 
     it('should return an error if the user is not logged in', async () => {
@@ -122,6 +149,15 @@ describe('/api/student', () => {
       const res = await request.get('/api/student/class-schedule');
       expect(res.statusCode).toEqual(401);
       expect(res.error.text).toEqual('Unauthorized');
+    });
+
+    it('should return "Unable to retrieve GPA data." when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/v1\/students\/[0-9]+\/gpa/)
+        .reply(500);
+
+      const res = await request.get('/api/student/gpa');
+      expect(res.error.text).toEqual('Unable to retrieve GPA data.');
     });
   });
 
@@ -166,6 +202,15 @@ describe('/api/student', () => {
       expect(res.statusCode).toEqual(401);
       expect(res.error.text).toEqual('Unauthorized');
     });
+
+    it('should return "Unable to retrieve grades." when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/v1\/students\/[0-9]+\/grades/)
+        .reply(500);
+
+      const res = await request.get('/api/student/grades');
+      expect(res.error.text).toEqual('Unable to retrieve grades.');
+    });
   });
 
   describe('/holds', () => {
@@ -187,6 +232,15 @@ describe('/api/student', () => {
       const res = await request.get('/api/student/holds');
       expect(res.statusCode).toEqual(401);
       expect(res.error.text).toEqual('Unauthorized');
+    });
+
+    it('should return "Unable to retrieve account holds." when there is a 500 error', async () => {
+      nock(APIGEE_BASE_URL)
+        .get(/v1\/students\/[0-9]+\/holds/)
+        .reply(500);
+
+      const res = await request.get('/api/student/holds');
+      expect(res.error.text).toEqual('Unable to retrieve account holds.');
     });
   });
 });

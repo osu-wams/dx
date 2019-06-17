@@ -2,7 +2,7 @@
 
 exports[`Background color is orange-400 1`] = `
 .c1 {
-  color: #7B746F;
+  color: #D73F09;
 }
 
 .c0 {
@@ -11,7 +11,7 @@ exports[`Background color is orange-400 1`] = `
   display: inline-block;
   padding: 0.4rem 0.8rem;
   background-color: #D73F09;
-  color: #7B746F;
+  color: #D73F09;
 }
 
 .c0:hover,
@@ -35,7 +35,7 @@ exports[`Background color is orange-400 1`] = `
     <svg
       aria-hidden="true"
       class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
-      color="#7B746F"
+      color="#D73F09"
       data-icon="long-arrow-right"
       data-prefix="fal"
       focusable="false"
@@ -54,7 +54,7 @@ exports[`Background color is orange-400 1`] = `
 
 exports[`Background is orange-400, and text is white 1`] = `
 .c1 {
-  color: #7B746F;
+  color: #ffffff;
 }
 
 .c0 {
@@ -87,7 +87,7 @@ exports[`Background is orange-400, and text is white 1`] = `
     <svg
       aria-hidden="true"
       class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
-      color="#7B746F"
+      color="#ffffff"
       data-icon="long-arrow-right"
       data-prefix="fal"
       focusable="false"
@@ -106,7 +106,7 @@ exports[`Background is orange-400, and text is white 1`] = `
 
 exports[`Default options 1`] = `
 .c1 {
-  color: #7B746F;
+  color: #D73F09;
 }
 
 .c0 {
@@ -115,7 +115,7 @@ exports[`Default options 1`] = `
   display: inline-block;
   padding: 0.4rem 0.8rem;
   background-color: transparent;
-  color: #7B746F;
+  color: #D73F09;
 }
 
 .c0:hover,
@@ -139,7 +139,7 @@ exports[`Default options 1`] = `
     <svg
       aria-hidden="true"
       class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
-      color="#7B746F"
+      color="#D73F09"
       data-icon="long-arrow-right"
       data-prefix="fal"
       focusable="false"
@@ -158,7 +158,7 @@ exports[`Default options 1`] = `
 
 exports[`Text color is pine-400 1`] = `
 .c1 {
-  color: #7B746F;
+  color: #D73F09;
 }
 
 .c0 {
@@ -167,7 +167,7 @@ exports[`Text color is pine-400 1`] = `
   display: inline-block;
   padding: 0.4rem 0.8rem;
   background-color: #4A773C;
-  color: #7B746F;
+  color: #D73F09;
 }
 
 .c0:hover,
@@ -191,7 +191,7 @@ exports[`Text color is pine-400 1`] = `
     <svg
       aria-hidden="true"
       class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
-      color="#7B746F"
+      color="#D73F09"
       data-icon="long-arrow-right"
       data-prefix="fal"
       focusable="false"

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import Icon from '../ui/Icon';
 import { faMapMarkerAlt, faEnvelope, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { parse } from 'date-fns';
-import Button, { CloseButton } from '../ui/Button';
+import { CloseButton } from '../ui/Button';
 import {
   List,
   ListItem,
@@ -17,9 +17,9 @@ import { titleCase, formatTime, formatDate } from '../util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import { Color } from '../theme';
 import Divider from '../ui/Divider';
-import MoreInfoLink from '../ui/MoreInfoLink';
 import { CourseScheduleAttributes } from '../api/student/course-schedule';
-import { FC } from 'react';
+import ExternalLink from '../ui/ExternalLink';
+import Url from '../util/externalUrls.data';
 
 const Course: FC<{
   attributes: CourseScheduleAttributes;
@@ -50,20 +50,20 @@ const Course: FC<{
           scheduleDescription,
           scheduleType
         }) => (
-          <ListItem key={beginDate + beginTime}>
+          <ListItem key={beginDate + beginTime + weeklySchedule}>
             <ListItemContent>
               <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
               <ListItemText>
                 <ListItemHeader>{scheduleDescription}</ListItemHeader>
                 <ListItemDescription>
                   {room} {building} <br />
-                  {beginDate != endDate
+                  {beginDate !== endDate
                     ? weeklySchedule.map((day, index) => day)
                     : formatDate(parse(beginDate), 'noYear')}{' '}
                   &middot; {formatTime(beginTime)} - {formatTime(endTime)}
                 </ListItemDescription>
               </ListItemText>
-              <a href={`https://map.oregonstate.edu/?building=${building}`} target="blank">
+              <a href={Url.campusMap.building + building} target="blank">
                 <VisuallyHidden>View {buildingDescription} on map</VisuallyHidden>
                 <Icon icon={faMapMarkerAlt} />
               </a>
@@ -90,9 +90,8 @@ const Course: FC<{
         </ListItem>
       ))}
     </List>
-    {/* TODO: Add appropriate link */}
     <MyDialogFooter>
-      <MoreInfoLink text="View Courses" href="https://UPDATEME.edu" />
+      <ExternalLink href={Url.canvas.main}>View courses</ExternalLink>
     </MyDialogFooter>
   </MyDialog>
 );
