@@ -7,11 +7,16 @@ import { useDebounceFunction } from '../../util/useDebounce';
 
 const ResourcesSearch: React.FC<any> = ({ onQueryChanged, setSelectedCategory }) => {
   const [query, setQuery] = useState<string>('');
+  const [initialized, setInitialized] = useState<boolean>(false);
 
   useDebounceFunction(
     () => {
-      onQueryChanged(query);
-      setSelectedCategory('all');
+      if (initialized) {
+        onQueryChanged(query);
+        setSelectedCategory('all');
+      } else {
+        setInitialized(true);
+      }
     },
     300,
     [query]

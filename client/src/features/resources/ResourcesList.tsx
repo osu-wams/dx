@@ -11,6 +11,7 @@ const ResourcesList: React.FC<any> = ({ resources }) => (
           href={resource.attributes.field_service_url.uri}
           target="_blank"
         >
+          <img src={resource.attributes.icon} height="20px" />
           <ResourceName>{resource.attributes.title}</ResourceName>
           <ResourceDescription>{resource.attributes.field_service_description}</ResourceDescription>
         </Resource>

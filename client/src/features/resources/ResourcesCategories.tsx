@@ -13,7 +13,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
   useEffect(() => {
     getCategories()
       .then(data => {
-        const defaultCategory = data[0].id;
+        const defaultCategory = selectedCategory === 'all' ? 'all' : selectedCategory;
         onCategorySelected(defaultCategory);
         setCategories(data);
       })
@@ -29,7 +29,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
       {categories.length > 0 && (
         <>
           <CustomRadioBtn
-            icon=""
+            icon="http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/th.svg"
             text="All"
             id="all"
             className="testo"
@@ -42,7 +42,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
           />
           {categories.map(category => (
             <CustomRadioBtn
-              icon=""
+              icon={category.attributes.icon}
               text={category.attributes.name}
               id={category.id}
               key={category.id}
