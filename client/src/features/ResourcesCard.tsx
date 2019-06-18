@@ -53,7 +53,7 @@ const getResources = (categ: string) =>
       categoryId,
       axios
         .get(
-          `/api/services${
+          `/api/resources${
             categoryId != 'all'
               ? `?category=1b9b7a4b-5a64-41af-a40a-8bb01abedd19,${categoryId}`
               : ''
@@ -65,7 +65,7 @@ const getResources = (categ: string) =>
 
 const getCategoryId = (categ: string) =>
   axios
-    .get('/api/services/categories')
+    .get('/api/resources/categories')
     .then(
       res => res.data.find((e: any) => e.attributes.name.toUpperCase() == categ.toUpperCase()).id
     );

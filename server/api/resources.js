@@ -1,5 +1,5 @@
 //==========================================//
-//               /api/services              //
+//               /api/resources             //
 //==========================================//
 const { Router } = require('express');
 const request = require('request-promise');

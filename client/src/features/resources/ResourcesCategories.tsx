@@ -3,7 +3,7 @@ import axios from 'axios';
 import CustomRadioBtn from '../../ui/CustomRadioBtn';
 
 // Get a list of all the categories
-const getCategories = () => axios.get('/api/services/categories').then(res => res.data);
+const getCategories = () => axios.get('/api/resources/categories').then(res => res.data);
 
 const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedCategory }) => {
   const isMounted = useRef(true);

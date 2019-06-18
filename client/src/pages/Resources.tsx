@@ -6,11 +6,11 @@ import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
 
 const getResources = query =>
-  axios.get(`/api/services${query ? `?query=${query}` : ''}`).then(res => res.data);
+  axios.get(`/api/resources${query ? `?query=${query}` : ''}`).then(res => res.data);
 
 const getResourcesByCategory = categoryId =>
   axios
-    .get(`/api/services${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
+    .get(`/api/resources${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
     .then(res => res.data);
 
 const Resources = () => {

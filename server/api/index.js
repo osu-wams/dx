@@ -3,7 +3,7 @@ const user = require('./user');
 const masquerade = require('./masquerade');
 const events = require('./events');
 const student = require('./student');
-const services = require('./services');
+const resources = require('./resources');
 const alerts = require('./alerts');
 const jobs = require('./jobs');
 const announcements = require('./announcements');
@@ -17,7 +17,7 @@ module.exports = app => {
   app.use('/api/jobs', auth.ensureAuthenticated, jobs);
   app.use('/api/persons', auth.ensureAuthenticated, persons);
   app.use('/api/events', events);
-  app.use('/api/services', services);
+  app.use('/api/resources', resources);
   app.use('/api/alerts', alerts);
   app.use('/api/announcements', announcements);
 };

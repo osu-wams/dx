@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import PageTitle from '../ui/PageTitle';
 import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
