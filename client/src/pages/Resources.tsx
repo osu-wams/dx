@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import PageTitle from '../ui/PageTitle';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-
-const getResources = query =>
-  axios.get(`/api/resources${query ? `?query=${query}` : ''}`).then(res => res.data);
-
-const getResourcesByCategory = categoryId =>
-  axios
-    .get(`/api/resources${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
-    .then(res => res.data);
+import { getResources, getResourcesByCategory } from '../api/resources';
 
 const Resources = () => {
   const [resources, setResources] = useState<any>([]);
