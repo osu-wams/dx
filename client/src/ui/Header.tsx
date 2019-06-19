@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuList, MenuButton, MenuItem, MenuLink } from '@reach/menu-button';
-import { toast, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import logo from '../assets/logo.png';
 import '@reach/menu-button/styles.css';
 import '@reach/dialog/styles.css';
@@ -86,7 +86,10 @@ const Header = () => {
         .post('/api/masquerade', { masqueradeId })
         .then(() => {
           toggleMasqueradeDialog();
-          toast.warn(`Masquerading as OSU ID ${masqueradeId}.`, { transition: Zoom });
+          toast.success(`Masquerading as OSU ID ${masqueradeId}.`, { transition: Zoom });
+          setTimeout(() => {
+            window.location.reload(true);
+          }, 2000);
         })
         .catch(err => console.log(err));
     } else {
@@ -142,6 +145,7 @@ const Header = () => {
         <HeaderBottomSection>
           <MainNav />
         </HeaderBottomSection>
+        <ToastContainer />
       </HeaderWrapper>
       <MyDialog isOpen={showMasqueradeDialog} data-testid="masquerade-dialog">
         <h2>Log in as another user</h2>
