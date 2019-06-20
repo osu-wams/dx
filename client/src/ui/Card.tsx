@@ -125,6 +125,7 @@ const CardFooterWrapper = styled.div<ICollapse>`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto;
   /* If we only have 1 link, align it right */
   a:only-child {
     margin-left: auto;
