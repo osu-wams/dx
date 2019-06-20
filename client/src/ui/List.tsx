@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { theme, Color } from '../theme';
 
@@ -39,6 +40,16 @@ const ListItemContent = styled.div`
 
 const ListItemContentButton = styled(ListItemContent).attrs({ as: 'button' })``;
 
+type TLink = React.HTMLProps<HTMLAnchorElement>;
+
+const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: ${Color['neutral-100']};
+  }
+`;
+
 const ListItemText = styled.div`
   padding-right: 1.5rem;
   flex: 2;
@@ -62,6 +73,7 @@ export {
   ListItem,
   ListItemContent,
   ListItemContentButton,
+  ListItemContentLink,
   ListItemText,
   ListItemHeader,
   ListItemDescription
