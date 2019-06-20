@@ -29,7 +29,6 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
             icon="http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/th.svg"
             text="All"
             id="all"
-            className="testo"
             name="categories"
             onChange={() => {
               onCategorySelected('all');
