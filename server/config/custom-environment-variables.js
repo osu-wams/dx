@@ -9,7 +9,8 @@ module.exports = {
   saml: {
     cert: 'SAML_CERT',
     pvk: 'SAML_PVK',
-    callbackUrl: 'SAML_CALLBACK_URL'
+    callbackUrl: 'SAML_CALLBACK_URL',
+    logoutCallbackUrl: 'SAML_LOGOUT_CALLBACK_URL'
   },
   handshakeApi: {
     token: 'HANDSHAKE_API_TOKEN'

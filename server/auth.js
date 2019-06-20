@@ -4,6 +4,7 @@ const passport = require('passport');
 const SamlStrategy = require('passport-saml').Strategy;
 const DevStrategy = require('passport-dev').Strategy;
 const config = require('config');
+const logger = require('./logger');
 
 const ENV = config.get('env');
 const SAML_CERT = config.get('saml.cert');
@@ -12,6 +13,7 @@ let SAML_PVK = config.get('saml.pvk');
 // newlines, otherwise passport-saml breaks.
 SAML_PVK = SAML_PVK.replace(/\\n/g, '\n');
 const SAML_CALLBACK_URL = config.get('saml.callbackUrl');
+const SAML_LOGOUT_CALLBACK_URL = config.get('saml.logoutCallbackUrl');
 const Auth = {};
 
 // OSU SSO url (saml)
@@ -43,6 +45,7 @@ if (ENV === 'production') {
       disableRequestedAuthnContext: true,
       identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
       callbackUrl: SAML_CALLBACK_URL,
+      logoutCallback: SAML_LOGOUT_CALLBACK_URL,
       logoutUrl: samlLogout,
       entryPoint: samlUrl + 'SAML2/Redirect/SSO',
       issuer: 'https://my.oregonstate.edu',
@@ -96,6 +99,8 @@ Auth.login = function(req, res, next) {
 Auth.logout = (req, res) => {
   if (!req.user) res.redirect('/');
   return Auth.passportStrategy.logout(req, (err, uri) => {
+    logger.info('Logging user out');
+    req.session.destroy();
     req.logout();
     return res.redirect(uri);
   });

@@ -24,7 +24,8 @@ module.exports = {
   saml: {
     cert: '',
     pvk: '',
-    callbackUrl: ''
+    callbackUrl: '',
+    logoutCallback: ''
   },
   redis: {
     host: '',

@@ -61,6 +61,10 @@ app.post('/login/saml', passport.authenticate('saml'), (req, res) => {
   res.redirect('/');
 });
 
+app.get('/logout/saml', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 // Import API Routes
 require('./api')(app);
 
