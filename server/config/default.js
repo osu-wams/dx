@@ -25,7 +25,7 @@ module.exports = {
     cert: '',
     pvk: '',
     callbackUrl: '',
-    logoutCallback: ''
+    logoutCallbackUrl: ''
   },
   redis: {
     host: '',
