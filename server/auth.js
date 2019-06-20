@@ -99,7 +99,9 @@ Auth.login = function(req, res, next) {
 
 Auth.logout = (req, res) => {
   if (!req.user) res.redirect('/');
+  console.log('Trying to log user out ' + req.user.email);
   return Auth.passportStrategy.logout(req, (err, uri) => {
+    console.log('Logging user out ' + req.user.email);
     req.session.destroy();
     req.logout();
     return res.redirect(uri);
