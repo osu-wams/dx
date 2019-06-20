@@ -82,6 +82,7 @@ Auth.login = function(req, res, next) {
       return next(err);
     }
     if (!user) {
+      logger.info('Bad user login.');
       return res.send(400, {
         message: 'Bad username or password'
       });
@@ -99,7 +100,6 @@ Auth.login = function(req, res, next) {
 Auth.logout = (req, res) => {
   if (!req.user) res.redirect('/');
   return Auth.passportStrategy.logout(req, (err, uri) => {
-    logger.info('Logging user out');
     req.session.destroy();
     req.logout();
     return res.redirect(uri);
