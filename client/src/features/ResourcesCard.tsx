@@ -1,11 +1,11 @@
-import React, { useState, useEffect, FC } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef, FC } from 'react';
 import styled from 'styled-components';
 import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
 import Icon from '../ui/Icon';
 import Button from '../ui/Button';
 import { Color, theme } from '../theme';
+import { getResourcesByCategory, getCategories } from '../api/resources';
 
 const ResourceContainer = styled.div`
   display: grid;
@@ -30,7 +30,6 @@ const Resource = styled.a`
   flex: 2;
   align-items: center;
   text-align: center;
-  justify-content: center;
 `;
 
 const ResourceIconBorder = styled.div`
@@ -45,50 +44,56 @@ const ResourceIconBorder = styled.div`
 
 const ResourceIcon = styled.img`
   padding: ${theme.spacing.unit}px;
+  max-width: 100%;
+  max-height: 100%;
 `;
 
 const getResources = (categ: string) =>
   getCategoryId(categ).then(categoryId =>
     Promise.all([
       categoryId,
-      axios
-        .get(
-          `/api/resources${
-            categoryId != 'all'
-              ? `?category=1b9b7a4b-5a64-41af-a40a-8bb01abedd19,${categoryId}`
-              : ''
-          }`
-        )
-        .then(res => res.data)
+      getResourcesByCategory(
+        categoryId === 'all' ? 'all' : `1b9b7a4b-5a64-41af-a40a-8bb01abedd19,${categoryId}`
+      ).then(res => res)
     ]).then(res => res[1])
   );
 
 const getCategoryId = (categ: string) =>
-  axios
-    .get('/api/resources/categories')
-    .then(
-      res => res.data.find((e: any) => e.attributes.name.toUpperCase() == categ.toUpperCase()).id
-    );
+  getCategories().then(
+    res => res.find((e: any) => e.attributes.name.toUpperCase() == categ.toUpperCase()).id
+  );
 
 /**
  * Resources Card
  *
  * Displays resources from a given set of categories
  */
-const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
+const ResourcesCard: FC<{ categ: string; color: Color }> = ({ categ, color }) => {
   const [resources, setResources] = useState<any>([]);
   const [categoryId, setCategoryId] = useState<any>('');
+  const isMounted = useRef(true);
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
-  console.log(resources);
 
   // Populate resources and category ID
   useEffect(() => {
+    isMounted.current = true;
     getResources(categ)
-      .then(setResources)
+      .then(data => {
+        if (isMounted.current) {
+          setResources(data);
+        }
+      })
       .catch(console.log);
     getCategoryId(categ)
-      .then(setCategoryId)
+      .then(data => {
+        if (isMounted.current) {
+          setCategoryId(data);
+        }
+      })
       .catch(console.log);
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   return (
@@ -96,12 +101,14 @@ const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
       <CardHeader title={cardTitle} />
       <CardContent>
         {resources.length ? (
-          <ResourceContainer>
+          <ResourceContainer data-testid="resource-container">
             {resources.map(({ id, attributes }) => (
               <Resource key={id} href={attributes.field_service_url.uri} target="_blank">
-                <ResourceIconBorder>
-                  <ResourceIcon src={attributes.icon} />
-                </ResourceIconBorder>
+                {attributes.icon !== undefined && (
+                  <ResourceIconBorder>
+                    <ResourceIcon src={attributes.icon} />
+                  </ResourceIconBorder>
+                )}
                 <>{attributes.title}</>
               </Resource>
             ))}
@@ -116,12 +123,12 @@ const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
             as="a"
             href={`/resources?category=${categoryId}`}
             bg={Color.transparent}
-            fg={Color['pine-400']}
+            fg={color}
           >
             See all {categ} resources
             <Icon
               icon={faArrowRight}
-              color={Color['pine-400']}
+              color={color}
               style={{ marginLeft: `${theme.spacing.unit}px` }}
             />
           </Button>
