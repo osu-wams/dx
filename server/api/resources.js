@@ -14,17 +14,19 @@ const getData = async (url, match) => {
   const { data, included } = await request.get(url, { json: true });
   if (included) {
     included.forEach(item => {
-      const matchingItem = data.find(e => {
+      const matchingItems = data.filter(e => {
         return e.relationships[match].data && e.relationships[match].data.id === item.id;
       });
-      if (matchingItem) {
+      if (matchingItems.length > 0) {
         const matchingMedia = included.find(e => {
           return e.id === item.relationships.field_media_image.data.id;
         });
         if (matchingMedia) {
-          data[
-            data.indexOf(matchingItem)
-          ].attributes.icon = `${baseUrl}${matchingMedia.attributes.uri.url}`;
+          matchingItems.forEach(matchingItem => {
+            data[
+              data.indexOf(matchingItem)
+            ].attributes.icon = `${baseUrl}${matchingMedia.attributes.uri.url}`;
+          });
         }
       }
     });
