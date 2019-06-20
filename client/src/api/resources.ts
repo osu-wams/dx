@@ -10,4 +10,7 @@ const getResourcesByCategory = categoryId =>
 
 const getCategories = () => axios.get('/api/resources/categories').then(res => res.data);
 
-export { getResources, getResourcesByCategory, getCategories };
+// Category selected by default. Currently the popular category id
+const defaultCategoryId = '1b9b7a4b-5a64-41af-a40a-8bb01abedd19';
+
+export { getResources, getResourcesByCategory, getCategories, defaultCategoryId };

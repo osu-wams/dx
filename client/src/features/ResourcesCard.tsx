@@ -5,7 +5,7 @@ import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
 import Icon from '../ui/Icon';
 import Button from '../ui/Button';
 import { Color, theme } from '../theme';
-import { getResourcesByCategory, getCategories } from '../api/resources';
+import { getResourcesByCategory, getCategories, defaultCategoryId } from '../api/resources';
 
 const ResourceContainer = styled.div`
   display: grid;
@@ -53,14 +53,14 @@ const getResources = (categ: string) =>
     Promise.all([
       categoryId,
       getResourcesByCategory(
-        categoryId === 'all' ? 'all' : `1b9b7a4b-5a64-41af-a40a-8bb01abedd19,${categoryId}`
+        categoryId === 'all' ? 'all' : defaultCategoryId + ',' + categoryId
       ).then(res => res)
     ]).then(res => res[1])
   );
 
 const getCategoryId = (categ: string) =>
   getCategories().then(
-    res => res.find((e: any) => e.attributes.name.toUpperCase() == categ.toUpperCase()).id
+    res => res.find((e: any) => e.attributes.name.toUpperCase() === categ.toUpperCase()).id
   );
 
 /**

@@ -3,7 +3,7 @@ import PageTitle from '../ui/PageTitle';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import { getResources, getResourcesByCategory } from '../api/resources';
+import { getResources, getResourcesByCategory, defaultCategoryId } from '../api/resources';
 
 const Resources = () => {
   const [resources, setResources] = useState<any>([]);
@@ -18,7 +18,7 @@ const Resources = () => {
     } else {
       // Needed here because of async behavior in ResourcesCategories
       // Set selected category to 'popular' by default
-      setSelectedCategory('1b9b7a4b-5a64-41af-a40a-8bb01abedd19');
+      setSelectedCategory(defaultCategoryId);
     }
   }, []);
 
