@@ -16,7 +16,7 @@ const CustomRadioBtn: FC<RadioProps & InputHTMLAttributes<HTMLInputElement>> = (
   <Category>
     <HiddenRadioInput type="radio" id={id} {...props} />
     <CategoryLabel htmlFor={id}>
-      {icon} {text}
+      <CategoryIcon src={icon} /> {text}
     </CategoryLabel>
   </Category>
 );
@@ -40,11 +40,17 @@ const HiddenRadioInput = styled.input`
   width: 1px;
 `;
 
+const CategoryIcon = styled.img`
+  height: 12px;
+  margin-right: 6px;
+`;
+
 const CategoryLabel = styled.label`
   background: #fff;
   border: 1px solid ${Color['neutral-300']};
   border-radius: 2rem;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   font-size: ${theme.fontSize[12]};
   padding: 0.4rem 0.8rem;
   cursor: pointer;
