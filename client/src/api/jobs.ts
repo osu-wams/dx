@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { array } from 'prop-types';
 
 export const getJobs = (): Promise<IJobsWrapper> => axios.get(`/api/jobs`).then(res => res.data);
 

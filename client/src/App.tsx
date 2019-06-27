@@ -1,5 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
-
 import React, { useState, useEffect } from 'react';
 import { Router as ReachRouter, Location, RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
