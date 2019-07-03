@@ -29,5 +29,19 @@ module.exports = {
   redis: {
     host: '',
     port: ''
+  },
+  rds: {
+    host: '',
+    port: '',
+    user: '',
+    password: '',
+    database: ''
+  },
+  canvasOauth: {
+    id: '',
+    secret: '',
+    callbackUrl: '',
+    authUrl: '',
+    tokenUrl: ''
   }
 };

@@ -1,0 +1,2 @@
+server/migrations/*.js
+server/coverage

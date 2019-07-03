@@ -5,3 +5,5 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 Currently ${FONTAWESOME_TOKEN} is an environment variable.
 Add it to your .bashrc .zshrc or preferred file of choice.
+
+Install db-migrate globally

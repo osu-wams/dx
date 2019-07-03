@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  rds:
+    image: redis
+    ports:
+      - "6380:6379"
+  session_cache:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: password1
+      MYSQL_DATABASE: myosu_dashboard
+      MYSQL_USER: myosu_dashboard
+      MYSQL_PASSWORD: myosu_dashboard
+    ports:
+      - "3307:3306"

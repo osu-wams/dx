@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "host": "localhost",
+    "user": "myosu_dashboard",
+    "password" : "myosu_dashboard",
+    "database": "myosu_dashboard",
+    "driver": "mysql",
+    "port": 3307,
+    "multipleStatements": true
+  }
+}

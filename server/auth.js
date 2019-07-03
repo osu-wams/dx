@@ -1,8 +1,9 @@
-/* eslint-disable consistent-return, node/no-unpublished-require, node/no-missing-require */
+/* eslint-disable consistent-return, node/no-unpublished-require, node/no-missing-require, no-unused-vars */
 
 const passport = require('passport');
 const SamlStrategy = require('passport-saml').Strategy;
 const DevStrategy = require('passport-dev').Strategy;
+const OAuthStrategy = require('passport-oauth2').Strategy;
 const config = require('config');
 
 const ENV = config.get('env');
@@ -17,22 +18,6 @@ const Auth = {};
 // OSU SSO url (saml)
 const samlUrl = 'https://login.oregonstate.edu/idp/profile/';
 const samlLogout = samlUrl + 'Logout';
-
-function parseSamlResult(user, done) {
-  const samlUser = {
-    email: user['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'],
-    firstName: user['urn:oid:2.5.4.42'],
-    lastName: user['urn:oid:2.5.4.4'],
-    isAdmin: false
-  };
-
-  let permissions = user['urn:oid:1.3.6.1.4.1.5923.1.1.1.7'] || [];
-  if (permissions.includes('urn:mace:oregonstate.edu:entitlement:dx:dx-admin')) {
-    samlUser.isAdmin = true;
-  }
-
-  return done(null, samlUser);
-}
 
 if (ENV === 'production') {
   Auth.passportStrategy = new SamlStrategy(
@@ -49,7 +34,21 @@ if (ENV === 'production') {
       decryptionPvk: SAML_PVK,
       signatureAlgorithm: 'sha256'
     },
-    parseSamlResult
+    (profile, done) => {
+      let user = {
+        osuId: profile['urn:oid:1.3.6.1.4.1.5016.2.1.2.1'],
+        email: profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.6'],
+        firstName: profile['urn:oid:2.5.4.42'],
+        lastName: profile['urn:oid:2.5.4.4'],
+        isAdmin: false
+      };
+
+      let permissions = profile['urn:oid:1.3.6.1.4.1.5923.1.1.1.7'] || [];
+      if (permissions.includes('urn:mace:oregonstate.edu:entitlement:dx:dx-admin')) {
+        user.isAdmin = true;
+      }
+      return done(null, user);
+    }
   );
 } else {
   // Configure Dev Strategy
@@ -101,7 +100,6 @@ Auth.ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-
   res.status(401).send('Unauthorized');
 };
 
@@ -113,4 +111,23 @@ Auth.ensureAdmin = (req, res, next) => {
   return res.status(401).send('Unauthorized');
 };
 
+Auth.oAuth2Strategy = new OAuthStrategy(
+  {
+    authorizationURL: 'https://oregonstate.test.instructure.com/login/oauth2/auth',
+    tokenURL: 'https://oregonstate.test.instructure.com/login/oauth2/token',
+    clientID: config.get('canvasOauth.id'),
+    clientSecret: config.get('canvasOauth.secret'),
+    callbackURL: config.get('canvasOauth.callbackUrl')
+  },
+  function(accessToken, refreshToken, params, profile, done) {
+    let user = {
+      userId: params.user.id,
+      fullName: params.user.name,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+      expireTime: ((Date.now() / 1000) | 0) + params.expires_in
+    };
+    done(null, user);
+  }
+);
 module.exports = Auth;
