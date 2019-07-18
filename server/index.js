@@ -76,11 +76,13 @@ app.post('/login/saml', passport.authenticate('saml'), (req, res) => {
             if (err) throw err;
           }
         );
+        // Insert into oauth data
         connection.query(dbQuery.insertOAuthOptIn, [req.user.osuId, false], err => {
           if (err) throw err;
         });
+        req.user.isCanvasOptIn = false;
         connection.release();
-        res.redirect('/');
+        res.redirect('/canvas/login');
       } else {
         connection.query(dbQuery.getOptInStatus, [req.user.osuId], (err, results) => {
           if (err) throw err;
@@ -91,8 +93,12 @@ app.post('/login/saml', passport.authenticate('saml'), (req, res) => {
             getCurrentOauthToken(req.user.osuId, results => {
               req.user.canvasOauthToken = results.accessToken;
               req.user.canvasOauthExpire = results.expireTime;
+              req.user.isCanvasOptIn = true;
               res.redirect('/');
             });
+          } else {
+            req.user.isCanvasOptIn = false;
+            res.redirect('/');
           }
         });
         connection.release();
@@ -114,6 +120,7 @@ app.get(
         if (error) throw error;
       });
     }
+    req.user.isCanvasOptIn = false;
     res.redirect('/');
   },
   (req, res) => {
@@ -124,6 +131,7 @@ app.get(
     // Add the access token and expire time to the user object
     req.user.canvasOauthToken = req.account.accessToken;
     req.user.canvasOauthExpire = req.account.expireTime;
+    req.user.isCanvasOptIn = true;
     res.redirect('/');
   }
 );

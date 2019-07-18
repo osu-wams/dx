@@ -6,4 +6,13 @@ You can find the most recent version of this guide [here](https://github.com/fac
 Currently ${FONTAWESOME_TOKEN} is an environment variable.
 Add it to your .bashrc .zshrc or preferred file of choice.
 
-Install db-migrate globally
+## Setup for Local Development OAuth flow
+* Install db-migrate globally `npm i -g db-migrate`
+* Go to the server directory and run `docker-compose up -d`
+  * You need docker installed on your machine if you don't (https://www.docker.com/)
+* Edit /etc/hosts file
+  * Add `127.0.0.1  dev.my.oregonstate.edu` to the end of file
+* Run `export NODE_ENV=production`
+  * To clear this run `unset NODE_ENV`
+  * NOTE: We only need this if we want to test SAML and CANVAS OAUTH on our local machine
+

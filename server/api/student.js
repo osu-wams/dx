@@ -6,20 +6,33 @@ const { Router } = require('express');
 const request = require('request-promise');
 const config = require('config');
 const { getToken } = require('./util');
-const { getUpcomingAssignments } = require('./modules/canvas');
+const { getPlannerItemsMask, getPlannerItemsOAuth } = require('./modules/canvas');
 
 const BASE_URL = `${config.get('osuApi.baseUrl')}/students`;
 
 const router = new Router();
 
-router.get('/assignments', async (req, res) => {
+router.get('/planner-items', async (req, res) => {
+  console.log(req.user.canvasOauthToken);
   try {
-    const apiResponse = await getUpcomingAssignments(req.user.masqueradeId || req.user.osuId);
+    console.log(req.user);
+    let plannerApiResponse;
+    // Administrators that have masqueraded get access to this endpoint (else you get oauth)
+    if (req.user.isAdmin && req.user.masqueradeId) {
+      plannerApiResponse = await getPlannerItemsMask(req.user.masqueradeId);
+    } else if (req.user.canvasOauthToken) {
+      plannerApiResponse = await getPlannerItemsOAuth(req.user.canvasOauthToken);
+      // plannerApiResponse = await getPlannerItemsMask(req.user.masqueradeId || req.user.osuId);
+    } else {
+      plannerApiResponse = [];
+    }
+
     // Filter out just assignments
-    const assignments = apiResponse.filter(item => item.assignment !== undefined);
-    res.send(assignments);
+    // const assignments = apiResponse.filter(item => item.assignment !== undefined);
+    res.send(plannerApiResponse);
   } catch (err) {
-    res.status(500).send('Unable to retrieve assignments.');
+    console.log(err);
+    res.status(500).send('Unable to retrieve planner items.');
   }
 });
 

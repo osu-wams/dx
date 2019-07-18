@@ -9,13 +9,23 @@ const getCurrentOauthToken = (osuId, callback) => {
     if (err) throw err;
     connection.query(dbQuery.selectOAuth, [osuId], (error, results) => {
       if (error) throw error;
+
       const refresh = performRefresh(results[0].refresh_token);
-      refresh.then(body => {
-        const response = JSON.parse(body);
-        const expireTime = ((Date.now() / 1000) | 0) + response.expires_in;
-        connection.release();
-        return callback({ accessToken: response.access_token, expireTime: expireTime });
-      });
+
+      refresh
+        .then(body => {
+          const response = JSON.parse(body);
+          const expireTime = ((Date.now() / 1000) | 0) + response.expires_in;
+          connection.release();
+          return callback({ accessToken: response.access_token, expireTime: expireTime });
+        })
+        .catch(err => {
+          console.log(err);
+          // Stuff expired / deauthorized
+          // ! Delete refresh_token
+          // ! setOptIn to false
+          // redirect, etc etc.
+        });
     });
   });
 };

@@ -1,11 +1,11 @@
 version: "3.7"
 
 services:
-  rds:
+  session_cache:
     image: redis
     ports:
       - "6380:6379"
-  session_cache:
+  rds:
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: password1

@@ -1,6 +1,6 @@
 const Url = {
   canvas: {
-    main: 'https://canvas.oregonstate.edu'
+    main: 'https://oregonstate.instructure.com'
   },
   handshake: {
     main: 'https://app.joinhandshake.com/',

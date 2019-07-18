@@ -1,7 +1,7 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
 import CourseScheduleCard from '../features/CourseScheduleCard';
-import UpcomingAssignments from '../features/UpcomingAssignments';
+import PlannerItems from '../features/PlannerItems';
 import EventCardContainer from '../ui/EventCardContainer';
 import PageGrid from '../ui/PageGrid';
 
@@ -11,7 +11,7 @@ const Dashboard = () => {
       <PageTitle title="My OSU Dashboard" />
       <PageGrid>
         <CourseScheduleCard />
-        <UpcomingAssignments />
+        <PlannerItems />
         <EventCardContainer className="col-span-2" />
       </PageGrid>
     </div>

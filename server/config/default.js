@@ -41,7 +41,7 @@ module.exports = {
     id: '',
     secret: '',
     callbackUrl: '',
-    authUrl: '',
-    tokenUrl: ''
+    authUrl: 'https://oregonstate.test.instructure.com/login/oauth2/auth',
+    tokenUrl: 'https://oregonstate.test.instructure.com/login/oauth2/token'
   }
 };

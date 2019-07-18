@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import { faFileAlt, faMapMarkerAlt, faArrowRight } from '@fortawesome/pro-light-svg-icons';
 import { addDays, eachDay, format, isSameDay } from 'date-fns';
@@ -8,18 +8,21 @@ import {
   List,
   ListItem,
   ListItemHeader,
-  ListItemContent,
   ListItemContentButton,
   ListItemDescription,
-  ListItemText
+  ListItemText,
+  ListItemContentLink
 } from '../ui/List';
 import Icon from '../ui/Icon';
 import { theme, Color } from '../theme';
 import excitedCalendarIcon from '../assets/excited-calendar.svg';
-import { getCourseSchedule, getUpcomingAssignments } from '../api/student';
+import { getCourseSchedule } from '../api/student';
+import { getPlannerItems } from '../api/student/planner-items';
 import { formatTime } from '../util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import VisuallyHidden from '@reach/visually-hidden';
+import Url from '../util/externalUrls.data';
+import { UserContext } from '../App';
 
 /**
  * Course Schedule Card
@@ -30,7 +33,8 @@ const CourseScheduleCard = () => {
   const nextFiveDays = getNextFiveDays();
   const [courses, setCourses] = useState<any[]>([]);
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
-  const [assignments, setAssignments] = useState<any[]>([]);
+  const [plannerItems, setPlannerItems] = useState<any[]>([]);
+  const user = useContext<any>(UserContext);
 
   // Populate user courses
   useEffect(() => {
@@ -59,9 +63,9 @@ const CourseScheduleCard = () => {
   }, []);
 
   useEffect(() => {
-    getUpcomingAssignments()
+    getPlannerItems()
       .then(data => {
-        setAssignments(data);
+        setPlannerItems(data);
       })
       .catch(console.log);
   }, []);
@@ -76,9 +80,16 @@ const CourseScheduleCard = () => {
 
   // Get courses and assignments matching selected day.
   const selectedCourses = getCoursesOnSelectedDay();
-  const selectedAssignments = assignments.filter(item =>
-    isSameDay(item.assignment.due_at, selectedDay)
-  );
+
+  let selectedPlannerItems;
+  if (user.isCanvasOptIn) {
+    selectedPlannerItems = plannerItems.filter(item =>
+      item.plannable.due_at ? isSameDay(item.plannable.due_at, selectedDay) : ''
+    );
+  } else {
+    selectedPlannerItems = [];
+  }
+  // const selectedPlannerItems = [];
   // Get a list of days with courses or assignments.
   // Used to display the orange dots above days to indicate
   // which days have events at a quick glance.
@@ -87,11 +98,18 @@ const CourseScheduleCard = () => {
       nextFiveDays.filter(day => {
         let dayShortcode = getDayShortcode(day);
         const coursesOnDay = courses.filter(course => course.weeklySchedule.includes(dayShortcode));
-        const assignmentsOnDay = assignments.filter(item => isSameDay(item.assignment.due_at, day));
+        let plannerItemsOnDay;
+        if (user.canvasOauthToken) {
+          plannerItemsOnDay = plannerItems.filter(item =>
+            item.plannable.due_at ? isSameDay(item.plannable.due_at, day) : ''
+          );
+        } else {
+          plannerItemsOnDay = [];
+        }
 
-        return coursesOnDay.length > 0 || assignmentsOnDay.length > 0;
+        return coursesOnDay.length > 0 || plannerItemsOnDay.length > 0;
       }),
-    [nextFiveDays, assignments, courses]
+    [nextFiveDays, plannerItems, courses]
   );
 
   return (
@@ -110,7 +128,8 @@ const CourseScheduleCard = () => {
           </Day>
         ))}
       </DayList>
-      {selectedCourses.length === 0 && selectedAssignments.length === 0 && <EmptyState />}
+      {selectedCourses.length === 0 && selectedPlannerItems.length === 0 && <EmptyState />}
+
       {selectedCourses.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
           <SectionHeader>Courses</SectionHeader>
@@ -146,22 +165,33 @@ const CourseScheduleCard = () => {
           </List>
         </div>
       )}
-      {selectedAssignments.length > 0 && (
+      {user.isCanvasOptIn && selectedPlannerItems.length > 0 && (
         <div>
           <SectionHeader>Assignments</SectionHeader>
           <List>
-            {selectedAssignments.map(({ title, assignment: { id, due_at } }) => (
-              <ListItem key={id}>
-                <ListItemContent>
-                  <Icon icon={faFileAlt} color={Color['orange-200']} />
-                  <ListItemText>
-                    <ListItemHeader>{title}</ListItemHeader>
-                    <ListItemDescription>Due at {format(due_at, 'hh:mma')}</ListItemDescription>
-                  </ListItemText>
-                </ListItemContent>
-              </ListItem>
-            ))}
+            {selectedPlannerItems.map(
+              ({ plannable_id, html_url, plannable_type, plannable: { title, due_at } }) => (
+                <ListItem key={plannable_id}>
+                  <ListItemContentLink href={Url.canvas.main + html_url}>
+                    <Icon icon={faFileAlt} color={Color['orange-200']} />
+                    <ListItemText>
+                      <ListItemHeader>{title} </ListItemHeader>
+                      <ListItemDescription>
+                        {plannable_type !== 'announcement'
+                          ? `Due today at ${format(due_at, 'h:mma')}`
+                          : ''}
+                      </ListItemDescription>
+                    </ListItemText>
+                  </ListItemContentLink>
+                </ListItem>
+              )
+            )}
           </List>
+        </div>
+      )}
+      {user.isCanvasOptIn !== undefined && !user.isCanvasOptIn && (
+        <div>
+          <a href="/canvas/login">Authorize Canvas</a>
         </div>
       )}
     </Card>
@@ -213,7 +243,9 @@ const Header = styled.div`
   margin-bottom: ${theme.spacing.unit * 2}px;
 `;
 
-const Day = styled.button<{ selected: boolean }>`
+type selectedBtn = boolean;
+
+const Day = styled.button<{ selected: selectedBtn }>`
   background: none;
   border: none;
   padding: 0;
