@@ -1,19 +1,21 @@
-FROM node:10.15.0-alpine
+FROM node:10.15-alpine
 
-RUN apk add yarn
+RUN set -eux; \
+    apk add yarn; \
+    mkdir -p /var/www/app/current
 
-ENV appDir /var/www/app/current
+# ENV appDir /var/www/app/current
 
 # Set the work directory
 RUN mkdir -p /var/www/app/current
-WORKDIR ${appDir}
+# WORKDIR ${appDir}
+WORKDIR /var/www/app/current
 
 # Add our package.json and install *before* adding our application files
-ADD ./server/package.json ./
-RUN yarn install
-
 # Install pm2 *globally* so we can run our application
-RUN yarn global add pm2
+ADD ./server/package.json ./
+RUN yarn install; \
+    yarn global add pm2
 
 # Now add application files
 ADD ./server ./
