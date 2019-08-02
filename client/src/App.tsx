@@ -53,6 +53,8 @@ const App = () => {
     axios
       .get('/api/user')
       .then(res => {
+        // if canvas opt in and expiered need to refresh
+        console.log(res.data);
         setUser(res.data);
       })
       .catch(() => {

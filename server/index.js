@@ -9,6 +9,7 @@ const RedisStore = require('connect-redis')(session);
 const config = require('config');
 const logger = require('./logger');
 const auth = require('./auth');
+const { findOrCreateUser } = require('./api/modules/user-account')
 const { pool, dbQuery } = require('./db');
 const { getCurrentOauthToken } = require('./canvas-refresh');
 
@@ -62,49 +63,14 @@ app.get('/healthcheck', (req, res) => {
   res.status(200).end();
 });
 
-app.post('/login/saml', passport.authenticate('saml'), (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(dbQuery.selectUser, [req.user.osuId], (err, results) => {
-      if (err) throw err;
-      if (results.length == 0) {
-        // Initialize user object in database.
-        connection.query(
-          dbQuery.insertUser,
-          [req.user.osuId, req.user.firstName, req.user.lastName, req.user.email],
-          err => {
-            if (err) throw err;
-          }
-        );
-        // Insert into oauth data
-        connection.query(dbQuery.insertOAuthOptIn, [req.user.osuId, false], err => {
-          if (err) throw err;
-        });
-        req.user.isCanvasOptIn = false;
-        connection.release();
-        res.redirect('/canvas/login');
-      } else {
-        connection.query(dbQuery.getOptInStatus, [req.user.osuId], (err, results) => {
-          if (err) throw err;
-          if (results.length == 0) {
-            console.error('we got a problem');
-          }
-          if (results[0].opt_in) {
-            getCurrentOauthToken(req.user.osuId, results => {
-              req.user.canvasOauthToken = results.accessToken;
-              req.user.canvasOauthExpire = results.expireTime;
-              req.user.isCanvasOptIn = true;
-              res.redirect('/');
-            });
-          } else {
-            req.user.isCanvasOptIn = false;
-            res.redirect('/');
-          }
-        });
-        connection.release();
-      }
-    });
-  });
+app.post('/login/saml', passport.authenticate('saml'), async (req, res) => {
+  // find by id or create
+  const [isNew] = await findOrCreateUser(req.user);
+  if (isNew) {
+    res.redirect('/canvas/login');
+  } else {
+    res.redirect('/canvas/refresh');
+  }
 });
 // Canvas Oauth2 login route
 app.get('/canvas/login', passport.authorize('canvasOauth'));
@@ -135,13 +101,11 @@ app.get(
     res.redirect('/');
   }
 );
-app.get('/canvas/session', (req, res) => {
-  getCurrentOauthToken(req.user.osuId, results => {
-    req.user.canvasOauthToken = results.accessToken;
-    req.user.canvasOauthExpire = results.expireTime;
-    res.redirect('/');
-  });
-});
+app.get('/canvas/refresh', async (req, res) => {
+  let myUser = await getCurrentOauthToken(req.user);
+  req.user = myUser;
+  res.redirect('/');
+})
 // Import API Routes
 require('./api')(app);
 

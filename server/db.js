@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const util = require('util');
 const config = require('config');
 // Configure RDS store
 const pool = mysql.createPool({
@@ -22,5 +23,7 @@ const dbQuery = {
   updateOAuthAccessToken: 'UPDATE oauth_data SET refresh_token = ?, WHERE osu_id = ?',
   getOptInStatus: 'SELECT opt_in FROM oauth_data WHERE osu_id = ?'
 };
+
+pool.query = util.promisify(pool.query);
 
 module.exports = { pool, dbQuery };

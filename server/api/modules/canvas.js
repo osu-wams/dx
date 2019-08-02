@@ -11,10 +11,10 @@ const CANVAS_TOKEN = config.get('canvasApi.token');
  * @returns {Promise<Object[]>}
  */
 
-const getPlannerItemsMask = maskId => {
+const getPlannerItemsMask = async maskId => {
   const today = format(Date.now(), 'YYYY-MM-DD');
   console.log(today);
-  return request({
+  return await request({
     method: 'GET',
     url: `${CANVAS_BASE_URL}/planner/items?as_user_id=sis_user_id:${maskId}&start_date=${today}`,
     auth: { bearer: CANVAS_TOKEN }
@@ -22,9 +22,9 @@ const getPlannerItemsMask = maskId => {
 };
 
 // @TODO: start day to change today.
-const getPlannerItemsOAuth = accessToken => {
+const getPlannerItemsOAuth = async accessToken => {
   const today = format(Date.now(), 'YYYY-MM-DD');
-  return request({
+  return await request({
     method: 'GET',
     url: `${CANVAS_BASE_URL}/planner/items?start_date=${today}`,
     auth: { bearer: accessToken }
