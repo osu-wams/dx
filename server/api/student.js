@@ -3,40 +3,22 @@
 //==========================================//
 
 const { Router } = require('express');
-const async = require('async');
 const request = require('request-promise');
 const config = require('config');
 const { getToken } = require('./util');
 const { getPlannerItemsMask, getPlannerItemsOAuth } = require('./modules/canvas');
-const { getCurrentOauthToken } = require('../canvas-refresh');
 
 const BASE_URL = `${config.get('osuApi.baseUrl')}/students`;
 
 const router = new Router();
 
 router.get('/planner-items', async (req, res) => {
-  console.log('Before refreshing ' + req.user.canvasOauthToken);
-  console.log('Current expire time from session ' + req.user.canvasOauthExpire + ' Current time ' + ((Date.now() / 1000) | 0));
-  // if (((Date.now() / 1000) | 0) > req.user.canvasOauthExpire) {
-  // Access token is expiered and we need to get a new one
-  //  await getCurrentOauthToken(req.user.osuId, results => {
-  //   req.user.canvasOauthToken = results.accessToken;
-  //   req.user.canvasOauthExpire = results.expireTime;
-  //   req.user.isCanvasOptIn = results.canvasOptIn;
-  //   console.log('Performing refresh ' + req.user.canvasOauthToken);
-  // })
-  // }
-  let user = await getCurrentOauthToken(req.user);
-  req.user = user;
-  // console.log(user);
   try {
-    // console.log(req.user);
     let plannerApiResponse;
     // Administrators that have masqueraded get access to this endpoint (else you get oauth)
     if (req.user.isAdmin && req.user.masqueradeId) {
       plannerApiResponse = await getPlannerItemsMask(req.user.masqueradeId);
     } else if (req.user.canvasOauthToken) {
-      console.log('Token we tried to use was ' + req.user.canvasOauthToken);
       plannerApiResponse = await getPlannerItemsOAuth(req.user.canvasOauthToken);
       // plannerApiResponse = await getPlannerItemsMask(req.user.masqueradeId || req.user.osuId);
     } else {
@@ -47,10 +29,9 @@ router.get('/planner-items', async (req, res) => {
     // const assignments = apiResponse.filter(item => item.assignment !== undefined);
     res.send(plannerApiResponse);
   } catch (err) {
-    console.log(err);
+    console.log(err); // eslint-disable-line no-console
     res.status(500).send('Unable to retrieve planner items.');
   }
-
 });
 router.get('/academic-status', async (req, res) => {
   try {

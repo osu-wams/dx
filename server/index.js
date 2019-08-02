@@ -9,7 +9,11 @@ const RedisStore = require('connect-redis')(session);
 const config = require('config');
 const logger = require('./logger');
 const auth = require('./auth');
-const { findOrCreateUser } = require('./api/modules/user-account')
+const {
+  updateOAuthToken,
+  updateOAuthOptIn,
+  findOrCreateUser
+} = require('./api/modules/user-account');
 const { pool, dbQuery } = require('./db');
 const { getCurrentOauthToken } = require('./canvas-refresh');
 
@@ -79,24 +83,18 @@ app.get('/canvas/login', passport.authorize('canvasOauth'));
 app.get(
   '/canvas/auth',
   passport.authorize('canvasOauth', { failWithError: true }),
-  (err, req, res, next) => {
+  async (err, req, res, next) => {
     // Handle the error when the user denies access
     if (err.name === 'AuthenticationError') {
-      pool.query(dbQuery.updateOAuthOptIn, [false, req.user.osuId], error => {
-        if (error) throw error;
-      });
+      await updateOAuthOptIn(req.user, false);
     }
     req.user.isCanvasOptIn = false;
     res.redirect('/');
   },
-  (req, res) => {
-    // Add the users refresh token to the database.
-    pool.query(dbQuery.updateOAuthTokens, [req.account.refreshToken, req.user.osuId], error => {
-      if (error) throw error;
-    });
-    // Add the access token and expire time to the user object
+  async (req, res) => {
+    await updateOAuthToken(req.user, req.account);
     req.user.canvasOauthToken = req.account.accessToken;
-    req.user.canvasOauthExpire = req.account.expireTime;
+    req.user.canvasOauthExpire = ((Date.now() / 1000) | 0) + req.account.expireTime;
     req.user.isCanvasOptIn = true;
     res.redirect('/');
   }
@@ -105,7 +103,7 @@ app.get('/canvas/refresh', async (req, res) => {
   let myUser = await getCurrentOauthToken(req.user);
   req.user = myUser;
   res.redirect('/');
-})
+});
 // Import API Routes
 require('./api')(app);
 
