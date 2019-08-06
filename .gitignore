@@ -1,7 +1,7 @@
 .gitignore
 .DS_STORE
 .idea
-client/build
+build
 cypress/videos
 cypress/screenshots
 **/coverage

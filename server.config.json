@@ -1,9 +1,0 @@
-{
-    "apps": [
-        {
-            "name": "dx",
-            "script": "npm",
-            "args" : "start"
-        }
-    ]
-}

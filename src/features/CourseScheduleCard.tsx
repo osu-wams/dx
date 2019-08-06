@@ -222,7 +222,7 @@ const EmptyState = () => (
   <>
     <NoCoursesImage src={excitedCalendarIcon} />
     <NoCoursesText>
-      Nice! You don't have any assignments due or courses scheduled on this day.
+      Nice! You don&rsquo;t have any assignments due or courses scheduled on this day.
       <a href="#">
         Check out the OSU calendar
         <Icon icon={faArrowRight} color={Color['orange-400']} />
