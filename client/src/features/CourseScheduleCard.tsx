@@ -132,6 +132,7 @@ const CourseScheduleCard = () => {
 
       {selectedCourses.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
+          {/* TODO: course should NOT be a link */}
           <SectionHeader>Courses</SectionHeader>
           <List>
             {selectedCourses.map(course => (

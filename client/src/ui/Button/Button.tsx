@@ -15,6 +15,8 @@ const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>`
   ${({ btnSize }) => btnSizes(btnSize)};
 `;
 
+type IBtnSizes = 'small' | 'large';
+
 type BtnProps = {
   bg?: Color;
   fg?: Color;
@@ -22,7 +24,7 @@ type BtnProps = {
 };
 
 function btnSizes(value?: IBtnSizes) {
-  let padding = '.6rem .8rem';
+  let padding = '.6rem 1.4rem';
   let fontSize = '';
   if (value === 'small') {
     padding = '.2rem .3rem;';
@@ -39,6 +41,9 @@ function btnSizes(value?: IBtnSizes) {
   return fontSize + padding;
 }
 
-export default Button;
+const ButtonLink = styled(Button).attrs({ as: 'a' })`
+  text-decoration: none;
+`;
 
-type IBtnSizes = 'small' | 'large';
+export default Button;
+export { ButtonLink };

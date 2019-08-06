@@ -12,6 +12,7 @@ import {
   ListItemText
 } from '../ui/List';
 import { getPlannerItems } from '../api/student/planner-items';
+import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import { Color } from '../theme';
 import Url from '../util/externalUrls.data';
 import ExternalLink from '../ui/ExternalLink';
@@ -22,7 +23,7 @@ import { UserContext } from '../App';
  *
  * Displays upcoming assignments from Canvas.
  */
-const UpcomingAssignments = () => {
+const PlannerItems = () => {
   const [plannerItems, setPlannerItems] = useState([]);
   const user = useContext<any>(UserContext);
 
@@ -35,17 +36,12 @@ const UpcomingAssignments = () => {
 
   return (
     <Card>
-      <CardHeader title="Canvas To Dos 2" badge={<Badge>{plannerItems.length}</Badge>} />
+      <CardHeader title="Canvas" badge={<Badge>{plannerItems.length}</Badge>} />
       <CardContent>
         {/* Show upcoming assignments if any exist, otherwise show empty state. */}
-        {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && (
-          <div>
-            You are missing out on Canvas and other useful data here. Authorize Canvas now to take
-            advantage of this app
-          </div>
-        )}
+        {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && <AuthorizeCanvas />}
 
-        {plannerItems.length ? (
+        {plannerItems.length && user.isCanvasOptIn === true ? (
           <List>
             {plannerItems.map(
               ({ plannable_id, plannable_type, html_url, plannable: { title, due_at } }) => (
@@ -81,4 +77,4 @@ const UpcomingAssignments = () => {
 // Todo: Replace with actual empty state when ready in mockups.
 const EmptyState = () => <span>NO ASSIGNMENTS </span>;
 
-export default UpcomingAssignments;
+export default PlannerItems;
