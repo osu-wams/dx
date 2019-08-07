@@ -63,7 +63,7 @@ jobs:
           command: yarn run build
       - persist_to_workspace:
           root: /home/circleci
-          paths: project/client/build
+          paths: project/build
 
   build_client-dev:
     <<: *build_client
@@ -77,7 +77,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - aws-s3/sync:
-          from: ~/project/client/build
+          from: ~/project/build
           to: ${AWS_S3_BUCKET_URL}
 
   deploy_client-dev:
