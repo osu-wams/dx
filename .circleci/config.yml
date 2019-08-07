@@ -5,7 +5,6 @@
 version: 2.1
 
 orbs:
-  aws-ecr: circleci/aws-ecr@3.0.0
   aws-s3: circleci/aws-s3@1.0.3
   aws-cli: circleci/aws-cli@0.1.13
 
@@ -64,7 +63,7 @@ jobs:
           command: yarn run build
       - persist_to_workspace:
           root: /home/circleci
-          paths: project/client/build
+          paths: project/build
 
   build_client-dev:
     <<: *build_client
@@ -78,7 +77,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - aws-s3/sync:
-          from: ~/project/client/build
+          from: ~/project/build
           to: ${AWS_S3_BUCKET_URL}
 
   deploy_client-dev:
@@ -152,11 +151,6 @@ workflows:
           requires:
             - approve_deploy_client
           filters: *master-only
-      - aws-ecr/build_and_push_image:
-          repo: 'dx'
-          tag: ${CIRCLE_BUILD_NUM}
-          requires:
-            - lint_test_coverage
       - flush-cache-prod:
           requires:
             - deploy_client-prod
