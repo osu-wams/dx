@@ -2,7 +2,6 @@ import React from 'react';
 import PageTitle from '../ui/PageTitle';
 import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
-import StudentJobs from '../features/StudentJobs';
 import { HighlightsCard } from '../ui/Highlights';
 import AccountBalance from '../features/AccountBalance';
 import MealPlans from '../features/MealPlans';
@@ -14,7 +13,6 @@ const Finances = () => {
     <div data-testid="finances-page">
       <PageTitle title="Financial Information" />
       <PageGrid>
-        <StudentJobs />
         <HighlightsCard className="row-span-1">
           <AccountBalance />
           <MealPlans />
