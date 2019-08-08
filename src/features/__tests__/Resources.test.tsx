@@ -1,15 +1,12 @@
 import React from 'react';
-import { render, cleanup, waitForElement, fireEvent, act } from '@testing-library/react';
+import { render, cleanup, waitForElement, fireEvent } from '@testing-library/react';
 import {
   resourcesData,
   resourcesDataByCategory,
   categoriesData,
   defaultCategory
 } from '../../api/__mocks__/resources.data';
-import ResourcesCard from '../ResourcesCard';
 import Resources from '../../pages/Resources';
-import { Color } from '../../theme';
-import { timeout } from 'q';
 
 afterEach(cleanup);
 
@@ -121,31 +118,4 @@ describe('<Resources />', () => {
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();
   });
-
-  /*
-  it('should have two items', async () => {
-    const { getByText, getByTestId } = render(
-      <ResourcesCard categ="financial" color={Color['pine-400']} />
-    );
-    await waitForElement(() => getByText('Student Jobs'));
-    expect(getByTestId('resource-container').children).toHaveLength(2);
-  });
-
-  it('should have a link to all category resources', async () => {
-    {
-      const { getByText } = render(<ResourcesCard categ="financial" color={Color['pine-400']} />);
-      await waitForElement(() => getByText('See all financial resources'));
-    }
-    {
-      const { getByText } = render(<ResourcesCard categ="academic" color={Color['orange-400']} />);
-      await waitForElement(() => getByText('See all academic resources'));
-    }
-  });
-
-  it('should return "No resources available" when Resources data is empty', async () => {
-    mockGetResources.mockResolvedValue(Promise.resolve({}));
-    const { getByText } = render(<ResourcesCard categ="financial" color={Color['pine-400']} />);
-    await waitForElement(() => getByText('No resources available.'));
-  });
-  */
 });
