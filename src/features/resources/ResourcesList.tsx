@@ -5,15 +5,11 @@ import { Color, theme } from '../../theme';
 const ResourcesList: React.FC<any> = ({ resources }) => (
   <>
     {resources.length > 0 &&
-      resources.map(resource => (
-        <Resource
-          key={resource.id}
-          href={resource.attributes.field_service_url.uri}
-          target="_blank"
-        >
-          <img src={resource.attributes.icon} height="20px" />
-          <ResourceName>{resource.attributes.title}</ResourceName>
-          <ResourceDescription>{resource.attributes.field_service_description}</ResourceDescription>
+      resources.map(({ id, title, icon, uri, field_service_description }) => (
+        <Resource key={id} href={uri} target="_blank">
+          <img src={icon} height="20px" />
+          <ResourceName>{title}</ResourceName>
+          <ResourceDescription>{field_service_description}</ResourceDescription>
         </Resource>
       ))}
   </>
