@@ -51,6 +51,7 @@
     "@typescript-eslint/parser": "^1.13.0",
     "axios-mock-adapter": "^1.16.0",
     "codecov": "^3.5.0",
+    "cross-env": "^5.2.0",
     "cypress": "^3.4.1",
     "cypress-testing-library": "^4.0.0",
     "eslint": "5.12.0",
@@ -97,7 +98,7 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "eslint -c /.eslintrc --fix",
+      "eslint -c .eslintrc --fix",
       "git add",
       "cross-env CI=true yarn run test --findRelatedTests"
     ]
