@@ -5,7 +5,7 @@ import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
 import Icon from '../ui/Icon';
 import Button from '../ui/Button';
 import { Color, theme } from '../theme';
-import { getResourcesByCategory, getCategories, defaultCategoryId } from '../api/resources';
+import { getResourcesByCategory, getCategories, defaultCategoryId, IResourceResult } from '../api/resources';
 
 const ResourceContainer = styled.div`
   display: grid;
@@ -69,7 +69,7 @@ const getCategoryId = (categ: string) =>
  * Displays resources from a given set of categories
  */
 const ResourcesCard: FC<{ categ: string; color: Color }> = ({ categ, color }) => {
-  const [resources, setResources] = useState<any>([]);
+  const [resources, setResources] = useState<Array<IResourceResult>>([]);
   const [categoryId, setCategoryId] = useState<any>('');
   const isMounted = useRef(true);
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
@@ -102,14 +102,14 @@ const ResourcesCard: FC<{ categ: string; color: Color }> = ({ categ, color }) =>
       <CardContent>
         {resources.length ? (
           <ResourceContainer data-testid="resource-container">
-            {resources.map(({ id, attributes }) => (
-              <Resource key={id} href={attributes.field_service_url.uri} target="_blank">
-                {attributes.icon !== undefined && (
+            {resources.map(({ id, icon, uri, title}) => (
+              <Resource key={id} href={uri} target="_blank">
+                {icon !== undefined && (
                   <ResourceIconBorder>
-                    <ResourceIcon src={attributes.icon} />
+                    <ResourceIcon src={icon} />
                   </ResourceIconBorder>
                 )}
-                <>{attributes.title}</>
+                <>{title}</>
               </Resource>
             ))}
           </ResourceContainer>

@@ -4,7 +4,6 @@ export interface IResourceResult {
   id: string;
   title: string;
   icon?: string;
-  field_service_description: string;
   uri: string;
 }
 
@@ -14,7 +13,7 @@ const getResources = query =>
 const getResourcesByCategory = categoryId =>
   axios
     .get(`/api/resources${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
-    .then(res => res.data);
+    .then((res):Array<IResourceResult> => res.data);
 
 const getCategories = () => axios.get('/api/resources/categories').then(res => res.data);
 

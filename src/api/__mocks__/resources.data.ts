@@ -2,26 +2,16 @@ const resourcesData = {
   data: [
     {
       id: '2ff0aaa4-5ca2-4adb-beaa-decc8744396f',
-      attributes: {
-        title: 'Student Jobs',
-        icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/logo_sites_128px.png',
-        field_service_url: {
-          uri:
-            'https://jobs.oregonstate.edu/postings/search?utf8=&query=&query_v0_posted_at_date=&query_position_type_id=5&query_organizational_tier_3_id=any&1970=&1971=&225=&commit=Search',
-          title: ''
-        }
-      }
+      title: 'Student Jobs',
+      icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/logo_sites_128px.png',
+      uri:
+        'https://jobs.oregonstate.edu/postings/search?utf8=&query=&query_v0_posted_at_date=&query_position_type_id=5&query_organizational_tier_3_id=any&1970=&1971=&225=&commit=Search'
     },
     {
       id: '825d22a1-938c-4ca7-8b9d-625a639bcdde',
-      attributes: {
-        title: 'Billing Information',
-        icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',
-        field_service_url: {
-          uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling',
-          title: ''
-        }
-      }
+      title: 'Billing Information',
+      icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',
+      uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
     }
   ]
 };
