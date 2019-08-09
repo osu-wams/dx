@@ -3,10 +3,11 @@ import PageTitle from '../ui/PageTitle';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import { getResources, getResourcesByCategory, defaultCategoryId } from '../api/resources';
+import { getResources, getResourcesByCategory, defaultCategoryId, IResourceResult } from '../api/resources';
 
+//import type here
 const Resources = () => {
-  const [resources, setResources] = useState<any>([]);
+  const [resources, setResources] = useState<Array<IResourceResult>>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   useEffect(() => {

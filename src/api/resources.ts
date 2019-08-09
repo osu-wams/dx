@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-interface Result {
+export interface IResourceResult {
   id: string;
   title: string;
-  icon: string;
+  icon?: string;
   field_service_description: string;
   uri: string;
 }
 
 const getResources = query =>
-  axios.get(`/api/resources${query ? `?query=${query}` : ''}`).then((res):Array<Result> => res.data);
+  axios.get(`/api/resources${query ? `?query=${query}` : ''}`).then((res):Array<IResourceResult> => res.data);
 
 const getResourcesByCategory = categoryId =>
   axios

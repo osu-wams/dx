@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Color, theme } from '../../theme';
+import { IResourceResult } from '../../api/resources';
 
 const ResourcesList: React.FC<any> = ({ resources }) => (
   <>
     {resources.length > 0 &&
-      resources.map(({ id, title, icon, uri, field_service_description }) => (
-        <Resource key={id} href={uri} target="_blank">
-          <img src={icon} height="20px" />
-          <ResourceName>{title}</ResourceName>
-          <ResourceDescription>{field_service_description}</ResourceDescription>
+      resources.map((result:IResourceResult) => (
+        <Resource key={result.id} href={result.uri} target="_blank">
+          <img src={result.icon} height="20px" />
+          <ResourceName>{result.title}</ResourceName>
         </Resource>
       ))}
   </>
