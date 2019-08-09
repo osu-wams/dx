@@ -23,6 +23,7 @@ import { getIconByScheduleType } from './course-utils';
 import VisuallyHidden from '@reach/visually-hidden';
 import Url from '../util/externalUrls.data';
 import { UserContext } from '../App';
+import { AuthorizeCanvasCompact } from './canvas/AuthorizeCanvasCompact';
 
 /**
  * Course Schedule Card
@@ -128,10 +129,38 @@ const CourseScheduleCard = () => {
           </Day>
         ))}
       </DayList>
+      
       {selectedCourses.length === 0 && selectedPlannerItems.length === 0 && <EmptyState />}
+      
+
+        <CardSection>
+          <SectionHeader>Assignments</SectionHeader>
+          <List>
+            {user.isCanvasOptIn !== undefined && !user.isCanvasOptIn && (
+              <AuthorizeCanvasCompact />
+            )}
+            {user.isCanvasOptIn && selectedPlannerItems.length > 0 && selectedPlannerItems.map(
+              ({ plannable_id, html_url, plannable_type, plannable: { title, due_at } }) => (
+                <ListItem key={plannable_id}>
+                  <ListItemContentLink href={Url.canvas.main + html_url}>
+                    <Icon icon={faFileAlt} color={Color['orange-200']} />
+                    <ListItemText>
+                      <ListItemHeader>{title} </ListItemHeader>
+                      <ListItemDescription>
+                        {plannable_type !== 'announcement'
+                          ? `Due today at ${format(due_at, 'h:mma')}`
+                          : ''}
+                      </ListItemDescription>
+                    </ListItemText>
+                  </ListItemContentLink>
+                </ListItem>
+              )
+            )}
+          </List>
+        </CardSection>
 
       {selectedCourses.length > 0 && (
-        <div style={{ marginBottom: '16px' }}>
+        <CardSection>
           {/* TODO: course should NOT be a link */}
           <SectionHeader>Courses</SectionHeader>
           <List>
@@ -164,37 +193,9 @@ const CourseScheduleCard = () => {
               </ListItem>
             ))}
           </List>
-        </div>
+        </CardSection>
       )}
-      {user.isCanvasOptIn && selectedPlannerItems.length > 0 && (
-        <div>
-          <SectionHeader>Assignments</SectionHeader>
-          <List>
-            {selectedPlannerItems.map(
-              ({ plannable_id, html_url, plannable_type, plannable: { title, due_at } }) => (
-                <ListItem key={plannable_id}>
-                  <ListItemContentLink href={Url.canvas.main + html_url}>
-                    <Icon icon={faFileAlt} color={Color['orange-200']} />
-                    <ListItemText>
-                      <ListItemHeader>{title} </ListItemHeader>
-                      <ListItemDescription>
-                        {plannable_type !== 'announcement'
-                          ? `Due today at ${format(due_at, 'h:mma')}`
-                          : ''}
-                      </ListItemDescription>
-                    </ListItemText>
-                  </ListItemContentLink>
-                </ListItem>
-              )
-            )}
-          </List>
-        </div>
-      )}
-      {user.isCanvasOptIn !== undefined && !user.isCanvasOptIn && (
-        <div>
-          <a href="/canvas/login">Authorize Canvas</a>
-        </div>
-      )}
+      
     </Card>
   );
 };
@@ -234,6 +235,13 @@ const EmptyState = () => (
 /**
  * Styling
  */
+
+const CardSection = styled.div`
+  & + div {
+    margin-top: 1.6rem;
+  }
+`;
+
 const Card = styled(CardBase)`
   padding: ${theme.spacing.unit * 2}px;
 `;

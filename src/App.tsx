@@ -51,8 +51,7 @@ const App = () => {
     axios
       .get('/api/user')
       .then(res => {
-        // if canvas opt in and expiered need to refresh
-        console.log(res.data);
+        // if canvas opt in and expired need to refresh
         setUser(res.data);
       })
       .catch(() => {

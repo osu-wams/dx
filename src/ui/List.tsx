@@ -28,7 +28,10 @@ const ListItemContent = styled.div`
   flex-wrap: wrap;
   align-items: center;
   border: none;
-  svg {
+  padding: .1rem 1rem;
+  svg, img {
+    height: 3rem;
+    border-radius: 50%;
     font-size: 2.4rem;
     width: 3rem !important; /* overwrite fontawsome class to have equal spacing of icons */
     & + div {

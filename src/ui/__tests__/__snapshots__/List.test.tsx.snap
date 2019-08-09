@@ -40,16 +40,21 @@ exports[`An icon on the right 1`] = `
   -ms-flex-align: center;
   align-items: center;
   border: none;
+  padding: .1rem 1rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c2 svg {
+.c2 svg,
+.c2 img {
+  height: 3rem;
+  border-radius: 50%;
   font-size: 2.4rem;
   width: 3rem !important;
 }
 
-.c2 svg + div {
+.c2 svg + div,
+.c2 img + div {
   padding-left: 1.5rem;
 }
 
@@ -75,6 +80,8 @@ exports[`An icon on the right 1`] = `
 
 .c6 {
   color: #F79572;
+  background-color: transparent;
+  padding: 0;
 }
 
 <ul
@@ -161,16 +168,21 @@ exports[`Default style with icon on left 1`] = `
   -ms-flex-align: center;
   align-items: center;
   border: none;
+  padding: .1rem 1rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c2 svg {
+.c2 svg,
+.c2 img {
+  height: 3rem;
+  border-radius: 50%;
   font-size: 2.4rem;
   width: 3rem !important;
 }
 
-.c2 svg + div {
+.c2 svg + div,
+.c2 img + div {
   padding-left: 1.5rem;
 }
 
@@ -196,6 +208,8 @@ exports[`Default style with icon on left 1`] = `
 
 .c3 {
   color: #B7B1AF;
+  background-color: transparent;
+  padding: 0;
 }
 
 <ul
@@ -281,16 +295,21 @@ exports[`Icon on both left and right 1`] = `
   -ms-flex-align: center;
   align-items: center;
   border: none;
+  padding: .1rem 1rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c2 svg {
+.c2 svg,
+.c2 img {
+  height: 3rem;
+  border-radius: 50%;
   font-size: 2.4rem;
   width: 3rem !important;
 }
 
-.c2 svg + div {
+.c2 svg + div,
+.c2 img + div {
   padding-left: 1.5rem;
 }
 
@@ -316,6 +335,8 @@ exports[`Icon on both left and right 1`] = `
 
 .c3 {
   color: #B7B1AF;
+  background-color: transparent;
+  padding: 0;
 }
 
 <ul
