@@ -8,13 +8,13 @@ import ExternalLink from '../ui/ExternalLink';
 import Url from '../util/externalUrls.data';
 
 /**
- * Upcoming Assignments Card
- * Displays upcoming assignments from Canvas.
+ * Academic Calendar Card
+ * Displays upcoming events from Localist.
  */
 const AcademicCalendar = () => {
   const [calEvents, setCalEvents] = useState<IEvents | []>([]);
 
-  // Populate assignment data for current user
+  // Get Academic Calendar Events
   useEffect(() => {
     getAcademicCalendarEvents()
       .then(setCalEvents)
