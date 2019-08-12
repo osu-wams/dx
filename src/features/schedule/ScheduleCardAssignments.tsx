@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { faFileAlt  } from '@fortawesome/pro-light-svg-icons';
 import { format } from 'date-fns';
-import { CardSection,  SectionHeader, NoItems, NoItemsImage, NoItemsText } from '../schedule/ScheduleStyles';
+import { CardSection,  SectionHeader, NoItems, NoItemsImage, NoItemsText } from './ScheduleCardStyles';
 import { UserContext } from '../../App';
 import Url from '../../util/externalUrls.data';
 import Icon from '../../ui/Icon';
@@ -17,7 +17,7 @@ import {
 } from '../../ui/List';
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvasCompact';
 
-const Assignments = ( {selectedPlannerItems} ) => {
+const ScheduleCardAssignments = ( {selectedPlannerItems} ) => {
   const user = useContext<any>(UserContext);
 
 
@@ -58,4 +58,4 @@ const Assignments = ( {selectedPlannerItems} ) => {
   )
 }
 
-export { Assignments };
+export { ScheduleCardAssignments };
