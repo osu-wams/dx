@@ -3,9 +3,10 @@ import { isSameDay } from 'date-fns';
 import generateId from 'uuid/v4';
 import { getCourseSchedule } from '../api/student';
 import { getPlannerItems } from '../api/student/planner-items';
+import { getAcademicCalendarEvents, IEvents } from '../api/events';
 import { UserContext } from '../App';
 import { getNextFiveDays, getDayShortcode } from './schedule/schedule-utils';
-import { ScheduleCardDayMenu, ScheduleCardCourses, ScheduleCardAssignments } from './schedule';
+import { ScheduleCardDayMenu, ScheduleCardCourses, ScheduleCardAssignments, ScheduleCardAcademicCalendar } from './schedule';
 import { Header, Card } from './schedule/ScheduleCardStyles';
 
 /**
@@ -18,6 +19,7 @@ const ScheduleCard = () => {
   const [courses, setCourses] = useState<any[]>([]);
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const [plannerItems, setPlannerItems] = useState<any[]>([]);
+  const [calEvents, setCalEvents] = useState<IEvents | []>([]);
   const user = useContext<any>(UserContext);
 
   // Populate user courses
@@ -54,6 +56,13 @@ const ScheduleCard = () => {
       .catch(console.log);
   }, []);
 
+  // Populate assignment data for current user
+  useEffect(() => {
+    getAcademicCalendarEvents()
+      .then(setCalEvents)
+      .catch(console.log);
+  }, []);
+
   const getCoursesOnSelectedDay = () => {
     let selectedDayShortcode = getDayShortcode(selectedDay);
     const coursesOnSelectedDay = courses.filter(course =>
@@ -73,6 +82,11 @@ const ScheduleCard = () => {
   } else {
     selectedPlannerItems = [];
   }
+
+  let selectedCalEvents = calEvents.filter(event => 
+    event.pubDate ? isSameDay(event.pubDate, selectedDay) : '');
+
+
   // const selectedPlannerItems = [];
   // Get a list of days with courses or assignments.
   // Used to display the orange dots above days to indicate
@@ -90,9 +104,12 @@ const ScheduleCard = () => {
         } else {
           plannerItemsOnDay = [];
         }
-        return coursesOnDay.length > 0 || plannerItemsOnDay.length > 0;
+        let calendarEventsOnDay = calEvents.filter(event => 
+          event.pubDate ? isSameDay(event.pubDate, day) : '');
+
+        return coursesOnDay.length > 0 || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0;
       }),
-    [nextFiveDays, plannerItems, courses]
+    [nextFiveDays, plannerItems, calEvents, courses]
   );
 
   return (
@@ -105,6 +122,8 @@ const ScheduleCard = () => {
       <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
 
       <ScheduleCardCourses selectedCourses={selectedCourses} />
+
+      <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
       
     </Card>
   );
