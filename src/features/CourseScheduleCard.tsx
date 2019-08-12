@@ -21,10 +21,10 @@ import { getIconByScheduleType } from './course-utils';
 import VisuallyHidden from '@reach/visually-hidden';
 import Url from '../util/externalUrls.data';
 import { UserContext } from '../App';
-import { AuthorizeCanvasCompact } from './canvas/AuthorizeCanvasCompact';
 import { getNextFiveDays, getDayShortcode } from './schedule/schedule-utils';
 import { DayMenu } from './schedule/DayMenu';
-import { Header, Card, CardSection, NoCoursesImage, NoCoursesText, SectionHeader } from './schedule/ScheduleStyles';
+import { Assignments} from './schedule/Assignments';
+import { Header, Card, CardSection, SectionHeader } from './schedule/ScheduleStyles';
 
 /**
  * Course Schedule Card
@@ -120,34 +120,7 @@ const CourseScheduleCard = () => {
       
       <DayMenu nextFiveDays={nextFiveDays} selectedDay={selectedDay} setSelectedDay={setSelectedDay} daysWithEvents={daysWithEvents} />
       
-      {selectedCourses.length === 0 && selectedPlannerItems.length === 0 && <EmptyState />}
-      
-
-      <CardSection>
-        <SectionHeader>Assignments</SectionHeader>
-        <List>
-          {user.isCanvasOptIn !== undefined && !user.isCanvasOptIn && (
-            <AuthorizeCanvasCompact />
-          )}
-          {user.isCanvasOptIn && selectedPlannerItems.length > 0 && selectedPlannerItems.map(
-            ({ plannable_id, html_url, plannable_type, plannable: { title, due_at } }) => (
-              <ListItem key={plannable_id}>
-                <ListItemContentLink href={Url.canvas.main + html_url}>
-                  <Icon icon={faFileAlt} color={Color['orange-200']} />
-                  <ListItemText>
-                    <ListItemHeader>{title} </ListItemHeader>
-                    <ListItemDescription>
-                      {plannable_type !== 'announcement'
-                        ? `Due today at ${format(due_at, 'h:mma')}`
-                        : ''}
-                    </ListItemDescription>
-                  </ListItemText>
-                </ListItemContentLink>
-              </ListItem>
-            )
-          )}
-        </List>
-      </CardSection>
+      <Assignments selectedPlannerItems={selectedPlannerItems} />
 
       {selectedCourses.length > 0 && (
         <CardSection>
@@ -189,20 +162,5 @@ const CourseScheduleCard = () => {
     </Card>
   );
 };
-
-
-
-const EmptyState = () => (
-  <>
-    <NoCoursesImage src={excitedCalendarIcon} />
-    <NoCoursesText>
-      Nice! You don&rsquo;t have any assignments due or courses scheduled on this day.
-      <a href="#">
-        Check out the OSU calendar
-        <Icon icon={faArrowRight} color={Color['orange-400']} />
-      </a>
-    </NoCoursesText>
-  </>
-);
 
 export default CourseScheduleCard;
