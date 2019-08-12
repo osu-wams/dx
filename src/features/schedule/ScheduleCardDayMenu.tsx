@@ -46,7 +46,7 @@ const Day = styled.button<{ selected: selectedBtn }>`
   }
 
   & > span:nth-child(2) {
-    color: ${Color['neutral-550']};
+    color: ${props => props.selected ? Color['orange-400'] : Color["neutral-550"]};;
     font-weight: bold;
     font-size: ${theme.fontSize[12]};
     text-transform: uppercase;
@@ -54,27 +54,17 @@ const Day = styled.button<{ selected: selectedBtn }>`
   }
 
   & > span:last-child {
-    color: ${Color['neutral-700']};
+    color: ${props => props.selected ? Color['orange-400'] : Color["neutral-700"]};
     line-height: .4rem;
     font-size: ${theme.fontSize[24]};
     padding: 1.2rem 1.2rem 2rem;
-    border-bottom: 3px solid transparent;
+    border-bottom: 3px solid ${props => props.selected ? Color['orange-400'] : 'transparent'};
   }
-  &:hover, &:active, &:focus {
-    & > span:last-child {
-      border-bottom-color: ${Color["neutral-300"]};
+  &:hover, &:focus, &:active {
+    span:last-child {
+      border-bottom-color:  ${props => props.selected ? Color['orange-400'] : Color["neutral-300"]};
     }
   }
-
-  ${props => props.selected &&
-    `
-    & > span {
-      color: ${Color['orange-400']} !important;
-      &:last-child {
-        border-bottom-color: ${Color['orange-400']};
-      }
-    }
-  `}
 `;
 
 const DayList = styled.div`
