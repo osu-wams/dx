@@ -1,37 +1,19 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { faFileAlt, faMapMarkerAlt, faArrowRight } from '@fortawesome/pro-light-svg-icons';
-import { format, isSameDay } from 'date-fns';
+import { isSameDay } from 'date-fns';
 import generateId from 'uuid/v4';
-import {
-  List,
-  ListItem,
-  ListItemHeader,
-  ListItemContentButton,
-  ListItemDescription,
-  ListItemText,
-  ListItemContentLink
-} from '../ui/List';
-import Icon from '../ui/Icon';
-import { Color } from '../theme';
-import excitedCalendarIcon from '../assets/excited-calendar.svg';
 import { getCourseSchedule } from '../api/student';
 import { getPlannerItems } from '../api/student/planner-items';
-import { formatTime } from '../util/helpers';
-import { getIconByScheduleType } from './course-utils';
-import VisuallyHidden from '@reach/visually-hidden';
-import Url from '../util/externalUrls.data';
 import { UserContext } from '../App';
 import { getNextFiveDays, getDayShortcode } from './schedule/schedule-utils';
-import { DayMenu } from './schedule/DayMenu';
-import { Assignments} from './schedule/Assignments';
-import { Header, Card, CardSection, SectionHeader } from './schedule/ScheduleStyles';
+import { ScheduleCardDayMenu, ScheduleCardCourses, ScheduleCardAssignments } from './schedule';
+import { Header, Card } from './schedule/ScheduleCardStyles';
 
 /**
  * Course Schedule Card
  *
  * Displays courses for the next 5 days, filterable by day.
  */
-const CourseScheduleCard = () => {
+const ScheduleCard = () => {
   const nextFiveDays = getNextFiveDays();
   const [courses, setCourses] = useState<any[]>([]);
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
@@ -108,7 +90,6 @@ const CourseScheduleCard = () => {
         } else {
           plannerItemsOnDay = [];
         }
-
         return coursesOnDay.length > 0 || plannerItemsOnDay.length > 0;
       }),
     [nextFiveDays, plannerItems, courses]
@@ -116,51 +97,17 @@ const CourseScheduleCard = () => {
 
   return (
     <Card>
-      <Header>{format(selectedDay, 'dddd MMM Do')} | Day at a Glance </Header>
-      
-      <DayMenu nextFiveDays={nextFiveDays} selectedDay={selectedDay} setSelectedDay={setSelectedDay} daysWithEvents={daysWithEvents} />
-      
-      <Assignments selectedPlannerItems={selectedPlannerItems} />
 
-      {selectedCourses.length > 0 && (
-        <CardSection>
-          {/* TODO: course should NOT be a link */}
-          <SectionHeader>Courses</SectionHeader>
-          <List>
-            {selectedCourses.map(course => (
-              <ListItem key={`${course.id}${course.beginTime}`}>
-                <ListItemContentButton>
-                  <Icon
-                    icon={getIconByScheduleType(course.scheduleType)}
-                    color={Color['orange-200']}
-                  />
-                  <ListItemText>
-                    <ListItemHeader>
-                      {course.courseSubject} {course.courseNumber}
-                    </ListItemHeader>
-                    <ListItemDescription>
-                      {course.scheduleDescription} &bull; {course.room} {course.buildingDescription}
-                    </ListItemDescription>
-                    <ListItemDescription>
-                      {formatTime(course.beginTime)} - {formatTime(course.endTime)}
-                    </ListItemDescription>
-                  </ListItemText>
-                  <a
-                    href={`https://map.oregonstate.edu/?building=${course.building}`}
-                    target="blank"
-                  >
-                    <VisuallyHidden>View on map</VisuallyHidden>
-                    <Icon icon={faMapMarkerAlt} />
-                  </a>
-                </ListItemContentButton>
-              </ListItem>
-            ))}
-          </List>
-        </CardSection>
-      )}
+      <Header>Day at a Glance</Header>
+      
+      <ScheduleCardDayMenu nextFiveDays={nextFiveDays} selectedDay={selectedDay} setSelectedDay={setSelectedDay} daysWithEvents={daysWithEvents} />
+      
+      <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
+
+      <ScheduleCardCourses selectedCourses={selectedCourses} />
       
     </Card>
   );
 };
 
-export default CourseScheduleCard;
+export default ScheduleCard;

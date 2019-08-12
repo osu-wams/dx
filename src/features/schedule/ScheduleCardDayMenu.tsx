@@ -3,7 +3,7 @@ import { format, isSameDay } from 'date-fns';
 import styled from 'styled-components';
 import { theme, Color } from '../../theme';
 
-const DayMenu = ({selectedDay, nextFiveDays, setSelectedDay, daysWithEvents}) => {
+const ScheduleCardDayMenu = ({selectedDay, nextFiveDays, setSelectedDay, daysWithEvents}) => {
         
   return (
     <DayList>
@@ -22,7 +22,7 @@ const DayMenu = ({selectedDay, nextFiveDays, setSelectedDay, daysWithEvents}) =>
   )
 }
 
-export { DayMenu };
+export { ScheduleCardDayMenu };
 
 // Styles
 type selectedBtn = boolean;
