@@ -114,11 +114,6 @@ const Header = () => {
     }
   };
 
-  const logout = () => {
-    // logout logic needed
-    logout();
-  };
-
   return (
     <>
       <HeaderWrapper>
@@ -131,7 +126,7 @@ const Header = () => {
                 <FontAwesomeIcon icon={faUserCircle} size="2x" />
               </UserButton>
               <ProfileMenuList>
-                <MenuItem onSelect={() => logout()}>Logout</MenuItem>
+                <MenuItem as="a" href="/logout">Logout</MenuItem>
                 {user && user.isAdmin && (
                   <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
                 )}
