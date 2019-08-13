@@ -126,7 +126,7 @@ const Header = () => {
                 <FontAwesomeIcon icon={faUserCircle} size="2x" />
               </UserButton>
               <ProfileMenuList>
-                <MenuItem as="a" href="/logout">Logout</MenuItem>
+                <MenuLink as="a" href="/logout">Logout</MenuLink>
                 {user && user.isAdmin && (
                   <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
                 )}

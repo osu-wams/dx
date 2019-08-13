@@ -6,4 +6,5 @@ module.exports = app => {
   app.use(proxy('/api', { target: 'http://localhost:4000/' }));
   app.use(proxy('/login', { target: 'http://localhost:4000/' }));
   app.use(proxy('/canvas', { target: 'http://localhost:4000/' }));
+  app.use(proxy('/logout', { target: 'http://localhost:4000/' }))
 };
