@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { isSameDay } from 'date-fns';
 import generateId from 'uuid/v4';
-import { getCourseSchedule } from '../api/student';
-import { getPlannerItems } from '../api/student/planner-items';
+import { getCourseSchedule, getPlannerItems } from '../api/student';
 import { getAcademicCalendarEvents, IEvents } from '../api/events';
 import { UserContext } from '../App';
 import { getNextFiveDays, getDayShortcode } from './schedule/schedule-utils';
-import { ScheduleCardDayMenu, ScheduleCardCourses, ScheduleCardAssignments, ScheduleCardAcademicCalendar } from './schedule';
+import {
+  ScheduleCardDayMenu,
+  ScheduleCardCourses,
+  ScheduleCardAssignments,
+  ScheduleCardAcademicCalendar
+} from './schedule';
 import { Header, Card } from './schedule/ScheduleCardStyles';
 
 /**
@@ -83,9 +87,9 @@ const ScheduleCard = () => {
     selectedPlannerItems = [];
   }
 
-  let selectedCalEvents = calEvents.filter(event => 
-    event.pubDate ? isSameDay(event.pubDate, selectedDay) : '');
-
+  let selectedCalEvents = calEvents.filter(event =>
+    event.pubDate ? isSameDay(event.pubDate, selectedDay) : ''
+  );
 
   // const selectedPlannerItems = [];
   // Get a list of days with courses or assignments.
@@ -104,27 +108,29 @@ const ScheduleCard = () => {
         } else {
           plannerItemsOnDay = [];
         }
-        let calendarEventsOnDay = calEvents.filter(event => 
-          event.pubDate ? isSameDay(event.pubDate, day) : '');
+        let calendarEventsOnDay = calEvents.filter(event =>
+          event.pubDate ? isSameDay(event.pubDate, day) : ''
+        );
 
-        return coursesOnDay.length > 0 || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0;
+        return (
+          coursesOnDay.length > 0 || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0
+        );
       }),
     [nextFiveDays, plannerItems, calEvents, courses]
   );
 
   return (
     <Card>
-
       <Header>Day at a Glance</Header>
-      
-      <ScheduleCardDayMenu nextFiveDays={nextFiveDays} selectedDay={selectedDay} setSelectedDay={setSelectedDay} daysWithEvents={daysWithEvents} />
-      
+      <ScheduleCardDayMenu
+        nextFiveDays={nextFiveDays}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        daysWithEvents={daysWithEvents}
+      />
       <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
-
       <ScheduleCardCourses selectedCourses={selectedCourses} />
-
       <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
-      
     </Card>
   );
 };

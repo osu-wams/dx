@@ -88,13 +88,13 @@ export default [
           endTime: '09:50:00',
           room: '285',
           building: 'WNGR',
-          buildingDescription: 'Weniger Hall',
+          buildingDescription: 'Every Day Test',
           campus: ' Oregon State - Corvallis',
           hoursPerWeek: 0.83,
           creditHourSession: 1,
           scheduleType: 'C',
           scheduleDescription: 'Recitation',
-          weeklySchedule: ['T']
+          weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
         }
       ]
     }
@@ -321,7 +321,7 @@ export default [
           endTime: '16:50:00',
           room: '151',
           building: 'WNGR',
-          buildingDescription: 'Weniger Hall',
+          buildingDescription: 'Library',
           campus: ' Oregon State - Corvallis',
           hoursPerWeek: 1.66,
           creditHourSession: 4,

@@ -17,12 +17,12 @@ import { titleCase, formatTime, formatDate } from '../util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import { Color } from '../theme';
 import Divider from '../ui/Divider';
-import { CourseScheduleAttributes } from '../api/student/course-schedule';
+import { ICourseScheduleAttributes } from '../api/student/course-schedule';
 import ExternalLink from '../ui/ExternalLink';
 import Url from '../util/externalUrls.data';
 
 const Course: FC<{
-  attributes: CourseScheduleAttributes;
+  attributes: ICourseScheduleAttributes;
   isOpen: boolean;
   toggleCourse: Function;
 }> = ({

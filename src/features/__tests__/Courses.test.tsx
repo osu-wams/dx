@@ -1,12 +1,23 @@
 import React from 'react';
 import { render, fireEvent, waitForElement } from '@testing-library/react';
+import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
 
-test('renders', () => {
-  render(<Courses />);
-});
+const mockGetCourseSchedule = jest.fn();
+
+jest.mock('../../api/student', () => ({
+  getCourseSchedule: () => mockGetCourseSchedule(),
+}));
 
 describe('<Courses />', () => {
+  beforeAll(() => {
+    mockGetCourseSchedule.mockResolvedValue(Promise.resolve(mockCourseSchedule));
+  });
+
+  it('renders', () => {
+    render(<Courses />);
+  });
+
   it('renders a list of courses for the current user', async () => {
     const { getByText } = render(<Courses />);
     const courseTitle = await waitForElement(() => getByText(/data structures/i));
