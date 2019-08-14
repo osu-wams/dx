@@ -1,7 +1,9 @@
 import React from 'react';
-import { render, fireEvent, waitForElement, act } from '@testing-library/react';
+import { render, fireEvent, waitForElement, act, cleanup } from '@testing-library/react';
 import Header from '../Header';
 import App from '../../App';
+
+afterEach(cleanup);
 
 test('renders', () => {
   render(<Header />);
@@ -32,4 +34,18 @@ test('Masquerade Overlay opens from the user menu dropdown', async () => {
     fireEvent.click(cancelBtn);
   });
   expect(queryByTestId('masquerade-dialog')).toBeNull();
+});
+
+test('Logout Link is in the menu', async () => {
+  const { getByText, getByTestId, debug } = render(<App />);
+
+  await (async () => {
+    expect(getByTestId('dashboard-page')).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.click(getByTestId('user-btn'));
+    });
+    const logoutLink = await waitForElement(() => getByText('Logout'));
+    expect(logoutLink).toBeInTheDocument();
+  });
 });
