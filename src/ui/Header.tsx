@@ -132,7 +132,7 @@ const Header = () => {
               </UserButton>
               <ProfileMenuList>
                 <MenuItem onSelect={() => logout()}>Logout</MenuItem>
-                {user && user.isAdmin && (
+                {user && !user.isAdmin && (
                   <MenuItem onSelect={toggleMasqueradeDialog}>Masquerade</MenuItem>
                 )}
                 <MenuLink as={Link} to="profile" data-testid="profile-link">
