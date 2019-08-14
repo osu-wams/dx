@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import PageTitle from '../ui/PageTitle';
+import { CardBase } from '../ui/Card';
+import { theme } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import { getResources, getResourcesByCategory, defaultCategoryId, IResourceResult } from '../api/resources';
+import {
+  getResources,
+  getResourcesByCategory,
+  defaultCategoryId,
+  IResourceResult
+} from '../api/resources';
 
 //import type here
 const Resources = () => {
@@ -23,7 +31,7 @@ const Resources = () => {
     }
   }, []);
 
-  const fetchResources = query => {
+  const fetchResources = (query: string) => {
     getResources(query)
       .then(res => setResources(res))
       .catch(console.log);
@@ -36,7 +44,7 @@ const Resources = () => {
   };
 
   return (
-    <div data-testid="resources-page">
+    <ResourcesWrapper data-testid="resources-page">
       <PageTitle title="Resources" />
       {selectedCategory !== '' && (
         <>
@@ -55,10 +63,14 @@ const Resources = () => {
         <ResourcesList resources={resources} />
       ) : (
         /* @TODO need mockup styling to do and messaging for no results */
-        <div>No results </div>
+        <div>No results</div>
       )}
-    </div>
+    </ResourcesWrapper>
   );
 };
+
+const ResourcesWrapper = styled(CardBase)`
+  padding: ${theme.spacing.unit * 2}px;
+`;
 
 export default Resources;

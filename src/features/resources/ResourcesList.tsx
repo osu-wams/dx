@@ -1,33 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
+import { faCube } from '@fortawesome/pro-light-svg-icons';
+import Icon from '../../ui/Icon';
+import { List, ListItem, ListItemContentLink } from '../../ui/List';
 import { Color, theme } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 
 const ResourcesList: React.FC<any> = ({ resources }) => (
-  <>
+  <List>
     {resources.length > 0 &&
-      resources.map((result:IResourceResult) => (
-        <Resource key={result.id} href={result.uri} target="_blank">
-          <img src={result.icon} height="20px" />
-          <ResourceName>{result.title}</ResourceName>
-        </Resource>
+      resources.map((resource: IResourceResult) => (
+        <ListItem spaced key={resource.id}>
+          <ListItemContentLink spaced href={resource.uri} target="_blank">
+            {resource.icon !== undefined ? (
+              <ResourceImg src={resource.icon} />
+            ) : (
+              <ResourceIcon icon={faCube} color={Color.black} />
+            )}
+            <ResourceName>{resource.title}</ResourceName>
+          </ListItemContentLink>
+        </ListItem>
       ))}
-  </>
+  </List>
 );
-
-const Resource = styled.a`
-  padding: ${theme.spacing.unit * 2}px;
-  display: block;
-  text-decoration: none;
-`;
 
 const ResourceName = styled.div`
   font-size: ${theme.fontSize[18]};
   color: ${Color['neutral-700']};
+  padding-left: ${theme.spacing.unit * 2}px;
 `;
 
-const ResourceDescription = styled.div`
-  color: ${Color['neutral-600']};
+const ResourceImg = styled.img`
+  width: 3rem;
+`;
+
+const ResourceIcon = styled(Icon)`
+  height: auto;
 `;
 
 export default ResourcesList;
