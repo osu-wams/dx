@@ -3,23 +3,21 @@ import { render, waitForElement } from '@testing-library/react';
 import AcademicHistory from '../Academics/AcademicHistory';
 import mockGrades from '../../api/student/__mocks__/grades.data';
 
-jest.unmock('../../api/student/grades');
-
 const mockGetGrades = jest.fn();
 
 jest.mock('../../api/student/grades', () => ({
   getGrades: () => mockGetGrades()
 }));
 
-it('renders and finds placeholder text: "Find past courses"', () => {
-  const { getByPlaceholderText } = render(<AcademicHistory />);
-  expect(getByPlaceholderText('Find past courses')).toBeInTheDocument();
-});
-
 describe('<AcademicHistory />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
     mockGetGrades.mockResolvedValue(Promise.resolve(mockGrades));
+  });
+
+  it('renders and finds placeholder text: "Find past courses"', () => {
+    const { getByPlaceholderText } = render(<AcademicHistory />);
+    expect(getByPlaceholderText('Find past courses')).toBeInTheDocument();
   });
 
   it('should find the course: "Test Course Title"', async () => {

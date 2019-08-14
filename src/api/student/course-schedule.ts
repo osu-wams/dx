@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-const getCourseSchedule = (term = 'current'): Promise<CourseSchedule[]> =>
+const getCourseSchedule = (term = 'current'): Promise<ICourseSchedule[]> =>
   axios.get(`/api/student/class-schedule?term=${term}`).then(res => res.data);
 
-export type Faculty = {
+export interface IFaculty {
   email: string;
   name: string;
   osuId: string;
   primary: boolean;
-};
+}
 
-export type MeetingTime = {
+export interface IMeetingTime {
   beginDate: string;
   beginTime: string;
   building: string;
@@ -24,16 +24,16 @@ export type MeetingTime = {
   scheduleType: string;
   scheduleDescription: string;
   weeklySchedule: string[];
-};
+}
 
-export type CourseSchedule = {
+export interface ICourseSchedule {
   id: string;
-  attributes: CourseScheduleAttributes;
+  attributes: ICourseScheduleAttributes;
   links: string;
   type: string;
-};
+}
 
-export type CourseScheduleAttributes = {
+export interface ICourseScheduleAttributes {
   academicYear: string;
   academicYearDescription: string;
   continuingEducation: boolean;
@@ -43,15 +43,15 @@ export type CourseScheduleAttributes = {
   courseSubjectDescription: string;
   courseTitle: string;
   creditHours: number;
-  faculty: Faculty[];
+  faculty: IFaculty[];
   gradingMode: string;
-  meetingTimes: MeetingTime[];
+  meetingTimes: IMeetingTime[];
   registrationStatus: string;
   scheduleDescription: string;
   scheduleType: string;
   sectionNumber: string;
   term: string;
   termDescription: string;
-};
+}
 
 export { getCourseSchedule };

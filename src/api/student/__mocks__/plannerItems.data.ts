@@ -18,7 +18,7 @@ export default [
     plannable_date: '2019-05-02T06:59:00Z',
     plannable: {
       id: 8514159,
-      title: 'Week 5 Lecture/Readings Discussion',
+      title: 'Testo Planner Discussion',
       todo_date: null,
       unread_count: 0,
       read_state: 'read',
@@ -26,7 +26,39 @@ export default [
       updated_at: '2019-05-07T03:04:29Z',
       assignment_id: 7547408,
       points_possible: 5,
-      due_at: '2019-05-02T06:59:00Z'
+      due_at: new Date()
+    },
+    html_url: '/courses/1724943/assignments/7547408/submissions/6227907',
+    context_name: 'INTRODUCTORY BIOLOGY III (BI_206_C401_S2019)'
+  },
+  {
+    context_type: 'Course',
+    course_id: 234234,
+    plannable_id: 45345,
+    planner_override: null,
+    plannable_type: 'announcement',
+    new_activity: false,
+    submissions: {
+      submitted: true,
+      excused: false,
+      graded: true,
+      late: false,
+      missing: false,
+      needs_grading: false,
+      has_feedback: false
+    },
+    plannable_date: '2019-05-02T06:59:00Z',
+    plannable: {
+      id: 234234,
+      title: 'Planner Announcement Test',
+      todo_date: null,
+      unread_count: 0,
+      read_state: 'read',
+      created_at: '2019-03-29T18:56:13Z',
+      updated_at: '2019-05-07T03:04:29Z',
+      assignment_id: 345345345,
+      points_possible: 5,
+      due_at: new Date()
     },
     html_url: '/courses/1724943/assignments/7547408/submissions/6227907',
     context_name: 'INTRODUCTORY BIOLOGY III (BI_206_C401_S2019)'

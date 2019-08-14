@@ -2,6 +2,8 @@ import React from 'react';
 import { render, waitForElement } from '@testing-library/react';
 import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
 import MealPlans from '../MealPlans';
+import axiosMock from 'axios'
+
 
 const mockGetMealPlans = jest.fn();
 

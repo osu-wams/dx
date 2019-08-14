@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { faChevronRight, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import { getCourseSchedule } from '../api/student';
 import { Card, CardHeader, Badge, CardContent, CardFooter } from '../ui/Card';
-import { CourseSchedule, CourseScheduleAttributes } from '../api/student/course-schedule';
+import { ICourseSchedule, ICourseScheduleAttributes } from '../api/student/course-schedule';
 import Icon from '../ui/Icon';
 import { getIconByScheduleType } from './course-utils';
 import {
@@ -20,9 +20,9 @@ import ExternalLink from '../ui/ExternalLink';
 import Url from '../util/externalUrls.data';
 
 const Courses = () => {
-  const [courses, setCourses] = useState<CourseSchedule[]>([]);
+  const [courses, setCourses] = useState<ICourseSchedule[]>([]);
   const [isOpen, setOpen] = useState(false);
-  const [courseAttributes, setCourseAttributes] = useState<CourseScheduleAttributes | null>(null);
+  const [courseAttributes, setCourseAttributes] = useState<ICourseScheduleAttributes | null>(null);
 
   // Hides or shows course details
   const toggleCourse = courseAttributes => {
