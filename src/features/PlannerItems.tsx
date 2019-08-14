@@ -15,7 +15,7 @@ import { getPlannerItems } from '../api/student/planner-items';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import { Color } from '../theme';
 import Url from '../util/externalUrls.data';
-import ExternalLink from '../ui/ExternalLink';
+import { ExternalLink } from '../ui/Link';
 import { UserContext } from '../App';
 
 /**

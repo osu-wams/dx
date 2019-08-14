@@ -4,7 +4,7 @@ import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../ui/List';
 import { getAcademicCalendarEvents, IEvents } from '../api/events';
 import { Date, DateDay, DateMonth } from '../ui/Date';
-import ExternalLink from '../ui/ExternalLink';
+import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 
 /**

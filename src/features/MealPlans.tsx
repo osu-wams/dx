@@ -8,7 +8,7 @@ import {
   HighlightEmphasis,
   HighlightDescription
 } from '../ui/Highlights';
-import ExternalLink from '../ui/ExternalLink';
+import { ExternalLink } from '../ui/Link';
 
 const MealPlans: React.FC = () => {
   const [mealPlans, setMealPlans] = useState<IMealPlans[] | undefined>(undefined);

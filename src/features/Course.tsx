@@ -18,7 +18,7 @@ import { getIconByScheduleType } from './course-utils';
 import { Color } from '../theme';
 import Divider from '../ui/Divider';
 import { CourseScheduleAttributes } from '../api/student/course-schedule';
-import ExternalLink from '../ui/ExternalLink';
+import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 
 const Course: FC<{

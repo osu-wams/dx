@@ -13,7 +13,7 @@ import {
   ListItemText
 } from '../ui/List';
 import Button from '../ui/Button';
-import ExternalLink from '../ui/ExternalLink';
+import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 
 const StudentJobs: React.FC = () => {

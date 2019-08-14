@@ -1,10 +1,11 @@
-import styled from 'styled-components';
 import React from 'react';
+import styled from 'styled-components';
+import { Link } from '@reach/router';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
 import { Color } from '../theme';
 
-const ExternaLinkStyles = styled.a<StyleProps>`
+const LinkStyles = styled.a<StyleProps>`
   :hover,
   :active,
   :focus {
@@ -27,11 +28,20 @@ type StyleProps = {
 
 const ExternalLink = ({ children, ...props }) => {
   return (
-    <ExternaLinkStyles {...props} target="_blank">
+    <LinkStyles {...props} target="_blank">
       {children}
       <Icon icon={faLongArrowRight} color={props.fg ? props.fg : Color['orange-400']} />
-    </ExternaLinkStyles>
+    </LinkStyles>
   );
 };
 
-export default ExternalLink;
+const InternalLink = ({ children, ...props }) => {
+  return (
+    <LinkStyles as={Link} {...props} target="_blank">
+      {children}
+      <Icon icon={faLongArrowRight} color={props.fg ? props.fg : Color['orange-400']} />
+    </LinkStyles>
+  );
+};
+
+export { ExternalLink, InternalLink };
