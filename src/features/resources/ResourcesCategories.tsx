@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { theme } from '../../theme';
 import { getCategories } from '../../api/resources';
 import CustomRadioBtn from '../../ui/CustomRadioBtn';
 
@@ -10,8 +12,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
   useEffect(() => {
     getCategories()
       .then(data => {
-        const defaultCategory = selectedCategory === 'all' ? 'all' : selectedCategory;
-        onCategorySelected(defaultCategory);
+        onCategorySelected(selectedCategory);
         setCategories(data);
       })
       .catch(console.log);
@@ -22,7 +23,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
   }, []);
 
   return (
-    <>
+    <CategoriesWrapper>
       {categories.length > 0 && (
         <>
           <CustomRadioBtn
@@ -52,8 +53,12 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
           ))}
         </>
       )}
-    </>
+    </CategoriesWrapper>
   );
 };
+
+const CategoriesWrapper = styled.div`
+  margin-bottom: ${theme.spacing.unit * 2}px;
+`;
 
 export default ResourceCategories;

@@ -16,6 +16,17 @@ const resourcesData = {
   ]
 };
 
+const resourcesDataByCategory = {
+  data: [
+    {
+      id: '825d22a1-938c-4ca7-8b9d-625a639bcdde',
+      title: 'Billing Information',
+      icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',
+      uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
+    }
+  ]
+};
+
 const categoriesData = {
   data: [
     {
@@ -45,4 +56,6 @@ const categoriesData = {
   ]
 };
 
-export { resourcesData, categoriesData };
+const defaultCategory = '1b9b7a4b-5a64-41af-a40a-8bb01abedd19';
+
+export { resourcesData, resourcesDataByCategory, categoriesData, defaultCategory };
