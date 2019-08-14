@@ -68,7 +68,7 @@ const ScheduleCard = () => {
   }, []);
 
   const getCoursesOnSelectedDay = () => {
-    let selectedDayShortcode = getDayShortcode(selectedDay);
+    const selectedDayShortcode = getDayShortcode(selectedDay);
     const coursesOnSelectedDay = courses.filter(course =>
       course.weeklySchedule.includes(selectedDayShortcode)
     );
@@ -91,14 +91,13 @@ const ScheduleCard = () => {
     event.pubDate ? isSameDay(event.pubDate, selectedDay) : ''
   );
 
-  // const selectedPlannerItems = [];
   // Get a list of days with courses or assignments.
   // Used to display the orange dots above days to indicate
   // which days have events at a quick glance.
   const daysWithEvents = useMemo(
     () =>
       nextFiveDays.filter(day => {
-        let dayShortcode = getDayShortcode(day);
+        const dayShortcode = getDayShortcode(day);
         const coursesOnDay = courses.filter(course => course.weeklySchedule.includes(dayShortcode));
         let plannerItemsOnDay;
         if (user.canvasOauthToken) {
