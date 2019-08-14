@@ -2,6 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme, Color } from '../theme';
 
+type SpacedList = {
+  spaced?: boolean;
+};
+
 const List = styled.ul`
   color: ${Color['neutral-700']};
   text-decoration: none;
@@ -9,10 +13,11 @@ const List = styled.ul`
   margin: 0;
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.li<SpacedList>`
   list-style-type: none;
   &:not(:last-child) {
-    margin-bottom: ${theme.spacing.unit * 2}px;
+    margin-bottom: ${props => (props.spaced ? 0 : theme.spacing.unit * 2)}px;
+    border-bottom: ${props => (props.spaced ? 1 : 0)}px solid ${Color['neutral-200']};
   }
   & > button {
     /* cursor only on buttons, not divs */
@@ -20,14 +25,16 @@ const ListItem = styled.li`
   }
 `;
 
-const ListItemContent = styled.div`
+const ListItemContent = styled.div<SpacedList>`
   width: 100%;
   background: transparent;
   display: flex;
   justify-content: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   border: none;
+  padding: ${props => (props.spaced ? theme.spacing.unit * 3 : 0)}px
+    ${props => (props.spaced ? theme.spacing.unit * 2 : 0)}px;
   svg {
     font-size: 2.4rem;
     width: 3rem !important; /* overwrite fontawsome class to have equal spacing of icons */
