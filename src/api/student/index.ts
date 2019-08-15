@@ -14,8 +14,11 @@ export interface IAccountTransactions {
 
 export interface ITransaction {
   amount: number;
-  description: String;
+  category: string;
+  description: string;
   entryDate: Date;
+  term: string;
+  transactionType: string;
 }
 
 export const getAcademicStatus = () =>

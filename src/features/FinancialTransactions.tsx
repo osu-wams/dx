@@ -2,15 +2,23 @@ import React, { useState, useEffect, useRef, FC } from 'react';
 import styled from 'styled-components';
 import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
-import { List, ListItem, ListItemContent } from '../ui/List';
 import { Color, theme } from '../theme';
 import { getAccountTransactions, IAccountTransactions, ITransaction } from '../api/student';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
+import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
 
 type ITransactionAmount = {
   color: string;
 };
+
+const TransactionsTable = styled(Table)`
+  width: 100%;
+`;
+
+const TransactionAmountHeader = styled(TableHeaderCell)`
+  text-align: right;
+`;
 
 const TransactionsContainer = styled(CardContent)`
   padding-top: 0;
@@ -22,22 +30,24 @@ const TransactionName = styled.div`
   color: ${Color['neutral-700']};
 `;
 
-const TransactionDate = styled.div`
+const TransactionDetail = styled.div`
   font-size: ${theme.fontSize[12]};
   color: ${Color['neutral-500']};
+  text-transform: capitalize;
 `;
 
-const TransactionAmount = styled.div<ITransactionAmount>`
-  font-size: ${theme.fontSize[16]};
+const TransactionAmount = styled(TableCell)`
+  text-align: right;
+  padding: 0.8rem !important;
+`;
+
+const TransactionNumber = styled.div<ITransactionAmount>`
+  font-size: ${theme.fontSize[14]};
   color: ${props => props.color};
 `;
 
-const TransactionDetails = styled.div`
-  padding-left: ${theme.spacing.unit * 2}px;
-`;
-
-const TransactionContent = styled(ListItemContent)`
-  padding: ${theme.spacing.unit * 1.5}px ${theme.spacing.unit * 2}px;
+const TransactionDetails = styled(TableCell)`
+  padding: 0.8rem !important;
 `;
 
 /**
@@ -67,26 +77,39 @@ const FinancialTransactions: FC = () => {
 
   return (
     <Card>
-      <CardHeader title="Transactions" />
+      <CardHeader title="Recent Transactions" />
       <TransactionsContainer>
         {transactions.length ? (
-          <List data-testid="transaction-container">
-            {transactions.map((transaction: ITransaction, index: number) => (
-              <ListItem spaced key={index}>
-                <TransactionContent spaced>
-                  <TransactionAmount
-                    color={transaction.amount < 0 ? Color['lava-400'] : Color['pine-400']}
-                  >
-                    {formatDollars(transaction.amount)}
+          <TransactionsTable variant="basic" data-testid="transaction-container">
+            <TableHeader>
+              <TableRow>
+                <TransactionAmountHeader>Amount</TransactionAmountHeader>
+                <TableHeaderCell>Details</TableHeaderCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {transactions.map((transaction: ITransaction, index: number) => (
+                <TableRow key={index}>
+                  <TransactionAmount>
+                    <TransactionNumber
+                      color={
+                        transaction.transactionType === 'charge'
+                          ? Color['lava-400']
+                          : Color['pine-400']
+                      }
+                    >
+                      {formatDollars(transaction.amount)}
+                    </TransactionNumber>
+                    <TransactionDetail>{transaction.transactionType}</TransactionDetail>
                   </TransactionAmount>
                   <TransactionDetails>
                     <TransactionName>{transaction.description}</TransactionName>
-                    <TransactionDate>{formatDate(transaction.entryDate)}</TransactionDate>
+                    <TransactionDetail>{formatDate(transaction.entryDate)}</TransactionDetail>
                   </TransactionDetails>
-                </TransactionContent>
-              </ListItem>
-            ))}
-          </List>
+                </TableRow>
+              ))}
+            </TableBody>
+          </TransactionsTable>
         ) : (
           <EmptyState />
         )}
@@ -99,6 +122,6 @@ const FinancialTransactions: FC = () => {
 };
 
 // Todo: Replace with actual empty state when ready in mockups.
-const EmptyState = () => <span>No transactions available.</span>;
+const EmptyState = () => <span>No recent transactions available.</span>;
 
 export default FinancialTransactions;
