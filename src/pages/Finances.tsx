@@ -1,4 +1,5 @@
 import React from 'react';
+import { faDollarSign } from '@fortawesome/pro-light-svg-icons';
 import PageTitle from '../ui/PageTitle';
 import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
@@ -18,7 +19,7 @@ const Finances = () => {
           <AccountBalance />
           <MealPlans />
         </HighlightsCard>
-        <ResourcesCard categ="financial" />
+        <ResourcesCard categ="financial" icon={faDollarSign} />
         <AnnouncementContainer className="col-span-2" type="financial" />
       </PageGrid>
     </div>

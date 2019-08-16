@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import styled from 'styled-components';
-import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
+import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
+import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
 import { Color, theme } from '../theme';
 import { getAccountTransactions, IAccountTransactions, ITransaction } from '../api/student';
@@ -76,7 +77,10 @@ const FinancialTransactions: FC = () => {
 
   return (
     <Card>
-      <CardHeader title="Recent Transactions" />
+      <CardHeader
+        title="Recent Transactions"
+        badge={<CardIcon icon={faMoneyBillWave} count={transactions.length} />}
+      />
       <TransactionsContainer>
         {transactions.length ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">

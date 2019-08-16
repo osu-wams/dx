@@ -9,7 +9,7 @@ interface IEvent {
   title: string;
 }
 
-export type IEvents = [IEvent];
+export type IEvents = IEvent[];
 
 const getAcademicCalendarEvents = (): Promise<IEvents> =>
   axios.get('/api/events/academic-calendar').then(res => res.data);

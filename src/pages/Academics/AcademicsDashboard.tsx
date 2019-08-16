@@ -1,4 +1,5 @@
 import React from 'react';
+import { faGraduationCap } from '@fortawesome/pro-light-svg-icons';
 import Courses from '../../features/Courses';
 import AnnouncementContainer from '../../ui/AnnouncementContainer';
 import PageGrid from '../../ui/PageGrid';
@@ -12,7 +13,7 @@ const AcademicsDashboard = () => {
       <Courses />
       <PlannerItems />
       <AcademicCalendar />
-      <ResourcesCard categ="academic" />
+      <ResourcesCard categ="academic" icon={faGraduationCap} />
       <AnnouncementContainer className="col-span-2" type="academic" />
     </PageGrid>
   );
