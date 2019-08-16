@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
+import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import Icon from '../ui/Icon';
 import {
   List,
@@ -36,7 +36,10 @@ const PlannerItems = () => {
 
   return (
     <Card>
-      <CardHeader title="Canvas" badge={<Badge>{plannerItems.length}</Badge>} />
+      <CardHeader
+        title="Canvas"
+        badge={<CardIcon icon={faFileEdit} count={plannerItems.length} />}
+      />
       <CardContent>
         {/* Show upcoming assignments if any exist, otherwise show empty state. */}
         {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && <AuthorizeCanvas />}

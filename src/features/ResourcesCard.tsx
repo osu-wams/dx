@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import styled from 'styled-components';
-import { faCube } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
+import { faCube, IconDefinition } from '@fortawesome/pro-light-svg-icons';
+import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
 import { Color, theme } from '../theme';
@@ -59,7 +59,7 @@ const getCategoryId = (categ: string) =>
  *
  * Displays resources from a given set of categories
  */
-const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
+const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
   const [resources, setResources] = useState<IResourceResult[]>([]);
   const [categoryId, setCategoryId] = useState<any>('');
   const isMounted = useRef(true);
@@ -89,7 +89,7 @@ const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
 
   return (
     <Card>
-      <CardHeader title={cardTitle} />
+      <CardHeader title={cardTitle} badge={<CardIcon icon={icon} count={resources.length} />} />
       <ResourcesContainer>
         {resources.length ? (
           <List data-testid="resource-container">

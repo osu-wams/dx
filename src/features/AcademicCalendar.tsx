@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { Card, CardHeader, CardContent, CardFooter, Badge } from '../ui/Card';
+import { faCalendar } from '@fortawesome/pro-light-svg-icons';
+import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../ui/List';
 import { getAcademicCalendarEvents, IEvents } from '../api/events';
 import { Date, DateDay, DateMonth } from '../ui/Date';
@@ -12,7 +13,7 @@ import Url from '../util/externalUrls.data';
  * Displays upcoming events from Localist.
  */
 const AcademicCalendar = () => {
-  const [calEvents, setCalEvents] = useState<IEvents | []>([]);
+  const [calEvents, setCalEvents] = useState<IEvents>([]);
 
   // Get Academic Calendar Events
   useEffect(() => {
@@ -25,7 +26,7 @@ const AcademicCalendar = () => {
     <Card>
       <CardHeader
         title="Academic Calendar"
-        badge={<Badge>{calEvents.length < 5 ? calEvents.length : 5}</Badge>}
+        badge={<CardIcon icon={faCalendar} count={calEvents.length < 5 ? calEvents.length : 5} />}
       />
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}

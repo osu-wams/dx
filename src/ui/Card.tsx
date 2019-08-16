@@ -1,7 +1,7 @@
 import React, { useState, useContext, FC } from 'react';
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
-import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
+import { faChevronDown, faChevronUp, IconDefinition } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
 import { Color, shadows, theme } from '../theme';
 import useMediaQuery from '../util/useMediaQuery';
@@ -149,4 +149,20 @@ const Badge = styled.div<IBadge>`
   margin-right: 12px;
 `;
 
-export { Card, CardHeader, CardContent, CardFooter, Badge, CardBase };
+const CardIconWrapper = styled.div`
+  margin-right: 12px;
+`;
+
+const CardIconBase = styled(Icon)`
+  font-size: ${theme.fontSize[24]};
+`;
+
+const CardIcon: FC<{ icon: IconDefinition; count?: number }> = ({ icon, count }) => {
+  return (
+    <CardIconWrapper>
+      <CardIconBase icon={icon} color={Color['neutral-550']} count={count} />
+    </CardIconWrapper>
+  );
+};
+
+export { Card, CardHeader, CardContent, CardFooter, Badge, CardIcon, CardBase };
