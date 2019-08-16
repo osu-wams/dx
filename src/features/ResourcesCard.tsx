@@ -9,7 +9,8 @@ import {
   getResourcesByCategory,
   getCategories,
   defaultCategoryId,
-  IResourceResult
+  IResourceResult,
+  ICategory
 } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 
@@ -44,7 +45,13 @@ const getResources = (categ: string) =>
 
 const getCategoryId = (categ: string) =>
   getCategories().then(
-    res => res.find((e: any) => e.attributes.name.toUpperCase() === categ.toUpperCase()).id
+    (res: ICategory[]): string => {
+      const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
+      if (result !== undefined) {
+        return result.id;
+      }
+      return '';
+    }
   );
 
 /**
@@ -53,7 +60,7 @@ const getCategoryId = (categ: string) =>
  * Displays resources from a given set of categories
  */
 const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
-  const [resources, setResources] = useState<[IResourceResult] | []>([]);
+  const [resources, setResources] = useState<IResourceResult[]>([]);
   const [categoryId, setCategoryId] = useState<any>('');
   const isMounted = useRef(true);
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
@@ -62,7 +69,7 @@ const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
   useEffect(() => {
     isMounted.current = true;
     getResources(categ)
-      .then((data: [IResourceResult]) => {
+      .then((data: IResourceResult[]) => {
         if (isMounted.current) {
           setResources(data);
         }

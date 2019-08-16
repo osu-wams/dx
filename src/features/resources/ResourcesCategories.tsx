@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../theme';
-import { getCategories } from '../../api/resources';
+import { getCategories, ICategory } from '../../api/resources';
 import CustomRadioBtn from '../../ui/CustomRadioBtn';
 
 const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedCategory }) => {
   const isMounted = useRef(true);
-  const [categories, setCategories] = useState<any>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   // Load category data on initial render
   useEffect(() => {
     getCategories()
-      .then(data => {
+      .then((data: ICategory[]) => {
         onCategorySelected(selectedCategory);
         setCategories(data);
       })
@@ -37,10 +37,10 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
             }}
             checked={selectedCategory === 'all'}
           />
-          {categories.map(category => (
+          {categories.map((category: ICategory) => (
             <CustomRadioBtn
-              icon={category.attributes.icon}
-              text={category.attributes.name}
+              icon={category.icon}
+              text={category.name}
               id={category.id}
               key={category.id}
               onChange={() => {

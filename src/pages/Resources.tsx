@@ -15,7 +15,7 @@ import {
 
 //import type here
 const Resources = () => {
-  const [resources, setResources] = useState<Array<IResourceResult>>([]);
+  const [resources, setResources] = useState<IResourceResult[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   useEffect(() => {
@@ -37,9 +37,9 @@ const Resources = () => {
       .catch(console.log);
   };
 
-  const fetchResourcesByCategory = category => {
+  const fetchResourcesByCategory = (category: string) => {
     getResourcesByCategory(category)
-      .then(res => setResources(res))
+      .then((res: IResourceResult[]) => setResources(res))
       .catch(console.log);
   };
 

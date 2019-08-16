@@ -30,28 +30,19 @@ const resourcesDataByCategory = {
 const categoriesData = {
   data: [
     {
-      type: 'taxonomy_term--categories',
       id: '1b9b7a4b-5a64-41af-a40a-8bb01abedd19',
-      attributes: {
-        name: 'Popular',
-        icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/star.svg'
-      }
+      name: 'Popular',
+      icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/star.svg'
     },
     {
-      type: 'taxonomy_term--categories',
       id: '2cd0a3c4-a7f1-4080-bf2e-e458559de2a3',
-      attributes: {
-        name: 'Academic',
-        icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/graduation-cap.svg'
-      }
+      name: 'Academic',
+      icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/graduation-cap.svg'
     },
     {
-      type: 'taxonomy_term--categories',
       id: 'e2730988-0614-43b7-b3ce-0b047e8219e0',
-      attributes: {
-        name: 'Financial',
-        icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/hands-usd.svg'
-      }
+      name: 'Financial',
+      icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/hands-usd.svg'
     }
   ]
 };

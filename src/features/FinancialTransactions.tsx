@@ -64,7 +64,6 @@ const FinancialTransactions: FC = () => {
     isMounted.current = true;
     getAccountTransactions()
       .then((data: IAccountTransactions) => {
-        console.log(data);
         if (isMounted.current) {
           setTransactions(data.attributes.transactions);
         }

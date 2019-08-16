@@ -6,7 +6,7 @@ import { List, ListItem, ListItemContentLink } from '../../ui/List';
 import { Color, theme } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 
-const ResourcesList: React.FC<any> = ({ resources }) => (
+const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => (
   <List>
     {resources.length > 0 &&
       resources.map((resource: IResourceResult) => (
