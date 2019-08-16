@@ -56,7 +56,7 @@ const TransactionDetails = styled(TableCell)`
  * Displays past financial transactions for the current user
  */
 const FinancialTransactions: FC = () => {
-  const [transactions, setTransactions] = useState<[ITransaction] | []>([]);
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const isMounted = useRef(true);
 
   // Populate resources and category ID
