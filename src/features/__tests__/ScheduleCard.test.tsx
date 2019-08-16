@@ -101,8 +101,6 @@ describe('<ScheduleCard /> without canvas authorization', () => {
     firstName: 'Testo',
     lastName: 'LastTesto',
     isAdmin: true,
-    canvasOauthToken: '123',
-    canvasOauthExpire: 1562889528,
     isCanvasOptIn: false
   };
 

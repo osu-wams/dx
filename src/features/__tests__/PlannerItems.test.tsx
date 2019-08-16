@@ -11,8 +11,6 @@ const auth = {
   firstName: 'Testo',
   lastName: 'LastTesto',
   isAdmin: true,
-  canvasOauthToken: '123',
-  canvasOauthExpire: 1562889528,
   isCanvasOptIn: true
 };
 

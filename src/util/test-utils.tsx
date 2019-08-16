@@ -9,19 +9,17 @@ const authUser = {
   firstName: 'Testo',
   lastName: 'LastTesto',
   isAdmin: true,
-  canvasOauthToken: '123',
-  canvasOauthExpire: 1562889528,
   isCanvasOptIn: true
 };
 
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
-  const Wrapper = (props) => {
+  const Wrapper = props => {
     return <UserContext.Provider value={user} {...props} />;
-  }
-  return render (ui, { wrapper: Wrapper, ...options });
-}
+  };
+  return render(ui, { wrapper: Wrapper, ...options });
+};
 
 // Pass a different user
- // const { getByTestId } = renderWithUserContext(<Dashboard />, { user: authUser });
+// const { getByTestId } = renderWithUserContext(<Dashboard />, { user: authUser });
 
- export { renderWithUserContext}
+export { renderWithUserContext };

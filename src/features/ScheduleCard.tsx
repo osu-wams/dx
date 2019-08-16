@@ -100,7 +100,7 @@ const ScheduleCard = () => {
         const dayShortcode = getDayShortcode(day);
         const coursesOnDay = courses.filter(course => course.weeklySchedule.includes(dayShortcode));
         let plannerItemsOnDay;
-        if (user.canvasOauthToken) {
+        if (user.isCanvasOptIn) {
           plannerItemsOnDay = plannerItems.filter(item =>
             item.plannable.due_at ? isSameDay(item.plannable.due_at, day) : ''
           );
@@ -115,7 +115,7 @@ const ScheduleCard = () => {
           coursesOnDay.length > 0 || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0
         );
       }),
-    [nextFiveDays, plannerItems, calEvents, courses, user.canvasOauthToken]
+    [nextFiveDays, plannerItems, calEvents, courses, user.isCanvasOptIn]
   );
 
   return (
