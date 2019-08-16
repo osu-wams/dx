@@ -120,39 +120,18 @@ workflows:
       - lint_test_coverage:
           requires:
             - install
-      - build_client-dev:
-          context: my-osu-dashboard-dev
-          requires:
-            - lint_test_coverage
-          filters: *not-master
-      - deploy_client-dev:
-          context: my-osu-dashboard-dev
-          requires:
-            - build_client-dev
-          filters: *not-master
-      - flush-cache-dev:
-          requires:
-            - deploy_client-dev
-          context: my-osu-dashboard-dev
-          filters: *not-master
       - build_client-prod:
-          context: my-osu-dashboard-prod
+          context: my-osu-dashboard-dev
           requires:
             - lint_test_coverage
-          filters: *master-only
-      - approve_deploy_client:
-          type: approval
-          context: my-osu-dashboard-prod
-          requires:
-            - build_client-prod
           filters: *master-only
       - deploy_client-prod:
-          context: my-osu-dashboard-prod
+          context: my-osu-dashboard-dev
           requires:
-            - approve_deploy_client
+            - build_client-prod
           filters: *master-only
       - flush-cache-prod:
           requires:
             - deploy_client-prod
-          context: my-osu-dashboard-prod
+          context: my-osu-dashboard-dev
           filters: *master-only
