@@ -94,7 +94,7 @@ const ResourcesCard: FC<{ categ: string; color: Color }> = ({ categ, color }) =>
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [categ]);
 
   return (
     <Card>

@@ -115,7 +115,7 @@ const ScheduleCard = () => {
           coursesOnDay.length > 0 || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0
         );
       }),
-    [nextFiveDays, plannerItems, calEvents, courses]
+    [nextFiveDays, plannerItems, calEvents, courses, user.canvasOauthToken]
   );
 
   return (
