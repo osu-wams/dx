@@ -1,27 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { theme } from '../../theme';
-import { getCategories, ICategory } from '../../api/resources';
+import { ICategory } from '../../api/resources';
 import CustomRadioBtn from '../../ui/CustomRadioBtn';
 
-const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedCategory }) => {
-  const isMounted = useRef(true);
-  const [categories, setCategories] = useState<ICategory[]>([]);
-
-  // Load category data on initial render
-  useEffect(() => {
-    getCategories()
-      .then((data: ICategory[]) => {
-        onCategorySelected(selectedCategory);
-        setCategories(data);
-      })
-      .catch(console.log);
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
+const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, categories }) => {
   return (
     <CategoriesWrapper>
       {categories.length > 0 && (
@@ -32,8 +15,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
             id="all"
             name="categories"
             onChange={() => {
-              onCategorySelected('all');
-              setSelectedCategory('all');
+              fetchResourcesByCategory('all');
             }}
             checked={selectedCategory === 'all'}
           />
@@ -44,8 +26,7 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
               id={category.id}
               key={category.id}
               onChange={() => {
-                onCategorySelected(category.id);
-                setSelectedCategory(category.id);
+                fetchResourcesByCategory(category.id);
               }}
               checked={selectedCategory === category.id}
               name="categories"

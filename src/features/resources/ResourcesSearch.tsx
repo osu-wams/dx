@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
+import { useDebounce } from 'use-debounce';
 import Icon from '../../ui/Icon';
 import { Color, theme } from '../../theme';
-import { useDebounceFunction } from '../../util/useDebounce';
+import { getResources } from '../../api/resources';
 
-const ResourcesSearch: React.FC<any> = ({ onQueryChanged, setSelectedCategory }) => {
+const ResourcesSearch: React.FC<any> = ({ setResources, setSelectedCategory }) => {
   const [query, setQuery] = useState<string>('');
-  const [initialized, setInitialized] = useState<boolean>(false);
+  const [debouncedText] = useDebounce(query, 500);
 
-  useDebounceFunction(
-    () => {
-      if (initialized) {
-        onQueryChanged(query);
-        setSelectedCategory('all');
-      } else {
-        setInitialized(true);
-      }
-    },
-    300,
-    [query]
-  );
+  useEffect(() => {
+    if (debouncedText) {
+      setSelectedCategory('all');
+      getResources(debouncedText)
+        .then(res => setResources(res))
+        .catch(console.log);
+    } else {
+      getResources('')
+        .then(res => setResources(res))
+        .catch(console.log);
+
+      console.log('else fetch all');
+    }
+  }, [debouncedText, setResources, setSelectedCategory]);
 
   return (
     <SearchWrapper>

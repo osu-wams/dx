@@ -33,9 +33,11 @@ const ListItemContent = styled.div<SpacedList>`
   flex-wrap: nowrap;
   align-items: center;
   border: none;
-  padding: ${props => (props.spaced ? theme.spacing.unit * 3 : 0)}px
-    ${props => (props.spaced ? theme.spacing.unit * 2 : 0)}px;
-  svg {
+  padding: ${props => (props.spaced ? theme.spacing.unit * 3 : 1)}px
+    ${props => (props.spaced ? theme.spacing.unit * 2 : 10)}px;
+  svg,
+  img {
+    height: 3rem;
     font-size: 2.4rem;
     width: 3rem !important; /* overwrite fontawsome class to have equal spacing of icons */
     & + div {

@@ -62,7 +62,7 @@ export function formatDollars(amount: number) {
 
 // Simple function to change between singular and plural by adding an s
 export function singularPlural(quantity: number, word: string) {
-  return quantity != 1 ? word + 's' : word;
+  return quantity !== 1 ? word + 's' : word;
 }
 
 // Formats phones with Google library. International numbers get full string. US numbers just national format

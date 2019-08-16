@@ -1,7 +1,6 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
-import CourseScheduleCard from '../features/CourseScheduleCard';
-import PlannerItems from '../features/PlannerItems';
+import ScheduleCard from '../features/ScheduleCard';
 import EventCardContainer from '../ui/EventCardContainer';
 import PageGrid from '../ui/PageGrid';
 
@@ -10,8 +9,7 @@ const Dashboard = () => {
     <div data-testid="dashboard-page">
       <PageTitle title="My OSU Dashboard" />
       <PageGrid>
-        <CourseScheduleCard />
-        <PlannerItems />
+        <ScheduleCard />
         <EventCardContainer className="col-span-2" />
       </PageGrid>
     </div>

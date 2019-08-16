@@ -85,7 +85,7 @@ const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [categ]);
 
   return (
     <Card>

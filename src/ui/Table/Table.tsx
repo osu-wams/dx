@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import styledMap from 'styled-map';
 import { Color } from '../../theme';
-const Table = styled.table<{
+
+interface ITable {
   striped?: boolean;
   stretch?: boolean;
   variant: 'basic' | 'compact' | 'default';
-}>`
+}
+
+const Table = styled.table<ITable>`
   border: ${styledMap('variant', {
     basic: 'none',
     compact: 'none',

@@ -13,7 +13,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
         <ListItem spaced key={resource.id}>
           <ListItemContentLink spaced href={resource.uri} target="_blank">
             {resource.icon !== undefined ? (
-              <ResourceImg src={resource.icon} />
+              <ResourceImg src={resource.icon} alt="" />
             ) : (
               <ResourceIcon icon={faCube} color={Color.black} />
             )}
