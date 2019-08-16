@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import PageTitle from '../ui/PageTitle';
+import { CardBase } from '../ui/Card';
+import { theme } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import { getCategories, getResourcesByCategory, defaultCategoryId } from '../api/resources';
+import {
+  getCategories,
+  getResourcesByCategory,
+  defaultCategoryId,
+  IResourceResult,
+  ICategory
+} from '../api/resources';
 
+//import type here
 const Resources = () => {
-  const [resources, setResources] = useState<any>([]);
+  const [resources, setResources] = useState<IResourceResult[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [categories, setCategories] = useState<any>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   useEffect(() => {
     let theCategoryId = defaultCategoryId;
@@ -20,16 +30,16 @@ const Resources = () => {
     }
     setSelectedCategory(theCategoryId);
     getCategories()
-      .then(data => {
+      .then((data: ICategory[]) => {
         fetchResourcesByCategory(theCategoryId);
         setCategories(data);
       })
       .catch(console.log);
   }, []);
 
-  const fetchResourcesByCategory = category => {
+  const fetchResourcesByCategory = (category: string) => {
     getResourcesByCategory(category)
-      .then(res => {
+      .then((res: IResourceResult[]) => {
         setResources(res);
         setSelectedCategory(category);
       })
@@ -37,7 +47,7 @@ const Resources = () => {
   };
 
   return (
-    <div data-testid="resources-page">
+    <ResourcesWrapper data-testid="resources-page">
       <PageTitle title="Resources" />
       {selectedCategory !== '' && (
         <>
@@ -53,10 +63,14 @@ const Resources = () => {
         <ResourcesList resources={resources} />
       ) : (
         /* @TODO need mockup styling to do and messaging for no results */
-        <div>No results </div>
+        <div>No results</div>
       )}
-    </div>
+    </ResourcesWrapper>
   );
 };
+
+const ResourcesWrapper = styled(CardBase)`
+  padding: ${theme.spacing.unit * 2}px;
+`;
 
 export default Resources;

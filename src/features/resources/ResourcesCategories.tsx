@@ -1,9 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
+import { theme } from '../../theme';
+import { ICategory } from '../../api/resources';
 import CustomRadioBtn from '../../ui/CustomRadioBtn';
 
 const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, categories }) => {
   return (
-    <>
+    <CategoriesWrapper>
       {categories.length > 0 && (
         <>
           <CustomRadioBtn
@@ -15,12 +18,11 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
               fetchResourcesByCategory('all');
             }}
             checked={selectedCategory === 'all'}
-            // checked={selectedCategory === 'all'}
           />
-          {categories.map(category => (
+          {categories.map((category: ICategory) => (
             <CustomRadioBtn
-              icon={category.attributes.icon}
-              text={category.attributes.name}
+              icon={category.icon}
+              text={category.name}
               id={category.id}
               key={category.id}
               onChange={() => {
@@ -29,12 +31,15 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
               checked={selectedCategory === category.id}
               name="categories"
             />
-          ))}{' '}
-          {console.log(selectedCategory)}
+          ))}
         </>
       )}
-    </>
+    </CategoriesWrapper>
   );
 };
+
+const CategoriesWrapper = styled.div`
+  margin-bottom: ${theme.spacing.unit * 2}px;
+`;
 
 export default ResourceCategories;

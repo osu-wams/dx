@@ -8,6 +8,10 @@ const Url = {
   },
   events: {
     academicCalendar: 'https://registrar.oregonstate.edu/osu-academic-calendar'
+  },
+  banner: {
+    financialTransactions:
+      'https://xe.ucsadm.oregonstate.edu:9990/ssomanager/c/SSB?pkg=OSU_ARWEB.P_ViewBillDate'
   }
 };
 

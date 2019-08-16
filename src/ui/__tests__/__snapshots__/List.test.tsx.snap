@@ -15,6 +15,7 @@ exports[`An icon on the right 1`] = `
 
 .c1:not(:last-child) {
   margin-bottom: 16px;
+  border-bottom: 0px solid #E9E5E4;
 }
 
 .c1 > button {
@@ -32,15 +33,15 @@ exports[`An icon on the right 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   border: none;
-  padding: .1rem 1rem;
+  padding: 1px 10px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -48,7 +49,6 @@ exports[`An icon on the right 1`] = `
 .c2 svg,
 .c2 img {
   height: 3rem;
-  border-radius: 50%;
   font-size: 2.4rem;
   width: 3rem !important;
 }
@@ -82,6 +82,7 @@ exports[`An icon on the right 1`] = `
   color: #F79572;
   background-color: transparent;
   padding: 0;
+  border-radius: 0;
 }
 
 <ul
@@ -143,6 +144,7 @@ exports[`Default style with icon on left 1`] = `
 
 .c1:not(:last-child) {
   margin-bottom: 16px;
+  border-bottom: 0px solid #E9E5E4;
 }
 
 .c1 > button {
@@ -160,15 +162,15 @@ exports[`Default style with icon on left 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   border: none;
-  padding: .1rem 1rem;
+  padding: 1px 10px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -176,7 +178,6 @@ exports[`Default style with icon on left 1`] = `
 .c2 svg,
 .c2 img {
   height: 3rem;
-  border-radius: 50%;
   font-size: 2.4rem;
   width: 3rem !important;
 }
@@ -210,6 +211,7 @@ exports[`Default style with icon on left 1`] = `
   color: #B7B1AF;
   background-color: transparent;
   padding: 0;
+  border-radius: 0;
 }
 
 <ul
@@ -270,6 +272,7 @@ exports[`Icon on both left and right 1`] = `
 
 .c1:not(:last-child) {
   margin-bottom: 16px;
+  border-bottom: 0px solid #E9E5E4;
 }
 
 .c1 > button {
@@ -287,15 +290,15 @@ exports[`Icon on both left and right 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   border: none;
-  padding: .1rem 1rem;
+  padding: 1px 10px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -303,7 +306,6 @@ exports[`Icon on both left and right 1`] = `
 .c2 svg,
 .c2 img {
   height: 3rem;
-  border-radius: 50%;
   font-size: 2.4rem;
   width: 3rem !important;
 }
@@ -337,6 +339,7 @@ exports[`Icon on both left and right 1`] = `
   color: #B7B1AF;
   background-color: transparent;
   padding: 0;
+  border-radius: 0;
 }
 
 <ul

@@ -10,7 +10,7 @@ import Resources from '../../pages/Resources';
 
 afterEach(cleanup);
 
-const sleep = ms => {
+const sleep = (ms: number) => {
   return new Promise(res => setTimeout(res, ms));
 };
 

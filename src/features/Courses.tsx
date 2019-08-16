@@ -16,7 +16,7 @@ import {
 import Course from '../features/Course';
 import { titleCase, singularPlural } from '../util/helpers';
 import { Color } from '../theme';
-import ExternalLink from '../ui/ExternalLink';
+import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 
 const Courses = () => {

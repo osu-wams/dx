@@ -1,51 +1,36 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import styled from 'styled-components';
-import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
+import { faCube } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter } from '../ui/Card';
 import Icon from '../ui/Icon';
-import Button from '../ui/Button';
+import { List, ListItem, ListItemContentLink } from '../ui/List';
 import { Color, theme } from '../theme';
-import { getResourcesByCategory, getCategories, defaultCategoryId } from '../api/resources';
+import {
+  getResourcesByCategory,
+  getCategories,
+  defaultCategoryId,
+  IResourceResult,
+  ICategory
+} from '../api/resources';
+import { InternalLink } from '../ui/Link';
 
-const ResourceContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  grid-row-gap: 16px;
-  grid-column-gap: 16px;
+const ResourcesContainer = styled(CardContent)`
+  padding-top: 0;
+  padding-bottom: 0;
 `;
 
-const Resource = styled.a`
-  :link,
-  :visited,
-  :hover,
-  :active {
-    text-decoration: none;
-  }
-  color: ${Color['black']};
-  padding: 1.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  flex: 2;
-  align-items: center;
-  text-align: center;
+const ResourceName = styled.div`
+  font-size: ${theme.fontSize[18]};
+  color: ${Color['neutral-700']};
+  padding-left: ${theme.spacing.unit * 2}px;
 `;
 
-const ResourceIconBorder = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: ${theme.spacing.unit * 6}px;
-  height: ${theme.spacing.unit * 6}px;
-  border: 1px solid ${Color['neutral-300']};
-  border-radius: 50%;
+const ResourceImg = styled.img`
+  width: 3rem;
 `;
 
-const ResourceIcon = styled.img`
-  padding: ${theme.spacing.unit}px;
-  max-width: 100%;
-  max-height: 100%;
+const ResourceIcon = styled(Icon)`
+  height: auto;
 `;
 
 const getResources = (categ: string) =>
@@ -60,7 +45,13 @@ const getResources = (categ: string) =>
 
 const getCategoryId = (categ: string) =>
   getCategories().then(
-    res => res.find((e: any) => e.attributes.name.toUpperCase() === categ.toUpperCase()).id
+    (res: ICategory[]): string => {
+      const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
+      if (result !== undefined) {
+        return result.id;
+      }
+      return '';
+    }
   );
 
 /**
@@ -68,8 +59,8 @@ const getCategoryId = (categ: string) =>
  *
  * Displays resources from a given set of categories
  */
-const ResourcesCard: FC<{ categ: string; color: Color }> = ({ categ, color }) => {
-  const [resources, setResources] = useState<any>([]);
+const ResourcesCard: FC<{ categ: string }> = ({ categ }) => {
+  const [resources, setResources] = useState<IResourceResult[]>([]);
   const [categoryId, setCategoryId] = useState<any>('');
   const isMounted = useRef(true);
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
@@ -78,7 +69,7 @@ const ResourcesCard: FC<{ categ: string; color: Color }> = ({ categ, color }) =>
   useEffect(() => {
     isMounted.current = true;
     getResources(categ)
-      .then(data => {
+      .then((data: IResourceResult[]) => {
         if (isMounted.current) {
           setResources(data);
         }
@@ -99,39 +90,31 @@ const ResourcesCard: FC<{ categ: string; color: Color }> = ({ categ, color }) =>
   return (
     <Card>
       <CardHeader title={cardTitle} />
-      <CardContent>
+      <ResourcesContainer>
         {resources.length ? (
-          <ResourceContainer data-testid="resource-container">
-            {resources.map(({ id, attributes }) => (
-              <Resource key={id} href={attributes.field_service_url.uri} target="_blank">
-                {attributes.icon !== undefined && (
-                  <ResourceIconBorder>
-                    <ResourceIcon src={attributes.icon} />
-                  </ResourceIconBorder>
-                )}
-                <>{attributes.title}</>
-              </Resource>
+          <List data-testid="resource-container">
+            {resources.map(resource => (
+              <ListItem spaced key={resource.id}>
+                <ListItemContentLink spaced href={resource.uri} target="_blank">
+                  {resource.icon !== undefined ? (
+                    <ResourceImg src={resource.icon} />
+                  ) : (
+                    <ResourceIcon icon={faCube} color={Color.black} />
+                  )}
+                  <ResourceName>{resource.title}</ResourceName>
+                </ListItemContentLink>
+              </ListItem>
             ))}
-          </ResourceContainer>
+          </List>
         ) : (
           <EmptyState />
         )}
-      </CardContent>
+      </ResourcesContainer>
       {categoryId !== '' && (
         <CardFooter>
-          <Button
-            as="a"
-            href={`/resources?category=${categoryId}`}
-            bg={Color.transparent}
-            fg={color}
-          >
+          <InternalLink to={`/resources?category=${categoryId}`}>
             See all {categ} resources
-            <Icon
-              icon={faArrowRight}
-              color={color}
-              style={{ marginLeft: `${theme.spacing.unit}px` }}
-            />
-          </Button>
+          </InternalLink>
         </CardFooter>
       )}
     </Card>
