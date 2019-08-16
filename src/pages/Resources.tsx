@@ -3,34 +3,36 @@ import PageTitle from '../ui/PageTitle';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import { getResources, getResourcesByCategory, defaultCategoryId } from '../api/resources';
+import { getCategories, getResourcesByCategory, defaultCategoryId } from '../api/resources';
 
 const Resources = () => {
   const [resources, setResources] = useState<any>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [categories, setCategories] = useState<any>([]);
 
   useEffect(() => {
+    let theCategoryId = defaultCategoryId;
     if (window.location.search.startsWith('?category=')) {
       const queryString = window.location.search.split('=');
       if (queryString.length === 2) {
-        setSelectedCategory(queryString[1]);
+        theCategoryId = queryString[1];
       }
-    } else {
-      // Needed here because of async behavior in ResourcesCategories
-      // Set selected category to 'popular' by default
-      setSelectedCategory(defaultCategoryId);
     }
-  }, []);
-
-  const fetchResources = query => {
-    getResources(query)
-      .then(res => setResources(res))
+    setSelectedCategory(theCategoryId);
+    getCategories()
+      .then(data => {
+        fetchResourcesByCategory(theCategoryId);
+        setCategories(data);
+      })
       .catch(console.log);
-  };
+  }, []);
 
   const fetchResourcesByCategory = category => {
     getResourcesByCategory(category)
-      .then(res => setResources(res))
+      .then(res => {
+        setResources(res);
+        setSelectedCategory(category);
+      })
       .catch(console.log);
   };
 
@@ -39,14 +41,11 @@ const Resources = () => {
       <PageTitle title="Resources" />
       {selectedCategory !== '' && (
         <>
-          <ResourcesSearch
-            onQueryChanged={fetchResources}
-            setSelectedCategory={setSelectedCategory}
-          />
+          <ResourcesSearch setResources={setResources} setSelectedCategory={setSelectedCategory} />
           <ResourcesCategories
-            onCategorySelected={fetchResourcesByCategory}
+            fetchResourcesByCategory={fetchResourcesByCategory}
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            categories={categories}
           />
         </>
       )}

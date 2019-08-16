@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
 import { getGrades } from '../../api/student';
@@ -16,12 +17,11 @@ import {
   TableHeaderCell
 } from '../../ui/Table';
 import { singularPlural, titleCase } from '../../util/helpers';
-import useDebounce from '../../util/useDebounce';
 
 const AcademicHistory = () => {
   const [grades, setGrades] = useState<Grades[]>([]);
   const [query, setQuery] = useState('');
-  const debouncedQuery = useDebounce(query, 300);
+  const [debouncedQuery] = useDebounce(query, 300);
   const [filteredGrades, setFilteredGrades] = useState<Grades[]>([]);
 
   // Populate user grades

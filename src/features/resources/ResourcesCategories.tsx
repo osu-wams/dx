@@ -1,26 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { getCategories } from '../../api/resources';
+import React from 'react';
 import CustomRadioBtn from '../../ui/CustomRadioBtn';
 
-const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedCategory }) => {
-  const isMounted = useRef(true);
-  const [categories, setCategories] = useState<any>([]);
-
-  // Load category data on initial render
-  useEffect(() => {
-    getCategories()
-      .then(data => {
-        const defaultCategory = selectedCategory === 'all' ? 'all' : selectedCategory;
-        onCategorySelected(defaultCategory);
-        setCategories(data);
-      })
-      .catch(console.log);
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
+const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, categories }) => {
   return (
     <>
       {categories.length > 0 && (
@@ -31,10 +12,10 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
             id="all"
             name="categories"
             onChange={() => {
-              onCategorySelected('all');
-              setSelectedCategory('all');
+              fetchResourcesByCategory('all');
             }}
             checked={selectedCategory === 'all'}
+            // checked={selectedCategory === 'all'}
           />
           {categories.map(category => (
             <CustomRadioBtn
@@ -43,13 +24,13 @@ const ResourceCategories = ({ onCategorySelected, selectedCategory, setSelectedC
               id={category.id}
               key={category.id}
               onChange={() => {
-                onCategorySelected(category.id);
-                setSelectedCategory(category.id);
+                fetchResourcesByCategory(category.id);
               }}
               checked={selectedCategory === category.id}
               name="categories"
             />
-          ))}
+          ))}{' '}
+          {console.log(selectedCategory)}
         </>
       )}
     </>
