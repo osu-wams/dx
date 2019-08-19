@@ -65,11 +65,13 @@ const PlannerItems = () => {
             )}
           </List>
         ) : (
-          <EmptyState />
+          user.isCanvasOptIn === true && <EmptyState />
         )}
       </CardContent>
       <CardFooter>
-        <ExternalLink href={Url.canvas.main}>View all in Canvas</ExternalLink>
+        {user.isCanvasOptIn === true && (
+          <ExternalLink href={Url.canvas.main}>View all in Canvas</ExternalLink>
+        )}
       </CardFooter>
     </Card>
   );

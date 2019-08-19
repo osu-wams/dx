@@ -8,7 +8,7 @@ import { getIconByScheduleType } from './course-utils';
 import {
   List,
   ListItem,
-  ListItemContent,
+  ListItemContentButton,
   ListItemText,
   ListItemHeader,
   ListItemDescription
@@ -62,7 +62,7 @@ const Courses = () => {
               }
             }) => (
               <ListItem key={id}>
-                <ListItemContent onClick={() => toggleCourse(attributes)}>
+                <ListItemContentButton onClick={() => toggleCourse(attributes)}>
                   <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
                   <ListItemText>
                     <ListItemHeader>
@@ -75,7 +75,7 @@ const Courses = () => {
                     </ListItemDescription>
                   </ListItemText>
                   <Icon icon={faChevronRight} />
-                </ListItemContent>
+                </ListItemContentButton>
               </ListItem>
             )
           )}

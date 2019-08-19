@@ -27,9 +27,9 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     mockGetCourseSchedule.mockResolvedValue(Promise.resolve(mockCourseSchedule));
   });
 
-  it('should find "Day at a Glance" card title', async () => {
-    const { getByText } = renderWithUserContext(<ScheduleCard />);
-    expect(getByText('Day at a Glance')).toBeInTheDocument();
+  it('should find the card header even though it is visually hidden', async () => {
+    const { getByTestId } = renderWithUserContext(<ScheduleCard />);
+    expect(getByTestId('scheduleCardHeader')).toBeInTheDocument();
   });
 
   it('should find "Every Day Test" Course in card', async () => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { isSameDay } from 'date-fns';
+import { isSameDay, format } from 'date-fns';
 import generateId from 'uuid/v4';
+import VisuallyHidden from '@reach/visually-hidden';
 import { getCourseSchedule, getPlannerItems } from '../api/student';
 import { getAcademicCalendarEvents, IEvents } from '../api/events';
 import { UserContext } from '../App';
@@ -120,7 +121,9 @@ const ScheduleCard = () => {
 
   return (
     <Card>
-      <Header>Day at a Glance</Header>
+      <VisuallyHidden>
+        <Header data-testid="scheduleCardHeader">{format(selectedDay, 'dddd MMMM D')}</Header>
+      </VisuallyHidden>
       <ScheduleCardDayMenu
         nextFiveDays={nextFiveDays}
         selectedDay={selectedDay}
