@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
-import Icon from '../ui/Icon';
+import generateId from 'uuid/v4';
 import { faMapMarkerAlt, faEnvelope, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { parse } from 'date-fns';
+import Icon from '../ui/Icon';
 import { CloseButton } from '../ui/Button';
 import {
   List,
@@ -36,6 +37,7 @@ const Course: FC<{
       {courseSubject} {courseNumber}
     </h2>
     <div className="details">{titleCase(courseTitle)}</div>
+    {console.log(meetingTimes)}
     <List>
       {meetingTimes.map(
         ({
@@ -50,7 +52,7 @@ const Course: FC<{
           scheduleDescription,
           scheduleType
         }) => (
-          <ListItem key={beginDate + beginTime + weeklySchedule}>
+          <ListItem key={generateId()}>
             <ListItemContent>
               <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
               <ListItemText>
@@ -60,13 +62,15 @@ const Course: FC<{
                   {beginDate !== endDate
                     ? weeklySchedule.map((day, index) => day)
                     : formatDate(parse(beginDate), 'noYear')}{' '}
-                  &middot; {formatTime(beginTime)} - {formatTime(endTime)}
+                  {beginTime && `\u00B7 ${formatTime(beginTime)} - ${formatTime(endTime)}`}
                 </ListItemDescription>
               </ListItemText>
-              <a href={Url.campusMap.building + building} target="blank">
-                <VisuallyHidden>View {buildingDescription} on map</VisuallyHidden>
-                <Icon icon={faMapMarkerAlt} />
-              </a>
+              {buildingDescription && (
+                <a href={Url.campusMap.building + building} target="blank">
+                  <VisuallyHidden>View {buildingDescription} on map</VisuallyHidden>
+                  <Icon icon={faMapMarkerAlt} />
+                </a>
+              )}
             </ListItemContent>
           </ListItem>
         )
