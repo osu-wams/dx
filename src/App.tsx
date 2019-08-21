@@ -39,12 +39,16 @@ interface User {
   email: String;
 }
 
+interface AppProps {
+  containerElement: HTMLElement;
+}
+
 export const UserContext = React.createContext<any>(null);
 
 const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
   props.pageComponent;
 
-const App = () => {
+const App = (props: AppProps) => {
   const [user, setUser] = useState<User | {}>({});
 
   useEffect(() => {
@@ -53,6 +57,7 @@ const App = () => {
       .then(res => {
         // if canvas opt in and expired need to refresh
         setUser(res.data);
+        props.containerElement.style.opacity = '1';
       })
       .catch(() => {
         window.location.href = '/login';
