@@ -34,7 +34,9 @@ export enum Color {
   'pine-500' = '#3C692E',
   'pine-600' = '#254A1A',
   'pine-700' = '#142E0C',
-  'lava-400' = '#C72127'
+  'lava-400' = '#C72127',
+  'luminance-300' = '#FFCE57',
+  'roguewave-400' = '#00859B'
 }
 
 export const shadows = {
