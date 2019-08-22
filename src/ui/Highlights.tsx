@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Color, theme } from '../theme';
 import { CardBase } from '../ui/Card';
 
@@ -15,16 +15,31 @@ const HighlightsCard = styled(CardBase)`
   }
 `;
 
-const Highlight = styled.div`
-  text-align: center;
+interface IHighlight {
+  textAlignLeft?: boolean;
+}
+
+const Highlight = styled.div<IHighlight>`
+  text-align: ${props => (props.textAlignLeft ? 'left' : 'center')};
 `;
 
-const HighlightTitle = styled.h2`
+const HighlightTitle = styled.h2<{ marginTop?: number }>`
   font-size: ${theme.fontSize[14]};
   color: ${Color['neutral-550']};
   font-weight: 600;
   margin-bottom: 0;
   padding: 0 1.6rem;
+  ${props =>
+    props.marginTop !== undefined &&
+    css`
+      margin-top: ${props.marginTop as number};
+    `}
+`;
+
+const HighlightEmphasisInline = styled.em<{ color?: Color }>`
+  color: ${props => props.color || Color['orange-400']};
+  font-style: normal;
+  font-weight: bold;
 `;
 
 const HighlightEmphasis = styled.div<{ color: Color }>`
@@ -39,4 +54,11 @@ const HighlightDescription = styled.div`
   padding: 0 1.6rem 1.6rem;
 `;
 
-export { HighlightsCard, Highlight, HighlightTitle, HighlightEmphasis, HighlightDescription };
+export {
+  HighlightsCard,
+  Highlight,
+  HighlightTitle,
+  HighlightEmphasis,
+  HighlightEmphasisInline,
+  HighlightDescription
+};
