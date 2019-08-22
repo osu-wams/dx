@@ -20,8 +20,6 @@ const ResourcesSearch: React.FC<any> = ({ setResources, setSelectedCategory }) =
       getResources('')
         .then(res => setResources(res))
         .catch(console.log);
-
-      console.log('else fetch all');
     }
   }, [debouncedText, setResources, setSelectedCategory]);
 

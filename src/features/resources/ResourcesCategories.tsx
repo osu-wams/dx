@@ -2,34 +2,30 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from '../../theme';
 import { ICategory } from '../../api/resources';
-import CustomRadioBtn from '../../ui/CustomRadioBtn';
+import CustomBtn from '../../ui/CustomBtn';
 
 const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, categories }) => {
   return (
     <CategoriesWrapper>
       {categories.length > 0 && (
         <>
-          <CustomRadioBtn
+          <CustomBtn
             icon="http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/th.svg"
             text="All"
             id="all"
             name="categories"
-            onChange={() => {
-              fetchResourcesByCategory('all');
-            }}
-            checked={selectedCategory === 'all'}
+            clickHandler={() => fetchResourcesByCategory('all')}
+            selected={selectedCategory === 'all' ? true : false}
           />
           {categories.map((category: ICategory) => (
-            <CustomRadioBtn
+            <CustomBtn
               icon={category.icon}
               text={category.name}
               id={category.id}
               key={category.id}
-              onChange={() => {
-                fetchResourcesByCategory(category.id);
-              }}
-              checked={selectedCategory === category.id}
+              clickHandler={() => fetchResourcesByCategory(category.id)}
               name="categories"
+              selected={selectedCategory === category.id ? true : false}
             />
           ))}
         </>
