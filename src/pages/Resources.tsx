@@ -19,6 +19,7 @@ const Resources = () => {
   const [resources, setResources] = useState<IResourceResult[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const [query, setQuery] = useState<String>('');
 
   useEffect(() => {
     let theCategoryId = defaultCategoryId;
@@ -51,13 +52,22 @@ const Resources = () => {
       <PageTitle title="Resources" />
       {selectedCategory !== '' && (
         <>
-          <ResourcesSearch setResources={setResources} setSelectedCategory={setSelectedCategory} />
+          <ResourcesSearch
+            setResources={setResources}
+            setSelectedCategory={setSelectedCategory}
+            setSearchTerm={(term: string) => setQuery(term)}
+          />
           <ResourcesCategories
             fetchResourcesByCategory={fetchResourcesByCategory}
             selectedCategory={selectedCategory}
             categories={categories}
           />
         </>
+      )}
+      {query !== '' && (
+        <StyledParagraph>
+          Found {resources.length} resources for {query}
+        </StyledParagraph>
       )}
       {resources.length > 0 ? (
         <ResourcesList resources={resources} />
@@ -71,6 +81,10 @@ const Resources = () => {
 
 const ResourcesWrapper = styled(CardBase)`
   padding: ${theme.spacing.unit * 2}px;
+`;
+
+const StyledParagraph = styled.p`
+  font-size: 14px;
 `;
 
 export default Resources;

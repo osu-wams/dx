@@ -17,8 +17,8 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
   selected
 }) => (
   <StyledBtn id={id} onClick={clickHandler} className={selected ? 'selected' : ''}>
-    <CustomLabel htmlFor={id} selected={selected} >
-      <Icon src={icon} /> {text}
+    <CustomLabel htmlFor={id} selected={selected}>
+      <Icon src={icon} aria-hidden="true" /> {text}
     </CustomLabel>
   </StyledBtn>
 );

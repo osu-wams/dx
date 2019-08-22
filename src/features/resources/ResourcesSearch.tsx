@@ -6,7 +6,7 @@ import Icon from '../../ui/Icon';
 import { Color, theme } from '../../theme';
 import { getResources } from '../../api/resources';
 
-const ResourcesSearch: React.FC<any> = ({ setResources, setSelectedCategory }) => {
+const ResourcesSearch: React.FC<any> = ({ setResources, setSelectedCategory, setSearchTerm }) => {
   const [query, setQuery] = useState<string>('');
   const [debouncedText] = useDebounce(query, 500);
 
@@ -21,14 +21,21 @@ const ResourcesSearch: React.FC<any> = ({ setResources, setSelectedCategory }) =
         .then(res => setResources(res))
         .catch(console.log);
     }
-  }, [debouncedText, setResources, setSelectedCategory]);
+  }, [debouncedText, setResources, setSelectedCategory, query]);
 
   return (
     <SearchWrapper>
       <InputLabel>
         <Icon icon={faSearch} />
       </InputLabel>
-      <Input placeholder="Find resources" value={query} onChange={e => setQuery(e.target.value)} />
+      <Input
+        placeholder="Find resources"
+        value={query}
+        onChange={e => {
+          setQuery(e.target.value);
+          setSearchTerm(e.target.value);
+        }}
+      />
     </SearchWrapper>
   );
 };
