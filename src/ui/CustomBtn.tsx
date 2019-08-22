@@ -43,6 +43,7 @@ const CustomLabel = styled('label')<{ selected: boolean }>`
   font-size: ${theme.fontSize[12]};
   padding: 0.4rem 0.8rem;
   cursor: pointer;
+  white-space: nowrap;
 `;
 
 export default CustomBtn;
