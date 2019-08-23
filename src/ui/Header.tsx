@@ -6,7 +6,7 @@ import { faUserCircle } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuList, MenuButton, MenuLink } from '@reach/menu-button';
 import 'react-toastify/dist/ReactToastify.min.css';
-import logo from '../assets/logo.png';
+import logo from '../assets/osu-logo.svg';
 import '@reach/menu-button/styles.css';
 import '@reach/dialog/styles.css';
 import MainNav from './MainNav';
@@ -16,15 +16,20 @@ const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 140px;
   background-color: ${Color.white};
 `;
+
+// Controls when Logo becomes larger, and navigation moves to the top
+const headerMedia = `980px`;
 
 const HeaderTopSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px 0;
+  padding: 8px 16px 12px;
+  @media (min-width: ${headerMedia}) {
+    padding-top: 12px;
+  }
 `;
 
 const HeaderBottomSection = styled.div`
@@ -32,6 +37,10 @@ const HeaderBottomSection = styled.div`
   align-items: center;
   width: 100%;
   overflow-x: auto;
+  @media (min-width: ${headerMedia}) {
+    position: absolute;
+    top: 3.6rem;
+  }
 `;
 
 const UserButton = styled(MenuButton)`
@@ -48,7 +57,10 @@ const ProfileMenuList = styled(MenuList)`
 `;
 
 const Logo = styled.img`
-  height: 44px;
+  height: 60px;
+  @media (min-width: ${headerMedia}) {
+    height: 80px;
+  }
 `;
 
 const Header = () => (

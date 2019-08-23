@@ -8,7 +8,7 @@ import Icon from './Icon';
 const Nav = styled.nav`
   display: flex;
   flex-direction: row;
-  margin: 24px auto 0 auto;
+  margin: 0 auto;
   /* Side Gradients */
   &:before,
   &:after {
@@ -82,6 +82,10 @@ const MainNav = () => (
     <NavLink to="resources">
       <Icon icon={faToolbox} />
       Resources
+    </NavLink>
+    <NavLink to="resources">
+      <Icon icon={faToolbox} />
+      Beta
     </NavLink>
   </Nav>
 );
