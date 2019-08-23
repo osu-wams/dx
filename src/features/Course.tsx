@@ -37,7 +37,6 @@ const Course: FC<{
       {courseSubject} {courseNumber}
     </h2>
     <div className="details">{titleCase(courseTitle)}</div>
-    {console.log(meetingTimes)}
     <List>
       {meetingTimes.map(
         ({
