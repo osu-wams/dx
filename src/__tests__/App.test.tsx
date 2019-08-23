@@ -16,7 +16,7 @@ it('renders <App> without crashing', () => {
   const testHistory = createHistory(createMemorySource('/'));
   ReactDOM.render(
     <LocationProvider history={testHistory}>
-      <App />
+      <App containerElement={div} />
     </LocationProvider>,
     div
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Router as ReachRouter, Location, RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
@@ -39,13 +39,18 @@ interface User {
   email: String;
 }
 
+interface AppProps {
+  containerElement: HTMLElement;
+}
+
 export const UserContext = React.createContext<any>(null);
 
 const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
   props.pageComponent;
 
-const App = () => {
+const App = (props: AppProps) => {
   const [user, setUser] = useState<User | {}>({});
+  const containerElementRef = useRef(props.containerElement);
 
   useEffect(() => {
     axios
@@ -53,6 +58,7 @@ const App = () => {
       .then(res => {
         // if canvas opt in and expired need to refresh
         setUser(res.data);
+        containerElementRef.current.style.opacity = '1';
       })
       .catch(() => {
         window.location.href = '/login';

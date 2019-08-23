@@ -3,4 +3,5 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const applicationRoot = document.getElementById('root') as HTMLElement;
+ReactDOM.render(<App containerElement={applicationRoot} />, applicationRoot);
