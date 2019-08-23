@@ -4,7 +4,6 @@ import { faMask, faUserHeadset, faCommentAltCheck } from '@fortawesome/pro-light
 import VisuallyHidden from '@reach/visually-hidden';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import '@reach/menu-button/styles.css';
 import '@reach/dialog/styles.css';
 import MyDialog from './MyDialog';
 import Button from './Button';
