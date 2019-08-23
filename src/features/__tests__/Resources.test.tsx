@@ -8,8 +8,6 @@ import {
 } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
 
-afterEach(cleanup);
-
 const sleep = (ms: number) => {
   return new Promise(res => setTimeout(res, ms));
 };

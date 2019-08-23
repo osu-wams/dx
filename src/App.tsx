@@ -13,6 +13,7 @@ import Finances from './pages/Finances';
 import Resources from './pages/Resources';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
+import Footer from './ui/Footer';
 
 const Router = styled(ReachRouter)`
   padding: ${theme.spacing.unit * 2}px;
@@ -109,6 +110,7 @@ const App = (props: AppProps) => {
           )}
         </Location>
       </ContentWrapper>
+      <Footer />
     </UserContext.Provider>
   );
 };
