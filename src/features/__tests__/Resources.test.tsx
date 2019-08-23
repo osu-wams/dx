@@ -41,8 +41,9 @@ describe('<Resources />', () => {
     const { getByLabelText, queryByText, findByText } = render(<Resources />);
     const popular = await waitForElement(() => getByLabelText('Popular'));
     const all = await waitForElement(() => getByLabelText('All'));
-    expect(popular).toHaveProperty('checked', true);
-    expect(all).toHaveProperty('checked', false);
+    fireEvent.click(popular);
+    expect(popular).toHaveClass('selected');
+    expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(queryByText(/Student Jobs/)).toBeNull();
   });
@@ -52,8 +53,9 @@ describe('<Resources />', () => {
     const popular = await waitForElement(() => getByLabelText('Popular'));
     const all = await waitForElement(() => getByLabelText('All'));
     fireEvent.click(all);
-    // expect(popular).toHaveProperty('checked', false);
-    // expect(all).toHaveProperty('checked', true);
+    await sleep(50);
+    expect(popular).not.toHaveClass('selected');
+    expect(all).toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();
   });
@@ -64,8 +66,9 @@ describe('<Resources />', () => {
     const all = await waitForElement(() => getByLabelText('All'));
     fireEvent.click(all);
     fireEvent.click(academic);
-    // expect(academic).toHaveProperty('checked', true);
-    // expect(all).toHaveProperty('checked', false);
+    await sleep(50);
+    expect(academic).toHaveClass('selected');
+    expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(queryByText(/Student Jobs/)).toBeNull();
   });
@@ -82,8 +85,8 @@ describe('<Resources />', () => {
     const { getByLabelText, findByText } = render(<Resources />);
     const popular = await waitForElement(() => getByLabelText('Popular'));
     const all = await waitForElement(() => getByLabelText('All'));
-    expect(popular).toHaveProperty('checked', false);
-    expect(all).toHaveProperty('checked', true);
+    expect(popular).not.toHaveClass('selected');
+    expect(all).toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();
     location.search = '';
@@ -91,21 +94,20 @@ describe('<Resources />', () => {
 
   it('should move to the All category when searching', async () => {
     console.log(window.location.search);
-    const { getByLabelText, findByText, debug, getByPlaceholderText } = render(<Resources />);
-    const popular = await waitForElement(() => getByLabelText('Popular'));
-    const all = await waitForElement(() => getByLabelText('All'));
-    expect(popular).toHaveProperty('checked', true);
-    expect(all).toHaveProperty('checked', false);
+    const { getByLabelText, findByText, getByPlaceholderText } = render(<Resources />);
+    let popular = await waitForElement(() => getByLabelText('Popular'));
+    let all = await waitForElement(() => getByLabelText('All'));
+    expect(popular).toHaveClass('selected');
+    expect(all).not.toHaveClass('selected');
     await fireEvent.change(getByPlaceholderText('Find resources'), {
       target: {
         value: 'example'
       }
     });
     // Need to wait for debounce
-    await sleep(400);
-    debug();
-    // expect(popular).toHaveProperty('checked', false);
-    // expect(all).toHaveProperty('checked', true);
+    await sleep(600);
+    expect(popular).not.toHaveClass('selected');
+    expect(all).toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();
   });
