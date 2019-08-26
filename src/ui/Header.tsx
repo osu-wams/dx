@@ -8,38 +8,38 @@ import { Menu, MenuList, MenuButton, MenuLink } from '@reach/menu-button';
 import 'react-toastify/dist/ReactToastify.min.css';
 import logo from '../assets/osu-logo.svg';
 import '@reach/menu-button/styles.css';
-import '@reach/dialog/styles.css';
 import MainNav from './MainNav';
 import { Color } from '../theme';
 
+const headerMedia = `900px`;
+
 const HeaderWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   width: 100%;
   background-color: ${Color.white};
+  justify-content: space-between;
+  flex-flow: row wrap;
+  padding: 8px 8px 12px;
+  align-items: center;
 `;
 
-// Controls when Logo becomes larger, and navigation moves to the top
-const headerMedia = `980px`;
-
-const HeaderTopSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 16px 12px;
+const ProfileMenu = styled.div`
   @media (min-width: ${headerMedia}) {
-    padding-top: 12px;
+    width: 150px;
+    order: 2;
+    button {
+      float: right;
+    }
   }
 `;
 
-const HeaderBottomSection = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  overflow-x: auto;
+const Navigation = styled.div`
+  flex-basis: 100%;
+  margin: 10px auto 0 auto;
+  overflow-x: scroll;
   @media (min-width: ${headerMedia}) {
-    position: absolute;
-    top: 3.6rem;
+    flex-basis: auto;
+    order: 1;
   }
 `;
 
@@ -57,6 +57,7 @@ const ProfileMenuList = styled(MenuList)`
 `;
 
 const Logo = styled.img`
+  order: 0;
   height: 60px;
   @media (min-width: ${headerMedia}) {
     height: 80px;
@@ -65,28 +66,26 @@ const Logo = styled.img`
 
 const Header = () => (
   <HeaderWrapper>
-    <HeaderTopSection>
-      <Logo src={logo} alt="Oregon State University" />
-      <div>
-        <Menu>
-          <UserButton data-testid="user-btn">
-            <VisuallyHidden>User menu</VisuallyHidden>
-            <FontAwesomeIcon icon={faUserCircle} size="2x" />
-          </UserButton>
-          <ProfileMenuList>
-            <MenuLink as="a" href="/logout">
-              Logout
-            </MenuLink>
-            <MenuLink as={Link} to="profile" data-testid="profile-link">
-              View Profile
-            </MenuLink>
-          </ProfileMenuList>
-        </Menu>
-      </div>
-    </HeaderTopSection>
-    <HeaderBottomSection>
+    <Logo src={logo} alt="Oregon State University" />
+    <ProfileMenu>
+      <Menu className="profile-menu">
+        <UserButton data-testid="user-btn">
+          <VisuallyHidden>User menu</VisuallyHidden>
+          <FontAwesomeIcon icon={faUserCircle} size="2x" />
+        </UserButton>
+        <ProfileMenuList>
+          <MenuLink as="a" href="/logout">
+            Logout
+          </MenuLink>
+          <MenuLink as={Link} to="profile" data-testid="profile-link">
+            View Profile
+          </MenuLink>
+        </ProfileMenuList>
+      </Menu>
+    </ProfileMenu>
+    <Navigation>
       <MainNav />
-    </HeaderBottomSection>
+    </Navigation>
   </HeaderWrapper>
 );
 
