@@ -8,7 +8,6 @@ import Icon from './Icon';
 const Nav = styled.nav`
   display: flex;
   flex-direction: row;
-  margin: 24px auto 0 auto;
   /* Side Gradients */
   &:before,
   &:after {
@@ -18,18 +17,21 @@ const Nav = styled.nav`
     pointer-events: none;
   }
   &:before {
-    width: 3rem;
-    background: linear-gradient(to right, white 0.5rem, transparent);
+    width: 3.5rem;
+    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0.5rem, rgba(255, 255, 255, 0));
+    left: -1rem;
   }
   &:after {
     width: 3.5rem;
-    background: linear-gradient(to left, white 0.5rem, transparent);
+    background: linear-gradient(to left, rgba(255, 255, 255, 1) 0.5rem, rgba(255, 255, 255, 0));
     right: 0;
   }
   @media (min-width: 541px) {
+    justify-content: center;
     &:before,
     &:after {
       background: none;
+      width: 0;
     }
   }
 `;
@@ -54,19 +56,17 @@ const NavLink = styled(Link)`
   &:hover > svg {
     color: ${Color['orange-400']};
   }
-  :first-child {
-    margin-left: 2rem;
-  }
-  :last-child {
-    margin-right: 2rem;
-  }
   & > svg {
     font-size: 24px;
   }
+  &:last-child {
+    /* prevents last anchor link from being under the gradient */
+    padding-right: 2rem;
+  }
 `;
 
-const MainNav = () => (
-  <Nav>
+const MainNav = (...props) => (
+  <Nav {...props}>
     <NavLink to="/">
       <Icon icon={faHome} />
       Home
