@@ -25,7 +25,7 @@ describe('<Alerts />', () => {
       expect(dxTitle).not.toBeInTheDocument();
     });
   });
-  describe('with a DX alert and no Rave Alert', () => {
+  describe('with an info DX alert and no Rave Alert', () => {
     beforeAll(() => {
       mockGetRaveAlerts.mockResolvedValue(Promise.resolve([]));
       mockGetDxAlerts.mockResolvedValue(Promise.resolve(dxAlerts));
@@ -33,6 +33,19 @@ describe('<Alerts />', () => {
     it('should not find the Rave alert', async () => {
       const { getByText, queryByText } = render(<Alerts />);
       const dxTitle = await waitForElement(() => getByText('BobRoss'));
+      const raveTitle = queryByText('First Rave');
+      expect(dxTitle).toBeInTheDocument();
+      expect(raveTitle).not.toBeInTheDocument();
+    });
+  });
+  describe('with a warn DX alert and no Rave Alert', () => {
+    beforeAll(() => {
+      mockGetRaveAlerts.mockResolvedValue(Promise.resolve([]));
+      mockGetDxAlerts.mockResolvedValue(Promise.resolve([dxAlerts[1]]));
+    });
+    it('should not find the Rave alert', async () => {
+      const { getByText, queryByText } = render(<Alerts />);
+      const dxTitle = await waitForElement(() => getByText('Old Dx Alert'));
       const raveTitle = queryByText('First Rave');
       expect(dxTitle).toBeInTheDocument();
       expect(raveTitle).not.toBeInTheDocument();
