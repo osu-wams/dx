@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import Icon from '../../ui/Icon';
 import { faCogs, faUserHeadset, faCommentAltLines, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon } from '../../ui/Card';
