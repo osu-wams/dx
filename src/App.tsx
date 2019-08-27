@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import Academics from './pages/Academics';
 import Finances from './pages/Finances';
 import Resources from './pages/Resources';
+import BetaDashboard from './pages/BetaDashboard';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
@@ -103,6 +104,7 @@ const App = (props: AppProps) => {
                   <RouterPage path="academics/*" pageComponent={<Academics />} />
                   <RouterPage path="finances" pageComponent={<Finances />} />
                   <RouterPage path="resources" pageComponent={<Resources />} />
+                  <RouterPage path="beta" pageComponent={<BetaDashboard />} />
                   <RouterPage default pageComponent={<PageNotFound />} />
                 </Router>
               </RouteContainer>

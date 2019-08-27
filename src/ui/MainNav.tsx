@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
-import { faHome, faGraduationCap, faHandsUsd, faToolbox } from '@fortawesome/pro-light-svg-icons';
+import { faHome, faGraduationCap, faHandsUsd, faToolbox, faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
 import { Color } from '../theme';
 import Icon from './Icon';
 
@@ -82,6 +82,10 @@ const MainNav = (...props) => (
     <NavLink to="resources">
       <Icon icon={faToolbox} />
       Resources
+    </NavLink>
+    <NavLink to="beta">
+      <Icon icon={faFlaskPotion} />
+      Beta
     </NavLink>
   </Nav>
 );
