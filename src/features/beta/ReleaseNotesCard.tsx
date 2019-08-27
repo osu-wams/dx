@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../../ui/Card';
-import { ExternalLink } from '../../ui/Link';
+import { Card, CardHeader, CardContent, CardIcon } from '../../ui/Card';
 import { Color, theme } from '../../theme';
 
 /*
