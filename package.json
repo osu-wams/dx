@@ -25,6 +25,7 @@
     "libphonenumber-js": "^1.7.19",
     "react": "16.9.0",
     "react-dom": "16.9.0",
+    "react-loading-skeleton": "^1.1.2",
     "react-pose": "^4.0.6",
     "react-responsive": "^6.1.1",
     "react-scripts": "^3.1.1",
