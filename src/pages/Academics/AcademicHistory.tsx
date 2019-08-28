@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
@@ -22,6 +23,7 @@ const AcademicHistory = () => {
   const [grades, setGrades] = useState<Grades[]>([]);
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 300);
+  const [gradesLoading, setGradesLoading] = useState<boolean>(true);
   const [filteredGrades, setFilteredGrades] = useState<Grades[]>([]);
 
   // Populate user grades
@@ -30,6 +32,7 @@ const AcademicHistory = () => {
       .then(data => {
         setGrades(data);
         setFilteredGrades(data);
+        setGradesLoading(false);
       })
       .catch(console.log);
   }, []);
@@ -69,7 +72,8 @@ const AcademicHistory = () => {
           onChange={e => setQuery(e.target.value)}
         />
       </SearchWrapper>
-      {grades.length > 1 ? (
+      {gradesLoading && <Skeleton count={5} />}
+      {grades.length > 0 ? (
         <div aria-live="polite">
           {Object.keys(gradesByTerm).map((key, index) => (
             <PlainCard title={key} key={index}>
@@ -109,7 +113,7 @@ const AcademicHistory = () => {
             </PlainCard>
           ))}
         </div>
-      ) : (
+      ) : !gradesLoading && (
         <div>No course history yet</div>
       )}
     </>
