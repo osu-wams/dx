@@ -8,7 +8,8 @@ import { Color, theme } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 
 const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => (
-  <List>
+  <List aria-live="polite" aria-atomic="true">
+    {resources && `found ${resources.length} results`}
     <PoseGroup>
       {resources.length > 0 &&
         resources.map((resource: IResourceResult) => (
