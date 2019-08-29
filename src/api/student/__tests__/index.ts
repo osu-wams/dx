@@ -6,14 +6,18 @@ import {
   getAccountHolds,
   getAccountTransactions,
   getCourseSchedule,
-  getGrades
+  getGrades,
+  getGpa,
+  getPlannerItems
 } from '..';
 import courses from '../__mocks__/courses.data';
 import grades from '../__mocks__/grades.data';
 import holds from '../__mocks__/holds.data';
+import gpa from '../__mocks__/gpa.data';
 import accountTransactions from '../__mocks__/accountTransactions.data';
 import accountBalance from '../__mocks__/accountBalance.data';
 import academicStatus from '../__mocks__/academicStatus.data';
+import plannerItems from '../__mocks__/plannerItems.data';
 
 jest.unmock('..');
 const mockAxios = new MockAdapter(axios);
@@ -59,5 +63,17 @@ describe('Student API', () => {
     mockAxios.onGet(/\/api\/student\/academic-status/).replyOnce(200, academicStatus);
     const res = await getAcademicStatus();
     expect(res).toEqual(academicStatus);
+  });
+
+  it('should get the gpa for the current user', async () => {
+    mockAxios.onGet('/api/student/gpa').replyOnce(200, gpa);
+    const res = await getGpa();
+    expect(res).toEqual(gpa);
+  });
+
+  it('should get the planner items for the current user', async () => {
+    mockAxios.onGet('/api/student/planner-items').replyOnce(200, plannerItems);
+    const res = await getPlannerItems();
+    expect(res).toEqual(plannerItems);
   });
 });
