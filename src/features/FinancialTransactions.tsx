@@ -117,7 +117,7 @@ const FinancialTransactions: FC = () => {
           <EmptyState />
         )}
       </TransactionsContainer>
-      <CardFooter>
+      <CardFooter infoButtonId="CHANGE-ME">
         <ExternalLink href={Url.banner.financialTransactions}>See all transactions</ExternalLink>
       </CardFooter>
     </Card>

@@ -44,15 +44,13 @@ const getResources = (categ: string) =>
   );
 
 const getCategoryId = (categ: string) =>
-  getCategories().then(
-    (res: ICategory[]): string => {
-      const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
-      if (result !== undefined) {
-        return result.id;
-      }
-      return '';
+  getCategories().then((res: ICategory[]): string => {
+    const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
+    if (result !== undefined) {
+      return result.id;
     }
-  );
+    return '';
+  });
 
 /**
  * Resources Card
@@ -111,7 +109,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
         )}
       </ResourcesContainer>
       {categoryId !== '' && (
-        <CardFooter>
+        <CardFooter infoButtonId="CHANGE-ME">
           <InternalLink to={`/resources?category=${categoryId}`}>
             See all {categ} resources
           </InternalLink>

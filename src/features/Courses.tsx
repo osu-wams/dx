@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { faChevronRight, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
+import { faChevronRight } from '@fortawesome/pro-light-svg-icons';
 import { getCourseSchedule } from '../api/student';
 import { Card, CardHeader, Badge, CardContent, CardFooter } from '../ui/Card';
 import { ICourseSchedule, ICourseScheduleAttributes } from '../api/student/course-schedule';
@@ -84,8 +84,7 @@ const Courses = () => {
           <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />
         )}
       </CardContent>
-      <CardFooter>
-        <Icon icon={faInfoCircle} />
+      <CardFooter infoButtonId="CHANGE-ME">
         <ExternalLink href={Url.canvas.main} fg={Color['orange-400']}>
           View more in Canvas
         </ExternalLink>

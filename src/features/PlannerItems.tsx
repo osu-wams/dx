@@ -68,7 +68,7 @@ const PlannerItems = () => {
           user.isCanvasOptIn === true && <EmptyState />
         )}
       </CardContent>
-      <CardFooter>
+      <CardFooter infoButtonId="CHANGE-ME">
         {user.isCanvasOptIn === true && (
           <ExternalLink href={Url.canvas.main}>View all in Canvas</ExternalLink>
         )}
