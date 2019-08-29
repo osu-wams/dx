@@ -10,7 +10,6 @@ import {
   CardIcon
 } from '../ui/Card';
 import Icon from '../ui/Icon';
-import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import { AcademicStanding } from './academic-overview/AcademicStanding';
 import { StudentHolds } from './academic-overview/StudentHolds';
 import { StudentGpa } from './academic-overview/StudentGpa';
@@ -18,35 +17,27 @@ import { StudentEnrolledCredits } from './academic-overview/StudentEnrolledCredi
 import { Color } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
-import { UserContext } from '../App';
 
 export const AcademicOverview = () => {
-  const user = useContext<any>(UserContext);
-
   return (
     <Card>
       <CardHeader title="Academic Overview" badge={<CardIcon icon={faAnalytics} />} />
-      <>
-        {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && <AuthorizeCanvas />}
-        {user.isCanvasOptIn && (
-          <CardContentTable>
-            <CardContentRow className="row-span-1">
-              <CardContentCell>
-                <StudentGpa />
-              </CardContentCell>
-              <CardContentCell>
-                <StudentEnrolledCredits />
-              </CardContentCell>
-            </CardContentRow>
-            <CardContentRow borderless className="row-span-1">
-              <CardContentCell>
-                <AcademicStanding />
-                <StudentHolds />
-              </CardContentCell>
-            </CardContentRow>
-          </CardContentTable>
-        )}
-      </>
+      <CardContentTable>
+        <CardContentRow className="row-span-1">
+          <CardContentCell>
+            <StudentGpa />
+          </CardContentCell>
+          <CardContentCell>
+            <StudentEnrolledCredits />
+          </CardContentCell>
+        </CardContentRow>
+        <CardContentRow borderless className="row-span-1">
+          <CardContentCell>
+            <AcademicStanding />
+            <StudentHolds />
+          </CardContentCell>
+        </CardContentRow>
+      </CardContentTable>
       <CardFooter>
         <Icon icon={faInfoCircle} />
         <ExternalLink href={Url.myDegrees.main} fg={Color['orange-400']}>
