@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
-import {
-  Highlight,
-  HighlightTitle,
-  HighlightEmphasisInline,
-  HighlightDescription
-} from '../../ui/Highlights';
+import { Highlight, HighlightTitle, HighlightEmphasisInline, HighlightDescription } from '../../ui/Highlights';
 import { theme, Color } from '../../theme';
 import { getAccountHolds } from '../../api/student';
 import { Hold } from '../../api/student/holds';
@@ -27,10 +23,11 @@ interface HoldsState {
 }
 
 export const StudentHolds: React.FC = () => {
-  const [holds, setHolds] = useState<HoldsState>({
+  const [ holds, setHolds ] = useState<HoldsState>({
     items: [],
     text: 'holds'
   });
+  const [ holdsLoading, setHoldsLoading ] = useState<boolean>(true);
 
   useEffect(() => {
     getAccountHolds()
@@ -40,6 +37,7 @@ export const StudentHolds: React.FC = () => {
           if (items.length === 1) text = 'hold';
           setHolds({ items, text });
         }
+        setHoldsLoading(false);
       })
       .catch(console.error);
   }, []);
@@ -47,18 +45,17 @@ export const StudentHolds: React.FC = () => {
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Holds</HighlightTitle>
-      <HighlightDescription>
-        <span>You have</span>
-        <HighlightEmphasisInline>{holds.items.length}</HighlightEmphasisInline>
-        <span>{holds.text} on your student account.</span>
-        {holds.items.length > 0 && (
-          <HoldsList>
-            {holds.items.map((h, i) => (
-              <li key={i}>{h.description}</li>
-            ))}
-          </HoldsList>
-        )}
-      </HighlightDescription>
+      {holdsLoading && <Skeleton />}
+      {!holdsLoading && (
+        <HighlightDescription>
+          <span>You have</span>
+          <HighlightEmphasisInline> {holds.items.length} </HighlightEmphasisInline>
+          <span>{holds.text} on your student account.</span>
+          {holds.items.length > 0 && (
+            <HoldsList>{holds.items.map((h, i) => <li key={i}>{h.description}</li>)}</HoldsList>
+          )}
+        </HighlightDescription>
+      )}
     </Highlight>
   );
 };
