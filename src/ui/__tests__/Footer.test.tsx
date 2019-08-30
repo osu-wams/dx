@@ -33,7 +33,7 @@ test('Masquerade link should not be present if user is not an admin', async () =
   expect(maskLink).not.toBeInTheDocument();
 });
 
-test('Masquerade link is present and interactions can happen for administrators', async () => {
+test('Masquerade link is present for administrators and they can open and close the modal', async () => {
   const { getByText, getByTestId, queryByTestId } = renderWithUserContext(<Footer />);
 
   //Profile icon click - this text is visually hidden
@@ -52,7 +52,7 @@ test('Masquerade link is present and interactions can happen for administrators'
   expect(queryByTestId('masquerade-dialog')).toBeNull();
 });
 
-test('Masquerade link is present and  C?haNGE ME... for administrators', async () => {
+test('As an administrator, I can click "masquerade" and trigger the api calls', async () => {
   mockGetMasqueradeUser.mockResolvedValue(Promise.resolve({ masqueradeId: 'Testo' }));
   mockPostMasqueradeUser.mockResolvedValue(Promise.resolve({ masqueradeId: 'Testo Post' }));
 

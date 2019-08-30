@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
 import PageTitle from '../ui/PageTitle';
 import { CardBase } from '../ui/Card';
 import { theme } from '../theme';
@@ -19,6 +20,8 @@ const Resources = () => {
   const [resources, setResources] = useState<IResourceResult[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const [catLoading, setCatLoading] = useState<boolean>(true);
+  const [resLoading, setResLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let theCategoryId = defaultCategoryId;
@@ -33,6 +36,7 @@ const Resources = () => {
       .then((data: ICategory[]) => {
         fetchResourcesByCategory(theCategoryId);
         setCategories(data);
+        setCatLoading(false);
       })
       .catch(console.log);
   }, []);
@@ -40,6 +44,7 @@ const Resources = () => {
   const fetchResourcesByCategory = (category: string) => {
     getResourcesByCategory(category)
       .then((res: IResourceResult[]) => {
+        setResLoading(false);
         setResources(res);
         setSelectedCategory(category);
       })
@@ -52,6 +57,7 @@ const Resources = () => {
       {selectedCategory !== '' && (
         <>
           <ResourcesSearch setResources={setResources} setSelectedCategory={setSelectedCategory} />
+          {catLoading && <Skeleton />}
           <ResourcesCategories
             fetchResourcesByCategory={fetchResourcesByCategory}
             selectedCategory={selectedCategory}
@@ -59,11 +65,14 @@ const Resources = () => {
           />
         </>
       )}
-      {resources.length > 0 ? (
+      {resLoading && <Skeleton count={5} />}
+      {!resLoading && resources.length > 0 ? (
         <ResourcesList resources={resources} />
       ) : (
-        /* @TODO need mockup styling to do and messaging for no results */
-        <div>No results</div>
+        !resLoading && (
+          /* @TODO need mockup styling to do and messaging for no results */
+          <div>No results</div>
+        )
       )}
     </ResourcesWrapper>
   );

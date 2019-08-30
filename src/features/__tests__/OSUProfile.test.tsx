@@ -40,8 +40,9 @@ describe('<OSUProfile />', () => {
     mockGetPerson.mockResolvedValue(Promise.resolve(null));
     const { queryByText, getByText } = render(<OSUProfile />);
 
-    expect(getByText('Cannot find your information')).toBeInTheDocument();
-
+    await wait(() => {
+      expect(getByText('Cannot find your information')).toBeInTheDocument();
+    });
     await wait(() => {
       expect(queryByText('Testo Last')).not.toBeInTheDocument();
     });

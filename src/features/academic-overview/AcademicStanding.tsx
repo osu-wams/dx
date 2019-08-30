@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import {
   Highlight,
   HighlightTitle,
@@ -9,6 +10,7 @@ import { getAcademicStatus, AcademicStatus } from '../../api/student/academic-st
 
 export const AcademicStanding: React.FC = () => {
   const [academicStanding, setAcademicStanding] = useState('');
+  const [academicStandingLoading, setAcademicStandingLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getAcademicStatus()
@@ -16,6 +18,7 @@ export const AcademicStanding: React.FC = () => {
         if (res.academicStanding) {
           setAcademicStanding(res.academicStanding);
         }
+        setAcademicStandingLoading(false);
       })
       .catch(console.error);
   }, []);
@@ -23,15 +26,18 @@ export const AcademicStanding: React.FC = () => {
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Academic Standing</HighlightTitle>
-      <HighlightDescription>
-        {academicStanding && academicStanding ? (
-          <>
-            You are in <HighlightEmphasisInline>{academicStanding}</HighlightEmphasisInline>.
-          </>
-        ) : (
-          <>You have no current academic standing.</>
-        )}
-      </HighlightDescription>
+      {academicStandingLoading && <Skeleton />}
+      {!academicStandingLoading && (
+        <HighlightDescription>
+          {academicStanding.length > 0 ? (
+            <>
+              You are in <HighlightEmphasisInline>{academicStanding}</HighlightEmphasisInline>.
+            </>
+          ) : (
+            <>You have no current academic standing.</>
+          )}
+        </HighlightDescription>
+      )}
     </Highlight>
   );
 };
