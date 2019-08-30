@@ -4,7 +4,7 @@ import { theme } from '../../theme';
 import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from './index';
-import { InfoButtonContext } from '../../App';
+import { AppContext } from '../../App';
 import { InfoButtonState } from '../../api/info-buttons';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 
@@ -34,16 +34,16 @@ const DialogContent = styled.div`
 `;
 
 const InfoButton = props => {
-  const infoButtons = useContext(InfoButtonContext);
+  const appContext = useContext(AppContext);
   const [dialogVisible, toggleDialog] = useState(false);
   const [currentButton, setButton] = useState<InfoButtonState | null>(null);
 
   useEffect(() => {
-    const thisButton = infoButtons.find(i => i.id === props.infoButtonId);
+    const thisButton = appContext.infoButtonData.find(i => i.id === props.infoButtonId);
     if (thisButton) {
       setButton(thisButton);
     }
-  }, [infoButtons, props.infoButtonId]);
+  }, [appContext.infoButtonData, props.infoButtonId]);
 
   return currentButton ? (
     <>

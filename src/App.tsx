@@ -38,6 +38,10 @@ const RouteContainer = posed.div({
   exit: { opacity: 0 }
 });
 
+const initialAppContext: IAppContext = {
+  infoButtonData: []
+};
+
 interface User {
   email: String;
 }
@@ -46,15 +50,19 @@ interface AppProps {
   containerElement: HTMLElement;
 }
 
+export interface IAppContext {
+  infoButtonData: InfoButtonState[];
+}
+
 export const UserContext = React.createContext<any>(null);
-export const InfoButtonContext = React.createContext<InfoButtonState[]>([]);
+export const AppContext = React.createContext<IAppContext>(initialAppContext);
 
 const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
   props.pageComponent;
 
 const App = (props: AppProps) => {
   const [user, setUser] = useState<User | {}>({});
-  const [infoButtons, setInfoButtons] = useState<InfoButtonState[] | []>([]);
+  const [appContext, setAppContext] = useState<IAppContext>(initialAppContext);
   const containerElementRef = useRef(props.containerElement);
 
   useEffect(() => {
@@ -71,7 +79,7 @@ const App = (props: AppProps) => {
 
     getInfoButtons()
       .then((res: InfoButtonState[]) => {
-        setInfoButtons(res);
+        setAppContext((a: IAppContext) => ({ infoButtonData: res, ...a }));
       })
       .catch(console.error);
 
@@ -99,7 +107,7 @@ const App = (props: AppProps) => {
 
   return (
     <UserContext.Provider value={user}>
-      <InfoButtonContext.Provider value={infoButtons}>
+      <AppContext.Provider value={appContext}>
         <GlobalStyles />
         <Header />
         <Alerts />
@@ -123,7 +131,7 @@ const App = (props: AppProps) => {
           </Location>
         </ContentWrapper>
         <Footer />
-      </InfoButtonContext.Provider>
+      </AppContext.Provider>
     </UserContext.Provider>
   );
 };

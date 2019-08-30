@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import { Card, CardContent, CardHeader, CardFooter, Badge } from '../Card';
 import Button from '../Button';
 import { Color } from '../../theme';

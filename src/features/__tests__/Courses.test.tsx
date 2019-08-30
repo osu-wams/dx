@@ -1,12 +1,13 @@
 import React from 'react';
-import { render, fireEvent, waitForElement } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
 
 const mockGetCourseSchedule = jest.fn();
 
 jest.mock('../../api/student', () => ({
-  getCourseSchedule: () => mockGetCourseSchedule(),
+  getCourseSchedule: () => mockGetCourseSchedule()
 }));
 
 describe('<Courses />', () => {
