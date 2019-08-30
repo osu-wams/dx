@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Color } from '../../theme';
-import { Highlight, HighlightTitle, HighlightEmphasis, HighlightDescription } from '../../ui/Highlights';
+import {
+  Highlight,
+  HighlightTitle,
+  HighlightEmphasis,
+  HighlightDescription
+} from '../../ui/Highlights';
 import { getGpa } from '../../api/student';
 import { GpaLevel } from '../../api/student/gpa';
 
 export const StudentGpa: React.FC = () => {
-  const [ overallGpa, setOverallGpa ] = useState({
+  const [overallGpa, setOverallGpa] = useState({
     gpa: '',
     message: 'You must first complete a term to have an overall GPA.'
   });
-  const [ overallGpaLoading, setOverallGpaLoading ] = useState<boolean>(true);
+  const [overallGpaLoading, setOverallGpaLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getGpa()

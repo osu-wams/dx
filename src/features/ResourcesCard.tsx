@@ -6,7 +6,13 @@ import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card'
 import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
 import { Color, theme } from '../theme';
-import { getResourcesByCategory, getCategories, defaultCategoryId, IResourceResult, ICategory } from '../api/resources';
+import {
+  getResourcesByCategory,
+  getCategories,
+  defaultCategoryId,
+  IResourceResult,
+  ICategory
+} from '../api/resources';
 import { InternalLink } from '../ui/Link';
 
 const ResourcesContainer = styled(CardContent)`
@@ -20,18 +26,22 @@ const ResourceName = styled.div`
   padding-left: ${theme.spacing.unit * 2}px;
 `;
 
-const ResourceImg = styled.img`width: 3rem;`;
+const ResourceImg = styled.img`
+  width: 3rem;
+`;
 
 const ResourceIcon = styled(Icon)`
   height: auto;
 `;
 
 const getResources = (categ: string) =>
-  getCategoryId(categ).then((categoryId) =>
+  getCategoryId(categ).then(categoryId =>
     Promise.all([
       categoryId,
-      getResourcesByCategory(categoryId === 'all' ? 'all' : defaultCategoryId + ',' + categoryId).then((res) => res)
-    ]).then((res) => res[1])
+      getResourcesByCategory(
+        categoryId === 'all' ? 'all' : defaultCategoryId + ',' + categoryId
+      ).then(res => res)
+    ]).then(res => res[1])
   );
 
 const getCategoryId = (categ: string) =>
@@ -49,28 +59,25 @@ const getCategoryId = (categ: string) =>
  * Displays resources from a given set of categories
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
-  const [ resources, setResources ] = useState<IResourceResult[]>([]);
-  const [ resourcesLoading, setResourcesLoading ] = useState<boolean>(true);
-  const [ categoryId, setCategoryId ] = useState<any>('');
+  const [resources, setResources] = useState<IResourceResult[]>([]);
+  const [resourcesLoading, setResourcesLoading] = useState<boolean>(true);
+  const [categoryId, setCategoryId] = useState<any>('');
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
 
   // Populate resources and category ID
-  useEffect(
-    () => {
-      getResources(categ)
-        .then((data: IResourceResult[]) => {
-          setResources(data);
-          setResourcesLoading(false);
-        })
-        .catch(console.log);
-      getCategoryId(categ)
-        .then((data) => {
-          setCategoryId(data);
-        })
-        .catch(console.log);
-    },
-    [ categ ]
-  );
+  useEffect(() => {
+    getResources(categ)
+      .then((data: IResourceResult[]) => {
+        setResources(data);
+        setResourcesLoading(false);
+      })
+      .catch(console.log);
+    getCategoryId(categ)
+      .then(data => {
+        setCategoryId(data);
+      })
+      .catch(console.log);
+  }, [categ]);
 
   return (
     <Card>
@@ -79,7 +86,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
         {resourcesLoading && <Skeleton count={5} />}
         {resources.length ? (
           <List data-testid="resource-container">
-            {resources.map((resource) => (
+            {resources.map(resource => (
               <ListItem spaced key={resource.id}>
                 <ListItemContentLink spaced href={resource.uri} target="_blank">
                   {resource.icon !== undefined ? (
@@ -98,7 +105,9 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
       </ResourcesContainer>
       {categoryId !== '' && (
         <CardFooter>
-          <InternalLink to={`/resources?category=${categoryId}`}>See all {categ} resources</InternalLink>
+          <InternalLink to={`/resources?category=${categoryId}`}>
+            See all {categ} resources
+          </InternalLink>
         </CardFooter>
       )}
     </Card>

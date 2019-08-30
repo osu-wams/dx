@@ -113,8 +113,8 @@ const AcademicHistory = () => {
             </PlainCard>
           ))}
         </div>
-      ) : !gradesLoading && (
-        <div>No course history yet</div>
+      ) : (
+        !gradesLoading && <div>No course history yet</div>
       )}
     </>
   );
