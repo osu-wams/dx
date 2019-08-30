@@ -16,11 +16,6 @@ describe('<MealPlans />', () => {
     mockGetMealPlans.mockResolvedValue(Promise.resolve(mockMealPlans));
   });
 
-  it('should render the approriate title', async () => {
-    const { getByText } = render(<MealPlans />);
-    expect(getByText('No meal plans')).toBeInTheDocument();
-  });
-
   it('should have a $16.88 balance from our mock data', async () => {
     const { getByText } = render(<MealPlans />);
     await waitForElement(() => getByText('$16.88'));

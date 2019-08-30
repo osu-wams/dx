@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { isSameDay, format } from 'date-fns';
 import generateId from 'uuid/v4';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -22,8 +23,10 @@ import { Header, Card } from './schedule/ScheduleCardStyles';
 const ScheduleCard = () => {
   const nextFiveDays = getNextFiveDays();
   const [courses, setCourses] = useState<any[]>([]);
+  const [coursesLoading, setCoursesLoading] = useState<boolean>(true);
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const [plannerItems, setPlannerItems] = useState<any[]>([]);
+  const [plannerItemsLoading, setPlannerItemsLoading] = useState<boolean>(true);
   const [calEvents, setCalEvents] = useState<IEvents | []>([]);
   const user = useContext<any>(UserContext);
 
@@ -49,6 +52,7 @@ const ScheduleCard = () => {
           });
         });
         setCourses(_courses);
+        setCoursesLoading(false);
       })
       .catch(console.log);
   }, []);
@@ -57,6 +61,7 @@ const ScheduleCard = () => {
     getPlannerItems()
       .then(data => {
         setPlannerItems(data);
+        setPlannerItemsLoading(false);
       })
       .catch(console.log);
   }, []);
@@ -130,8 +135,12 @@ const ScheduleCard = () => {
         setSelectedDay={setSelectedDay}
         daysWithEvents={daysWithEvents}
       />
-      <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
-      <ScheduleCardCourses selectedCourses={selectedCourses} />
+      {plannerItemsLoading && <Skeleton count={4} />}
+      {!plannerItemsLoading && (
+        <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
+      )}
+      {coursesLoading && <Skeleton count={4} />}
+      {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
       <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
     </Card>
   );

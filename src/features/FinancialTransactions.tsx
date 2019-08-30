@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
@@ -58,6 +59,7 @@ const TransactionDetails = styled(TableCell)`
  */
 const FinancialTransactions: FC = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const isMounted = useRef(true);
 
   // Populate resources and category ID
@@ -67,6 +69,7 @@ const FinancialTransactions: FC = () => {
       .then((data: IAccountTransactions) => {
         if (isMounted.current) {
           setTransactions(data.attributes.transactions);
+          setLoading(false);
         }
       })
       .catch(console.log);
@@ -82,6 +85,7 @@ const FinancialTransactions: FC = () => {
         badge={<CardIcon icon={faMoneyBillWave} count={transactions.length} />}
       />
       <TransactionsContainer>
+        {loading && <Skeleton count={5} />}
         {transactions.length ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
             <TableHeader>
@@ -114,7 +118,7 @@ const FinancialTransactions: FC = () => {
             </TableBody>
           </TransactionsTable>
         ) : (
-          <EmptyState />
+          !loading && <EmptyState />
         )}
       </TransactionsContainer>
       <CardFooter infoButtonId="financial-transactions">

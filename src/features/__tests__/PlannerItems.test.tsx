@@ -20,4 +20,11 @@ describe('<PlannerItems />', () => {
     const { getByText } = render(<PlannerItems />);
     await waitForElement(() => getByText('Week 5 Lab Discussion'));
   });
+
+  it('should find "NO ASSIGNMENTS" if our promise returns empty', async () => {
+    mockGetPlannerItems.mockResolvedValue(Promise.resolve([]));
+    const { getByText } = render(<PlannerItems />);
+    const element = await waitForElement(() => getByText('NO ASSIGNMENTS'));
+    expect(element).toBeInTheDocument();
+  });
 });

@@ -20,7 +20,7 @@ describe('<ResourcesCard />', () => {
     mockGetCategories.mockResolvedValue(Promise.resolve(categoriesData.data));
   });
 
-  it('should render the approriate title', async () => {
+  it('should render the appropriate title', async () => {
     {
       const { getByText } = render(<ResourcesCard categ="financial" />);
       expect(getByText('Financial Resources')).toBeInTheDocument();

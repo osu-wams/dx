@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faCalendar } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
@@ -14,11 +15,15 @@ import Url from '../util/externalUrls.data';
  */
 const AcademicCalendar = () => {
   const [calEvents, setCalEvents] = useState<IEvents>([]);
+  const [calEventsLoading, setCalEventsLoading] = useState<boolean>(true);
 
   // Get Academic Calendar Events
   useEffect(() => {
     getAcademicCalendarEvents()
-      .then(setCalEvents)
+      .then(data => {
+        setCalEvents(data);
+        setCalEventsLoading(false);
+      })
       .catch(console.log);
   }, []);
 
@@ -30,6 +35,7 @@ const AcademicCalendar = () => {
       />
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
+        {calEventsLoading && <Skeleton count={5} />}
         {calEvents.length ? (
           <List>
             {calEvents.slice(0, 5).map(({ title, link, pubDate }) => (
@@ -47,7 +53,7 @@ const AcademicCalendar = () => {
             ))}
           </List>
         ) : (
-          <EmptyState />
+          !calEventsLoading && <EmptyState />
         )}
       </CardContent>
       <CardFooter infoButtonId="CHANGE-ME">

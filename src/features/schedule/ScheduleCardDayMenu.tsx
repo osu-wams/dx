@@ -75,4 +75,4 @@ const DayList = styled.div`
   align-items: baseline;
   border-bottom: 1px solid ${Color['neutral-200']};
   margin: 0 -1.6rem 1.6rem;
-=`;
+`;

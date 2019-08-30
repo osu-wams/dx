@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { getCourseSchedule } from './course-schedule';
 import { getGrades } from './grades';
+import { getGpa } from './gpa';
+import { getAccountHolds } from './holds';
 import { getAccountBalance } from './account-balance';
+import { getAcademicStatus } from './academic-status';
 import { getPlannerItems } from './planner-items';
 
 // Todo: Replace rest of API calls with properly-typed versions.
@@ -21,12 +24,15 @@ export interface ITransaction {
   transactionType: string;
 }
 
-export const getAcademicStatus = () =>
-  axios.get(`/api/student/academic-status`).then(res => res.data);
-
 export const getAccountTransactions = (): Promise<IAccountTransactions> =>
   axios.get('/api/student/account-transactions').then(res => res.data);
 
-export const getAccountHolds = () => axios.get('/api/student/holds').then(res => res.data);
-
-export { getGrades, getCourseSchedule, getAccountBalance, getPlannerItems };
+export {
+  getAccountHolds,
+  getAcademicStatus,
+  getGrades,
+  getCourseSchedule,
+  getAccountBalance,
+  getPlannerItems,
+  getGpa
+};

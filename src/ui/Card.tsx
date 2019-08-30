@@ -171,4 +171,52 @@ const CardIcon: FC<{ icon: IconDefinition; count?: number }> = ({ icon, count })
   );
 };
 
-export { Card, CardHeader, CardContent, CardFooter, Badge, CardIcon, CardBase };
+/**
+ * UI component intended to become full-width with a single flex column to fill
+ * a card in place of a CardContent component.
+ */
+const CardContentTable = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+interface ICardContentRow {
+  borderless?: boolean;
+}
+
+/**
+ * A row with an optional bottom border to establish a full width series of nested cells, intended to be
+ * used inside of a CardContentTable UI.
+ */
+const CardContentRow = styled.div<ICardContentRow>`
+  display: flex;
+  flex-direction: row;
+  background-color: ${Color.white};
+  overflow: hidden;
+  border-bottom: ${props => (props.borderless ? 'none' : `1px solid ${Color['neutral-200']}`)};
+`;
+
+/**
+ * A cell intended to be used inside of a CardContentRow UI.
+ */
+const CardContentCell = styled.div`
+  padding: ${theme.spacing.unit * 2}px;
+  flex-grow: 1;
+  flex-basis: 0;
+  & + div {
+    border-left: 1px solid ${Color['neutral-200']};
+  }
+`;
+
+export {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Badge,
+  CardIcon,
+  CardBase,
+  CardContentTable,
+  CardContentRow,
+  CardContentCell
+};
