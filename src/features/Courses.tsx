@@ -84,7 +84,7 @@ const Courses = () => {
           <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />
         )}
       </CardContent>
-      <CardFooter infoButtonId="CHANGE-ME">
+      <CardFooter infoButtonId="canvas">
         <ExternalLink href={Url.canvas.main} fg={Color['orange-400']}>
           View more in Canvas
         </ExternalLink>

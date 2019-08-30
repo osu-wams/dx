@@ -79,7 +79,9 @@ const App = (props: AppProps) => {
 
     getInfoButtons()
       .then((res: InfoButtonState[]) => {
-        setAppContext((a: IAppContext) => ({ infoButtonData: res, ...a }));
+        setAppContext((a: IAppContext) => {
+          return Object.assign({}, a, { infoButtonData: res });
+        });
       })
       .catch(console.error);
 
