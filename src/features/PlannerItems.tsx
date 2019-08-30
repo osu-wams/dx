@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
@@ -26,11 +27,15 @@ import { UserContext } from '../App';
 const PlannerItems = () => {
   const [plannerItems, setPlannerItems] = useState([]);
   const user = useContext<any>(UserContext);
+  const [plannerItemsLoading, setPlannerItemsLoading] = useState<boolean>(true);
 
   // Populate assignment data for current user
   useEffect(() => {
     getPlannerItems()
-      .then(setPlannerItems)
+      .then(data => {
+        setPlannerItems(data);
+        setPlannerItemsLoading(false);
+      })
       .catch(console.log);
   }, []);
 
@@ -44,6 +49,7 @@ const PlannerItems = () => {
         {/* Show upcoming assignments if any exist, otherwise show empty state. */}
         {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && <AuthorizeCanvas />}
 
+        {plannerItemsLoading && <Skeleton count={5} />}
         {plannerItems.length && user.isCanvasOptIn === true ? (
           <List>
             {plannerItems.map(
@@ -65,7 +71,7 @@ const PlannerItems = () => {
             )}
           </List>
         ) : (
-          user.isCanvasOptIn === true && <EmptyState />
+          !plannerItemsLoading && (user.isCanvasOptIn === true && <EmptyState />)
         )}
       </CardContent>
       <CardFooter>
@@ -80,6 +86,6 @@ const PlannerItems = () => {
 // <ListItemContent as="a" href={url} target="_blank">
 
 // Todo: Replace with actual empty state when ready in mockups.
-const EmptyState = () => <span>NO ASSIGNMENTS </span>;
+const EmptyState = () => <span>NO ASSIGNMENTS</span>;
 
 export default PlannerItems;

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, FC } from 'react';
+import React, { useState, useEffect, FC } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import { faCube, IconDefinition } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
@@ -43,36 +44,30 @@ const getCategoryId = (categ: string) =>
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
   const [resources, setResources] = useState<IResourceResult[]>([]);
+  const [resourcesLoading, setResourcesLoading] = useState<boolean>(true);
   const [categoryId, setCategoryId] = useState<any>('');
-  const isMounted = useRef(true);
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
 
   // Populate resources and category ID
   useEffect(() => {
-    isMounted.current = true;
     getResourcesByQueue(categ)
       .then((data: IResourceResult[]) => {
-        if (isMounted.current) {
-          setResources(data);
-        }
+        setResources(data);
+        setResourcesLoading(false);
       })
       .catch(console.log);
     getCategoryId(categ)
       .then(data => {
-        if (isMounted.current) {
-          setCategoryId(data);
-        }
+        setCategoryId(data);
       })
       .catch(console.log);
-    return () => {
-      isMounted.current = false;
-    };
   }, [categ]);
 
   return (
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} count={resources.length} />} />
       <ResourcesContainer>
+        {resourcesLoading && <Skeleton count={5} />}
         {resources.length ? (
           <List data-testid="resource-container">
             {resources.map(resource => (
@@ -89,7 +84,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
             ))}
           </List>
         ) : (
-          <EmptyState />
+          !resourcesLoading && <EmptyState />
         )}
       </ResourcesContainer>
       {categoryId !== '' && (

@@ -19,7 +19,7 @@ const getStudentExperienceEvents = () =>
     .get('/api/events', {
       params: {
         type: 115613,
-        days: 7
+        days: 30
       }
     })
     .then(res => res.data);

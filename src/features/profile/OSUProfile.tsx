@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faEnvelope, faMapMarkerAlt, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
+import Skeleton from 'react-loading-skeleton';
 import { theme, Color } from '../../theme';
 import { formatPhone } from '../../util/helpers';
 import Icon from '../../ui/Icon';
@@ -11,10 +12,13 @@ import PlainCard from '../../ui/PlainCard';
 
 const OSUProfile = () => {
   const [person, setPerson] = useState<IPersons | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
     getPerson()
       .then(data => {
         setPerson(data);
+        setLoading(false);
       })
       .catch(console.log);
   }, []);
@@ -30,7 +34,9 @@ const OSUProfile = () => {
 
   return (
     <PlainCard title="OSU Profile">
-      {person && Object.keys(person).length ? (
+      {loading && <Skeleton count={6} />}
+      {!loading && !person && <p>Cannot find your information</p>}
+      {person && Object.keys(person).length && (
         <>
           <PersonName>
             {person.attributes.firstName} {person.attributes.lastName}
@@ -77,8 +83,6 @@ const OSUProfile = () => {
             )}
           </ContactInfo>
         </>
-      ) : (
-        <p>Cannot find your information</p>
       )}
     </PlainCard>
   );

@@ -1,4 +1,7 @@
 const Url = {
+  myDegrees: {
+    main: 'https://myosu.oregonstate.edu/'
+  },
   canvas: {
     main: 'https://oregonstate.instructure.com'
   },

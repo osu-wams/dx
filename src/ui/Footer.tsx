@@ -16,7 +16,7 @@ import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 
 const FooterWrapper = styled.div`
   width: 100%;
-  background-color: ${Color['neutral-700']};
+  background-color: ${Color.black};
   padding: 1.6rem;
   color: ${Color.white};
   display: flex;

@@ -1,25 +1,8 @@
 import React from 'react';
-import { render as rtlRender, waitForElement } from '@testing-library/react';
+import { waitForElement } from '@testing-library/react';
+import { renderWithUserContext } from '../../util/test-utils';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import PlannerItems from '../PlannerItems';
-
-import { UserContext } from '../../App';
-
-const auth = {
-  osuId: '123',
-  email: 'testo@oregonstate.edu',
-  firstName: 'Testo',
-  lastName: 'LastTesto',
-  isAdmin: true,
-  isCanvasOptIn: true
-};
-
-function render(ui, { user = auth, ...options } = {}) {
-  function Wrapper(props) {
-    return <UserContext.Provider value={user} {...props} />;
-  }
-  return rtlRender(ui, { wrapper: Wrapper, ...options });
-}
 
 const mockGetPlannerItems = jest.fn();
 
@@ -34,7 +17,14 @@ describe('<PlannerItems />', () => {
   });
 
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
-    const { getByText } = render(<PlannerItems />);
+    const { getByText } = renderWithUserContext(<PlannerItems />);
     await waitForElement(() => getByText('Week 5 Lab Discussion'));
+  });
+
+  it('should find "NO ASSIGNMENTS" if our promise returns empty', async () => {
+    mockGetPlannerItems.mockResolvedValue(Promise.resolve([]));
+    const { getByText } = renderWithUserContext(<PlannerItems />);
+    const element = await waitForElement(() => getByText('NO ASSIGNMENTS'));
+    expect(element).toBeInTheDocument();
   });
 });
