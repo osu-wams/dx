@@ -14,13 +14,13 @@ import Url from '../util/externalUrls.data';
  * Displays upcoming events from Localist.
  */
 const AcademicCalendar = () => {
-  const [ calEvents, setCalEvents ] = useState<IEvents>([]);
-  const [ calEventsLoading, setCalEventsLoading ] = useState<boolean>(true);
+  const [calEvents, setCalEvents] = useState<IEvents>([]);
+  const [calEventsLoading, setCalEventsLoading] = useState<boolean>(true);
 
   // Get Academic Calendar Events
   useEffect(() => {
     getAcademicCalendarEvents()
-      .then((data) => {
+      .then(data => {
         setCalEvents(data);
         setCalEventsLoading(false);
       })
