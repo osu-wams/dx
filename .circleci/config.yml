@@ -45,7 +45,7 @@ jobs:
           command: yarn run lint
       - run:
           name: Run Tests
-          command: yarn run test:coverage
+          command: yarn run test:coverage -w 1
       - run:
           name: Report to CodeCov
           command: npx codecov@3
