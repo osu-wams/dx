@@ -6,13 +6,7 @@ import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card'
 import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
 import { Color, theme } from '../theme';
-import {
-  getResourcesByCategory,
-  getCategories,
-  defaultCategoryId,
-  IResourceResult,
-  ICategory
-} from '../api/resources';
+import { getCategories, IResourceResult, ICategory, getResourcesByQueue } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 
 const ResourcesContainer = styled(CardContent)`
@@ -33,16 +27,6 @@ const ResourceImg = styled.img`
 const ResourceIcon = styled(Icon)`
   height: auto;
 `;
-
-const getResources = (categ: string) =>
-  getCategoryId(categ).then(categoryId =>
-    Promise.all([
-      categoryId,
-      getResourcesByCategory(
-        categoryId === 'all' ? 'all' : defaultCategoryId + ',' + categoryId
-      ).then(res => res)
-    ]).then(res => res[1])
-  );
 
 const getCategoryId = (categ: string) =>
   getCategories().then((res: ICategory[]): string => {
@@ -66,7 +50,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
 
   // Populate resources and category ID
   useEffect(() => {
-    getResources(categ)
+    getResourcesByQueue(categ)
       .then((data: IResourceResult[]) => {
         setResources(data);
         setResourcesLoading(false);
