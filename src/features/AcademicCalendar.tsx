@@ -56,7 +56,7 @@ const AcademicCalendar = () => {
           !calEventsLoading && <EmptyState />
         )}
       </CardContent>
-      <CardFooter>
+      <CardFooter infoButtonId="CHANGE-ME">
         <ExternalLink href={Url.events.academicCalendar}>View academic calendar</ExternalLink>
       </CardFooter>
     </Card>

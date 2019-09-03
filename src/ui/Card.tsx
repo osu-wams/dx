@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 import { faChevronDown, faChevronUp, IconDefinition } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
+import { InfoButton } from './Button';
 import { Color, shadows, theme } from '../theme';
 import useMediaQuery from '../util/useMediaQuery';
 
@@ -109,7 +110,12 @@ const CardContentWrapper = styled.div<ICollapse>`
 
 const CardFooter = ({ ...props }) => {
   const { collapsed, collapsible } = useContext(CardContext);
-  return <CardFooterWrapper collapsed={collapsed} collapsible={collapsible} {...props} />;
+  return (
+    <CardFooterWrapper collapsed={collapsed} collapsible={collapsible} {...props}>
+      <InfoButton infoButtonId={props.infoButtonId} />
+      {props.children}
+    </CardFooterWrapper>
+  );
 };
 
 const CardFooterWrapper = styled.div<ICollapse>`

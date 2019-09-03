@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
+import { waitForElement } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import AcademicStanding from '../academic-overview/AcademicStanding';
 
 const mockGetAcademicStatus = jest.fn();

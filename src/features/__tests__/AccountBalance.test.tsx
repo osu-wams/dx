@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
+import { waitForElement } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
 import AccountBalance from '../AccountBalance';
 

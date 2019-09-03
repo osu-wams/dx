@@ -15,6 +15,7 @@ import BetaDashboard from './pages/BetaDashboard';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
+import { getInfoButtons, InfoButtonState } from './api/info-buttons';
 
 const Router = styled(ReachRouter)`
   padding: ${theme.spacing.unit * 2}px;
@@ -37,6 +38,10 @@ const RouteContainer = posed.div({
   exit: { opacity: 0 }
 });
 
+const initialAppContext: IAppContext = {
+  infoButtonData: []
+};
+
 interface User {
   email: String;
 }
@@ -45,13 +50,19 @@ interface AppProps {
   containerElement: HTMLElement;
 }
 
+export interface IAppContext {
+  infoButtonData: InfoButtonState[];
+}
+
 export const UserContext = React.createContext<any>(null);
+export const AppContext = React.createContext<IAppContext>(initialAppContext);
 
 const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
   props.pageComponent;
 
 const App = (props: AppProps) => {
   const [user, setUser] = useState<User | {}>({});
+  const [appContext, setAppContext] = useState<IAppContext>(initialAppContext);
   const containerElementRef = useRef(props.containerElement);
 
   useEffect(() => {
@@ -65,6 +76,14 @@ const App = (props: AppProps) => {
       .catch(() => {
         window.location.href = '/login';
       });
+
+    getInfoButtons()
+      .then((res: InfoButtonState[]) => {
+        setAppContext((a: IAppContext) => {
+          return Object.assign({}, a, { infoButtonData: res });
+        });
+      })
+      .catch(console.error);
 
     // Manage focus styles on keyboard navigable elements.
     //   - Add focus styles if tab used to navigate.
@@ -90,29 +109,31 @@ const App = (props: AppProps) => {
 
   return (
     <UserContext.Provider value={user}>
-      <GlobalStyles />
-      <Header />
-      <Alerts />
-      <ContentWrapper>
-        <Location>
-          {({ location }) => (
-            <PoseGroup>
-              <RouteContainer key={location.key} style={{ width: '100%' }}>
-                <Router location={location}>
-                  <RouterPage path="/" pageComponent={<Dashboard />} />
-                  <RouterPage path="profile" pageComponent={<Profile />} />
-                  <RouterPage path="academics/*" pageComponent={<Academics />} />
-                  <RouterPage path="finances" pageComponent={<Finances />} />
-                  <RouterPage path="resources" pageComponent={<Resources />} />
-                  <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                  <RouterPage default pageComponent={<PageNotFound />} />
-                </Router>
-              </RouteContainer>
-            </PoseGroup>
-          )}
-        </Location>
-      </ContentWrapper>
-      <Footer />
+      <AppContext.Provider value={appContext}>
+        <GlobalStyles />
+        <Header />
+        <Alerts />
+        <ContentWrapper>
+          <Location>
+            {({ location }) => (
+              <PoseGroup>
+                <RouteContainer key={location.key} style={{ width: '100%' }}>
+                  <Router location={location}>
+                    <RouterPage path="/" pageComponent={<Dashboard />} />
+                    <RouterPage path="profile" pageComponent={<Profile />} />
+                    <RouterPage path="academics/*" pageComponent={<Academics />} />
+                    <RouterPage path="finances" pageComponent={<Finances />} />
+                    <RouterPage path="resources" pageComponent={<Resources />} />
+                    <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                    <RouterPage default pageComponent={<PageNotFound />} />
+                  </Router>
+                </RouteContainer>
+              </PoseGroup>
+            )}
+          </Location>
+        </ContentWrapper>
+        <Footer />
+      </AppContext.Provider>
     </UserContext.Provider>
   );
 };

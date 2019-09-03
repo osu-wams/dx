@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
+import { waitForElement } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import StudentHolds from '../academic-overview/StudentHolds';
 
 const mockGetAccountHolds = jest.fn();

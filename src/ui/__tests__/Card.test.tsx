@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import { Card, CardContent, CardHeader, CardFooter, Badge } from '../Card';
 import Button from '../Button';
 import { Color } from '../../theme';
@@ -15,7 +16,7 @@ const StandardCard = () => (
       badge={<Badge color={Color['orange-400']}>{4}</Badge>}
     />
     <CardContent data-testid="StandardCardContent">Content</CardContent>
-    <CardFooter>
+    <CardFooter infoButtonId="blah">
       <Button>View all</Button>
     </CardFooter>
   </Card>
@@ -25,7 +26,7 @@ const CardNoBadge = () => (
   <Card data-testid="CardNoBadge">
     <CardHeader data-testid="CardNoBadgeHeader" title="Header" />
     <CardContent>Content</CardContent>
-    <CardFooter>
+    <CardFooter infoButtonId="blah">
       <Button>View all</Button>
     </CardFooter>
   </Card>

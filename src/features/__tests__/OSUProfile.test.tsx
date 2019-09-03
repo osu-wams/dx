@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, wait, waitForElement } from '@testing-library/react';
+import { wait, waitForElement } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import { personsMailingAddressData } from '../../api/persons/__mocks__/addresses.data';
 import { personsData } from '../../api/persons/__mocks__/person.data';
 import OSUProfile from '../profile/OSUProfile';

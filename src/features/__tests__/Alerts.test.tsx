@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, waitForElement } from '@testing-library/react';
+import { waitForElement } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import { raveAlerts, dxAlerts } from '../../api/__mocks__/alerts.data';
 import Alerts from '../Alerts';
 

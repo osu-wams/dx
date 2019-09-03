@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import Resources from '../Resources';
 
 test('renders', () => {
