@@ -22,18 +22,19 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-v2-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-v2-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - node_modules
       - persist_to_workspace:
           root: /home/circleci
-          paths: project
+          paths:
+            - project
 
   lint_test_coverage:
     executor: node-executor
@@ -45,13 +46,14 @@ jobs:
           command: yarn run lint
       - run:
           name: Run Tests
-          command: yarn run test:coverage
+          command: yarn run test:coverage -w 1
       - run:
           name: Report to CodeCov
           command: npx codecov@3
       - persist_to_workspace:
           root: /home/circleci
-          paths: project
+          paths:
+            - project
 
   build_client: &build_client
     executor: node-executor
@@ -63,7 +65,8 @@ jobs:
           command: yarn run build
       - persist_to_workspace:
           root: /home/circleci
-          paths: project/build
+          paths:
+            - project
 
   build_client-dev:
     <<: *build_client
