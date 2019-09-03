@@ -60,3 +60,29 @@ describe('<ResourcesCard />', () => {
     await waitForElement(() => getByText('No resources available.'));
   });
 });
+
+describe('with an InfoButton in the CardFooter', () => {
+  const validIinfoButtonId = 'CHANGE-ME';
+
+  test('does not display the button when the infoButtonData is missing it', async () => {
+    const { queryByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
+      appContext: {
+        infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
+      }
+    });
+
+    const element = queryByTestId(validIinfoButtonId);
+    expect(element).not.toBeInTheDocument();
+  });
+
+  test('displays the button when the infoButtonData is included', async () => {
+    const { getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
+      appContext: {
+        infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
+      }
+    });
+
+    const element = await waitForElement(() => getByTestId(validIinfoButtonId));
+    expect(element).toBeInTheDocument();
+  });
+});

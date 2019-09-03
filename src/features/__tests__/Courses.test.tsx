@@ -62,3 +62,29 @@ test('Course spells out the month and day "december 6" for Final exams', async (
   // For Final exams we spell out the month and day
   expect(courseDialog).toHaveTextContent(/december 6/i);
 });
+
+describe('with an InfoButton in the CardFooter', () => {
+  const validIinfoButtonId = 'canvas';
+
+  test('does not display the button when the infoButtonData is missing it', async () => {
+    const { queryByTestId } = render(<Courses />, {
+      appContext: {
+        infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
+      }
+    });
+
+    const element = queryByTestId(validIinfoButtonId);
+    expect(element).not.toBeInTheDocument();
+  });
+
+  test('displays the button when the infoButtonData is included', async () => {
+    const { getByTestId } = render(<Courses />, {
+      appContext: {
+        infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
+      }
+    });
+
+    const element = await waitForElement(() => getByTestId(validIinfoButtonId));
+    expect(element).toBeInTheDocument();
+  });
+});

@@ -48,6 +48,7 @@ const InfoButton = props => {
   return currentButton ? (
     <>
       <InfoButtonIcon
+        data-testid={props.infoButtonId}
         icon={faInfoCircle}
         onClick={(e: React.MouseEvent<HTMLElement>) => toggleDialog(true)}
       />

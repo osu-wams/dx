@@ -8,9 +8,7 @@ Add it to your .bashrc .zshrc or preferred file of choice.
 
 ## Setup for Local Development OAuth flow
 
-- Install db-migrate globally `npm i -g db-migrate`
-- Go to the server directory and run `docker-compose up -d`
-  - You need docker installed on your machine if you don't (https://www.docker.com/)
+- Go to the server directory and read its README
 - Edit /etc/hosts file
   - Add `127.0.0.1 dev.my.oregonstate.edu` to the end of file
 - Run `export NODE_ENV=production`
