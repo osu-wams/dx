@@ -52,7 +52,7 @@ const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
           )}
         {user.isCanvasOptIn && selectedPlannerItems.length === 0 && (
           <NoItems>
-            <NoItemsImage src={assignment} />
+            <NoItemsImage src={assignment} alt="" />
             <NoItemsText>No Canvas assignments due today</NoItemsText>
           </NoItems>
         )}
