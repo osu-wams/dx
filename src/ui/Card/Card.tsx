@@ -2,10 +2,10 @@ import React, { useState, useContext, FC } from 'react';
 import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 import { faChevronDown, faChevronUp, IconDefinition } from '@fortawesome/pro-light-svg-icons';
-import Icon from './Icon';
-import { InfoButton } from './Button';
-import { Color, shadows, theme } from '../theme';
-import useMediaQuery from '../util/useMediaQuery';
+import Icon from '../Icon';
+import { InfoButton } from '../Button';
+import { Color, shadows, theme } from '../../theme';
+import useMediaQuery from '../../util/useMediaQuery';
 
 const CardContext = React.createContext<any>(null);
 
