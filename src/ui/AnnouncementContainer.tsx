@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getAnnouncements } from '../api/announcements';
 import EventCard from './EventCard';
@@ -16,41 +16,22 @@ const AnnouncementContainerWrapper = styled.div`
 
 const AnnouncementContainer = ({ type, ...props }) => {
   const [events, setEvents] = useState<any>([]);
-  const isMounted = useRef(true);
 
   // Fetch data on load
   useEffect(() => {
-    isMounted.current = true;
+    let isMounted = true;
     getAnnouncements(type)
       .then(data => {
-        if (isMounted.current) {
-          const newAnnounce = item => {
-            const action = item.attributes.field_announcement_action
-              ? {
-                  title: item.attributes.field_announcement_action.title,
-                  link: item.attributes.field_announcement_action.uri
-                }
-              : {
-                  title: null,
-                  link: null
-                };
-            return {
-              id: item.id,
-              title: item.attributes.title,
-              body: item.attributes.field_announcement_body,
-              bg_image: item.attributes.background_image,
-              action
-            };
-          };
+        if (isMounted) {
           for (let i = 0; i < data.length; i++) {
-            setEvents(prevEvents => [...prevEvents, newAnnounce(data[i])]);
+            setEvents(prevEvents => [...prevEvents, data[i]]);
           }
         }
       })
       .catch(console.log);
 
     return () => {
-      isMounted.current = false;
+      isMounted = false;
     };
   }, [type]);
 

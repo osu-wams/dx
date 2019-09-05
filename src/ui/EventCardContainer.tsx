@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getAnnouncements } from '../api/announcements';
 import { getStudentExperienceEvents } from '../api/events';
@@ -17,34 +17,14 @@ const EventCardContainerWrapper = styled.div`
 
 const EventCardContainer = ({ ...props }) => {
   const [events, setEvents] = useState<any>([]);
-  const isMounted = useRef(true);
 
   // Fetch data on load
   useEffect(() => {
-    isMounted.current = true;
+    let isMounted = true;
 
     Promise.all([getAnnouncements(''), getStudentExperienceEvents()])
       .then(promises => {
-        if (isMounted.current) {
-          const newAnnounce = item => {
-            const action = item.attributes.field_announcement_action
-              ? {
-                  title: item.attributes.field_announcement_action.title,
-                  link: item.attributes.field_announcement_action.uri
-                }
-              : {
-                  title: null,
-                  link: null
-                };
-            return {
-              id: item.id,
-              date: null,
-              title: item.attributes.title,
-              body: item.attributes.field_announcement_body,
-              bg_image: item.attributes.background_image,
-              action
-            };
-          };
+        if (isMounted) {
           const newLocalist = item => {
             return {
               id: item.event.event_instances[0].event_instance.id,
@@ -59,11 +39,7 @@ const EventCardContainer = ({ ...props }) => {
             };
           };
           for (let i = 0; i < Math.min(promises[0].length, promises[1].length); i++) {
-            setEvents(prevEvents => [
-              ...prevEvents,
-              newAnnounce(promises[0][i]),
-              newLocalist(promises[1][i])
-            ]);
+            setEvents(prevEvents => [...prevEvents, promises[0][i], newLocalist(promises[1][i])]);
           }
           if (promises[0].length < promises[1].length) {
             for (let i = promises[0].length; i < promises[1].length; i++) {
@@ -71,7 +47,7 @@ const EventCardContainer = ({ ...props }) => {
             }
           } else if (promises[0].length > promises[1].length) {
             for (let i = promises[1].length; i < promises[0].length; i++) {
-              setEvents(prevEvents => [...prevEvents, newAnnounce(promises[0][i])]);
+              setEvents(prevEvents => [...prevEvents, promises[0][i]]);
             }
           }
         }
@@ -79,7 +55,7 @@ const EventCardContainer = ({ ...props }) => {
       .catch(console.log);
 
     return () => {
-      isMounted.current = false;
+      isMounted = false;
     };
   }, []);
 
