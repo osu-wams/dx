@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Icon from '../Icon';
 import {ICollapse} from './ICollapse';
 import {theme, Color} from '../../theme';
-import {CardContext} from './index';
+import {CardContext} from './Card';
 
 const CardHeader: FC<{ title: string; badge?: any }> = ({title, badge, ...props }) => {
   const { collapsed, toggleCollapsed, collapsible, uuid } = useContext(CardContext);

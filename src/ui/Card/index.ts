@@ -1,7 +1,6 @@
-import React from 'react';
-import Card from './Card';
+import { Card, CardContext } from './Card';
 import CardIcon from './CardIcon';
-import CardFooter from './CardFooter';
+import CardFooter, { StaticCardFooter } from './CardFooter';
 import CardContent from './CardContent';
 import CardHeader from './CardHeader';
 import {
@@ -11,8 +10,6 @@ import {
   CardContentRow,
   CardContentTable
 } from './StyledCardComponents';
-
-const CardContext = React.createContext<any>(null);
 
 export {
   Card,
@@ -25,5 +22,6 @@ export {
   CardContentTable,
   CardContentRow,
   CardContentCell,
-  CardContext
+  CardContext,
+  StaticCardFooter
 };

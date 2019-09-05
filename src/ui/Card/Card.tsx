@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import uuidv4 from 'uuid/v4';
 import useMediaQuery from '../../util/useMediaQuery';
 import { CardBase } from './StyledCardComponents';
-import {CardContext} from './index';
+
+const CardContext = React.createContext<any>(null);
 
 const Card = ({ children, ...props }) => {
   // Generate a UUID for linking header to controlled content
@@ -20,4 +21,4 @@ const Card = ({ children, ...props }) => {
   );
 };
 
-export default Card;
+export {Card, CardContext};

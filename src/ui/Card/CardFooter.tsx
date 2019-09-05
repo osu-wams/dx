@@ -1,17 +1,34 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { InfoButton } from '../Button';
-import {theme} from '../../theme';
-import {ICollapse} from './ICollapse';
-import {CardContext} from './index';
+import { theme } from '../../theme';
+import { ICollapse } from './ICollapse';
+import { CardContext } from './Card';
 
 const CardFooter = ({ ...props }) => {
   const { collapsed, collapsible } = useContext(CardContext);
-  return (
+
+  return props.children || props.infoButtonId ? (
     <CardFooterWrapper collapsed={collapsed} collapsible={collapsible} {...props}>
       <InfoButton infoButtonId={props.infoButtonId} />
       {props.children}
     </CardFooterWrapper>
+  ) : (
+    <></>
+  );
+};
+
+/**
+ * Non Collapsible footer
+ */
+const StaticCardFooter = ({ ...props }) => {
+  return props.children || props.infoButtonId ? (
+    <CardFooterWrapper collapsed={false} collapsible={false} {...props}>
+      <InfoButton infoButtonId={props.infoButtonId} />
+      {props.children}
+    </CardFooterWrapper>
+  ) : (
+    <></>
   );
 };
 
@@ -36,3 +53,4 @@ const CardFooterWrapper = styled.div<ICollapse>`
 `;
 
 export default CardFooter;
+export { StaticCardFooter };
