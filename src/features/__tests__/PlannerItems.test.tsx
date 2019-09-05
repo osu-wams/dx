@@ -30,7 +30,7 @@ describe('<PlannerItems />', () => {
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  const validIinfoButtonId = 'CHANGE-ME';
+  const validIinfoButtonId = 'canvas';
 
   test('does not display the button when the infoButtonData is missing it', async () => {
     const { queryByTestId } = render(<PlannerItems />, {
