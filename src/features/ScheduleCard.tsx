@@ -145,7 +145,7 @@ const ScheduleCard = () => {
         {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
         <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} /> 
       </div>
-      <StaticCardFooter infoButtonId="CHANGE-ME"></StaticCardFooter>
+      <StaticCardFooter infoButtonId="academic-calendar"></StaticCardFooter>
     </Card>
   );
 };

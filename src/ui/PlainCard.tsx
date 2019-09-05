@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { CardBase } from '../ui/Card';
+import { CardBase, StaticCardFooter } from '../ui/Card';
 import { theme, Color } from '../theme';
 
 const Card = styled(CardBase)`
@@ -18,6 +18,7 @@ const PlainCard: FC<{ title: string }> = ({ title, children, ...props }) => {
     <Card {...props}>
       <Header>{title}</Header>
       {children}
+      <StaticCardFooter></StaticCardFooter>
     </Card>
   );
 };
