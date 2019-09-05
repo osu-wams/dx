@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getAnnouncements } from '../api/announcements';
 import { getStudentExperienceEvents } from '../api/events';
@@ -17,15 +17,14 @@ const EventCardContainerWrapper = styled.div`
 
 const EventCardContainer = ({ ...props }) => {
   const [events, setEvents] = useState<any>([]);
-  const isMounted = useRef(true);
 
   // Fetch data on load
   useEffect(() => {
-    isMounted.current = true;
+    let isMounted = true;
 
     Promise.all([getAnnouncements(''), getStudentExperienceEvents()])
       .then(promises => {
-        if (isMounted.current) {
+        if (isMounted) {
           const newAnnounce = item => {
             const action = item.attributes.field_announcement_action
               ? {
@@ -79,7 +78,8 @@ const EventCardContainer = ({ ...props }) => {
       .catch(console.log);
 
     return () => {
-      isMounted.current = false;
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
     };
   }, []);
 

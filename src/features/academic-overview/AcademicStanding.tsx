@@ -13,14 +13,22 @@ export const AcademicStanding: React.FC = () => {
   const [academicStandingLoading, setAcademicStandingLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    let isMounted = true;
     getAcademicStatus()
       .then((res: AcademicStatus) => {
-        if (res.academicStanding) {
-          setAcademicStanding(res.academicStanding);
+        if (isMounted) {
+          if (res.academicStanding) {
+            setAcademicStanding(res.academicStanding);
+          }
+          setAcademicStandingLoading(false);
         }
-        setAcademicStandingLoading(false);
       })
       .catch(console.error);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   return (

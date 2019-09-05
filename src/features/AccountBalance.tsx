@@ -17,12 +17,20 @@ const AccountBalance: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    let isMounted = true;
     getAccountBalance()
       .then(res => {
-        setAccountBalance(res.attributes);
-        setLoading(false);
+        if (isMounted) {
+          setAccountBalance(res.attributes);
+          setLoading(false);
+        }
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   return (

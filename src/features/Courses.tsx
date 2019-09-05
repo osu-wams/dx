@@ -32,11 +32,17 @@ const Courses = () => {
 
   // Populate user courses
   useEffect(() => {
+    let isMounted = true;
     getCourseSchedule()
       .then(res => {
-        setCourses(res);
+        isMounted && setCourses(res);
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   if (!courses.length) {

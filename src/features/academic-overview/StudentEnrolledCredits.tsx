@@ -14,14 +14,22 @@ export const StudentEnrolledCredits: React.FC = () => {
   const [enrolledCreditsLoading, setEnrolledCreditsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    let isMounted = true;
     getAcademicStatus()
       .then((res: AcademicStatus) => {
-        if (res.creditHoursAttempted) {
-          setEnrolledCredits(res.creditHoursAttempted);
+        if (isMounted) {
+          if (res.creditHoursAttempted) {
+            setEnrolledCredits(res.creditHoursAttempted);
+          }
+          setEnrolledCreditsLoading(false);
         }
-        setEnrolledCreditsLoading(false);
       })
       .catch(console.error);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   return (
