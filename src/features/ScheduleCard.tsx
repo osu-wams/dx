@@ -14,6 +14,7 @@ import {
   ScheduleCardAcademicCalendar
 } from './schedule';
 import { Header, Card } from './schedule/ScheduleCardStyles';
+import { StaticCardFooter } from '../ui/Card';
 
 /**
  * Course Schedule Card
@@ -142,8 +143,9 @@ const ScheduleCard = () => {
         )}
         {coursesLoading && <Skeleton count={4} />}
         {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
-        <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
+        <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} /> 
       </div>
+      <StaticCardFooter infoButtonId="academic-calendar"></StaticCardFooter>
     </Card>
   );
 };

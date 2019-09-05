@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon } from '../../ui/Card';
+import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 
 const BetaInfo: FC = () => {
   return (
@@ -9,6 +9,7 @@ const BetaInfo: FC = () => {
       <CardContent>
         <DashboardBetaInfo />
       </CardContent>
+      <CardFooter></CardFooter>
     </Card>
   );
 };

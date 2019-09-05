@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Icon from '../../ui/Icon';
 import { faCogs, faUserHeadset, faCommentAltLines, faExternalLink } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon } from '../../ui/Card';
+import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import { Color } from '../../theme';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../../ui/List';
 
@@ -40,6 +40,7 @@ const BetaResources: FC = () => {
           </ListItem>
         </List>
       </CardContent>
+      <CardFooter></CardFooter>
     </Card>
   );
 };
