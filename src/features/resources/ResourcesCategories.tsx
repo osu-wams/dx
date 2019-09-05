@@ -10,7 +10,7 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
       {categories.length > 0 && (
         <>
           <CustomBtn
-            icon="http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/th.svg"
+            icon="https://data.dx.oregonstate.edu/sites/default/files/2019-05/th.svg"
             text="All"
             id="all"
             name="categories"
