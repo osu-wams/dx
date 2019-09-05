@@ -6,7 +6,7 @@ import {
   CardContentTable,
   CardContentRow,
   CardContentCell,
-  CardFooter,
+  StaticCardFooter,
   CardIcon
 } from '../ui/Card';
 import { AcademicStanding } from './academic-overview/AcademicStanding';
@@ -19,7 +19,7 @@ import { ExternalLink } from '../ui/Link';
 
 export const AcademicOverview = () => {
   return (
-    <Card>
+    <Card collapsing={false}>
       <CardHeader title="Academic Overview" badge={<CardIcon icon={faAnalytics} />} />
       <CardContentTable>
         <CardContentRow className="row-span-1">
@@ -37,11 +37,11 @@ export const AcademicOverview = () => {
           </CardContentCell>
         </CardContentRow>
       </CardContentTable>
-      <CardFooter infoButtonId="academic-overview">
+      <StaticCardFooter infoButtonId="academic-overview">
         <ExternalLink href={Url.myDegrees.main} fg={Color['orange-400']}>
           See more in MyDegrees
         </ExternalLink>
-      </CardFooter>
+      </StaticCardFooter>
     </Card>
   );
 };
