@@ -33,45 +33,67 @@ const ScheduleCard = () => {
 
   // Populate user courses
   useEffect(() => {
+    let isMounted = true;
     getCourseSchedule()
       .then(data => {
         // Course data has individual meeting times (recitation, lab, lecture, etc.)
         // as an array in attributes. We actually want a list of meeting times, but still
         // need other relevant course data. Transform data prior to setting state.
-        const _courses: any = [];
-        data.forEach(item => {
-          const {
-            attributes: { meetingTimes, ...otherAttributes }
-          } = item;
-          meetingTimes.forEach(meetingTime => {
-            const course: any = {
-              id: generateId(),
-              ...meetingTime,
-              ...otherAttributes
-            };
-            _courses.push(course);
+        if (isMounted) {
+          const _courses: any = [];
+          data.forEach(item => {
+            const {
+              attributes: { meetingTimes, ...otherAttributes }
+            } = item;
+            meetingTimes.forEach(meetingTime => {
+              const course: any = {
+                id: generateId(),
+                ...meetingTime,
+                ...otherAttributes
+              };
+              _courses.push(course);
+            });
           });
-        });
-        setCourses(_courses);
-        setCoursesLoading(false);
+
+          setCourses(_courses);
+          setCoursesLoading(false);
+        }
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
     getPlannerItems()
       .then(data => {
-        setPlannerItems(data);
-        setPlannerItemsLoading(false);
+        if (isMounted) {
+          setPlannerItems(data);
+          setPlannerItemsLoading(false);
+        }
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   // Populate assignment data for current user
   useEffect(() => {
+    let isMounted = true;
     getAcademicCalendarEvents()
-      .then(setCalEvents)
+      .then(isMounted && setCalEvents)
       .catch(console.log);
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const getCoursesOnSelectedDay = () => {

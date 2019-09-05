@@ -29,13 +29,15 @@ const ResourceIcon = styled(Icon)`
 `;
 
 const getCategoryId = (categ: string) =>
-  getCategories().then((res: ICategory[]): string => {
-    const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
-    if (result !== undefined) {
-      return result.id;
+  getCategories().then(
+    (res: ICategory[]): string => {
+      const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
+      if (result !== undefined) {
+        return result.id;
+      }
+      return '';
     }
-    return '';
-  });
+  );
 
 /**
  * Resources Card
@@ -50,17 +52,24 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
 
   // Populate resources and category ID
   useEffect(() => {
+    let isMounted = true;
     getResourcesByQueue(categ)
       .then((data: IResourceResult[]) => {
-        setResources(data);
-        setResourcesLoading(false);
+        if (isMounted) {
+          setResources(data);
+          setResourcesLoading(false);
+        }
       })
       .catch(console.log);
     getCategoryId(categ)
       .then(data => {
-        setCategoryId(data);
+        isMounted && setCategoryId(data);
       })
       .catch(console.log);
+
+    return () => {
+      isMounted = false;
+    };
   }, [categ]);
 
   return (

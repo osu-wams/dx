@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import PageTitle from '../ui/PageTitle';
@@ -22,6 +22,7 @@ const Resources = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [catLoading, setCatLoading] = useState<boolean>(true);
   const [resLoading, setResLoading] = useState<boolean>(true);
+  const isMounted = useRef(true);
 
   useEffect(() => {
     let theCategoryId = defaultCategoryId;
@@ -31,22 +32,31 @@ const Resources = () => {
         theCategoryId = queryString[1];
       }
     }
-    setSelectedCategory(theCategoryId);
+    isMounted && setSelectedCategory(theCategoryId);
     getCategories()
       .then((data: ICategory[]) => {
-        fetchResourcesByCategory(theCategoryId);
-        setCategories(data);
-        setCatLoading(false);
+        if (isMounted.current) {
+          fetchResourcesByCategory(theCategoryId);
+          setCategories(data);
+          setCatLoading(false);
+        }
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted.current = false;
+    };
   }, []);
 
   const fetchResourcesByCategory = (category: string) => {
     getResourcesByCategory(category)
       .then((res: IResourceResult[]) => {
-        setResLoading(false);
-        setResources(res);
-        setSelectedCategory(category);
+        if (isMounted.current) {
+          setResLoading(false);
+          setResources(res);
+          setSelectedCategory(category);
+        }
       })
       .catch(console.log);
   };

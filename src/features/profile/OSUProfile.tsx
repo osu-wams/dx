@@ -15,21 +15,34 @@ const OSUProfile = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    let isMounted = true;
     getPerson()
       .then(data => {
-        setPerson(data);
-        setLoading(false);
+        if (isMounted) {
+          setPerson(data);
+          setLoading(false);
+        }
       })
       .catch(console.log);
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   const [address, setAddress] = useState<IMailingAddress | null>(null);
   useEffect(() => {
+    let isMounted = true;
     getMailingAddress()
       .then(data => {
-        setAddress(data);
+        isMounted && setAddress(data);
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   return (

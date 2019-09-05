@@ -35,16 +35,24 @@ export const StudentHolds: React.FC = () => {
   const [holdsLoading, setHoldsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    let isMounted = true;
     getAccountHolds()
       .then((items: AccountHoldsResponse) => {
-        if (items.length > 0) {
-          let text = 'holds';
-          if (items.length === 1) text = 'hold';
-          setHolds({ items, text });
+        if (isMounted) {
+          if (items.length > 0) {
+            let text = 'holds';
+            if (items.length === 1) text = 'hold';
+            setHolds({ items, text });
+          }
+          setHoldsLoading(false);
         }
-        setHoldsLoading(false);
       })
       .catch(console.error);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   return (
