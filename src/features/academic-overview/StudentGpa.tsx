@@ -18,14 +18,22 @@ export const StudentGpa: React.FC = () => {
   const [overallGpaLoading, setOverallGpaLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    let isMounted = true;
     getGpa()
       .then((res: GpaLevel) => {
-        if (res && res.gpa) {
-          setOverallGpa({ gpa: res.gpa, message: 'GPA across all past terms.' });
+        if (isMounted) {
+          if (res && res.gpa) {
+            setOverallGpa({ gpa: res.gpa, message: 'GPA across all past terms.' });
+          }
+          setOverallGpaLoading(false);
         }
-        setOverallGpaLoading(false);
       })
       .catch(console.error);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   return (

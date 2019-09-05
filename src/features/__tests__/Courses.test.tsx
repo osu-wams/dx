@@ -64,7 +64,7 @@ test('Course spells out the month and day "december 6" for Final exams', async (
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  const validIinfoButtonId = 'canvas';
+  const validIinfoButtonId = 'current-courses';
 
   test('does not display the button when the infoButtonData is missing it', async () => {
     const { queryByTestId } = render(<Courses />, {

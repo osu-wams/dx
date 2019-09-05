@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon } from '../../ui/Card';
+import { Card, CardHeader, CardContent, CardIcon, CardFooter} from '../../ui/Card';
 import { Color, theme } from '../../theme';
 
 /*
@@ -29,6 +29,7 @@ const BetaReleaseNotes: FC = () => {
           It was born from humble roots, only to rise to well-seasoned greatness...
         </ReleaseContent>
       </CardContent>
+      <CardFooter></CardFooter>
     </Card>
   );
 };

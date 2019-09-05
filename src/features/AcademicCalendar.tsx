@@ -19,12 +19,20 @@ const AcademicCalendar = () => {
 
   // Get Academic Calendar Events
   useEffect(() => {
+    let isMounted = true;
     getAcademicCalendarEvents()
       .then(data => {
-        setCalEvents(data);
-        setCalEventsLoading(false);
+        if (isMounted) {
+          setCalEvents(data);
+          setCalEventsLoading(false);
+        }
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   return (
@@ -56,7 +64,7 @@ const AcademicCalendar = () => {
           !calEventsLoading && <EmptyState />
         )}
       </CardContent>
-      <CardFooter infoButtonId="CHANGE-ME">
+      <CardFooter infoButtonId="academic-calendar">
         <ExternalLink href={Url.events.academicCalendar}>View academic calendar</ExternalLink>
       </CardFooter>
     </Card>

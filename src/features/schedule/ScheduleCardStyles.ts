@@ -29,21 +29,25 @@ const NoItemsImage = styled.img`
 `;
 
 const NoItemsText = styled.p`
-  color: ${Color["neutral-550"]};
+  color: ${Color['neutral-550']};
   a {
     color: ${Color['orange-400']};
     text-decoration: none;
     font-weight: 600;
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
       text-decoration: underline;
     }
   }
 `;
 
-const SectionHeader = styled.div`
+const SectionHeader = styled.h3`
   color: ${Color['neutral-550']};
   font-weight: 600;
+  font-size: ${theme.fontSize[16]};
   margin-bottom: ${theme.spacing.unit}px;
+  margin-top: 0;
 `;
 
-export {Header, Card, CardSection, NoItems, NoItemsImage, NoItemsText, SectionHeader};
+export { Header, Card, CardSection, NoItems, NoItemsImage, NoItemsText, SectionHeader };

@@ -11,16 +11,21 @@ const ResourcesSearch: React.FC<any> = ({ setResources, setSelectedCategory }) =
   const [debouncedText] = useDebounce(query, 500);
 
   useEffect(() => {
+    let isMounted = true;
     if (debouncedText) {
       setSelectedCategory('all');
       getResources(debouncedText)
-        .then(res => setResources(res))
+        .then(res => isMounted && setResources(res))
         .catch(console.log);
     } else {
       getResources('')
-        .then(res => setResources(res))
+        .then(res => isMounted && setResources(res))
         .catch(console.log);
     }
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, [debouncedText, setResources, setSelectedCategory]);
 
   return (

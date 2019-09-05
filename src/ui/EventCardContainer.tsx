@@ -55,6 +55,7 @@ const EventCardContainer = ({ ...props }) => {
       .catch(console.log);
 
     return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
       isMounted = false;
     };
   }, []);

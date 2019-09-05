@@ -17,12 +17,20 @@ const MealPlans: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    let isMounted = true;
     getMealPlans()
       .then(res => {
-        setMealPlans(res);
-        setLoading(false);
+        if (isMounted) {
+          setMealPlans(res);
+          setLoading(false);
+        }
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   return (

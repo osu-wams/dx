@@ -28,13 +28,21 @@ const AcademicHistory = () => {
 
   // Populate user grades
   useEffect(() => {
+    let isMounted = true;
     getGrades()
       .then(data => {
-        setGrades(data);
-        setFilteredGrades(data);
-        setGradesLoading(false);
+        if (isMounted) {
+          setGrades(data);
+          setFilteredGrades(data);
+          setGradesLoading(false);
+        }
       })
       .catch(console.log);
+
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {

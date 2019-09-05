@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
@@ -28,15 +28,21 @@ const PlannerItems = () => {
   const [plannerItems, setPlannerItems] = useState([]);
   const user = useContext<any>(UserContext);
   const [plannerItemsLoading, setPlannerItemsLoading] = useState<boolean>(true);
-
+  const isMounted = useRef(true);
   // Populate assignment data for current user
   useEffect(() => {
     getPlannerItems()
       .then(data => {
-        setPlannerItems(data);
-        setPlannerItemsLoading(false);
+        if (isMounted.current) {
+          setPlannerItems(data);
+          setPlannerItemsLoading(false);
+        }
       })
       .catch(console.log);
+    return () => {
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted.current = false;
+    };
   }, []);
 
   return (
@@ -74,7 +80,7 @@ const PlannerItems = () => {
           !plannerItemsLoading && (user.isCanvasOptIn === true && <EmptyState />)
         )}
       </CardContent>
-      <CardFooter infoButtonId="CHANGE-ME">
+      <CardFooter infoButtonId="canvas">
         {user.isCanvasOptIn === true && (
           <ExternalLink href={Url.canvas.main}>View all in Canvas</ExternalLink>
         )}

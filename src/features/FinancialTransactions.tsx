@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, FC } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
@@ -60,21 +60,22 @@ const TransactionDetails = styled(TableCell)`
 const FinancialTransactions: FC = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const isMounted = useRef(true);
 
   // Populate resources and category ID
   useEffect(() => {
-    isMounted.current = true;
+    let isMounted = true;
     getAccountTransactions()
       .then((data: IAccountTransactions) => {
-        if (isMounted.current) {
+        if (isMounted) {
           setTransactions(data.attributes.transactions);
           setLoading(false);
         }
       })
       .catch(console.log);
+
     return () => {
-      isMounted.current = false;
+      // prevents setting data on a component that has been unmounted before promise resolves
+      isMounted = false;
     };
   }, []);
 
@@ -121,7 +122,7 @@ const FinancialTransactions: FC = () => {
           !loading && <EmptyState />
         )}
       </TransactionsContainer>
-      <CardFooter infoButtonId="financial-transactions">
+      <CardFooter infoButtonId="recent-transactions">
         <ExternalLink href={Url.banner.financialTransactions}>See all transactions</ExternalLink>
       </CardFooter>
     </Card>

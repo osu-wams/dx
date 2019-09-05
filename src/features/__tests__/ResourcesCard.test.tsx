@@ -62,7 +62,7 @@ describe('<ResourcesCard />', () => {
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  const validIinfoButtonId = 'CHANGE-ME';
+  const validIinfoButtonId = 'financial-resources';
 
   test('does not display the button when the infoButtonData is missing it', async () => {
     const { queryByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {

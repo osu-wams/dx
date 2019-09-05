@@ -36,7 +36,7 @@ describe('<AcademicCalendar />', () => {
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  const validIinfoButtonId = 'CHANGE-ME';
+  const validIinfoButtonId = 'academic-calendar';
 
   test('does not display the button when the infoButtonData is missing it', async () => {
     const { queryByTestId } = render(<AcademicCalendar />, {
