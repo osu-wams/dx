@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { faAnalytics, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
+import React from 'react';
+import { faAnalytics } from '@fortawesome/pro-light-svg-icons';
 import {
   Card,
   CardHeader,
@@ -9,7 +9,6 @@ import {
   CardFooter,
   CardIcon
 } from '../ui/Card';
-import Icon from '../ui/Icon';
 import { AcademicStanding } from './academic-overview/AcademicStanding';
 import { StudentHolds } from './academic-overview/StudentHolds';
 import { StudentGpa } from './academic-overview/StudentGpa';
@@ -38,8 +37,7 @@ export const AcademicOverview = () => {
           </CardContentCell>
         </CardContentRow>
       </CardContentTable>
-      <CardFooter>
-        <Icon icon={faInfoCircle} />
+      <CardFooter infoButtonId="academic-overview">
         <ExternalLink href={Url.myDegrees.main} fg={Color['orange-400']}>
           See more in MyDegrees
         </ExternalLink>
