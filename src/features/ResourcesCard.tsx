@@ -88,7 +88,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
         )}
       </ResourcesContainer>
       {categoryId !== '' && (
-        <CardFooter infoButtonId="CHANGE-ME">
+        <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink to={`/resources?category=${categoryId}`}>
             See all {categ} resources
           </InternalLink>

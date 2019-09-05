@@ -1,6 +1,5 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
-import { format } from 'date-fns';
+import { waitForElement, fireEvent } from '@testing-library/react';
 import { renderWithUserContext } from '../../util/test-utils';
 import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
@@ -64,6 +63,33 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
     const todayCalEvent = await waitForElement(() => getByText(/Testo Event/));
     expect(todayCalEvent).toBeInTheDocument();
+  });
+});
+
+describe('<ScheduleCard /> accessibility checks', () => {
+  // Set mock function result before running any tests
+  beforeAll(() => {
+    mockGetAcademicCalendarEvents.mockResolvedValue(Promise.resolve(academicCalendar3));
+    mockGetPlannerItems.mockResolvedValue(Promise.resolve(mockPlannerItems));
+    mockGetCourseSchedule.mockResolvedValue(Promise.resolve(mockCourseSchedule));
+  });
+
+  it('should find appropriate aria attributes', async () => {
+    renderWithUserContext(<ScheduleCard />);
+    const aria = document.querySelector('[aria-live="assertive"]');
+
+    expect(aria).toHaveAttribute('aria-atomic', 'true');
+  });
+
+  it('should navigate to the next date which should have no Canvas assignments', async () => {
+    const { getByText } = renderWithUserContext(<ScheduleCard />);
+    const nextDayButton = document.querySelector('button:first-child + button');
+    fireEvent.click(nextDayButton);
+    const noPlannerItemsText = await waitForElement(() =>
+      getByText(/No Canvas assignments due today/)
+    );
+
+    expect(noPlannerItemsText).toBeInTheDocument();
   });
 });
 

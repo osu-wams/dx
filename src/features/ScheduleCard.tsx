@@ -137,13 +137,15 @@ const ScheduleCard = () => {
         daysWithEvents={daysWithEvents}
       />
       {plannerItemsLoading && <Skeleton count={4} />}
-      {!plannerItemsLoading && (
-        <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
-      )}
-      {coursesLoading && <Skeleton count={4} />}
-      {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
-      <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
-      <StaticCardFooter></StaticCardFooter>
+      <div aria-live="assertive" aria-atomic="true">
+        {!plannerItemsLoading && (
+          <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
+        )}
+        {coursesLoading && <Skeleton count={4} />}
+        {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
+        <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} /> 
+      </div>
+      <StaticCardFooter infoButtonId="CHANGE-ME"></StaticCardFooter>
     </Card>
   );
 };
