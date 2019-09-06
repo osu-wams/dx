@@ -2,14 +2,18 @@ import React from 'react';
 import { format, isSameDay } from 'date-fns';
 import styled from 'styled-components';
 import { theme, Color } from '../../theme';
+import { Event } from '../../util/gaTracking';
 
 const ScheduleCardDayMenu = ({ selectedDay, nextFiveDays, setSelectedDay, daysWithEvents }) => {
   return (
     <DayList>
-      {nextFiveDays.map(day => (
+      {nextFiveDays.map((day, index) => (
         <Day
           key={day.toUTCString()}
-          onClick={() => setSelectedDay(day)}
+          onClick={() => {
+            setSelectedDay(day);
+            Event('schedule-card', 'week-navigation', `Link number ${index + 1}`);
+          }}
           selected={isSameDay(day, selectedDay)}
         >
           <span>{daysWithEvents.includes(day) ? '\u2022' : ''}</span>
