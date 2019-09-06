@@ -2,51 +2,7 @@ import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import EventCardContainer from '../EventCardContainer';
-
-jest.unmock('../../api/announcements');
-jest.unmock('../../api/events');
-
-const mockAnnouncements = [
-  {
-    id: '12345',
-    attributes: {
-      title: 'Announcement test title 1',
-      field_announcement_body: 'Announcement test body text 1',
-      field_announcement_action: {
-        uri: 'https://oregonstate.edu',
-        title: 'Announcement link title'
-      },
-      background_image:
-        'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-03/example_image_0.jpg'
-    }
-  },
-  {
-    id: '67890',
-    attributes: {
-      title: 'Announcement test title 2',
-      field_announcement_body: 'Announcement test body text 2',
-      field_announcement_action: null
-    }
-  }
-];
-
-const mockLocalist = [
-  {
-    event: {
-      title: 'Localist test title 1',
-      photo_url:
-        'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-03/example_image_0.jpg',
-      localist_url: 'https://events.oregonstate.edu/event/intro_to_media_workshop_2369',
-      event_instances: [
-        {
-          event_instance: {
-            id: '13579'
-          }
-        }
-      ]
-    }
-  }
-];
+import { announcementsData, localistData } from '../__mocks__/announcements.data';
 
 const mockGetAnnouncements = jest.fn();
 const mockGetStudentExperienceEvents = jest.fn();
@@ -63,29 +19,11 @@ jest.mock('../../api/events', () => {
   };
 });
 
-// @OTODO - Whate were we planning on doing with this?
-// const desktop = () => {
-//   const spy = jest.spyOn(window, 'matchMedia');
-//   spy.mockImplementation(query => {
-//     return {
-//       matches: true,
-//       media: query,
-//       onchange: null,
-//       addListener: jest.fn(),
-//       removeListener: jest.fn(),
-//       addEventListener: jest.fn(),
-//       removeEventListener: jest.fn(),
-//       dispatchEvent: jest.fn()
-//     };
-//   });
-//   return spy;
-// };
-
 describe('<EventCardContainer />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetAnnouncements.mockResolvedValue(Promise.resolve(mockAnnouncements));
-    mockGetStudentExperienceEvents.mockResolvedValue(Promise.resolve(mockLocalist));
+    mockGetAnnouncements.mockResolvedValue(Promise.resolve(announcementsData));
+    mockGetStudentExperienceEvents.mockResolvedValue(Promise.resolve(localistData));
   });
 
   it('should render all cards', async () => {
