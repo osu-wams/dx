@@ -1,14 +1,15 @@
 import React from 'react';
-import { render, fireEvent, waitForElement, act } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
+import { render } from '../../util/test-utils';
 import Header from '../Header';
-import App from '../../App';
+import Dashboard from '../../pages/Dashboard';
 
 test('renders', () => {
   render(<Header />);
 });
 
 test('Logout Link is in the menu', async () => {
-  const { getByText, getByTestId } = render(<App />);
+  const { getByText, getByTestId } = render(<Dashboard />);
 
   await (async () => {
     expect(getByTestId('dashboard-page')).toBeInTheDocument();

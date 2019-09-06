@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
@@ -71,6 +72,9 @@ const AcademicHistory = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Academics | History</title>
+      </Helmet>
       <SearchWrapper>
         <Icon icon={faSearch} color={Color['neutral-600']} />
         <FilterInput
