@@ -16,6 +16,7 @@ import { StudentEnrolledCredits } from './academic-overview/StudentEnrolledCredi
 import { Color } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
+import { Event } from '../util/gaTracking';
 
 export const AcademicOverview = () => {
   return (
@@ -38,7 +39,11 @@ export const AcademicOverview = () => {
         </CardContentRow>
       </CardContentTable>
       <CardFooter infoButtonId="academic-overview">
-        <ExternalLink href={Url.myDegrees.main} fg={Color['orange-400']}>
+        <ExternalLink
+          href={Url.myDegrees.main}
+          fg={Color['orange-400']}
+          onClick={() => Event('academic-overview', 'See more in MyDegrees link')}
+        >
           See more in MyDegrees
         </ExternalLink>
       </CardFooter>

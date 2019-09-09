@@ -18,6 +18,7 @@ import { Color } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { UserContext } from '../App';
+import { Event } from '../util/gaTracking';
 
 /**
  * Upcoming Assignments Card
@@ -52,7 +53,7 @@ const PlannerItems = () => {
         badge={<CardIcon icon={faFileEdit} count={plannerItems.length} />}
       />
       <CardContent>
-        {/* Show upcoming assignments if any exist, otherwise show empty state. */}
+        {/* If not authorized to canvas, we display the link to have them authorize */}
         {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && <AuthorizeCanvas />}
 
         {plannerItemsLoading && <Skeleton count={5} />}
@@ -61,7 +62,17 @@ const PlannerItems = () => {
             {plannerItems.map(
               ({ plannable_id, plannable_type, html_url, plannable: { title, due_at } }) => (
                 <ListItem key={plannable_id}>
-                  <ListItemContentLink href={Url.canvas.main + html_url} target="_blank">
+                  <ListItemContentLink
+                    href={Url.canvas.main + html_url}
+                    target="_blank"
+                    onClick={() =>
+                      Event(
+                        'planner-items',
+                        'Canvas planner item click',
+                        Url.canvas.main + html_url
+                      )
+                    }
+                  >
                     <Icon icon={faFileEdit} color={Color['orange-200']} />
                     <ListItemText>
                       <ListItemHeader>{title}</ListItemHeader>
@@ -82,7 +93,12 @@ const PlannerItems = () => {
       </CardContent>
       <CardFooter infoButtonId="canvas">
         {user.isCanvasOptIn === true && (
-          <ExternalLink href={Url.canvas.main}>View all in Canvas</ExternalLink>
+          <ExternalLink
+            href={Url.canvas.main}
+            onClick={() => Event('planner-items', 'View all link clicked')}
+          >
+            View all in Canvas
+          </ExternalLink>
         )}
       </CardFooter>
     </Card>

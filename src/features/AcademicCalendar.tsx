@@ -8,6 +8,7 @@ import { getAcademicCalendarEvents, IEvents } from '../api/events';
 import { Date, DateDay, DateMonth } from '../ui/Date';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
+import { Event } from '../util/gaTracking';
 
 /**
  * Academic Calendar Card
@@ -48,7 +49,10 @@ const AcademicCalendar = () => {
           <List>
             {calEvents.slice(0, 5).map(({ title, link, pubDate }) => (
               <ListItem key={title}>
-                <ListItemContentLink href={link}>
+                <ListItemContentLink
+                  href={link}
+                  onClick={() => Event('academic-calendar', 'event clicked', link)}
+                >
                   <Date>
                     <DateDay>{format(pubDate, 'D')}</DateDay>
                     <DateMonth>{format(pubDate, 'MMM')}</DateMonth>
@@ -65,7 +69,12 @@ const AcademicCalendar = () => {
         )}
       </CardContent>
       <CardFooter infoButtonId="academic-calendar">
-        <ExternalLink href={Url.events.academicCalendar}>View academic calendar</ExternalLink>
+        <ExternalLink
+          href={Url.events.academicCalendar}
+          onClick={() => Event('academic-calendar', 'View all link')}
+        >
+          View academic calendar
+        </ExternalLink>
       </CardFooter>
     </Card>
   );
