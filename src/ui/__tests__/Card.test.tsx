@@ -22,6 +22,16 @@ const StandardCard = () => (
   </Card>
 );
 
+const NonCollapsingCard = () => (
+  <Card collapsing={false}>
+    <CardHeader
+      data-testid="StandardCardHeader"
+      title="Header"
+      badge={<Badge color={Color['orange-400']}>{4}</Badge>}
+    />
+  </Card>
+);
+
 const CardNoBadge = () => (
   <Card data-testid="CardNoBadge">
     <CardHeader data-testid="CardNoBadgeHeader" title="Header" />
@@ -78,6 +88,28 @@ describe('<Card />', () => {
 
     const { getByTestId } = render(<StandardCard />);
     expect(getByTestId(/standardcardcontent/i)).toBeVisible();
+    Object.defineProperty(window, 'matchMedia', matchMedia);
+  });
+
+  it('should not be collapsible on mobile view when collapsing prop is set to false', () => {
+    const matchMedia = window.matchMedia || {};
+    Object.defineProperty(window, 'matchMedia', {
+      value: jest.fn(() => ({ matches: false, addListener: () => {}, removeListener: () => {} }))
+    });
+    const { getByText } = render(<NonCollapsingCard />);
+    // the svg icon for collapsing cards should not exist
+    expect(getByText('Header').nextSibling).toBeNull();
+    Object.defineProperty(window, 'matchMedia', matchMedia);
+  });
+
+  it('should be collapsible on mobile view when collapsing prop is not defined or set to true', () => {
+    const matchMedia = window.matchMedia || {};
+    Object.defineProperty(window, 'matchMedia', {
+      value: jest.fn(() => ({ matches: false, addListener: () => {}, removeListener: () => {} }))
+    });
+    const { getByText } = render(<StandardCard />);
+    // the svg icon for collapsing cards should exist
+    expect(getByText('Header').nextSibling).toBeInstanceOf(SVGSVGElement);
     Object.defineProperty(window, 'matchMedia', matchMedia);
   });
 });
