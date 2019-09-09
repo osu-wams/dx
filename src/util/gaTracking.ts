@@ -24,6 +24,7 @@ type Components =
   | 'anouncements'
   | 'events'
   | 'courses'
+  | 'course'
   | 'planner-items'
   | 'academic-calendar'
   | 'academic-resourses'

@@ -5,6 +5,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '@reach/dialog/styles.css';
+import { Event } from '../util/gaTracking';
 import MyDialog from './MyDialog';
 import Button from './Button';
 import Input from './Input';
@@ -127,24 +128,52 @@ const Footer = () => {
       <FooterWrapper>
         <FooterContent>
           <FooterButtonWrapper>
-            <FooterIconLink href="#CHANGE-WHEN-READY">
+            <FooterIconLink
+              href="#CHANGE-WHEN-READY"
+              onClick={() => Event('footer', 'Get Support link')}
+            >
               <Icon icon={faUserHeadset} color={Color['orange-400']} size="2x" />
               <br />
               Get Support
             </FooterIconLink>
-            <FooterIconLink href="#CHANGE-WHEN-READY">
+            <FooterIconLink
+              href="#CHANGE-WHEN-READY"
+              onClick={() => Event('footer', 'Give Feedback link')}
+            >
               <Icon icon={faCommentAltCheck} color={Color['orange-400']} size="2x" />
               <br />
               Give Feedback
             </FooterIconLink>
           </FooterButtonWrapper>
-          <a href="https://oregonstate.edu/copyright">Copyright</a> &copy; 2019 Oregon State
-          University <br />
-          <a href="https://oregonstate.edu/official-web-disclaimer">Disclaimer</a> |{' '}
-          <a href="https://accessibility.oregonstate.edu">Accessibility Information</a>
+          <a
+            href="https://oregonstate.edu/copyright"
+            onClick={() => Event('footer', 'Copyright link')}
+          >
+            Copyright
+          </a>
+          &copy; 2019 Oregon State University <br />
+          <a
+            href="https://oregonstate.edu/official-web-disclaimer"
+            onClick={() => Event('footer', 'Disclaimer link')}
+          >
+            Disclaimer
+          </a>{' '}
+          |{' '}
+          <a
+            href="https://accessibility.oregonstate.edu"
+            onClick={() => Event('footer', 'Accessibility link')}
+          >
+            Accessibility Information
+          </a>
         </FooterContent>
         {user && user.isAdmin && (
-          <Button onClick={toggleMasqueradeDialog} bg={Color.transparent}>
+          <Button
+            onClick={() => {
+              toggleMasqueradeDialog();
+              Event('footer', 'masquerade', 'click masquerade modal open');
+            }}
+            bg={Color.transparent}
+          >
             <Icon icon={faMask} color={Color.white} size="2x" />
             <VisuallyHidden>Masquerade</VisuallyHidden>
           </Button>
@@ -166,7 +195,13 @@ const Footer = () => {
         </Label>
         <br />
         <br />
-        <Button type="submit" onClick={masquerade}>
+        <Button
+          type="submit"
+          onClick={() => {
+            Event('footer', 'masquerade', 'submit form to masquerade');
+            masquerade();
+          }}
+        >
           Masquerade
         </Button>
         <Button
