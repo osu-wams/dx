@@ -35,7 +35,22 @@ const CardHeader: FC<{ title: string; badge?: any }> = ({title, badge, ...props 
   );
 };
 
-const CardHeaderWrapper = styled.div<ICollapse>`
+// const CardHeaderWrapper = styled.div<ICollapse>`
+//   height: 64px;
+//   width: 100%;
+//   padding: ${theme.spacing.unit * 2}px;
+//   display: flex;
+//   align-items: center;
+//   cursor: ${props => (props.collapsible ? 'pointer' : 'default')};
+//   border: none;
+//   border-bottom: ${props =>
+//     props.collapsed && props.collapsible ? 'none' : `1px solid ${Color['neutral-200']}`};
+// `;
+
+const CardHeaderWrapper = styled.h2<ICollapse>`
+  margin: unset;
+  font-weight: normal;
+  font-size: ${theme.fontSize[16]};
   height: 64px;
   width: 100%;
   padding: ${theme.spacing.unit * 2}px;
