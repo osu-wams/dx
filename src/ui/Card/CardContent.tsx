@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import {theme} from '../../theme';
-import {ICollapse} from './ICollapse';
-import {CardContext} from './Card';
+import { theme } from '../../theme';
+import { ICollapse } from './ICollapse';
+import { CardContext } from './Card';
 
 const CardContent = ({ ...props }) => {
   const { collapsed, collapsible, uuid } = useContext(CardContext);

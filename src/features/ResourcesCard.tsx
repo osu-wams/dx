@@ -78,7 +78,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
       <ResourcesContainer>
         {resourcesLoading && <Skeleton count={5} />}
         {resources.length ? (
-          <List data-testid="resource-container">
+          <List aria-live="polite" aria-atomic="true" data-testid="resource-container">
             {resources.map(resource => (
               <ListItem spaced key={resource.id}>
                 <ListItemContentLink spaced href={resource.uri} target="_blank">

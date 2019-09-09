@@ -85,7 +85,7 @@ const FinancialTransactions: FC = () => {
         title="Recent Transactions"
         badge={<CardIcon icon={faMoneyBillWave} count={transactions.length} />}
       />
-      <TransactionsContainer>
+      <TransactionsContainer aria-live="polite">
         {loading && <Skeleton count={5} />}
         {transactions.length ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
