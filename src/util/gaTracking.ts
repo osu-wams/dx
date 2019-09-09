@@ -20,12 +20,11 @@ type Components =
   | 'header'
   | 'navigation-main'
   | 'schedule-card'
-  | 'featured-resources'
+  | 'resources-card'
   | 'anouncements'
   | 'events'
   | 'courses'
   | 'course'
   | 'planner-items'
   | 'academic-calendar'
-  | 'academic-resourses'
   | 'academic-overview';
