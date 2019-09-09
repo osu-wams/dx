@@ -9,6 +9,7 @@ import { getAccountTransactions, IAccountTransactions, ITransaction } from '../a
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
+import { Event } from '../util/gaTracking';
 
 type ITransactionAmount = {
   color: string;
@@ -123,7 +124,12 @@ const FinancialTransactions: FC = () => {
         )}
       </TransactionsContainer>
       <CardFooter infoButtonId="recent-transactions">
-        <ExternalLink href={Url.banner.financialTransactions}>See all transactions</ExternalLink>
+        <ExternalLink
+          href={Url.banner.financialTransactions}
+          onClick={() => Event('financial-transactions', 'See all transactions in banner')}
+        >
+          See all transactions
+        </ExternalLink>
       </CardFooter>
     </Card>
   );
