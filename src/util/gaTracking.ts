@@ -27,6 +27,8 @@ type Components =
   | 'course'
   | 'planner-items'
   | 'meal-plans'
+  | 'dx-event'
+  | 'calendar-event'
   | 'academic-calendar'
   | 'financial-transactions'
   | 'academic-overview'
