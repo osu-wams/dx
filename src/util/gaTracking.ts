@@ -29,4 +29,5 @@ type Components =
   | 'meal-plans'
   | 'academic-calendar'
   | 'financial-transactions'
-  | 'academic-overview';
+  | 'academic-overview'
+  | 'info-button';

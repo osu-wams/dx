@@ -9,6 +9,7 @@ import { AppContext } from '../../App';
 import { InfoButtonState } from '../../api/info-buttons';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Button from './Button';
+import { Event } from '../../util/gaTracking';
 
 const DialogHeader = styled.div`
   display: flex;
@@ -46,7 +47,10 @@ const InfoButton = props => {
       <Button
         bg={Color.transparent}
         data-testid={props.infoButtonId}
-        onClick={(e: React.MouseEvent<HTMLElement>) => toggleDialog(true)}
+        onClick={(e: React.MouseEvent<HTMLElement>) => {
+          toggleDialog(true);
+          Event('info-button', currentButton.title);
+        }}
       >
         <Icon icon={faInfoCircle} />
         <VisuallyHidden>Information about {currentButton.title}</VisuallyHidden>
