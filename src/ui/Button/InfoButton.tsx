@@ -52,7 +52,7 @@ const InfoButton = props => {
           Event('info-button', currentButton.title);
         }}
       >
-        <Icon icon={faInfoCircle} />
+        <Icon icon={faInfoCircle} size="lg" color={Color['neutral-600']} />
         <VisuallyHidden>Information about {currentButton.title}</VisuallyHidden>
       </Button>
       <MyDialog isOpen={dialogVisible}>
