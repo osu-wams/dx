@@ -57,7 +57,7 @@ const PlannerItems = () => {
 
         {plannerItemsLoading && <Skeleton count={5} />}
         {plannerItems.length && user.isCanvasOptIn === true ? (
-          <List aria-live="polite" aria-atomic="true">
+          <List>
             {plannerItems.map(
               ({ plannable_id, plannable_type, html_url, plannable: { title, due_at } }) => (
                 <ListItem key={plannable_id}>

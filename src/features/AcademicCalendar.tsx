@@ -36,7 +36,7 @@ const AcademicCalendar = () => {
   }, []);
 
   return (
-    <Card >
+    <Card>
       <CardHeader
         title="Academic Calendar"
         badge={<CardIcon icon={faCalendar} count={calEvents.length < 5 ? calEvents.length : 5} />}
@@ -45,7 +45,7 @@ const AcademicCalendar = () => {
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
         {calEventsLoading && <Skeleton count={5} />}
         {calEvents.length ? (
-          <List aria-live="polite" aria-atomic="true">
+          <List>
             {calEvents.slice(0, 5).map(({ title, link, pubDate }) => (
               <ListItem key={title}>
                 <ListItemContentLink href={link}>

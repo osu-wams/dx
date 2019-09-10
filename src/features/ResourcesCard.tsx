@@ -29,15 +29,13 @@ const ResourceIcon = styled(Icon)`
 `;
 
 const getCategoryId = (categ: string) =>
-  getCategories().then(
-    (res: ICategory[]): string => {
-      const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
-      if (result !== undefined) {
-        return result.id;
-      }
-      return '';
+  getCategories().then((res: ICategory[]): string => {
+    const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
+    if (result !== undefined) {
+      return result.id;
     }
-  );
+    return '';
+  });
 
 /**
  * Resources Card
@@ -78,7 +76,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
       <ResourcesContainer>
         {resourcesLoading && <Skeleton count={5} />}
         {resources.length ? (
-          <List aria-live="polite" aria-atomic="true" data-testid="resource-container">
+          <List data-testid="resource-container">
             {resources.map(resource => (
               <ListItem spaced key={resource.id}>
                 <ListItemContentLink spaced href={resource.uri} target="_blank">

@@ -13,6 +13,8 @@ const CardContent = ({ ...props }) => {
       collapsible={collapsible}
       role={collapsible ? 'region' : undefined}
       aria-labelledby={`${uuid}header`}
+      aria-live={collapsed ? 'polite' : undefined}
+      aria-atomic={collapsed ? true : undefined}
       {...props}
     />
   );
