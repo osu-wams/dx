@@ -11,7 +11,8 @@ const isTest = process.env.NODE_ENV === 'test';
 // When running tests, intialize in ./setupTests.js instead
 if (!isTest) {
   ReactGA.initialize('UA-48705802-13', {
-    debug: isDevelopment,
+    // Uncomment line below to get details in the console when developing
+    // debug: isDevelopment,
     gaOptions: {
       siteSpeedSampleRate: 100
     }
