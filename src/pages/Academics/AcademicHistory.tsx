@@ -19,6 +19,7 @@ import {
   TableHeaderCell
 } from '../../ui/Table';
 import { singularPlural, titleCase } from '../../util/helpers';
+import { Event } from '../../util/gaTracking';
 
 const AcademicHistory = () => {
   const [grades, setGrades] = useState<Grades[]>([]);
@@ -58,6 +59,7 @@ const AcademicHistory = () => {
           `${e.attributes.courseSubject} ${e.attributes.courseNumber}`.match(re)
       );
       setFilteredGrades(matchingGrades);
+      Event('academic-history-search', debouncedQuery);
     }
   }, [debouncedQuery, grades]);
 
@@ -86,7 +88,7 @@ const AcademicHistory = () => {
       </SearchWrapper>
       {gradesLoading && <Skeleton count={5} />}
       {grades.length > 0 ? (
-        <div aria-live="polite">
+        <div aria-live="polite" aria-atomic="true">
           {Object.keys(gradesByTerm).map((key, index) => (
             <PlainCard title={key} key={index}>
               <Table variant="basic" stretch>
