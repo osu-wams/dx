@@ -12,7 +12,7 @@ const isTest = process.env.NODE_ENV === 'test';
 if (!isTest) {
   ReactGA.initialize('UA-48705802-13', {
     // Uncomment line below to get details in the console when developing
-    // debug: isDevelopment,
+    debug: isDevelopment,
     gaOptions: {
       siteSpeedSampleRate: 100
     }

@@ -3,6 +3,7 @@ import { fireEvent, waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
+import { mockGAEvent } from '../../setupTests';
 
 const mockGetCourseSchedule = jest.fn();
 
@@ -38,7 +39,7 @@ test('Specific course loads on click, close button closes', async () => {
   const OpSysBtn = await waitForElement(() => getByText(/data structures/i));
   fireEvent.click(OpSysBtn);
 
-  // Dialg is present and displays the corrent course
+  // Dialg is present and displays the current course
   const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
   expect(courseDialog).toBeInTheDocument();
   expect(courseDialog).toHaveTextContent(/data structures/i);
@@ -47,6 +48,33 @@ test('Specific course loads on click, close button closes', async () => {
   const closeBtn = await waitForElement(() => getByText('Close'));
   fireEvent.click(closeBtn);
   expect(queryByTestId('course-dialog')).toBeNull();
+});
+
+test('Various Links are present as well as Google Analytics events are recorded', async () => {
+  const { getByText, getByTestId } = render(<Courses />);
+
+  const OpSysBtn = await waitForElement(() => getByText(/data structures/i));
+  fireEvent.click(OpSysBtn);
+  expect(mockGAEvent).toHaveBeenCalled();
+
+  // Dialg is present and displays the current course
+  const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
+  expect(courseDialog).toHaveTextContent(/data structures/i);
+
+  // MapLink is present and clickable
+  const MapLink = await waitForElement(() => getByText(/View Strand Agriculture Hall/i));
+  fireEvent.click(MapLink);
+  expect(mockGAEvent).toHaveBeenCalled();
+
+  // Professor email link is clickable
+  const ContactProfessorLink = await waitForElement(() => getByText(/E-mail Hess/i));
+  fireEvent.click(ContactProfessorLink);
+  expect(mockGAEvent).toHaveBeenCalled();
+
+  // All Courses Link
+  const ViewCoursesLink = await waitForElement(() => getByText(/view courses/i));
+  fireEvent.click(ViewCoursesLink);
+  expect(mockGAEvent).toHaveBeenCalled();
 });
 
 test('Course spells out the month and day "december 6" for Final exams', async () => {
@@ -61,6 +89,13 @@ test('Course spells out the month and day "december 6" for Final exams', async (
 
   // For Final exams we spell out the month and day
   expect(courseDialog).toHaveTextContent(/december 6/i);
+});
+
+test('Footer has a Link that when clicked and Google Analytics Event fired', async () => {
+  const { getByText } = render(<Courses />);
+  const CanvasLink = await waitForElement(() => getByText(/View more in Canvas/i));
+  fireEvent.click(CanvasLink);
+  expect(mockGAEvent).toHaveBeenCalled();
 });
 
 describe('with an InfoButton in the CardFooter', () => {
