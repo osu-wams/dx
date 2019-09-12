@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { theme } from '../../theme';
 import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
+import { Event } from '../../util/gaTracking';
 
 const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, categories }) => {
   return (
@@ -14,7 +15,10 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
             text="All"
             id="all"
             name="categories"
-            clickHandler={() => fetchResourcesByCategory('all')}
+            clickHandler={() => {
+              fetchResourcesByCategory('all');
+              Event('resource-category', 'all');
+            }}
             selected={selectedCategory === 'all' ? true : false}
           />
           {categories.map((category: ICategory) => (
@@ -23,7 +27,10 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
               text={category.name}
               id={category.id}
               key={category.id}
-              clickHandler={() => fetchResourcesByCategory(category.id)}
+              clickHandler={() => {
+                fetchResourcesByCategory(category.id);
+                Event('resource-category', category.name);
+              }}
               name="categories"
               selected={selectedCategory === category.id ? true : false}
             />

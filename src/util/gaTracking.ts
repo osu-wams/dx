@@ -32,6 +32,8 @@ type Components =
   | 'academic-calendar'
   | 'financial-transactions'
   | 'academic-overview'
+  | 'resource'
   | 'resource-search'
+  | 'resource-category'
   | 'academic-history-search'
   | 'info-button';
