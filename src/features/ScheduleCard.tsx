@@ -45,14 +45,16 @@ const ScheduleCard = () => {
             const {
               attributes: { meetingTimes, ...otherAttributes }
             } = item;
-            meetingTimes.forEach(meetingTime => {
-              const course: any = {
-                id: generateId(),
-                ...meetingTime,
-                ...otherAttributes
-              };
-              _courses.push(course);
-            });
+            meetingTimes
+              .filter(t => t.beginDate && Date.parse(t.beginDate) <= Date.now())
+              .forEach(meetingTime => {
+                const course: any = {
+                  id: generateId(),
+                  ...meetingTime,
+                  ...otherAttributes
+                };
+                _courses.push(course);
+              });
           });
 
           setCourses(_courses);
@@ -165,7 +167,7 @@ const ScheduleCard = () => {
         )}
         {coursesLoading && <Skeleton count={4} />}
         {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
-        <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} /> 
+        <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
       </div>
       <StaticCardFooter infoButtonId="academic-calendar"></StaticCardFooter>
     </Card>
