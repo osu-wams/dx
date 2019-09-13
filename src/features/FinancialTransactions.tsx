@@ -5,7 +5,11 @@ import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
 import { Color, theme } from '../theme';
-import { getAccountTransactions, IAccountTransactions, ITransaction } from '../api/student';
+import {
+  getAccountTransactions,
+  IAccountTransactions,
+  ITransaction
+} from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
