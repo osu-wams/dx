@@ -5,6 +5,7 @@ import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import ScheduleCard from '../ScheduleCard';
+import { mockGAEvent } from '../../setupTests';
 
 const mockGetPlannerItems = jest.fn();
 const mockGetCourseSchedule = jest.fn();
@@ -31,18 +32,29 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     expect(getByTestId('scheduleCardHeader')).toBeInTheDocument();
   });
 
-  it('should find "Every Day Test" Course in card', async () => {
+  it('should find "Every Day Test" Course in card and have clickable map link', async () => {
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const todayCourse = await waitForElement(() => getByText(/Every Day Test/));
     expect(todayCourse).toBeInTheDocument();
   });
 
-  it('should find "Testo Planner Discussion" PlannerItem in card', async () => {
+  it('should find a course with a clickable map link', async () => {
+    const { getByText, debug } = renderWithUserContext(<ScheduleCard />);
+
+    const mapLink = await waitForElement(() => getByText(/View PH 222 location/));
+    // debug();
+    fireEvent.click(mapLink);
+    expect(mockGAEvent).toHaveBeenCalled();
+  });
+
+  it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const todayPlannerItem = await waitForElement(() => getByText(/Testo Planner Discussion/));
     expect(todayPlannerItem).toBeInTheDocument();
+    fireEvent.click(todayPlannerItem);
+    expect(mockGAEvent).toHaveBeenCalled();
   });
 
   it('should not associate a due date with a "Planner Announcement Test" PlannerItem in card', async () => {
@@ -63,6 +75,8 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
     const todayCalEvent = await waitForElement(() => getByText(/Testo Event/));
     expect(todayCalEvent).toBeInTheDocument();
+    fireEvent.click(todayCalEvent);
+    expect(mockGAEvent).toHaveBeenCalled();
   });
 });
 
