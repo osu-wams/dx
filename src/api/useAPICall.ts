@@ -1,5 +1,17 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
 
+/**
+ * Write comment about disabling linting
+ */
+
+/**
+ * TODO
+ * @param api 
+ * @param query 
+ * @param dataTransform 
+ * @param initialState 
+ */
 const useAPICall = <T>(
   api: Function,
   query: string | undefined,
@@ -7,22 +19,25 @@ const useAPICall = <T>(
   initialState: T
 ) => {
   const [data, setData] = useState<T>(initialState);
-  const [caughtError, setCaughtError] = useState<boolean>(false);
-  const memoizedCallback = useCallback((d)=> dataTransform(d), [dataTransform])
+  const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     api(query)
       .then((result: T) => {
-        const temp = memoizedCallback(result);
-        setData(temp);
+        const transformed = dataTransform(result);
+        setData(transformed);
       })
       .catch(e => {
         console.log(e);
-        setCaughtError(true);
+        setError(true);
       });
-  }, [api, query, memoizedCallback]);
+    setLoading(false);
+  }, []);
 
-  return { data, didCatch: caughtError };
+  return { data, loading, error };
 };
 
 export default useAPICall;
+
+/* eslint-enable react-hooks/exhaustive-deps */

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import { faCube, IconDefinition } from '@fortawesome/pro-light-svg-icons';
@@ -6,7 +6,7 @@ import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card'
 import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
 import { Color, theme } from '../theme';
-import { getCategories, ICategory, useResourcesByQueue, useCategories } from '../api/resources';
+import { useResourcesByQueue, useCategories } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 
@@ -29,49 +29,17 @@ const ResourceIcon = styled(Icon)`
   height: auto;
 `;
 
-// const getCategoryId = (categ: string) =>
-//   getCategories().then((res: ICategory[]): string => {
-//     const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
-//     if (result !== undefined) {
-//       return result.id;
-//     }
-//     return '';
-//   });
-
 /**
  * Resources Card
  *
  * Displays resources from a given set of categories
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
-  const getCategoryId = data => data.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
+
+  const getCategoryId = data => data.filter((e: any) => e.name.toUpperCase() === categ.toUpperCase());
   const resources = useResourcesByQueue(categ);
   const categories = useCategories(getCategoryId);
-  const [resourcesLoading, setResourcesLoading] = useState<boolean>(true);
-  const [categoryId, setCategoryId] = useState<string>('');
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
-
-  // Populate resources and category ID
-  useEffect(() => {
-    let isMounted = true;
-    if (resources.data.length || resources.didCatch) {
-      setResourcesLoading(false);
-    }
-
-    if (isMounted && categories.data && categories.data.length) {
-      setCategoryId(categories.data[0].id);
-    }
-
-    // getCategoryId(categ)
-    //   .then(data => {
-    //     isMounted && setCategoryId(data);
-    //   })
-    //   .catch(console.log);
-    // console.log("here=====: ", categories);
-    return () => {
-      isMounted = false;
-    };
-  }, [resources, categories]);
 
   return (
     <Card>
@@ -80,7 +48,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
         badge={<CardIcon icon={icon} count={resources.data.length} />}
       />
       <ResourcesContainer>
-        {resourcesLoading && <Skeleton count={5} />}
+        {categories.loading && <Skeleton count={5} />}
         {resources.data.length ? (
           <List data-testid="resource-container">
             {resources.data.map(resource => (
@@ -96,13 +64,14 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
               </ListItem>
             ))}
           </List>
-        ) : !resourcesLoading && !resources.didCatch ? (
+        ) : !categories.loading && !resources.error ? (
           <EmptyState />
         ) : (
           <FailedState>Oops, something went wrong!</FailedState>
         )}
       </ResourcesContainer>
-      {categories.data && categories.data[0] && categories.data[0].id !== '' && (
+      {
+        categories.data.length && categories.data[0].id !== '' && (
         <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink to={`/resources?category=${categories.data[0].id}`}>
             See all {categ} resources

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import useAPICall from './useAPICall';
-import { useEffect } from 'react';
 
 export interface IResourceResult {
   id: string;
@@ -34,9 +33,8 @@ const getResourcesByCategory = (categoryId: string): Promise<IResourceResult[]> 
  */
 const getResourcesByQueue = (category: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources/category/${category}`).then(res => res.data);
-const temp = (f)=> f
 const useResourcesByQueue = (category: string) =>
-  useAPICall<IResourceResult[]>(getResourcesByQueue, category, temp, []);
+  useAPICall<IResourceResult[]>(getResourcesByQueue, category, d => d, []);
 
 /**
  * Categories
@@ -44,7 +42,11 @@ const useResourcesByQueue = (category: string) =>
 const getCategories = (): Promise<ICategory[]> =>
   axios.get('/api/resources/categories').then(res => res.data);
 
-const useCategories = (callback: Function) => {
+/**
+ * Gets data from the Categories API
+ * @param callback (optional) data transformation function
+ */
+const useCategories = (callback: Function = data => data) => {
   return useAPICall<ICategory[]>(getCategories, undefined, callback, []);
 };
 
