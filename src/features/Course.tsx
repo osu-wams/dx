@@ -18,7 +18,7 @@ import { titleCase, formatTime, formatDate } from '../util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import { Color } from '../theme';
 import Divider from '../ui/Divider';
-import { ICourseScheduleAttributes } from '../api/student/course-schedule';
+import { ICourseScheduleAttributes, IFaculty } from '../api/student/course-schedule';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 
@@ -77,8 +77,8 @@ const Course: FC<{
     </List>
     <Divider />
     <List>
-      {faculty.map(fac => (
-        <ListItem key={fac.osuId}>
+      {faculty.map((fac: IFaculty, index: number) => (
+        <ListItem key={`${fac.email}-${index}`}>
           <ListItemContent>
             <Icon icon={faChalkboardTeacher} color={Color['neutral-600']} />
             <ListItemText>
