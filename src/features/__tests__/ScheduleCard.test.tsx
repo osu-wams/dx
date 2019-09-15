@@ -34,7 +34,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   it('should find "Every Day Test" Course in card', async () => {
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
-    const todayCourse = await waitForElement(() => getByText(/Every Day Test/));
+    const todayCourse = await waitForElement(() => getByText("Every Day Test"));
     expect(todayCourse).toBeInTheDocument();
   });
 
