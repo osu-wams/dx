@@ -1,9 +1,10 @@
 import { addDays, eachDay, format } from 'date-fns';
+import { ICourseSchedule } from '../../api/student/course-schedule';
 
 /**
  * Utility functions
  */
-const getNextFiveDays = () => {
+export const getNextFiveDays = () => {
   let rangeStart = new Date();
   let rangeEnd = addDays(rangeStart, 4);
   let nextFiveDays = eachDay(rangeStart, rangeEnd);
@@ -11,7 +12,7 @@ const getNextFiveDays = () => {
   return nextFiveDays;
 };
 
-const getDayShortcode = (date: Date) => {
+export const getDayShortcode = (date: Date) => {
   let twoLetterShortcodes = ['Th', 'Sa', 'Su'];
 
   let shortcode = format(date, 'dddd').substr(0, 2);
@@ -19,4 +20,28 @@ const getDayShortcode = (date: Date) => {
   return shortcode;
 };
 
-export {getNextFiveDays, getDayShortcode}
+/**
+ * Return an array of courses that have a meeting time that has a beginDate before right now.
+ * @param courses the full list of courses returned from API
+ * @returns ICourseSchedule[] - an array of courses
+ */
+export const currentCourses = (courses: ICourseSchedule[]): ICourseSchedule[] => {
+  return courses.filter(c =>
+    c.attributes.meetingTimes.filter(m => m.beginDate && Date.parse(m.beginDate) <= Date.now())
+  );
+};
+
+/**
+ *  Return an array of courses that have a meeting time that includes the provided day short code
+ * @param courses an array of courses to be filtered
+ * @param dayShortCode a day short code (M, T, W, Th, F)
+ * @returns ICourseSchedule[] - an array of courses
+ */
+export const coursesOnDay = (
+  courses: ICourseSchedule[],
+  dayShortCode: string
+): ICourseSchedule[] => {
+  return courses.filter(
+    c => c.attributes.meetingTimes.findIndex(m => m.weeklySchedule.includes(dayShortCode)) > -1
+  );
+};

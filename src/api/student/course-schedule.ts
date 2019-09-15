@@ -6,7 +6,6 @@ const getCourseSchedule = (term = 'current'): Promise<ICourseSchedule[]> =>
 export interface IFaculty {
   email: string;
   name: string;
-  osuId: string;
   primary: boolean;
 }
 
