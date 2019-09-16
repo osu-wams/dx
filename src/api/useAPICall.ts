@@ -5,6 +5,12 @@ import { useEffect, useState } from 'react';
  * Write comment about disabling linting
  */
 
+export interface IAPIResult<T> {
+  data: T; 
+  loading: boolean;
+  error: boolean;
+}
+
 /**
  * TODO
  * @param api 
@@ -17,12 +23,13 @@ const useAPICall = <T>(
   query: string | undefined,
   dataTransform: Function,
   initialState: T
-) => {
+): IAPIResult<T> => {
   const [data, setData] = useState<T>(initialState);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setLoading(true);
     api(query)
       .then((result: T) => {
         const transformed = dataTransform(result);
@@ -33,7 +40,7 @@ const useAPICall = <T>(
         setError(true);
       });
     setLoading(false);
-  }, []);
+  }, [query]);
 
   return { data, loading, error };
 };

@@ -1,36 +1,28 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import {
-  resourcesData,
-  resourcesDataByCategory,
-  categoriesData,
-  defaultCategory
-} from '../../api/__mocks__/resources.data';
+import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
 
 const sleep = (ms: number) => {
   return new Promise(res => setTimeout(res, ms));
 };
 
-const mockGetResources = jest.fn();
-const mockGetResourcesByCategory = jest.fn();
-const mockGetCategories = jest.fn();
-const mockDefaultCategory = jest.fn(() => defaultCategory);
+const mockUseResources = jest.fn();
+const mockUseCategories = jest.fn();
+const mockDefaultCategory = defaultCategory;
 
 jest.mock('../../api/resources', () => ({
-  getResources: () => mockGetResources(),
-  getResourcesByCategory: () => mockGetResourcesByCategory(),
-  getCategories: () => mockGetCategories(),
-  defaultCategoryId: () => mockDefaultCategory()
+  useResources: () => mockUseResources(),
+  useCategories: () => mockUseCategories(),
+  defaultCategoryId: () => mockDefaultCategory
 }));
 
 describe('<Resources />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetResources.mockResolvedValue(Promise.resolve(resourcesData.data));
-    mockGetResourcesByCategory.mockResolvedValue(Promise.resolve(resourcesDataByCategory.data));
-    mockGetCategories.mockResolvedValue(Promise.resolve(categoriesData.data));
+    mockUseResources.mockReturnValue(resourcesData);
+    mockUseCategories.mockReturnValue(categoriesData);
   });
 
   it('should render the resources page', async () => {
@@ -46,7 +38,7 @@ describe('<Resources />', () => {
     expect(popular).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
-    expect(queryByText(/Student Jobs/)).toBeNull();
+    expect(queryByText(/Webcams/)).toBeNull();
   });
 
   it('should have a clickable All category', async () => {
@@ -71,7 +63,7 @@ describe('<Resources />', () => {
     expect(academic).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
-    expect(queryByText(/Student Jobs/)).toBeNull();
+    expect(queryByText(/Webcams/)).toBeNull();
   });
 
   it('should load a different category based on the URL parameter', async () => {
@@ -83,10 +75,12 @@ describe('<Resources />', () => {
       writable: true,
       value: location
     });
+
     const { getByLabelText, findByText } = render(<Resources />);
+    await sleep(50);
     const popular = await waitForElement(() => getByLabelText('Popular'));
     const all = await waitForElement(() => getByLabelText('All'));
-    expect(popular).not.toHaveClass('selected');
+     expect(popular).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();

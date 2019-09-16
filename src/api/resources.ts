@@ -18,7 +18,19 @@ export interface ICategory {
  * Resources
  */
 const getResources = (query: string): Promise<IResourceResult[]> =>
+  axios.get(`/api/resources${query ? `${query}` : ''}`).then(res => res.data);
+const useResources = (query: string) => {
+  return useAPICall<IResourceResult[]>(getResources, query, d => d, []);
+};
+
+/**
+ * Resources by Query
+ */
+const getResourcesByQuery = (query: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources${query ? `?query=${query}` : ''}`).then(res => res.data);
+const useResourcesByQuery = (query: string) => {
+  return useAPICall<IResourceResult[]>(getResourcesByQuery, query, d => d, []);
+};
 
 /**
  * ResourcesByCategory
@@ -27,6 +39,9 @@ const getResourcesByCategory = (categoryId: string): Promise<IResourceResult[]> 
   axios
     .get(`/api/resources${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
     .then(res => res.data);
+const useResourcesByCategory = (categoryId: string) => {
+  return useAPICall<IResourceResult[]>(getResources, categoryId, d => d, []);
+};
 
 /**
  * ResourcesByQueue
@@ -55,7 +70,10 @@ const defaultCategoryId = '1b9b7a4b-5a64-41af-a40a-8bb01abedd19';
 
 export {
   getResources,
+  useResources,
+  useResourcesByQuery,
   getResourcesByCategory,
+  useResourcesByCategory,
   getCategories,
   defaultCategoryId,
   useCategories,

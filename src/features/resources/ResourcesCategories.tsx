@@ -4,7 +4,8 @@ import { theme } from '../../theme';
 import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
 
-const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, categories }) => {
+const ResourceCategories = ({ categories, currentCategory, setSelectedCategory }) => {
+
   return (
     <CategoriesWrapper>
       {categories.length > 0 && (
@@ -14,8 +15,8 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
             text="All"
             id="all"
             name="categories"
-            clickHandler={() => fetchResourcesByCategory('all')}
-            selected={selectedCategory === 'all' ? true : false}
+            clickHandler={() => setSelectedCategory('all')}
+            selected={currentCategory === 'all' ? true : false}
           />
           {categories.map((category: ICategory) => (
             <CustomBtn
@@ -23,9 +24,9 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
               text={category.name}
               id={category.id}
               key={category.id}
-              clickHandler={() => fetchResourcesByCategory(category.id)}
+              clickHandler={() => setSelectedCategory(category.id)}
               name="categories"
-              selected={selectedCategory === category.id ? true : false}
+              selected={currentCategory === category.id ? true : false}
             />
           ))}
         </>
