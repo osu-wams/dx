@@ -59,20 +59,17 @@ const ScheduleCard = () => {
   useEffect(() => {
     let isMounted = true;
     getCourseSchedule()
-      .then(data => {
-        // Course data has individual meeting times (recitation, lab, lecture, etc.)
-        // as an array in attributes. We actually want a list of meeting times, but still
-        // need other relevant course data. Transform data prior to setting state.
-        if (isMounted) {
-          const _courses = currentCourses(data).map(c => ({
-            id: generateId(),
-            ...c
-          }));
-          setCourses(_courses);
-          setCoursesLoading(false);
-        }
+      .then(res => {
+        const currentCourses = res.filter(c =>
+          c.attributes.meetingTimes.find(t => t.beginDate && Date.parse(t.beginDate) <= Date.now())
+        );
+        isMounted && setCourses(currentCourses);
+        setCoursesLoading(false);
       })
-      .catch(console.log);
+      .catch(err => {
+        setCoursesLoading(false);
+        console.log(err);
+      });
 
     getPlannerItems()
       .then(data => {
@@ -81,7 +78,10 @@ const ScheduleCard = () => {
           setPlannerItemsLoading(false);
         }
       })
-      .catch(console.log);
+      .catch(err => {
+        setPlannerItemsLoading(false);
+        console.log(err);
+      });
 
     getAcademicCalendarEvents()
       .then(isMounted && setCalEvents)
