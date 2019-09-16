@@ -40,7 +40,7 @@ const getResourcesByCategory = (categoryId: string): Promise<IResourceResult[]> 
     .get(`/api/resources${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
     .then(res => res.data);
 const useResourcesByCategory = (categoryId: string) => {
-  return useAPICall<IResourceResult[]>(getResources, categoryId, d => d, []);
+  return useAPICall<IResourceResult[]>(getResourcesByCategory, categoryId, d => d, []);
 };
 
 /**
@@ -69,12 +69,9 @@ const useCategories = (callback: Function = data => data) => {
 const defaultCategoryId = '1b9b7a4b-5a64-41af-a40a-8bb01abedd19';
 
 export {
-  getResources,
   useResources,
   useResourcesByQuery,
-  getResourcesByCategory,
   useResourcesByCategory,
-  getCategories,
   defaultCategoryId,
   useCategories,
   useResourcesByQueue
