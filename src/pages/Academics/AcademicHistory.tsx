@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
+import VisuallyHidden from '@reach/visually-hidden';
 import { Helmet } from 'react-helmet';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
@@ -79,10 +80,14 @@ const AcademicHistory = () => {
       </Helmet>
       <SearchWrapper>
         <Icon icon={faSearch} color={Color['neutral-600']} />
+        <VisuallyHidden>
+          <label htmlFor="course-filter">Find courses</label>
+        </VisuallyHidden>
         <FilterInput
           type="text"
           placeholder="Find past courses"
           value={query}
+          id="course-filter"
           onChange={e => setQuery(e.target.value)}
         />
       </SearchWrapper>

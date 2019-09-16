@@ -17,6 +17,7 @@ export const Event = (category: Components, action: string, label?: string) => {
 // To make it easier to filter, our components will be the categories in Google Analytics
 type Components =
   | 'footer'
+  | 'beta'
   | 'header'
   | 'navigation-main'
   | 'schedule-card'
