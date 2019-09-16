@@ -1,8 +1,9 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
+import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import EventCardContainer from '../EventCardContainer';
 import { announcementsData, localistData } from '../__mocks__/announcements.data';
+import { mockGAEvent } from '../../setupTests';
 
 const mockGetAnnouncements = jest.fn();
 const mockGetStudentExperienceEvents = jest.fn();
@@ -54,6 +55,16 @@ describe('<EventCardContainer />', () => {
     expect(getByText(/Announcement test body text 2/i)).toBeInTheDocument();
     expect(getByText(/Announcement link title/i)).toBeInTheDocument();
     expect(getByText(/Localist test title 1/i)).toBeInTheDocument();
+  });
+
+  it('should track clicks to events and announcements', async () => {
+    const { getAllByTestId, getByText } = render(<EventCardContainer />);
+    await waitForElement(() => getAllByTestId('eventcard'));
+    const localist = getByText(/Localist test title/i);
+    const announcementLink = getByText(/Announcement link title/i);
+    fireEvent.click(localist);
+    fireEvent.click(announcementLink);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should alternate types of events', async () => {
