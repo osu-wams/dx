@@ -36,6 +36,7 @@ describe('<Resources />', () => {
     const popular = await waitForElement(() => getByLabelText('Popular'));
     const all = await waitForElement(() => getByLabelText('All'));
     fireEvent.click(popular);
+    await sleep(50);
     expect(popular).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();

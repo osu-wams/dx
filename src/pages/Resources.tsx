@@ -42,7 +42,7 @@ const Resources = () => {
           {categories.loading && <Skeleton />}
           <ResourcesCategories
             categories={categories.data}
-            currentCategory={selectedCategory}
+            selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
         </>

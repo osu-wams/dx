@@ -36,11 +36,15 @@ const ResourceIcon = styled(Icon)`
  * Displays resources from a given set of categories
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
-
-  const getCategoryId = data => data.filter((e: any) => e.name.toUpperCase() === categ.toUpperCase());
+  const getCategoryId = data =>
+    data.filter((e: any) => e.name.toUpperCase() === categ.toUpperCase());
   const resources = useResourcesByQueue(categ);
   const categories = useCategories(getCategoryId);
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
+
+  const validCategory = (): boolean => {
+    return categories.data.length > 0 && categories.data[0].id !== '';
+  };
 
   return (
     <Card>
@@ -76,8 +80,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
           <FailedState>Oops, something went wrong!</FailedState>
         )}
       </ResourcesContainer>
-      {
-        categories.data.length && categories.data[0].id !== '' && (
+      {validCategory() && (
         <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink
             to={`/resources?category=${categories.data[0].id}`}
