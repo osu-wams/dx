@@ -22,6 +22,7 @@ import {
   ListItemContentLink
 } from '../../ui/List';
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvasCompact';
+import { Event } from '../../util/gaTracking';
 
 const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
   const user = useContext<any>(UserContext);
@@ -36,7 +37,12 @@ const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
           selectedPlannerItems.map(
             ({ plannable_id, html_url, plannable_type, plannable: { title, due_at } }) => (
               <ListItem key={plannable_id}>
-                <ListItemContentLink href={Url.canvas.main + html_url}>
+                <ListItemContentLink
+                  href={Url.canvas.main + html_url}
+                  onClick={() =>
+                    Event('schedule-card', 'canvas-link', `${Url.canvas.main + html_url}`)
+                  }
+                >
                   <Icon icon={faFileAlt} color={Color['orange-200']} />
                   <ListItemText>
                     <ListItemHeader>{title} </ListItemHeader>

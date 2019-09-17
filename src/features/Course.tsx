@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
+import ReactGA from 'react-ga';
 import generateId from 'uuid/v4';
 import { faMapMarkerAlt, faEnvelope, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { parse } from 'date-fns';
@@ -21,6 +22,7 @@ import Divider from '../ui/Divider';
 import { ICourseScheduleAttributes, IFaculty } from '../api/student/course-schedule';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
+import { Event } from '../util/gaTracking';
 
 const Course: FC<{
   attributes: ICourseScheduleAttributes;
@@ -32,6 +34,7 @@ const Course: FC<{
   toggleCourse
 }) => (
   <MyDialog isOpen={isOpen} data-testid="course-dialog">
+    {ReactGA.modalview('/academics/course-details')}
     <CloseButton onClick={toggleCourse} />
     <h2>
       {courseSubject} {courseNumber}
@@ -65,7 +68,14 @@ const Course: FC<{
                 </ListItemDescription>
               </ListItemText>
               {buildingDescription && (
-                <a href={Url.campusMap.building + building} target="blank">
+                <a
+                  href={Url.campusMap.building + building}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    Event('course', 'course location clicked', Url.campusMap.building + building)
+                  }
+                >
                   <VisuallyHidden>View {buildingDescription} on map</VisuallyHidden>
                   <Icon icon={faMapMarkerAlt} />
                 </a>
@@ -85,7 +95,10 @@ const Course: FC<{
               <ListItemHeader>{fac.name}</ListItemHeader>
               <ListItemDescription>Instructor</ListItemDescription>
             </ListItemText>
-            <a href={`mailto:${fac.email}`}>
+            <a
+              href={`mailto:${fac.email}`}
+              onClick={() => Event('course', 'email professor icon clicked', fac.name)}
+            >
               <VisuallyHidden>E-mail {fac.name}</VisuallyHidden>
               <Icon icon={faEnvelope} />
             </a>
@@ -94,7 +107,9 @@ const Course: FC<{
       ))}
     </List>
     <MyDialogFooter>
-      <ExternalLink href={Url.canvas.main}>View courses</ExternalLink>
+      <ExternalLink href={Url.canvas.main} onClick={() => Event('course', 'view courses clicked')}>
+        View courses
+      </ExternalLink>
     </MyDialogFooter>
   </MyDialog>
 );

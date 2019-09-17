@@ -23,6 +23,7 @@ import {
   ListItemText
 } from '../../ui/List';
 import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
+import { Event } from '../../util/gaTracking';
 
 interface ScheduleCardCoursesProps {
   selectedCourses: ICourseSchedule[];
@@ -45,7 +46,18 @@ const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
             {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
           </ListItemDescription>
         </ListItemText>
-        <a href={Url.campusMap.building + meetingTime.building} target="blank">
+        <a
+          href={Url.campusMap.building + meetingTime.building}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() =>
+            Event(
+              'schedule-card',
+              'course location clicked',
+              `${Url.campusMap.building + meetingTime.building}`
+            )
+          }
+        >
           <VisuallyHidden>
             View {course.attributes.courseSubject} {course.attributes.courseNumber} location on map
           </VisuallyHidden>

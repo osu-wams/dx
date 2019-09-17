@@ -1,8 +1,9 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
+import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { academicCalendar3, academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
 import AcademicCalendar from '../AcademicCalendar';
+import { mockGAEvent } from '../../setupTests';
 
 const mockGetAcademicCalendar = jest.fn();
 
@@ -20,6 +21,17 @@ describe('<AcademicCalendar />', () => {
     const { getByText } = render(<AcademicCalendar />);
     const eventTitle = await waitForElement(() => getByText('Testo Event'));
     expect(eventTitle).toBeInTheDocument();
+  });
+
+  it('can click on footer and event to send data to analytics', async () => {
+    const { getByText } = render(<AcademicCalendar />);
+    const eventTitle = await waitForElement(() => getByText('Testo Event'));
+    fireEvent.click(eventTitle);
+    expect(mockGAEvent).toHaveBeenCalled();
+
+    const viewCalendar = await waitForElement(() => getByText('View academic calendar'));
+    fireEvent.click(viewCalendar);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should have "3" as a value when only 3 calendar events are present', async () => {

@@ -1,18 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { theme } from '../../theme';
+import VisuallyHidden from '@reach/visually-hidden';
+import { theme, Color } from '../../theme';
 import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from './index';
 import { AppContext } from '../../App';
 import { InfoButtonState } from '../../api/info-buttons';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
-
-const InfoButtonIcon = styled(Icon)`
-  &:hover {
-    cursor: pointer;
-  }
-`;
+import Button from './Button';
+import { Event } from '../../util/gaTracking';
 
 const DialogHeader = styled.div`
   display: flex;
@@ -47,11 +44,17 @@ const InfoButton = props => {
 
   return currentButton ? (
     <>
-      <InfoButtonIcon
+      <Button
+        bg={Color.transparent}
         data-testid={props.infoButtonId}
-        icon={faInfoCircle}
-        onClick={(e: React.MouseEvent<HTMLElement>) => toggleDialog(true)}
-      />
+        onClick={(e: React.MouseEvent<HTMLElement>) => {
+          toggleDialog(true);
+          Event('info-button', currentButton.title);
+        }}
+      >
+        <Icon icon={faInfoCircle} size="lg" color={Color['neutral-600']} />
+        <VisuallyHidden>Information about {currentButton.title}</VisuallyHidden>
+      </Button>
       <MyDialog isOpen={dialogVisible}>
         <DialogHeader>
           <DialogTitle>{currentButton.title}</DialogTitle>

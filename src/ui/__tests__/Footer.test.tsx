@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitForElement, act, getByLabelText } from '@testing-library/react';
 import { renderWithUserContext } from '../../util/test-utils';
 import Footer from '../Footer';
+import { mockGAEvent } from '../../setupTests';
 
 const mockGetMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
@@ -73,4 +74,24 @@ test('As an administrator, I can click "masquerade" and trigger the api calls', 
   idInput.value = '111';
   fireEvent.click(masqueradeSubmit);
   expect(mockPostMasqueradeUser).toHaveBeenCalled();
+});
+
+test('Links to be present and tracked in Google Analytics', async () => {
+  const { getByText } = renderWithUserContext(<Footer />);
+
+  //Profile icon click - this text is visually hidden
+  const supportLink = getByText('Get Support');
+  const feedbackLink = getByText('Give Feedback');
+  const copyrightLink = getByText('Copyright');
+  const disclaimerLink = getByText('Disclaimer');
+  const maskLink = getByText('Masquerade');
+  const accessibilityLink = getByText(/Accessibility Information/);
+  fireEvent.click(supportLink);
+  fireEvent.click(feedbackLink);
+  fireEvent.click(copyrightLink);
+  fireEvent.click(disclaimerLink);
+  fireEvent.click(accessibilityLink);
+  fireEvent.click(maskLink);
+
+  expect(mockGAEvent).toHaveBeenCalledTimes(9);
 });

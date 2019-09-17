@@ -11,6 +11,7 @@ import {
   HighlightDescription
 } from '../ui/Highlights';
 import { ExternalLink } from '../ui/Link';
+import { Event } from '../util/gaTracking';
 
 const MealPlans: React.FC = () => {
   const [mealPlans, setMealPlans] = useState<IMealPlans[] | undefined>(undefined);
@@ -47,7 +48,11 @@ const MealPlans: React.FC = () => {
             {formatDollars(mealPlans[0].attributes.balance)}
           </HighlightEmphasis>
           <HighlightDescription>
-            <ExternalLink fg={Color['pine-400']} href="http://mycard.oregonstate.edu/">
+            <ExternalLink
+              fg={Color['pine-400']}
+              href="http://mycard.oregonstate.edu/"
+              onClick={() => Event('meal-plans', 'Add money to card - mycard link')}
+            >
               View and Add Balance
             </ExternalLink>
           </HighlightDescription>

@@ -6,6 +6,7 @@ import Icon from '../../ui/Icon';
 import { List, ListItemAnimated, ListItemContentLink } from '../../ui/List';
 import { Color, theme } from '../../theme';
 import { IResourceResult } from '../../api/resources';
+import { Event } from '../../util/gaTracking';
 
 const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => (
   <List aria-live="polite" aria-atomic="true">
@@ -14,7 +15,12 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
       {resources.length > 0 &&
         resources.map((resource: IResourceResult) => (
           <ListItemAnimated spaced key={resource.id} pose="closed">
-            <ListItemContentLink spaced href={resource.uri} target="_blank">
+            <ListItemContentLink
+              spaced
+              href={resource.uri}
+              onClick={() => Event('resource', resource.title)}
+              target="_blank"
+            >
               {resource.icon !== undefined ? (
                 <ResourceImg src={resource.icon} alt="" />
               ) : (

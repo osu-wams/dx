@@ -5,6 +5,7 @@ import { useDebounce } from 'use-debounce';
 import Icon from '../../ui/Icon';
 import { Color, theme } from '../../theme';
 import { getResources } from '../../api/resources';
+import { Event } from '../../util/gaTracking';
 
 const ResourcesSearch: React.FC<any> = ({ setResources, setSelectedCategory }) => {
   const [query, setQuery] = useState<string>('');
@@ -14,6 +15,7 @@ const ResourcesSearch: React.FC<any> = ({ setResources, setSelectedCategory }) =
     let isMounted = true;
     if (debouncedText) {
       setSelectedCategory('all');
+      Event('resource-search', debouncedText);
       getResources(debouncedText)
         .then(res => isMounted && setResources(res))
         .catch(console.log);

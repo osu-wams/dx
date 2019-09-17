@@ -5,10 +5,15 @@ import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
 import { Color, theme } from '../theme';
-import { getAccountTransactions, IAccountTransactions, ITransaction } from '../api/student';
+import {
+  getAccountTransactions,
+  IAccountTransactions,
+  ITransaction
+} from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
+import { Event } from '../util/gaTracking';
 
 type ITransactionAmount = {
   color: string;
@@ -123,7 +128,12 @@ const FinancialTransactions: FC = () => {
         )}
       </TransactionsContainer>
       <CardFooter infoButtonId="recent-transactions">
-        <ExternalLink href={Url.banner.financialTransactions}>See all transactions</ExternalLink>
+        <ExternalLink
+          href={Url.banner.financialTransactions}
+          onClick={() => Event('financial-transactions', 'See all transactions in banner')}
+        >
+          See all transactions
+        </ExternalLink>
       </CardFooter>
     </Card>
   );

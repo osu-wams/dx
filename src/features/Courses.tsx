@@ -18,6 +18,7 @@ import { titleCase, singularPlural } from '../util/helpers';
 import { Color } from '../theme';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
+import { Event } from '../util/gaTracking';
 
 const Courses = () => {
   const [courses, setCourses] = useState<ICourseSchedule[]>([]);
@@ -71,7 +72,12 @@ const Courses = () => {
               }
             }) => (
               <ListItem key={id}>
-                <ListItemContentButton onClick={() => toggleCourse(attributes)}>
+                <ListItemContentButton
+                  onClick={() => {
+                    toggleCourse(attributes);
+                    Event('courses', 'course clicked', attributes.courseTitle);
+                  }}
+                >
                   <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
                   <ListItemText>
                     <ListItemHeader>
@@ -94,7 +100,11 @@ const Courses = () => {
         )}
       </CardContent>
       <CardFooter infoButtonId="current-courses">
-        <ExternalLink href={Url.canvas.main} fg={Color['orange-400']}>
+        <ExternalLink
+          href={Url.canvas.main}
+          fg={Color['orange-400']}
+          onClick={() => Event('courses', 'Link to Canvas clicked')}
+        >
           View more in Canvas
         </ExternalLink>
       </CardFooter>

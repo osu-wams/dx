@@ -1,9 +1,10 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
+import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import { resourcesData, categoriesData } from '../../api/__mocks__/resources.data';
 import ResourcesCard from '../ResourcesCard';
+import { mockGAEvent } from '../../setupTests';
 
 const mockGetResourcesByQueue = jest.fn();
 const mockGetCategories = jest.fn();
@@ -43,6 +44,13 @@ describe('<ResourcesCard />', () => {
     expect(getByTestId('resource-container').children).toHaveLength(2);
   });
 
+  it('should have a clickable resource that fires GooglaAnalytics', async () => {
+    const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
+    const StudentJobsResource = await waitForElement(() => getByText('Student Jobs'));
+    fireEvent.click(StudentJobsResource);
+    expect(mockGAEvent).toHaveBeenCalled();
+  });
+
   it('should have a link to all category resources', async () => {
     {
       const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
@@ -50,7 +58,12 @@ describe('<ResourcesCard />', () => {
     }
     {
       const { getByText } = render(<ResourcesCard categ="academic" icon={faCube} />);
-      await waitForElement(() => getByText('See all academic resources'));
+      const AllAcademicLink = await waitForElement(() => getByText('See all academic resources'));
+      expect(AllAcademicLink).toBeInTheDocument();
+
+      // Google Analytics is setup and fires
+      fireEvent.click(AllAcademicLink);
+      expect(mockGAEvent).toHaveBeenCalled();
     }
   });
 
