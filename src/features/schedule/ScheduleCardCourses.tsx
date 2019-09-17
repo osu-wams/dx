@@ -22,45 +22,58 @@ import {
   ListItemDescription,
   ListItemText
 } from '../../ui/List';
+import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 
-const ScheduleCardCourses = ({ selectedCourses }) => (
-  <CardSection>
-    {/* TODO: course should NOT be a link */}
-    <SectionHeader>Courses</SectionHeader>
-    <List>
-      {selectedCourses.length > 0 &&
-        selectedCourses.map(course => (
-          <ListItem key={`${course.id}${course.beginTime}`}>
-            <ListItemContent>
-              <Icon icon={getIconByScheduleType(course.scheduleType)} color={Color['orange-200']} />
-              <ListItemText>
-                <ListItemHeader>
-                  {course.courseSubject} {course.courseNumber}
-                </ListItemHeader>
-                <ListItemDescription>
-                  {course.scheduleDescription} &bull; {course.room} {course.buildingDescription}
-                </ListItemDescription>
-                <ListItemDescription>
-                  {formatTime(course.beginTime)} - {formatTime(course.endTime)}
-                </ListItemDescription>
-              </ListItemText>
-              <a href={Url.campusMap.building + course.building} target="blank">
-                <VisuallyHidden>
-                  View {course.courseSubject} {course.courseNumber} location on map
-                </VisuallyHidden>
-                <Icon icon={faMapMarkerAlt} />
-              </a>
-            </ListItemContent>
-          </ListItem>
-        ))}
-      {selectedCourses.length === 0 && (
-        <NoItems>
-          <NoItemsImage src={courses} alt="" />
-          <NoItemsText>You don&apos;t have any courses scheduled for today</NoItemsText>
-        </NoItems>
-      )}
-    </List>
-  </CardSection>
-);
+interface ScheduleCardCoursesProps {
+  selectedCourses: ICourseSchedule[];
+}
+
+const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
+  return course.attributes.meetingTimes.map((meetingTime: IMeetingTime) => (
+    <ListItem key={`${course.id}${meetingTime.beginTime}`}>
+      <ListItemContent>
+        <Icon icon={getIconByScheduleType(meetingTime.scheduleType)} color={Color['orange-200']} />
+        <ListItemText>
+          <ListItemHeader>
+            {course.attributes.courseSubject} {course.attributes.courseNumber}
+          </ListItemHeader>
+          <ListItemDescription>
+            {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
+            {meetingTime.buildingDescription}
+          </ListItemDescription>
+          <ListItemDescription>
+            {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
+          </ListItemDescription>
+        </ListItemText>
+        <a href={Url.campusMap.building + meetingTime.building} target="blank">
+          <VisuallyHidden>
+            View {course.attributes.courseSubject} {course.attributes.courseNumber} location on map
+          </VisuallyHidden>
+          <Icon icon={faMapMarkerAlt} />
+        </a>
+      </ListItemContent>
+    </ListItem>
+  ));
+};
+
+const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
+  const { selectedCourses } = props;
+  return (
+    <CardSection>
+      {/* TODO: course should NOT be a link */}
+      <SectionHeader>Courses</SectionHeader>
+      <List>
+        {selectedCourses.length > 0 &&
+          selectedCourses.map((c: ICourseSchedule) => meetingTimeListItems(c))}
+        {selectedCourses.length === 0 && (
+          <NoItems>
+            <NoItemsImage src={courses} alt="" />
+            <NoItemsText>You don&apos;t have any courses scheduled for today</NoItemsText>
+          </NoItems>
+        )}
+      </List>
+    </CardSection>
+  );
+};
 
 export { ScheduleCardCourses };

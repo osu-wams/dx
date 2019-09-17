@@ -6,7 +6,12 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { getCourseSchedule, getPlannerItems } from '../api/student';
 import { getAcademicCalendarEvents, IEvents } from '../api/events';
 import { UserContext } from '../App';
-import { getNextFiveDays, getDayShortcode } from './schedule/schedule-utils';
+import {
+  getNextFiveDays,
+  getDayShortcode,
+  currentCourses,
+  coursesOnDay
+} from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
   ScheduleCardCourses,
@@ -15,6 +20,7 @@ import {
 } from './schedule';
 import { Header, Card } from './schedule/ScheduleCardStyles';
 import { StaticCardFooter } from '../ui/Card';
+import { ICourseSchedule } from '../api/student/course-schedule';
 
 /**
  * Course Schedule Card
@@ -23,52 +29,48 @@ import { StaticCardFooter } from '../ui/Card';
  */
 const ScheduleCard = () => {
   const nextFiveDays = getNextFiveDays();
-  const [courses, setCourses] = useState<any[]>([]);
+  const [courses, setCourses] = useState<ICourseSchedule[]>([]);
   const [coursesLoading, setCoursesLoading] = useState<boolean>(true);
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const [plannerItems, setPlannerItems] = useState<any[]>([]);
   const [plannerItemsLoading, setPlannerItemsLoading] = useState<boolean>(true);
   const [calEvents, setCalEvents] = useState<IEvents | []>([]);
   const user = useContext<any>(UserContext);
+  const getCoursesOnSelectedDay = () => {
+    const selectedDayShortcode = getDayShortcode(selectedDay);
+    return coursesOnDay(courses, selectedDayShortcode);
+  };
+
+  // Get courses and assignments matching selected day.
+  const selectedCourses = getCoursesOnSelectedDay();
+
+  let selectedPlannerItems: any[] = [];
+  if (user.isCanvasOptIn) {
+    selectedPlannerItems = plannerItems.filter(item =>
+      item.plannable.due_at ? isSameDay(item.plannable.due_at, selectedDay) : ''
+    );
+  }
+
+  const selectedCalEvents = calEvents.filter(event =>
+    event.pubDate ? isSameDay(event.pubDate, selectedDay) : ''
+  );
 
   // Populate user courses
   useEffect(() => {
     let isMounted = true;
     getCourseSchedule()
-      .then(data => {
-        // Course data has individual meeting times (recitation, lab, lecture, etc.)
-        // as an array in attributes. We actually want a list of meeting times, but still
-        // need other relevant course data. Transform data prior to setting state.
-        if (isMounted) {
-          const _courses: any = [];
-          data.forEach(item => {
-            const {
-              attributes: { meetingTimes, ...otherAttributes }
-            } = item;
-            meetingTimes.forEach(meetingTime => {
-              const course: any = {
-                id: generateId(),
-                ...meetingTime,
-                ...otherAttributes
-              };
-              _courses.push(course);
-            });
-          });
-
-          setCourses(_courses);
-          setCoursesLoading(false);
-        }
+      .then(res => {
+        const currentCourses = res.filter(c =>
+          c.attributes.meetingTimes.find(t => t.beginDate && Date.parse(t.beginDate) <= Date.now())
+        );
+        isMounted && setCourses(currentCourses);
+        setCoursesLoading(false);
       })
-      .catch(console.log);
+      .catch(err => {
+        setCoursesLoading(false);
+        console.log(err);
+      });
 
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    let isMounted = true;
     getPlannerItems()
       .then(data => {
         if (isMounted) {
@@ -76,17 +78,11 @@ const ScheduleCard = () => {
           setPlannerItemsLoading(false);
         }
       })
-      .catch(console.log);
+      .catch(err => {
+        setPlannerItemsLoading(false);
+        console.log(err);
+      });
 
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
-
-  // Populate assignment data for current user
-  useEffect(() => {
-    let isMounted = true;
     getAcademicCalendarEvents()
       .then(isMounted && setCalEvents)
       .catch(console.log);
@@ -96,30 +92,6 @@ const ScheduleCard = () => {
     };
   }, []);
 
-  const getCoursesOnSelectedDay = () => {
-    const selectedDayShortcode = getDayShortcode(selectedDay);
-    const coursesOnSelectedDay = courses.filter(course =>
-      course.weeklySchedule.includes(selectedDayShortcode)
-    );
-    return coursesOnSelectedDay;
-  };
-
-  // Get courses and assignments matching selected day.
-  const selectedCourses = getCoursesOnSelectedDay();
-
-  let selectedPlannerItems;
-  if (user.isCanvasOptIn) {
-    selectedPlannerItems = plannerItems.filter(item =>
-      item.plannable.due_at ? isSameDay(item.plannable.due_at, selectedDay) : ''
-    );
-  } else {
-    selectedPlannerItems = [];
-  }
-
-  let selectedCalEvents = calEvents.filter(event =>
-    event.pubDate ? isSameDay(event.pubDate, selectedDay) : ''
-  );
-
   // Get a list of days with courses or assignments.
   // Used to display the orange dots above days to indicate
   // which days have events at a quick glance.
@@ -127,22 +99,19 @@ const ScheduleCard = () => {
     () =>
       nextFiveDays.filter(day => {
         const dayShortcode = getDayShortcode(day);
-        const coursesOnDay = courses.filter(course => course.weeklySchedule.includes(dayShortcode));
-        let plannerItemsOnDay;
+        const hasCourses = coursesOnDay(courses, dayShortcode).length > 0;
+        const calendarEventsOnDay = calEvents.filter(event =>
+          event.pubDate ? isSameDay(event.pubDate, day) : ''
+        );
+
+        let plannerItemsOnDay: any[] = [];
         if (user.isCanvasOptIn) {
           plannerItemsOnDay = plannerItems.filter(item =>
             item.plannable.due_at ? isSameDay(item.plannable.due_at, day) : ''
           );
-        } else {
-          plannerItemsOnDay = [];
         }
-        let calendarEventsOnDay = calEvents.filter(event =>
-          event.pubDate ? isSameDay(event.pubDate, day) : ''
-        );
 
-        return (
-          coursesOnDay.length > 0 || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0
-        );
+        return hasCourses || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0;
       }),
     [nextFiveDays, plannerItems, calEvents, courses, user.isCanvasOptIn]
   );
@@ -165,7 +134,7 @@ const ScheduleCard = () => {
         )}
         {coursesLoading && <Skeleton count={4} />}
         {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
-        <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} /> 
+        <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
       </div>
       <StaticCardFooter infoButtonId="academic-calendar"></StaticCardFooter>
     </Card>

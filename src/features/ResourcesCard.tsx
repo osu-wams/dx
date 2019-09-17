@@ -29,15 +29,13 @@ const ResourceIcon = styled(Icon)`
 `;
 
 const getCategoryId = (categ: string) =>
-  getCategories().then(
-    (res: ICategory[]): string => {
-      const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
-      if (result !== undefined) {
-        return result.id;
-      }
-      return '';
+  getCategories().then((res: ICategory[]): string => {
+    const result = res.find((e: any) => e.name.toUpperCase() === categ.toUpperCase());
+    if (result !== undefined) {
+      return result.id;
     }
-  );
+    return '';
+  });
 
 /**
  * Resources Card

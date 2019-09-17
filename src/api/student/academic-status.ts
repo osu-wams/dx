@@ -6,5 +6,4 @@ export const getAcademicStatus = (): Promise<AcademicStatus> =>
 export type AcademicStatus = {
   academicStanding: string;
   term: string;
-  creditHoursAttempted: number;
 };

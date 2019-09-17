@@ -1,12 +1,12 @@
-import React, {useContext, FC} from 'react';
+import React, { useContext, FC } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components';
 import Icon from '../Icon';
-import {ICollapse} from './ICollapse';
-import {theme, Color} from '../../theme';
-import {CardContext} from './Card';
+import { ICollapse } from './ICollapse';
+import { theme, Color } from '../../theme';
+import { CardContext } from './Card';
 
-const CardHeader: FC<{ title: string; badge?: any }> = ({title, badge, ...props }) => {
+const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props }) => {
   const { collapsed, toggleCollapsed, collapsible, uuid } = useContext(CardContext);
   const handleKeyDown = e => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -35,7 +35,10 @@ const CardHeader: FC<{ title: string; badge?: any }> = ({title, badge, ...props 
   );
 };
 
-const CardHeaderWrapper = styled.div<ICollapse>`
+const CardHeaderWrapper = styled.h2<ICollapse>`
+  margin: unset;
+  font-weight: normal;
+  font-size: ${theme.fontSize[16]};
   height: 64px;
   width: 100%;
   padding: ${theme.spacing.unit * 2}px;

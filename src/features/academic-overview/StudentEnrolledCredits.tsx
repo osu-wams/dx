@@ -7,7 +7,7 @@ import {
   HighlightEmphasis,
   HighlightDescription
 } from '../../ui/Highlights';
-import { getAcademicStatus, AcademicStatus } from '../../api/student/academic-status';
+import { getCourseSchedule, ICourseSchedule } from '../../api/student/course-schedule';
 
 export const StudentEnrolledCredits: React.FC = () => {
   const [enrolledCredits, setEnrolledCredits] = useState<number>(0);
@@ -15,11 +15,14 @@ export const StudentEnrolledCredits: React.FC = () => {
 
   useEffect(() => {
     let isMounted = true;
-    getAcademicStatus()
-      .then((res: AcademicStatus) => {
+    getCourseSchedule()
+      .then((res: ICourseSchedule[]) => {
         if (isMounted) {
-          if (res.creditHoursAttempted) {
-            setEnrolledCredits(res.creditHoursAttempted);
+          if (res.length) {
+            const credits = res
+              .map((c: ICourseSchedule) => c.attributes.creditHours)
+              .reduce((a: number, v: number) => a + v);
+            setEnrolledCredits(credits);
           }
           setEnrolledCreditsLoading(false);
         }
