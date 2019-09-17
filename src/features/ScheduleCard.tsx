@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { isSameDay, format } from 'date-fns';
-import generateId from 'uuid/v4';
 import VisuallyHidden from '@reach/visually-hidden';
 import { getCourseSchedule, getPlannerItems } from '../api/student';
 import { getAcademicCalendarEvents, IEvents } from '../api/events';
 import { UserContext } from '../App';
-import {
-  getNextFiveDays,
-  getDayShortcode,
-  currentCourses,
-  coursesOnDay
-} from './schedule/schedule-utils';
+import { getNextFiveDays, getDayShortcode, coursesOnDay } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
   ScheduleCardCourses,

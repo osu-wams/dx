@@ -1,9 +1,16 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
-import { faHome, faGraduationCap, faHandsUsd, faToolbox, faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
+import {
+  faHome,
+  faGraduationCap,
+  faHandsUsd,
+  faToolbox,
+  faFlaskPotion
+} from '@fortawesome/pro-light-svg-icons';
 import { Color } from '../theme';
 import Icon from './Icon';
+import { Event } from '../util/gaTracking';
 
 const Nav = styled.nav`
   display: flex;
@@ -67,23 +74,23 @@ const NavLink = styled(Link)`
 
 const MainNav = (...props) => (
   <Nav {...props}>
-    <NavLink to="/">
+    <NavLink to="/" onClick={() => Event('navigation-main', 'Home link clicked')}>
       <Icon icon={faHome} />
       Home
     </NavLink>
-    <NavLink to="academics">
+    <NavLink to="academics" onClick={() => Event('navigation-main', 'Academics link clicked')}>
       <Icon icon={faGraduationCap} />
       Academics
     </NavLink>
-    <NavLink to="finances">
+    <NavLink to="finances" onClick={() => Event('navigation-main', 'Finances link clicked')}>
       <Icon icon={faHandsUsd} />
       Finances
     </NavLink>
-    <NavLink to="resources">
+    <NavLink to="resources" onClick={() => Event('navigation-main', 'Resources link clicked')}>
       <Icon icon={faToolbox} />
       Resources
     </NavLink>
-    <NavLink to="beta">
+    <NavLink to="beta" onClick={() => Event('navigation-main', 'Beta link clicked')}>
       <Icon icon={faFlaskPotion} />
       Beta
     </NavLink>

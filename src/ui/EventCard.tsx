@@ -6,6 +6,7 @@ import { CardBase } from './Card';
 import Icon from './Icon';
 import { Color, theme } from '../theme';
 import Button from './Button';
+import { Event } from '../util/gaTracking';
 
 const ButtonWithIcon = styled(Button).attrs({
   as: 'a'
@@ -133,9 +134,13 @@ const EventCardContent = ({ item }) => {
   return (
     <>
       {!item.body && (
-        <EventCardBody href={item.action.link} target="_blank">
+        <EventCardBody
+          href={item.action.link}
+          target="_blank"
+          onClick={() => Event('calendar-event', item.title, item.action.link)}
+        >
           <EventCardDate month={format(item.date, 'MMM')} day={format(item.date, 'D')} />
-          <EventCardLargeTitle aria-live="polite">{item.title}</EventCardLargeTitle>
+          <EventCardLargeTitle>{item.title}</EventCardLargeTitle>
         </EventCardBody>
       )}
       {item.body && (
@@ -144,7 +149,12 @@ const EventCardContent = ({ item }) => {
           <EventCardText>{item.body}</EventCardText>
           <>
             {item.action.title && (
-              <ButtonWithIcon fg={Color.white} href={item.action.link} target="_blank">
+              <ButtonWithIcon
+                fg={Color.white}
+                href={item.action.link}
+                onClick={() => Event('dx-event', item.action.title, item.action.link)}
+                target="_blank"
+              >
                 {item.action.title}
                 <Icon icon={faLongArrowRight} color={Color.white} />
               </ButtonWithIcon>

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../../ui/Icon';
 import { Color, theme } from '../../theme';
+import { Event } from '../../util/gaTracking';
 
 const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }) => {
+  useEffect(() => {
+    Event('resource-search', query);
+  });
 
   const handleChange = value => {
     setQuery(value);

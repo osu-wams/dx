@@ -9,6 +9,7 @@ import { Color, theme } from '../theme';
 import { useResourcesByQueue, useCategories } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
+import { Event } from '../util/gaTracking';
 
 const ResourcesContainer = styled(CardContent)`
   padding-top: 0;
@@ -53,7 +54,12 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
           <List data-testid="resource-container">
             {resources.data.map(resource => (
               <ListItem spaced key={resource.id}>
-                <ListItemContentLink spaced href={resource.uri} target="_blank">
+                <ListItemContentLink
+                  spaced
+                  href={resource.uri}
+                  target="_blank"
+                  onClick={() => Event('resources-card', categ, resource.title)}
+                >
                   {resource.icon !== undefined ? (
                     <ResourceImg src={resource.icon} />
                   ) : (
@@ -73,7 +79,10 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
       {
         categories.data.length && categories.data[0].id !== '' && (
         <CardFooter infoButtonId={`${categ}-resources`}>
-          <InternalLink to={`/resources?category=${categories.data[0].id}`}>
+          <InternalLink
+            to={`/resources?category=${categories.data[0].id}`}
+            onClick={() => Event('resources-card', `view all ${categ} link`)}
+          >
             See all {categ} resources
           </InternalLink>
         </CardFooter>

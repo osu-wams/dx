@@ -10,6 +10,7 @@ import logo from '../assets/osu-logo.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
 import { Color } from '../theme';
+import { Event } from '../util/gaTracking';
 
 const headerMedia = `900px`;
 
@@ -76,15 +77,29 @@ const Header = () => (
     <Logo src={logo} alt="Oregon State University" />
     <ProfileMenu>
       <Menu className="profile-menu">
-        <UserButton data-testid="user-btn">
+        <UserButton
+          data-testid="user-btn"
+          onClick={() => Event('header', 'user-button-menu', 'User button menu expanded')}
+        >
           <VisuallyHidden>User menu</VisuallyHidden>
           <FontAwesomeIcon icon={faUserCircle} size="2x" />
         </UserButton>
         <ProfileMenuList>
-          <MenuLink as="a" href="/logout">
+          <MenuLink
+            as="a"
+            href="/logout"
+            onClick={() => Event('header', 'user-button-menu', 'Logout link clicked')}
+          >
             Logout
           </MenuLink>
-          <MenuLink as={Link} to="profile" data-testid="profile-link">
+          <MenuLink
+            as={Link}
+            to="profile"
+            data-testid="profile-link"
+            onClick={() =>
+              Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
+            }
+          >
             View Profile
           </MenuLink>
         </ProfileMenuList>

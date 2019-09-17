@@ -1,8 +1,9 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
+import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import PlannerItems from '../PlannerItems';
+import { mockGAEvent } from '../../setupTests';
 
 const mockGetPlannerItems = jest.fn();
 
@@ -19,6 +20,20 @@ describe('<PlannerItems />', () => {
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
     const { getByText } = render(<PlannerItems />);
     await waitForElement(() => getByText('Week 5 Lab Discussion'));
+  });
+
+  it('should track analytics when footer link and assignment is clicked', async () => {
+    const { getByText } = render(<PlannerItems />);
+
+    // Planner Item
+    const PlannerItem = await waitForElement(() => getByText('Week 5 Lab Discussion'));
+    fireEvent.click(PlannerItem);
+    expect(mockGAEvent).toHaveBeenCalled();
+
+    // Footer link
+    const CanvasLink = await waitForElement(() => getByText('View all in Canvas'));
+    fireEvent.click(CanvasLink);
+    expect(mockGAEvent).toHaveBeenCalled();
   });
 
   it('should find "NO ASSIGNMENTS" if our promise returns empty', async () => {

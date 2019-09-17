@@ -3,6 +3,7 @@ import { Router as ReachRouter, Location, RouteComponentProps } from '@reach/rou
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import axios from 'axios';
+import ReactGA from 'react-ga';
 import GlobalStyles from './GlobalStyles';
 import { theme, breakpoints } from './theme';
 import Header from './ui/Header';
@@ -117,6 +118,7 @@ const App = (props: AppProps) => {
           <Location>
             {({ location }) => (
               <PoseGroup>
+                {ReactGA.pageview(location.pathname + location.search + location.hash)}
                 <RouteContainer key={location.key} style={{ width: '100%' }}>
                   <Router location={location}>
                     <RouterPage path="/" pageComponent={<Dashboard />} />

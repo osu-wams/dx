@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { theme } from '../../theme';
 import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
+import { Event } from '../../util/gaTracking';
 
-const ResourceCategories = ({ categories, currentCategory, setSelectedCategory }) => {
+const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory }) => {
 
   return (
     <CategoriesWrapper>
@@ -15,8 +16,11 @@ const ResourceCategories = ({ categories, currentCategory, setSelectedCategory }
             text="All"
             id="all"
             name="categories"
-            clickHandler={() => setSelectedCategory('all')}
-            selected={currentCategory === 'all' ? true : false}
+            clickHandler={() => {
+              setSelectedCategory('all');
+              Event('resource-category', 'all');
+            }}
+            selected={selectedCategory === 'all' ? true : false}
           />
           {categories.map((category: ICategory) => (
             <CustomBtn
@@ -24,9 +28,12 @@ const ResourceCategories = ({ categories, currentCategory, setSelectedCategory }
               text={category.name}
               id={category.id}
               key={category.id}
-              clickHandler={() => setSelectedCategory(category.id)}
+              clickHandler={() => {
+                setSelectedCategory(category.id);
+                Event('resource-category', category.name);
+              }}
               name="categories"
-              selected={currentCategory === category.id ? true : false}
+              selected={selectedCategory === category.id ? true : false}
             />
           ))}
         </>

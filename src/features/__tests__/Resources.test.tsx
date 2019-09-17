@@ -3,6 +3,7 @@ import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
+import { mockGAEvent } from '../../setupTests';
 
 const sleep = (ms: number) => {
   return new Promise(res => setTimeout(res, ms));
@@ -49,8 +50,17 @@ describe('<Resources />', () => {
     await sleep(50);
     expect(popular).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
-    expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();
+    expect(findByText(/Billing Information/)).not.toBeNull();
+  });
+
+  it('should have clickable categories that report to GoogleAnalytics', async () => {
+    const { getByText } = render(<Resources />);
+    await sleep(50);
+    const BillingInformationResource = await getByText(/Billing Information/);
+    expect(BillingInformationResource).not.toBeNull();
+    fireEvent.click(BillingInformationResource);
+    expect(mockGAEvent).toHaveBeenCalled();
   });
 
   it('should be able to reselect a category', async () => {
