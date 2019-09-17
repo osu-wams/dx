@@ -11,7 +11,7 @@ import { defaultCategoryId, useCategories, useResources } from '../api/resources
 
 //import type here
 const Resources = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>(defaultCategoryId);
+  const [selectedCategory, setSelectedCategory] = useState<string>(getInitialCategory());
   const [query, setQuery] = useState<string>('');
   const categories = useCategories();
   const resources = useResources(
@@ -19,15 +19,6 @@ const Resources = () => {
       ? `?query=${query}`
       : `?category=${selectedCategory !== 'all' ? selectedCategory : ''}`
   );
-
-  useEffect(() => {
-    if(window.location.search.startsWith('?category=')){
-      const terms = window.location.search.split('=')
-      if(terms.length === 2){
-        setSelectedCategory(terms[1]);
-      }
-    }
-  }, []);
 
   return (
     <ResourcesWrapper data-testid="resources-page">
@@ -58,6 +49,16 @@ const Resources = () => {
       )}
     </ResourcesWrapper>
   );
+};
+
+const getInitialCategory = () => {
+  if (window.location.search.startsWith('?category=')) {
+    const terms = window.location.search.split('=');
+    if (terms.length === 2) {
+      return terms[1];
+    }
+  }
+  return defaultCategoryId;
 };
 
 const ResourcesWrapper = styled(CardBase)`
