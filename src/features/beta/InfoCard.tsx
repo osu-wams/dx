@@ -4,7 +4,7 @@ import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Ca
 
 const BetaInfo: FC = () => {
   return (
-    <Card>
+    <Card collapsing={false}>
       <CardHeader title="Dashboard Beta" badge={<CardIcon icon={faFlaskPotion} />} />
       <CardContent>
         <DashboardBetaInfo />

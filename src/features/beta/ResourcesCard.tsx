@@ -13,7 +13,7 @@ import { Event } from '../../util/gaTracking';
 
 const BetaResources: FC = () => {
   return (
-    <Card>
+    <Card collapsing={false}>
       <CardHeader title="Beta Resources" badge={<CardIcon icon={faCogs} />} />
       <CardContent>
         <List>

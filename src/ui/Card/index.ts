@@ -1,6 +1,6 @@
 import { Card, CardContext } from './Card';
 import CardIcon from './CardIcon';
-import CardFooter, { StaticCardFooter } from './CardFooter';
+import CardFooter from './CardFooter';
 import CardContent from './CardContent';
 import CardHeader from './CardHeader';
 import {
@@ -22,6 +22,5 @@ export {
   CardContentTable,
   CardContentRow,
   CardContentCell,
-  CardContext,
-  StaticCardFooter
+  CardContext
 };

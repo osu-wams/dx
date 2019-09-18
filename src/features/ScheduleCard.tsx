@@ -12,8 +12,8 @@ import {
   ScheduleCardAssignments,
   ScheduleCardAcademicCalendar
 } from './schedule';
-import { Header, Card } from './schedule/ScheduleCardStyles';
-import { StaticCardFooter } from '../ui/Card';
+import { Header } from './schedule/ScheduleCardStyles';
+import { Card, CardFooter, CardContent } from '../ui/Card';
 import { ICourseSchedule } from '../api/student/course-schedule';
 
 /**
@@ -107,26 +107,28 @@ const ScheduleCard = () => {
   );
 
   return (
-    <Card>
+    <Card collapsing={false}>
       <VisuallyHidden>
         <Header data-testid="scheduleCardHeader">{format(selectedDay, 'dddd MMMM D')}</Header>
       </VisuallyHidden>
-      <ScheduleCardDayMenu
-        nextFiveDays={nextFiveDays}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}
-        daysWithEvents={daysWithEvents}
-      />
-      {plannerItemsLoading && <Skeleton count={4} />}
-      <div aria-live="assertive" aria-atomic="true">
-        {!plannerItemsLoading && (
-          <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
-        )}
-        {coursesLoading && <Skeleton count={4} />}
-        {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
-        <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
-      </div>
-      <StaticCardFooter infoButtonId="academic-calendar"></StaticCardFooter>
+      <CardContent>
+        <ScheduleCardDayMenu
+          nextFiveDays={nextFiveDays}
+          selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
+          daysWithEvents={daysWithEvents}
+        />
+        {plannerItemsLoading && <Skeleton count={4} />}
+        <div aria-live="assertive" aria-atomic="true">
+          {!plannerItemsLoading && (
+            <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
+          )}
+          {coursesLoading && <Skeleton count={4} />}
+          {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
+          <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
+        </div>
+      </CardContent>
+      <CardFooter infoButtonId="academic-calendar"></CardFooter>
     </Card>
   );
 };

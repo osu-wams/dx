@@ -18,20 +18,6 @@ const CardFooter = ({ ...props }) => {
   );
 };
 
-/**
- * Non Collapsible footer
- */
-const StaticCardFooter = ({ ...props }) => {
-  return props.children || props.infoButtonId ? (
-    <CardFooterWrapper collapsed={false} collapsible={false} {...props}>
-      <InfoButton infoButtonId={props.infoButtonId} />
-      {props.children}
-    </CardFooterWrapper>
-  ) : (
-    <></>
-  );
-};
-
 const CardFooterWrapper = styled.div<ICollapse>`
   padding: ${`${theme.spacing.unit}px ${theme.spacing.unit * 2}px`};
   ${props =>
@@ -53,4 +39,3 @@ const CardFooterWrapper = styled.div<ICollapse>`
 `;
 
 export default CardFooter;
-export { StaticCardFooter };

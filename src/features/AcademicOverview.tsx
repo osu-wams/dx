@@ -20,7 +20,7 @@ import { Event } from '../util/gaTracking';
 
 export const AcademicOverview = () => {
   return (
-    <Card>
+    <Card collapsing={false}>
       <CardHeader title="Academic Overview" badge={<CardIcon icon={faAnalytics} />} />
       <CardContentTable>
         <CardContentRow className="row-span-1">

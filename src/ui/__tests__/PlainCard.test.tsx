@@ -4,14 +4,15 @@ import PlainCard from '../PlainCard';
 
 const Plain = () => (
   <PlainCard title="Plain Card Title">
-    <p>Can have any children inside</p>
-    <span>Any element can work</span>
+    <p data-testid='paragraph' >Can have any children inside</p>
+    <span data-testid='span' >Any element can work</span>
   </PlainCard>
 );
 
-test('Should render with children and match snapshot', () => {
-  const { container } = render(<Plain />);
-  expect(container).toMatchSnapshot();
+test('Should render with children', () => {
+  const { getByTestId } = render(<Plain />);
+  expect(getByTestId('paragraph')).toBeInTheDocument();
+  expect(getByTestId('span')).toBeInTheDocument();
 });
 
 test('Title in rendered element should be "Plain Card Title"', () => {
