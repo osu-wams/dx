@@ -8,7 +8,7 @@ import PageGrid from '../ui/PageGrid';
 const BetaDashboard = () => {
   return (
     <div data-testid="betadash-page">
-      <PageTitle title="DX Beta" />
+      <PageTitle title="Beta" />
       <PageGrid>
         <BetaInfoCard />
         <BetaResourcesCard />

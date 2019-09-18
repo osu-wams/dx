@@ -12,7 +12,7 @@ import PageGrid from '../ui/PageGrid';
 const Finances = () => {
   return (
     <div data-testid="finances-page">
-      <PageTitle title="Financial Information" />
+      <PageTitle title="Finances" />
       <PageGrid>
         <FinancialTransactions />
         <HighlightsCard className="row-span-1">

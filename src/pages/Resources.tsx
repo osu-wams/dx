@@ -62,29 +62,33 @@ const Resources = () => {
   };
 
   return (
-    <ResourcesWrapper data-testid="resources-page">
+
+    <>
       <PageTitle title="Resources" />
-      {selectedCategory !== '' && (
-        <>
-          <ResourcesSearch setResources={setResources} setSelectedCategory={setSelectedCategory} />
-          {catLoading && <Skeleton />}
-          <ResourcesCategories
-            fetchResourcesByCategory={fetchResourcesByCategory}
-            selectedCategory={selectedCategory}
-            categories={categories}
-          />
-        </>
-      )}
-      {resLoading && <Skeleton count={5} />}
-      {!resLoading && resources.length > 0 ? (
-        <ResourcesList resources={resources} />
-      ) : (
-        !resLoading && (
-          /* @TODO need mockup styling to do and messaging for no results */
-          <div>No results</div>
-        )
-      )}
-    </ResourcesWrapper>
+      <ResourcesWrapper data-testid="resources-page">
+        
+        {selectedCategory !== '' && (
+          <>
+            <ResourcesSearch setResources={setResources} setSelectedCategory={setSelectedCategory} />
+            {catLoading && <Skeleton />}
+            <ResourcesCategories
+              fetchResourcesByCategory={fetchResourcesByCategory}
+              selectedCategory={selectedCategory}
+              categories={categories}
+            />
+          </>
+        )}
+        {resLoading && <Skeleton count={5} />}
+        {!resLoading && resources.length > 0 ? (
+          <ResourcesList resources={resources} />
+        ) : (
+          !resLoading && (
+            /* @TODO need mockup styling to do and messaging for no results */
+            <div>No results</div>
+          )
+        )}
+      </ResourcesWrapper>
+    </>
   );
 };
 

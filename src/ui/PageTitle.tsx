@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import VisuallyHidden from '@reach/visually-hidden';
+import styled from 'styled-components';
 import Helmet from 'react-helmet';
+import { Color, theme } from '../theme';
 
 type Props = {
   title: string;
@@ -10,13 +11,23 @@ type Props = {
 // Currently hidden and just for accessibility purposes
 const PageTitle: FC<Props> = ({ title }) => (
   <>
-    <VisuallyHidden>
-      <h1>{title}</h1>
-    </VisuallyHidden>
+    <Title>
+      {title}
+    </Title>
     <Helmet>
       <title>{title}</title>
     </Helmet>
   </>
 );
+
+const Title = styled.h1`
+  font-family: Stratum2
+  font-size: ${theme.fontSize[36]};
+  font-color: ${Color["neutral-700"]};
+  font-weight: normal;
+  line-height: 43px;
+  margin-bottom: ${theme.spacing.unit};
+`;
+
 
 export default PageTitle;

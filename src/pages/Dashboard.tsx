@@ -9,7 +9,7 @@ import ResourcesCard from '../features/ResourcesCard';
 const Dashboard = () => {
   return (
     <div data-testid="dashboard-page">
-      <PageTitle title="My OSU Dashboard" />
+      <PageTitle title="Student Dashboard" />
       <PageGrid>
         <ScheduleCard />
         <ResourcesCard categ="featured" icon={faStars} />
