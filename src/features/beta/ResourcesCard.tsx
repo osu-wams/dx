@@ -10,6 +10,7 @@ import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Ca
 import { Color } from '../../theme';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
+import Url from '../../util/externalUrls.data';
 
 const BetaResources: FC = () => {
   return (
@@ -41,7 +42,7 @@ const BetaResources: FC = () => {
           </ListItem>
           <ListItem>
             <ListItemContentLink
-              href="https://myosu.oregonstate.edu/"
+              href={Url.myosu.main}
               target="_blank"
               onClick={() => Event('beta', 'old my osu')}
             >

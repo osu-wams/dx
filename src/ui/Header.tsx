@@ -9,10 +9,10 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import logo from '../assets/osu-logo.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
-import { Color } from '../theme';
+import { Color, breakpoints } from '../theme';
 import { Event } from '../util/gaTracking';
 
-const headerMedia = `900px`;
+const headerMedia = breakpoints[768];
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const HeaderWrapper = styled.div`
 
 const ProfileMenu = styled.div`
   @media (min-width: ${headerMedia}) {
-    width: 150px;
+    width: 100px;
     order: 2;
     button {
       float: right;

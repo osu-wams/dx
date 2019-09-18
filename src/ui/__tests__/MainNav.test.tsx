@@ -4,6 +4,16 @@ import { renderWithUserContext } from '../../util/test-utils';
 import MainNav from '../MainNav';
 import { mockGAEvent } from '../../setupTests';
 
+// required because of the overlay from Reakit
+global.document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document
+  }
+});
+
 test('Main Navigation Links to be present and tracked in Google Analytics', async () => {
   const { getByText } = renderWithUserContext(<MainNav />);
 
@@ -11,13 +21,11 @@ test('Main Navigation Links to be present and tracked in Google Analytics', asyn
   const home = getByText('Home');
   const academics = getByText('Academics');
   const finances = getByText('Finances');
-  const resources = getByText('Resources');
-  const beta = getByText('Beta');
+  const more = getByText('More');
   fireEvent.click(home);
   fireEvent.click(academics);
   fireEvent.click(finances);
-  fireEvent.click(resources);
-  fireEvent.click(beta);
+  fireEvent.click(more);
 
-  expect(mockGAEvent).toHaveBeenCalledTimes(5);
+  expect(mockGAEvent).toHaveBeenCalledTimes(4);
 });
