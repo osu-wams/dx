@@ -6,17 +6,17 @@ import { useEffect, useState } from 'react';
  */
 
 export interface IAPIResult<T> {
-  data: T; 
+  data: T;
   loading: boolean;
   error: boolean;
 }
 
 /**
  * TODO
- * @param api 
- * @param query 
- * @param dataTransform 
- * @param initialState 
+ * @param api
+ * @param query
+ * @param dataTransform
+ * @param initialState
  */
 const useAPICall = <T>(
   api: Function,
@@ -28,18 +28,23 @@ const useAPICall = <T>(
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
+  const fetchData = async () => {
     setLoading(true);
     api(query)
       .then((result: T) => {
         const transformed = dataTransform(result);
         setData(transformed);
+        setLoading(false);
       })
       .catch(e => {
         console.log(e);
         setError(true);
+        setLoading(false);
       });
-    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [query]);
 
   return { data, loading, error };
