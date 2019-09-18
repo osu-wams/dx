@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { isSameDay, format } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { getCourseSchedule, getPlannerItems } from '../api/student';
-import { getAcademicCalendarEvents, IEvents } from '../api/events';
+import { useAcademicCalendarEvents } from '../api/events';
 import { UserContext } from '../App';
 import { getNextFiveDays, getDayShortcode, coursesOnDay } from './schedule/schedule-utils';
 import {
@@ -28,7 +28,7 @@ const ScheduleCard = () => {
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const [plannerItems, setPlannerItems] = useState<any[]>([]);
   const [plannerItemsLoading, setPlannerItemsLoading] = useState<boolean>(true);
-  const [calEvents, setCalEvents] = useState<IEvents | []>([]);
+  const calEvents = useAcademicCalendarEvents();
   const user = useContext<any>(UserContext);
   const getCoursesOnSelectedDay = () => {
     const selectedDayShortcode = getDayShortcode(selectedDay);
@@ -45,7 +45,7 @@ const ScheduleCard = () => {
     );
   }
 
-  const selectedCalEvents = calEvents.filter(event =>
+  const selectedCalEvents = calEvents.data.filter(event =>
     event.pubDate ? isSameDay(event.pubDate, selectedDay) : ''
   );
 
@@ -77,10 +77,6 @@ const ScheduleCard = () => {
         console.log(err);
       });
 
-    getAcademicCalendarEvents()
-      .then(isMounted && setCalEvents)
-      .catch(console.log);
-
     return () => {
       isMounted = false;
     };
@@ -94,7 +90,7 @@ const ScheduleCard = () => {
       nextFiveDays.filter(day => {
         const dayShortcode = getDayShortcode(day);
         const hasCourses = coursesOnDay(courses, dayShortcode).length > 0;
-        const calendarEventsOnDay = calEvents.filter(event =>
+        const calendarEventsOnDay = calEvents.data.filter(event =>
           event.pubDate ? isSameDay(event.pubDate, day) : ''
         );
 

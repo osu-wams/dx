@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faCalendar } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../ui/List';
-import { getAcademicCalendarEvents, IEvents } from '../api/events';
+import { useAcademicCalendarEvents } from '../api/events';
 import { Date, DateDay, DateMonth } from '../ui/Date';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
@@ -15,39 +15,20 @@ import { Event } from '../util/gaTracking';
  * Displays upcoming events from Localist.
  */
 const AcademicCalendar = () => {
-  const [calEvents, setCalEvents] = useState<IEvents>([]);
-  const [calEventsLoading, setCalEventsLoading] = useState<boolean>(true);
-
-  // Get Academic Calendar Events
-  useEffect(() => {
-    let isMounted = true;
-    getAcademicCalendarEvents()
-      .then(data => {
-        if (isMounted) {
-          setCalEvents(data);
-          setCalEventsLoading(false);
-        }
-      })
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
+  const calEvents = useAcademicCalendarEvents();
 
   return (
     <Card>
       <CardHeader
         title="Academic Calendar"
-        badge={<CardIcon icon={faCalendar} count={calEvents.length < 5 ? calEvents.length : 5} />}
+        badge={<CardIcon icon={faCalendar} count={calEvents.data.length < 5 ? calEvents.data.length : 5} />}
       />
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
-        {calEventsLoading && <Skeleton count={5} />}
-        {calEvents.length ? (
+        {calEvents.loading && <Skeleton count={5} />}
+        {calEvents.data.length ? (
           <List>
-            {calEvents.slice(0, 5).map(({ title, link, pubDate }) => (
+            {calEvents.data.slice(0, 5).map(({ title, link, pubDate }) => (
               <ListItem key={title}>
                 <ListItemContentLink
                   href={link}
@@ -65,7 +46,7 @@ const AcademicCalendar = () => {
             ))}
           </List>
         ) : (
-          !calEventsLoading && <EmptyState />
+          !calEvents.loading && <EmptyState />
         )}
       </CardContent>
       <CardFooter infoButtonId="academic-calendar">
