@@ -5,6 +5,16 @@ import Header from '../Header';
 import Dashboard from '../../pages/Dashboard';
 import { mockGAEvent } from '../../setupTests';
 
+// required because of the overlay from Reakit
+global.document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: 'BODY',
+    ownerDocument: document
+  }
+});
+
 test('renders', () => {
   render(<Header />);
 });
@@ -24,7 +34,7 @@ test('Logout Link is in the menu', async () => {
 
 // !TODO revise this test - passing/failing is inconsistent
 xtest('User Button and profile link are in the menu and tracked via GA', async () => {
-  const { getByText, getByTestId, debug } = render(<Header />);
+  const { getByText, getByTestId } = render(<Header />);
 
   const userLink = await waitForElement(() => getByTestId('user-btn'));
   expect(userLink).toBeInTheDocument();
