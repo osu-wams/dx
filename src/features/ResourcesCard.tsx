@@ -11,7 +11,7 @@ import { InternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 
 const ResourcesContainer = styled(CardContent)`
-  padding-top: 0;
+  padding-top: 1.6rem;
   padding-bottom: 0;
 `;
 
@@ -73,15 +73,14 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
 
   return (
     <Card>
-      <CardHeader title={cardTitle} badge={<CardIcon icon={icon} count={resources.length} />} />
+      <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
         {resourcesLoading && <Skeleton count={5} />}
         {resources.length ? (
           <List data-testid="resource-container">
             {resources.map(resource => (
-              <ListItem spaced key={resource.id}>
+              <ListItem key={resource.id}>
                 <ListItemContentLink
-                  spaced
                   href={resource.uri}
                   target="_blank"
                   onClick={() => Event('resources-card', categ, resource.title)}
