@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga';
-import './index.css';
 import App from './App';
 
 // Initialize Google Analytics
