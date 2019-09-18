@@ -42,7 +42,7 @@ const Day = styled.button<{ selected: selectedBtn }>`
   align-self: flex-end;
 
   & > span:first-child {
-    color: ${Color['orange-500']};
+    color: ${Color['orange-400']};
     font-weight: bold;
     font-size: ${theme.fontSize[20]};
     line-height: 18px;

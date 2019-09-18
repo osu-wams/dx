@@ -3,15 +3,16 @@ import styled from 'styled-components';
 import { getAnnouncements } from '../api/announcements';
 import { getStudentExperienceEvents } from '../api/events';
 import EventCard from './EventCard';
+import { theme } from '../theme';
 
 const EventCardContainerWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: 16px;
+  grid-row-gap: ${theme.spacing.mobile};
   @media screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-gap: ${theme.spacing.desktop};
   }
 `;
 

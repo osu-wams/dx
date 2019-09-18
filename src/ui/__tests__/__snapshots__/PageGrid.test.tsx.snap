@@ -5,12 +5,13 @@ exports[`Columns and Rows with different properties 1`] = `
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  grid-column-gap: 1rem;
 }
 
 @media screen and (min-width:768px) {
   .c0 {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: 2rem;
   }
 
   .c0 div {
@@ -67,12 +68,13 @@ exports[`Right Column row height now spans 4/3 1`] = `
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  grid-column-gap: 1rem;
 }
 
 @media screen and (min-width:768px) {
   .c0 {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: 2rem;
   }
 
   .c0 div {
@@ -122,12 +124,13 @@ exports[`Right Column row height now spans 5/3 1`] = `
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  grid-column-gap: 1rem;
 }
 
 @media screen and (min-width:768px) {
   .c0 {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: 2rem;
   }
 
   .c0 div {
@@ -177,12 +180,13 @@ exports[`Right Column row height only 1/3 1`] = `
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  grid-column-gap: 1rem;
 }
 
 @media screen and (min-width:768px) {
   .c0 {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: 2rem;
   }
 
   .c0 div {
@@ -232,12 +236,13 @@ exports[`Right Column row height only 2/3 1`] = `
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  grid-column-gap: 1rem;
 }
 
 @media screen and (min-width:768px) {
   .c0 {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: 2rem;
   }
 
   .c0 div {
@@ -287,12 +292,13 @@ exports[`Standard equal size columns 1`] = `
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  grid-column-gap: 1rem;
 }
 
 @media screen and (min-width:768px) {
   .c0 {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: 2rem;
   }
 
   .c0 div {
@@ -340,12 +346,13 @@ exports[`Third div now spans both columns, making it a single column 1`] = `
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  grid-column-gap: 1rem;
 }
 
 @media screen and (min-width:768px) {
   .c0 {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: 2rem;
   }
 
   .c0 div {

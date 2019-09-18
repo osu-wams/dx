@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Color, shadows, theme } from '../../theme';
+import { Color, shadows, theme, breakpoints } from '../../theme';
 
 interface IBadge {
   fg?: Color;
@@ -17,7 +17,10 @@ const CardBase = styled.div`
   box-shadow: ${shadows[1]};
   background-color: ${Color.white};
   overflow: hidden;
-  margin-bottom: ${theme.spacing.unit * 2}px;
+  margin-bottom: ${theme.spacing.mobile};
+  @media (min-width: ${breakpoints[768]}) {
+    margin-bottom: ${theme.spacing.desktop};
+  }
 `;
 
 const Badge = styled.div<IBadge>`

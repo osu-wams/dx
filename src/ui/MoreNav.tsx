@@ -23,10 +23,19 @@ const PopoverDisclosure = styled(PD)`
   padding: 0 4px;
   line-height: 30px;
   text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
   color: ${Color['neutral-550']};
   & > svg {
     font-size: 24px;
   }
+  &:active,
+  &:focus,
+  &:hover,
+  &:active > svg,
+  &:focus > svg,
+  &:hover > svg,
   &[aria-expanded='true'],
   &[aria-expanded='true'] > svg {
     color: ${Color['orange-400']};
@@ -42,8 +51,6 @@ const Popover = styled(PO)`
   @media (min-width: ${breakpoints[768]}) {
     max-width: 600px;
   }
-
-  /* left: 240px !important; */
 `;
 
 const NavLink = styled(Link)`
