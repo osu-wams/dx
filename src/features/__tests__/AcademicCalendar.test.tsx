@@ -5,16 +5,16 @@ import { academicCalendar3, academicCalendar6 } from '../../api/__mocks__/academ
 import AcademicCalendar from '../AcademicCalendar';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetAcademicCalendar = jest.fn();
+const mockUseAcademicCalendar = jest.fn();
 
 jest.mock('../../api/events', () => ({
-  getAcademicCalendarEvents: () => mockGetAcademicCalendar()
+  useAcademicCalendarEvents: () => mockUseAcademicCalendar()
 }));
 
 describe('<AcademicCalendar />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetAcademicCalendar.mockResolvedValue(Promise.resolve(academicCalendar6));
+    mockUseAcademicCalendar.mockReturnValue(academicCalendar6);
   });
 
   it('should find the "Testo Event" as a title', async () => {
@@ -35,13 +35,13 @@ describe('<AcademicCalendar />', () => {
   });
 
   it('should have "3" as a value when only 3 calendar events are present', async () => {
-    mockGetAcademicCalendar.mockResolvedValue(Promise.resolve(academicCalendar3));
+    mockUseAcademicCalendar.mockReturnValue(academicCalendar3);
     const { getAllByText } = render(<AcademicCalendar />);
     await waitForElement(() => getAllByText('3'));
   });
 
   it('should return "No Calendar Events" when no events are loaded', async () => {
-    mockGetAcademicCalendar.mockResolvedValue(Promise.resolve({}));
+    mockUseAcademicCalendar.mockReturnValue({data: [], loading: false, error: false});
     const { getByText } = render(<AcademicCalendar />);
     await waitForElement(() => getByText('No Calendar Events'));
   });
