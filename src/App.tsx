@@ -19,8 +19,11 @@ import Footer from './ui/Footer';
 import { getInfoButtons, InfoButtonState } from './api/info-buttons';
 
 const Router = styled(ReachRouter)`
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${theme.spacing.mobile};
   width: 100%;
+  @media (min-width: ${breakpoints[768]}) {
+    padding: ${theme.spacing.desktop};
+  }
 `;
 
 const ContentWrapper = styled.div`

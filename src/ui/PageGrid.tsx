@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { theme } from '../theme';
 /* Page Grid
  * Single column for mobile. 2 column for Desktop
  * Provides row-span and col-span classes to modify width or height of children elements
@@ -9,9 +9,10 @@ const PageGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  grid-column-gap: ${theme.spacing.mobile};
   @media screen and (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-column-gap: ${theme.spacing.desktop};
     div {
       grid-row: span 3;
     }

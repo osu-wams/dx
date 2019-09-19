@@ -21,6 +21,9 @@ interface IHighlight {
 
 const Highlight = styled.div<IHighlight>`
   text-align: ${props => (props.textAlignLeft ? 'left' : 'center')};
+  & + div {
+    margin-top: 1.2rem;
+  }
 `;
 
 const HighlightTitle = styled.h2<{ marginTop?: number }>`
@@ -51,7 +54,7 @@ const HighlightEmphasis = styled.div<{ color: Color }>`
 const HighlightDescription = styled.div`
   font-size: ${theme.fontSize[12]};
   color: ${Color['neutral-550']};
-  padding: 0 1.6rem 1.6rem;
+  padding: 0 1.6rem;
 `;
 
 export {
