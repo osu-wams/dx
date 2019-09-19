@@ -2,6 +2,11 @@ import { createGlobalStyle } from 'styled-components';
 import { Color, theme } from './theme';
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: Stratum2;
+    src: url('./assets/Stratum2WebRegular.woff2');
+    font-weight: 400;
+  }
   html {
     box-sizing: border-box;
     font-size: 62.5%;

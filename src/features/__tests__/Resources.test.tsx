@@ -34,9 +34,9 @@ describe('<Resources />', () => {
     mockGetCategories.mockResolvedValue(Promise.resolve(categoriesData.data));
   });
 
-  it('should render the resources page', async () => {
-    const { getByTestId } = render(<Resources />);
-    expect(getByTestId('resources-page')).toBeInTheDocument();
+  it('should display the title Resources', async () => {
+    const { getByText } = render(<Resources />);
+    await waitForElement(() => getByText('Resources'));
   });
 
   it('should have the Popular tag selected', async () => {
