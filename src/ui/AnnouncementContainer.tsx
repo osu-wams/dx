@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getAnnouncements } from '../api/announcements';
+import { useAnnouncements } from '../api/announcements';
 import EventCard from './EventCard';
 
 const AnnouncementContainerWrapper = styled.div`
@@ -15,33 +15,15 @@ const AnnouncementContainerWrapper = styled.div`
 `;
 
 const AnnouncementContainer = ({ type, ...props }) => {
-  const [events, setEvents] = useState<any>([]);
+  const events = useAnnouncements(type);
 
-  // Fetch data on load
-  useEffect(() => {
-    let isMounted = true;
-    getAnnouncements(type)
-      .then(data => {
-        if (isMounted) {
-          for (let i = 0; i < data.length; i++) {
-            setEvents(prevEvents => [...prevEvents, data[i]]);
-          }
-        }
-      })
-      .catch(console.log);
-
-    return () => {
-      isMounted = false;
-    };
-  }, [type]);
-
-  if (!events.length) {
+  if (!events.data.length) {
     return null;
   }
 
   return (
     <AnnouncementContainerWrapper {...props}>
-      {events.map(item => (
+      {events.data.map(item => (
         <EventCard key={item.id} itemContent={item} />
       ))}
     </AnnouncementContainerWrapper>
