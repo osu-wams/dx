@@ -3,18 +3,26 @@ import { faStars } from '@fortawesome/pro-light-svg-icons';
 import PageTitle from '../ui/PageTitle';
 import ScheduleCard from '../features/ScheduleCard';
 import EventCardContainer from '../ui/EventCardContainer';
-import PageGrid from '../ui/PageGrid';
+import { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper } from '../ui/PageGrid';
 import ResourcesCard from '../features/ResourcesCard';
 
 const Dashboard = () => {
   return (
     <div data-testid="dashboard-page">
-      <PageTitle title="Student Dashboard" />
-      <PageGrid>
-        <ScheduleCard />
-        <ResourcesCard categ="featured" icon={faStars} />
-        <EventCardContainer className="col-span-2" />
-      </PageGrid>
+      <MainGridWrapper>
+        <PageTitle title="Student Dashboard" />
+        <MainGrid>
+          <MainGridCol>
+            <ScheduleCard />
+          </MainGridCol>
+          <MainGridCol>
+            <ResourcesCard categ="featured" icon={faStars} />
+          </MainGridCol>
+        </MainGrid>
+      </MainGridWrapper>
+      <SecondGridWrapper>
+        <EventCardContainer />
+      </SecondGridWrapper>
     </div>
   );
 };

@@ -7,21 +7,29 @@ import FinancialTransactions from '../features/FinancialTransactions';
 import { HighlightsCard } from '../ui/Highlights';
 import AccountBalance from '../features/AccountBalance';
 import MealPlans from '../features/MealPlans';
-import PageGrid from '../ui/PageGrid';
+import { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper } from '../ui/PageGrid';
 
 const Finances = () => {
   return (
     <div data-testid="finances-page">
-      <PageTitle title="Finances" />
-      <PageGrid>
-        <FinancialTransactions />
-        <HighlightsCard className="row-span-1">
-          <AccountBalance />
-          <MealPlans />
-        </HighlightsCard>
-        <ResourcesCard categ="financial" icon={faDollarSign} />
+      <MainGridWrapper>
+        <PageTitle title="Finances" />
+        <MainGrid>
+          <MainGridCol>
+            <FinancialTransactions />
+          </MainGridCol>
+          <MainGridCol>
+            <HighlightsCard className="row-span-1">
+              <AccountBalance />
+              <MealPlans />
+            </HighlightsCard>
+            <ResourcesCard categ="financial" icon={faDollarSign} />
+          </MainGridCol>
+        </MainGrid>
+      </MainGridWrapper>
+      <SecondGridWrapper>
         <AnnouncementContainer className="col-span-2" type="financial" />
-      </PageGrid>
+      </SecondGridWrapper>
     </div>
   );
 };

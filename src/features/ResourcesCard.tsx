@@ -11,8 +11,8 @@ import { InternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 
 const ResourcesContainer = styled(CardContent)`
-  padding-top: 1.6rem;
-  padding-bottom: 0;
+  /* padding-top: 1.6rem;
+  padding-bottom: 0; */
 `;
 
 const ResourceName = styled.div`
