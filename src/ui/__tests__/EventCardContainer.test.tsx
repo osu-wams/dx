@@ -5,26 +5,27 @@ import EventCardContainer from '../EventCardContainer';
 import { announcementsData, localistData } from '../__mocks__/announcements.data';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetAnnouncements = jest.fn();
-const mockGetStudentExperienceEvents = jest.fn();
+const mockUseAnnouncements = jest.fn();
+const mockUseStudentExperienceEvents = jest.fn();
+const mockNoData = {data:[], loading: false, error: false}
 
 jest.mock('../../api/announcements', () => {
   return {
-    getAnnouncements: () => mockGetAnnouncements()
+    useAnnouncements: () => mockUseAnnouncements()
   };
 });
 
 jest.mock('../../api/events', () => {
   return {
-    getStudentExperienceEvents: () => mockGetStudentExperienceEvents()
+    useStudentExperienceEvents: () => mockUseStudentExperienceEvents()
   };
 });
 
 describe('<EventCardContainer />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetAnnouncements.mockResolvedValue(Promise.resolve(announcementsData));
-    mockGetStudentExperienceEvents.mockResolvedValue(Promise.resolve(localistData));
+    mockUseAnnouncements.mockReturnValue(announcementsData);
+    mockUseStudentExperienceEvents.mockReturnValue(localistData);
   });
 
   it('should render all cards', async () => {
@@ -33,20 +34,6 @@ describe('<EventCardContainer />', () => {
     await waitForElement(() => getAllByTestId('eventcard'));
 
     expect(getAllByTestId('eventcard')).toHaveLength(3);
-  });
-
-  it('should render only announcements when no localist events loaded', async () => {
-    mockGetStudentExperienceEvents.mockResolvedValueOnce(Promise.resolve([]));
-    const { getAllByTestId } = render(<EventCardContainer />);
-    await waitForElement(() => getAllByTestId('eventcard'));
-    expect(getAllByTestId('eventcard')).toHaveLength(2);
-  });
-
-  it('should render only localist events when no announcements loaded', async () => {
-    mockGetAnnouncements.mockResolvedValueOnce(Promise.resolve([]));
-    const { getAllByTestId } = render(<EventCardContainer />);
-    await waitForElement(() => getAllByTestId('eventcard'));
-    expect(getAllByTestId('eventcard')).toHaveLength(1);
   });
 
   it('should display text', async () => {
@@ -77,4 +64,20 @@ describe('<EventCardContainer />', () => {
     expect(cards[1]).not.toContainElement(bodyText[0]);
     expect(cards[1]).not.toContainElement(bodyText[1]);
   });
+
+  it('should render only announcements when no localist events loaded', async () => {
+    mockUseStudentExperienceEvents.mockReturnValue(mockNoData);
+    const { getAllByTestId } = render(<EventCardContainer />);
+    await waitForElement(() => getAllByTestId('eventcard'));
+    expect(getAllByTestId('eventcard')).toHaveLength(2);
+  });
+
+  it('should render only localist events when no announcements loaded', async () => {
+    mockUseStudentExperienceEvents.mockReturnValue(localistData)
+    mockUseAnnouncements.mockReturnValue(mockNoData);
+    const { getAllByTestId } = render(<EventCardContainer />);
+    await waitForElement(() => getAllByTestId('eventcard'));
+    expect(getAllByTestId('eventcard')).toHaveLength(1);
+  });
+
 });

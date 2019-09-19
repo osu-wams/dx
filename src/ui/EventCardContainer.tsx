@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getAnnouncements } from '../api/announcements';
-import { getStudentExperienceEvents } from '../api/events';
+import { useAnnouncements } from '../api/announcements';
+import { useStudentExperienceEvents } from '../api/events';
 import EventCard from './EventCard';
 
 const EventCardContainerWrapper = styled.div`
@@ -17,48 +17,46 @@ const EventCardContainerWrapper = styled.div`
 
 const EventCardContainer = ({ ...props }) => {
   const [events, setEvents] = useState<any>([]);
+  const studentExperienceEvents = useStudentExperienceEvents();
+  const announcements = useAnnouncements('');
+
+  // Helper Function
+  const newLocalist = item => {
+    return {
+      id: item.event.event_instances[0].event_instance.id,
+      date: item.event.event_instances[0].event_instance.start,
+      title: item.event.title,
+      body: null,
+      bg_image: item.event.photo_url,
+      action: {
+        title: null,
+        link: item.event.localist_url
+      }
+    };
+  };
 
   // Fetch data on load
   useEffect(() => {
-    let isMounted = true;
-
-    Promise.all([getAnnouncements(''), getStudentExperienceEvents()])
-      .then(promises => {
-        if (isMounted) {
-          const newLocalist = item => {
-            return {
-              id: item.event.event_instances[0].event_instance.id,
-              date: item.event.event_instances[0].event_instance.start,
-              title: item.event.title,
-              body: null,
-              bg_image: item.event.photo_url,
-              action: {
-                title: null,
-                link: item.event.localist_url
-              }
-            };
-          };
-          for (let i = 0; i < Math.min(promises[0].length, promises[1].length); i++) {
-            setEvents(prevEvents => [...prevEvents, promises[0][i], newLocalist(promises[1][i])]);
-          }
-          if (promises[0].length < promises[1].length) {
-            for (let i = promises[0].length; i < promises[1].length; i++) {
-              setEvents(prevEvents => [...prevEvents, newLocalist(promises[1][i])]);
-            }
-          } else if (promises[0].length > promises[1].length) {
-            for (let i = promises[1].length; i < promises[0].length; i++) {
-              setEvents(prevEvents => [...prevEvents, promises[0][i]]);
-            }
-          }
-        }
-      })
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
+    const formattedEvents: any[] = [];
+    for (
+      let i = 0;
+      i < Math.min(announcements.data.length, studentExperienceEvents.data.length);
+      i++
+    ) {
+      formattedEvents.push(announcements.data[i]);
+      formattedEvents.push(newLocalist(studentExperienceEvents.data[i]));
+    }
+    if (announcements.data.length < studentExperienceEvents.data.length) {
+      for (let i = announcements.data.length; i < studentExperienceEvents.data.length; i++) {
+        formattedEvents.push(newLocalist(studentExperienceEvents.data[i]));
+      }
+    } else if (announcements.data.length > studentExperienceEvents.data.length) {
+      for (let i = studentExperienceEvents.data.length; i < announcements.data.length; i++) {
+        formattedEvents.push(announcements.data[i]);
+      }
+    }
+    setEvents(formattedEvents);
+  }, [announcements.data, studentExperienceEvents.data]);
 
   if (!events.length) {
     return null;
