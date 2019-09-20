@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { format } from 'date-fns';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { Color, theme } from '../theme';
+import { Color, theme, breakpoints } from '../theme';
 import Button from './Button';
 import { Event } from '../util/gaTracking';
 
@@ -20,6 +20,7 @@ const ButtonWithIcon = styled(Button).attrs({
   & > svg {
     margin-left: ${theme.spacing.unit * 2}px;
   }
+  align-self: flex-start;
 `;
 
 const EventCardTitle = styled.div`
@@ -95,6 +96,9 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   margin: 0;
   & ${EventCardTitle} {
     color: ${Color['neutral-700']};
+  }
+  @media (min-width: ${breakpoints[768]}) {
+    margin-bottom: 0;
   }
   ${props => {
     if (props.imageUrl) {

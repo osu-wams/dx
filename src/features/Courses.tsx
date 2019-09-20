@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { faChevronRight } from '@fortawesome/pro-light-svg-icons';
+import { faChevronRight, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { getCourseSchedule } from '../api/student';
-import { Card, CardHeader, Badge, CardContent, CardFooter } from '../ui/Card';
+import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
 import { ICourseSchedule, ICourseScheduleAttributes } from '../api/student/course-schedule';
 import Icon from '../ui/Icon';
 import { getIconByScheduleType } from './course-utils';
@@ -35,12 +35,7 @@ const Courses = () => {
   useEffect(() => {
     let isMounted = true;
     getCourseSchedule()
-      .then(res => {
-        const currentCourses = res.filter(c =>
-          c.attributes.meetingTimes.find(t => t.beginDate && Date.parse(t.beginDate) <= Date.now())
-        );
-        isMounted && setCourses(currentCourses);
-      })
+      .then(res => isMounted && setCourses(res))
       .catch(console.log);
 
     return () => {
@@ -55,7 +50,10 @@ const Courses = () => {
 
   return (
     <Card>
-      <CardHeader title="Current Courses" badge={<Badge>{courses.length}</Badge>} />
+      <CardHeader
+        title="Current Courses"
+        badge={<CardIcon icon={faChalkboardTeacher} count={courses.length} />}
+      />
       <CardContent>
         <List>
           {courses.map(

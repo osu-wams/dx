@@ -12,8 +12,8 @@ import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
 
 const ResourcesContainer = styled(CardContent)`
-  padding-top: 0;
-  padding-bottom: 0;
+  /* padding-top: 1.6rem;
+  padding-bottom: 0; */
 `;
 
 const ResourceName = styled.div`
@@ -48,18 +48,14 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
 
   return (
     <Card>
-      <CardHeader
-        title={cardTitle}
-        badge={<CardIcon icon={icon} count={resources.data.length} />}
-      />
+      <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
         {categories.loading && <Skeleton count={5} />}
         {resources.data.length ? (
           <List data-testid="resource-container">
             {resources.data.map(resource => (
-              <ListItem spaced key={resource.id}>
+              <ListItem key={resource.id}>
                 <ListItemContentLink
-                  spaced
                   href={resource.uri}
                   target="_blank"
                   onClick={() => Event('resources-card', categ, resource.title)}

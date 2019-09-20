@@ -1,27 +1,36 @@
 import React from 'react';
 import { faDollarSign } from '@fortawesome/pro-light-svg-icons';
-import PageTitle from '../ui/PageTitle';
+import PageTitle, { Title } from '../ui/PageTitle';
 import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import FinancialTransactions from '../features/FinancialTransactions';
 import { HighlightsCard } from '../ui/Highlights';
 import AccountBalance from '../features/AccountBalance';
 import MealPlans from '../features/MealPlans';
-import PageGrid from '../ui/PageGrid';
+import { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper } from '../ui/PageGrid';
 
 const Finances = () => {
   return (
     <div data-testid="finances-page">
-      <PageTitle title="Financial Information" />
-      <PageGrid>
-        <FinancialTransactions />
-        <HighlightsCard className="row-span-1">
-          <AccountBalance />
-          <MealPlans />
-        </HighlightsCard>
-        <ResourcesCard categ="financial" icon={faDollarSign} />
+      <MainGridWrapper>
+        <PageTitle title="Finances" />
+        <MainGrid>
+          <MainGridCol>
+            <HighlightsCard className="row-span-1">
+              <AccountBalance />
+              <MealPlans />
+            </HighlightsCard>
+            <FinancialTransactions />
+          </MainGridCol>
+          <MainGridCol>
+            <ResourcesCard categ="financial" icon={faDollarSign} />
+          </MainGridCol>
+        </MainGrid>
+      </MainGridWrapper>
+      <SecondGridWrapper>
+        <Title as="h2">Announcements</Title>
         <AnnouncementContainer className="col-span-2" type="financial" />
-      </PageGrid>
+      </SecondGridWrapper>
     </div>
   );
 };

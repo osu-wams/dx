@@ -53,7 +53,9 @@ export const breakpoints = {
 
 export const theme = {
   spacing: {
-    unit: 8
+    unit: 8,
+    mobile: '1rem', // padding/padding or row/column gaps
+    desktop: '2rem'
   },
   widths: {
     contentMax: '1024px'
@@ -66,7 +68,8 @@ export const theme = {
     '16': '1.6rem',
     '18': '1.8rem',
     '20': '2.0rem',
-    '24': '2.4rem'
+    '24': '2.4rem',
+    '36': '3.6rem'
   }
 };
 

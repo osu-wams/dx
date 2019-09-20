@@ -27,11 +27,6 @@ const TransactionAmountHeader = styled(TableHeaderCell)`
   text-align: right;
 `;
 
-const TransactionsContainer = styled(CardContent)`
-  padding-top: 0;
-  padding-bottom: 0;
-`;
-
 const TransactionName = styled.div`
   font-size: ${theme.fontSize[14]};
   color: ${Color['neutral-700']};
@@ -90,7 +85,7 @@ const FinancialTransactions: FC = () => {
         title="Recent Transactions"
         badge={<CardIcon icon={faMoneyBillWave} count={transactions.length} />}
       />
-      <TransactionsContainer>
+      <CardContent className="flush">
         {loading && <Skeleton count={5} />}
         {transactions.length ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
@@ -126,7 +121,7 @@ const FinancialTransactions: FC = () => {
         ) : (
           !loading && <EmptyState />
         )}
-      </TransactionsContainer>
+      </CardContent>
       <CardFooter infoButtonId="recent-transactions">
         <ExternalLink
           href={Url.banner.financialTransactions}

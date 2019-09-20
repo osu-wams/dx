@@ -1,7 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 import { Color, theme } from './theme';
+import Stratum from './assets/Stratum2WebRegular.woff2';
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: Stratum2;
+    src: url(${Stratum});
+    font-weight: 400;
+  }
+
   html {
     box-sizing: border-box;
     font-size: 62.5%;
@@ -24,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
   }
   #root {
-    background-color: ${Color['neutral-100']};
+    background-color: ${Color['neutral-200']};
     min-height: 100vh;
     display: flex;
     flex-direction: column;

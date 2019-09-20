@@ -1,14 +1,16 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
 import OSUProfile from '../features/profile/OSUProfile';
-import PageGrid from '../ui/PageGrid';
+import { MainGridWrapper, MainGrid } from '../ui/PageGrid';
 
 const Profile = () => (
   <div data-testid="profile-page">
-    <PageTitle title="My Profile" />
-    <PageGrid>
-      <OSUProfile />
-    </PageGrid>
+    <MainGridWrapper>
+      <PageTitle title="My Profile" />
+      <MainGrid>
+        <OSUProfile />
+      </MainGrid>
+    </MainGridWrapper>
   </div>
 );
 

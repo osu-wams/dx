@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
-import PageTitle from '../ui/PageTitle';
 import { CardBase } from '../ui/Card';
 import { theme } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
 import { defaultCategoryId, useCategories, useResources } from '../api/resources';
+import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
+import PageTitle from '../ui/PageTitle';
 
 //import type here
 const Resources = () => {
@@ -21,33 +22,39 @@ const Resources = () => {
   );
 
   return (
-    <ResourcesWrapper data-testid="resources-page">
+    <MainGridWrapper>
       <PageTitle title="Resources" />
-      {selectedCategory !== '' && (
-        <>
-          <ResourcesSearch
-            query={query}
-            setQuery={setQuery}
-            setSelectedCategory={setSelectedCategory}
-          />
-          {categories.loading && <Skeleton />}
-          <ResourcesCategories
-            categories={categories.data}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-          />
-        </>
-      )}
-      {resources.loading && <Skeleton count={5} />}
-      {!resources.loading && resources.data.length > 0 ? (
-        <ResourcesList resources={resources.data} />
-      ) : (
-        !resources.loading && (
-          /* @TODO need mockup styling to do and messaging for no results */
-          <div>No results</div>
-        )
-      )}
-    </ResourcesWrapper>
+      <MainGrid>
+        <MainGridCol className="col-span-2">
+          <ResourcesWrapper data-testid="resources-page">
+            {selectedCategory !== '' && (
+              <>
+                <ResourcesSearch
+                  query={query}
+                  setQuery={setQuery}
+                  setSelectedCategory={setSelectedCategory}
+                />
+                {categories.loading && <Skeleton />}
+                <ResourcesCategories
+                  categories={categories.data}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                />
+              </>
+            )}
+            {resources.loading && <Skeleton count={5} />}
+            {!resources.loading && resources.data.length > 0 ? (
+              <ResourcesList resources={resources.data} />
+            ) : (
+              !resources.loading && (
+                /* @TODO need mockup styling to do and messaging for no results */
+                <div>No results</div>
+              )
+            )}
+          </ResourcesWrapper>
+        </MainGridCol>
+      </MainGrid>
+    </MainGridWrapper>
   );
 };
 

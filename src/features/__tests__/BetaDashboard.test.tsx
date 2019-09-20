@@ -1,8 +1,9 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/dom';
+import { fireEvent, waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import BetaDashboard from '../../pages/BetaDashboard';
 import { mockGAEvent } from '../../setupTests';
+
 
 describe('<BetaDashboard />', () => {
   it('should render the beta dashboard page', async () => {
@@ -18,7 +19,11 @@ describe('<BetaDashboard />', () => {
     fireEvent.click(oldMyOSU);
     fireEvent.click(getHelp);
     fireEvent.click(giveFeedback);
-
     expect(mockGAEvent).toHaveBeenCalledTimes(3);
+  });
+
+  it('should display the title Beta', async () => {
+    const { getByText } = render(<BetaDashboard />);
+    await waitForElement(() => getByText('Beta'));
   });
 });

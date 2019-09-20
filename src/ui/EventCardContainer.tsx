@@ -3,15 +3,18 @@ import styled from 'styled-components';
 import { useAnnouncements } from '../api/announcements';
 import { useStudentExperienceEvents } from '../api/events';
 import EventCard from './EventCard';
+import { theme, breakpoints } from '../theme';
 
 const EventCardContainerWrapper = styled.div`
+  max-width: ${breakpoints[1024]};
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: 16px;
-  @media screen and (min-width: 768px) {
+  grid-row-gap: ${theme.spacing.mobile};
+  @media screen and (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-gap: ${theme.spacing.desktop};
   }
 `;
 
