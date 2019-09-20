@@ -1,6 +1,17 @@
 import axios from 'axios';
 import useAPICall from './useAPICall';
-import { getClassification } from '../api/student/classification';
+
+export interface IUserClassificationAttributes {
+  level: string;
+  campus: string;
+  classification: string;
+  isInternational: boolean;
+}
+
+export interface IUserClassification {
+  attributes?: IUserClassificationAttributes;
+  id: string;
+}
 
 export interface IResourceResult {
   id: string;
@@ -15,34 +26,55 @@ export interface ICategory {
   icon: string;
 }
 
-const userClassifications = async () => {
-  const classifications = await getClassification();
+/**
+ *  Translate the various student classifications to what the matching "Resource Audience"
+ *  might be set to from the backend API.
+ * @param user the user to inspect for classifications
+ */
+const userClassifications = (user: any): string[] => {
   const results: string[] = [];
-  if (classifications.attributes.level === 'Graduate') {
-    results.push('Graduate Student');
-  }
-  if (classifications.attributes.campus === 'Dist. Degree Corvallis Student') {
-    results.push('Ecampus');
-  } else if (classifications.attributes.campus === 'Oregon State - Cascades') {
-    results.push('Bend');
-  } else {
-    results.push('Corvallis');
-  }
-  if (classifications.attributes.classification === 'Freshman') {
-    results.push('First Year');
-  }
-  if (classifications.attributes.isInternational) {
-    results.push('International Student');
+  const userClassification: IUserClassification = user.classification || {};
+  if (!('attributes' in userClassification)) return results;
+
+  const {
+    level,
+    campus,
+    classification,
+    isInternational
+  } = userClassification.attributes as IUserClassificationAttributes;
+  if (level === 'Graduate') results.push('Graduate Student');
+  if (classification === 'Freshman') results.push('First Year');
+  if (isInternational) results.push('International Student');
+  switch (campus) {
+    case 'Dist. Degree Corvallis Student':
+      results.push('Ecampus');
+      break;
+    case 'Oregon State - Cascades':
+      results.push('Bend');
+      break;
+    default:
+      results.push('Corvallis');
+      break;
   }
   return results;
 };
 
-const filterResourcesForUser = async (
-  resources: (IResourceResult & { audiences: string[] })[]
-): Promise<IResourceResult[]> => {
-  const classifications = await userClassifications();
+/**
+ *  If a user doesn't have a student classification, or if the resource doesn't
+ *  have audiences specified then return the resource.. otherwise, filter the resources.
+ * @param resources the list of resources to be optionally filtered
+ * @param user the user to consider of filtering resources
+ */
+const filterResourcesForUser = (
+  resources: (IResourceResult & { audiences: string[] })[],
+  user: any
+): IResourceResult[] => {
+  const classifications = userClassifications(user);
   return resources
-    .filter(e => e.audiences.some(audience => classifications.includes(audience)))
+    .filter(e => {
+      if (classifications.length === 0 || e.audiences.length === 0) return true;
+      return e.audiences.some(audience => classifications.includes(audience));
+    })
     .map(({ audiences, ...resourceAttribs }) => {
       return { ...resourceAttribs };
     });
@@ -53,12 +85,12 @@ const filterResourcesForUser = async (
  */
 const getResources = (query: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources${query ? `${query}` : ''}`).then(res => res.data);
-const useResources = (query: string) => {
+const useResources = (query: string, user) => {
   return useAPICall<IResourceResult[]>(
     getResources,
     query,
     async d => {
-      const transformed = await filterResourcesForUser(d);
+      const transformed = await filterResourcesForUser(d, user);
       return transformed;
     },
     []
@@ -70,12 +102,12 @@ const useResources = (query: string) => {
  */
 const getResourcesByQuery = (query: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources${query ? `?query=${query}` : ''}`).then(res => res.data);
-const useResourcesByQuery = (query: string) => {
+const useResourcesByQuery = (query: string, user) => {
   return useAPICall<IResourceResult[]>(
     getResourcesByQuery,
     query,
     async d => {
-      const transformed = await filterResourcesForUser(d);
+      const transformed = await filterResourcesForUser(d, user);
       return transformed;
     },
     []
@@ -89,12 +121,12 @@ const getResourcesByCategory = (categoryId: string): Promise<IResourceResult[]> 
   axios
     .get(`/api/resources${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
     .then(res => res.data);
-const useResourcesByCategory = (categoryId: string) => {
+const useResourcesByCategory = (categoryId: string, user) => {
   return useAPICall<IResourceResult[]>(
     getResourcesByCategory,
     categoryId,
     async d => {
-      const transformed = await filterResourcesForUser(d);
+      const transformed = await filterResourcesForUser(d, user);
       return transformed;
     },
     []
@@ -106,12 +138,12 @@ const useResourcesByCategory = (categoryId: string) => {
  */
 const getResourcesByQueue = (category: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources/category/${category}`).then(res => res.data);
-const useResourcesByQueue = (category: string) =>
+const useResourcesByQueue = (category: string, user) =>
   useAPICall<IResourceResult[]>(
     getResourcesByQueue,
     category,
     async d => {
-      const transformed = await filterResourcesForUser(d);
+      const transformed = await filterResourcesForUser(d, user);
       return transformed;
     },
     []

@@ -1,6 +1,7 @@
 const resourcesData = {
   data: [
     {
+      audiences: ['First Year', 'Bend'],
       id: '2ff0aaa4-5ca2-4adb-beaa-decc8744396f',
       title: 'Student Jobs',
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/logo_sites_128px.png',
@@ -8,6 +9,7 @@ const resourcesData = {
         'https://jobs.oregonstate.edu/postings/search?utf8=&query=&query_v0_posted_at_date=&query_position_type_id=5&query_organizational_tier_3_id=any&1970=&1971=&225=&commit=Search'
     },
     {
+      audiences: ['Graduate Student', 'International Student', 'Ecampus', 'Corvallis'],
       id: '825d22a1-938c-4ca7-8b9d-625a639bcdde',
       title: 'Billing Information',
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',
@@ -21,6 +23,7 @@ const resourcesData = {
 const resourcesDataByCategory = {
   data: [
     {
+      audiences: [],
       id: '825d22a1-938c-4ca7-8b9d-625a639bcdde',
       title: 'Billing Information',
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render, authUser } from '../../util/test-utils';
 import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
 import { mockGAEvent } from '../../setupTests';
@@ -116,5 +116,43 @@ describe('<Resources />', () => {
     expect(all).toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();
+  });
+
+  describe('with audiences', () => {
+    it('shows all resources', async () => {
+      const newAuthUser = { ...authUser, classification: { id: authUser.osuId } };
+      const { getByLabelText, findByText } = render(<Resources />, {
+        user: newAuthUser
+      });
+      const all = await waitForElement(() => getByLabelText('All'));
+      fireEvent.click(all);
+      await sleep(50);
+      expect(all).toHaveClass('selected');
+      expect(findByText(/Billing Information/)).not.toBeNull();
+      expect(findByText(/Student Jobs/)).not.toBeNull();
+    });
+    it('shows one resource', async () => {
+      const newAuthUser = {
+        ...authUser,
+        classification: {
+          id: authUser.osuId,
+          attributes: {
+            level: '',
+            campus: '',
+            classification: '',
+            isInternational: true
+          }
+        }
+      };
+      const { getByLabelText, queryByText, findByText } = render(<Resources />, {
+        user: newAuthUser
+      });
+      const all = await waitForElement(() => getByLabelText('All'));
+      fireEvent.click(all);
+      await sleep(50);
+      expect(all).toHaveClass('selected');
+      expect(findByText(/Billing Information/)).not.toBeNull();
+      expect(queryByText(/Student Jobs/)).toBeNull();
+    });
   });
 });

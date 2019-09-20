@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import { faCube, IconDefinition } from '@fortawesome/pro-light-svg-icons';
+import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
@@ -36,9 +37,10 @@ const ResourceIcon = styled(Icon)`
  * Displays resources from a given set of categories
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
+  const user = useContext<any>(UserContext);
   const getCategoryId = data =>
     data.filter((e: any) => e.name.toUpperCase() === categ.toUpperCase());
-  const resources = useResourcesByQueue(categ);
+  const resources = useResourcesByQueue(categ, user);
   const categories = useCategories(getCategoryId);
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
 
