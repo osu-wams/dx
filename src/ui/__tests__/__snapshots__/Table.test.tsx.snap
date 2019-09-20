@@ -12,11 +12,21 @@ exports[`<Table /> BasicTable no border around table element 1`] = `
 
 .c0 td {
   padding: 0.4rem 0.8rem;
+  font-size: 1.6rem;
+}
+
+.c0 th {
+  color: #7B746F;
+  font-weight: 600;
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(34,36,38,0.15);
+  text-align: left;
+  padding: 0.4rem 0.8rem;
 }
 
 .c0 td:not(:first-child),
 .c0 th:not(:first-child) {
-  border-left: none;
+  border-left: 1px solid rgba(34,36,38,0.15);
 }
 
 .c0 tr:not(:first-child) td {
@@ -64,6 +74,16 @@ exports[`<Table /> CompactTable smaller paddings and font size 1`] = `
 
 .c0 td {
   padding: .2rem .4rem;
+  font-size: 1.6rem;
+}
+
+.c0 th {
+  color: #7B746F;
+  font-weight: 600;
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(34,36,38,0.15);
+  text-align: left;
+  padding: 0.4rem 0.8rem;
 }
 
 .c0 td:not(:first-child),
@@ -115,6 +135,16 @@ exports[`<Table /> DefaultTable gets rendered with border around table 1`] = `
 }
 
 .c0 td {
+  padding: 0.4rem 0.8rem;
+  font-size: 1.6rem;
+}
+
+.c0 th {
+  color: #7B746F;
+  font-weight: 600;
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(34,36,38,0.15);
+  text-align: left;
   padding: 0.4rem 0.8rem;
 }
 
@@ -169,11 +199,21 @@ exports[`<Table /> Stetch table gets 100% width 1`] = `
 
 .c0 td {
   padding: 0.4rem 0.8rem;
+  font-size: 1.6rem;
+}
+
+.c0 th {
+  color: #7B746F;
+  font-weight: 600;
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(34,36,38,0.15);
+  text-align: left;
+  padding: 0.4rem 0.8rem;
 }
 
 .c0 td:not(:first-child),
 .c0 th:not(:first-child) {
-  border-left: none;
+  border-left: 1px solid rgba(34,36,38,0.15);
 }
 
 .c0 tr:not(:first-child) td {
@@ -233,11 +273,21 @@ exports[`<Table /> StripedTable alternates background color on rows 1`] = `
 
 .c0 td {
   padding: 0.4rem 0.8rem;
+  font-size: 1.6rem;
+}
+
+.c0 th {
+  color: #7B746F;
+  font-weight: 600;
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(34,36,38,0.15);
+  text-align: left;
+  padding: 0.4rem 0.8rem;
 }
 
 .c0 td:not(:first-child),
 .c0 th:not(:first-child) {
-  border-left: none;
+  border-left: 1px solid rgba(34,36,38,0.15);
 }
 
 .c0 tr:not(:first-child) td {

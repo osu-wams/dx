@@ -6,11 +6,11 @@ import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
 import { getGrades } from '../../api/student';
-import PlainCard from '../../ui/PlainCard';
-import { Color } from '../../theme';
+import { Color, theme, breakpoints } from '../../theme';
 import Input from '../../ui/Input';
 import Icon from '../../ui/Icon';
 import PageTitle from '../../ui/PageTitle';
+import { Card, CardHeader, CardContent } from '../../ui/Card';
 import {
   Table,
   TableBody,
@@ -96,45 +96,48 @@ const AcademicHistory = () => {
           </SearchWrapper>
           {gradesLoading && <Skeleton count={5} />}
           {grades.length > 0 ? (
-            <div aria-live="polite" aria-atomic="true">
+            <HistoryGrid aria-live="polite" aria-atomic="true">
               {Object.keys(gradesByTerm).map((key, index) => (
-                <PlainCard title={key} key={index}>
-                  <Table variant="basic" stretch>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHeaderCell>Course Code</TableHeaderCell>
-                        <TableHeaderCell>Final Grade</TableHeaderCell>
-                        <TableHeaderCell>Course Title</TableHeaderCell>
-                        <TableHeaderCell>Credits</TableHeaderCell>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {gradesByTerm[key].map(
-                        (
-                          { courseNumber, courseSubject, creditHours, gradeFinal, courseTitle },
-                          subindex
-                        ) => {
-                          return (
-                            <TableRow key={subindex}>
-                              <TableCell>
-                                <strong>
-                                  {courseSubject} {courseNumber}
-                                </strong>
-                              </TableCell>
-                              <TableCell>{gradeFinal}</TableCell>
-                              <TableCell>{titleCase(courseTitle)}</TableCell>
-                              <TableCell>
-                                {creditHours} {singularPlural(creditHours, 'Credit')}
-                              </TableCell>
-                            </TableRow>
-                          );
-                        }
-                      )}
-                    </TableBody>
-                  </Table>
-                </PlainCard>
+                <HistoryCard key={index}>
+                  <CardHeader title={key} />
+                  <CardContent className="flush">
+                    <Table variant="spacious" stretch>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHeaderCell>Course</TableHeaderCell>
+                          <TableHeaderCell>Final Grade</TableHeaderCell>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {gradesByTerm[key].map(
+                          (
+                            { courseNumber, courseSubject, creditHours, gradeFinal, courseTitle },
+                            subindex
+                          ) => {
+                            return (
+                              <TableRow key={subindex}>
+                                <TableCell>
+                                  <CourseTitle>{titleCase(courseTitle)}</CourseTitle>
+                                  <CourseData>
+                                    <strong>
+                                      {courseSubject} {courseNumber} &middot;
+                                    </strong>{' '}
+                                    {creditHours} {singularPlural(creditHours, 'Credit')}
+                                  </CourseData>
+                                </TableCell>
+                                <TableCell>
+                                  <Grade>{gradeFinal}</Grade>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          }
+                        )}
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </HistoryCard>
               ))}
-            </div>
+            </HistoryGrid>
           ) : (
             !gradesLoading && <div>No course history yet</div>
           )}
@@ -146,16 +149,53 @@ const AcademicHistory = () => {
 
 export default AcademicHistory;
 
+const HistoryCard = styled(Card)`
+  margin-bottom: 0;
+`;
+
+const Grade = styled.span`
+  font-size: ${theme.fontSize[24]};
+  color: ${Color['orange-400']};
+  display: block;
+  text-align: center;
+`;
+
+const CourseTitle = styled.span`
+  color: ${Color['neutral-700']};
+`;
+const CourseData = styled.div`
+  font-size: ${theme.fontSize[14]};
+`;
+
 const SearchWrapper = styled.div`
   position: relative;
   svg {
     position: absolute;
-    top: 1rem;
-    left: 1.2rem;
+    top: 2rem;
+    right: 1.6rem;
+    font-size: ${theme.fontSize[24]};
   }
   margin-bottom: 2rem;
 `;
 const FilterInput = styled(Input)`
   width: 100%;
-  padding-left: 4rem;
+  padding: 1.6rem;
+  font-size: ${theme.fontSize[24]};
+`;
+
+const HistoryGrid = styled.div`
+  max-width: ${breakpoints[1024]};
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  grid-row-gap: ${theme.spacing.mobile};
+  grid-auto-rows: minmax(min-content, max-content);
+  & > div {
+    height: min-content;
+  }
+  @media screen and (min-width: ${breakpoints[768]}) {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: ${theme.spacing.desktop};
+  }
 `;
