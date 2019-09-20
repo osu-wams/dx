@@ -35,7 +35,7 @@ const MealPlans: React.FC = () => {
   }, []);
 
   return (
-    <Highlight>
+    <Highlight textAlignLeft>
       {loading && (
         <HighlightTitle>
           <Skeleton count={4} />
@@ -43,23 +43,32 @@ const MealPlans: React.FC = () => {
       )}
       {mealPlans && mealPlans.length ? (
         <>
-          <HighlightTitle>{mealPlans[0].attributes.mealPlan}</HighlightTitle>
-          <HighlightEmphasis color={Color['pine-400']}>
+          <HighlightEmphasis color={mealPlans[0].attributes.balance > 0 ? Color['pine-400'] : Color['lava-400']}>
             {formatDollars(mealPlans[0].attributes.balance)}
           </HighlightEmphasis>
-          <HighlightDescription>
-            <ExternalLink
-              fg={Color['pine-400']}
-              href="http://mycard.oregonstate.edu/"
-              onClick={() => Event('meal-plans', 'Add money to card - mycard link')}
-            >
-              View and Add Balance
-            </ExternalLink>
-          </HighlightDescription>
+          <HighlightTitle marginTop={0}>Meal Plan Balance</HighlightTitle>
+          <HighlightDescription>The current balance for your UHDS or Orange Rewards meal plan.</HighlightDescription>
         </>
       ) : (
         !loading && <HighlightTitle>No meal plans</HighlightTitle>
       )}
+
+      {/* 
+        The code below puts a link in the highlight. However, due to interface design, since we want the final item's link
+        to be in line with the info button in the card footer, I've put the code over in FinancialOverview.tsx
+
+        If we added a new item to the financial overview, we'd want to uncomment the code below and remove/replace it in the
+        footer on the Financial Overview card. Kinda janky but the alternative is to rewrite a handful of code for a 1-off
+        scenario.
+      */}
+      {/* <ExternalLink
+        style={{ float: 'right' }}
+        fg={Color['orange-400']}
+        href="http://mycard.oregonstate.edu/"
+        onClick={() => Event('meal-plans', 'Add money to card - mycard link')}
+      >
+        Add money
+      </ExternalLink> */}
     </Highlight>
   );
 };

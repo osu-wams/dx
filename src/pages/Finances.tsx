@@ -5,9 +5,10 @@ import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import FinancialTransactions from '../features/FinancialTransactions';
 import { HighlightsCard } from '../ui/Highlights';
-import AccountBalance from '../features/AccountBalance';
+import AccountBalance from '../features/financial-overview/AccountBalance';
 import MealPlans from '../features/MealPlans';
 import PageGrid from '../ui/PageGrid';
+import FinancialOverview from '../features/financial-overview/FinancialOverview';
 
 const Finances = () => {
   return (
@@ -15,6 +16,7 @@ const Finances = () => {
       <PageTitle title="Finances" />
       <PageGrid>
         <FinancialTransactions />
+        <FinancialOverview />
         <HighlightsCard className="row-span-1">
           <AccountBalance />
           <MealPlans />
