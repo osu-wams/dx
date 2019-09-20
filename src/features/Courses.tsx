@@ -35,12 +35,7 @@ const Courses = () => {
   useEffect(() => {
     let isMounted = true;
     getCourseSchedule()
-      .then(res => {
-        const currentCourses = res.filter(c =>
-          c.attributes.meetingTimes.find(t => t.beginDate && Date.parse(t.beginDate) <= Date.now())
-        );
-        isMounted && setCourses(currentCourses);
-      })
+      .then(res => isMounted && setCourses(res))
       .catch(console.log);
 
     return () => {
