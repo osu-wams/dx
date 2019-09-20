@@ -1,6 +1,6 @@
 import React from 'react';
 import { faDollarSign } from '@fortawesome/pro-light-svg-icons';
-import PageTitle from '../ui/PageTitle';
+import PageTitle, { Title } from '../ui/PageTitle';
 import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import FinancialTransactions from '../features/FinancialTransactions';
@@ -16,18 +16,19 @@ const Finances = () => {
         <PageTitle title="Finances" />
         <MainGrid>
           <MainGridCol>
-            <FinancialTransactions />
-          </MainGridCol>
-          <MainGridCol>
             <HighlightsCard className="row-span-1">
               <AccountBalance />
               <MealPlans />
             </HighlightsCard>
+            <FinancialTransactions />
+          </MainGridCol>
+          <MainGridCol>
             <ResourcesCard categ="financial" icon={faDollarSign} />
           </MainGridCol>
         </MainGrid>
       </MainGridWrapper>
       <SecondGridWrapper>
+        <Title as="h2">Announcements</Title>
         <AnnouncementContainer className="col-span-2" type="financial" />
       </SecondGridWrapper>
     </div>
