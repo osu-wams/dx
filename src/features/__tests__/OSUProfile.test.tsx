@@ -8,11 +8,12 @@ import OSUProfile from '../profile/OSUProfile';
 jest.unmock('../../api/persons/addresses');
 jest.unmock('../../api/persons/persons');
 
-const mockGetMailingAddress = jest.fn();
+const mockUseMailingAddress = jest.fn();
 const mockGetPerson = jest.fn();
+const mockNoData = { data: null, loading: false, error: false };
 
 jest.mock('../../api/persons/addresses', () => ({
-  getMailingAddress: () => mockGetMailingAddress()
+  useMailingAddress: () => mockUseMailingAddress()
 }));
 jest.mock('../../api/persons/persons', () => ({
   getPerson: () => mockGetPerson()
@@ -22,7 +23,7 @@ describe('<OSUProfile />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
     mockGetPerson.mockResolvedValue(Promise.resolve(personsData));
-    mockGetMailingAddress.mockReturnValue(Promise.resolve(personsMailingAddressData));
+    mockUseMailingAddress.mockReturnValue(personsMailingAddressData);
   });
 
   it('should render the approriate name: "Testo Last"', async () => {
@@ -50,7 +51,7 @@ describe('<OSUProfile />', () => {
   });
 
   it('should not find the "Mailing Address" when address is null', async () => {
-    mockGetMailingAddress.mockResolvedValue(Promise.resolve(null));
+    mockUseMailingAddress.mockReturnValue(mockNoData);
     const { queryByText } = render(<OSUProfile />);
     await wait(() => {
       expect(queryByText('Current Mailing')).not.toBeInTheDocument();

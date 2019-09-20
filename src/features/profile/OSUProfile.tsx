@@ -7,12 +7,14 @@ import { theme, Color } from '../../theme';
 import { formatPhone } from '../../util/helpers';
 import Icon from '../../ui/Icon';
 import { getPerson, IPersons } from '../../api/persons/persons';
-import { getMailingAddress, IMailingAddress } from '../../api/persons/addresses';
+import { useMailingAddress } from '../../api/persons/addresses';
 import PlainCard from '../../ui/PlainCard';
 
 const OSUProfile = () => {
   const [person, setPerson] = useState<IPersons | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const address = useMailingAddress();
+  // const [address, setAddress] = useState<IMailingAddress | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -24,21 +26,6 @@ const OSUProfile = () => {
         }
       })
       .catch(console.log);
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
-
-  const [address, setAddress] = useState<IMailingAddress | null>(null);
-  useEffect(() => {
-    let isMounted = true;
-    getMailingAddress()
-      .then(data => {
-        isMounted && setAddress(data);
-      })
-      .catch(console.log);
-
     return () => {
       // prevents setting data on a component that has been unmounted before promise resolves
       isMounted = false;
@@ -84,13 +71,13 @@ const OSUProfile = () => {
               <div>
                 <dt>
                   <Icon icon={faMapMarkerAlt} color={Color['orange-400']} />{' '}
-                  <VisuallyHidden>{address.attributes.addressTypeDescription}</VisuallyHidden>
+                  <VisuallyHidden>{address.data ? address.data.attributes.addressTypeDescription : 'No data'}</VisuallyHidden>
                 </dt>
                 <dd>
-                  {address.attributes.addressLine1}
+                  {address.data ? address.data.attributes.addressLine1 : ''}
                   <br />
-                  {address.attributes.city}, {address.attributes.stateCode}{' '}
-                  {address.attributes.postalCode}
+                  {address.data ? address.data.attributes.city:'No city name'}, {address.data ? address.data.attributes.stateCode : 'No state title'}{' '}
+                  {address.data ? address.data.attributes.postalCode : 'No postal Code'}
                 </dd>
               </div>
             )}

@@ -1,7 +1,10 @@
 import axios from 'axios';
+import useAPICall from '../useAPICall';
 
 const getMailingAddress = (): Promise<IMailingAddress> =>
   axios.get(`/api/persons/addresses`).then(res => res.data);
+const useMailingAddress = () =>
+  useAPICall<IMailingAddress | null>(getMailingAddress, undefined, data => data, null);
 
 export interface IMailingAddress {
   id: string;
@@ -29,4 +32,4 @@ export interface IMailingAddressAttributes {
   lastModified: string;
 }
 
-export { getMailingAddress };
+export { useMailingAddress };
