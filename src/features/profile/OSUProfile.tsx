@@ -14,7 +14,6 @@ const OSUProfile = () => {
   const [person, setPerson] = useState<IPersons | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const address = useMailingAddress();
-  // const [address, setAddress] = useState<IMailingAddress | null>(null);
 
   useEffect(() => {
     let isMounted = true;

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-
-import { getMealPlans, IMealPlans } from '../api/persons/meal-plans';
+import { useMealPlans } from '../api/persons/meal-plans';
 import { Color } from '../theme';
 import { formatDollars } from '../util/helpers';
 import {
@@ -14,38 +13,20 @@ import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 
 const MealPlans: React.FC = () => {
-  const [mealPlans, setMealPlans] = useState<IMealPlans[] | undefined>(undefined);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    let isMounted = true;
-    getMealPlans()
-      .then(res => {
-        if (isMounted) {
-          setMealPlans(res);
-          setLoading(false);
-        }
-      })
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
+  const mealPlans = useMealPlans();
 
   return (
     <Highlight>
-      {loading && (
+      {mealPlans.loading && (
         <HighlightTitle>
           <Skeleton count={4} />
         </HighlightTitle>
       )}
-      {mealPlans && mealPlans.length ? (
+      {mealPlans && mealPlans.data.length ? (
         <>
-          <HighlightTitle>{mealPlans[0].attributes.mealPlan}</HighlightTitle>
+          <HighlightTitle>{mealPlans.data[0].attributes.mealPlan}</HighlightTitle>
           <HighlightEmphasis color={Color['pine-400']}>
-            {formatDollars(mealPlans[0].attributes.balance)}
+            {formatDollars(mealPlans.data[0].attributes.balance)}
           </HighlightEmphasis>
           <HighlightDescription>
             <ExternalLink
@@ -58,7 +39,7 @@ const MealPlans: React.FC = () => {
           </HighlightDescription>
         </>
       ) : (
-        !loading && <HighlightTitle>No meal plans</HighlightTitle>
+        !mealPlans.loading && <HighlightTitle>No meal plans</HighlightTitle>
       )}
     </Highlight>
   );

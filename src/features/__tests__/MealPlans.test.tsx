@@ -5,16 +5,17 @@ import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
 import MealPlans from '../MealPlans';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetMealPlans = jest.fn();
+const mockUseMealPlans = jest.fn();
+const mockNoData = { data: [], loading: false, error: false };
 
 jest.mock('../../api/persons/meal-plans', () => ({
-  getMealPlans: () => mockGetMealPlans()
+  useMealPlans: () => mockUseMealPlans()
 }));
 
 describe('<MealPlans />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetMealPlans.mockResolvedValue(Promise.resolve(mockMealPlans));
+    mockUseMealPlans.mockReturnValue(mockMealPlans);
   });
 
   it('should have a $16.88 balance from our mock data', async () => {
@@ -35,7 +36,7 @@ describe('<MealPlans />', () => {
   });
 
   it('should return "No meal plans" when MealPlan data is empty', async () => {
-    mockGetMealPlans.mockResolvedValue(Promise.resolve({}));
+    mockUseMealPlans.mockReturnValue(mockNoData);
     const { getByText } = render(<MealPlans />);
     await waitForElement(() => getByText('No meal plans'));
   });
