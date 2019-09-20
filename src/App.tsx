@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Router as ReachRouter, Location, RouteComponentProps } from '@reach/router';
+import { Router, Location, RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import axios from 'axios';
 import ReactGA from 'react-ga';
 import GlobalStyles from './GlobalStyles';
-import { theme, breakpoints } from './theme';
 import Header from './ui/Header';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
@@ -18,22 +17,12 @@ import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { getInfoButtons, InfoButtonState } from './api/info-buttons';
 
-const Router = styled(ReachRouter)`
-  padding: ${theme.spacing.mobile};
-  width: 100%;
-  @media (min-width: ${breakpoints[768]}) {
-    padding: ${theme.spacing.desktop};
-  }
-`;
-
 const ContentWrapper = styled.div`
-  max-width: ${breakpoints[1024]};
-  width: 100%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
+  width: 100%;
   flex-grow: 1;
 `;
 

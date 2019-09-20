@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
-import { Color, theme } from '../theme';
+import { Color, theme, breakpoints } from '../theme';
 
 type Props = {
   title: string;
@@ -11,9 +11,7 @@ type Props = {
 // Currently hidden and just for accessibility purposes
 const PageTitle: FC<Props> = ({ title }) => (
   <>
-    <Title>
-      {title}
-    </Title>
+    <Title>{title}</Title>
     <Helmet>
       <title>{title}</title>
     </Helmet>
@@ -21,13 +19,18 @@ const PageTitle: FC<Props> = ({ title }) => (
 );
 
 const Title = styled.h1`
-  font-family: Stratum2
-  font-size: ${theme.fontSize[36]};
-  font-color: ${Color["neutral-700"]};
+  font-family: Stratum2, sans-serif;
+  font-size: ${theme.fontSize[24]};
+  color: ${Color['neutral-600']};
   font-weight: normal;
   line-height: 43px;
-  margin-bottom: ${theme.spacing.unit};
+  margin: 0 auto;
+  max-width: 1024px;
+  @media (min-width: ${breakpoints[768]}) {
+    font-size: ${theme.fontSize[36]};
+    margin-bottom: 1rem;
+  }
 `;
 
-
 export default PageTitle;
+export { Title };

@@ -14,6 +14,7 @@ import {
   IResourceResult,
   ICategory
 } from '../api/resources';
+import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 
 //import type here
 const Resources = () => {
@@ -62,33 +63,38 @@ const Resources = () => {
   };
 
   return (
-
-    <>
+    <MainGridWrapper>
       <PageTitle title="Resources" />
-      <ResourcesWrapper data-testid="resources-page">
-        
-        {selectedCategory !== '' && (
-          <>
-            <ResourcesSearch setResources={setResources} setSelectedCategory={setSelectedCategory} />
-            {catLoading && <Skeleton />}
-            <ResourcesCategories
-              fetchResourcesByCategory={fetchResourcesByCategory}
-              selectedCategory={selectedCategory}
-              categories={categories}
-            />
-          </>
-        )}
-        {resLoading && <Skeleton count={5} />}
-        {!resLoading && resources.length > 0 ? (
-          <ResourcesList resources={resources} />
-        ) : (
-          !resLoading && (
-            /* @TODO need mockup styling to do and messaging for no results */
-            <div>No results</div>
-          )
-        )}
-      </ResourcesWrapper>
-    </>
+      <MainGrid>
+        <MainGridCol className="col-span-2">
+          <ResourcesWrapper data-testid="resources-page">
+            {selectedCategory !== '' && (
+              <>
+                <ResourcesSearch
+                  setResources={setResources}
+                  setSelectedCategory={setSelectedCategory}
+                />
+                {catLoading && <Skeleton />}
+                <ResourcesCategories
+                  fetchResourcesByCategory={fetchResourcesByCategory}
+                  selectedCategory={selectedCategory}
+                  categories={categories}
+                />
+              </>
+            )}
+            {resLoading && <Skeleton count={5} />}
+            {!resLoading && resources.length > 0 ? (
+              <ResourcesList resources={resources} />
+            ) : (
+              !resLoading && (
+                /* @TODO need mockup styling to do and messaging for no results */
+                <div>No results</div>
+              )
+            )}
+          </ResourcesWrapper>
+        </MainGridCol>
+      </MainGrid>
+    </MainGridWrapper>
   );
 };
 

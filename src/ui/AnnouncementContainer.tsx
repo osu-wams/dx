@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getAnnouncements } from '../api/announcements';
 import EventCard from './EventCard';
+import { breakpoints } from '../theme';
 
 const AnnouncementContainerWrapper = styled.div`
+  max-width: ${breakpoints[1024]};
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
