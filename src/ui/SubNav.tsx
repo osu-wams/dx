@@ -1,39 +1,45 @@
 import { Link } from '@reach/router';
 import styled from 'styled-components';
-import { theme, Color } from '../theme';
+import { theme, Color, breakpoints } from '../theme';
 
 const SubNav = styled.nav`
   display: flex;
   flex-direction: row;
-  height: 4rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 0 0 1.6rem 0;
+  @media (min-width: ${breakpoints[768]}) {
+    max-width: ${breakpoints[1024]};
+    margin: -4rem auto 2rem;
+    justify-content: flex-end;
+  }
 `;
 
 const SubNavLink = styled(Link)`
-  background: ${Color.white};
-  border: 1px solid ${Color['neutral-300']};
-  padding: 0.4rem 2rem 0;
-  line-height: 30px;
+  padding: 0.2rem 0 0;
+  line-height: 20px;
   text-decoration: none;
-  color: ${Color['neutral-700']};
+  border-bottom: 3px solid transparent;
+  color: ${Color['neutral-600']};
   display: inline-block;
   text-align: center;
-  font-size: ${theme.fontSize[14]};
+  font-size: ${theme.fontSize[16]};
+  svg {
+    margin-right: 0.5rem;
+    color: ${Color['neutral-600']};
+  }
   &:active,
   &:focus,
   &:hover,
-  &[aria-current] {
-    background: transparent;
+  &[aria-current],
+  &:active svg,
+  &:focus svg,
+  &:hover svg,
+  &[aria-current] svg {
+    color: ${Color['orange-400']};
+    border-bottom-color: ${Color['orange-400']};
   }
-  :first-child {
-    border-radius: 8px 0 0 8px;
-  }
-  :last-child {
-    border-radius: 0 8px 8px 0;
-  }
-  & + & {
-    border-left: none;
+  & + a {
+    margin-left: 2.6rem;
   }
 `;
 

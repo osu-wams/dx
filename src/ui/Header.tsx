@@ -66,10 +66,15 @@ const ProfileMenuList = styled(MenuList)`
     min-width: 15rem;
     [data-reach-menu-item] {
       padding: 1rem 2rem;
+      font-size: ${theme.fontSize[16]};
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
     svg {
-      color: ${Color['orange-400']};
+      color: ${Color['orange-300']};
       margin-right: 1.2rem;
+      font-size: ${theme.fontSize[20]};
     }
     div + div {
       [data-reach-menu-item] {

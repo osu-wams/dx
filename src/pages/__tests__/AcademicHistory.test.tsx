@@ -20,6 +20,11 @@ describe('<AcademicHistory />', () => {
     mockGetGrades.mockResolvedValue(Promise.resolve(mockGrades));
   });
 
+  it('renders without errors', async () => {
+    const { getByTestId } = render(<AcademicHistory />);
+    expect(getByTestId('academic-history')).toBeInTheDocument();
+  });
+
   it('renders and finds placeholder text: "Find past courses"', () => {
     const { getByPlaceholderText } = render(<AcademicHistory />);
     expect(getByPlaceholderText('Find past courses')).toBeInTheDocument();
