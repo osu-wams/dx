@@ -31,6 +31,10 @@ const CardContentWrapper = styled.div<ICollapse>`
     padding: ${props.collapsed ? 0 : theme.spacing.unit * 2}px;
   `}
   overflow: hidden;
+  /* Use this when you don't want margin or padding inside cards */
+  &.flush {
+    padding: 0;
+  }
 `;
 
 export default CardContent;
