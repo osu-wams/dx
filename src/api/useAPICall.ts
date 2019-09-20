@@ -45,7 +45,7 @@ const useAPICall = <T>(
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [query]);
 
   return { data, loading, error };
 };
