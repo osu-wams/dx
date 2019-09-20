@@ -1,6 +1,6 @@
 import React from 'react';
 import { faStars } from '@fortawesome/pro-light-svg-icons';
-import PageTitle from '../ui/PageTitle';
+import PageTitle, { Title } from '../ui/PageTitle';
 import ScheduleCard from '../features/ScheduleCard';
 import EventCardContainer from '../ui/EventCardContainer';
 import { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper } from '../ui/PageGrid';
@@ -21,6 +21,7 @@ const Dashboard = () => {
         </MainGrid>
       </MainGridWrapper>
       <SecondGridWrapper>
+        <Title as="h2">Announcements</Title>
         <EventCardContainer />
       </SecondGridWrapper>
     </div>
