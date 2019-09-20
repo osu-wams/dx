@@ -96,7 +96,7 @@
   },
   "husky": {
     "hooks": {
-      
+      "pre-push": "lint-staged"
     }
   },
   "lint-staged": {

@@ -18,10 +18,11 @@ const Finances = () => {
         <PageTitle title="Finances" />
         <MainGrid>
           <MainGridCol>
-            <HighlightsCard className="row-span-1">
+            <FinancialOverview />  
+            {/* <HighlightsCard className="row-span-1">
               <AccountBalance />
               <MealPlans />
-            </HighlightsCard>
+            </HighlightsCard> */}
             <FinancialTransactions />
           </MainGridCol>
           <MainGridCol>
