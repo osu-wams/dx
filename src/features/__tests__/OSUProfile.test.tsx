@@ -9,20 +9,20 @@ jest.unmock('../../api/persons/addresses');
 jest.unmock('../../api/persons/persons');
 
 const mockUseMailingAddress = jest.fn();
-const mockGetPerson = jest.fn();
+const mockUsePerson = jest.fn();
 const mockNoData = { data: null, loading: false, error: false };
 
 jest.mock('../../api/persons/addresses', () => ({
   useMailingAddress: () => mockUseMailingAddress()
 }));
 jest.mock('../../api/persons/persons', () => ({
-  getPerson: () => mockGetPerson()
+  usePerson: () => mockUsePerson()
 }));
 
 describe('<OSUProfile />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetPerson.mockResolvedValue(Promise.resolve(personsData));
+    mockUsePerson.mockReturnValue(personsData);
     mockUseMailingAddress.mockReturnValue(personsMailingAddressData);
   });
 
@@ -39,7 +39,7 @@ describe('<OSUProfile />', () => {
   });
 
   it('should not find name "Testo Last" but should see "Cannot find your information" when no person is found', async () => {
-    mockGetPerson.mockResolvedValue(Promise.resolve(null));
+    mockUsePerson.mockReturnValue(mockNoData);
     const { queryByText, getByText } = render(<OSUProfile />);
 
     await wait(() => {
