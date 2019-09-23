@@ -24,7 +24,7 @@ export const AccountBalanceExternalLink = () => (
   </ExternalLink>
 );
 
-const AccountBalance = (props:{renderLink:boolean}) => {
+const AccountBalance = (props: { renderLink: boolean }) => {
   const [accountBalance, setAccountBalance] = useState<IAccountBalanceAttributes | undefined>(
     undefined
   );
@@ -48,19 +48,28 @@ const AccountBalance = (props:{renderLink:boolean}) => {
   }, []);
 
   return (
-    <Highlight textAlignLeft> 
-      {accountBalance && typeof accountBalance.currentBalance === "number" ? (
+    <Highlight textAlignLeft>
+      {accountBalance && typeof accountBalance.currentBalance === 'number' ? (
         <>
           <HighlightEmphasis color={Color['neutral-550']}>
             {loading && <Skeleton />}
             {accountBalance ? formatDollars(accountBalance.currentBalance) : !loading && 'No data'}
           </HighlightEmphasis>
           <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
-          <HighlightDescription>Your OSU student account balance. It may take up to 24 hours for transactions to be reflected.</HighlightDescription>
+          <HighlightDescription>
+            Your OSU student account balance. It may take up to 24 hours for transactions to be
+            reflected.
+          </HighlightDescription>
           {props.renderLink && AccountBalanceExternalLink()}
         </>
-      ) : (<HighlightTitle>Error Loading Account Balance</HighlightTitle>)}
-      
+      ) : (
+        <>
+        <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
+        <HighlightDescription>
+          No data
+        </HighlightDescription>
+        </>
+      )}
     </Highlight>
   );
 };

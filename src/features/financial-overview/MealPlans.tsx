@@ -52,7 +52,16 @@ export const MealPlans = props => {
           !myMealPlans ||
           (myMealPlans && myMealPlans.attributes && myMealPlans.attributes.balance <= 0)
         ) {
-          props.setHasMealPlan(false);
+          
+          /*
+           Only going to run this function if it exists. The tests were getting angry because
+           this function is undefined unless you can pass in the function from financial
+           overview.
+           */
+          if(typeof props.setHasMealPlan !== 'undefined') {
+            props.setHasMealPlan(false);
+          }
+          
         }
       });
     return () => {
@@ -81,7 +90,7 @@ export const MealPlans = props => {
           </HighlightDescription>
         </>
       ) : (
-        !loading && <></>
+        !loading && <>No meal plans</>
       )}
     </Highlight>
   );

@@ -5,6 +5,7 @@ import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
 import MealPlans from '../financial-overview/MealPlans';
 import FinancialOverview from '../financial-overview/FinancialOverview';
 import { mockGAEvent } from '../../setupTests';
+import { debug } from 'util';
 
 const mockGetMealPlans = jest.fn();
 
@@ -31,6 +32,8 @@ describe('<MealPlans />', () => {
   it('should not render if no balance ', async () => {
     mockGetMealPlans.mockResolvedValue(Promise.resolve({}));
     const { getByText } = render(<MealPlans />);
+
     await waitForElement(() => getByText('No meal plans'));
+    
   });
 });
