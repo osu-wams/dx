@@ -156,7 +156,7 @@ const EventCardContent = ({ item }) => {
               <ButtonWithIcon
                 fg={Color.white}
                 href={item.action.link}
-                onClick={() => Event('dx-event', item.action.title, item.action.link)}
+                onClick={() => Event('dx-event', item.title, item.action.link)}
                 target="_blank"
               >
                 {item.action.title}

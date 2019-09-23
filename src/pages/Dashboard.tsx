@@ -21,7 +21,7 @@ const Dashboard = () => {
         </MainGrid>
       </MainGridWrapper>
       <SecondGridWrapper>
-        <Title as="h2">Announcements</Title>
+        <Title as="h2">Announcements and Events</Title>
         <EventCardContainer />
       </SecondGridWrapper>
     </div>

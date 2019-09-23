@@ -29,7 +29,7 @@ const AcademicsDashboard = () => {
         </MainGrid>
       </MainGridWrapper>
       <SecondGridWrapper>
-        <Title as="h2">Announcements and Events</Title>
+        <Title as="h2">Announcements</Title>
         <AnnouncementContainer className="col-span-2" type="academic" />
       </SecondGridWrapper>
     </>
