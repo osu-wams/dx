@@ -4,9 +4,6 @@ import PageTitle, { Title } from '../ui/PageTitle';
 import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import FinancialTransactions from '../features/FinancialTransactions';
-import { HighlightsCard } from '../ui/Highlights';
-import AccountBalance from '../features/financial-overview/AccountBalance';
-import MealPlans from '../features/financial-overview/MealPlans';
 import FinancialOverview from '../features/financial-overview/FinancialOverview';
 import { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper } from '../ui/PageGrid';
 
