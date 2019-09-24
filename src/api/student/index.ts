@@ -3,13 +3,13 @@ import { getGrades } from './grades';
 import { getGpa } from './gpa';
 import { getAccountHolds } from './holds';
 import { getAccountBalance } from './account-balance';
-import { getAcademicStatus } from './academic-status';
+import { useAcademicStatus } from './academic-status';
 import { getPlannerItems } from './planner-items';
 import { getAccountTransactions } from './account-transactions';
 
 export {
   getAccountHolds,
-  getAcademicStatus,
+  useAcademicStatus,
   getGrades,
   getCourseSchedule,
   getAccountBalance,

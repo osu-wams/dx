@@ -1,7 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {
-  getAcademicStatus,
   getAccountBalance,
   getAccountHolds,
   getAccountTransactions,
@@ -23,6 +22,7 @@ jest.unmock('..');
 const mockAxios = new MockAdapter(axios);
 
 describe('Student API', () => {
+
   // Course Schedule
   it('should get the course schedule for the current user', async () => {
     mockAxios.onGet(/\/api\/student\/class-schedule/).replyOnce(200, courses);
@@ -56,13 +56,6 @@ describe('Student API', () => {
     mockAxios.onGet('/api/student/holds').replyOnce(200, holds);
     const res = await getAccountHolds();
     expect(res).toEqual(holds);
-  });
-
-  // Academic Status
-  it('should get the academic status for the current user', async () => {
-    mockAxios.onGet(/\/api\/student\/academic-status/).replyOnce(200, academicStatus);
-    const res = await getAcademicStatus();
-    expect(res).toEqual(academicStatus);
   });
 
   it('should get the gpa for the current user', async () => {

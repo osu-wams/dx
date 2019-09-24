@@ -5,22 +5,26 @@ import AcademicStanding from '../academic-overview/AcademicStanding';
 import AcademicOverview from '../AcademicOverview';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetAcademicStatus = jest.fn();
+const mockUseAcademicStatus = jest.fn();
 
 jest.mock('../../api/student/academic-status', () => ({
-  getAcademicStatus: () => mockGetAcademicStatus()
+  useAcademicStatus: () => mockUseAcademicStatus()
 }));
 
 describe('<AcademicStanding />', () => {
   it('should render and have the approriate standing', async () => {
-    mockGetAcademicStatus.mockResolvedValue(Promise.resolve({ academicStanding: 'Good Standing' }));
+    mockUseAcademicStatus.mockReturnValue({
+      data: { academicStanding: 'Good Standing' },
+      loading: false,
+      error: false
+    });
     const { getByText } = render(<AcademicStanding />);
     const element = await waitForElement(() => getByText('Good Standing'));
     expect(element).toBeInTheDocument();
   });
 
   it('should return appropriate text when data is empty', async () => {
-    mockGetAcademicStatus.mockResolvedValue(Promise.resolve({}));
+    mockUseAcademicStatus.mockReturnValue({ data: {}, loading: false, error: false });
     const { getByText } = render(<AcademicStanding />);
     const element = await waitForElement(() => getByText('You have no current academic standing.'));
     expect(element).toBeInTheDocument();
