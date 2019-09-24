@@ -1,9 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {
-  getAccountBalance,
   getAccountHolds,
-  getAccountTransactions,
   getCourseSchedule,
   getGrades,
   getGpa,
@@ -13,9 +11,6 @@ import courses from '../__mocks__/courses.data';
 import grades from '../__mocks__/grades.data';
 import holds from '../__mocks__/holds.data';
 import gpa from '../__mocks__/gpa.data';
-import accountTransactions from '../__mocks__/accountTransactions.data';
-import accountBalance from '../__mocks__/accountBalance.data';
-import academicStatus from '../__mocks__/academicStatus.data';
 import plannerItems from '../__mocks__/plannerItems.data';
 
 jest.unmock('..');
@@ -30,25 +25,11 @@ describe('Student API', () => {
     expect(res).toEqual(courses);
   });
 
-  // Account Transactions
-  it('should get account transactions for the current user', async () => {
-    mockAxios.onGet('/api/student/account-transactions').replyOnce(200, accountTransactions);
-    const res = await getAccountTransactions();
-    expect(res).toEqual(accountTransactions);
-  });
-
   // Grades
   it('should get the course schedule for the current user', async () => {
     mockAxios.onGet(/\/api\/student\/grades/).replyOnce(200, grades);
     const res = await getGrades();
     expect(res).toEqual(grades);
-  });
-
-  // Account Balance
-  it('should get the account balance for the current user', async () => {
-    mockAxios.onGet('/api/student/account-balance').replyOnce(200, accountBalance);
-    const res = await getAccountBalance();
-    expect(res).toEqual(accountBalance);
   });
 
   // Account Holds

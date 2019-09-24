@@ -2,19 +2,18 @@ import { getCourseSchedule } from './course-schedule';
 import { getGrades } from './grades';
 import { getGpa } from './gpa';
 import { getAccountHolds } from './holds';
-import { getAccountBalance, useAccountBalance } from './account-balance';
+import { useAccountBalance } from './account-balance';
 import { useAcademicStatus } from './academic-status';
 import { getPlannerItems } from './planner-items';
-import { getAccountTransactions } from './account-transactions';
+import { useAccountTransactions } from './account-transactions';
 
 export {
   getAccountHolds,
   useAcademicStatus,
   getGrades,
   getCourseSchedule,
-  getAccountBalance,
   useAccountBalance,
   getPlannerItems,
   getGpa,
-  getAccountTransactions
+  useAccountTransactions
 };
