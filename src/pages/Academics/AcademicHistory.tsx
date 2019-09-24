@@ -75,6 +75,13 @@ const AcademicHistory = () => {
     {}
   );
 
+  // Make Cards Expended (collapse: false) when searching or the first card
+  const CardCollapse = (index: number, query) => {
+    if (index === 0 || query.length > 1) {
+      return false;
+    }
+  };
+
   return (
     <MainGridWrapper data-testid="academic-history">
       <PageTitle title="Academic History" />
@@ -98,7 +105,7 @@ const AcademicHistory = () => {
           {grades.length > 0 ? (
             <HistoryGrid aria-live="polite" aria-atomic="true">
               {Object.keys(gradesByTerm).map((key, index) => (
-                <HistoryCard key={index}>
+                <HistoryCard key={index} collapsing={CardCollapse(index, query)}>
                   <CardHeader title={key} />
                   <CardContent className="flush">
                     <Table variant="spacious" stretch>

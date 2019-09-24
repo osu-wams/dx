@@ -32,7 +32,7 @@ const AcademicCalendar = () => {
               <ListItem key={title}>
                 <ListItemContentLink
                   href={link}
-                  onClick={() => Event('academic-calendar', 'event clicked', link)}
+                  onClick={() => Event('academic-calendar', title, link)}
                 >
                   <Date>
                     <DateDay>{format(pubDate, 'D')}</DateDay>
