@@ -4,16 +4,16 @@ import { render } from '../../util/test-utils';
 import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
 import AccountBalance from '../AccountBalance';
 
-const mockGetAccountBalance = jest.fn();
+const mockUseAccountBalance = jest.fn();
 
 jest.mock('../../api/student/account-balance', () => ({
-  getAccountBalance: () => mockGetAccountBalance()
+  useAccountBalance: () => mockUseAccountBalance()
 }));
 
 describe('<AccountBalance />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetAccountBalance.mockResolvedValue(Promise.resolve(mockAccountBalance));
+    mockUseAccountBalance.mockReturnValue(mockAccountBalance);
   });
 
   it('should render and have the approriate title', async () => {
@@ -27,7 +27,7 @@ describe('<AccountBalance />', () => {
   });
 
   it('should return "No data" when AccountBalance data is empty', async () => {
-    mockGetAccountBalance.mockResolvedValue(Promise.resolve({}));
+    mockUseAccountBalance.mockReturnValue({data: {}, loading: false, error: false});
     const { getByText } = render(<AccountBalance />);
     await waitForElement(() => getByText('No data'));
   });

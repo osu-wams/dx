@@ -1,7 +1,10 @@
 import axios from 'axios';
+import useAPICall from '../useAPICall';
 
 const getAccountBalance = (): Promise<IAccountBalance> =>
   axios.get('/api/student/account-balance').then(res => res.data);
+const useAccountBalance = () =>
+  useAPICall<IAccountBalance>(getAccountBalance, undefined, data => data, {} as IAccountBalance);
 
 interface IAccountBalance {
   attributes: IAccountBalanceAttributes;
@@ -14,4 +17,4 @@ export type IAccountBalanceAttributes = {
   currentBalance: number;
 };
 // export { getAccountBalance };
-export { getAccountBalance };
+export { getAccountBalance, useAccountBalance };
