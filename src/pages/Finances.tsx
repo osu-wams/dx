@@ -7,7 +7,6 @@ import FinancialTransactions from '../features/FinancialTransactions';
 import FinancialOverview from '../features/financial-overview/FinancialOverview';
 import { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper } from '../ui/PageGrid';
 
-
 const Finances = () => {
   return (
     <div data-testid="finances-page">
@@ -15,7 +14,7 @@ const Finances = () => {
         <PageTitle title="Finances" />
         <MainGrid>
           <MainGridCol>
-            <FinancialOverview />  
+            <FinancialOverview />
             <FinancialTransactions />
           </MainGridCol>
           <MainGridCol>

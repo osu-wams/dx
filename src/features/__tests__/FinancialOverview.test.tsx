@@ -17,9 +17,13 @@ import { mockGAEvent } from '../../setupTests';
 //   expect(mockGAEvent).toHaveBeenCalled();
 // });
 
-it('should find link to view and make payment and clicking it triggers analytics', async () => {
-  const { getByText } = render(<FinancialOverview />);
+it('should find link to view and make payment and clicking it triggers analytics, and add money should not be visible when the mealplan is not being rendered', async () => {
+  const { getByText, queryByText } = render(<FinancialOverview />);
   const MakePayment = await waitForElement(() => getByText('Make a payment'));
+  const AddMoney = queryByText('Add money');
+
   fireEvent.click(MakePayment);
+  
   expect(mockGAEvent).toHaveBeenCalled();
+  expect(AddMoney).not.toBeInTheDocument()
 });

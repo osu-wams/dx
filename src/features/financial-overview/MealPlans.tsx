@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-
 import { getMealPlans, IMealPlans } from '../../api/persons/meal-plans';
 import { Color } from '../../theme';
 import { formatDollars } from '../../util/helpers';
@@ -52,16 +51,14 @@ export const MealPlans = props => {
           !myMealPlans ||
           (myMealPlans && myMealPlans.attributes && myMealPlans.attributes.balance <= 0)
         ) {
-          
           /*
            Only going to run this function if it exists. The tests were getting angry because
            this function is undefined unless you can pass in the function from financial
-           overview.
+          //  overview.  ;. 
            */
-          if(typeof props.setHasMealPlan !== 'undefined') {
+          if (typeof props.setHasMealPlan === 'function') {
             props.setHasMealPlan(false);
           }
-          
         }
       });
     return () => {

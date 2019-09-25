@@ -64,10 +64,8 @@ const AccountBalance = (props: { renderLink: boolean }) => {
         </>
       ) : (
         <>
-        <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
-        <HighlightDescription>
-          No data
-        </HighlightDescription>
+          <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
+          <HighlightDescription>No data</HighlightDescription>
         </>
       )}
     </Highlight>
