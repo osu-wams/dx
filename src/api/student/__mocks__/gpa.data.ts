@@ -1,3 +1,7 @@
 export default {
-  gpa: '3.8'
+  data: {
+    gpa: '3.8'
+  },
+  loading: false,
+  error: false
 };

@@ -1,7 +1,10 @@
 import axios from 'axios';
+import useAPICall from '../useAPICall';
 
 export const getGrades = (): Promise<Grades[]> =>
   axios.get(`/api/student/grades`).then(res => res.data);
+export const useGrades = ({ callback = data => data } = {}) =>
+  useAPICall<Grades[]>(getGrades, undefined, callback, []);
 
 export type Grades = {
   type: string;
