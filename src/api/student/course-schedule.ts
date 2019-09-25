@@ -1,7 +1,17 @@
 import axios from 'axios';
+import useAPICall from '../useAPICall';
 
 const getCourseSchedule = (term = 'current'): Promise<ICourseSchedule[]> =>
   axios.get(`/api/student/class-schedule?term=${term}`).then(res => res.data);
+
+/**
+ * Returns an array of course schedules. A callback function
+ * is provided if you want to mutate the data, but it must 
+ * return an array. 
+ * @param object containing a term and callback function
+ */
+const useCourseSchedule = ({ term = 'current', callback = data => data } = {}) =>
+  useAPICall<ICourseSchedule[]>(getCourseSchedule, term, callback, []);
 
 export interface IFaculty {
   email: string;
@@ -53,4 +63,4 @@ export interface ICourseScheduleAttributes {
   termDescription: string;
 }
 
-export { getCourseSchedule };
+export { getCourseSchedule, useCourseSchedule };

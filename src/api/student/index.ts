@@ -1,4 +1,4 @@
-import { getCourseSchedule } from './course-schedule';
+import { getCourseSchedule, useCourseSchedule } from './course-schedule';
 import { getGrades } from './grades';
 import { getGpa } from './gpa';
 import { getAccountHolds } from './holds';
@@ -12,6 +12,7 @@ export {
   useAcademicStatus,
   getGrades,
   getCourseSchedule,
+  useCourseSchedule,
   useAccountBalance,
   getPlannerItems,
   getGpa,
