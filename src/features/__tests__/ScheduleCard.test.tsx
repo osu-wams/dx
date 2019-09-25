@@ -7,7 +7,7 @@ import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetPlannerItems = jest.fn();
+const mockUsePlannerItems = jest.fn();
 const mockUseCourseSchedule = jest.fn();
 const mockUseAcademicCalendarEvents = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
@@ -16,7 +16,7 @@ jest.mock('../../api/events', () => ({
   useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents()
 }));
 jest.mock('../../api/student', () => ({
-  getPlannerItems: () => mockGetPlannerItems(),
+  usePlannerItems: () => mockUsePlannerItems(),
   useCourseSchedule: () => mockUseCourseSchedule()
 }));
 
@@ -24,7 +24,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
-    mockGetPlannerItems.mockResolvedValue(Promise.resolve(mockPlannerItems));
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
   });
 
@@ -88,7 +88,7 @@ describe('<ScheduleCard /> accessibility checks', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
-    mockGetPlannerItems.mockResolvedValue(Promise.resolve(mockPlannerItems));
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
   });
 
@@ -130,7 +130,7 @@ describe('<ScheduleCard /> without data for given days', () => {
   });
 
   it('should find "No Canvas assignments" text in card', async () => {
-    mockGetPlannerItems.mockResolvedValue(Promise.resolve([]));
+    mockUsePlannerItems.mockReturnValue(mockNoData);
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const noPlannerItemsText = await waitForElement(() => getByText(/No Canvas assignments/));

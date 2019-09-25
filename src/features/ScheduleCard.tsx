@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { isSameDay, format } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { useCourseSchedule, getPlannerItems } from '../api/student';
+import { useCourseSchedule, usePlannerItems } from '../api/student';
 import { useAcademicCalendarEvents } from '../api/events';
 import { UserContext } from '../App';
 import { getNextFiveDays, getDayShortcode, coursesOnDay } from './schedule/schedule-utils';
@@ -21,7 +21,7 @@ import { Card, CardFooter, CardContent } from '../ui/Card';
  * Displays courses for the next 5 days, filterable by day.
  */
 const ScheduleCard = () => {
-  const nextFiveDays = getNextFiveDays();
+  const plannerItems = usePlannerItems();
   const courses = useCourseSchedule({
     callback: data => {
       return data.filter(c =>
@@ -29,9 +29,8 @@ const ScheduleCard = () => {
       );
     }
   });
+  const nextFiveDays = getNextFiveDays();
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
-  const [plannerItems, setPlannerItems] = useState<any[]>([]);
-  const [plannerItemsLoading, setPlannerItemsLoading] = useState<boolean>(true);
   const calEvents = useAcademicCalendarEvents();
   const user = useContext<any>(UserContext);
   const getCoursesOnSelectedDay = () => {
@@ -44,7 +43,7 @@ const ScheduleCard = () => {
 
   let selectedPlannerItems: any[] = [];
   if (user.isCanvasOptIn) {
-    selectedPlannerItems = plannerItems.filter(item =>
+    selectedPlannerItems = plannerItems.data.filter(item =>
       item.plannable.due_at ? isSameDay(item.plannable.due_at, selectedDay) : ''
     );
   }
@@ -52,27 +51,6 @@ const ScheduleCard = () => {
   const selectedCalEvents = calEvents.data.filter(event =>
     event.pubDate ? isSameDay(event.pubDate, selectedDay) : ''
   );
-
-  // Populate user courses
-  useEffect(() => {
-    let isMounted = true;
-
-    getPlannerItems()
-      .then(data => {
-        if (isMounted) {
-          setPlannerItems(data);
-          setPlannerItemsLoading(false);
-        }
-      })
-      .catch(err => {
-        setPlannerItemsLoading(false);
-        console.log(err);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   // Get a list of days with courses or assignments.
   // Used to display the orange dots above days to indicate
@@ -88,7 +66,7 @@ const ScheduleCard = () => {
 
         let plannerItemsOnDay: any[] = [];
         if (user.isCanvasOptIn) {
-          plannerItemsOnDay = plannerItems.filter(item =>
+          plannerItemsOnDay = plannerItems.data.filter(item =>
             item.plannable.due_at ? isSameDay(item.plannable.due_at, day) : ''
           );
         }
@@ -110,9 +88,9 @@ const ScheduleCard = () => {
           setSelectedDay={setSelectedDay}
           daysWithEvents={daysWithEvents}
         />
-        {plannerItemsLoading && <Skeleton count={4} />}
+        {plannerItems.loading && <Skeleton count={4} />}
         <div aria-live="assertive" aria-atomic="true">
-          {!plannerItemsLoading && (
+          {!plannerItems.loading && (
             <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
           )}
           {courses.loading && <Skeleton count={4} />}

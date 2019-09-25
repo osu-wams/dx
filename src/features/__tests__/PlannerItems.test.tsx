@@ -5,16 +5,17 @@ import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetPlannerItems = jest.fn();
+const mockUsePlannerItems = jest.fn();
+const mockNoData = { data: [], loading: false, error: false };
 
 jest.mock('../../api/student/planner-items', () => ({
-  getPlannerItems: () => mockGetPlannerItems()
+  usePlannerItems: () => mockUsePlannerItems()
 }));
 
 describe('<PlannerItems />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetPlannerItems.mockResolvedValue(Promise.resolve(mockPlannerItems));
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
   });
 
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
@@ -37,7 +38,7 @@ describe('<PlannerItems />', () => {
   });
 
   it('should find "NO ASSIGNMENTS" if our promise returns empty', async () => {
-    mockGetPlannerItems.mockResolvedValue(Promise.resolve([]));
+    mockUsePlannerItems.mockReturnValue(mockNoData);
     const { getByText } = render(<PlannerItems />);
     const element = await waitForElement(() => getByText('NO ASSIGNMENTS'));
     expect(element).toBeInTheDocument();
