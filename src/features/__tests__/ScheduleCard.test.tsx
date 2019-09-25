@@ -8,7 +8,7 @@ import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from '../../setupTests';
 
 const mockGetPlannerItems = jest.fn();
-const mockGetCourseSchedule = jest.fn();
+const mockUseCourseSchedule = jest.fn();
 const mockUseAcademicCalendarEvents = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
 
@@ -17,7 +17,7 @@ jest.mock('../../api/events', () => ({
 }));
 jest.mock('../../api/student', () => ({
   getPlannerItems: () => mockGetPlannerItems(),
-  getCourseSchedule: () => mockGetCourseSchedule()
+  useCourseSchedule: () => mockUseCourseSchedule()
 }));
 
 describe('<ScheduleCard /> with data and canvas authorized user', () => {
@@ -25,7 +25,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   beforeAll(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockGetPlannerItems.mockResolvedValue(Promise.resolve(mockPlannerItems));
-    mockGetCourseSchedule.mockResolvedValue(Promise.resolve(mockCourseSchedule));
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
   });
 
   it('should find the card header even though it is visually hidden', async () => {
@@ -89,7 +89,7 @@ describe('<ScheduleCard /> accessibility checks', () => {
   beforeAll(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockGetPlannerItems.mockResolvedValue(Promise.resolve(mockPlannerItems));
-    mockGetCourseSchedule.mockResolvedValue(Promise.resolve(mockCourseSchedule));
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
   });
 
   it('should find appropriate aria attributes', async () => {
@@ -120,7 +120,7 @@ describe('<ScheduleCard /> without data for given days', () => {
   });
 
   it(`should find "You don't have any courses scheduled for today"`, async () => {
-    mockGetCourseSchedule.mockResolvedValue(Promise.resolve([]));
+    mockUseCourseSchedule.mockReturnValue(mockNoData);
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const noCoursesText = await waitForElement(() =>

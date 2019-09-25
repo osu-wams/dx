@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { faChevronRight, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
-import { getCourseSchedule } from '../api/student';
+import { useCourseSchedule } from '../api/student';
 import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
-import { ICourseSchedule, ICourseScheduleAttributes } from '../api/student/course-schedule';
+import { ICourseScheduleAttributes } from '../api/student/course-schedule';
 import Icon from '../ui/Icon';
 import { getIconByScheduleType } from './course-utils';
 import {
@@ -21,7 +21,7 @@ import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
 
 const Courses = () => {
-  const [courses, setCourses] = useState<ICourseSchedule[]>([]);
+  const courses = useCourseSchedule();
   const [isOpen, setOpen] = useState(false);
   const [courseAttributes, setCourseAttributes] = useState<ICourseScheduleAttributes | null>(null);
 
@@ -31,20 +31,7 @@ const Courses = () => {
     setCourseAttributes(courseAttributes);
   };
 
-  // Populate user courses
-  useEffect(() => {
-    let isMounted = true;
-    getCourseSchedule()
-      .then(res => isMounted && setCourses(res))
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
-
-  if (!courses.length) {
+  if (!courses.data.length) {
     return null;
   }
 
@@ -52,11 +39,11 @@ const Courses = () => {
     <Card>
       <CardHeader
         title="Current Courses"
-        badge={<CardIcon icon={faChalkboardTeacher} count={courses.length} />}
+        badge={<CardIcon icon={faChalkboardTeacher} count={courses.data.length} />}
       />
       <CardContent>
         <List>
-          {courses.map(
+          {courses.data.map(
             ({
               id,
               attributes,

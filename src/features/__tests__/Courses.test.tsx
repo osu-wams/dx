@@ -5,15 +5,15 @@ import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetCourseSchedule = jest.fn();
+const mockUseCourseSchedule = jest.fn();
 
 jest.mock('../../api/student', () => ({
-  getCourseSchedule: () => mockGetCourseSchedule()
+  useCourseSchedule: () => mockUseCourseSchedule()
 }));
 
 describe('<Courses />', () => {
   beforeAll(() => {
-    mockGetCourseSchedule.mockResolvedValue(Promise.resolve(mockCourseSchedule));
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
   });
 
   it('renders', () => {

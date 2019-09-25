@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { isSameDay, format } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { getCourseSchedule, getPlannerItems } from '../api/student';
+import { useCourseSchedule, getPlannerItems } from '../api/student';
 import { useAcademicCalendarEvents } from '../api/events';
 import { UserContext } from '../App';
 import { getNextFiveDays, getDayShortcode, coursesOnDay } from './schedule/schedule-utils';
@@ -14,7 +14,6 @@ import {
 } from './schedule';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
-import { ICourseSchedule } from '../api/student/course-schedule';
 
 /**
  * Course Schedule Card
@@ -23,8 +22,13 @@ import { ICourseSchedule } from '../api/student/course-schedule';
  */
 const ScheduleCard = () => {
   const nextFiveDays = getNextFiveDays();
-  const [courses, setCourses] = useState<ICourseSchedule[]>([]);
-  const [coursesLoading, setCoursesLoading] = useState<boolean>(true);
+  const courses = useCourseSchedule({
+    callback: data => {
+      return data.filter(c =>
+        c.attributes.meetingTimes.find(t => t.beginDate && Date.parse(t.beginDate) <= Date.now())
+      );
+    }
+  });
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const [plannerItems, setPlannerItems] = useState<any[]>([]);
   const [plannerItemsLoading, setPlannerItemsLoading] = useState<boolean>(true);
@@ -32,7 +36,7 @@ const ScheduleCard = () => {
   const user = useContext<any>(UserContext);
   const getCoursesOnSelectedDay = () => {
     const selectedDayShortcode = getDayShortcode(selectedDay);
-    return coursesOnDay(courses, selectedDayShortcode);
+    return coursesOnDay(courses.data, selectedDayShortcode);
   };
 
   // Get courses and assignments matching selected day.
@@ -52,18 +56,6 @@ const ScheduleCard = () => {
   // Populate user courses
   useEffect(() => {
     let isMounted = true;
-    getCourseSchedule()
-      .then(res => {
-        const currentCourses = res.filter(c =>
-          c.attributes.meetingTimes.find(t => t.beginDate && Date.parse(t.beginDate) <= Date.now())
-        );
-        isMounted && setCourses(currentCourses);
-        setCoursesLoading(false);
-      })
-      .catch(err => {
-        setCoursesLoading(false);
-        console.log(err);
-      });
 
     getPlannerItems()
       .then(data => {
@@ -89,7 +81,7 @@ const ScheduleCard = () => {
     () =>
       nextFiveDays.filter(day => {
         const dayShortcode = getDayShortcode(day);
-        const hasCourses = coursesOnDay(courses, dayShortcode).length > 0;
+        const hasCourses = coursesOnDay(courses.data, dayShortcode).length > 0;
         const calendarEventsOnDay = calEvents.data.filter(event =>
           event.pubDate ? isSameDay(event.pubDate, day) : ''
         );
@@ -123,8 +115,8 @@ const ScheduleCard = () => {
           {!plannerItemsLoading && (
             <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
           )}
-          {coursesLoading && <Skeleton count={4} />}
-          {!coursesLoading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
+          {courses.loading && <Skeleton count={4} />}
+          {!courses.loading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
           <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
         </div>
       </CardContent>
