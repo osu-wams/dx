@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Color } from '../../theme';
 import {
@@ -7,43 +7,23 @@ import {
   HighlightEmphasis,
   HighlightDescription
 } from '../../ui/Highlights';
-import { getGpa } from '../../api/student';
-import { GpaLevel } from '../../api/student/gpa';
+import { useGpa } from '../../api/student';
 
 export const StudentGpa: React.FC = () => {
-  const [overallGpa, setOverallGpa] = useState({
-    gpa: '',
-    message: 'You must first complete a term to have an overall GPA.'
-  });
-  const [overallGpaLoading, setOverallGpaLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    let isMounted = true;
-    getGpa()
-      .then((res: GpaLevel) => {
-        if (isMounted) {
-          if (res && res.gpa) {
-            setOverallGpa({ gpa: res.gpa, message: 'GPA across all past terms.' });
-          }
-          setOverallGpaLoading(false);
-        }
-      })
-      .catch(console.error);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
+  const { data, loading } = useGpa();
 
   return (
     <Highlight textAlignLeft>
-      <HighlightEmphasis color={Color['orange-400']}>{overallGpa.gpa}</HighlightEmphasis>
+      <HighlightEmphasis color={Color['orange-400']}>{data.gpa}</HighlightEmphasis>
       <HighlightTitle marginTop={0}>Overall GPA</HighlightTitle>
-      {overallGpaLoading && <Skeleton count={3} />}
-      {!overallGpaLoading && (
+      {loading && <Skeleton count={3} />}
+      {!loading && (
         <>
-          <HighlightDescription>{overallGpa.message}</HighlightDescription>
+          <HighlightDescription>
+            {data.gpa !== ''
+              ? 'GPA across all past terms.'
+              : 'You must first complete a term to have an overall GPA.'}
+          </HighlightDescription>
         </>
       )}
     </Highlight>

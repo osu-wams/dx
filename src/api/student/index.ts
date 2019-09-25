@@ -1,6 +1,6 @@
 import { getCourseSchedule, useCourseSchedule } from './course-schedule';
 import { getGrades } from './grades';
-import { getGpa } from './gpa';
+import { useGpa, getGpa } from './gpa';
 import { getAccountHolds } from './holds';
 import { useAccountBalance } from './account-balance';
 import { useAcademicStatus } from './academic-status';
@@ -16,5 +16,6 @@ export {
   useAccountBalance,
   getPlannerItems,
   getGpa,
+  useGpa, 
   useAccountTransactions
 };
