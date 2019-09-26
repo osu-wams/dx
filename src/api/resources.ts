@@ -65,8 +65,8 @@ const useCategories = (callback: Function = data => data) => {
   return useAPICall<ICategory[]>(getCategories, undefined, callback, []);
 };
 
-// Category selected by default. Currently the 'popular' category id
-const defaultCategoryId = '1b9b7a4b-5a64-41af-a40a-8bb01abedd19';
+// Category selected by default. Currently the 'featured' category id
+const defaultCategoryId = '6b7cd598-d71e-45f7-911c-d71551ec0a7c';
 
 export {
   useResources,

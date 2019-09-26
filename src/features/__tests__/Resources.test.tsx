@@ -31,13 +31,13 @@ describe('<Resources />', () => {
     await waitForElement(() => getByText('Resources'));
   });
 
-  it('should have the Popular tag selected', async () => {
+  it('should have the Featured tag selected', async () => {
     const { getByLabelText, queryByText, findByText } = render(<Resources />);
-    const popular = await waitForElement(() => getByLabelText('Popular'));
+    const featured = await waitForElement(() => getByLabelText('Featured'));
     const all = await waitForElement(() => getByLabelText('All'));
-    fireEvent.click(popular);
+    fireEvent.click(featured);
     await sleep(50);
-    expect(popular).toHaveClass('selected');
+    expect(featured).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(queryByText(/Webcams/)).toBeNull();
@@ -45,11 +45,11 @@ describe('<Resources />', () => {
 
   it('should have a clickable All category', async () => {
     const { getByLabelText, findByText } = render(<Resources />);
-    const popular = await waitForElement(() => getByLabelText('Popular'));
+    const featured = await waitForElement(() => getByLabelText('Featured'));
     const all = await waitForElement(() => getByLabelText('All'));
     fireEvent.click(all);
     await sleep(50);
-    expect(popular).not.toHaveClass('selected');
+    expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
     expect(findByText(/Student Jobs/)).not.toBeNull();
     expect(findByText(/Billing Information/)).not.toBeNull();
@@ -89,9 +89,9 @@ describe('<Resources />', () => {
 
     const { getByLabelText, findByText } = render(<Resources />);
     await sleep(50);
-    const popular = await waitForElement(() => getByLabelText('Popular'));
+    const featured = await waitForElement(() => getByLabelText('Featured'));
     const all = await waitForElement(() => getByLabelText('All'));
-     expect(popular).not.toHaveClass('selected');
+    expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();
@@ -101,9 +101,9 @@ describe('<Resources />', () => {
   it('should move to the All category when searching', async () => {
     console.log(window.location.search);
     const { getByLabelText, findByText, getByPlaceholderText } = render(<Resources />);
-    let popular = await waitForElement(() => getByLabelText('Popular'));
+    let featured = await waitForElement(() => getByLabelText('Featured'));
     let all = await waitForElement(() => getByLabelText('All'));
-    expect(popular).toHaveClass('selected');
+    expect(featured).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
     await fireEvent.change(getByPlaceholderText('Find resources'), {
       target: {
@@ -112,7 +112,7 @@ describe('<Resources />', () => {
     });
     // Need to wait for debounce
     await sleep(600);
-    expect(popular).not.toHaveClass('selected');
+    expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();

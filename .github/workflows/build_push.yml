@@ -1,0 +1,105 @@
+name: Build and Push Server Application to AWS
+on:
+  push:
+    branches:
+      - master
+      - stage
+      - production
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: yarn install, lint, test
+        run: |
+          yarn install --frozen-lockfile
+          yarn run lint
+          yarn run test:coverage -w 1
+        env:
+          CI: true
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+      - name: report code coverage
+        run: npx codecov@3
+        if: matrix.node-version == '10.x'
+        env:
+          CI: true
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Build client
+        run: |
+          yarn install --frozen-lockfile
+          yarn run build
+          build_date=$(date +%Y%m%d%H%M%S)
+          git_sha=$(git rev-parse --short ${{ github.sha }})
+          app_version=$(expr ${build_date}-${git_sha})
+          expr ${app_version} > build/app_version
+        env:
+          CI: true
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Login to AWS
+        run: $(aws ecr get-login --region ${{ secrets.AWS_REGION }} --no-include-email)
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+      - name: Copy client to S3 and flush Cloudfront cache for DEVELOPMENT
+        if: github.ref == 'refs/heads/master'
+        run: |
+          s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-development
+          aws s3 sync build ${s3_bucket_url}
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_DEV }} --paths /index.html
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+      - name: Copy client to S3 and flush Cloudfront cache for STAGE
+        if: github.ref == 'refs/heads/stage'
+        run: |
+          s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-stage
+          aws s3 sync build ${s3_bucket_url}
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_STAGE }} --paths /index.html
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+      - name: Copy client to S3 and flush Cloudfront cache for PRODUCTION
+        if: github.ref == 'refs/heads/production'
+        run: |
+          s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-production
+          aws s3 sync build ${s3_bucket_url}
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_PRODUCTION }} --paths /index.html
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
