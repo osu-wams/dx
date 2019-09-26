@@ -27,8 +27,8 @@ const getResourcesByQueue = (category: string): Promise<IResourceResult[]> =>
 const getCategories = (): Promise<ICategory[]> =>
   axios.get('/api/resources/categories').then(res => res.data);
 
-// Category selected by default. Currently the 'popular' category id
-const defaultCategoryId = '1b9b7a4b-5a64-41af-a40a-8bb01abedd19';
+// Category selected by default. Currently the 'featured' category id
+const defaultCategoryId = '6b7cd598-d71e-45f7-911c-d71551ec0a7c';
 
 export {
   getResources,
