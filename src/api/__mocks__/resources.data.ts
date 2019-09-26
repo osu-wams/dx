@@ -30,8 +30,8 @@ const resourcesDataByCategory = {
 const categoriesData = {
   data: [
     {
-      id: '1b9b7a4b-5a64-41af-a40a-8bb01abedd19',
-      name: 'Popular',
+      id: '6b7cd598-d71e-45f7-911c-d71551ec0a7c',
+      name: 'Featured',
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/star.svg'
     },
     {
@@ -47,6 +47,6 @@ const categoriesData = {
   ]
 };
 
-const defaultCategory = '1b9b7a4b-5a64-41af-a40a-8bb01abedd19';
+const defaultCategory = '6b7cd598-d71e-45f7-911c-d71551ec0a7c';
 
 export { resourcesData, resourcesDataByCategory, categoriesData, defaultCategory };
