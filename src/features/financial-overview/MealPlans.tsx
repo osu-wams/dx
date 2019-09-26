@@ -54,7 +54,7 @@ export const MealPlans = props => {
           /*
            Only going to run this function if it exists. The tests were getting angry because
            this function is undefined unless you can pass in the function from financial
-          //  overview.  ;. 
+           overview.  ;. 
            */
           if (typeof props.setHasMealPlan === 'function') {
             props.setHasMealPlan(false);
