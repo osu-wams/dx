@@ -55,6 +55,10 @@ jobs:
           git_sha=$(git rev-parse --short ${{ github.sha }})
           app_version=$(expr ${build_date}-${git_sha})
           expr ${app_version} > build/app_version
+        env:
+          CI: true
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Login to AWS
         run: $(aws ecr get-login --region ${{ secrets.AWS_REGION }} --no-include-email)
         env:
