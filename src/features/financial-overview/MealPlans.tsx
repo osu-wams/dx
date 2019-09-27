@@ -13,6 +13,7 @@ import { ExternalLink } from '../../ui/Link';
 import { Event } from '../../util/gaTracking';
 
 export const MealPlans = props => {
+  const { setFooterLink, setHasMealPlan } = props;
   const [mealPlans, setMealPlans] = useState<IMealPlans[] | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -27,6 +28,7 @@ export const MealPlans = props => {
     </ExternalLink>
   );
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     let isMounted = true;
     let myMealPlans: any;
@@ -37,7 +39,7 @@ export const MealPlans = props => {
           myMealPlans = res[0];
           if (myMealPlans.attributes.balance > 0) {
             setMealPlans(res);
-            props.setFooterLink(MealPlanExternalLink());
+            setFooterLink(MealPlanExternalLink());
           }
         }
       })
@@ -54,10 +56,10 @@ export const MealPlans = props => {
           /*
            Only going to run this function if it exists. The tests were getting angry because
            this function is undefined unless you can pass in the function from financial
-           overview.  ;. 
+           overview.  ;.
            */
-          if (typeof props.setHasMealPlan === 'function') {
-            props.setHasMealPlan(false);
+          if (typeof setHasMealPlan === 'function') {
+            setHasMealPlan(false);
           }
         }
       });
@@ -66,6 +68,7 @@ export const MealPlans = props => {
       isMounted = false;
     };
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <Highlight textAlignLeft>
