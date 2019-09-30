@@ -16,78 +16,30 @@ const mock = new MockAdapter(axios);
 describe('getResources', () => {
   it('gets all resources for a non-student', async () => {
     mock.onGet('/api/resources?query=some-bogus-query').reply(200, resourcesData.data);
-    const result = await getResources('some-bogus-query', {
-      ...authUser,
-      classification: undefined
-    });
+    const result = await getResources('?query=some-bogus-query');
     expect(result.map(r => r.title)).toStrictEqual(resourcesData.data.map(r => r.title));
   });
   it('gets all resources', async () => {
     mock.onGet('/api/resources').reply(200, resourcesData.data);
-    const result = await getResources('', authUser);
+    const result = await getResources('');
     expect(result.map(r => r.title)).toStrictEqual(resourcesData.data.map(r => r.title));
-  });
-  it('gets only the last resource', async () => {
-    mock.onGet('/api/resources').reply(200, resourcesData.data);
-    const result = await getResources('', {
-      ...authUser,
-      classification: {
-        attributes: {
-          level: '',
-          campus: '',
-          classification: '',
-          isInternational: true
-        }
-      }
-    });
-    expect(result.map(r => r.title)).toStrictEqual([resourcesData.data[1].title]);
-  });
-  it('gets only the first resource', async () => {
-    mock.onGet('/api/resources').reply(200, resourcesData.data);
-    const result = await getResources('', {
-      ...authUser,
-      classification: {
-        attributes: {
-          level: '',
-          campus: 'Oregon State - Cascades',
-          classification: 'Freshman',
-          isInternational: false
-        }
-      }
-    });
-    expect(result.map(r => r.title)).toStrictEqual([resourcesData.data[0].title]);
-  });
-  it('gets only the resource with Ecampus', async () => {
-    mock.onGet('/api/resources').reply(200, resourcesData.data);
-    const result = await getResources('', {
-      ...authUser,
-      classification: {
-        attributes: {
-          level: '',
-          campus: 'Dist. Degree Corvallis Student',
-          classification: '',
-          isInternational: true
-        }
-      }
-    });
-    expect(result.map(r => r.title)).toStrictEqual([resourcesData.data[1].title]);
   });
 });
 
 describe('getResourcesByCategory', () => {
   it('gets all resources for a non-student', async () => {
     mock.onGet('/api/resources?category=all').reply(200, resourcesData.data);
-    const result = await getResourcesByCategory('all', { ...authUser, classification: undefined });
+    const result = await getResourcesByCategory('all');
     expect(result.map(r => r.title)).toStrictEqual(resourcesData.data.map(r => r.title));
   });
   it('gets all resources', async () => {
     mock.onGet('/api/resources?category=all').reply(200, resourcesData.data);
-    const result = await getResourcesByCategory('all', authUser);
+    const result = await getResourcesByCategory('all');
     expect(result.map(r => r.title)).toStrictEqual(resourcesData.data.map(r => r.title));
   });
   it('gets resources when a category id is supplied', async () => {
     mock.onGet('/api/resources?category=blah').reply(200, resourcesData.data);
-    const result = await getResourcesByCategory('blah', authUser);
+    const result = await getResourcesByCategory('blah');
     expect(result.map(r => r.title)).toStrictEqual(resourcesData.data.map(r => r.title));
   });
 });
@@ -95,15 +47,12 @@ describe('getResourcesByCategory', () => {
 describe('getResourcesByQueue', () => {
   it('gets all resources for a non-student', async () => {
     mock.onGet(new RegExp('/api/resources/category/financial')).reply(200, resourcesData.data);
-    const result = await getResourcesByQueue('financial', {
-      ...authUser,
-      classification: undefined
-    });
+    const result = await getResourcesByQueue('financial');
     expect(result.map(r => r.title)).toStrictEqual(resourcesData.data.map(r => r.title));
   });
   it('gets all resources', async () => {
     mock.onGet(new RegExp('/api/resources/category/featured')).reply(200, resourcesData.data);
-    const result = await getResourcesByQueue('featured', authUser);
+    const result = await getResourcesByQueue('featured');
     expect(result.map(r => r.title)).toStrictEqual(resourcesData.data.map(r => r.title));
   });
 });

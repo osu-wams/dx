@@ -172,5 +172,10 @@ export {
   useResourcesByCategory,
   defaultCategoryId,
   useCategories,
-  useResourcesByQueue
+  useResourcesByQueue,
+  getCategories,
+  getResources,
+  getResourcesByCategory,
+  getResourcesByQuery,
+  getResourcesByQueue
 };

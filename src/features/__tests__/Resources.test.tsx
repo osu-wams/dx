@@ -21,7 +21,7 @@ jest.mock('../../api/resources', () => ({
 
 describe('<Resources />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseResources.mockReturnValue(resourcesData);
     mockUseCategories.mockReturnValue(categoriesData);
   });
@@ -130,29 +130,6 @@ describe('<Resources />', () => {
       expect(all).toHaveClass('selected');
       expect(findByText(/Billing Information/)).not.toBeNull();
       expect(findByText(/Student Jobs/)).not.toBeNull();
-    });
-    it('shows one resource', async () => {
-      const newAuthUser = {
-        ...authUser,
-        classification: {
-          id: authUser.osuId,
-          attributes: {
-            level: '',
-            campus: '',
-            classification: '',
-            isInternational: true
-          }
-        }
-      };
-      const { getByLabelText, queryByText, findByText } = render(<Resources />, {
-        user: newAuthUser
-      });
-      const all = await waitForElement(() => getByLabelText('All'));
-      fireEvent.click(all);
-      await sleep(50);
-      expect(all).toHaveClass('selected');
-      expect(findByText(/Billing Information/)).not.toBeNull();
-      expect(queryByText(/Student Jobs/)).toBeNull();
     });
   });
 });
