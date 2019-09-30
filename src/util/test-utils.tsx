@@ -2,14 +2,26 @@ import React, { FC } from 'react';
 import { render as testingLibraryRender } from '@testing-library/react';
 
 import { UserContext, AppContext, IAppContext } from '../App';
+import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
 
-const authUser = {
+export const authUserClassification: IUserClassification = {
+  id: '123',
+  attributes: {
+    level: 'Graduate',
+    campus: '',
+    classification: 'Freshman',
+    isInternational: true
+  }
+};
+
+export const authUser = {
   osuId: '123',
   email: 'testo@oregonstate.edu',
   firstName: 'Testo',
   lastName: 'LastTesto',
   isAdmin: true,
-  isCanvasOptIn: true
+  isCanvasOptIn: true,
+  classification: authUserClassification
 };
 
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
