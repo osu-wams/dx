@@ -28,7 +28,7 @@ describe('<MealPlans />', () => {
   });
 
   it('should not render if no balance ', async () => {
-    mockUseMealPlans.mockResolvedValue(Promise.resolve({}));
+    mockUseMealPlans.mockResolvedValue(Promise.resolve(mockNoData));
     const { getByText } = render(<MealPlans />);
     await waitForElement(() => getByText('No meal plans'));
   });

@@ -10,23 +10,8 @@ interface MealPlansCallback {
 const getMealPlans = (): Promise<IMealPlans[]> =>
   axios.get(`/api/persons/meal-plans`).then(res => res.data);
 
-const useMealPlans = (callbacks: MealPlansCallback) =>
-  useAPICall<IMealPlans[]>(
-    getMealPlans,
-    undefined,
-    (data: IMealPlans[]) => {
-      if (data.length) {
-        if (data[0].attributes.balance > 0) {
-          callbacks.setFooterLink(callbacks.MealPlanExternalLink());
-        }
-        callbacks.setHasMealPlan(data[0].attributes.balance > 0);
-      } else {
-        callbacks.setHasMealPlan(false);
-      }
-      return data;
-    },
-    []
-  );
+const useMealPlans = ({ callback = data => data } = {}) =>
+  useAPICall<IMealPlans[]>(getMealPlans, undefined, callback, []);
 
 export interface IMealPlans {
   attributes: IMealPlansAttributes;
