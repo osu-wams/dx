@@ -1,7 +1,17 @@
 import axios from 'axios';
+import useAPICall from '../useAPICall';
+
+interface MealPlansCallback {
+  setFooterLink: Function;
+  MealPlanExternalLink: Function;
+  setHasMealPlan: Function;
+}
 
 const getMealPlans = (): Promise<IMealPlans[]> =>
   axios.get(`/api/persons/meal-plans`).then(res => res.data);
+
+const useMealPlans = ({ callback = data => data } = {}) =>
+  useAPICall<IMealPlans[]>(getMealPlans, undefined, callback, []);
 
 export interface IMealPlans {
   attributes: IMealPlansAttributes;
@@ -17,4 +27,4 @@ export interface IMealPlansAttributes {
   lastUsedPlace: string | null;
 }
 
-export { getMealPlans };
+export { useMealPlans };

@@ -5,16 +5,16 @@ import mockFinancialTransactions from '../../api/student/__mocks__/accountTransa
 import FinancialTransactions from '../FinancialTransactions';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetFinancialTransactions = jest.fn();
+const mockUseFinancialTransactions = jest.fn();
 
 jest.mock('../../api/student/account-transactions', () => ({
-  getAccountTransactions: () => mockGetFinancialTransactions()
+  useAccountTransactions: () => mockUseFinancialTransactions()
 }));
 
 describe('<FinancialTransactions />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetFinancialTransactions.mockResolvedValue(Promise.resolve(mockFinancialTransactions));
+    mockUseFinancialTransactions.mockReturnValue(mockFinancialTransactions);
   });
 
   it('should have a $3,417.97 charge from our mock data', async () => {
@@ -31,9 +31,11 @@ describe('<FinancialTransactions />', () => {
   });
 
   it('should show an empty state when there are no recent transactions', async () => {
-    mockGetFinancialTransactions.mockResolvedValue(
-      Promise.resolve({ attributes: { transactions: [] } })
-    );
+    mockUseFinancialTransactions.mockReturnValue({
+      data: { attributes: { transactions: [] } },
+      loading: false,
+      error: false
+    });
     const { getByText, debug } = render(<FinancialTransactions />);
     const empty = await waitForElement(() => getByText(/No recent transactions/));
 

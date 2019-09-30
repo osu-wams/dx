@@ -4,16 +4,16 @@ import { render } from '../../util/test-utils';
 import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
 import AccountBalance from '../financial-overview/AccountBalance';
 
-const mockGetAccountBalance = jest.fn();
+const mockUseAccountBalance = jest.fn();
 
 jest.mock('../../api/student/account-balance', () => ({
-  getAccountBalance: () => mockGetAccountBalance()
+  useAccountBalance: () => mockUseAccountBalance()
 }));
 
 describe('<AccountBalance />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetAccountBalance.mockResolvedValue(Promise.resolve(mockAccountBalance));
+    mockUseAccountBalance.mockReturnValue(mockAccountBalance);
   });
 
   it('should render and have the approriate title', async () => {
@@ -22,13 +22,13 @@ describe('<AccountBalance />', () => {
   });
 
   it('should have a $2,356.00 balance from our mock data', async () => {
-    const { getByText } = render(<AccountBalance renderLink={false}/>);
+    const { getByText } = render(<AccountBalance renderLink={false} />);
     await waitForElement(() => getByText('$2,356.00'));
   });
 
   it('should return "No data" when AccountBalance data is empty', async () => {
-    mockGetAccountBalance.mockResolvedValue(Promise.resolve({}));
-    const { getByText } = render(<AccountBalance renderLink={false}/>);
+    mockUseAccountBalance.mockResolvedValue(Promise.resolve({}));
+    const { getByText } = render(<AccountBalance renderLink={false} />);
     await waitForElement(() => getByText('No data'));
   });
 });

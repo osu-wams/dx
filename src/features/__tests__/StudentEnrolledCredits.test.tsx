@@ -3,24 +3,26 @@ import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import StudentEnrolledCredits from '../academic-overview/StudentEnrolledCredits';
 
-const mockGetCourseSchedule = jest.fn();
+const mockUseCourseSchedule = jest.fn();
 
 jest.mock('../../api/student/course-schedule', () => ({
-  getCourseSchedule: () => mockGetCourseSchedule()
+  useCourseSchedule: () => mockUseCourseSchedule()
 }));
 
 describe('<StudentEnrolledCredits />', () => {
   it('should render and have the approriate standing', async () => {
-    mockGetCourseSchedule.mockResolvedValue(
-      Promise.resolve([{ attributes: { creditHours: 5 } }, { attributes: { creditHours: 2 } }])
-    );
+    mockUseCourseSchedule.mockReturnValue({
+      data: 7,
+      loading: false,
+      error: false
+    });
     const { getByText } = render(<StudentEnrolledCredits />);
     const element = await waitForElement(() => getByText('7'));
     expect(element).toBeInTheDocument();
   });
 
   it('should return appropriate text when data is empty', async () => {
-    mockGetCourseSchedule.mockResolvedValue(Promise.resolve([]));
+    mockUseCourseSchedule.mockReturnValue({data: 0, loading: false, error: false});
     const { getByText } = render(<StudentEnrolledCredits />);
     const element = await waitForElement(() => getByText('0'));
     expect(element).toBeInTheDocument();

@@ -1,66 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
-import PageTitle from '../ui/PageTitle';
 import { CardBase } from '../ui/Card';
 import { theme } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import {
-  getCategories,
-  getResourcesByCategory,
-  defaultCategoryId,
-  IResourceResult,
-  ICategory
-} from '../api/resources';
+import { defaultCategoryId, useCategories, useResources } from '../api/resources';
 import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
+import PageTitle from '../ui/PageTitle';
 
 //import type here
 const Resources = () => {
-  const [resources, setResources] = useState<IResourceResult[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [categories, setCategories] = useState<ICategory[]>([]);
-  const [catLoading, setCatLoading] = useState<boolean>(true);
-  const [resLoading, setResLoading] = useState<boolean>(true);
-  const isMounted = useRef(true);
-
-  useEffect(() => {
-    let theCategoryId = defaultCategoryId;
-    if (window.location.search.startsWith('?category=')) {
-      const queryString = window.location.search.split('=');
-      if (queryString.length === 2) {
-        theCategoryId = queryString[1];
-      }
-    }
-    isMounted && setSelectedCategory(theCategoryId);
-    getCategories()
-      .then((data: ICategory[]) => {
-        if (isMounted.current) {
-          fetchResourcesByCategory(theCategoryId);
-          setCategories(data);
-          setCatLoading(false);
-        }
-      })
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted.current = false;
-    };
-  }, []);
-
-  const fetchResourcesByCategory = (category: string) => {
-    getResourcesByCategory(category)
-      .then((res: IResourceResult[]) => {
-        if (isMounted.current) {
-          setResLoading(false);
-          setResources(res);
-          setSelectedCategory(category);
-        }
-      })
-      .catch(console.log);
-  };
+  const [selectedCategory, setSelectedCategory] = useState<string>(getInitialCategory());
+  const [query, setQuery] = useState<string>('');
+  const categories = useCategories();
+  const resources = useResources(
+    query !== ''
+      ? `?query=${query}`
+      : `?category=${selectedCategory !== 'all' ? selectedCategory : ''}`
+  );
 
   return (
     <MainGridWrapper>
@@ -71,22 +30,23 @@ const Resources = () => {
             {selectedCategory !== '' && (
               <>
                 <ResourcesSearch
-                  setResources={setResources}
+                  query={query}
+                  setQuery={setQuery}
                   setSelectedCategory={setSelectedCategory}
                 />
-                {catLoading && <Skeleton />}
+                {categories.loading && <Skeleton />}
                 <ResourcesCategories
-                  fetchResourcesByCategory={fetchResourcesByCategory}
+                  categories={categories.data}
                   selectedCategory={selectedCategory}
-                  categories={categories}
+                  setSelectedCategory={setSelectedCategory}
                 />
               </>
             )}
-            {resLoading && <Skeleton count={5} />}
-            {!resLoading && resources.length > 0 ? (
-              <ResourcesList resources={resources} />
+            {resources.loading && <Skeleton count={5} />}
+            {!resources.loading && resources.data.length > 0 ? (
+              <ResourcesList resources={resources.data} />
             ) : (
-              !resLoading && (
+              !resources.loading && (
                 /* @TODO need mockup styling to do and messaging for no results */
                 <div>No results</div>
               )
@@ -96,6 +56,16 @@ const Resources = () => {
       </MainGrid>
     </MainGridWrapper>
   );
+};
+
+const getInitialCategory = () => {
+  if (window.location.search.startsWith('?category=')) {
+    const terms = window.location.search.split('=');
+    if (terms.length === 2) {
+      return terms[1];
+    }
+  }
+  return defaultCategoryId;
 };
 
 const ResourcesWrapper = styled(CardBase)`

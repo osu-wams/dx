@@ -5,7 +5,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
-import { getGrades } from '../../api/student';
+import { useGrades } from '../../api/student';
 import { Color, theme, breakpoints } from '../../theme';
 import Input from '../../ui/Input';
 import Icon from '../../ui/Icon';
@@ -25,37 +25,17 @@ import { MainGridWrapper, MainGrid, MainGridCol } from '../../ui/PageGrid';
 import { AcademicSubNav } from './AcademicsSubNav';
 
 const AcademicHistory = () => {
-  const [grades, setGrades] = useState<Grades[]>([]);
+  const grades = useGrades();
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 300);
-  const [gradesLoading, setGradesLoading] = useState<boolean>(true);
   const [filteredGrades, setFilteredGrades] = useState<Grades[]>([]);
-
-  // Populate user grades
-  useEffect(() => {
-    let isMounted = true;
-    getGrades()
-      .then(data => {
-        if (isMounted) {
-          setGrades(data);
-          setFilteredGrades(data);
-          setGradesLoading(false);
-        }
-      })
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (!debouncedQuery) {
-      setFilteredGrades(grades);
+      setFilteredGrades(grades.data);
     } else {
       const re = new RegExp(debouncedQuery, 'gi');
-      const matchingGrades = grades.filter(
+      const matchingGrades = grades.data.filter(
         e =>
           e.attributes.courseTitle.match(re) ||
           `${e.attributes.courseSubject}${e.attributes.courseNumber}`.match(re) ||
@@ -64,7 +44,7 @@ const AcademicHistory = () => {
       setFilteredGrades(matchingGrades);
       Event('academic-history-search', debouncedQuery);
     }
-  }, [debouncedQuery, grades]);
+  }, [debouncedQuery, grades.data]);
 
   const gradesByTerm = filteredGrades.reduce(
     (gradesSoFar, { attributes, attributes: { termDescription } }) => {
@@ -101,8 +81,8 @@ const AcademicHistory = () => {
               onChange={e => setQuery(e.target.value)}
             />
           </SearchWrapper>
-          {gradesLoading && <Skeleton count={5} />}
-          {grades.length > 0 ? (
+          {grades.loading && <Skeleton count={5} />}
+          {grades.data.length > 0 ? (
             <HistoryGrid aria-live="polite" aria-atomic="true">
               {Object.keys(gradesByTerm).map((key, index) => (
                 <HistoryCard key={index} collapsing={CardCollapse(index, query)}>
@@ -146,7 +126,7 @@ const AcademicHistory = () => {
               ))}
             </HistoryGrid>
           ) : (
-            !gradesLoading && <div>No course history yet</div>
+            !grades.loading && <div>No course history yet</div>
           )}
         </MainGridCol>
       </MainGrid>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
@@ -12,7 +12,7 @@ import {
   ListItemHeader,
   ListItemText
 } from '../ui/List';
-import { getPlannerItems } from '../api/student/planner-items';
+import { usePlannerItems } from '../api/student/planner-items';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import { Color } from '../theme';
 import Url from '../util/externalUrls.data';
@@ -26,40 +26,24 @@ import { Event } from '../util/gaTracking';
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
-  const [plannerItems, setPlannerItems] = useState([]);
+  const {data, loading, error} = usePlannerItems();
   const user = useContext<any>(UserContext);
-  const [plannerItemsLoading, setPlannerItemsLoading] = useState<boolean>(true);
-  const isMounted = useRef(true);
-  // Populate assignment data for current user
-  useEffect(() => {
-    getPlannerItems()
-      .then(data => {
-        if (isMounted.current) {
-          setPlannerItems(data);
-          setPlannerItemsLoading(false);
-        }
-      })
-      .catch(console.log);
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted.current = false;
-    };
-  }, []);
 
   return (
     <Card>
       <CardHeader
         title="Canvas"
-        badge={<CardIcon icon={faFileEdit} count={plannerItems.length} />}
+        badge={<CardIcon icon={faFileEdit} count={data.length} />}
       />
       <CardContent>
         {/* If not authorized to canvas, we display the link to have them authorize */}
         {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && <AuthorizeCanvas />}
 
-        {plannerItemsLoading && <Skeleton count={5} />}
-        {plannerItems.length && user.isCanvasOptIn === true ? (
+        {loading && <Skeleton count={5} />}
+        {error && <div>Oops! Something went wrong while retrieving your data.</div>}
+        {data.length && user.isCanvasOptIn === true ? (
           <List>
-            {plannerItems.map(
+            {data.map(
               ({ plannable_id, plannable_type, html_url, plannable: { title, due_at } }) => (
                 <ListItem key={plannable_id}>
                   <ListItemContentLink
@@ -88,7 +72,7 @@ const PlannerItems = () => {
             )}
           </List>
         ) : (
-          !plannerItemsLoading && (user.isCanvasOptIn === true && <EmptyState />)
+          !loading && (user.isCanvasOptIn === true && <EmptyState />)
         )}
       </CardContent>
       <CardFooter infoButtonId="canvas">

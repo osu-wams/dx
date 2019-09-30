@@ -6,19 +6,19 @@ import { resourcesData, categoriesData } from '../../api/__mocks__/resources.dat
 import ResourcesCard from '../ResourcesCard';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetResourcesByQueue = jest.fn();
-const mockGetCategories = jest.fn();
+const mockUseResourcesByQueue = jest.fn();
+const mockUseCategories = jest.fn();
 
 jest.mock('../../api/resources', () => ({
-  getResourcesByQueue: () => mockGetResourcesByQueue(),
-  getCategories: () => mockGetCategories()
+  useResourcesByQueue: () => mockUseResourcesByQueue(),
+  useCategories: () => mockUseCategories()
 }));
 
 describe('<ResourcesCard />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetResourcesByQueue.mockResolvedValue(Promise.resolve(resourcesData.data));
-    mockGetCategories.mockResolvedValue(Promise.resolve(categoriesData.data));
+    mockUseResourcesByQueue.mockReturnValue(resourcesData);
+    mockUseCategories.mockReturnValue(categoriesData);
   });
 
   it('should render the appropriate title', async () => {
@@ -68,7 +68,7 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should return "No resources available" when Resources data is empty', async () => {
-    mockGetResourcesByQueue.mockResolvedValue(Promise.resolve({}));
+    mockUseResourcesByQueue.mockReturnValue({ data: [], loading: false, error: false });
     const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
     await waitForElement(() => getByText('No resources available.'));
   });

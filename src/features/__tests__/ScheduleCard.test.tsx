@@ -7,24 +7,25 @@ import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from '../../setupTests';
 
-const mockGetPlannerItems = jest.fn();
-const mockGetCourseSchedule = jest.fn();
-const mockGetAcademicCalendarEvents = jest.fn();
+const mockUsePlannerItems = jest.fn();
+const mockUseCourseSchedule = jest.fn();
+const mockUseAcademicCalendarEvents = jest.fn();
+const mockNoData = { data: [], loading: false, error: false };
 
 jest.mock('../../api/events', () => ({
-  getAcademicCalendarEvents: () => mockGetAcademicCalendarEvents()
+  useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents()
 }));
 jest.mock('../../api/student', () => ({
-  getPlannerItems: () => mockGetPlannerItems(),
-  getCourseSchedule: () => mockGetCourseSchedule()
+  usePlannerItems: () => mockUsePlannerItems(),
+  useCourseSchedule: () => mockUseCourseSchedule()
 }));
 
 describe('<ScheduleCard /> with data and canvas authorized user', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetAcademicCalendarEvents.mockResolvedValue(Promise.resolve(academicCalendar3));
-    mockGetPlannerItems.mockResolvedValue(Promise.resolve(mockPlannerItems));
-    mockGetCourseSchedule.mockResolvedValue(Promise.resolve(mockCourseSchedule));
+    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
   });
 
   it('should find the card header even though it is visually hidden', async () => {
@@ -65,7 +66,10 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     );
 
     // Select the text of description "Due today at ..."
-    const dueAt = todayPlannerAnnouncement.nextSibling.textContent;
+    const dueAt =
+      todayPlannerAnnouncement && todayPlannerAnnouncement.nextSibling
+        ? todayPlannerAnnouncement.nextSibling.textContent
+        : 'somthing went wrong';
     // Should be empty since Announcements have no due dates
     expect(dueAt).toEqual('');
   });
@@ -83,9 +87,9 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 describe('<ScheduleCard /> accessibility checks', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetAcademicCalendarEvents.mockResolvedValue(Promise.resolve(academicCalendar3));
-    mockGetPlannerItems.mockResolvedValue(Promise.resolve(mockPlannerItems));
-    mockGetCourseSchedule.mockResolvedValue(Promise.resolve(mockCourseSchedule));
+    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
   });
 
   it('should find appropriate aria attributes', async () => {
@@ -98,7 +102,7 @@ describe('<ScheduleCard /> accessibility checks', () => {
   it('should navigate to the next date which should have no Canvas assignments', async () => {
     const { getByText } = renderWithUserContext(<ScheduleCard />);
     const nextDayButton = document.querySelector('button:first-child + button');
-    fireEvent.click(nextDayButton);
+    if (nextDayButton) fireEvent.click(nextDayButton);
     const noPlannerItemsText = await waitForElement(() =>
       getByText(/No Canvas assignments due today/)
     );
@@ -109,14 +113,14 @@ describe('<ScheduleCard /> accessibility checks', () => {
 
 describe('<ScheduleCard /> without data for given days', () => {
   it('should not find "Academic Calendar" subtitle since no events are present', async () => {
-    mockGetAcademicCalendarEvents.mockResolvedValue(Promise.resolve([]));
+    mockUseAcademicCalendarEvents.mockReturnValue(mockNoData);
     const { queryByText } = renderWithUserContext(<ScheduleCard />);
 
     expect(queryByText('Academic Calendar')).not.toBeInTheDocument();
   });
 
   it(`should find "You don't have any courses scheduled for today"`, async () => {
-    mockGetCourseSchedule.mockResolvedValue(Promise.resolve([]));
+    mockUseCourseSchedule.mockReturnValue(mockNoData);
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const noCoursesText = await waitForElement(() =>
@@ -126,7 +130,7 @@ describe('<ScheduleCard /> without data for given days', () => {
   });
 
   it('should find "No Canvas assignments" text in card', async () => {
-    mockGetPlannerItems.mockResolvedValue(Promise.resolve([]));
+    mockUsePlannerItems.mockReturnValue(mockNoData);
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const noPlannerItemsText = await waitForElement(() => getByText(/No Canvas assignments/));

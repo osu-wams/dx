@@ -13,7 +13,9 @@ const resourcesData = {
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',
       uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
     }
-  ]
+  ],
+  loading: false, 
+  error: false
 };
 
 const resourcesDataByCategory = {
@@ -24,7 +26,9 @@ const resourcesDataByCategory = {
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',
       uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
     }
-  ]
+  ],
+  loading: false, 
+  error: false
 };
 
 const categoriesData = {
@@ -44,7 +48,9 @@ const categoriesData = {
       name: 'Financial',
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/hands-usd.svg'
     }
-  ]
+  ],
+  loading: false, 
+  error: false
 };
 
 const defaultCategory = '6b7cd598-d71e-45f7-911c-d71551ec0a7c';

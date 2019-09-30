@@ -1,6 +1,8 @@
 import axios from 'axios';
+import useAPICall from '../useAPICall';
 
 const getPerson = (): Promise<IPersons> => axios.get(`/api/persons`).then(res => res.data);
+const usePerson = () => useAPICall<IPersons | null>(getPerson, undefined, data => data, null)
 
 export interface IPersons {
   id: string;
@@ -28,4 +30,4 @@ export interface IPersonsAttributes {
   confidential: boolean;
 }
 
-export { getPerson };
+export { usePerson };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   faExclamationTriangle,
   faCommentAltExclamation,
@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { Card, CardHeader, CardContent, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { formatDate } from '../util/helpers';
-import { getDxAlerts, getRaveAlerts, Alert } from '../api/alerts';
+import { useDxAlerts, useRaveAlerts, Alert } from '../api/alerts';
 import { Color, theme, breakpoints } from '../theme';
 
 const AlertWrapper = styled.div`
@@ -63,17 +63,8 @@ interface IconProps {
  * Alerts from  university-wide system Rave, and from DX API in Drupal
  */
 const Alerts = () => {
-  const [raveAlerts, setRaveAlerts] = useState<Alert[]>([]);
-  const [dxAlerts, setDxAlerts] = useState<Alert[]>([]);
-
-  useEffect(() => {
-    getRaveAlerts()
-      .then(setRaveAlerts)
-      .catch(console.log);
-    getDxAlerts()
-      .then(setDxAlerts)
-      .catch(console.log);
-  }, []);
+  const raveAlerts = useRaveAlerts();
+  const dxAlerts = useDxAlerts();
 
   const cardBody = (alert: Alert, iconProps: IconProps): JSX.Element => (
     <AlertCardWrapper>
@@ -118,11 +109,11 @@ const Alerts = () => {
     }
   };
 
-  if (raveAlerts.length || dxAlerts.length) {
+  if (raveAlerts.data.length || dxAlerts.data.length) {
     return (
       <AlertWrapper>
-        {raveAlerts[0] && alertCard(raveAlerts[0])}
-        {dxAlerts[0] && alertCard(dxAlerts[0])}
+        {raveAlerts.data[0] && alertCard(raveAlerts.data[0])}
+        {dxAlerts.data[0] && alertCard(dxAlerts.data[0])}
       </AlertWrapper>
     );
   } else {

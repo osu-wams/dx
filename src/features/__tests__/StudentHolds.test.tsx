@@ -3,15 +3,19 @@ import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import StudentHolds from '../academic-overview/StudentHolds';
 
-const mockGetAccountHolds = jest.fn();
+const mockUseAccountHolds = jest.fn();
 
 jest.mock('../../api/student/holds', () => ({
-  getAccountHolds: () => mockGetAccountHolds()
+  useAccountHolds: () => mockUseAccountHolds()
 }));
 
 describe('<StudentHolds />', () => {
   it('should render and have a single hold', async () => {
-    mockGetAccountHolds.mockResolvedValue(Promise.resolve([{ description: 'blah' }]));
+    mockUseAccountHolds.mockReturnValue({
+      data: [{ description: 'blah' }],
+      loading: false,
+      error: false
+    });
     const { getByText } = render(<StudentHolds />);
     const element = await waitForElement(() => getByText('blah'));
     expect(element).toBeInTheDocument();
@@ -20,9 +24,11 @@ describe('<StudentHolds />', () => {
   });
 
   it('should render and have a multiple holds', async () => {
-    mockGetAccountHolds.mockResolvedValue(
-      Promise.resolve([{ description: 'blah' }, { description: 'BobRoss' }])
-    );
+    mockUseAccountHolds.mockReturnValue({
+      data: [{ description: 'blah' }, { description: 'BobRoss' }],
+      loading: false,
+      error: false
+    });
     const { getByText } = render(<StudentHolds />);
     const element = await waitForElement(() => getByText('blah'));
     expect(element).toBeInTheDocument();
@@ -32,7 +38,7 @@ describe('<StudentHolds />', () => {
   });
 
   it('should return appropriate text when data is empty', async () => {
-    mockGetAccountHolds.mockResolvedValue(Promise.resolve([]));
+    mockUseAccountHolds.mockReturnValue({ data: [], loading: false, error: false });
     const { getByText } = render(<StudentHolds />);
     const element = await waitForElement(() => getByText('0'));
     expect(element).toBeInTheDocument();

@@ -10,6 +10,7 @@ import {
   CardIcon
 } from '../../ui/Card';
 
+import Url from '../../util/externalUrls.data';
 import AccountBalance, { AccountBalanceExternalLink } from './AccountBalance';
 import MealPlans from './MealPlans';
 
@@ -21,25 +22,19 @@ export const AcademicOverview = () => {
     <Card collapsing={false}>
       <CardHeader title="Financial Overview" badge={<CardIcon icon={faUsdSquare} />} />
       <CardContentTable>
-        {hasMealPlan ? (
+        <CardContentRow className="row-span-1">
+          <CardContentCell>
+            <AccountBalance renderLink={footerLink.props.href !== Url.myDegrees.main} />
+          </CardContentCell>
+        </CardContentRow>
+        {hasMealPlan && (
           <>
-            <CardContentRow className="row-span-1">
-              <CardContentCell>
-                <AccountBalance renderLink={footerLink.type !== AccountBalanceExternalLink} />
-              </CardContentCell>
-            </CardContentRow>
             <CardContentRow borderless className="row-span-1">
               <CardContentCell>
                 <MealPlans setFooterLink={setFooterLink} setHasMealPlan={setHasMealPlan} />
               </CardContentCell>
             </CardContentRow>
           </>
-        ) : (
-          <CardContentRow borderless className="row-span-1">
-            <CardContentCell>
-              <AccountBalance renderLink={false} />
-            </CardContentCell>
-          </CardContentRow>
         )}
       </CardContentTable>
       <CardFooter infoButtonId="financial-overview">{footerLink}</CardFooter>

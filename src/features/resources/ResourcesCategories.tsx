@@ -5,7 +5,8 @@ import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';
 
-const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, categories }) => {
+const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory }) => {
+
   return (
     <CategoriesWrapper>
       {categories.length > 0 && (
@@ -16,7 +17,7 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
             id="all"
             name="categories"
             clickHandler={() => {
-              fetchResourcesByCategory('all');
+              setSelectedCategory('all');
               Event('resource-category', 'all');
             }}
             selected={selectedCategory === 'all' ? true : false}
@@ -28,7 +29,7 @@ const ResourceCategories = ({ fetchResourcesByCategory, selectedCategory, catego
               id={category.id}
               key={category.id}
               clickHandler={() => {
-                fetchResourcesByCategory(category.id);
+                setSelectedCategory(category.id);
                 Event('resource-category', category.name);
               }}
               name="categories"

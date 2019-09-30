@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { getAccountBalance, IAccountBalanceAttributes } from '../../api/student/account-balance';
+import { useAccountBalance } from '../../api/student/account-balance';
 import { Color } from '../../theme';
 import { formatDollars } from '../../util/helpers';
 import {
@@ -25,49 +25,22 @@ export const AccountBalanceExternalLink = () => (
 );
 
 const AccountBalance = (props: { renderLink: boolean }) => {
-  const [accountBalance, setAccountBalance] = useState<IAccountBalanceAttributes | undefined>(
-    undefined
-  );
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    let isMounted = true;
-    getAccountBalance()
-      .then(res => {
-        if (isMounted) {
-          setAccountBalance(res.attributes);
-          setLoading(false);
-        }
-      })
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
+  const { data, loading } = useAccountBalance();
 
   return (
     <Highlight textAlignLeft>
-      {accountBalance && typeof accountBalance.currentBalance === 'number' ? (
-        <>
-          <HighlightEmphasis color={Color['neutral-550']}>
-            {loading && <Skeleton />}
-            {accountBalance ? formatDollars(accountBalance.currentBalance) : !loading && 'No data'}
-          </HighlightEmphasis>
-          <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
-          <HighlightDescription>
-            Your OSU student account balance. It may take up to 24 hours for transactions to be
-            reflected.
-          </HighlightDescription>
-          {props.renderLink && AccountBalanceExternalLink()}
-        </>
-      ) : (
-        <>
-          <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
-          <HighlightDescription>No data</HighlightDescription>
-        </>
-      )}
+      <HighlightEmphasis color={Color['neutral-550']}>
+        {loading && <Skeleton />}
+        {data && data.attributes && data.attributes.currentBalance
+          ? formatDollars(data.attributes.currentBalance)
+          : !loading && 'No data'}
+      </HighlightEmphasis>
+      <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
+      <HighlightDescription>
+        Your OSU student account balance. It may take up to 24 hours for transactions to be
+        reflected.
+      </HighlightDescription>
+      {props.renderLink && AccountBalanceExternalLink()}
     </Highlight>
   );
 };

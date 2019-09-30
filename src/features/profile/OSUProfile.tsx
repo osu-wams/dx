@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faEnvelope, faMapMarkerAlt, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
@@ -6,91 +6,66 @@ import Skeleton from 'react-loading-skeleton';
 import { theme, Color } from '../../theme';
 import { formatPhone } from '../../util/helpers';
 import Icon from '../../ui/Icon';
-import { getPerson, IPersons } from '../../api/persons/persons';
-import { getMailingAddress, IMailingAddress } from '../../api/persons/addresses';
+import { usePerson } from '../../api/persons/persons';
+import { useMailingAddress } from '../../api/persons/addresses';
 import PlainCard from '../../ui/PlainCard';
 
 const OSUProfile = () => {
-  const [person, setPerson] = useState<IPersons | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    let isMounted = true;
-    getPerson()
-      .then(data => {
-        if (isMounted) {
-          setPerson(data);
-          setLoading(false);
-        }
-      })
-      .catch(console.log);
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
-
-  const [address, setAddress] = useState<IMailingAddress | null>(null);
-  useEffect(() => {
-    let isMounted = true;
-    getMailingAddress()
-      .then(data => {
-        isMounted && setAddress(data);
-      })
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
+  const person = usePerson();
+  const address = useMailingAddress();
 
   return (
     <PlainCard title="OSU Profile">
-      {loading && <Skeleton count={6} />}
-      {!loading && !person && <p>Cannot find your information</p>}
+      {person.loading && <Skeleton count={6} />}
+      {!person.loading && !person.data && <p>Cannot find your information</p>}
       {person && Object.keys(person).length && (
         <>
           <PersonName>
-            {person.attributes.firstName} {person.attributes.lastName}
+            {person.data ? person.data.attributes.firstName : 'No first name'}{' '}
+            {person.data ? person.data.attributes.lastName : 'No last name'}
           </PersonName>
           <PairData>
             <div>
               <dt>ONID</dt>
-              <dd>{person.attributes.username}</dd>
+              <dd>{person.data ? person.data.attributes.username : 'No username'}</dd>
             </div>
             <div>
               <dt>OSU ID</dt>
-              <dd>{person.id}</dd>
+              <dd>{person.data ? person.data.id : 'No ID'}</dd>
             </div>
           </PairData>
           <ContactInfo>
-            {person.attributes.primaryPhone !== person.attributes.mobilePhone &&
+            {person.data &&
+              person.data.attributes.primaryPhone !== person.data.attributes.mobilePhone &&
               renderInfoIcons(
                 'Primary phone',
-                formatPhone(person.attributes.primaryPhone),
+                formatPhone(person.data.attributes.primaryPhone),
                 faPhone
               )}
-            {person.attributes.homePhone !== person.attributes.mobilePhone &&
-              person.attributes.homePhone !== person.attributes.mobilePhone &&
-              renderInfoIcons('Home phone', formatPhone(person.attributes.homePhone), faPhone)}
+            {person.data &&
+              person.data.attributes.homePhone !== person.data.attributes.mobilePhone &&
+              person.data.attributes.homePhone !== person.data.attributes.mobilePhone &&
+              renderInfoIcons('Home phone', formatPhone(person.data.attributes.homePhone), faPhone)}
             {renderInfoIcons(
               'Mobile phone',
-              formatPhone(person.attributes.mobilePhone),
+              formatPhone(person.data ? person.data.attributes.mobilePhone : null),
               faMobileAlt
             )}
-            {renderInfoIcons('Email', person.attributes.email, faEnvelope)}
+            {renderInfoIcons('Email', person.data ? person.data.attributes.email : '', faEnvelope)}
             {address && (
               <div>
                 <dt>
                   <Icon icon={faMapMarkerAlt} color={Color['orange-400']} />{' '}
-                  <VisuallyHidden>{address.attributes.addressTypeDescription}</VisuallyHidden>
+                  <VisuallyHidden>
+                    {address.data ? address.data.attributes.addressTypeDescription : 'No data'}
+                  </VisuallyHidden>
                 </dt>
                 <dd>
-                  {address.attributes.addressLine1}
+                  {address.data ? address.data.attributes.addressLine1 : ''}
                   <br />
-                  {address.attributes.city}, {address.attributes.stateCode}{' '}
-                  {address.attributes.postalCode}
+                  {address.data ? address.data.attributes.city : 'No city name'},{' '}
+                  {address.data ? address.data.attributes.stateCode : 'No state title'}{' '}
+                  {address.data ? address.data.attributes.postalCode : 'No postal Code'}
                 </dd>
               </div>
             )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Color } from '../../theme';
 import {
@@ -7,40 +7,28 @@ import {
   HighlightEmphasis,
   HighlightDescription
 } from '../../ui/Highlights';
-import { getCourseSchedule, ICourseSchedule } from '../../api/student/course-schedule';
+import {
+  ICourseSchedule,
+  useCourseSchedule
+} from '../../api/student/course-schedule';
 
 export const StudentEnrolledCredits: React.FC = () => {
-  const [enrolledCredits, setEnrolledCredits] = useState<number>(0);
-  const [enrolledCreditsLoading, setEnrolledCreditsLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    let isMounted = true;
-    getCourseSchedule()
-      .then((res: ICourseSchedule[]) => {
-        if (isMounted) {
-          if (res.length) {
-            const credits = res
-              .map((c: ICourseSchedule) => c.attributes.creditHours)
-              .reduce((a: number, v: number) => a + v);
-            setEnrolledCredits(credits);
-          }
-          setEnrolledCreditsLoading(false);
-        }
-      })
-      .catch(console.error);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
+  const enrolledCredits = useCourseSchedule({
+    callback: data => {
+      if (data.length) {
+        return data
+          .map((c: ICourseSchedule) => c.attributes.creditHours)
+          .reduce((a: number, v: number) => a + v);
+      }
+    }
+  });
 
   return (
     <Highlight textAlignLeft>
-      {enrolledCreditsLoading && <Skeleton count={5} />}
-      {!enrolledCreditsLoading && (
+      {enrolledCredits.loading && <Skeleton count={5} />}
+      {!enrolledCredits.loading && (
         <>
-          <HighlightEmphasis color={Color['orange-400']}>{enrolledCredits}</HighlightEmphasis>
+          <HighlightEmphasis color={Color['orange-400']}>{enrolledCredits.data}</HighlightEmphasis>
           <HighlightTitle marginTop={0}>Credits</HighlightTitle>
           <HighlightDescription>Enrolled credits for current term.</HighlightDescription>
         </>

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Router, Location, RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
-import axios from 'axios';
 import ReactGA from 'react-ga';
 import GlobalStyles from './GlobalStyles';
 import Header from './ui/Header';
@@ -15,7 +14,8 @@ import BetaDashboard from './pages/BetaDashboard';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { getInfoButtons, InfoButtonState } from './api/info-buttons';
+import { useInfoButtons, InfoButtonState } from './api/info-buttons';
+import { useUser } from './api/user';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -54,29 +54,19 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
   props.pageComponent;
 
 const App = (props: AppProps) => {
-  const [user, setUser] = useState<User | {}>({});
+  const user = useUser();
+  const infoButtons = useInfoButtons();
   const [appContext, setAppContext] = useState<IAppContext>(initialAppContext);
   const containerElementRef = useRef(props.containerElement);
 
   useEffect(() => {
-    axios
-      .get('/api/user')
-      .then(res => {
-        // if canvas opt in and expired need to refresh
-        setUser(res.data);
-        containerElementRef.current.style.opacity = '1';
-      })
-      .catch(() => {
-        window.location.href = '/login';
-      });
+    setAppContext(previous => ({ ...previous, infoButtonData: infoButtons.data }));
 
-    getInfoButtons()
-      .then((res: InfoButtonState[]) => {
-        setAppContext((a: IAppContext) => {
-          return Object.assign({}, a, { infoButtonData: res });
-        });
-      })
-      .catch(console.error);
+    if (user.error) {
+      window.location.href = '/login';
+    } else if (!user.loading) {
+      containerElementRef.current.style.opacity = '1';
+    }
 
     // Manage focus styles on keyboard navigable elements.
     //   - Add focus styles if tab used to navigate.
@@ -88,6 +78,7 @@ const App = (props: AppProps) => {
         window.addEventListener('mousedown', handleMouseDownOnce);
       }
     };
+
     //   - Remove focus styles if mouse used to navigate.
     //   - Start listening for keydown to add focus styles.
     const handleMouseDownOnce = () => {
@@ -98,10 +89,10 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, []);
+  }, [infoButtons.data, user.error, user.loading]);
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={user.data}>
       <AppContext.Provider value={appContext}>
         <GlobalStyles />
         <Header />

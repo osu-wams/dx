@@ -1,15 +1,11 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
 import { Color, theme } from '../theme';
-import {
-  getAccountTransactions,
-  IAccountTransactions,
-  ITransaction
-} from '../api/student/account-transactions';
+import { useAccountTransactions } from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
@@ -58,36 +54,26 @@ const TransactionDetails = styled(TableCell)`
  * Displays past financial transactions for the current user
  */
 const FinancialTransactions: FC = () => {
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  // Populate resources and category ID
-  useEffect(() => {
-    let isMounted = true;
-    getAccountTransactions()
-      .then((data: IAccountTransactions) => {
-        if (isMounted) {
-          setTransactions(data.attributes.transactions);
-          setLoading(false);
-        }
-      })
-      .catch(console.log);
-
-    return () => {
-      // prevents setting data on a component that has been unmounted before promise resolves
-      isMounted = false;
-    };
-  }, []);
+  const { data, loading } = useAccountTransactions();
 
   return (
     <Card>
       <CardHeader
         title="Recent Transactions"
-        badge={<CardIcon icon={faMoneyBillWave} count={transactions.length} />}
+        badge={
+          <CardIcon
+            icon={faMoneyBillWave}
+            count={
+              data.attributes && data.attributes.transactions
+                ? data.attributes.transactions.length
+                : 0
+            }
+          />
+        }
       />
       <CardContent className="flush">
         {loading && <Skeleton count={5} />}
-        {transactions.length ? (
+        {data.attributes && data.attributes.transactions && data.attributes.transactions.length ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
             <TableHeader>
               <TableRow>
@@ -96,7 +82,7 @@ const FinancialTransactions: FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {transactions.map((transaction: ITransaction, index: number) => (
+              {data.attributes.transactions.map((transaction, index: number) => (
                 <TableRow key={index}>
                   <TransactionAmount>
                     <TransactionNumber

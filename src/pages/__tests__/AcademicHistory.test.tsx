@@ -8,16 +8,16 @@ const sleep = (ms: number) => {
   return new Promise(res => setTimeout(res, ms));
 };
 
-const mockGetGrades = jest.fn();
+const mockUseGrades = jest.fn();
 
 jest.mock('../../api/student/grades', () => ({
-  getGrades: () => mockGetGrades()
+  useGrades: () => mockUseGrades()
 }));
 
 describe('<AcademicHistory />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
-    mockGetGrades.mockResolvedValue(Promise.resolve(mockGrades));
+    mockUseGrades.mockReturnValue(mockGrades);
   });
 
   it('renders without errors', async () => {
@@ -57,7 +57,7 @@ describe('<AcademicHistory />', () => {
   });
 
   it('should find the message: "No course history yet" if grades is an empty array', async () => {
-    mockGetGrades.mockResolvedValue(Promise.resolve([]));
+    mockUseGrades.mockReturnValue({data: [], loading: false, error: false});
     const { getByText } = render(<AcademicHistory />);
     const NoGrades = await waitForElement(() => getByText('No course history yet'));
     expect(NoGrades).toBeInTheDocument();

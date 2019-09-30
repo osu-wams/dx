@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useAPICall from './useAPICall';
 
 export const getInfoButtons = (): Promise<InfoButtonState[]> =>
   axios
@@ -13,6 +14,9 @@ export const getInfoButtons = (): Promise<InfoButtonState[]> =>
       console.error('InfoButtons API failed, returning empty data');
       return [];
     });
+
+export const useInfoButtons = () =>
+  useAPICall<InfoButtonState[]>(getInfoButtons, undefined, data => data, []);
 
 export interface InfoButtonState {
   id: string;

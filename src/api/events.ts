@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useAPICall from './useAPICall';
 
 interface IEvent {
   content: string;
@@ -13,6 +14,8 @@ export type IEvents = IEvent[];
 
 const getAcademicCalendarEvents = (): Promise<IEvents> =>
   axios.get('/api/events/academic-calendar').then(res => res.data);
+const useAcademicCalendarEvents = () =>
+  useAPICall<IEvents>(getAcademicCalendarEvents, undefined, data => data, []);
 
 const getStudentExperienceEvents = () =>
   axios
@@ -23,5 +26,7 @@ const getStudentExperienceEvents = () =>
       }
     })
     .then(res => res.data);
+const useStudentExperienceEvents = () =>
+  useAPICall(getStudentExperienceEvents, undefined, data => data, []);
 
-export { getAcademicCalendarEvents, getStudentExperienceEvents };
+export { useStudentExperienceEvents, useAcademicCalendarEvents };

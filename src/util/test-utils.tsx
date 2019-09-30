@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { render as testingLibraryRender } from '@testing-library/react';
 
 import { UserContext, AppContext, IAppContext } from '../App';
