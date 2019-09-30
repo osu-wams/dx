@@ -4,9 +4,7 @@ import PageTitle, { Title } from '../ui/PageTitle';
 import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import FinancialTransactions from '../features/FinancialTransactions';
-import { HighlightsCard } from '../ui/Highlights';
-import AccountBalance from '../features/AccountBalance';
-import MealPlans from '../features/MealPlans';
+import FinancialOverview from '../features/financial-overview/FinancialOverview';
 import { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper } from '../ui/PageGrid';
 
 const Finances = () => {
@@ -16,10 +14,7 @@ const Finances = () => {
         <PageTitle title="Finances" />
         <MainGrid>
           <MainGridCol>
-            <HighlightsCard className="row-span-1">
-              <AccountBalance />
-              <MealPlans />
-            </HighlightsCard>
+            <FinancialOverview />
             <FinancialTransactions />
           </MainGridCol>
           <MainGridCol>

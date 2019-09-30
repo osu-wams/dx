@@ -2,8 +2,7 @@ import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
-import MealPlans from '../MealPlans';
-import { mockGAEvent } from '../../setupTests';
+import MealPlans from '../financial-overview/MealPlans';
 
 const mockUseMealPlans = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
@@ -23,20 +22,13 @@ describe('<MealPlans />', () => {
     await waitForElement(() => getByText('$16.88'));
   });
 
-  it('should find link to view and add balance and clicking it triggers analytics', async () => {
+  it('should have Meal Plan Balance as title from our mock data', async () => {
     const { getByText } = render(<MealPlans />);
-    const AddBalance = await waitForElement(() => getByText('View and Add Balance'));
-    fireEvent.click(AddBalance);
-    expect(mockGAEvent).toHaveBeenCalled();
+    await waitForElement(() => getByText('Meal Plan Balance'));
   });
 
-  it('should have Orange Cash as title from our mock data', async () => {
-    const { getByText } = render(<MealPlans />);
-    await waitForElement(() => getByText('Orange Cash'));
-  });
-
-  it('should return "No meal plans" when MealPlan data is empty', async () => {
-    mockUseMealPlans.mockReturnValue(mockNoData);
+  it('should not render if no balance ', async () => {
+    mockUseMealPlans.mockResolvedValue(Promise.resolve({}));
     const { getByText } = render(<MealPlans />);
     await waitForElement(() => getByText('No meal plans'));
   });
