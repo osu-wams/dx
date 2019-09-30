@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 /* eslint-disable react-hooks/exhaustive-deps */
 
 /**
- * Write comment about disabling linting
+ * Exhaustive deps has been disabled in linting because this hook shouldn't
+ * trigger any time one of the referenced methods changes upstream.
  */
 
 export interface IAPIResult<T> {
@@ -37,6 +38,7 @@ const useAPICall = <T>(
         setLoading(false);
       })
       .catch(e => {
+        // TODO: Cause the user to redirect to the dashboard in the case of an HTTP401?
         console.log(e);
         setError(true);
         setLoading(false);

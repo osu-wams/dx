@@ -31,7 +31,7 @@ const AccountBalance = (props: { renderLink: boolean }) => {
     <Highlight textAlignLeft>
       <HighlightEmphasis color={Color['neutral-550']}>
         {loading && <Skeleton />}
-        {data.attributes && data.attributes.currentBalance
+        {data && data.attributes && data.attributes.currentBalance
           ? formatDollars(data.attributes.currentBalance)
           : !loading && 'No data'}
       </HighlightEmphasis>

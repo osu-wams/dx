@@ -34,7 +34,7 @@ export const MealPlans = props => {
           <Skeleton count={4} />
         </HighlightTitle>
       )}
-      {mealPlans && mealPlans.data.length ? (
+      {mealPlans && mealPlans.data && mealPlans.data.length ? (
         <>
           <HighlightEmphasis
             color={mealPlans.data[0].attributes.balance > 0 ? Color['pine-400'] : Color['lava-400']}
