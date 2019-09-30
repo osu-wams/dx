@@ -89,8 +89,8 @@ const useResources = (query: string, user) => {
   return useAPICall<IResourceResult[]>(
     getResources,
     query,
-    async d => {
-      const transformed = await filterResourcesForUser(d, user);
+    d => {
+      const transformed = filterResourcesForUser(d, user);
       return transformed;
     },
     []
@@ -106,8 +106,8 @@ const useResourcesByQuery = (query: string, user) => {
   return useAPICall<IResourceResult[]>(
     getResourcesByQuery,
     query,
-    async d => {
-      const transformed = await filterResourcesForUser(d, user);
+    d => {
+      const transformed = filterResourcesForUser(d, user);
       return transformed;
     },
     []
@@ -125,8 +125,8 @@ const useResourcesByCategory = (categoryId: string, user) => {
   return useAPICall<IResourceResult[]>(
     getResourcesByCategory,
     categoryId,
-    async d => {
-      const transformed = await filterResourcesForUser(d, user);
+    d => {
+      const transformed = filterResourcesForUser(d, user);
       return transformed;
     },
     []
@@ -142,8 +142,8 @@ const useResourcesByQueue = (category: string, user) =>
   useAPICall<IResourceResult[]>(
     getResourcesByQueue,
     category,
-    async d => {
-      const transformed = await filterResourcesForUser(d, user);
+    d => {
+      const transformed = filterResourcesForUser(d, user);
       return transformed;
     },
     []

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { CardBase } from '../ui/Card';
@@ -9,16 +9,19 @@ import ResourcesList from '../features/resources/ResourcesList';
 import { defaultCategoryId, useCategories, useResources } from '../api/resources';
 import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import PageTitle from '../ui/PageTitle';
+import { UserContext } from '../App';
 
 //import type here
 const Resources = () => {
+  const user = useContext(UserContext);
   const [selectedCategory, setSelectedCategory] = useState<string>(getInitialCategory());
   const [query, setQuery] = useState<string>('');
   const categories = useCategories();
   const resources = useResources(
     query !== ''
       ? `?query=${query}`
-      : `?category=${selectedCategory !== 'all' ? selectedCategory : ''}`
+      : `?category=${selectedCategory !== 'all' ? selectedCategory : ''}`,
+    user
   );
 
   return (
