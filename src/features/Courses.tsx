@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { faChevronRight, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
+import { faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { useCourseSchedule } from '../api/student';
 import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
 import { ICourseScheduleAttributes } from '../api/student/course-schedule';
 import Icon from '../ui/Icon';
 import { getIconByScheduleType } from './course-utils';
+import { sortedByCourseName } from './schedule/schedule-utils';
 import {
   List,
   ListItem,
@@ -43,7 +44,7 @@ const Courses = () => {
       />
       <CardContent>
         <List>
-          {courses.data.map(
+          {sortedByCourseName(courses.data).map(
             ({
               id,
               attributes,
@@ -65,7 +66,7 @@ const Courses = () => {
                 >
                   <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
                   <ListItemText>
-                    <ListItemHeader>
+                    <ListItemHeader data-testid="course-list-item-header">
                       {courseSubject} {courseNumber}
                     </ListItemHeader>
                     <ListItemDescription>
@@ -74,7 +75,6 @@ const Courses = () => {
                       {singularPlural(creditHours, 'Credit')}
                     </ListItemDescription>
                   </ListItemText>
-                  <Icon icon={faChevronRight} />
                 </ListItemContentButton>
               </ListItem>
             )

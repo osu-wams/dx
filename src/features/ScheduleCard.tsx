@@ -22,24 +22,16 @@ import { Card, CardFooter, CardContent } from '../ui/Card';
  */
 const ScheduleCard = () => {
   const plannerItems = usePlannerItems();
-  const courses = useCourseSchedule({
-    callback: data => {
-      return data.filter(c =>
-        c.attributes.meetingTimes.find(t => t.beginDate && Date.parse(t.beginDate) <= Date.now())
-      );
-    }
-  });
+  const courses = useCourseSchedule();
   const nextFiveDays = getNextFiveDays();
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const calEvents = useAcademicCalendarEvents();
   const user = useContext<any>(UserContext);
+
   const getCoursesOnSelectedDay = () => {
     const selectedDayShortcode = getDayShortcode(selectedDay);
     return coursesOnDay(courses.data, selectedDayShortcode);
   };
-
-  // Get courses and assignments matching selected day.
-  const selectedCourses = getCoursesOnSelectedDay();
 
   let selectedPlannerItems: any[] = [];
   if (user.isCanvasOptIn) {
@@ -94,7 +86,7 @@ const ScheduleCard = () => {
             <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
           )}
           {courses.loading && <Skeleton count={4} />}
-          {!courses.loading && <ScheduleCardCourses selectedCourses={selectedCourses} />}
+          {!courses.loading && <ScheduleCardCourses selectedCourses={getCoursesOnSelectedDay()} />}
           <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
         </div>
       </CardContent>
