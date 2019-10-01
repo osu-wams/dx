@@ -1,9 +1,7 @@
-name: Build and Push Server Application to AWS
+name: Build and Push Server Application to AWS PRODUCTION
 on:
   push:
     branches:
-      - master
-      - stage
       - production
 
 jobs:
@@ -11,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [10.x, 12.x]
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node-version }}
@@ -67,32 +65,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-      - name: Copy client to S3 and flush Cloudfront cache for DEVELOPMENT
-        if: github.ref == 'refs/heads/master'
-        run: |
-          s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-development
-          aws s3 sync build ${s3_bucket_url}
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_DEV }} --paths /index.html
-        env:
-          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-      - name: Copy client to S3 and flush Cloudfront cache for STAGE
-        if: github.ref == 'refs/heads/stage'
-        run: |
-          s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-stage
-          aws s3 sync build ${s3_bucket_url}
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_STAGE }} --paths /index.html
-        env:
-          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
       - name: Copy client to S3 and flush Cloudfront cache for PRODUCTION
-        if: github.ref == 'refs/heads/production'
         run: |
           s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-production
           aws s3 sync build ${s3_bucket_url}
