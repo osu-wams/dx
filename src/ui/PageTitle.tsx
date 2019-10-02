@@ -5,7 +5,10 @@ import { Color, theme, breakpoints } from '../theme';
 
 type Props = {
   title: string;
-  badge?: string;
+  badge?: {
+    title: string;
+    href?: string;
+  };
 };
 
 // Page title for all our pages
@@ -14,7 +17,7 @@ const PageTitle: FC<Props> = ({ title, badge }) => (
   <>
     <Title>
       {title}
-      {badge && <Badge>{badge}</Badge>}
+      {badge && <Badge href={badge.href || '#'}>{badge.title}</Badge>}
     </Title>
     <Helmet>
       <title>{title}</title>
@@ -36,7 +39,7 @@ const Title = styled.h1`
   }
 `;
 
-const Badge = styled.span`
+const Badge = styled.a`
   background-color: ${Color['roguewave-400']};
   color: ${Color['white']};
   font-size: ${theme.fontSize[14]};
@@ -46,6 +49,7 @@ const Badge = styled.span`
   border-radius: 4px;
   margin-left: 10px;
   font-weight: bold;
+  text-decoration: none;
 `;
 
 export default PageTitle;

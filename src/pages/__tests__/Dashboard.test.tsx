@@ -14,4 +14,5 @@ test('should display the title Student Dashboard', async () => {
   const badge = await waitForElement(() => getByText('Beta'));
   expect(title).toBeInTheDocument();
   expect(badge).toBeInTheDocument();
+  expect(badge.closest('a')).toHaveAttribute('href', '/beta');
 });
