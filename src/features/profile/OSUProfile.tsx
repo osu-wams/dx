@@ -15,14 +15,14 @@ const OSUProfile = () => {
   const address = useMailingAddress();
 
   return (
-    <PlainCard title="OSU Profile">
+    <PlainCard >
       {person.loading && <Skeleton count={6} />}
       {!person.loading && !person.data && <p>Cannot find your information</p>}
       {person && Object.keys(person).length && (
         <>
           <PersonName>
-            {person.data ? person.data.attributes.firstName : 'No first name'}{' '}
-            {person.data ? person.data.attributes.lastName : 'No last name'}
+            {person.data && !person.loading ? person.data.attributes.firstName : 'No first name'}{' '}
+            {person.data && !person.loading ? person.data.attributes.lastName : 'No last name'}
           </PersonName>
           <PairData>
             <div>
@@ -51,7 +51,11 @@ const OSUProfile = () => {
               formatPhone(person.data ? person.data.attributes.mobilePhone : null),
               faMobileAlt
             )}
-            {renderInfoIcons('Email', person.data ? person.data.attributes.email : '', faEnvelope)}
+            {renderInfoIcons(
+              'Email',
+              person.data && !person.loading ? person.data.attributes.email : '',
+              faEnvelope
+            )}
             {address && (
               <div>
                 <dt>
