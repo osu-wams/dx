@@ -11,7 +11,7 @@ import Button from './Button';
 import Input from './Input';
 import Label from './Label';
 import { Color, theme } from '../theme';
-import { UserContext } from '../App';
+import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
 import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 
@@ -66,10 +66,16 @@ const FooterIconLink = styled.a`
   }
 `;
 
+const FooterDeployedContent = styled.span`
+  display: block;
+  color: ${Color['neutral-500']};
+`;
+
 const Footer = () => {
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
   const [masqueradeId, setMasqueradeId] = useState('');
   const user = useContext<any>(UserContext);
+  const appContext = useContext<IAppContext>(AppContext);
 
   useEffect(() => {
     loadMasqueradeId();
@@ -165,6 +171,16 @@ const Footer = () => {
           >
             Accessibility Information
           </a>
+          {user && user.isAdmin && (
+            <>
+              <FooterDeployedContent>
+                Server Version: {appContext.appVersions.serverVersion}
+              </FooterDeployedContent>
+              <FooterDeployedContent>
+                Client Version: {appContext.appVersions.appVersion}
+              </FooterDeployedContent>
+            </>
+          )}
         </FooterContent>
         {user && user.isAdmin && (
           <Button

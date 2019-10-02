@@ -32,7 +32,11 @@ const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
 };
 
 const mockAppContext: IAppContext = {
-  infoButtonData: [{ id: 'info-button-id', content: 'Info button content', title: 'Title' }]
+  infoButtonData: [{ id: 'info-button-id', content: 'Info button content', title: 'Title' }],
+  appVersions: {
+    serverVersion: 'server-test-123',
+    appVersion: 'client-test-123'
+  }
 };
 
 const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = {}) => {
