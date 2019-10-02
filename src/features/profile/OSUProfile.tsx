@@ -21,8 +21,8 @@ const OSUProfile = () => {
       {person && Object.keys(person).length && (
         <>
           <PersonName>
-            {person.data && !person.loading ? person.data.attributes.firstName : 'No first name'}{' '}
-            {person.data && !person.loading ? person.data.attributes.lastName : 'No last name'}
+            {person.data && !person.loading ? person.data.attributes.firstName : ''}{' '}
+            {person.data && !person.loading ? person.data.attributes.lastName : ''}
           </PersonName>
           <PairData>
             <div>
