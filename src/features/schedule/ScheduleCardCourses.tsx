@@ -24,10 +24,31 @@ import {
 } from '../../ui/List';
 import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 import { Event } from '../../util/gaTracking';
+import { courseOnCorvallisCampus } from './schedule-utils';
 
 interface ScheduleCardCoursesProps {
   selectedCourses: ICourseSchedule[];
 }
+
+const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime): JSX.Element => (
+  <a
+    href={Url.campusMap.building + meetingTime.building}
+    target="_blank"
+    rel="noopener noreferrer"
+    onClick={() =>
+      Event(
+        'schedule-card',
+        'course location clicked',
+        `${Url.campusMap.building + meetingTime.building}`
+      )
+    }
+  >
+    <VisuallyHidden>
+      View {course.attributes.courseSubject} {course.attributes.courseNumber} location on map
+    </VisuallyHidden>
+    <Icon icon={faMapMarkerAlt} />
+  </a>
+);
 
 const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
   return course.attributes.meetingTimes.map((meetingTime: IMeetingTime) => (
@@ -46,23 +67,7 @@ const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
             {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
           </ListItemDescription>
         </ListItemText>
-        <a
-          href={Url.campusMap.building + meetingTime.building}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() =>
-            Event(
-              'schedule-card',
-              'course location clicked',
-              `${Url.campusMap.building + meetingTime.building}`
-            )
-          }
-        >
-          <VisuallyHidden>
-            View {course.attributes.courseSubject} {course.attributes.courseNumber} location on map
-          </VisuallyHidden>
-          <Icon icon={faMapMarkerAlt} />
-        </a>
+        {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
       </ListItemContent>
     </ListItem>
   ));
