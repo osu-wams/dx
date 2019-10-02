@@ -15,7 +15,7 @@ const PlainNoTitle = () => (
     <span data-testid="span">Any element can work</span>
   </PlainCard>
 );
-describe('<PlaneCard /> ', () => {
+describe('<PlainCard /> ', () => {
   test('Should render with children', () => {
     const { getByTestId } = render(<Plain />);
     expect(getByTestId('paragraph')).toBeInTheDocument();
