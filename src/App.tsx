@@ -16,6 +16,7 @@ import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { useInfoButtons, InfoButtonState } from './api/info-buttons';
 import { useUser } from './api/user';
+import { useAppVersions, AppVersions } from './api/app-versions';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -32,7 +33,11 @@ const RouteContainer = posed.div({
 });
 
 const initialAppContext: IAppContext = {
-  infoButtonData: []
+  infoButtonData: [],
+  appVersions: {
+    serverVersion: '',
+    appVersion: ''
+  }
 };
 
 interface User {
@@ -45,6 +50,7 @@ interface AppProps {
 
 export interface IAppContext {
   infoButtonData: InfoButtonState[];
+  appVersions: AppVersions;
 }
 
 export const UserContext = React.createContext<any>(null);
@@ -56,11 +62,16 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
 const App = (props: AppProps) => {
   const user = useUser();
   const infoButtons = useInfoButtons();
+  const appVersions = useAppVersions(initialAppContext.appVersions);
   const [appContext, setAppContext] = useState<IAppContext>(initialAppContext);
   const containerElementRef = useRef(props.containerElement);
 
   useEffect(() => {
-    setAppContext(previous => ({ ...previous, infoButtonData: infoButtons.data }));
+    setAppContext(previous => ({
+      ...previous,
+      infoButtonData: infoButtons.data,
+      appVersions: appVersions.data
+    }));
 
     if (user.error) {
       window.location.href = '/login';
@@ -89,7 +100,7 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading]);
+  }, [infoButtons.data, user.error, user.loading, appVersions.data]);
 
   return (
     <UserContext.Provider value={user.data}>

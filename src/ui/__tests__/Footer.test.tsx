@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, waitForElement, act, getByLabelText } from '@testing-library/react';
-import { renderWithUserContext } from '../../util/test-utils';
+import { renderWithUserContext, renderWithAllContexts } from '../../util/test-utils';
 import Footer from '../Footer';
 import { mockGAEvent } from '../../setupTests';
 
@@ -94,4 +94,14 @@ test('Links to be present and tracked in Google Analytics', async () => {
   fireEvent.click(maskLink);
 
   expect(mockGAEvent).toHaveBeenCalledTimes(9);
+});
+
+test('Application deployed versions', async () => {
+  const { getByText } = renderWithAllContexts(<Footer />);
+
+  const appText = getByText('Server Version: server-test-123');
+  const serverText = getByText('Client Version: client-test-123');
+
+  expect(appText).toBeInTheDocument();
+  expect(serverText).toBeInTheDocument();
 });
