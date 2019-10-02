@@ -36,18 +36,21 @@ export const currentCourses = (courses: ICourseSchedule[]): ICourseSchedule[] =>
 };
 
 /**
- *  Return an array of courses that have a meeting time that includes the provided day short code
+ *  Return an array of currently running courses that have a meeting time that includes the provided day short code, sorting
+ * the resulting array based on the courses begin times.
  * @param courses an array of courses to be filtered
  * @param dayShortCode a day short code (M, T, W, Th, F)
- * @returns ICourseSchedule[] - an array of courses
+ * @returns ICourseSchedule[] - an array of filtered and sorted courses
  */
 export const coursesOnDay = (
   courses: ICourseSchedule[],
   dayShortCode: string
 ): ICourseSchedule[] => {
-  return sortedByBeginTime(
-    courses.filter(
-      c => c.attributes.meetingTimes.findIndex(m => m.weeklySchedule.includes(dayShortCode)) > -1
+  return currentCourses(
+    sortedByBeginTime(
+      courses.filter(
+        c => c.attributes.meetingTimes.findIndex(m => m.weeklySchedule.includes(dayShortCode)) > -1
+      )
     )
   );
 };
