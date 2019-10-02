@@ -10,13 +10,11 @@ const Header = styled.h2`
   margin: 0 0 ${theme.spacing.unit * 2}px 0;
 `;
 
-const PlainCard: FC<{ title: string }> = ({ title, children, ...props }) => {
+const PlainCard: FC<{ title?: string }> = ({ title, children, ...props }) => {
   return (
     <Card collapsing={false}>
-      <Header>{title}</Header>
-      <CardContent>
-        {children}
-      </CardContent>
+      {title && <Header>{title}</Header>}
+      <CardContent>{children}</CardContent>
       <CardFooter></CardFooter>
     </Card>
   );
