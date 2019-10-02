@@ -31,6 +31,21 @@ describe('<Courses />', () => {
     const NumCourses = await waitForElement(() => getByText('8'));
     expect(NumCourses).toBeInTheDocument();
   });
+
+  it('renders a list of sorted courses for the current user', async () => {
+    const { queryAllByTestId } = render(<Courses />);
+    const courses = await waitForElement(() => queryAllByTestId('course-list-item-header'));
+    expect(courses.map(c => c.textContent)).toStrictEqual([
+      'CS 261',
+      'CS 261',
+      'CS 290',
+      'PH 212',
+      'PH 212',
+      'PH 212',
+      'PH 222',
+      'WR 214'
+    ]);
+  });
 });
 
 test('Specific course loads on click, close button closes', async () => {
