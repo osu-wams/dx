@@ -10,7 +10,7 @@ const Dashboard = () => {
   return (
     <div data-testid="dashboard-page">
       <MainGridWrapper>
-        <PageTitle title="Student Dashboard" />
+        <PageTitle title="Student Dashboard" badge="Beta" />
         <MainGrid>
           <MainGridCol>
             <ScheduleCard />
