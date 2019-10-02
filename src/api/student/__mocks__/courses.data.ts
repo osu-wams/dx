@@ -37,15 +37,15 @@ export default {
             beginTime: '10:00:00',
             endDate: '2017-12-01',
             endTime: '10:50:00',
-            room: '362',
-            building: 'MORE',
-            buildingDescription: 'Moreland Hall',
-            campus: ' Oregon State - Corvallis',
+            room: '123',
+            building: 'SMB',
+            buildingDescription: 'Some Building',
+            campus: ' Bend',
             hoursPerWeek: 2.5,
             creditHourSession: 3,
             scheduleType: 'A',
             scheduleDescription: 'Lecture',
-            weeklySchedule: ['M', 'W', 'F']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
           }
         ]
       }

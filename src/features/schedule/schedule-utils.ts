@@ -1,5 +1,6 @@
 import { addDays, eachDay, format } from 'date-fns';
-import { ICourseSchedule } from '../../api/student/course-schedule';
+import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
+import { isNullOrUndefined } from 'util';
 
 /**
  * Utility functions
@@ -57,9 +58,10 @@ export const coursesOnDay = (
 
 /**
  *  Return an array of courses that have been lexically sorted on the concatenated meeting beginTimes. Typically
- * the class has one meeting time. In the case where there are multiples, the value used to sort might look
- * like '08:0014:00' when the class meets at both 8am and 2pm, this would naturally sort after a class that has
- * a meeting time at 8am and 1pm ('08:0013:00').
+ * the class has one meeting time.
+ * * In the case where there are multiples, the value used to sort might look
+ * * like '08:0014:00' when the class meets at both 8am and 2pm, this would naturally sort after a class that has
+ * * a meeting time at 8am and 1pm ('08:0013:00').
  * @param courses an array of courses to be sorted
  * @returns ICourseSchedule[] - an array of courses
  */
@@ -73,7 +75,7 @@ const sortedByBeginTime = (courses: ICourseSchedule[]): ICourseSchedule[] => {
 
 /**
  *  Return an array of courses that have been lexically sorted on the concatenated course subject and number.
- * An example might look like 'PSY400' sorting after 'HST220'.
+ * * An example might look like 'PSY400' sorting after 'HST220'.
  * @param courses an array of courses to be sorted
  * @returns ICourseSchedule[] - an array of courses
  */
@@ -83,4 +85,21 @@ export const sortedByCourseName = (courses: ICourseSchedule[]): ICourseSchedule[
     const bSubject = `${b.attributes.courseSubject}${b.attributes.courseNumber}`;
     return aSubject > bSubject ? 1 : aSubject < bSubject ? -1 : 0;
   });
+};
+
+/**
+ * Inspect the course to see if it has a meeting time that is associated to the course
+ * campus that include the word 'corvallis'.
+ * * An example of the provided data would be 'Oregon State - Corvallis'
+ * @param course the course to be evaluated for campus location
+ * @returns boolean - true if a course meeting time has a campus detail of Corvallis
+ */
+export const courseOnCorvallisCampus = (course: ICourseSchedule): boolean => {
+  return !isNullOrUndefined(
+    course.attributes.meetingTimes
+      .filter(m => !isNullOrUndefined(m))
+      .find((m: IMeetingTime) => {
+        return m.campus.toLowerCase().includes('corvallis');
+      })
+  );
 };
