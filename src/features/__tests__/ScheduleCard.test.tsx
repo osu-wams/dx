@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
+import { wait, waitForElement, fireEvent } from '@testing-library/react';
 import { renderWithUserContext } from '../../util/test-utils';
 import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
@@ -47,6 +47,15 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     // debug();
     fireEvent.click(mapLink);
     expect(mockGAEvent).toHaveBeenCalled();
+  });
+
+  it('should find a course without a clickable map link', async () => {
+    const { queryByText, getByText } = renderWithUserContext(<ScheduleCard />);
+    const course = await waitForElement(() => getByText(/WR 214/));
+    expect(course).toBeInTheDocument();
+    await wait(() => {
+      expect(queryByText('View WR 214 location')).not.toBeInTheDocument();
+    });
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
