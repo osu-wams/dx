@@ -15,7 +15,7 @@ export const getAppVersions = async (): Promise<AppVersions> => {
       return { version: 'failed-to-fetch' };
     });
   const appVersion: String = await axios
-    .get('/app-version')
+    .get('/app_version')
     .then(res => res.data)
     .catch(err => {
       console.error('Failed fetching client deployed version.');

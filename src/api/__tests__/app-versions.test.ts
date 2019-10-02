@@ -9,7 +9,7 @@ const mock = new MockAdapter(axios);
 describe('getAppVersions', () => {
   it('gets versions on successful returns', async () => {
     mock.onGet('/healthcheck').reply(200, { version: 'server-tested-version' });
-    mock.onGet('/app-version').reply(200, 'client-tested-version');
+    mock.onGet('/app_version').reply(200, 'client-tested-version');
     const result = await getAppVersions();
     expect(result).toEqual({
       serverVersion: 'server-tested-version',
@@ -18,7 +18,7 @@ describe('getAppVersions', () => {
   });
   it('falls back gracefully when requests fail', async () => {
     mock.onGet('/healthcheck').reply(500);
-    mock.onGet('/app-version').reply(500);
+    mock.onGet('/app_version').reply(500);
     const result = await getAppVersions();
     expect(result).toEqual({
       serverVersion: 'failed-to-fetch',
