@@ -23,6 +23,19 @@ import { ICourseScheduleAttributes, IFaculty } from '../api/student/course-sched
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
+import { courseOnCorvallisCampus } from './schedule/schedule-utils';
+
+const buildingCampusMap = (building: string, buildingDescription: string): JSX.Element => (
+  <a
+    href={Url.campusMap.building + building}
+    target="_blank"
+    rel="noopener noreferrer"
+    onClick={() => Event('course', 'course location clicked', Url.campusMap.building + building)}
+  >
+    <VisuallyHidden>View {buildingDescription} on map</VisuallyHidden>
+    <Icon icon={faMapMarkerAlt} />
+  </a>
+);
 
 const Course: FC<{
   attributes: ICourseScheduleAttributes;
@@ -67,19 +80,8 @@ const Course: FC<{
                   {beginTime && `\u00B7 ${formatTime(beginTime)} - ${formatTime(endTime)}`}
                 </ListItemDescription>
               </ListItemText>
-              {buildingDescription && (
-                <a
-                  href={Url.campusMap.building + building}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    Event('course', 'course location clicked', Url.campusMap.building + building)
-                  }
-                >
-                  <VisuallyHidden>View {buildingDescription} on map</VisuallyHidden>
-                  <Icon icon={faMapMarkerAlt} />
-                </a>
-              )}
+              {courseOnCorvallisCampus(meetingTimes) &&
+                buildingCampusMap(building, buildingDescription)}
             </ListItemContent>
           </ListItem>
         )
