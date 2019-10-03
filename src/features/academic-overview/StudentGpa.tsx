@@ -15,14 +15,14 @@ export const StudentGpa: React.FC = () => {
   return (
     <Highlight textAlignLeft>
       <HighlightEmphasis color={Color['orange-400']}>{data.gpa}</HighlightEmphasis>
-      <HighlightTitle marginTop={0}>Overall GPA</HighlightTitle>
+      <HighlightTitle marginTop={0}>GPA</HighlightTitle>
       {loading && <Skeleton count={3} />}
       {!loading && (
         <>
           <HighlightDescription>
             {data.gpa !== ''
               ? 'GPA across all past terms.'
-              : 'You must first complete a term to have an overall GPA.'}
+              : 'You must first complete a term to have a GPA.'}
           </HighlightDescription>
         </>
       )}
