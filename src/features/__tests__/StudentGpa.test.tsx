@@ -11,7 +11,7 @@ jest.mock('../../api/student/gpa', () => ({
 
 describe('<StudentGpa />', () => {
   it('should render and have the approriate standing', async () => {
-    mockUseStudentGpa.mockReturnValue({data:{ gpa: '3.69' }, loading: false, error: false});
+    mockUseStudentGpa.mockReturnValue({ data: { gpa: '3.69' }, loading: false, error: false });
     const { getByText } = render(<StudentGpa />);
     const element = await waitForElement(() => getByText('3.69'));
     expect(element).toBeInTheDocument();
@@ -19,10 +19,10 @@ describe('<StudentGpa />', () => {
   });
 
   it('should return appropriate text when data is empty', async () => {
-    mockUseStudentGpa.mockReturnValue({data: {gpa: ''}, loading: false, error: false});
+    mockUseStudentGpa.mockReturnValue({ data: { gpa: '' }, loading: false, error: false });
     const { getByText } = render(<StudentGpa />);
     const element = await waitForElement(() =>
-      getByText('You must first complete a term to have an overall GPA.')
+      getByText('You must first complete a term to have a GPA.')
     );
     expect(element).toBeInTheDocument();
   });
