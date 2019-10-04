@@ -94,9 +94,15 @@ export const sortedByCourseName = (courses: ICourseSchedule[]): ICourseSchedule[
  * @param course the course to be evaluated for campus location
  * @returns boolean - true if a course meeting time has a campus detail of Corvallis
  */
-export const courseOnCorvallisCampus = (course: ICourseSchedule): boolean => {
+export const courseOnCorvallisCampus = (o: ICourseSchedule | IMeetingTime[]): boolean => {
+  let meetingTimes: IMeetingTime[];
+  if (o instanceof Array) {
+    meetingTimes = o;
+  } else {
+    meetingTimes = o.attributes.meetingTimes;
+  }
   return !isNullOrUndefined(
-    course.attributes.meetingTimes
+    meetingTimes
       .filter(m => !isNullOrUndefined(m))
       .find((m: IMeetingTime) => {
         return m.campus.toLowerCase().includes('corvallis');
