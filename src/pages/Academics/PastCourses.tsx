@@ -24,7 +24,7 @@ import { Event } from '../../util/gaTracking';
 import { MainGridWrapper, MainGrid, MainGridCol } from '../../ui/PageGrid';
 import { AcademicSubNav } from './AcademicsSubNav';
 
-const AcademicHistory = () => {
+const PastCourses = () => {
   const grades = useGrades();
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 300);
@@ -42,7 +42,7 @@ const AcademicHistory = () => {
           `${e.attributes.courseSubject} ${e.attributes.courseNumber}`.match(re)
       );
       setFilteredGrades(matchingGrades);
-      Event('academic-history-search', debouncedQuery);
+      Event('past-courses-search', debouncedQuery);
     }
   }, [debouncedQuery, grades.data]);
 
@@ -63,8 +63,8 @@ const AcademicHistory = () => {
   };
 
   return (
-    <MainGridWrapper data-testid="academic-history">
-      <PageTitle title="Academic History" />
+    <MainGridWrapper data-testid="past-courses">
+      <PageTitle title="Past Courses" />
       <AcademicSubNav />
       <MainGrid>
         <MainGridCol className="col-span-2">
@@ -134,7 +134,7 @@ const AcademicHistory = () => {
   );
 };
 
-export default AcademicHistory;
+export default PastCourses;
 
 const HistoryCard = styled(Card)`
   margin-bottom: 0;

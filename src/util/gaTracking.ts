@@ -36,5 +36,5 @@ type Components =
   | 'resource'
   | 'resource-search'
   | 'resource-category'
-  | 'academic-history-search'
+  | 'past-courses-search'
   | 'info-button';

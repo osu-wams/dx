@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, RouteComponentProps } from '@reach/router';
-import AcademicHistory from './AcademicHistory';
+import PastCourses from './PastCourses';
 import AcademicsDashboard from './AcademicsDashboard';
 
 const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
@@ -10,7 +10,7 @@ const Academics = () => {
   return (
     <Router>
       <RouterPage pageComponent={<AcademicsDashboard />} path="/" />
-      <RouterPage pageComponent={<AcademicHistory />} path="academic-history" />
+      <RouterPage pageComponent={<PastCourses />} path="past-courses" />
     </Router>
   );
 };

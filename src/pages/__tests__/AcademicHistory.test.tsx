@@ -1,7 +1,7 @@
 import React from 'react';
 import { waitForElement, fireEvent, act } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import AcademicHistory from '../Academics/AcademicHistory';
+import PastCourses from '../Academics/PastCourses';
 import mockGrades from '../../api/student/__mocks__/grades.data';
 
 const sleep = (ms: number) => {
@@ -14,30 +14,30 @@ jest.mock('../../api/student/grades', () => ({
   useGrades: () => mockUseGrades()
 }));
 
-describe('<AcademicHistory />', () => {
+describe('<PastCourses />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
     mockUseGrades.mockReturnValue(mockGrades);
   });
 
   it('renders without errors', async () => {
-    const { getByTestId } = render(<AcademicHistory />);
-    expect(getByTestId('academic-history')).toBeInTheDocument();
+    const { getByTestId } = render(<PastCourses />);
+    expect(getByTestId('past-courses')).toBeInTheDocument();
   });
 
   it('renders and finds placeholder text: "Find past courses"', () => {
-    const { getByPlaceholderText } = render(<AcademicHistory />);
+    const { getByPlaceholderText } = render(<PastCourses />);
     expect(getByPlaceholderText('Find past courses')).toBeInTheDocument();
   });
 
   it('should find the course: "Test Course Title"', async () => {
-    const { getByText } = render(<AcademicHistory />);
+    const { getByText } = render(<PastCourses />);
     const Algebra = await waitForElement(() => getByText('Test Course Title'));
     expect(Algebra).toBeInTheDocument();
   });
 
   it('should find "MTH 451" when typing and fire a google analytics event', async () => {
-    const { getByLabelText, getByText, debug } = render(<AcademicHistory />);
+    const { getByLabelText, getByText, debug } = render(<PastCourses />);
     const CourseSearchInput = getByLabelText('Find courses');
     await waitForElement(() => getByText('Test Course Title'));
     await act(async () => {
@@ -58,7 +58,7 @@ describe('<AcademicHistory />', () => {
 
   it('should find the message: "No course history yet" if grades is an empty array', async () => {
     mockUseGrades.mockReturnValue({data: [], loading: false, error: false});
-    const { getByText } = render(<AcademicHistory />);
+    const { getByText } = render(<PastCourses />);
     const NoGrades = await waitForElement(() => getByText('No course history yet'));
     expect(NoGrades).toBeInTheDocument();
   });
