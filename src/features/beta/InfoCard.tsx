@@ -15,7 +15,7 @@ const BetaInfo: FC = () => {
         <DashboardBetaContentP>
           This is the beta release of an all-new student portal, intended to (eventually!) replace
           MyOSU and lay the foundation for your OSU digital experience. Here are a few of
-          my.oregonstate.edu's key features:
+          my.oregonstate.edu&#39;s key features:
         </DashboardBetaContentP>
         <DashboardBetaStyledList>
           <li>
@@ -39,8 +39,8 @@ const BetaInfo: FC = () => {
           This is still a beta release, and while we plan to add new features and a greater level of
           personalization in the future, we want to hear from you now about your experience. This is
           YOUR dashboard — what would you like to see on this site? Notice any problems or bugs? You
-          can switch back to <DashbaordBetaContentA href='https://myosu.oregonstate.edu' target='_blank'>MyOSU</DashbaordBetaContentA> if you're not finding what you need on the new
-          dashboard (but drop us a line and tell us what's missing!). Explore away, and please send
+          can switch back to <DashbaordBetaContentA href='https://myosu.oregonstate.edu' target='_blank'>MyOSU</DashbaordBetaContentA> if you&#39;re not finding what you need on the new
+          dashboard (but drop us a line and tell us what&#39;s missing!). Explore away, and please send
           us your questions and <DashbaordBetaContentA href='http://localhost:3000/beta#CHANGE-WHEN-READY' target='_blank'>feedback</DashbaordBetaContentA>!
         </DashboardBetaContentP>
       </CardContent>
