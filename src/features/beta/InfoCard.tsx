@@ -2,9 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
 import { Color, theme } from '../../theme';
-import { ExternalLink } from '../../ui/Link';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
-import { List, ListItem, ListItemContent, ListItemText, ListItemHeader } from '../../ui/List';
 
 const BetaInfo: FC = () => {
   return (
@@ -39,9 +37,9 @@ const BetaInfo: FC = () => {
           This is still a beta release, and while we plan to add new features and a greater level of
           personalization in the future, we want to hear from you now about your experience. This is
           YOUR dashboard — what would you like to see on this site? Notice any problems or bugs? You
-          can switch back to <DashbaordBetaContentA href='https://myosu.oregonstate.edu' target='_blank'>MyOSU</DashbaordBetaContentA> if you&#39;re not finding what you need on the new
+          can switch back to <DashboardBetaContentA href='https://myosu.oregonstate.edu' target='_blank'>MyOSU</DashbaordBetaContentA> if you&#39;re not finding what you need on the new
           dashboard (but drop us a line and tell us what&#39;s missing!). Explore away, and please send
-          us your questions and <DashbaordBetaContentA href='http://localhost:3000/beta#CHANGE-WHEN-READY' target='_blank'>feedback</DashbaordBetaContentA>!
+          us your questions and <DashboardBetaContentA href='http://localhost:3000/beta#CHANGE-WHEN-READY' target='_blank'>feedback</DashbaordBetaContentA>!
         </DashboardBetaContentP>
       </CardContent>
       <CardFooter></CardFooter>
@@ -57,7 +55,7 @@ const DashboardBetaStyledList = styled.ul`
   margin: ${theme.spacing.unit}px 0 0 0;
   padding: 0 0 0 2.8rem;
 `;
-const DashbaordBetaContentA = styled.a`
+const DashboardBetaContentA = styled.a`
 :hover,
   :active,
   :focus {
