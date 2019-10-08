@@ -15,9 +15,20 @@ Add it to your .bashrc .zshrc or preferred file of choice.
   - To clear this run `unset NODE_ENV`
   - NOTE: We only need this if we want to test SAML and CANVAS OAUTH on our local machine
 
-## Testing and Development Notes
+## Setup .env, then start the application
 
-### AppContext
+Use `.env` to set the development servers hostname so that the browser is automatically opened to the proper url during development and testing.
+
+- Copy `.env.example` to `.env` then start the application
+
+```sh
+$ cp .env.example .env
+$ yarn start
+```
+
+# Testing and Development Notes
+
+## AppContext
 
 The application is designed to set an application-wide context with data that will be used deep in the component tree. This data is queried once per session and is maintained throughout the lifecycle of the users experience. As such, in order to test components in isolation, the AppContext needs to be set during any `render` calls. This functionality has been baked into a testing utility and overrides `react-testing-library` render method. The override can be found at `src/util/test-utils.tsx`.
 

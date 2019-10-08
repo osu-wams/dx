@@ -14,6 +14,7 @@ import { Color, theme } from '../theme';
 import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
 import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
+import { isNullOrUndefined } from 'util';
 
 const FooterWrapper = styled.div`
   width: 100%;
@@ -129,6 +130,24 @@ const Footer = () => {
     }
   };
 
+  /**
+   * Generate a version link, if possible, for the deployed version
+   * @param versionString the original version string
+   * @param repository the github repository name
+   */
+  const versionLink = (versionString: string, repository: string): JSX.Element => {
+    const [dateTime, version] = versionString.split('-'); // eslint-disable-line
+    if (isNullOrUndefined(version) || version === '') {
+      return <span>{versionString}</span>;
+    } else {
+      return (
+        <a href={`http://github.com/${repository}/${version}`} target="blank">
+          {versionString}
+        </a>
+      );
+    }
+  };
+
   return (
     <>
       <FooterWrapper>
@@ -174,10 +193,10 @@ const Footer = () => {
           {user && user.isAdmin && (
             <>
               <FooterDeployedContent>
-                Server Version: {appContext.appVersions.serverVersion}
+                Server Version: {versionLink(appContext.appVersions.serverVersion, 'dx-server')}
               </FooterDeployedContent>
               <FooterDeployedContent>
-                Client Version: {appContext.appVersions.appVersion}
+                Client Version: {versionLink(appContext.appVersions.appVersion, 'dx')}
               </FooterDeployedContent>
             </>
           )}
