@@ -48,7 +48,7 @@ const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
                     <ListItemHeader>{title} </ListItemHeader>
                     <ListItemDescription>
                       {plannable_type !== 'announcement'
-                        ? `Due today at ${format(due_at, 'h:mma')}`
+                        ? `Due ${format(due_at, 'MMM Do [at] h:mma')}`
                         : ''}
                     </ListItemDescription>
                   </ListItemText>

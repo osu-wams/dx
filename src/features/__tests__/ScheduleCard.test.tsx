@@ -6,6 +6,7 @@ import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from '../../setupTests';
+import { format } from 'date-fns';
 
 const mockUsePlannerItems = jest.fn();
 const mockUseCourseSchedule = jest.fn();
@@ -59,10 +60,13 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
+    const duePartialText = `Due ${format(new Date(), 'MMM Do [at] h:')}`;
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const todayPlannerItem = await waitForElement(() => getByText(/Testo Planner Discussion/));
     expect(todayPlannerItem).toBeInTheDocument();
+    // Check the planner item description element to see if it has the due date text like 'Due Oct 11 at 12:`
+    expect(todayPlannerItem.nextElementSibling).toHaveTextContent(duePartialText);
     fireEvent.click(todayPlannerItem);
     expect(mockGAEvent).toHaveBeenCalled();
   });
