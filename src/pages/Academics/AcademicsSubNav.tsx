@@ -9,9 +9,9 @@ const AcademicSubNav = () => {
       <SubNavLink to="/academics">
         <Icon icon={faThLarge} /> Dashboard
       </SubNavLink>
-      <SubNavLink to="/academics/academic-history">
+      <SubNavLink to="/academics/past-courses">
         <Icon icon={faClock} />
-        Academic History
+        Past Courses
       </SubNavLink>
     </SubNav>
   );
