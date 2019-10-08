@@ -26,54 +26,52 @@ import { Event } from '../util/gaTracking';
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
-  const {data, loading, error} = usePlannerItems();
+  const { data, loading } = usePlannerItems();
   const user = useContext<any>(UserContext);
+
+  const listOrEmpty = () => {
+    if (loading) {
+      return <Skeleton count={5} />;
+    }
+
+    if (data.length && user.isCanvasOptIn === true) {
+      return (
+        <List>
+          {data.map(({ plannable_id, plannable_type, html_url, plannable: { title, due_at } }) => (
+            <ListItem key={plannable_id}>
+              <ListItemContentLink
+                href={Url.canvas.main + html_url}
+                target="_blank"
+                onClick={() =>
+                  Event('planner-items', 'Canvas planner item click', Url.canvas.main + html_url)
+                }
+              >
+                <Icon icon={faFileEdit} color={Color['orange-200']} />
+                <ListItemText>
+                  <ListItemHeader>{title}</ListItemHeader>
+                  <ListItemDescription>
+                    {plannable_type !== ('calendar_event' || 'announcement')
+                      ? `Due ${format(due_at, 'MMM Do [at] h:mma')}`
+                      : ''}
+                  </ListItemDescription>
+                </ListItemText>
+              </ListItemContentLink>
+            </ListItem>
+          ))}
+        </List>
+      );
+    } else if (user.isCanvasOptIn === true) {
+      return <EmptyState />;
+    }
+  };
 
   return (
     <Card>
-      <CardHeader
-        title="Canvas"
-        badge={<CardIcon icon={faFileEdit} count={data.length} />}
-      />
+      <CardHeader title="Canvas" badge={<CardIcon icon={faFileEdit} count={data.length} />} />
       <CardContent>
         {/* If not authorized to canvas, we display the link to have them authorize */}
         {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && <AuthorizeCanvas />}
-
-        {loading && <Skeleton count={5} />}
-        {error && <div>Oops! Something went wrong while retrieving your data.</div>}
-        {data.length && user.isCanvasOptIn === true ? (
-          <List>
-            {data.map(
-              ({ plannable_id, plannable_type, html_url, plannable: { title, due_at } }) => (
-                <ListItem key={plannable_id}>
-                  <ListItemContentLink
-                    href={Url.canvas.main + html_url}
-                    target="_blank"
-                    onClick={() =>
-                      Event(
-                        'planner-items',
-                        'Canvas planner item click',
-                        Url.canvas.main + html_url
-                      )
-                    }
-                  >
-                    <Icon icon={faFileEdit} color={Color['orange-200']} />
-                    <ListItemText>
-                      <ListItemHeader>{title}</ListItemHeader>
-                      <ListItemDescription>
-                        {plannable_type !== ('calendar_event' || 'announcement')
-                          ? `Due ${format(due_at, 'MMM Do [at] h:mma')}`
-                          : ''}
-                      </ListItemDescription>
-                    </ListItemText>
-                  </ListItemContentLink>
-                </ListItem>
-              )
-            )}
-          </List>
-        ) : (
-          !loading && (user.isCanvasOptIn === true && <EmptyState />)
-        )}
+        {listOrEmpty()}
       </CardContent>
       <CardFooter infoButtonId="canvas">
         {user.isCanvasOptIn === true && (
