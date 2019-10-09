@@ -141,7 +141,7 @@ const Footer = () => {
       return <span>{versionString}</span>;
     } else {
       return (
-        <a href={`http://github.com/${repository}/${version}`} target="blank">
+        <a href={`http://github.com/osu-wams/${repository}/${version}`} target="blank">
           {versionString}
         </a>
       );
