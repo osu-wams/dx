@@ -72,7 +72,7 @@ test('Various Links are present as well as Google Analytics events are recorded'
   fireEvent.click(OpSysBtn);
   expect(mockGAEvent).toHaveBeenCalled();
 
-  // Dialg is present and displays the current course
+  // Dialog is present and displays the current course
   const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
   expect(courseDialog).toHaveTextContent(/data structures/i);
 
@@ -104,6 +104,20 @@ test('Course spells out the month and day "december 6" for Final exams', async (
 
   // For Final exams we spell out the month and day
   expect(courseDialog).toHaveTextContent(/december 6/i);
+});
+
+test('Course Midterm data is excluded from view', async () => {
+  const { getByText, queryByText, getByTestId } = render(<Courses />);
+
+  const TestoBtn = await waitForElement(() => getByText(/testo physics/i));
+  fireEvent.click(TestoBtn);
+
+  // Dialg is present and displays the corrent course
+  const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
+  expect(courseDialog).toBeInTheDocument();
+
+  // Mid terms are currently excluded due to inconsistent data source
+  expect(queryByText(/MID GRP/)).not.toBeInTheDocument();
 });
 
 test('Footer has a Link that when clicked and Google Analytics Event fired', async () => {

@@ -66,25 +66,28 @@ const Course: FC<{
           buildingDescription,
           scheduleDescription,
           scheduleType
-        }) => (
-          <ListItem key={generateId()}>
-            <ListItemContent>
-              <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
-              <ListItemText>
-                <ListItemHeader>{scheduleDescription}</ListItemHeader>
-                <ListItemDescription>
-                  {room} {building} <br />
-                  {beginDate !== endDate
-                    ? weeklySchedule.map((day, index) => day)
-                    : formatDate(parse(beginDate), 'noYear')}{' '}
-                  {beginTime && `\u00B7 ${formatTime(beginTime)} - ${formatTime(endTime)}`}
-                </ListItemDescription>
-              </ListItemText>
-              {courseOnCorvallisCampus(meetingTimes) &&
-                buildingCampusMap(building, buildingDescription)}
-            </ListItemContent>
-          </ListItem>
-        )
+        }) =>
+          // Midterms are inconsitently added in banner, so we are not displaying them
+          room !== 'MID' &&
+          scheduleType !== 'MID' && (
+            <ListItem key={generateId()}>
+              <ListItemContent>
+                <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
+                <ListItemText>
+                  <ListItemHeader>{scheduleDescription}</ListItemHeader>
+                  <ListItemDescription>
+                    {room} {building} <br />
+                    {beginDate !== endDate
+                      ? weeklySchedule.map((day, index) => day)
+                      : formatDate(parse(beginDate), 'noYear')}{' '}
+                    {beginTime && `\u00B7 ${formatTime(beginTime)} - ${formatTime(endTime)}`}
+                  </ListItemDescription>
+                </ListItemText>
+                {courseOnCorvallisCampus(meetingTimes) &&
+                  buildingCampusMap(building, buildingDescription)}
+              </ListItemContent>
+            </ListItem>
+          )
       )}
     </List>
     <Divider />
