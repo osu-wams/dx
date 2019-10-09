@@ -42,10 +42,9 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   });
 
   it('should find a course with a clickable map link', async () => {
-    const { getByText, debug } = renderWithUserContext(<ScheduleCard />);
+    const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const mapLink = await waitForElement(() => getByText(/View PH 222 location/));
-    // debug();
     fireEvent.click(mapLink);
     expect(mockGAEvent).toHaveBeenCalled();
   });
@@ -57,6 +56,14 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     await wait(() => {
       expect(queryByText('View WR 214 location')).not.toBeInTheDocument();
     });
+  });
+
+  it('should find a course but no MID term associated', async () => {
+    const { queryByText, getAllByText } = renderWithUserContext(<ScheduleCard />);
+    await waitForElement(() => getAllByText(/PH 212/));
+
+    // Mid terms are currently excluded due to inconsistent data source
+    expect(queryByText(/MID Group Events/)).not.toBeInTheDocument();
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
