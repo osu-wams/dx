@@ -99,8 +99,8 @@ test('Links to be present and tracked in Google Analytics', async () => {
 test('Application deployed versions', async () => {
   const { getByText } = renderWithAllContexts(<Footer />);
 
-  const appText = getByText('Server Version: server-test-123');
-  const serverText = getByText('Client Version: client-test-123');
+  const appText = getByText('server-test-123');
+  const serverText = getByText('client-test-123');
 
   expect(appText).toBeInTheDocument();
   expect(serverText).toBeInTheDocument();

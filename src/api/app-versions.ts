@@ -2,19 +2,19 @@ import axios from 'axios';
 import useAPICall from './useAPICall';
 
 export interface AppVersions {
-  serverVersion: String;
-  appVersion: String;
+  serverVersion: string;
+  appVersion: string;
 }
 
 export const getAppVersions = async (): Promise<AppVersions> => {
-  const healthCheck: { version: String } = await axios
+  const healthCheck: { version: string } = await axios
     .get('/healthcheck')
     .then(res => res.data)
     .catch(err => {
       console.error('Failed fetching server deployed version.');
       return { version: 'failed-to-fetch' };
     });
-  const appVersion: String = await axios
+  const appVersion: string = await axios
     .get('/app_version')
     .then(res => res.data)
     .catch(err => {
