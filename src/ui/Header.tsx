@@ -64,6 +64,7 @@ const ProfileMenuList = styled(MenuList)`
     border-radius: ${theme.borderRadius};
     color: ${Color.white};
     min-width: 15rem;
+    padding: 0;
     [data-reach-menu-item] {
       padding: 1rem 2rem;
       font-size: ${theme.fontSize[16]};
@@ -74,7 +75,7 @@ const ProfileMenuList = styled(MenuList)`
     svg {
       color: ${Color['orange-300']};
       margin-right: 1.2rem;
-      font-size: ${theme.fontSize[20]};
+      font-size: ${theme.fontSize[24]};
     }
     div + div {
       [data-reach-menu-item] {
