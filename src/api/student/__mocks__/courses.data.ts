@@ -328,7 +328,7 @@ export default {
             creditHourSession: 4,
             scheduleType: 'A',
             scheduleDescription: 'Lecture',
-            weeklySchedule: ['T', 'Th']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'S']
           },
           {
             beginDate: '2017-12-06',
@@ -358,7 +358,7 @@ export default {
             creditHourSession: 0,
             scheduleType: 'A',
             scheduleDescription: 'Lecture',
-            weeklySchedule: ['W']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
           }
         ]
       }

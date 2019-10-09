@@ -51,26 +51,35 @@ const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime
 );
 
 const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
-  return course.attributes.meetingTimes.map((meetingTime: IMeetingTime) => (
-    <ListItem key={`${course.id}${meetingTime.beginTime}`}>
-      <ListItemContent>
-        <Icon icon={getIconByScheduleType(meetingTime.scheduleType)} color={Color['orange-200']} />
-        <ListItemText>
-          <ListItemHeader>
-            {course.attributes.courseSubject} {course.attributes.courseNumber}
-          </ListItemHeader>
-          <ListItemDescription>
-            {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
-            {meetingTime.buildingDescription}
-          </ListItemDescription>
-          <ListItemDescription>
-            {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
-          </ListItemDescription>
-        </ListItemText>
-        {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
-      </ListItemContent>
-    </ListItem>
-  ));
+  let filteredCourses;
+  filteredCourses = course.attributes.meetingTimes.map(
+    (meetingTime: IMeetingTime) =>
+      meetingTime.room !== 'MID' &&
+      meetingTime.scheduleType !== 'MID' && (
+        <ListItem key={`${course.id}${meetingTime.beginTime}`}>
+          <ListItemContent>
+            <Icon
+              icon={getIconByScheduleType(meetingTime.scheduleType)}
+              color={Color['orange-200']}
+            />
+            <ListItemText>
+              <ListItemHeader>
+                {course.attributes.courseSubject} {course.attributes.courseNumber}
+              </ListItemHeader>
+              <ListItemDescription>
+                {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
+                {meetingTime.buildingDescription}
+              </ListItemDescription>
+              <ListItemDescription>
+                {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
+              </ListItemDescription>
+            </ListItemText>
+            {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
+          </ListItemContent>
+        </ListItem>
+      )
+  );
+  return filteredCourses;
 };
 
 const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
