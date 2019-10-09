@@ -24,7 +24,7 @@ const Resources = () => {
     user
   );
 
-  /* eslint-disable no-restricted-globals */
+  /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
   /**
    * A delegate method for children components to call and set the selected category. This
    * pushes the category name to the window history and updates the location bar, when the
@@ -61,7 +61,7 @@ const Resources = () => {
       }
     };
   }, []);
-  /* eslint-enable no-restricted-globals */
+  /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
 
   return (
     <MainGridWrapper>
