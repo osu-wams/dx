@@ -13,8 +13,7 @@ import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
 
 const ResourcesContainer = styled(CardContent)`
-  /* padding-top: 1.6rem;
-  padding-bottom: 0; */
+  padding-bottom: 0;
 `;
 
 const ResourceName = styled.div`

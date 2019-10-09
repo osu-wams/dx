@@ -6,7 +6,7 @@ import { theme, breakpoints, Color } from '../theme';
  */
 
 const MainGridWrapper = styled.div`
-  border-top: 1px solid ${Color['neutral-300']};
+  border-top: 1px solid ${Color['neutral-200']};
   border-bottom: 1px solid ${Color['neutral-300']};
   background-color: ${Color['neutral-100']};
   padding: 1rem ${theme.spacing.mobile} 2rem;
