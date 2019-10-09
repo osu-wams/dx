@@ -16,7 +16,7 @@ const resourcesData = {
       uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
     }
   ],
-  loading: false, 
+  loading: false,
   error: false
 };
 
@@ -30,7 +30,7 @@ const resourcesDataByCategory = {
       uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
     }
   ],
-  loading: false, 
+  loading: false,
   error: false
 };
 
@@ -52,10 +52,10 @@ const categoriesData = {
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/hands-usd.svg'
     }
   ],
-  loading: false, 
+  loading: false,
   error: false
 };
 
-const defaultCategory = '6b7cd598-d71e-45f7-911c-d71551ec0a7c';
+const defaultCategory = 'Featured';
 
 export { resourcesData, resourcesDataByCategory, categoriesData, defaultCategory };

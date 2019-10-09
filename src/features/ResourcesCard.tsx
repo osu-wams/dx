@@ -80,7 +80,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
       {validCategory() && (
         <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink
-            to={`/resources?category=${categories.data[0].id}`}
+            to={`/resources?category=${categories.data[0].name.toLowerCase()}`}
             onClick={() => Event('resources-card', `view all ${categ} link`)}
           >
             See all {categ} resources

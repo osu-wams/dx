@@ -16,7 +16,7 @@ const mockDefaultCategory = defaultCategory;
 jest.mock('../../api/resources', () => ({
   useResources: () => mockUseResources(),
   useCategories: () => mockUseCategories(),
-  defaultCategoryId: () => mockDefaultCategory
+  defaultCategoryName: () => mockDefaultCategory
 }));
 
 describe('<Resources />', () => {
