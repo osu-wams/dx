@@ -6,7 +6,6 @@ import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';
 
 const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory }) => {
-
   return (
     <CategoriesWrapper>
       {categories.length > 0 && (
@@ -20,7 +19,7 @@ const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory 
               setSelectedCategory('all');
               Event('resource-category', 'all');
             }}
-            selected={selectedCategory === 'all' ? true : false}
+            selected={selectedCategory && selectedCategory.toLowerCase() === 'all' ? true : false}
           />
           {categories.map((category: ICategory) => (
             <CustomBtn
@@ -29,11 +28,15 @@ const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory 
               id={category.id}
               key={category.id}
               clickHandler={() => {
-                setSelectedCategory(category.id);
+                setSelectedCategory(category.name);
                 Event('resource-category', category.name);
               }}
               name="categories"
-              selected={selectedCategory === category.id ? true : false}
+              selected={
+                selectedCategory && selectedCategory.toLowerCase() === category.name.toLowerCase()
+                  ? true
+                  : false
+              }
             />
           ))}
         </>
