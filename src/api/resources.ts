@@ -115,25 +115,6 @@ const useResourcesByQuery = (query: string, user) => {
 };
 
 /**
- * ResourcesByCategory
- */
-const getResourcesByCategory = (categoryId: string): Promise<IResourceResult[]> =>
-  axios
-    .get(`/api/resources${categoryId !== 'all' ? `?category=${categoryId}` : ''}`)
-    .then(res => res.data);
-const useResourcesByCategory = (categoryId: string, user) => {
-  return useAPICall<IResourceResult[]>(
-    getResourcesByCategory,
-    categoryId,
-    d => {
-      const transformed = filterResourcesForUser(d, user);
-      return transformed;
-    },
-    []
-  );
-};
-
-/**
  * ResourcesByQueue
  */
 const getResourcesByQueue = (category: string): Promise<IResourceResult[]> =>
@@ -164,18 +145,16 @@ const useCategories = (callback: Function = data => data) => {
 };
 
 // Category selected by default. Currently the 'featured' category id
-const defaultCategoryId = '6b7cd598-d71e-45f7-911c-d71551ec0a7c';
+const defaultCategoryName = 'featured';
 
 export {
   useResources,
   useResourcesByQuery,
-  useResourcesByCategory,
-  defaultCategoryId,
+  defaultCategoryName,
   useCategories,
   useResourcesByQueue,
   getCategories,
   getResources,
-  getResourcesByCategory,
   getResourcesByQuery,
   getResourcesByQueue
 };
