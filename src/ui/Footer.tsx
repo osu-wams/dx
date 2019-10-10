@@ -16,6 +16,7 @@ import Icon from './Icon';
 import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 import { isNullOrUndefined } from 'util';
 import Url from '../util/externalUrls.data';
+import * as cache from '../util/cache';
 
 const FooterWrapper = styled.div`
   width: 100%;
@@ -89,6 +90,7 @@ const Footer = () => {
     try {
       const { data } = await getMasqueradeUser();
       if (data.masqueradeId) {
+        cache.clear();
         setMasqueradeId(data.masqueradeId);
       }
     } catch (err) {
@@ -100,6 +102,7 @@ const Footer = () => {
     if (masqueradeId) {
       postMasqueradeUser(masqueradeId)
         .then(() => {
+          cache.clear();
           toggleMasqueradeDialog();
           toast.success(`Masquerading as OSU ID ${masqueradeId}.`, { transition: Zoom });
           setTimeout(() => {
@@ -110,6 +113,7 @@ const Footer = () => {
     } else {
       postMasqueradeUser()
         .then(() => {
+          cache.clear();
           toggleMasqueradeDialog();
           setMasqueradeId('');
           toast.info('Masquerade session ended.', { transition: Zoom });
