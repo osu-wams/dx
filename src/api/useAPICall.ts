@@ -12,6 +12,7 @@ export interface IAPIResult<T> {
   data: T;
   loading: boolean;
   error: boolean;
+  setData: Function;
 }
 
 /**
@@ -37,7 +38,9 @@ const useAPICall = <T>(
   api: Function,
   query: string | undefined,
   dataTransform: Function,
-  initialState: T
+  initialState: T,
+  useCache?: boolean,
+  errorCallback?: Function
 ): IAPIResult<T> => {
   const [data, setData] = useState<T>(initialState);
   const [error, setError] = useState<boolean>(false);
@@ -53,18 +56,29 @@ const useAPICall = <T>(
         setData(transformed);
         setLoading(false);
       })
-      .catch(e => {
-        // TODO: Cause the user to redirect to the dashboard in the case of an HTTP401?
-        console.log(e);
-        cache.removeItem(cacheKey);
-        setError(true);
-        setLoading(false);
+      .catch(async e => {
+        // API calls fail when the cookie expires, this causes the front-end to
+        // flow through the login process while providing the backend the target
+        // url to redirect the user to after a successful login.
+        if (e.response!.status === 401) {
+          window.location.href = `/login?return=${window.location.pathname}`;
+        } else if (e.response!.status === 403) {
+          cache.removeItem(cacheKey);
+          setError(true);
+          setLoading(false);
+          if (errorCallback) errorCallback();
+        } else {
+          cache.removeItem(cacheKey);
+          setError(true);
+          setLoading(false);
+          if (errorCallback) errorCallback();
+        }
       });
   };
 
   useEffect(() => {
     const cached = cache.getItem(cacheKey);
-    if (cached) {
+    if (useCache !== false && cached) {
       setData(cached);
       setLoading(false);
     } else {
@@ -72,7 +86,7 @@ const useAPICall = <T>(
     }
   }, [query]);
 
-  return { data, loading, error };
+  return { data, loading, error, setData };
 };
 
 export default useAPICall;

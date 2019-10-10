@@ -26,8 +26,10 @@ import { Event } from '../util/gaTracking';
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
-  const { data, loading } = usePlannerItems();
   const user = useContext<any>(UserContext);
+  const { data, loading } = usePlannerItems(() => {
+    user.setUser({ ...user, data: { isCanvasOptIn: false } });
+  });
 
   const listOrEmpty = () => {
     if (loading) {

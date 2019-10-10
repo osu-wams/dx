@@ -103,7 +103,7 @@ const App = (props: AppProps) => {
   }, [infoButtons.data, user.error, user.loading, appVersions.data]);
 
   return (
-    <UserContext.Provider value={user.data}>
+    <UserContext.Provider value={user}>
       <AppContext.Provider value={appContext}>
         <GlobalStyles />
         <Header />
