@@ -1,3 +1,5 @@
+const isTest = process.env.NODE_ENV === 'test';
+
 /**
  * Set session storage cache data, failing with no side effect of any exception. This
  * method is intended to provide the functionality unless (and until) the browser
@@ -7,6 +9,7 @@
  * @param value - the string value to be cached (expected to originally be JSON)
  */
 export const setItem = (key: string, value: string): void => {
+  if (isTest) return;
   try {
     let stringValue = value;
     if (typeof value !== 'string') stringValue = JSON.stringify(value);
@@ -24,6 +27,7 @@ export const setItem = (key: string, value: string): void => {
  * @param key - a unique key for storing data
  */
 export const getItem = (key: string): any => {
+  if (isTest) return null;
   try {
     const cacheHit = sessionStorage.getItem(key);
     if (cacheHit) {
@@ -44,6 +48,7 @@ export const getItem = (key: string): any => {
  * @param key - a unique key for storing data
  */
 export const removeItem = (key: string): void => {
+  if (isTest) return;
   try {
     sessionStorage.removeItem(key);
   } catch (err) {
@@ -59,6 +64,7 @@ export const removeItem = (key: string): void => {
  * @param key - a unique key for storing data
  */
 export const clear = (): void => {
+  if (isTest) return;
   try {
     sessionStorage.clear();
   } catch (err) {
