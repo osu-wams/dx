@@ -154,7 +154,7 @@ const Footer = () => {
         <FooterContent>
           <FooterButtonWrapper>
             <FooterIconLink
-              href="#CHANGE-WHEN-READY"
+              href="https://beav.es/dx-form"
               onClick={() => Event('footer', 'Get Support link')}
             >
               <Icon icon={faUserHeadset} color={Color['orange-400']} size="2x" />
@@ -162,7 +162,7 @@ const Footer = () => {
               Get Support
             </FooterIconLink>
             <FooterIconLink
-              href="#CHANGE-WHEN-READY"
+              href="https://beav.es/dx-form"
               onClick={() => Event('footer', 'Give Feedback link')}
             >
               <Icon icon={faCommentAltCheck} color={Color['orange-400']} size="2x" />

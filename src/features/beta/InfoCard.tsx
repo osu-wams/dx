@@ -37,9 +37,16 @@ const BetaInfo: FC = () => {
           This is still a beta release, and while we plan to add new features and a greater level of
           personalization in the future, we want to hear from you now about your experience. This is
           YOUR dashboard — what would you like to see on this site? Notice any problems or bugs? You
-          can switch back to <DashboardBetaContentA href='https://myosu.oregonstate.edu' target='_blank'>MyOSU</DashboardBetaContentA> if you&#39;re not finding what you need on the new
-          dashboard (but drop us a line and tell us what&#39;s missing!). Explore away, and please send
-          us your questions and <DashboardBetaContentA href='http://localhost:3000/beta#CHANGE-WHEN-READY' target='_blank'>feedback</DashboardBetaContentA>!
+          can switch back to{' '}
+          <DashboardBetaContentA href="https://myosu.oregonstate.edu" target="_blank">
+            MyOSU
+          </DashboardBetaContentA>{' '}
+          if you&#39;re not finding what you need on the new dashboard (but drop us a line and tell
+          us what&#39;s missing!). Explore away, and please send us your questions and{' '}
+          <DashboardBetaContentA href="https://beav.es/dx-form" target="_blank">
+            feedback
+          </DashboardBetaContentA>
+          !
         </DashboardBetaContentP>
       </CardContent>
       <CardFooter></CardFooter>
@@ -56,7 +63,7 @@ const DashboardBetaStyledList = styled.ul`
   padding: 0 0 0 2.8rem;
 `;
 const DashboardBetaContentA = styled.a`
-:hover,
+  :hover,
   :active,
   :focus {
     text-decoration: underline;

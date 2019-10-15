@@ -20,7 +20,7 @@ const BetaResources: FC = () => {
         <List>
           <ListItem>
             <ListItemContentLink
-              href="#CHANGE-WHEN-READY"
+              href="https://beav.es/dx-form"
               onClick={() => Event('beta', 'feedback')}
             >
               <Icon icon={faCommentAltLines} color={Color['orange-400']} />
@@ -31,7 +31,7 @@ const BetaResources: FC = () => {
           </ListItem>
           <ListItem>
             <ListItemContentLink
-              href="#CHANGE-WHEN-READY"
+              href="https://beav.es/dx-form"
               onClick={() => Event('beta', 'get help')}
             >
               <Icon icon={faUserHeadset} color={Color['orange-400']} />
