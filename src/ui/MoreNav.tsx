@@ -131,14 +131,16 @@ const MoreNav = () => {
         </PrimaryNav>
         <SecondaryNav>
           <SecondaryLink
-            href="https://beav.es/dx-form"
+            href={Url.support.main}
+            target="_blank"
             onClick={() => Event('navigation-main', 'Get Support link clicked')}
           >
             <Icon icon={faUserHeadset} />
             Get Support
           </SecondaryLink>
           <SecondaryLink
-            href="https://beav.es/dx-form"
+            href={Url.feedback.main}
+            target="_blank"
             onClick={() => Event('navigation-main', 'Give Feedback link clicked')}
           >
             <Icon icon={faCommentAltCheck} />

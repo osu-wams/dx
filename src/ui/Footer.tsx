@@ -15,6 +15,7 @@ import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
 import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 import { isNullOrUndefined } from 'util';
+import Url from '../util/externalUrls.data';
 
 const FooterWrapper = styled.div`
   width: 100%;
@@ -154,7 +155,8 @@ const Footer = () => {
         <FooterContent>
           <FooterButtonWrapper>
             <FooterIconLink
-              href="https://beav.es/dx-form"
+              href={Url.support.main}
+              target="_blank"
               onClick={() => Event('footer', 'Get Support link')}
             >
               <Icon icon={faUserHeadset} color={Color['orange-400']} size="2x" />
@@ -162,7 +164,8 @@ const Footer = () => {
               Get Support
             </FooterIconLink>
             <FooterIconLink
-              href="https://beav.es/dx-form"
+              href={Url.feedback.main}
+              target="_blank"
               onClick={() => Event('footer', 'Give Feedback link')}
             >
               <Icon icon={faCommentAltCheck} color={Color['orange-400']} size="2x" />

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
 import { Color, theme } from '../../theme';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
+import Url from '../../util/externalUrls.data';
 
 const BetaInfo: FC = () => {
   return (
@@ -43,7 +44,7 @@ const BetaInfo: FC = () => {
           </DashboardBetaContentA>{' '}
           if you&#39;re not finding what you need on the new dashboard (but drop us a line and tell
           us what&#39;s missing!). Explore away, and please send us your questions and{' '}
-          <DashboardBetaContentA href="https://beav.es/dx-form" target="_blank">
+          <DashboardBetaContentA href={Url.feedback.main} target="_blank">
             feedback
           </DashboardBetaContentA>
           !
