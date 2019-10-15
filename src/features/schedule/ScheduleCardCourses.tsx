@@ -94,7 +94,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
         {selectedCourses.length === 0 && (
           <NoItems>
             <NoItemsImage src={courses} alt="" />
-            <NoItemsText>You don&apos;t have any courses scheduled for today</NoItemsText>
+            <NoItemsText>You don&apos;t have any courses scheduled</NoItemsText>
           </NoItems>
         )}
       </List>
