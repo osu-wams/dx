@@ -197,7 +197,7 @@ const Footer = () => {
           >
             Accessibility Information
           </a>
-          {user!.data!.isAdmin && (
+          {user && user.data && user.data.isAdmin && (
             <>
               <FooterDeployedContent>
                 Server Version: {versionLink(appContext.appVersions.serverVersion, 'dx-server')}
@@ -208,7 +208,7 @@ const Footer = () => {
             </>
           )}
         </FooterContent>
-        {user!.data!.isAdmin && (
+        {user && user.data && user.data.isAdmin && (
           <Button
             onClick={() => {
               toggleMasqueradeDialog();
