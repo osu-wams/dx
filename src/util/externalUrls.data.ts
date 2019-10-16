@@ -21,6 +21,12 @@ const Url = {
   },
   bill: {
     main: 'https://mybill.oregonstate.edu'
+  },
+  support: {
+    main: 'https://beav.es/dx-form'
+  },
+  feedback: {
+    main: 'https://beav.es/dx-form'
   }
 };
 
