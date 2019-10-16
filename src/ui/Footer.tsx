@@ -76,27 +76,22 @@ const FooterDeployedContent = styled.span`
 
 const Footer = () => {
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
-  const [masqueradeId, setMasqueradeId] = useState('');
+  const [masqueradeId, setMasqueradeId] = useState(undefined);
   const user = useContext<any>(UserContext);
   const appContext = useContext<IAppContext>(AppContext);
 
   useEffect(() => {
-    loadMasqueradeId();
+    getMasqueradeUser()
+      .then(data => {
+        if (data && data.masqueradeId) {
+          cache.clear();
+          setMasqueradeId(data.masqueradeId);
+        }
+      })
+      .catch(err => console.log);
   }, []);
 
   const toggleMasqueradeDialog = () => setShowMasqueradeDialog(!showMasqueradeDialog);
-
-  const loadMasqueradeId = async () => {
-    try {
-      const { data } = await getMasqueradeUser();
-      if (data.masqueradeId) {
-        cache.clear();
-        setMasqueradeId(data.masqueradeId);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const masquerade = () => {
     if (masqueradeId) {
@@ -115,7 +110,7 @@ const Footer = () => {
         .then(() => {
           cache.clear();
           toggleMasqueradeDialog();
-          setMasqueradeId('');
+          setMasqueradeId(undefined);
           toast.info('Masquerade session ended.', { transition: Zoom });
           setTimeout(() => {
             window.location.reload(true);
