@@ -99,14 +99,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "cross-env CI=true yarn run test --findRelatedTests **/*.{js,jsx,ts,tsx}"
     }
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
       "eslint -c .eslintrc --fix",
-      "git add",
-      "cross-env CI=true yarn run test --findRelatedTests"
+      "git add"
     ]
   }
 }
