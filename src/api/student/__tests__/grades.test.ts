@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { renderHook } from '@testing-library/react-hooks';
@@ -14,16 +13,16 @@ describe('useGrades hook', () => {
   it('should have expected data', async () => {
     mockAxios.onGet(url).reply(200, grades.data);
     const { result, waitForNextUpdate } = renderHook(() => useGrades());
-    expect(result.current).toEqual(initialState);
+    expect(result.current).toMatchObject(initialState);
     await waitForNextUpdate();
-    expect(result.current).toEqual(grades);
+    expect(result.current).toMatchObject(grades);
   });
 
   it('should report an error if the server fails', async () => {
-    mockAxios.onGet(url).networkError();
+    mockAxios.onGet(url).reply(500);
     const { result, waitForNextUpdate } = renderHook(() => useGrades());
-    expect(result.current).toEqual(initialState);
+    expect(result.current).toMatchObject(initialState);
     await waitForNextUpdate();
-    expect(result.current).toEqual(errorState);
+    expect(result.current).toMatchObject(errorState);
   });
 });

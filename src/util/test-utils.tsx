@@ -15,13 +15,19 @@ export const authUserClassification: IUserClassification = {
 };
 
 export const authUser = {
-  osuId: '123',
-  email: 'testo@oregonstate.edu',
-  firstName: 'Testo',
-  lastName: 'LastTesto',
-  isAdmin: true,
-  isCanvasOptIn: true,
-  classification: authUserClassification
+  data: {
+    osuId: '123',
+    email: 'testo@oregonstate.edu',
+    firstName: 'Testo',
+    lastName: 'LastTesto',
+    isAdmin: true,
+    isCanvasOptIn: true,
+    classification: authUserClassification
+  },
+  error: false,
+  loading: false,
+  setUser: jest.fn(),
+  isCanvasOptIn: true
 };
 
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
