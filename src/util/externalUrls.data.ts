@@ -1,6 +1,6 @@
 const Url = {
   myDegrees: {
-    main: 'https://myosu.oregonstate.edu/'
+    main: 'https://mydegrees.oregonstate.edu/DashboardServlet'
   },
   canvas: {
     main: 'https://oregonstate.instructure.com'
@@ -18,6 +18,9 @@ const Url = {
   },
   myosu: {
     main: 'https://myosu.oregonstate.edu/'
+  },
+  bill: {
+    main: 'https://mybill.oregonstate.edu'
   },
   support: {
     main: 'https://beav.es/dx-form'

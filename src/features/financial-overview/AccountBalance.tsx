@@ -16,7 +16,7 @@ import { Event } from '../../util/gaTracking';
 export const AccountBalanceExternalLink = () => (
   <ExternalLink
     style={{ float: 'right' }}
-    href={Url.myDegrees.main}
+    href={Url.bill.main}
     fg={Color['orange-400']}
     onClick={() => Event('academic-overview', 'See more in MyDegrees link')}
   >
