@@ -60,9 +60,9 @@ const useAPICall = <T>(
         // API calls fail when the cookie expires, this causes the front-end to
         // flow through the login process while providing the backend the target
         // url to redirect the user to after a successful login.
-        if (e.response!.status === 401) {
+        if (e.response && e.response!.status === 401) {
           window.location.href = `/login?return=${window.location.pathname}`;
-        } else if (e.response!.status === 403) {
+        } else if (e.response && e.response!.status === 403) {
           cache.removeItem(cacheKey);
           setError(true);
           setLoading(false);
