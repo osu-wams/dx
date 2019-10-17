@@ -218,7 +218,7 @@ exports[`Renders default CloseButton with the SVG close icon 1`] = `
 }
 
 <button
-  class="closeButton c0 c1"
+  class="c0 c1 closeButton"
 >
   <svg
     aria-hidden="true"
