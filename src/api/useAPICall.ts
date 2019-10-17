@@ -61,7 +61,7 @@ const useAPICall = <T>(
         // flow through the login process while providing the backend the target
         // url to redirect the user to after a successful login.
         if (e.response && e.response!.status === 401) {
-          window.location.href = `/login?return=${window.location.pathname}`;
+          window.location.assign(`/login?return=${window.location.pathname}`);
         } else if (e.response && e.response!.status === 403) {
           cache.removeItem(cacheKey);
           setError(true);

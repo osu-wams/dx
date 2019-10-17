@@ -23,9 +23,12 @@ const matchMedia = () => ({
   addListener: () => {},
   removeListener: () => {}
 });
-
 window.matchMedia = window.matchMedia || matchMedia;
 
+// Mock the location change method
+window.location.assign = jest.fn();
+
+// Mock sessionStorage interface
 beforeEach(() => {
   Storage.prototype.clear = jest.fn();
   Storage.prototype.getItem = jest.fn();
