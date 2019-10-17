@@ -21,12 +21,14 @@ import { Card, CardFooter, CardContent } from '../ui/Card';
  * Displays courses for the next 5 days, filterable by day.
  */
 const ScheduleCard = () => {
-  const plannerItems = usePlannerItems();
+  const user = useContext<any>(UserContext);
+  const plannerItems = usePlannerItems(() => {
+    user.setUser({ ...user, data: { isCanvasOptIn: false } });
+  });
   const courses = useCourseSchedule();
   const nextFiveDays = getNextFiveDays();
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const calEvents = useAcademicCalendarEvents();
-  const user = useContext<any>(UserContext);
 
   const getCoursesOnSelectedDay = () => {
     const selectedDayShortcode = getDayShortcode(selectedDay);

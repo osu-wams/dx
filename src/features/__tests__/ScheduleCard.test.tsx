@@ -1,6 +1,6 @@
 import React from 'react';
 import { wait, waitForElement, fireEvent } from '@testing-library/react';
-import { renderWithUserContext } from '../../util/test-utils';
+import { renderWithUserContext, authUser } from '../../util/test-utils';
 import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
@@ -157,16 +157,14 @@ describe('<ScheduleCard /> without data for given days', () => {
 });
 
 describe('<ScheduleCard /> without canvas authorization', () => {
-  const noCanvasAuthUser = {
-    osuId: '123',
-    email: 'testo@oregonstate.edu',
-    firstName: 'Testo',
-    lastName: 'LastTesto',
-    isAdmin: true,
-    isCanvasOptIn: false
-  };
-
   it('should find "Authorize Canvas to see your assignments" PlannerItem in card', async () => {
+    const noCanvasAuthUser = authUser;
+    noCanvasAuthUser.isCanvasOptIn = false;
+    noCanvasAuthUser.data.isCanvasOptIn = false;
+    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
+
     const { getByText } = renderWithUserContext(<ScheduleCard />, { user: noCanvasAuthUser });
 
     const todayPlannerItem = await waitForElement(() =>

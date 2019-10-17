@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import * as cache from '../util/cache';
+
 /* eslint-disable react-hooks/exhaustive-deps */
 
 /**
@@ -10,46 +12,81 @@ export interface IAPIResult<T> {
   data: T;
   loading: boolean;
   error: boolean;
+  setData: Function;
 }
 
 /**
- * TODO
- * @param api
- * @param query
- * @param dataTransform
- * @param initialState
+ * An abstract method to make an API method call, include an arbitrary query string,
+ * optionally perform some data transformation along with an initial state for the hook
+ * to start with. All API calls want this behavior and are wrapped into this consistent hook.
+ *
+ * Process flow;
+ * * If cached data is found;
+ * *  - Check if data is cached in the browser, set the loading to false and return the data if it was cached.
+ * * If cached data is not found;
+ * *  - Set loading state to true so that skeletons/spinner could be rendered
+ * *  - Call the API function
+ * *  - Perform the Data Transformation
+ * *  - Set the data state and loading state to false
+ * *  - If an error is caught, set the loading state to false and the error state to true
+ * @param api - a function which makes an API call using axios
+ * @param query - an optional querystring to include to the API call
+ * @param dataTransform - a function that takes the data as input and expects to return properly shaped data
+ * @param initialState - an initial state for the data to render in the component
  */
 const useAPICall = <T>(
   api: Function,
   query: string | undefined,
   dataTransform: Function,
-  initialState: T
+  initialState: T,
+  useCache?: boolean,
+  errorCallback?: Function
 ): IAPIResult<T> => {
   const [data, setData] = useState<T>(initialState);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const cacheKey = `${api.name}:${query}:${dataTransform.name}`;
 
   const fetchData = async () => {
     setLoading(true);
     api(query)
       .then((result: T) => {
         const transformed = dataTransform(result);
+        cache.setItem(cacheKey, transformed);
         setData(transformed);
         setLoading(false);
       })
-      .catch(e => {
-        // TODO: Cause the user to redirect to the dashboard in the case of an HTTP401?
-        console.log(e);
-        setError(true);
-        setLoading(false);
+      .catch(async e => {
+        // API calls fail when the cookie expires, this causes the front-end to
+        // flow through the login process while providing the backend the target
+        // url to redirect the user to after a successful login.
+        if (e.response && e.response!.status === 401) {
+          window.location.assign(`/login?return=${window.location.pathname}`);
+        } else if (e.response && e.response!.status === 403) {
+          cache.removeItem(cacheKey);
+          setError(true);
+          setLoading(false);
+          if (errorCallback) errorCallback();
+        } else {
+          cache.removeItem(cacheKey);
+          setError(true);
+          setLoading(false);
+          if (errorCallback) errorCallback();
+        }
       });
   };
 
   useEffect(() => {
-    fetchData();
+    const cached = cache.getItem(cacheKey);
+    if (useCache !== false && cached) {
+      setData(cached);
+      setLoading(false);
+    } else {
+      fetchData();
+    }
   }, [query]);
 
-  return { data, loading, error };
+  return { data, loading, error, setData };
 };
 
 export default useAPICall;

@@ -56,7 +56,7 @@ const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
     (meetingTime: IMeetingTime) =>
       meetingTime.room !== 'MID' &&
       meetingTime.scheduleType !== 'MID' && (
-        <ListItem key={`${course.id}${meetingTime.beginTime}`}>
+        <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
           <ListItemContent>
             <Icon
               icon={getIconByScheduleType(meetingTime.scheduleType)}

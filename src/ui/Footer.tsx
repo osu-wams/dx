@@ -16,6 +16,7 @@ import Icon from './Icon';
 import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 import { isNullOrUndefined } from 'util';
 import Url from '../util/externalUrls.data';
+import * as cache from '../util/cache';
 
 const FooterWrapper = styled.div`
   width: 100%;
@@ -75,31 +76,28 @@ const FooterDeployedContent = styled.span`
 
 const Footer = () => {
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
-  const [masqueradeId, setMasqueradeId] = useState('');
+  const [masqueradeId, setMasqueradeId] = useState(undefined);
   const user = useContext<any>(UserContext);
   const appContext = useContext<IAppContext>(AppContext);
 
   useEffect(() => {
-    loadMasqueradeId();
+    getMasqueradeUser()
+      .then(data => {
+        if (data && data.masqueradeId) {
+          cache.clear();
+          setMasqueradeId(data.masqueradeId);
+        }
+      })
+      .catch(err => console.log);
   }, []);
 
   const toggleMasqueradeDialog = () => setShowMasqueradeDialog(!showMasqueradeDialog);
-
-  const loadMasqueradeId = async () => {
-    try {
-      const { data } = await getMasqueradeUser();
-      if (data.masqueradeId) {
-        setMasqueradeId(data.masqueradeId);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const masquerade = () => {
     if (masqueradeId) {
       postMasqueradeUser(masqueradeId)
         .then(() => {
+          cache.clear();
           toggleMasqueradeDialog();
           toast.success(`Masquerading as OSU ID ${masqueradeId}.`, { transition: Zoom });
           setTimeout(() => {
@@ -110,8 +108,9 @@ const Footer = () => {
     } else {
       postMasqueradeUser()
         .then(() => {
+          cache.clear();
           toggleMasqueradeDialog();
-          setMasqueradeId('');
+          setMasqueradeId(undefined);
           toast.info('Masquerade session ended.', { transition: Zoom });
           setTimeout(() => {
             window.location.reload(true);
@@ -193,7 +192,7 @@ const Footer = () => {
           >
             Accessibility Information
           </a>
-          {user && user.isAdmin && (
+          {user && user.data && user.data.isAdmin && (
             <>
               <FooterDeployedContent>
                 Server Version: {versionLink(appContext.appVersions.serverVersion, 'dx-server')}
@@ -204,7 +203,7 @@ const Footer = () => {
             </>
           )}
         </FooterContent>
-        {user && user.isAdmin && (
+        {user && user.data && user.data.isAdmin && (
           <Button
             onClick={() => {
               toggleMasqueradeDialog();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { waitForElement } from '@testing-library/react';
-import { render, renderWithUserContext } from '../../util/test-utils';
+import { renderWithUserContext, renderWithAllContexts } from '../../util/test-utils';
 import Dashboard from '../Dashboard';
 
 test('renders', () => {
@@ -9,7 +9,7 @@ test('renders', () => {
 });
 
 test('should display the title Student Dashboard', async () => {
-  const { getByText } = render(<Dashboard />);
+  const { getByText } = renderWithAllContexts(<Dashboard />);
   const title = await waitForElement(() => getByText('Student Dashboard'));
   const badge = await waitForElement(() => getByText('Beta'));
   expect(title).toBeInTheDocument();

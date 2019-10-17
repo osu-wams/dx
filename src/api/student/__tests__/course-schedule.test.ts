@@ -13,16 +13,16 @@ describe('useCourseSchedule hook', () => {
   it('should have expected data', async () => {
     mockAxios.onGet(url).reply(200, courses.data);
     const { result, waitForNextUpdate } = renderHook(() => useCourseSchedule());
-    expect(result.current).toEqual(initialState);
+    expect(result.current).toMatchObject(initialState);
     await waitForNextUpdate();
-    expect(result.current).toEqual(courses);
+    expect(result.current).toMatchObject(courses);
   });
 
   it('should report an error if the server fails', async () => {
-    mockAxios.onGet(url).networkError();
+    mockAxios.onGet(url).reply(500);
     const { result, waitForNextUpdate } = renderHook(() => useCourseSchedule());
-    expect(result.current).toEqual(initialState);
+    expect(result.current).toMatchObject(initialState);
     await waitForNextUpdate();
-    expect(result.current).toEqual(errorState);
+    expect(result.current).toMatchObject(errorState);
   });
 });

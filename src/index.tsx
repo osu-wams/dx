@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga';
 import App from './App';
+import * as cache from './util/cache';
 
 // Initialize Google Analytics
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -18,5 +19,10 @@ if (!isTest) {
     }
   });
 }
+
+// On first endering of the application, clear the session cache to ensure the
+// user gets fresh data.
+cache.clear();
+
 const applicationRoot = document.getElementById('root') as HTMLElement;
 ReactDOM.render(<App containerElement={applicationRoot} />, applicationRoot);
