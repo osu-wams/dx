@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { UserContext } from '../App';
 import { useAnnouncements, filterAnnouncementsForUser } from '../api/announcements';
-import { useStudentExperienceEvents } from '../api/events';
+import { useStudentExperienceEvents, useBendEvents } from '../api/events';
 import EventCard from './EventCard';
 import { theme, breakpoints } from '../theme';
 import { IAPIResult } from '../api/useAPICall';
@@ -27,6 +27,7 @@ const EventCardContainer = ({ ...props }) => {
   const user = useContext<any>(UserContext);
 
   const studentExperienceEvents = useStudentExperienceEvents();
+  const bendEvents = useBendEvents();
   const announcements = useAnnouncements('');
   
 
@@ -49,16 +50,41 @@ const EventCardContainer = ({ ...props }) => {
   useEffect(() => {
     const formattedEvents: any[] = [];
     let filteredAnnouncements: any[] = announcements.data;
+    let eventsToUse: any = studentExperienceEvents // the default bucket of events
+
+    console.log('bend events--',bendEvents)
+    console.log('SExp events--',studentExperienceEvents)
+
+    if (bendEvents && bendEvents.data && bendEvents.data.length) {
+      // console.log('updating the events to use to bend!')
+      // eventsToUse = bendEvents
+    }
+    
+    
     if (user) {
-      // if the user is present it's safe to filter
+      if (user && user.classification && user.classification.attributes) {
+        console.log('user',user.classification.attributes.campus)
+
+        let userCampus = user.classification.attributes.campus
+
+        if (userCampus === 'Oregon State - Cascades') {
+          eventsToUse = bendEvents
+        }
+
+      }
+      
+      
+
       if (announcements) {
-        filteredAnnouncements = filterAnnouncementsForUser(announcements.data, user);
+        console.log('before--', filteredAnnouncements.length)
+        filteredAnnouncements = filterAnnouncementsForUser(filteredAnnouncements, user);
+        console.log('after--', filteredAnnouncements)
       }
     }
 
     for (
       let i = 0;
-      i < Math.min(announcements.data.length, studentExperienceEvents.data.length);
+      i < Math.min(filteredAnnouncements.length, eventsToUse.data.length);
       i++
     ) {
       /*
@@ -68,8 +94,13 @@ const EventCardContainer = ({ ...props }) => {
        * jumping into logic on how we will finish populating the list.
        */
 
-      formattedEvents.push(announcements.data[i]);
-      formattedEvents.push(newLocalist(studentExperienceEvents.data[i]));
+
+      // console.log('newLocalist', newLocalist(studentExperienceEvents.data[i]))
+      console.log('riparonis', eventsToUse.data[i])
+
+
+      formattedEvents.push(filteredAnnouncements[i]);
+      formattedEvents.push(newLocalist(eventsToUse.data[i]));
     }
 
     /**
@@ -83,16 +114,16 @@ const EventCardContainer = ({ ...props }) => {
      * loop above.
      */
 
-    if (announcements.data.length < studentExperienceEvents.data.length) {
-      for (let i = announcements.data.length; i < studentExperienceEvents.data.length; i++) {
-        formattedEvents.push(newLocalist(studentExperienceEvents.data[i]));
+    if (filteredAnnouncements.length < eventsToUse.data.length) {
+      for (let i = filteredAnnouncements.length; i < eventsToUse.data.length; i++) {
+        formattedEvents.push(newLocalist(eventsToUse.data[i]));
       }
-    } else if (announcements.data.length > studentExperienceEvents.data.length) {
+    } else if (filteredAnnouncements.length > eventsToUse.data.length) {
       /*
       
       */
-      for (let i = studentExperienceEvents.data.length; i < announcements.data.length; i++) {
-        formattedEvents.push(announcements.data[i]);
+      for (let i = eventsToUse.data.length; i < filteredAnnouncements.length; i++) {
+        formattedEvents.push(filteredAnnouncements[i]);
       }
     }
 

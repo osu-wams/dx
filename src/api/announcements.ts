@@ -40,17 +40,18 @@ const userClassifications = (user: any): string[] => {
   if (level === 'Graduate') results.push('Graduate Student');
   if (classification === 'Freshman') results.push('First Year');
   if (isInternational) results.push('International Student');
-  switch (campus) {
-    case 'Dist. Degree Corvallis Student':
-      results.push('Ecampus');
-      break;
-    case 'Oregon State - Cascades':
-      results.push('Bend');
-      break;
-    default:
-      results.push('Corvallis');
-      break;
-  }
+  if (campus) results.push(campus)
+  // switch (campus) {
+  //   case 'Dist. Degree Corvallis Student':
+  //     results.push('Ecampus');
+  //     break;
+  //   case 'Oregon State - Cascades':
+  //     results.push('Bend');
+  //     break;
+  //   default:
+  //     results.push('Corvallis');
+  //     break;
+  // }
   return results;
 };
 
@@ -84,8 +85,8 @@ export const filterAnnouncementsForUser = (
 
         if (e.audiences) {
           e.audiences.forEach(announceCampus => {
-            console.log(announceCampus)
-            console.log(user.classification.attributes.campus)
+            console.log('A -', announceCampus)
+            console.log('U -', user.classification.attributes.campus)
             if (announceCampus === user.classification.attributes.campus) {
               shouldRemoveAnnouncement = false;
             }
@@ -100,13 +101,20 @@ export const filterAnnouncementsForUser = (
         console.log('end of announcement--')
       })
 
+      console.log('removing: ', announcementsToRemove.length)
+
       announcementsToRemove.forEach(e => {
+        console.log('removing announcement: ',e)
         const indexToRemove = announcements.indexOf(e)
+        console.log('# of announcements-',announcements.length)
         announcements.splice(indexToRemove,1)
+        console.log('# of announcements-',announcements.length)
       })
 
     }
   }
+
+  
 
   return announcements
     .filter(e => {

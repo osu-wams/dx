@@ -26,7 +26,22 @@ const getStudentExperienceEvents = () =>
       }
     })
     .then(res => res.data);
+
+const getBendEvents = () => 
+    axios
+      .get('/api/events/bend-events', {
+        params: {
+          campus_id: 273,
+          days: 30
+        }
+      })
+      .then(res => res.data);
+
+
 const useStudentExperienceEvents = () =>
   useAPICall(getStudentExperienceEvents, undefined, data => data, []);
 
-export { useStudentExperienceEvents, useAcademicCalendarEvents };
+const useBendEvents = () =>
+  useAPICall(getBendEvents, undefined, data => data, []);
+
+export { useStudentExperienceEvents, useAcademicCalendarEvents, useBendEvents };
