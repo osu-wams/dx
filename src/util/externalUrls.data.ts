@@ -20,7 +20,7 @@ const Url = {
     main: 'https://myosu.oregonstate.edu/'
   },
   bill: {
-    main: 'https://mybill.oregonstate.edu'
+    main: 'http://mybill.oregonstate.edu'
   },
   support: {
     main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=support'
