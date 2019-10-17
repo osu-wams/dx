@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, fireEvent, act } from '@testing-library/react';
+import { waitForElement, fireEvent, act, getByTestId, findAllByText, queryAllByText } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import PastCourses from '../Academics/PastCourses';
 import mockGrades from '../../api/student/__mocks__/grades.data';
@@ -37,7 +37,8 @@ describe('<PastCourses />', () => {
   });
 
   it('should find "MTH 451" when typing and fire a google analytics event', async () => {
-    const { getByLabelText, getByText, debug } = render(<PastCourses />);
+    const { container, getByLabelText, getByText } = render(<PastCourses />);
+    const AllPastCourses = getByTestId(container, "past-courses");
     const CourseSearchInput = getByLabelText('Find courses');
     await waitForElement(() => getByText('Test Course Title'));
     await act(async () => {
@@ -47,13 +48,45 @@ describe('<PastCourses />', () => {
         }
       });
     });
+    await sleep(600);
+    const FinalGrade = queryAllByText(AllPastCourses, /MTH 451/);
+    expect(FinalGrade).not.toBeNull();
+    expect(FinalGrade).toHaveLength(1);
+  });
 
-    expect(CourseSearchInput.value).toBe('MTH 451');
+  it('should not break when adding regex to the search and find the grade', async () => {
+    const { container, getByLabelText, getByText } = render(<PastCourses />);
+    const AllPastCourses = getByTestId(container, "past-courses");
+    const GradesSearchInput = getByLabelText('Find courses');
+    await waitForElement(() => getByText('Test Course Title'));
+    await act(async () => {
+      fireEvent.change(GradesSearchInput, {
+        target: {
+          value: 'A=B-'
+        }
+      });
+    });
+    await sleep(600);
+    const FinalGrade = queryAllByText(AllPastCourses, /A=B-/);
+    expect(FinalGrade).not.toBeNull();
+    expect(FinalGrade).toHaveLength(1);
+  });
 
-    // !TODO: useEffect is not bring triggered, we need to look at this
-    // const testCourseAfter = await waitForElement(() => getByText('Test Course Title'));
-    // expect(mockGAEvent).toHaveBeenCalled();
-    // expect(testCourseAfter).toBeInTheDocument();
+  it('should find all the mathematics classes', async () => {
+    const { container, getByLabelText, getByText } = render(<PastCourses />);
+    const AllPastCourses = getByTestId(container, "past-courses");
+    const SearchInput = getByLabelText('Find courses');
+    await waitForElement(() => getByText('Test Course Title'));
+    await act(async () => {
+      fireEvent.change(SearchInput, {
+        target: {
+          value: 'Mathematics'
+        }
+      });
+    });
+    await sleep(600);
+    expect(findAllByText(AllPastCourses, /Mathematics/)).not.toBeNull();
+    expect(queryAllByText(AllPastCourses, /MTH/)).toHaveLength(7)
   });
 
   it('should find the message: "No course history yet" if grades is an empty array', async () => {
