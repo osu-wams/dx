@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, fireEvent, act, getByTestId, waitForDomChange, findAllByText, queryAllByText } from '@testing-library/react';
+import { waitForElement, fireEvent, act, getByTestId, findAllByText, queryAllByText } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import PastCourses from '../Academics/PastCourses';
 import mockGrades from '../../api/student/__mocks__/grades.data';
