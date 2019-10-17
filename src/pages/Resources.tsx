@@ -18,11 +18,24 @@ const Resources = () => {
   const [query, setQuery] = useState<string>('');
   const categories = useCategories();
   const resources = useResources(
-    query !== ''
-      ? `?query=${query}`
-      : `?category=${activeCategory !== 'all' ? activeCategory : ''}`,
+    // query !== ''
+    //   ? `?query=${query}`
+    //   : `?category=${activeCategory !== 'all' ? activeCategory : ''}`,
     user
   );
+  const [filteredResources, setFilteredResources] = useState<any>('');
+  useEffect(() => {
+    if (!query) {
+      setFilteredResources(resources.data);
+    } else {
+      const results = filteredResources.filter(
+        resource => resource.title.toLowerCase().includes(query)
+        // !TODO: Need to add logic for synonyms
+        // resource.synonyms.toLowerCase().includes(query)
+      );
+      setFilteredResources(results);
+    }
+  }, [query, resources.data]);
 
   /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
   /**
@@ -68,6 +81,7 @@ const Resources = () => {
       <PageTitle title="Resources" />
       <MainGrid>
         <MainGridCol className="col-span-2">
+          {console.log(filteredResources)}
           <ResourcesWrapper data-testid="resources-page">
             {activeCategory !== '' && (
               <>
@@ -86,7 +100,7 @@ const Resources = () => {
             )}
             {resources.loading && <Skeleton count={5} />}
             {!resources.loading && resources.data.length > 0 ? (
-              <ResourcesList resources={resources.data} />
+              <ResourcesList resources={filteredResources} />
             ) : (
               !resources.loading && (
                 /* @TODO need mockup styling to do and messaging for no results */

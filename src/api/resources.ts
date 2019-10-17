@@ -84,12 +84,12 @@ const filterResourcesForUser = (
 /**
  * Resources
  */
-const getResources = (query: string): Promise<IResourceResult[]> =>
-  axios.get(`/api/resources${query ? `${query}` : ''}`).then(res => res.data);
-const useResources = (query: string, user) => {
+const getResources = (): Promise<IResourceResult[]> =>
+  axios.get(`/api/resources`).then(res => res.data);
+const useResources = user => {
   return useAPICall<IResourceResult[]>(
     getResources,
-    query,
+    undefined,
     d => {
       const transformed = filterResourcesForUser(d, user);
       return transformed;
