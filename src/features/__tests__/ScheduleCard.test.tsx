@@ -123,9 +123,7 @@ describe('<ScheduleCard /> accessibility checks', () => {
     const { getByText } = renderWithUserContext(<ScheduleCard />);
     const nextDayButton = document.querySelector('button:first-child + button');
     if (nextDayButton) fireEvent.click(nextDayButton);
-    const noPlannerItemsText = await waitForElement(() =>
-      getByText(/No Canvas assignments due today/)
-    );
+    const noPlannerItemsText = await waitForElement(() => getByText(/No Canvas assignments due/));
 
     expect(noPlannerItemsText).toBeInTheDocument();
   });
@@ -144,7 +142,7 @@ describe('<ScheduleCard /> without data for given days', () => {
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const noCoursesText = await waitForElement(() =>
-      getByText(/You don't have any courses scheduled for today/)
+      getByText(/You don't have any courses scheduled/)
     );
     expect(noCoursesText).toBeInTheDocument();
   });

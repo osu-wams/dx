@@ -9,12 +9,11 @@ import {
   CardFooter,
   CardIcon
 } from '../../ui/Card';
-
 import Url from '../../util/externalUrls.data';
 import AccountBalance, { AccountBalanceExternalLink } from './AccountBalance';
 import MealPlans from './MealPlans';
 
-export const AcademicOverview = () => {
+export const FinancialOverview = () => {
   const [footerLink, setFooterLink] = useState(AccountBalanceExternalLink);
   const [hasMealPlan, setHasMealPlan] = useState<boolean>(true);
 
@@ -24,7 +23,7 @@ export const AcademicOverview = () => {
       <CardContentTable>
         <CardContentRow className="row-span-1">
           <CardContentCell>
-            <AccountBalance renderLink={footerLink.props.href !== Url.myDegrees.main} />
+            <AccountBalance renderLink={footerLink.props.href !== Url.bill.main} />
           </CardContentCell>
         </CardContentRow>
         {hasMealPlan && (
@@ -42,4 +41,4 @@ export const AcademicOverview = () => {
   );
 };
 
-export default AcademicOverview;
+export default FinancialOverview;
