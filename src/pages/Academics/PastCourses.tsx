@@ -34,12 +34,14 @@ const PastCourses = () => {
     if (!debouncedQuery) {
       setFilteredGrades(grades.data);
     } else {
-      const re = new RegExp(debouncedQuery, 'gi');
+      const re = new RegExp(debouncedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
       const matchingGrades = grades.data.filter(
         e =>
           e.attributes.courseTitle.match(re) ||
           `${e.attributes.courseSubject}${e.attributes.courseNumber}`.match(re) ||
-          `${e.attributes.courseSubject} ${e.attributes.courseNumber}`.match(re)
+          `${e.attributes.courseSubject} ${e.attributes.courseNumber}`.match(re) ||
+          `${e.attributes.courseSubjectDescription}`.match(re) ||
+          `${e.attributes.gradeFinal}`.match(re)
       );
       setFilteredGrades(matchingGrades);
       Event('past-courses-search', debouncedQuery);
