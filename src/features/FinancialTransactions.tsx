@@ -9,6 +9,7 @@ import { useAccountTransactions } from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
+import transaction from '../assets/transaction.svg';
 import { Event } from '../util/gaTracking';
 
 type ITransactionAmount = {
@@ -46,6 +47,23 @@ const TransactionNumber = styled.div<ITransactionAmount>`
 
 const TransactionDetails = styled(TableCell)`
   padding: 0.8rem !important;
+`;
+
+const NoItems = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  padding: ${theme.spacing.unit * 4}px ${theme.spacing.unit * 8}px 0px ${theme.spacing.unit * 8}px;
+`;
+
+const NoItemsImage = styled.img`
+  height: 60px;
+`;
+
+const NoItemsText = styled.p`
+  color: ${Color['neutral-550']};
+  text-align: center;
 `;
 
 /**
@@ -105,7 +123,12 @@ const FinancialTransactions: FC = () => {
             </TableBody>
           </TransactionsTable>
         ) : (
-          !loading && <EmptyState />
+          !loading && (
+            <NoItems>
+              <NoItemsImage src={transaction} alt="" />
+              <NoItemsText>There are no recent transactions for this term.</NoItemsText>
+            </NoItems>
+          )
         )}
       </CardContent>
       <CardFooter infoButtonId="recent-transactions">
@@ -119,8 +142,5 @@ const FinancialTransactions: FC = () => {
     </Card>
   );
 };
-
-// Todo: Replace with actual empty state when ready in mockups.
-const EmptyState = () => <span>No recent transactions available.</span>;
 
 export default FinancialTransactions;
