@@ -5,7 +5,6 @@ import { useAnnouncements, filterAnnouncementsForUser } from '../api/announcemen
 import { useStudentExperienceEvents, useBendEvents } from '../api/events';
 import EventCard from './EventCard';
 import { theme, breakpoints } from '../theme';
-import { IAPIResult } from '../api/useAPICall';
 
 const EventCardContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
@@ -20,17 +19,13 @@ const EventCardContainerWrapper = styled.div`
   }
 `;
 
-
-
 const EventCardContainer = ({ ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
-
   const studentExperienceEvents = useStudentExperienceEvents();
   const bendEvents = useBendEvents();
   const announcements = useAnnouncements('');
   
-
   // Helper Function
   const newLocalist = item => {
     return {
@@ -51,54 +46,33 @@ const EventCardContainer = ({ ...props }) => {
     const formattedEvents: any[] = [];
     let filteredAnnouncements: any[] = announcements.data;
     let eventsToUse: any = studentExperienceEvents // the default bucket of events
-
-    console.log('bend events--',bendEvents)
-    console.log('SExp events--',studentExperienceEvents)
-
     if (bendEvents && bendEvents.data && bendEvents.data.length) {
       // console.log('updating the events to use to bend!')
       // eventsToUse = bendEvents
     }
-    
-    
     if (user) {
       if (user && user.classification && user.classification.attributes) {
-        console.log('user',user.classification.attributes.campus)
-
         let userCampus = user.classification.attributes.campus
-
         if (userCampus === 'Oregon State - Cascades') {
           eventsToUse = bendEvents
         }
-
       }
-      
-      
-
       if (announcements) {
-        console.log('before--', filteredAnnouncements.length)
         filteredAnnouncements = filterAnnouncementsForUser(filteredAnnouncements, user);
-        console.log('after--', filteredAnnouncements)
       }
     }
 
-    for (
-      let i = 0;
-      i < Math.min(filteredAnnouncements.length, eventsToUse.data.length);
-      i++
-    ) {
-      /*
+    /*
        * Determines the minimum number of announcements and student experience events.
        * Since we want to alternate between an announcement card and student experience card
        * getting displayed, we first figure out how many we can safely loop through before
        * jumping into logic on how we will finish populating the list.
        */
-
-
-      // console.log('newLocalist', newLocalist(studentExperienceEvents.data[i]))
-      console.log('riparonis', eventsToUse.data[i])
-
-
+    for (
+      let i = 0;
+      i < Math.min(filteredAnnouncements.length, eventsToUse.data.length);
+      i++
+    ) {
       formattedEvents.push(filteredAnnouncements[i]);
       formattedEvents.push(newLocalist(eventsToUse.data[i]));
     }
@@ -113,29 +87,20 @@ const EventCardContainer = ({ ...props }) => {
      * No need to worry about if they are == as they would all get gobbled up in the for
      * loop above.
      */
-
     if (filteredAnnouncements.length < eventsToUse.data.length) {
       for (let i = filteredAnnouncements.length; i < eventsToUse.data.length; i++) {
         formattedEvents.push(newLocalist(eventsToUse.data[i]));
       }
     } else if (filteredAnnouncements.length > eventsToUse.data.length) {
-      /*
-      
-      */
       for (let i = eventsToUse.data.length; i < filteredAnnouncements.length; i++) {
         formattedEvents.push(filteredAnnouncements[i]);
       }
     }
-
-    //TODO: if user than filter announcements before setting events
-
     setEvents(formattedEvents);
   }, [announcements.data, studentExperienceEvents.data, user]);
-
   if (!events.length) {
     return null;
   }
-
   return (
     <EventCardContainerWrapper {...props}>
       {events.map(item => (
@@ -144,5 +109,4 @@ const EventCardContainer = ({ ...props }) => {
     </EventCardContainerWrapper>
   );
 };
-
 export default EventCardContainer;
