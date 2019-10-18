@@ -15,7 +15,7 @@ describe('useGrades hook', () => {
     const { result, waitForNextUpdate } = renderHook(() => useGpa());
     expect(result.current).toMatchObject(initialState);
     await waitForNextUpdate();
-    expect(result.current).toEqual({ data: gpaData, loading: false, error: false });
+    expect(result.current).toMatchObject({ data: gpaData, loading: false, error: false });
   });
 
   it('should report an error if the server fails', async () => {
