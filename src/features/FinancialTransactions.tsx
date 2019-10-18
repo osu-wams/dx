@@ -126,7 +126,7 @@ const FinancialTransactions: FC = () => {
           !loading && (
             <NoItems>
               <NoItemsImage src={transaction} alt="" />
-              <NoItemsText>There are no recent transactions for this term.</NoItemsText>
+              <NoItemsText>There are no recent transactions for this term</NoItemsText>
             </NoItems>
           )
         )}
