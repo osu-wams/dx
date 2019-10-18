@@ -41,17 +41,7 @@ const userClassifications = (user: any): string[] => {
   if (classification === 'Freshman') results.push('First Year');
   if (isInternational) results.push('International Student');
   if (campus) results.push(campus)
-  // switch (campus) {
-  //   case 'Dist. Degree Corvallis Student':
-  //     results.push('Ecampus');
-  //     break;
-  //   case 'Oregon State - Cascades':
-  //     results.push('Bend');
-  //     break;
-  //   default:
-  //     results.push('Corvallis');
-  //     break;
-  // }
+
   return results;
 };
 
@@ -77,28 +67,69 @@ export const filterAnnouncementsForUser = (
    */
 
   if (user && user.classification && user.classification.attributes && user.classification.attributes.campus) {
+    console.log('user--', user)
     if (announcements) {
       announcements.forEach(e => {
-        let shouldRemoveAnnouncement = true;
-
-        console.log('new announcement--')
+        let shouldKeepAnnouncement = false;
+        let doesMatchOnCampus = false
+        let doesMatchOnLevel = false
+        let doesMatchOnInternational = false
+        
+        console.log('new announcement--',e)
 
         if (e.audiences) {
           e.audiences.forEach(announceCampus => {
+            
             console.log('A -', announceCampus)
             console.log('U -', user.classification.attributes.campus)
-            if (announceCampus === user.classification.attributes.campus) {
-              shouldRemoveAnnouncement = false;
+            console.log('L -',user.classification.attributes.level)
+
+            let campusMatch = (announceCampus === user.classification.attributes.campus)
+            let levelMatch = ((user.classification.attributes.level === announceCampus) ||  (user.classification.attributes.level === 'Undergraduate'))
+            let internationalMatch = ((announceCampus === 'mapped_international') && (user.classification.attributes.isInternational))
+            
+            if (campusMatch) {
+              doesMatchOnCampus = true
             }
+
+            if (levelMatch) {
+              doesMatchOnLevel = true
+            }
+            
+            if (internationalMatch) {
+              doesMatchOnInternational = true
+            }
+
           })
         }
-        if (shouldRemoveAnnouncement) {
-          console.log('announcement audience did not match user audience')
+
+        /**
+         * We're collecting the international status of the student and announcement, but it is still
+         * slightly unclear what the rules are for that in terms of if an announcement should be 
+         * hidden/visible
+         * 
+         * This logic DOES require that an announcement have both a campus and audience/level in drupal
+         * 
+         * Undergrads always get a pass on the level check. We don't have an undergrad option on announcements
+         * so I hard coded a special case for that a few lines above this. We'll want to think about adding Undergrad
+         * going forward as an audience so that we can target announcements at them.
+         */
+
+        if (doesMatchOnCampus && doesMatchOnLevel) {
+          shouldKeepAnnouncement = true
+        }
+
+        console.log('International Match?-',doesMatchOnInternational)
+
+        if (!shouldKeepAnnouncement) {
+          console.log('announcement audience and classification level did not match user audience')
           announcementsToRemove.push(e)
         } else {
           console.log('announcement audience matched!')
         }
+        
         console.log('end of announcement--')
+
       })
 
       console.log('removing: ', announcementsToRemove.length)
@@ -113,9 +144,6 @@ export const filterAnnouncementsForUser = (
 
     }
   }
-
-  
-
   return announcements
     .filter(e => {
       if (classifications.length === 0 || e.audiences.length === 0) return true;
