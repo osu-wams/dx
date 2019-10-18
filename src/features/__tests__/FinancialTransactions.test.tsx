@@ -38,7 +38,7 @@ describe('<FinancialTransactions />', () => {
     });
     const { getByText, debug } = render(<FinancialTransactions />);
     const empty = await waitForElement(() =>
-      getByText(/There are no recent transactions for this term./)
+      getByText(/There are no recent transactions for this term/)
     );
 
     expect(empty).toBeInTheDocument();
