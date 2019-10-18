@@ -37,7 +37,6 @@ const getBendEvents = () =>
       })
       .then(res => res.data);
 
-
 const useStudentExperienceEvents = () =>
   useAPICall(getStudentExperienceEvents, undefined, data => data, []);
 
