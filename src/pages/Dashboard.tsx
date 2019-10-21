@@ -10,7 +10,15 @@ const Dashboard = () => {
   return (
     <div data-testid="dashboard-page">
       <MainGridWrapper>
-        <PageTitle title="Student Dashboard" badge={{ title: 'Beta', href: '/beta' }} />
+        <PageTitle
+          title="Student Dashboard"
+          badge={{
+            title: 'Beta',
+            href: '/beta',
+            eventCategory: 'beta',
+            eventAction: 'Beta link clicked'
+          }}
+        />
         <MainGrid>
           <MainGridCol>
             <ScheduleCard />

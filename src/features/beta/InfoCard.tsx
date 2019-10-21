@@ -4,6 +4,7 @@ import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
 import { Color, theme } from '../../theme';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import Url from '../../util/externalUrls.data';
+import { Event } from '../../util/gaTracking';
 
 const BetaInfo: FC = () => {
   return (
@@ -39,12 +40,20 @@ const BetaInfo: FC = () => {
           personalization in the future, we want to hear from you now about your experience. This is
           YOUR dashboard — what would you like to see on this site? Notice any problems or bugs? You
           can switch back to{' '}
-          <DashboardBetaContentA href="https://myosu.oregonstate.edu" target="_blank">
+          <DashboardBetaContentA
+            href={Url.myosu.main}
+            onClick={() => Event('beta-info', 'Go to MyOSU link clicked')}
+            target="_blank"
+          >
             MyOSU
           </DashboardBetaContentA>{' '}
           if you&#39;re not finding what you need on the new dashboard (but drop us a line and tell
           us what&#39;s missing!). Explore away, and please send us your questions and{' '}
-          <DashboardBetaContentA href={Url.feedback.main} target="_blank">
+          <DashboardBetaContentA
+            href={Url.feedback.main}
+            onClick={() => Event('beta-info', 'Give Feedback link clicked')}
+            target="_blank"
+          >
             feedback
           </DashboardBetaContentA>
           !
