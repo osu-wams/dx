@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
@@ -14,11 +15,29 @@ import {
 } from '../ui/List';
 import { usePlannerItems } from '../api/student/planner-items';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
-import { Color } from '../theme';
+import { theme, Color } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { UserContext } from '../App';
 import { Event } from '../util/gaTracking';
+import assignment from '../assets/assignment.svg';
+
+const NoItems = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  padding: ${theme.spacing.unit * 4}px ${theme.spacing.unit * 8}px 0px ${theme.spacing.unit * 8}px;
+`;
+
+const NoItemsImage = styled.img`
+  height: 60px;
+`;
+
+const NoItemsText = styled.p`
+  color: ${Color['neutral-550']};
+  text-align: center;
+`;
 
 /**
  * Upcoming Assignments Card
@@ -63,7 +82,12 @@ const PlannerItems = () => {
         </List>
       );
     } else if (user.isCanvasOptIn === true) {
-      return <EmptyState />;
+      return (
+        <NoItems>
+          <NoItemsImage src={assignment} alt="" />
+          <NoItemsText>You have no upcoming Canvas assignments</NoItemsText>
+        </NoItems>
+      );
     }
   };
 
@@ -88,10 +112,5 @@ const PlannerItems = () => {
     </Card>
   );
 };
-
-// <ListItemContent as="a" href={url} target="_blank">
-
-// Todo: Replace with actual empty state when ready in mockups.
-const EmptyState = () => <span>NO ASSIGNMENTS</span>;
 
 export default PlannerItems;

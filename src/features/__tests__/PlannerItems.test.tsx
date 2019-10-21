@@ -37,10 +37,12 @@ describe('<PlannerItems />', () => {
     expect(mockGAEvent).toHaveBeenCalled();
   });
 
-  it('should find "NO ASSIGNMENTS" if our promise returns empty', async () => {
+  it('should find empty state if our promise returns empty', async () => {
     mockUsePlannerItems.mockReturnValue(mockNoData);
     const { getByText } = render(<PlannerItems />);
-    const element = await waitForElement(() => getByText('NO ASSIGNMENTS'));
+    const element = await waitForElement(() =>
+      getByText('You have no upcoming Canvas assignments')
+    );
     expect(element).toBeInTheDocument();
   });
 });
