@@ -68,8 +68,8 @@ const Course: FC<{
           scheduleType
         }) =>
           // Midterms are inconsitently added in banner, so we are not displaying them
-          room !== 'MID' &&
-          scheduleType !== 'MID' && (
+          room !== 'MID' ||
+          (scheduleType !== 'MID' && (
             <ListItem key={generateId()}>
               <ListItemContent>
                 <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
@@ -87,7 +87,7 @@ const Course: FC<{
                   buildingCampusMap(building, buildingDescription)}
               </ListItemContent>
             </ListItem>
-          )
+          ))
       )}
     </List>
     <Divider />

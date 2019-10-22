@@ -30,6 +30,10 @@ interface ScheduleCardCoursesProps {
   selectedCourses: ICourseSchedule[];
 }
 
+function isMidterm(meetingTime: IMeetingTime) {
+  return meetingTime.room == 'MID' || meetingTime.scheduleType == 'MID';
+}
+
 const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime): JSX.Element => (
   <a
     href={Url.campusMap.building + meetingTime.building}
@@ -54,10 +58,10 @@ const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
   let filteredCourses;
   filteredCourses = course.attributes.meetingTimes.map(
     (meetingTime: IMeetingTime) =>
-      meetingTime.room !== 'MID' &&
-      meetingTime.scheduleType !== 'MID' && (
+      !isMidterm(meetingTime) && (
         <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
           <ListItemContent>
+            {console.log(meetingTime.room)}
             <Icon
               icon={getIconByScheduleType(meetingTime.scheduleType)}
               color={Color['orange-200']}
