@@ -51,10 +51,9 @@ export const coursesOnDay = (
     sortedByBeginTime(
       courses.filter(c =>
         c.attributes.meetingTimes.find(m => {
-          console.log(m);
-          if (m.room == 'MID' || m.scheduleType == 'MID') {
+          if (m.room === 'MID' || m.scheduleType === 'MID') {
             // is midterm return skip
-            return;
+            return [];
           } else {
             return m.weeklySchedule.includes(dayShortCode);
           }

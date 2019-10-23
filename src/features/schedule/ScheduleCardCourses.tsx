@@ -31,7 +31,7 @@ interface ScheduleCardCoursesProps {
 }
 
 function isMidterm(meetingTime: IMeetingTime) {
-  return meetingTime.room == 'MID' || meetingTime.scheduleType == 'MID';
+  return meetingTime.room === 'MID' || meetingTime.scheduleType === 'MID';
 }
 
 const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime): JSX.Element => (
@@ -61,7 +61,6 @@ const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
       !isMidterm(meetingTime) && (
         <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
           <ListItemContent>
-            {console.log(meetingTime.room)}
             <Icon
               icon={getIconByScheduleType(meetingTime.scheduleType)}
               color={Color['orange-200']}

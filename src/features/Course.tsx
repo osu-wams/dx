@@ -25,6 +25,10 @@ import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
 import { courseOnCorvallisCampus } from './schedule/schedule-utils';
 
+function isMidterm(room: string, scheduleType: string) {
+  return room === 'MID' || scheduleType === 'MID';
+}
+
 const buildingCampusMap = (building: string, buildingDescription: string): JSX.Element => (
   <a
     href={Url.campusMap.building + building}
@@ -68,8 +72,7 @@ const Course: FC<{
           scheduleType
         }) =>
           // Midterms are inconsitently added in banner, so we are not displaying them
-          room !== 'MID' ||
-          (scheduleType !== 'MID' && (
+          !isMidterm(room, scheduleType) && (
             <ListItem key={generateId()}>
               <ListItemContent>
                 <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
@@ -87,7 +90,7 @@ const Course: FC<{
                   buildingCampusMap(building, buildingDescription)}
               </ListItemContent>
             </ListItem>
-          ))
+          )
       )}
     </List>
     <Divider />
