@@ -6,7 +6,7 @@ import ReactGA from 'react-ga';
  * @param {string} action
  * @param {string} label
  */
-export const Event = (category: Components, action: string, label?: string) => {
+export const Event = (category: IComponents, action: string, label?: string) => {
   ReactGA.event({
     category,
     action,
@@ -15,9 +15,10 @@ export const Event = (category: Components, action: string, label?: string) => {
 };
 
 // To make it easier to filter, our components will be the categories in Google Analytics
-type Components =
+export type IComponents =
   | 'footer'
   | 'beta'
+  | 'beta-info'
   | 'header'
   | 'navigation-main'
   | 'schedule-card'
@@ -37,4 +38,6 @@ type Components =
   | 'resource-search'
   | 'resource-category'
   | 'past-courses-search'
-  | 'info-button';
+  | 'info-button'
+  | 'canvas-auth'
+  | 'badge';

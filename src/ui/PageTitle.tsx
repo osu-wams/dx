@@ -2,28 +2,57 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import { Color, theme, breakpoints } from '../theme';
+import { Event, IComponents } from '../util/gaTracking';
 
 type Props = {
   title: string;
   badge?: {
     title: string;
     href?: string;
+    eventCategory?: IComponents;
+    eventAction?: string;
+    eventLabel?: string;
   };
 };
 
 // Page title for all our pages
 // Currently hidden and just for accessibility purposes
-const PageTitle: FC<Props> = ({ title, badge }) => (
-  <>
-    <Title>
-      {title}
-      {badge && <Badge href={badge.href || '#'}>{badge.title}</Badge>}
-    </Title>
-    <Helmet>
-      <title>{title}</title>
-    </Helmet>
-  </>
-);
+const PageTitle: FC<Props> = ({ title, badge }) => {
+  let showBadge: boolean = false;
+  let myBadge;
+
+  if (badge !== undefined) {
+    showBadge = true;
+    if (badge.href !== undefined) {
+      if (badge.eventCategory !== undefined && badge.eventAction !== undefined) {
+        myBadge = (
+          <Badge
+            href={badge.href}
+            onClick={() => Event(badge.eventCategory!, badge.eventAction!, badge.eventLabel)}
+          >
+            {badge.title}
+          </Badge>
+        );
+      } else {
+        myBadge = <Badge href={badge.href}>{badge.title}</Badge>;
+      }
+    } else {
+      myBadge = <Badge>{badge.title}</Badge>;
+    }
+  }
+
+  return (
+    <>
+      <Title>
+        {title}
+        {showBadge && myBadge}
+      </Title>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
+    </>
+  );
+};
 
 const Title = styled.h1`
   font-family: Stratum2, sans-serif;
