@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import { faCube, IconDefinition } from '@fortawesome/pro-light-svg-icons';
@@ -11,6 +11,7 @@ import { useResourcesByQueue, useCategories } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
+import { hasAudience } from '../api/user';
 
 const ResourcesContainer = styled(CardContent)`
   padding-bottom: 0;
@@ -39,7 +40,9 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const user = useContext<any>(UserContext);
   const getCategoryId = data =>
     data.filter((e: any) => e.name.toUpperCase() === categ.toUpperCase());
-  const resources = useResourcesByQueue(categ, user);
+  const res = useResourcesByQueue(categ);
+  const [resources, setResources] = useState<any>([]);
+
   const categories = useCategories(getCategoryId);
   const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
 
@@ -47,17 +50,29 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
     return categories.data.length > 0 && categories.data[0].id !== '';
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
+  // Fetch data on load
+  useEffect(() => {
+    let resourcesToUse: any[] = [];
+
+    if (!user.loading && !res.loading) {
+      resourcesToUse = res.data.filter(resource => hasAudience(user.data, resource));
+    }
+    setResources(resourcesToUse);
+  }, [res.data, res.loading, user.data, user.loading]);
+  /* eslint-enable react-hooks/exhaustive-deps */
+
   return (
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
         {categories.loading && <Skeleton count={5} />}
-        {resources.data.length ? (
+        {resources.length ? (
           <List data-testid="resource-container">
-            {resources.data.map(resource => (
+            {resources.map(resource => (
               <ListItem key={resource.id}>
                 <ListItemContentLink
-                  href={resource.uri}
+                  href={resource.link}
                   target="_blank"
                   onClick={() => Event('resources-card', categ, resource.title)}
                 >

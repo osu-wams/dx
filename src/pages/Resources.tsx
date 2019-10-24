@@ -7,15 +7,11 @@ import { theme } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import {
-  defaultCategoryName,
-  useCategories,
-  useResources,
-  filterResourcesForUser
-} from '../api/resources';
+import { defaultCategoryName, useCategories, useResources } from '../api/resources';
 import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
+import { hasAudience } from '../api/user';
 
 //import type here
 const Resources = () => {
@@ -24,15 +20,17 @@ const Resources = () => {
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 250);
   const categories = useCategories();
-  const resources = useResources();
+  const res = useResources();
+  // const [resources, setResources] = useState([]);
 
   const [filteredResources, setFilteredResources] = useState<any>([]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (resources.data && user.data) {
+    if (res.data && user.data) {
       if (!debouncedQuery) {
         // const res = filterResourcesForUserRef.current(resources.data, user.data);
-        setFilteredResources(resources.data);
+        setFilteredResources(res.data);
       } else {
         const results = filteredResources.filter(resource => {
           if (resource.synonyms.length > 0) {
@@ -47,7 +45,8 @@ const Resources = () => {
         setFilteredResources(results);
       }
     }
-  }, [debouncedQuery, resources.data, user.data]);
+  }, [debouncedQuery, res.data, user.data]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
   /**
@@ -79,7 +78,7 @@ const Resources = () => {
         activeCategory,
         `?category=${activeCategory}`
       );
-      let resourcesByCategory = resources.data;
+      let resourcesByCategory = res.data;
       if (activeCategory !== 'all') {
         resourcesByCategory = resourcesByCategory.filter(resource => {
           let match = false;
@@ -99,7 +98,7 @@ const Resources = () => {
         if (e.state.category) setActiveCategory(decodeURI(e.state.category));
       }
     };
-  }, [activeCategory, resources.data]);
+  }, [activeCategory, res.data]);
   /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
 
   return (
@@ -124,11 +123,11 @@ const Resources = () => {
               </>
             )}
             {/* <ResourcesList resources={filteredResources} /> */}
-            {resources.loading && <Skeleton count={5} />}
-            {!resources.loading && resources.data.length > 0 ? (
-              <ResourcesList resources={filterResourcesForUser(filteredResources, user.data)} />
+            {res.loading && <Skeleton count={5} />}
+            {!res.loading && res.data.length > 0 ? (
+              <ResourcesList resources={filteredResources.filter(r => hasAudience(r, user.data))} />
             ) : (
-              !resources.loading && (
+              !res.loading && (
                 /* @TODO need mockup styling to do and messaging for no results */
                 <div>No results</div>
               )
@@ -147,7 +146,7 @@ const getInitialCategory = () => {
       return decodeURI(terms[1]);
     }
   }
-  return decodeURI(defaultCategoryName);
+  return decodeURI(defaultCategoryName());
 };
 
 const ResourcesWrapper = styled(CardBase)`
