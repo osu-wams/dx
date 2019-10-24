@@ -59,6 +59,30 @@ export const userClassifications = (user: IUser): string[] => {
   return results;
 };
 
+export const hasAudience = (user: IUser, announcement: { audiences: string[] }): boolean => {
+  if (announcement.audiences && announcement.audiences.length === 0) return true;
+  if (user.classification !== undefined && user.classification.attributes !== undefined) {
+    // Find the key name associated to the users campusCode to use for matching in the audiences
+    // set for the announcement
+    const usersCampusName = Object.keys(CAMPUS_CODES)
+      .map(k => k.toLowerCase())
+      .find(key => CAMPUS_CODES[key] === user.classification!.attributes!.campusCode.toLowerCase());
+    if (!usersCampusName) {
+      // If there is no matching campusCode, then default to displaying the announcement
+      console.error(
+        `Expected campus code ${
+          user.classification!.attributes!.campusCode
+        } not found in configuration, this is an unexpected circumstance that needs to be repaired.`
+      );
+      return true;
+    }
+    // The user has a classification and the item has audiences specified, return if
+    // this users campusCode exists in the audience list.
+    return announcement.audiences.some(a => a.toLowerCase() === usersCampusName.toLowerCase());
+  }
+  return true;
+};
+
 export const atCampus = (user: IUser, campusCode: string): boolean => {
   return (
     user.classification !== undefined &&
