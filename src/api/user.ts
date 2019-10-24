@@ -66,7 +66,11 @@ export const hasAudience = (user: IUser, announcement: { audiences: string[] }):
     // set for the announcement
     const usersCampusName = Object.keys(CAMPUS_CODES)
       .map(k => k.toLowerCase())
-      .find(key => CAMPUS_CODES[key] === user.classification!.attributes!.campusCode.toLowerCase());
+      .find(
+        key =>
+          CAMPUS_CODES[key].toLowerCase() ===
+          user.classification!.attributes!.campusCode.toLowerCase()
+      );
     if (!usersCampusName) {
       // If there is no matching campusCode, then default to displaying the announcement
       console.error(

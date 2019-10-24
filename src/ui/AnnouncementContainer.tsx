@@ -31,7 +31,7 @@ const AnnouncementContainer = ({ type, ...props }) => {
 
     if (!user.loading && !announcements.loading) {
       announcementsToUse = announcements.data.filter(announcement =>
-        hasAudience(user, announcement)
+        hasAudience(user.data, announcement)
       );
     }
     setEvents(announcementsToUse);

@@ -38,10 +38,10 @@ const EventCardContainer = ({ ...props }) => {
     }
 
     if (!user.loading) {
-      const atBend = atCampus(user, CAMPUS_CODES.bend);
+      const atBend = atCampus(user.data, CAMPUS_CODES.bend);
       if (!announcements.loading) {
         announcementsToUse = announcements.data.filter(announcement =>
-          hasAudience(user, announcement)
+          hasAudience(user.data, announcement)
         );
       }
       if (!studentExperienceEvents.loading && !atBend) {
