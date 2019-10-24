@@ -17,16 +17,14 @@ const getAcademicCalendarEvents = (): Promise<IEvents> =>
 const useAcademicCalendarEvents = () =>
   useAPICall<IEvents>(getAcademicCalendarEvents, undefined, data => data, []);
 
-const getStudentExperienceEvents = () =>
-  axios
-    .get('/api/events', {
-      params: {
-        type: 115613,
-        days: 30
-      }
-    })
-    .then(res => res.data);
+const getStudentExperienceEvents = () => axios.get('/api/events').then(res => res.data);
+
+const getCampusEvents = (name: string) =>
+  axios.get(`/api/events/campus/${name}`).then(res => res.data);
+
 const useStudentExperienceEvents = () =>
   useAPICall(getStudentExperienceEvents, undefined, data => data, []);
 
-export { useStudentExperienceEvents, useAcademicCalendarEvents };
+const useCampusEvents = (name: string) => useAPICall(getCampusEvents, name, data => data, []);
+
+export { useStudentExperienceEvents, useAcademicCalendarEvents, useCampusEvents };

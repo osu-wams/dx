@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useAnnouncements } from '../api/announcements';
 import EventCard from './EventCard';
 import { breakpoints } from '../theme';
+import { UserContext } from '../App';
+import { hasAudience } from '../api/user';
 
 const AnnouncementContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
@@ -18,15 +20,31 @@ const AnnouncementContainerWrapper = styled.div`
 `;
 
 const AnnouncementContainer = ({ type, ...props }) => {
-  const events = useAnnouncements(type);
+  const [events, setEvents] = useState<any>([]);
+  const user = useContext<any>(UserContext);
+  const announcements = useAnnouncements(type);
 
-  if (!events.data.length) {
+  /* eslint-disable react-hooks/exhaustive-deps */
+  // Fetch data on load
+  useEffect(() => {
+    let announcementsToUse: any[] = [];
+
+    if (!user.loading && !announcements.loading) {
+      announcementsToUse = announcements.data.filter(announcement =>
+        hasAudience(user.data, announcement)
+      );
+    }
+    setEvents(announcementsToUse);
+  }, [announcements.data, announcements.loading, user.data, user.loading]);
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  if (!events.length) {
     return null;
   }
 
   return (
     <AnnouncementContainerWrapper {...props}>
-      {events.data.map(item => (
+      {events.map(item => (
         <EventCard key={item.id} itemContent={item} />
       ))}
     </AnnouncementContainerWrapper>
