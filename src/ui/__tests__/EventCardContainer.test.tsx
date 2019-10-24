@@ -7,7 +7,8 @@ import { mockGAEvent } from '../../setupTests';
 
 const mockUseAnnouncements = jest.fn();
 const mockUseStudentExperienceEvents = jest.fn();
-const mockNoData = {data:[], loading: false, error: false}
+const mockUseCampusEvents = jest.fn();
+const mockNoData = { data: [], loading: false, error: false };
 
 jest.mock('../../api/announcements', () => {
   return {
@@ -17,7 +18,8 @@ jest.mock('../../api/announcements', () => {
 
 jest.mock('../../api/events', () => {
   return {
-    useStudentExperienceEvents: () => mockUseStudentExperienceEvents()
+    useStudentExperienceEvents: () => mockUseStudentExperienceEvents(),
+    useCampusEvents: () => mockUseCampusEvents()
   };
 });
 
@@ -26,6 +28,7 @@ describe('<EventCardContainer />', () => {
   beforeAll(() => {
     mockUseAnnouncements.mockReturnValue(announcementsData);
     mockUseStudentExperienceEvents.mockReturnValue(localistData);
+    mockUseCampusEvents.mockReturnValue(localistData);
   });
 
   it('should render all cards', async () => {
@@ -33,7 +36,7 @@ describe('<EventCardContainer />', () => {
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
 
-    expect(getAllByTestId('eventcard')).toHaveLength(3);
+    expect(getAllByTestId('eventcard')).toHaveLength(5);
   });
 
   it('should display text', async () => {
@@ -73,11 +76,10 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should render only localist events when no announcements loaded', async () => {
-    mockUseStudentExperienceEvents.mockReturnValue(localistData)
+    mockUseStudentExperienceEvents.mockReturnValue(localistData);
     mockUseAnnouncements.mockReturnValue(mockNoData);
     const { getAllByTestId } = render(<EventCardContainer />);
     await waitForElement(() => getAllByTestId('eventcard'));
-    expect(getAllByTestId('eventcard')).toHaveLength(1);
+    expect(getAllByTestId('eventcard')).toHaveLength(3);
   });
-
 });

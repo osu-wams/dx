@@ -18,7 +18,7 @@ const announcementsData = {
       body: 'Announcement test body text 2',
       action: {
         title: null,
-        link: null
+        link: 'https://oregonstate.edu'
       }
     }
   ],
@@ -29,18 +29,32 @@ const announcementsData = {
 const localistData = {
   data: [
     {
-      event: {
-        title: 'Localist test title 1',
-        photo_url: 'http://example.oregonstate.edu/sites/default/files/2019-03/example_image_0.jpg',
-        localist_url: 'https://events.oregonstate.edu/event/intro_to_media_workshop_2369',
-        event_instances: [
-          {
-            event_instance: {
-              id: '13579'
-            }
-          }
-        ]
-      }
+      action: {
+        link:
+          'https://events.oregonstate.edu/event/sea-inspired_paintings_on_exhibit_at_hatfield_visitor_center_until_july_7'
+      },
+      bg_image:
+        'https://images.localist.com/photos/849707/huge/dc9bddd1554ee9119d1109f337d82d700118bba1.jpg',
+      date: '2019-10-24T10:00:00-07:00',
+      id: 31069217151072,
+      title: 'Localist test title 1',
+      type: 'localist'
+    },
+    {
+      action: { link: 'https://events.oregonstate.edu/event/pathogetesto' },
+      bg_image: 'https://images.localist.com/photos/30318536347604/huge/testo.jpg',
+      date: '2019-10-24T10:00:00-07:00',
+      id: 31069217151072,
+      title: 'Pathogen Environmental Monitoring Workshop for Pacific Northwest Food Ind',
+      type: 'localist'
+    },
+    {
+      action: { link: 'https://events.oregonstate.edu/testo' },
+      bg_image: 'https://images.localist.com/photos/30443006289764/huge/testo.jpg',
+      date: '2019-10-24T10:00:00-07:00',
+      id: 31069217151072,
+      title: 'Katherine Dziedzic - Integrative Biology PhD Defense Seminar',
+      type: 'localist'
     }
   ],
   loading: false,

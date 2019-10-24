@@ -106,7 +106,7 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
         color: ${Color.white};
         background:
           linear-gradient(
-            rgba(0, 0, 0, 0.55), 
+            rgba(0, 0, 0, 0.55),
             rgba(0, 0, 0, 0.55)
           ),
           url(${props.imageUrl}) no-repeat center;
@@ -152,7 +152,7 @@ const EventCardContent = ({ item }) => {
           <EventCardTitle aria-live="polite">{item.title}</EventCardTitle>
           <EventCardText>{item.body}</EventCardText>
           <>
-            {item.action.title && (
+            {item.action && item.action.title && (
               <ButtonWithIcon
                 fg={Color.white}
                 href={item.action.link}

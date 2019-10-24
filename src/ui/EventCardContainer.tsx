@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { UserContext } from '../App';
-import { useAnnouncements, filterAnnouncementsForUser } from '../api/announcements';
-import { useStudentExperienceEvents, useBendEvents } from '../api/events';
+import { useAnnouncements } from '../api/announcements';
+import { useStudentExperienceEvents, useCampusEvents } from '../api/events';
+import { IUser, atCampus, CAMPUS_CODES } from '../api/user';
 import EventCard from './EventCard';
 import { theme, breakpoints } from '../theme';
 
@@ -23,81 +24,89 @@ const EventCardContainer = ({ ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
   const studentExperienceEvents = useStudentExperienceEvents();
-  const bendEvents = useBendEvents();
+  const bendEvents = useCampusEvents('bend');
   const announcements = useAnnouncements('');
-  
-  // Helper Function
-  const newLocalist = item => {
-    return {
-      id: item.event.event_instances[0].event_instance.id,
-      date: item.event.event_instances[0].event_instance.start,
-      title: item.event.title,
-      body: null,
-      bg_image: item.event.photo_url,
-      action: {
-        title: null,
-        link: item.event.localist_url
+
+  const hasAudience = (user: IUser, announcement: { audiences: string[] }): boolean => {
+    if (announcement.audiences && announcement.audiences.length === 0) return true;
+    if (user.classification !== undefined && user.classification.attributes !== undefined) {
+      // Find the key name associated to the users campusCode to use for matching in the audiences
+      // set for the announcement
+      const usersCampusName = Object.keys(CAMPUS_CODES)
+        .map(k => k.toLowerCase())
+        .find(
+          key => CAMPUS_CODES[key] === user.classification!.attributes!.campusCode.toLowerCase()
+        );
+      if (!usersCampusName) {
+        // If there is no matching campusCode, then default to displaying the announcement
+        console.error(
+          `Expected campus code ${
+            user.classification!.attributes!.campusCode
+          } not found in configuration, this is an unexpected circumstance that needs to be repaired.`
+        );
+        return true;
       }
-    };
+      // The user has a classification and the item has audiences specified, return if
+      // this users campusCode exists in the audience list.
+      return announcement.audiences.some(a => a.toLowerCase() === usersCampusName.toLowerCase());
+    }
+    return true;
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
   useEffect(() => {
-    const formattedEvents: any[] = [];
-    let filteredAnnouncements: any[] = announcements.data;
-    let eventsToUse: any = studentExperienceEvents // the default bucket of events
-    if (bendEvents && bendEvents.data && bendEvents.data.length) {
-      // console.log('updating the events to use to bend!')
-      // eventsToUse = bendEvents
-    }
-    if (user) {
-      if (user && user.classification && user.classification.attributes) {
-        let userCampus = user.classification.attributes.campus
-        if (userCampus === 'Oregon State - Cascades') {
-          eventsToUse = bendEvents
-        }
-      }
-      if (announcements) {
-        filteredAnnouncements = filterAnnouncementsForUser(filteredAnnouncements, user);
-      }
+    let announcementsToUse: any[] = [];
+    let eventsToUse: any[] = [];
+
+    if (!announcements.loading) {
+      announcementsToUse = announcements.data;
     }
 
-    /*
-       * Determines the minimum number of announcements and student experience events.
-       * Since we want to alternate between an announcement card and student experience card
-       * getting displayed, we first figure out how many we can safely loop through before
-       * jumping into logic on how we will finish populating the list.
-       */
-    for (
-      let i = 0;
-      i < Math.min(filteredAnnouncements.length, eventsToUse.data.length);
-      i++
-    ) {
-      formattedEvents.push(filteredAnnouncements[i]);
-      formattedEvents.push(newLocalist(eventsToUse.data[i]));
+    if (!user.loading) {
+      const atBend = atCampus(user, CAMPUS_CODES.bend);
+      if (!announcements.loading) {
+        announcementsToUse = announcements.data.filter(a => hasAudience(user, a));
+      }
+      if (!studentExperienceEvents.loading && !atBend) {
+        eventsToUse = studentExperienceEvents.data;
+      }
+      if (!bendEvents.loading && atBend) {
+        eventsToUse = bendEvents.data;
+      }
     }
+    if (announcementsToUse.length || eventsToUse.length) {
+      // Weave two arrays alternating an item from each providing that the array
+      // with more elements ends with its remaining items "at the end of the array".
+      //
+      // * How this works;
+      // *  - Create an array setting its length to match the max of the two being weaved.
+      // *  - Map through each of this arrays elements, populating it with the item at that index
+      // *    from each of the weaved arrays. For example if array 'a' had 4 elements and 'b' had 2 the
+      // *    resulting weaved array would look like: [ [a[0],b[0]], [a[1],b[1]], [a[2],undefined], [a[3], undefined] ]
+      // *  - Flatten the array: [ a[0],b[0],a[1],b[1],a[2],undefined,a[3],undefined ]
+      // *  - Finally, filter out the 'undefined': [ a[0],b[0],a[1],b[1],a[2],a[3] ]
+      const weavedArrays = Array.from(
+        { length: Math.max(announcementsToUse.length, eventsToUse.length) },
+        (_, i) => [announcementsToUse[i], eventsToUse[i]]
+      )
+        .reduce((p, c) => p.concat(c))
+        .filter(e => e !== undefined);
 
-    /**
-     * If there are less announcements than student experience events, push the rest of
-     * the student experience events picking up from where we left off.
-     *
-     * If there are less student experience events than announcements, push the rest of
-     * the announcements picking up from where we left off.
-     *
-     * No need to worry about if they are == as they would all get gobbled up in the for
-     * loop above.
-     */
-    if (filteredAnnouncements.length < eventsToUse.data.length) {
-      for (let i = filteredAnnouncements.length; i < eventsToUse.data.length; i++) {
-        formattedEvents.push(newLocalist(eventsToUse.data[i]));
-      }
-    } else if (filteredAnnouncements.length > eventsToUse.data.length) {
-      for (let i = eventsToUse.data.length; i < filteredAnnouncements.length; i++) {
-        formattedEvents.push(filteredAnnouncements[i]);
-      }
+      setEvents(weavedArrays);
     }
-    setEvents(formattedEvents);
-  }, [announcements.data, studentExperienceEvents.data, user]);
+  }, [
+    announcements.data,
+    announcements.loading,
+    studentExperienceEvents.data,
+    studentExperienceEvents.loading,
+    user.data,
+    user.loading,
+    bendEvents.data,
+    bendEvents.loading
+  ]);
+  /* eslint-enable react-hooks/exhaustive-deps */
+
   if (!events.length) {
     return null;
   }
