@@ -27,6 +27,9 @@ const Url = {
   },
   feedback: {
     main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=feedback'
+  },
+  registrar: {
+    academicStanding: 'https://registrar.oregonstate.edu/grades-honor-roll-academic-standing'
   }
 };
 

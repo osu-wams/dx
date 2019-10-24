@@ -7,6 +7,9 @@ import {
   HighlightDescription
 } from '../../ui/Highlights';
 import { useAcademicStatus } from '../../api/student/academic-status';
+import Url from '../../util/externalUrls.data';
+import { SimpleExternalLink } from '../../ui/Link';
+import { Event } from '../../util/gaTracking';
 
 export const AcademicStanding: React.FC = () => {
   const academicStatus = useAcademicStatus();
@@ -20,11 +23,23 @@ export const AcademicStanding: React.FC = () => {
           {academicStatus.data.academicStanding &&
           academicStatus.data.academicStanding.length > 0 ? (
             <>
-              You are in{' '}
+              Your academic standing is{' '}
               <HighlightEmphasisInline>
                 {academicStatus.data.academicStanding}
               </HighlightEmphasisInline>
-              .
+              .<br />
+              <SimpleExternalLink
+                href={Url.registrar.academicStanding}
+                onClick={() =>
+                  Event(
+                    'academic-overview',
+                    'Learn more about academic standings',
+                    Url.registrar.academicStanding
+                  )
+                }
+              >
+                Learn more about academic standings
+              </SimpleExternalLink>
             </>
           ) : (
             <>You have no current academic standing.</>
