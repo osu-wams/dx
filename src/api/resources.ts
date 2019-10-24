@@ -4,6 +4,7 @@ import useAPICall from './useAPICall';
 export interface IUserClassificationAttributes {
   level: string;
   campus: string;
+  campusCode: string;
   classification: string;
   isInternational: boolean;
 }

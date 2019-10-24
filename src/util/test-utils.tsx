@@ -9,6 +9,7 @@ export const authUserClassification: IUserClassification = {
   attributes: {
     level: 'Graduate',
     campus: '',
+    campusCode: 'C',
     classification: 'Freshman',
     isInternational: true
   }

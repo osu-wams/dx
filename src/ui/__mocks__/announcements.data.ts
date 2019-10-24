@@ -9,7 +9,8 @@ const announcementsData = {
       action: {
         title: 'Announcement link title',
         link: 'https://oregonstate.edu'
-      }
+      },
+      audiences: []
     },
     {
       id: '67890',
@@ -19,7 +20,19 @@ const announcementsData = {
       action: {
         title: null,
         link: 'https://oregonstate.edu'
-      }
+      },
+      audiences: []
+    },
+    {
+      id: '67890',
+      date: null,
+      title: 'Announcement test title 3',
+      body: 'Announcement test body text 3',
+      action: {
+        title: null,
+        link: 'https://oregonstate.edu'
+      },
+      audiences: ['Bend']
     }
   ],
   loading: false,
