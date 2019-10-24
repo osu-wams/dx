@@ -6,8 +6,8 @@ const getCourseSchedule = (term = 'current'): Promise<ICourseSchedule[]> =>
 
 /**
  * Returns an array of course schedules. A callback function
- * is provided if you want to mutate the data, but it must 
- * return an array. 
+ * is provided if you want to mutate the data, but it must
+ * return an array.
  * @param object containing a term and callback function
  */
 const useCourseSchedule = ({ term = 'current', callback = data => data } = {}) =>
@@ -38,7 +38,7 @@ export interface IMeetingTime {
 export interface ICourseSchedule {
   id: string;
   attributes: ICourseScheduleAttributes;
-  links: string;
+  links: { self: string | null };
   type: string;
 }
 
