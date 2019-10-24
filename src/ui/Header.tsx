@@ -100,7 +100,7 @@ const Header = () => (
   <HeaderWrapper>
     <Logo src={logo} alt="Oregon State University" />
     <ProfileMenu>
-      <Menu className="profile-menu">
+      <Menu>
         <UserButton
           data-testid="user-btn"
           onClick={() => Event('header', 'user-button-menu', 'User button menu expanded')}

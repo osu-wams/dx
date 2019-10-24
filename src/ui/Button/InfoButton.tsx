@@ -55,9 +55,9 @@ const InfoButton = props => {
         <Icon icon={faInfoCircle} size="lg" color={Color['neutral-600']} />
         <VisuallyHidden>Information about {currentButton.title}</VisuallyHidden>
       </Button>
-      <MyDialog isOpen={dialogVisible}>
+      <MyDialog isOpen={dialogVisible} aria-labelledby="infobtn-title">
         <DialogHeader>
-          <DialogTitle>{currentButton.title}</DialogTitle>
+          <DialogTitle id="infobtn-title">{currentButton.title}</DialogTitle>
           <DialogClose onClick={(e: React.MouseEvent<HTMLElement>) => toggleDialog(false)} />
         </DialogHeader>
         <DialogContent dangerouslySetInnerHTML={{ __html: currentButton.content }} />

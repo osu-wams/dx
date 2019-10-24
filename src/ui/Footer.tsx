@@ -217,8 +217,12 @@ const Footer = () => {
         )}
         <ToastContainer />
       </FooterWrapper>
-      <MyDialog isOpen={showMasqueradeDialog} data-testid="masquerade-dialog">
-        <h2>Log in as another user</h2>
+      <MyDialog
+        isOpen={showMasqueradeDialog}
+        data-testid="masquerade-dialog"
+        aria-labelledby="maskDialog-title"
+      >
+        <h2 id="maskDialog-title">Log in as another user</h2>
         <Label htmlFor="osu-id">
           Enter user OSU ID
           <br />
