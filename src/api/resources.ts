@@ -19,6 +19,9 @@ export interface IResourceResult {
   title: string;
   icon?: string;
   uri: string;
+  synonyms: string[];
+  categories: string[];
+  audiences: string[];
 }
 
 export interface ICategory {
@@ -62,23 +65,19 @@ const userClassifications = (user: any): string[] => {
 
 /**
  *  If a user doesn't have a student classification, or if the resource doesn't
- *  have audiences specified then return the resource.. otherwise, filter the resources.
+ *  have audiences specified then return the resource. Otherwise, filter the resources.
  * @param resources the list of resources to be optionally filtered
  * @param user the user to consider of filtering resources
  */
-const filterResourcesForUser = (
-  resources: (IResourceResult & { audiences: string[] })[],
-  user: any
-): IResourceResult[] => {
+const filterResourcesForUser = (resources: IResourceResult[], user: any): IResourceResult[] => {
   const classifications = userClassifications(user);
-  return resources
-    .filter(e => {
-      if (classifications.length === 0 || e.audiences.length === 0) return true;
+  return resources.filter(e => {
+    if (classifications.length === 0 || e.audiences.length === 0) {
+      return true;
+    } else {
       return e.audiences.some(audience => classifications.includes(audience));
-    })
-    .map(({ audiences, ...resourceAttribs }) => {
-      return { ...resourceAttribs };
-    });
+    }
+  });
 };
 
 /**
@@ -86,33 +85,9 @@ const filterResourcesForUser = (
  */
 const getResources = (): Promise<IResourceResult[]> =>
   axios.get(`/api/resources`).then(res => res.data);
-const useResources = user => {
-  return useAPICall<IResourceResult[]>(
-    getResources,
-    undefined,
-    d => {
-      const transformed = filterResourcesForUser(d, user);
-      return transformed;
-    },
-    []
-  );
-};
 
-/**
- * Resources by Query
- */
-const getResourcesByQuery = (query: string): Promise<IResourceResult[]> =>
-  axios.get(`/api/resources${query ? `?query=${query}` : ''}`).then(res => res.data);
-const useResourcesByQuery = (query: string, user) => {
-  return useAPICall<IResourceResult[]>(
-    getResourcesByQuery,
-    query,
-    d => {
-      const transformed = filterResourcesForUser(d, user);
-      return transformed;
-    },
-    []
-  );
+const useResources = () => {
+  return useAPICall<IResourceResult[]>(getResources, undefined, d => d, []);
 };
 
 /**
@@ -120,6 +95,7 @@ const useResourcesByQuery = (query: string, user) => {
  */
 const getResourcesByQueue = (category: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources/category/${category}`).then(res => res.data);
+
 const useResourcesByQueue = (category: string, user) =>
   useAPICall<IResourceResult[]>(
     getResourcesByQueue,
@@ -150,12 +126,13 @@ const defaultCategoryName = 'featured';
 
 export {
   useResources,
-  useResourcesByQuery,
+  // useResourcesByQuery,
   defaultCategoryName,
   useCategories,
   useResourcesByQueue,
   getCategories,
   getResources,
-  getResourcesByQuery,
+  // getResourcesByQuery,
+  filterResourcesForUser,
   getResourcesByQueue
 };

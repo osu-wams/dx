@@ -1,19 +1,40 @@
 const resourcesData = {
   data: [
     {
-      audiences: ['First Year', 'Bend'],
-      id: '2ff0aaa4-5ca2-4adb-beaa-decc8744396f',
-      title: 'Student Jobs',
-      icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/logo_sites_128px.png',
-      uri:
-        'https://jobs.oregonstate.edu/postings/search?utf8=&query=&query_v0_posted_at_date=&query_position_type_id=5&query_organizational_tier_3_id=any&1970=&1971=&225=&commit=Search'
+      id: '1',
+      title: 'Bend Testo Success Center',
+      link: 'https://success.oregonstate.edu/',
+      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/badge-check.svg',
+      audiences: ['Bend'],
+      categories: ['Featured'],
+      synonyms: ['help', 'tutoring', 'writing', 'math']
     },
     {
-      audiences: ['Graduate Student', 'International Student', 'Ecampus', 'Corvallis'],
-      id: '825d22a1-938c-4ca7-8b9d-625a639bcdde',
+      id: '2',
+      title: 'Academics for Student Athletes',
+      link: 'https://studentathlete.oregonstate.edu/',
+      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/running.svg',
+      audiences: [],
+      categories: ['Academic'],
+      synonyms: []
+    },
+    {
+      id: '3',
       title: 'Billing Information',
-      icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',
-      uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
+      link: 'https://xe.ucsadm.oregonstate.edu:9990/ords/prod/bwskoacc.P_ViewAcct',
+      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
+      audiences: ['Corvallis'],
+      categories: ['Financial'],
+      synonyms: ['boo']
+    },
+    {
+      id: '4',
+      title: 'Student Jobs',
+      link: 'https://testo.com',
+      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
+      audiences: ['Corvallis'],
+      categories: ['Financial'],
+      synonyms: ['boo']
     }
   ],
   loading: false,

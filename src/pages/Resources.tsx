@@ -1,12 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import { useDebounce } from 'use-debounce';
 import { CardBase } from '../ui/Card';
 import { theme } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import { defaultCategoryName, useCategories, useResources } from '../api/resources';
+import {
+  defaultCategoryName,
+  useCategories,
+  useResources,
+  filterResourcesForUser
+} from '../api/resources';
 import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
@@ -16,26 +22,32 @@ const Resources = () => {
   const user = useContext(UserContext);
   const [activeCategory, setActiveCategory] = useState<string>(getInitialCategory());
   const [query, setQuery] = useState<string>('');
+  const [debouncedQuery] = useDebounce(query, 250);
   const categories = useCategories();
-  const resources = useResources(
-    // query !== ''
-    //   ? `?query=${query}`
-    //   : `?category=${activeCategory !== 'all' ? activeCategory : ''}`,
-    user
-  );
-  const [filteredResources, setFilteredResources] = useState<any>('');
+  const resources = useResources();
+
+  const [filteredResources, setFilteredResources] = useState<any>([]);
+
   useEffect(() => {
-    if (!query) {
-      setFilteredResources(resources.data);
-    } else {
-      const results = filteredResources.filter(
-        resource => resource.title.toLowerCase().includes(query)
-        // !TODO: Need to add logic for synonyms
-        // resource.synonyms.toLowerCase().includes(query)
-      );
-      setFilteredResources(results);
+    if (resources.data && user.data) {
+      if (!debouncedQuery) {
+        // const res = filterResourcesForUserRef.current(resources.data, user.data);
+        setFilteredResources(resources.data);
+      } else {
+        const results = filteredResources.filter(resource => {
+          if (resource.synonyms.length > 0) {
+            let match = resource.synonyms.find(s => s.includes(debouncedQuery.toLowerCase()));
+            if (match) {
+              return true;
+            }
+          }
+          return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
+        });
+        // setFilteredResources(filterResourcesForUserRef.current(results, user.data));
+        setFilteredResources(results);
+      }
     }
-  }, [query, resources.data]);
+  }, [debouncedQuery, resources.data, user.data]);
 
   /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
   /**
@@ -48,7 +60,7 @@ const Resources = () => {
     if (history.pushState) {
       window.history.pushState({ category: name }, name, `?category=${name}`);
     }
-    setActiveCategory(name);
+    setActiveCategory(decodeURI(name));
   };
 
   /**
@@ -67,13 +79,27 @@ const Resources = () => {
         activeCategory,
         `?category=${activeCategory}`
       );
+      let resourcesByCategory = resources.data;
+      if (activeCategory !== 'all') {
+        resourcesByCategory = resourcesByCategory.filter(resource => {
+          let match = false;
+          if (resource.categories.length > 0) {
+            match =
+              resource.categories.findIndex(s =>
+                s.toLowerCase().includes(activeCategory.toLowerCase())
+              ) > -1;
+          }
+          return match;
+        });
+      }
+      setFilteredResources(resourcesByCategory);
     }
     window.onpopstate = function(e) {
       if (e.state) {
-        if (e.state.category) setActiveCategory(e.state.category);
+        if (e.state.category) setActiveCategory(decodeURI(e.state.category));
       }
     };
-  }, []);
+  }, [activeCategory, resources.data]);
   /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
 
   return (
@@ -81,7 +107,6 @@ const Resources = () => {
       <PageTitle title="Resources" />
       <MainGrid>
         <MainGridCol className="col-span-2">
-          {console.log(filteredResources)}
           <ResourcesWrapper data-testid="resources-page">
             {activeCategory !== '' && (
               <>
@@ -98,9 +123,10 @@ const Resources = () => {
                 />
               </>
             )}
+            {/* <ResourcesList resources={filteredResources} /> */}
             {resources.loading && <Skeleton count={5} />}
             {!resources.loading && resources.data.length > 0 ? (
-              <ResourcesList resources={filteredResources} />
+              <ResourcesList resources={filterResourcesForUser(filteredResources, user.data)} />
             ) : (
               !resources.loading && (
                 /* @TODO need mockup styling to do and messaging for no results */
@@ -118,10 +144,10 @@ const getInitialCategory = () => {
   if (window.location.search.startsWith('?category=')) {
     const terms = window.location.search.split('=');
     if (terms.length === 2) {
-      return terms[1];
+      return decodeURI(terms[1]);
     }
   }
-  return defaultCategoryName;
+  return decodeURI(defaultCategoryName);
 };
 
 const ResourcesWrapper = styled(CardBase)`
