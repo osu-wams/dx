@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { Color } from '../../theme';
-import { ExternalLink, InternalLink, SimpleExternalLink } from '../Link';
+import { ExternalLink, SimpleExternalLink } from '../Link';
 
 const Default = () => <ExternalLink href="https://oregonstate.edu">Default link</ExternalLink>;
 
