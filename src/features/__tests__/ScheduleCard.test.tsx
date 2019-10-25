@@ -1,5 +1,5 @@
 import React from 'react';
-import { wait, waitForElement, fireEvent, getAllByText, getByTestId, getAllByTestId, getByTitle, getByLabelText } from '@testing-library/react';
+import { wait, waitForElement, fireEvent, getAllByText } from '@testing-library/react';
 import { renderWithUserContext, authUser } from '../../util/test-utils';
 import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
