@@ -15,10 +15,10 @@ const OSUProfile = () => {
   const address = useMailingAddress();
 
   return (
-    <PlainCard >
+    <PlainCard>
       {person.loading && <Skeleton count={6} />}
       {!person.loading && !person.data && <p>Cannot find your information</p>}
-      {person && Object.keys(person).length && (
+      {!person.loading && person && Object.keys(person).length && (
         <>
           <PersonName>
             {person.data && !person.loading ? person.data.attributes.firstName : ''}{' '}
@@ -56,7 +56,7 @@ const OSUProfile = () => {
               person.data && !person.loading ? person.data.attributes.email : '',
               faEnvelope
             )}
-            {address && (
+            {!address.loading && address && (
               <div>
                 <dt>
                   <Icon icon={faMapMarkerAlt} color={Color['orange-400']} />{' '}
