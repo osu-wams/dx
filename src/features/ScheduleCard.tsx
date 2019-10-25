@@ -1,6 +1,6 @@
 import React, { useState, useContext, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { isSameDay, format } from 'date-fns';
+import { isSameDay, format, isBefore, isAfter, isWithinRange } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useCourseSchedule, usePlannerItems } from '../api/student';
 import { useAcademicCalendarEvents } from '../api/events';
@@ -32,7 +32,12 @@ const ScheduleCard = () => {
 
   const getCoursesOnSelectedDay = () => {
     const selectedDayShortcode = getDayShortcode(selectedDay);
-    return coursesOnDay(courses.data, selectedDayShortcode);
+    return coursesOnDay(courses.data, selectedDayShortcode).filter(course => {
+      course.attributes.meetingTimes = course.attributes.meetingTimes.filter(meeting =>
+        isWithinRange(selectedDay, meeting.beginDate, meeting.endDate)
+      );
+      return course.attributes.meetingTimes.length;
+    });
   };
 
   let selectedPlannerItems: any[] = [];

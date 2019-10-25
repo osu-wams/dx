@@ -1,3 +1,7 @@
+const beginDate = new Date(Date.now()-(1000*60*60*24)).toISOString().slice(0,10);
+const endDate = new Date(Date.now()).toISOString().slice(0,10);
+const beginPastDate = new Date(Date.now()-(1000*60*60*24*10)).toISOString().slice(0,10);
+const endPastDate = new Date(Date.now()-(1000*60*60*24*5)).toISOString().slice(0,10);
 export default {
   data: [
     {
@@ -33,9 +37,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '10:00:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '10:50:00',
             room: '123',
             building: 'SMB',
@@ -83,9 +87,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '09:00:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '09:50:00',
             room: '285',
             building: 'WNGR',
@@ -133,9 +137,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: '2017-12-07',
+            beginDate: beginDate,
             beginTime: '09:30:00',
-            endDate: '2017-12-07',
+            endDate: endDate,
             endTime: '11:20:00',
             room: '305',
             building: 'PHAR',
@@ -148,9 +152,9 @@ export default {
             weeklySchedule: ['Th']
           },
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '11:00:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '11:50:00',
             room: '305',
             building: 'PHAR',
@@ -198,9 +202,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '10:00:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '10:50:00',
             room: '110',
             building: 'STAG',
@@ -248,9 +252,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '15:00:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '15:50:00',
             room: '210',
             building: 'LINC',
@@ -316,9 +320,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '16:00:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '16:50:00',
             room: '151',
             building: 'WNGR',
@@ -331,9 +335,9 @@ export default {
             weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'S']
           },
           {
-            beginDate: '2017-12-06',
+            beginDate: beginDate,
             beginTime: '16:00:00',
-            endDate: '2017-12-06',
+            endDate: endDate,
             endTime: '17:50:00',
             room: 'FNL',
             building: 'GRP',
@@ -346,9 +350,9 @@ export default {
             weeklySchedule: ['W']
           },
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '20:30:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '21:50:00',
             room: 'MID',
             building: 'GRP',
@@ -414,9 +418,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '14:00:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '15:50:00',
             room: '212',
             building: 'WNGR',
@@ -482,9 +486,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: '2017-09-20',
+            beginDate: beginDate,
             beginTime: '14:00:00',
-            endDate: '2017-12-01',
+            endDate: endDate,
             endTime: '15:50:00',
             room: '238',
             building: 'WNGR',
@@ -495,6 +499,148 @@ export default {
             scheduleType: 'D',
             scheduleDescription: 'Laboratory',
             weeklySchedule: ['T']
+          }
+        ]
+      }
+    },
+    {
+      type: "class-schedule",
+      id: "bogus-id-9",
+      links: {
+        self: null
+      },
+      attributes: {
+        academicYear: '1920',
+        academicYearDescription: "Academic Year 2019-20",
+        courseReferenceNumber: "17179",
+        courseSubject: "ED",
+        courseSubjectDescription: "Education",
+        courseNumber: "408",
+        courseTitle: "WORKSHOP/SEPT EXP SECONDARY",
+        sectionNumber: "001",
+        term: "202001",
+        termDescription: "Fall 2019",
+        scheduleDescription: "Workshop",
+        scheduleType: "W",
+        creditHours: 2,
+        registrationStatus: "**Web Registered**",
+        gradingMode: "Normal Grading Mode",
+        continuingEducation: false,
+        faculty: [
+          {
+            osuId: "1234567895",
+            name: "McGrory, Sue",
+            email: null,
+            primary: true
+          }
+        ],
+        meetingTimes: [
+          {
+            beginDate: beginPastDate,
+            beginTime: "09:00:00",
+            endDate: endPastDate,
+            endTime: "14:50:00",
+            room: "101",
+            building: "FURM",
+            buildingDescription: "Joyce Collin Furman Hall Old",
+            campusCode: "C",
+            campus: " Oregon State - Corvallis",
+            hoursPerWeek: 5.83,
+            creditHourSession: 0,
+            scheduleType: "W",
+            scheduleDescription: "Workshop",
+            weeklySchedule: [
+              "T"
+            ]
+          },
+          {
+            beginDate: beginDate,
+            beginTime: "09:00:00",
+            endDate: endDate,
+            endTime: "14:50:00",
+            room: "101",
+            building: "FURM",
+            buildingDescription: "Joyce Collin Furman Hall",
+            campusCode: "C",
+            campus: " Oregon State - Corvallis",
+            hoursPerWeek: 5.83,
+            creditHourSession: 2,
+            scheduleType: "W",
+            scheduleDescription: "Workshop",
+            weeklySchedule: [
+              "F"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      type: "class-schedule",
+      id: "bogus-id-10",
+      links: {
+        self: null
+      },
+      attributes: {
+        academicYear: '1920',
+        academicYearDescription: "Academic Year 2019-20",
+        courseReferenceNumber: "17179",
+        courseSubject: "ED",
+        courseSubjectDescription: "Education",
+        courseNumber: "408",
+        courseTitle: "WORKSHOP/SEPT EXP SECONDARY",
+        sectionNumber: "001",
+        term: "202001",
+        termDescription: "Fall 2019",
+        scheduleDescription: "Workshop",
+        scheduleType: "W",
+        creditHours: 2,
+        registrationStatus: "**Web Registered**",
+        gradingMode: "Normal Grading Mode",
+        continuingEducation: false,
+        faculty: [
+          {
+            osuId: "1234567895",
+            name: "McGrory, Sue",
+            email: null,
+            primary: true
+          }
+        ],
+        meetingTimes: [
+          {
+            beginDate: beginPastDate,
+            beginTime: "09:00:00",
+            endDate: endPastDate,
+            endTime: "14:50:00",
+            room: "101",
+            building: "FURM",
+            buildingDescription: "Joyce Collin Furman Hall Past",
+            campusCode: "C",
+            campus: " Oregon State - Corvallis",
+            hoursPerWeek: 5.83,
+            creditHourSession: 0,
+            scheduleType: "W",
+            scheduleDescription: "Workshop",
+            weeklySchedule: [
+              "T"
+            ]
+          },
+          {
+            beginDate: beginPastDate,
+            beginTime: "09:00:00",
+            endDate: endPastDate,
+            endTime: "14:50:00",
+            room: "101",
+            building: "FURM",
+            buildingDescription: "Joyce Collin Furman Hall Past",
+            campusCode: "C",
+            campus: " Oregon State - Corvallis",
+            hoursPerWeek: 5.83,
+            creditHourSession: 2,
+            scheduleType: "W",
+            scheduleDescription: "Workshop",
+            weeklySchedule: [
+              "F"
+            ]
           }
         ]
       }
