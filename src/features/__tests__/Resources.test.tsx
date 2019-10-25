@@ -11,12 +11,12 @@ const sleep = (ms: number) => {
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
-const mockDefaultCategory = defaultCategory;
+const mockDefaultCategory = jest.fn();
 
 jest.mock('../../api/resources', () => ({
   useResources: () => mockUseResources(),
   useCategories: () => mockUseCategories(),
-  defaultCategoryName: () => mockDefaultCategory
+  defaultCategoryName: () => mockDefaultCategory()
 }));
 
 describe('<Resources />', () => {
@@ -24,10 +24,12 @@ describe('<Resources />', () => {
   beforeEach(() => {
     mockUseResources.mockReturnValue(resourcesData);
     mockUseCategories.mockReturnValue(categoriesData);
+    mockDefaultCategory.mockReturnValue(defaultCategory);
   });
 
   it('should display the title Resources', async () => {
-    const { getByText } = render(<Resources />);
+    const { getByText, debug } = render(<Resources />);
+    debug();
     await waitForElement(() => getByText('Resources'));
   });
 
@@ -56,9 +58,10 @@ describe('<Resources />', () => {
   });
 
   it('should have clickable categories that report to GoogleAnalytics', async () => {
-    const { getByText } = render(<Resources />);
-    await sleep(50);
+    const { getByText, debug } = render(<Resources />);
+    await sleep(100);
     const BillingInformationResource = await getByText(/Billing Information/);
+    debug();
     expect(BillingInformationResource).not.toBeNull();
     fireEvent.click(BillingInformationResource);
     expect(mockGAEvent).toHaveBeenCalled();
@@ -99,12 +102,14 @@ describe('<Resources />', () => {
   });
 
   it('should move to the All category when searching', async () => {
-    console.log(window.location.search);
-    const { getByLabelText, findByText, getByPlaceholderText } = render(<Resources />);
+    const { getByLabelText, findByText, debug, getByPlaceholderText } = render(<Resources />);
+    // await sleep(100);
     let featured = await waitForElement(() => getByLabelText('Featured'));
     let all = await waitForElement(() => getByLabelText('All'));
+    await sleep(2000);
     expect(featured).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
+    debug();
     await fireEvent.change(getByPlaceholderText('Find resources'), {
       target: {
         value: 'example'

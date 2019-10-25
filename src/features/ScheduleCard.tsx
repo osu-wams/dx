@@ -92,7 +92,7 @@ const ScheduleCard = () => {
           <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
         </div>
       </CardContent>
-      <CardFooter infoButtonId="academic-calendar"></CardFooter>
+      <CardFooter infoButtonId="schedule-card"></CardFooter>
     </Card>
   );
 };

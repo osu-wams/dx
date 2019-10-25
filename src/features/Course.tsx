@@ -50,10 +50,10 @@ const Course: FC<{
   isOpen,
   toggleCourse
 }) => (
-  <MyDialog isOpen={isOpen} data-testid="course-dialog">
+  <MyDialog isOpen={isOpen} data-testid="course-dialog" aria-labelledby="course-title">
     {ReactGA.modalview('/academics/course-details')}
     <CloseButton onClick={toggleCourse} />
-    <h2>
+    <h2 id="course-title">
       {courseSubject} {courseNumber}
     </h2>
     <div className="details">{titleCase(courseTitle)}</div>

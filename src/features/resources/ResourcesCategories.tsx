@@ -38,7 +38,7 @@ const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory 
                   : false
               }
             />
-          ))}
+          ))}{' '}
         </>
       )}
     </CategoriesWrapper>

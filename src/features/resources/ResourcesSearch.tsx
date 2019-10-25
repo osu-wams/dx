@@ -8,7 +8,7 @@ import { Event } from '../../util/gaTracking';
 const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }) => {
   useEffect(() => {
     Event('resource-search', query);
-  });
+  }, [query]);
 
   const handleChange = value => {
     setQuery(value);

@@ -40,6 +40,22 @@ const NoItemsText = styled.p`
 `;
 
 /**
+ * Some Canvas link include the full path including https://instructure...
+ *
+ * Check to see if that data is included, and if so don't prepend it.
+ * If that's not there we add that ourselves. (Most links don't have it)
+ *
+ */
+
+const canvasUrl = url => {
+  if (url.startsWith(Url.canvas.main) || url.startsWith(Url.canvas.test)) {
+    return url;
+  } else {
+    return Url.canvas.main + url;
+  }
+};
+
+/**
  * Upcoming Assignments Card
  *
  * Displays upcoming assignments from Canvas.
@@ -61,10 +77,10 @@ const PlannerItems = () => {
           {data.map(({ plannable_id, plannable_type, html_url, plannable: { title, due_at } }) => (
             <ListItem key={plannable_id}>
               <ListItemContentLink
-                href={Url.canvas.main + html_url}
+                href={canvasUrl(html_url)}
                 target="_blank"
                 onClick={() =>
-                  Event('planner-items', 'Canvas planner item click', Url.canvas.main + html_url)
+                  Event('planner-items', 'Canvas planner item click', canvasUrl(html_url))
                 }
               >
                 <Icon icon={faFileEdit} color={Color['orange-200']} />

@@ -14,6 +14,9 @@ const LinkStyles = styled.a<StyleProps>`
   text-decoration: none;
   display: inline-block;
   padding: 0.4rem 0.8rem;
+  &.simple {
+    padding: 0;
+  }
   background-color: ${props => props.bg || 'transparent'};
   color: ${props => props.fg || Color['orange-400']};
   & > svg {
@@ -35,13 +38,19 @@ const ExternalLink = ({ children, ...props }) => {
   );
 };
 
+const SimpleExternalLink = ({ children, ...props }) => (
+  <LinkStyles {...props} target="_blank" className="simple">
+    {children}
+  </LinkStyles>
+);
+
 const InternalLink = ({ children, ...props }) => {
   return (
-    <LinkStyles as={Link} {...props} target="_blank">
+    <LinkStyles as={Link} {...props}>
       {children}
       <Icon icon={faLongArrowRight} color={props.fg ? props.fg : Color['orange-400']} />
     </LinkStyles>
   );
 };
 
-export { ExternalLink, InternalLink };
+export { ExternalLink, InternalLink, SimpleExternalLink };

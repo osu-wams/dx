@@ -59,8 +59,15 @@ export const userClassifications = (user: IUser): string[] => {
   return results;
 };
 
-export const hasAudience = (user: IUser, announcement: { audiences: string[] }): boolean => {
-  if (announcement.audiences && announcement.audiences.length === 0) return true;
+/* classifications need to be added to the audience...
+ *if (level === 'Graduate') results.push('Graduate Student');
+  if (classification === 'Freshman') results.push('First Year');
+  if (isInternational) re
+ */
+
+export const hasAudience = (user: IUser, item: { audiences: string[] }): boolean => {
+  const classifications: string[] = [];
+  if (item.audiences && item.audiences.length === 0) return true;
   if (user.classification !== undefined && user.classification.attributes !== undefined) {
     // Find the key name associated to the users campusCode to use for matching in the audiences
     // set for the announcement
@@ -78,11 +85,19 @@ export const hasAudience = (user: IUser, announcement: { audiences: string[] }):
           user.classification!.attributes!.campusCode
         } not found in configuration, this is an unexpected circumstance that needs to be repaired.`
       );
-      return true;
+      // return true;
+    } else {
+      classifications.push(usersCampusName);
     }
+    if (user.classification.attributes.level === 'Graduate')
+      classifications.push('Graduate Student');
+    if (user.classification.attributes.classification === 'Freshman')
+      classifications.push('First Year');
+    if (user.classification.attributes.isInternational)
+      classifications.push('International Student');
     // The user has a classification and the item has audiences specified, return if
     // this users campusCode exists in the audience list.
-    return announcement.audiences.some(a => a.toLowerCase() === usersCampusName.toLowerCase());
+    return item.audiences.some(a => classifications.includes(a.toLowerCase()));
   }
   return true;
 };

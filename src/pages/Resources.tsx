@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import { useDebounce } from 'use-debounce';
 import { CardBase } from '../ui/Card';
 import { theme } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
@@ -10,19 +11,42 @@ import { defaultCategoryName, useCategories, useResources } from '../api/resourc
 import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
+import { hasAudience } from '../api/user';
 
 //import type here
 const Resources = () => {
   const user = useContext(UserContext);
   const [activeCategory, setActiveCategory] = useState<string>(getInitialCategory());
   const [query, setQuery] = useState<string>('');
+  const [debouncedQuery] = useDebounce(query, 250);
   const categories = useCategories();
-  const resources = useResources(
-    query !== ''
-      ? `?query=${query}`
-      : `?category=${activeCategory !== 'all' ? activeCategory : ''}`,
-    user
-  );
+  const res = useResources();
+  // const [resources, setResources] = useState([]);
+
+  const [filteredResources, setFilteredResources] = useState<any>([]);
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    if (res.data && user.data) {
+      if (!debouncedQuery) {
+        // const res = filterResourcesForUserRef.current(resources.data, user.data);
+        setFilteredResources(res.data);
+      } else {
+        const results = filteredResources.filter(resource => {
+          if (resource.synonyms.length > 0) {
+            let match = resource.synonyms.find(s => s.includes(debouncedQuery.toLowerCase()));
+            if (match) {
+              return true;
+            }
+          }
+          return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
+        });
+        // setFilteredResources(filterResourcesForUserRef.current(results, user.data));
+        setFilteredResources(results);
+      }
+    }
+  }, [debouncedQuery, res.data, user.data]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
   /**
@@ -35,7 +59,7 @@ const Resources = () => {
     if (history.pushState) {
       window.history.pushState({ category: name }, name, `?category=${name}`);
     }
-    setActiveCategory(name);
+    setActiveCategory(decodeURI(name));
   };
 
   /**
@@ -54,13 +78,27 @@ const Resources = () => {
         activeCategory,
         `?category=${activeCategory}`
       );
+      let resourcesByCategory = res.data;
+      if (activeCategory !== 'all') {
+        resourcesByCategory = resourcesByCategory.filter(resource => {
+          let match = false;
+          if (resource.categories.length > 0) {
+            match =
+              resource.categories.findIndex(s =>
+                s.toLowerCase().includes(activeCategory.toLowerCase())
+              ) > -1;
+          }
+          return match;
+        });
+      }
+      setFilteredResources(resourcesByCategory);
     }
     window.onpopstate = function(e) {
       if (e.state) {
-        if (e.state.category) setActiveCategory(e.state.category);
+        if (e.state.category) setActiveCategory(decodeURI(e.state.category));
       }
     };
-  }, []);
+  }, [activeCategory, res.data]);
   /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
 
   return (
@@ -84,11 +122,12 @@ const Resources = () => {
                 />
               </>
             )}
-            {resources.loading && <Skeleton count={5} />}
-            {!resources.loading && resources.data.length > 0 ? (
-              <ResourcesList resources={resources.data} />
+            {/* <ResourcesList resources={filteredResources} /> */}
+            {res.loading && <Skeleton count={5} />}
+            {!res.loading && res.data.length > 0 ? (
+              <ResourcesList resources={filteredResources.filter(r => hasAudience(r, user.data))} />
             ) : (
-              !resources.loading && (
+              !res.loading && (
                 /* @TODO need mockup styling to do and messaging for no results */
                 <div>No results</div>
               )
@@ -104,10 +143,10 @@ const getInitialCategory = () => {
   if (window.location.search.startsWith('?category=')) {
     const terms = window.location.search.split('=');
     if (terms.length === 2) {
-      return terms[1];
+      return decodeURI(terms[1]);
     }
   }
-  return defaultCategoryName;
+  return decodeURI(defaultCategoryName());
 };
 
 const ResourcesWrapper = styled(CardBase)`
