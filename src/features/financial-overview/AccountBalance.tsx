@@ -12,6 +12,7 @@ import {
 import { ExternalLink } from '../../ui/Link';
 import Url from '../../util/externalUrls.data';
 import { Event } from '../../util/gaTracking';
+import { isNullOrUndefined } from 'util';
 
 export const AccountBalanceExternalLink = () => (
   <ExternalLink
@@ -31,7 +32,7 @@ const AccountBalance = (props: { renderLink: boolean }) => {
     <Highlight textAlignLeft>
       <HighlightEmphasis color={Color['neutral-550']}>
         {loading && <Skeleton />}
-        {data && data.attributes && data.attributes.currentBalance
+        {data && data.attributes && !isNullOrUndefined(data.attributes.currentBalance)
           ? formatDollars(data.attributes.currentBalance)
           : !loading && 'No data'}
       </HighlightEmphasis>

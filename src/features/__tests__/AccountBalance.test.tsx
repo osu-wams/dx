@@ -26,6 +26,13 @@ describe('<AccountBalance />', () => {
     await waitForElement(() => getByText('$2,356.00'));
   });
 
+  it('should have a $0.00 balance from our mock data', async () => {
+    mockAccountBalance.data.attributes.currentBalance = 0;
+    mockUseAccountBalance.mockReturnValue(mockAccountBalance);
+    const { getByText } = render(<AccountBalance renderLink={false} />);
+    await waitForElement(() => getByText('$0.00'));
+  });
+
   it('should return "No data" when AccountBalance data is empty', async () => {
     mockUseAccountBalance.mockResolvedValue(Promise.resolve({}));
     const { getByText } = render(<AccountBalance renderLink={false} />);
