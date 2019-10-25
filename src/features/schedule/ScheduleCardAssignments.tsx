@@ -35,7 +35,7 @@ const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
         {user.isCanvasOptIn &&
           selectedPlannerItems.length > 0 &&
           selectedPlannerItems.map(
-            ({ plannable_id, html_url, plannable_type, plannable: { title, due_at } }) => (
+            ({ plannable_id, html_url, plannable_type, plannable_date, plannable: { title } }) => (
               <ListItem key={plannable_id}>
                 <ListItemContentLink
                   href={Url.canvas.main + html_url}
@@ -48,7 +48,7 @@ const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
                     <ListItemHeader>{title} </ListItemHeader>
                     <ListItemDescription>
                       {plannable_type !== 'announcement'
-                        ? `Due ${format(due_at, 'MMM Do [at] h:mma')}`
+                        ? `Due ${format(plannable_date, 'MMM Do [at] h:mma')}`
                         : ''}
                     </ListItemDescription>
                   </ListItemText>

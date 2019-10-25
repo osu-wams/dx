@@ -1,6 +1,6 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render, mockAppContext } from '../../util/test-utils';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from '../../setupTests';
@@ -51,22 +51,22 @@ describe('with an InfoButton in the CardFooter', () => {
   const validIinfoButtonId = 'canvas';
 
   test('does not display the button when the infoButtonData is missing it', async () => {
-    const { queryByTestId } = render(<PlannerItems />, {
-      appContext: {
-        infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
-      }
-    });
+    const testAppContext = {
+      ...mockAppContext,
+      infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
+    };
+    const { queryByTestId } = render(<PlannerItems />, { appContext: testAppContext });
 
     const element = queryByTestId(validIinfoButtonId);
     expect(element).not.toBeInTheDocument();
   });
 
   test('displays the button when the infoButtonData is included', async () => {
-    const { getByTestId } = render(<PlannerItems />, {
-      appContext: {
-        infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
-      }
-    });
+    const testAppContext = {
+      ...mockAppContext,
+      infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
+    };
+    const { getByTestId } = render(<PlannerItems />, { appContext: testAppContext });
 
     const element = await waitForElement(() => getByTestId(validIinfoButtonId));
     expect(element).toBeInTheDocument();

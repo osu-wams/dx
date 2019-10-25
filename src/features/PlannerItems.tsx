@@ -74,7 +74,7 @@ const PlannerItems = () => {
     if (data.length && user.isCanvasOptIn === true) {
       return (
         <List>
-          {data.map(({ plannable_id, plannable_type, html_url, plannable: { title, due_at } }) => (
+          {data.map(({ plannable_id, plannable_date, html_url, plannable: { title } }) => (
             <ListItem key={plannable_id}>
               <ListItemContentLink
                 href={canvasUrl(html_url)}
@@ -87,9 +87,9 @@ const PlannerItems = () => {
                 <ListItemText>
                   <ListItemHeader>{title}</ListItemHeader>
                   <ListItemDescription>
-                    {plannable_type !== ('calendar_event' || 'announcement')
-                      ? `Due ${format(due_at, 'MMM Do [at] h:mma')}`
-                      : ''}
+                    {plannable_date &&
+                      plannable_date !== '' &&
+                      format(plannable_date, 'MMM Do [at] h:mma')}
                   </ListItemDescription>
                 </ListItemText>
               </ListItemContentLink>
