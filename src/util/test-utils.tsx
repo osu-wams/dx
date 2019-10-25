@@ -38,7 +38,7 @@ const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
 };
 
-const mockAppContext: IAppContext = {
+export const mockAppContext: IAppContext = {
   infoButtonData: [{ id: 'info-button-id', content: 'Info button content', title: 'Title' }],
   appVersions: {
     serverVersion: 'server-test-123',

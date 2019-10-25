@@ -16,7 +16,7 @@ export default {
         needs_grading: false,
         has_feedback: false
       },
-      plannable_date: '2019-05-02T06:59:00Z',
+      plannable_date: new Date(),
       plannable: {
         id: 8514159,
         title: 'Testo Planner Discussion',
@@ -48,7 +48,7 @@ export default {
         needs_grading: false,
         has_feedback: false
       },
-      plannable_date: '2019-05-02T06:59:00Z',
+      plannable_date: new Date(),
       plannable: {
         id: 234234,
         title: 'Planner Announcement Test',
