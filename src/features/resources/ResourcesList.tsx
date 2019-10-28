@@ -7,31 +7,34 @@ import { List, ListItemAnimated, ListItemContentLink } from '../../ui/List';
 import { Color, theme } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 import { Event } from '../../util/gaTracking';
+import { singularPlural } from '../../util/helpers';
 
 const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => (
-  <List aria-live="polite" aria-atomic="true">
-    {resources && `found ${resources.length} results`}
-    <PoseGroup>
-      {resources.length > 0 &&
-        resources.map((resource: IResourceResult) => (
-          <ListItemAnimated spaced key={resource.id} pose="closed">
-            <ListItemContentLink
-              spaced
-              href={resource.link}
-              onClick={() => Event('resource', resource.title)}
-              target="_blank"
-            >
-              {resource.icon !== undefined ? (
-                <ResourceImg src={resource.icon} alt="" />
-              ) : (
-                <ResourceIcon icon={faCube} color={Color.black} />
-              )}
-              <ResourceName>{resource.title}</ResourceName>
-            </ListItemContentLink>
-          </ListItemAnimated>
-        ))}
-    </PoseGroup>
-  </List>
+  <div aria-live="polite" aria-atomic="true">
+    {resources && `found ${resources.length} ${singularPlural(resources.length, 'result')}`}
+    <List>
+      <PoseGroup>
+        {resources.length > 0 &&
+          resources.map((resource: IResourceResult) => (
+            <ListItemAnimated spaced key={resource.id} pose="closed">
+              <ListItemContentLink
+                spaced
+                href={resource.link}
+                onClick={() => Event('resource', resource.title)}
+                target="_blank"
+              >
+                {resource.icon !== undefined ? (
+                  <ResourceImg src={resource.icon} alt="" />
+                ) : (
+                  <ResourceIcon icon={faCube} color={Color.black} />
+                )}
+                <ResourceName>{resource.title}</ResourceName>
+              </ListItemContentLink>
+            </ListItemAnimated>
+          ))}
+      </PoseGroup>
+    </List>
+  </div>
 );
 
 const ResourceName = styled.div`

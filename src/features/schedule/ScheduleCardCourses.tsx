@@ -82,7 +82,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
         {selectedCourses.length > 0 &&
           selectedCourses.map((c: ICourseSchedule) => meetingTimeListItems(c))}
         {selectedCourses.length === 0 && (
-          <NoItems>
+          <NoItems as="li">
             <NoItemsImage src={courses} alt="" />
             <NoItemsText>You don&apos;t have any courses scheduled</NoItemsText>
           </NoItems>

@@ -69,7 +69,7 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
             )
           )}
         {user.isCanvasOptIn && selectedPlannerItems.length === 0 && (
-          <NoItems>
+          <NoItems as="li">
             <NoItemsImage src={assignment} alt="" />
             <NoItemsText>No Canvas assignments due</NoItemsText>
           </NoItems>
