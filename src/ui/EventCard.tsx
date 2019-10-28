@@ -54,7 +54,7 @@ const EventCardDateStyling = styled.div`
   border-radius: 50%;
 
   & > span:first-child {
-    color: ${Color['neutral-500']};
+    color: ${Color['neutral-700']};
     font-weight: bold;
     font-size: ${theme.fontSize[12]};
     text-transform: uppercase;
