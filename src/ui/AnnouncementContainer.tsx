@@ -17,14 +17,12 @@ const AnnouncementContainerWrapper = styled.div`
 `;
 
 const AnnouncementContainer = ({ type, ...props }) => {
-
-  console.log('hmm-',props)
   const events = props.events
 
   if (!events.length) {
     return null;
   }
-
+  
   return (
     <AnnouncementContainerWrapper {...props}>
       {events.map(item => (
