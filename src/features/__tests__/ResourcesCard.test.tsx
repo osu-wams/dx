@@ -2,23 +2,20 @@ import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
-import { resourcesData, categoriesData } from '../../api/__mocks__/resources.data';
+import { resourcesData } from '../../api/__mocks__/resources.data';
 import ResourcesCard from '../ResourcesCard';
 import { mockGAEvent } from '../../setupTests';
 
 const mockUseResourcesByQueue = jest.fn();
-const mockUseCategories = jest.fn();
 
 jest.mock('../../api/resources', () => ({
-  useResourcesByQueue: () => mockUseResourcesByQueue(),
-  useCategories: () => mockUseCategories()
+  useResourcesByQueue: () => mockUseResourcesByQueue()
 }));
 
 describe('<ResourcesCard />', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
     mockUseResourcesByQueue.mockReturnValue(resourcesData);
-    mockUseCategories.mockReturnValue(categoriesData);
   });
 
   it('should render the appropriate title', async () => {
@@ -76,6 +73,10 @@ describe('<ResourcesCard />', () => {
 
 describe('with an InfoButton in the CardFooter', () => {
   const validIinfoButtonId = 'financial-resources';
+
+  beforeAll(() => {
+    mockUseResourcesByQueue.mockReturnValue(resourcesData);
+  });
 
   test('does not display the button when the infoButtonData is missing it', async () => {
     const { queryByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {

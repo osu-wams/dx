@@ -4,21 +4,14 @@ import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import { Color, theme } from '../../theme';
 
-/*
-  TODO: I'm not sure how to make it so that the cards aren't all the same height.
-  Dashboard Beta shouldn't be the same height as Beta Resources.
-*/
-
 const BetaReleaseNotes: FC = () => {
   return (
     <Card>
       <CardHeader title="Release Notes" badge={<CardIcon icon={faClipboardListCheck} />} />
       <CardContent>
-        {/* <ReleaseTitle>Beta Launch!</ReleaseTitle>
-        <ReleaseSubtitle>September 1, 2019</ReleaseSubtitle> */}
-        <ReleaseContent>
-          Check back here for spicy release notes as we update the dashboard!
-        </ReleaseContent>
+        <ReleaseTitle>Beta Launch!</ReleaseTitle>
+        <ReleaseSubtitle>Fall 2019</ReleaseSubtitle>
+        <p>Check back here for spicy release notes as we update the dashboard!</p>
       </CardContent>
       <CardFooter></CardFooter>
     </Card>
@@ -38,15 +31,6 @@ const ReleaseSubtitle = styled.p`
   font-size: ${theme.fontSize['14']};
   font-weight: 600;
   line-height: 19px;
-`;
-
-const ReleaseContent = styled.p`
-  font-size: ${theme.fontSize['16']};
-  margin: ${theme.spacing.unit}px 0 0 0;
-`;
-
-const ReleaseUnorderedList = styled.ul`
-  margin: ${theme.spacing.unit}px 0 0 0;
 `;
 
 export default BetaReleaseNotes;

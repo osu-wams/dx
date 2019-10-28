@@ -7,7 +7,7 @@ import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card'
 import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
 import { Color, theme } from '../theme';
-import { useResourcesByQueue, useCategories } from '../api/resources';
+import { useResourcesByQueue } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
@@ -34,24 +34,14 @@ const ResourceIcon = styled(Icon)`
 /**
  * Resources Card
  *
- * Displays resources from a given set of categories
+ * Displays resources from a given categorY
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
   const user = useContext<any>(UserContext);
-  const getCategoryId = data =>
-    data.filter((e: any) => e.name.toUpperCase() === categ.toUpperCase());
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<any>([]);
 
-  const categories = useCategories(getCategoryId);
-  const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
-
-  const validCategory = (): boolean => {
-    return categories.data.length > 0 && categories.data[0].id !== '';
-  };
-
   /* eslint-disable react-hooks/exhaustive-deps */
-  // Fetch data on load
   useEffect(() => {
     let resourcesToUse: any[] = [];
 
@@ -62,11 +52,13 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   }, [res.data, res.loading, user.data, user.loading]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
+  const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
+
   return (
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
-        {categories.loading && <Skeleton count={5} />}
+        {resources.loading && <Skeleton count={5} />}
         {resources.length ? (
           <List data-testid="resource-container">
             {resources.map(resource => (
@@ -86,16 +78,16 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
               </ListItem>
             ))}
           </List>
-        ) : !categories.loading && !resources.error ? (
+        ) : !resources.loading && !resources.error ? (
           <EmptyState />
         ) : (
           <FailedState>Oops, something went wrong!</FailedState>
         )}
       </ResourcesContainer>
-      {validCategory() && (
+      {resources.length && (
         <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink
-            to={`/resources?category=${categories.data[0].name.toLowerCase()}`}
+            to={`/resources?category=${categ.toLowerCase()}`}
             onClick={() => Event('resources-card', `view all ${categ} link`)}
           >
             View more {categ} resources
