@@ -21,7 +21,12 @@ const AcademicCalendar = () => {
     <Card>
       <CardHeader
         title="Academic Calendar"
-        badge={<CardIcon icon={faCalendar} count={calEvents.data.length < 5 ? calEvents.data.length : 5} />}
+        badge={
+          <CardIcon
+            icon={faCalendar}
+            count={calEvents.data.length < 5 ? calEvents.data.length : 5}
+          />
+        }
       />
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
@@ -54,7 +59,7 @@ const AcademicCalendar = () => {
           href={Url.events.academicCalendar}
           onClick={() => Event('academic-calendar', 'View all link')}
         >
-          View academic calendar
+          View more in the academic calendar
         </ExternalLink>
       </CardFooter>
     </Card>

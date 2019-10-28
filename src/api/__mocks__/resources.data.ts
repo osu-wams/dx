@@ -21,7 +21,7 @@ const resourcesData = {
     {
       id: '3',
       title: 'Billing Information',
-      link: 'https://xe.ucsadm.oregonstate.edu:9990/ords/prod/bwskoacc.P_ViewAcct',
+      link: 'https://oregonstate.edu/bill',
       icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
       audiences: ['Corvallis'],
       categories: ['Financial'],
@@ -48,7 +48,7 @@ const resourcesDataByCategory = {
       id: '825d22a1-938c-4ca7-8b9d-625a639bcdde',
       title: 'Billing Information',
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',
-      uri: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
+      link: 'http://fa.oregonstate.edu/business-affairs/studentbilling'
     }
   ],
   loading: false,

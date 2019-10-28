@@ -17,7 +17,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
           <ListItemAnimated spaced key={resource.id} pose="closed">
             <ListItemContentLink
               spaced
-              href={resource.uri}
+              href={resource.link}
               onClick={() => Event('resource', resource.title)}
               target="_blank"
             >

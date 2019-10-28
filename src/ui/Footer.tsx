@@ -175,6 +175,8 @@ const Footer = () => {
           <a
             href="https://oregonstate.edu/copyright"
             onClick={() => Event('footer', 'Copyright link')}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Copyright
           </a>
@@ -182,6 +184,8 @@ const Footer = () => {
           <a
             href="https://oregonstate.edu/official-web-disclaimer"
             onClick={() => Event('footer', 'Disclaimer link')}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Disclaimer
           </a>{' '}
@@ -189,6 +193,8 @@ const Footer = () => {
           <a
             href="https://accessibility.oregonstate.edu"
             onClick={() => Event('footer', 'Accessibility link')}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Accessibility Information
           </a>

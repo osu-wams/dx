@@ -35,8 +35,8 @@ const SubNavLink = styled(Link)`
   &:focus svg,
   &:hover svg,
   &[aria-current] svg {
-    color: ${Color['orange-400']};
-    border-bottom-color: ${Color['orange-400']};
+    color: ${Color['orange-500']};
+    border-bottom-color: ${Color['orange-500']};
   }
   & + a {
     margin-left: 2.6rem;

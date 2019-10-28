@@ -32,7 +32,7 @@ describe('<PlannerItems />', () => {
     expect(mockGAEvent).toHaveBeenCalled();
 
     // Footer link
-    const CanvasLink = await waitForElement(() => getByText('View all in Canvas'));
+    const CanvasLink = await waitForElement(() => getByText('View more in Canvas'));
     fireEvent.click(CanvasLink);
     expect(mockGAEvent).toHaveBeenCalled();
   });
