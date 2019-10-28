@@ -5,6 +5,7 @@ import { Color, theme } from '../../theme';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import Url from '../../util/externalUrls.data';
 import { Event } from '../../util/gaTracking';
+import { SimpleExternalLink } from '../../ui/Link';
 
 const BetaInfo: FC = () => {
   return (
@@ -40,22 +41,22 @@ const BetaInfo: FC = () => {
           personalization in the future, we want to hear from you now about your experience. This is
           YOUR dashboard — what would you like to see on this site? Notice any problems or bugs? You
           can switch back to{' '}
-          <DashboardBetaContentA
+          <SimpleExternalLink
             href={Url.myosu.main}
             onClick={() => Event('beta-info', 'Go to MyOSU link clicked')}
             target="_blank"
           >
             MyOSU
-          </DashboardBetaContentA>{' '}
+          </SimpleExternalLink>{' '}
           if you&#39;re not finding what you need on the new dashboard (but drop us a line and tell
           us what&#39;s missing!). Explore away, and please send us your questions and{' '}
-          <DashboardBetaContentA
+          <SimpleExternalLink
             href={Url.feedback.main}
             onClick={() => Event('beta-info', 'Give Feedback link clicked')}
             target="_blank"
           >
             feedback
-          </DashboardBetaContentA>
+          </SimpleExternalLink>
           !
         </DashboardBetaContentP>
       </CardContent>
@@ -72,15 +73,7 @@ const DashboardBetaStyledList = styled.ul`
   margin: ${theme.spacing.unit}px 0 0 0;
   padding: 0 0 0 2.8rem;
 `;
-const DashboardBetaContentA = styled.a`
-  :hover,
-  :active,
-  :focus {
-    text-decoration: underline;
-  }
-  text-decoration: none;
-  color: ${Color['orange-400']};
-`;
+
 const BetaTitle = styled.h3`
   color: ${Color['orange-400']};
   font-size: ${theme.fontSize['18']};

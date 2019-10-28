@@ -148,6 +148,7 @@ const MoreNav = () => {
           </SecondaryLink>
           <SecondaryLink
             href={Url.myosu.main}
+            target="_blank"
             onClick={() => Event('navigation-main', 'Go to MyOSU link clicked')}
           >
             <Icon icon={faArrowAltSquareLeft} />
