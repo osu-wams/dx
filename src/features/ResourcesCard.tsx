@@ -77,7 +77,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
                   onClick={() => Event('resources-card', categ, resource.title)}
                 >
                   {resource.icon !== undefined ? (
-                    <ResourceImg src={resource.icon} />
+                    <ResourceImg src={resource.icon} alt="" />
                   ) : (
                     <ResourceIcon icon={faCube} color={Color.black} />
                   )}
