@@ -549,9 +549,7 @@ export default {
             creditHourSession: 0,
             scheduleType: "W",
             scheduleDescription: "Workshop",
-            weeklySchedule: [
-              "T"
-            ]
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
           },
           {
             beginDate: beginDate,
@@ -567,9 +565,7 @@ export default {
             creditHourSession: 2,
             scheduleType: "W",
             scheduleDescription: "Workshop",
-            weeklySchedule: [
-              "F"
-            ]
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
           }
         ]
       }
@@ -620,9 +616,7 @@ export default {
             creditHourSession: 0,
             scheduleType: "W",
             scheduleDescription: "Workshop",
-            weeklySchedule: [
-              "T"
-            ]
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
           },
           {
             beginDate: beginPastDate,
@@ -638,9 +632,7 @@ export default {
             creditHourSession: 2,
             scheduleType: "W",
             scheduleDescription: "Workshop",
-            weeklySchedule: [
-              "F"
-            ]
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
           }
         ]
       }
