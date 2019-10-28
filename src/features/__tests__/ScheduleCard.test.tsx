@@ -43,7 +43,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
   it('should find one workshop', async () => {
     const { container, queryByText } = renderWithUserContext(<ScheduleCard />);
-    const todayWorkshop = await waitForElement(() => getAllByText(container, /Workshop/))
+    const todayWorkshop = await waitForElement(() => getAllByText(container, /Workshop/));
     expect(todayWorkshop).toHaveLength(1);
     expect(queryByText('Joyce Collin Furman Hall Old')).not.toBeInTheDocument();
   });
@@ -57,11 +57,9 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   });
 
   it('should find a course without a clickable map link', async () => {
-    const { queryByText, getByTestId } = renderWithUserContext(<ScheduleCard />);
-    const course = await waitForElement(() => getByTestId('course-list-item-header'));
-    expect(course).toBeInTheDocument();
-    expect(course.innerHTML).toContain('WR');
-    expect(course.innerHTML).toContain('214');
+    const { queryByText, getAllByTestId } = renderWithUserContext(<ScheduleCard />);
+    const courses = await waitForElement(() => getAllByTestId('course-list-item-header'));
+    expect(courses[0]).toHaveTextContent('WR214');
     await wait(() => {
       expect(queryByText('View WR 214 location')).not.toBeInTheDocument();
     });
