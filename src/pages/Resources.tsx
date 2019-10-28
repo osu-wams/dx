@@ -21,7 +21,6 @@ const Resources = () => {
   const [debouncedQuery] = useDebounce(query, 250);
   const categories = useCategories();
   const res = useResources();
-  // const [resources, setResources] = useState([]);
 
   const [filteredResources, setFilteredResources] = useState<any>([]);
 
@@ -29,7 +28,6 @@ const Resources = () => {
   useEffect(() => {
     if (res.data && user.data) {
       if (!debouncedQuery) {
-        // const res = filterResourcesForUserRef.current(resources.data, user.data);
         setFilteredResources(res.data);
       } else {
         const results = filteredResources.filter(resource => {
@@ -41,7 +39,6 @@ const Resources = () => {
           }
           return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
         });
-        // setFilteredResources(filterResourcesForUserRef.current(results, user.data));
         setFilteredResources(results);
       }
     }
@@ -122,7 +119,6 @@ const Resources = () => {
                 />
               </>
             )}
-            {/* <ResourcesList resources={filteredResources} /> */}
             {res.loading && <Skeleton count={5} />}
             {!res.loading && res.data.length > 0 ? (
               <ResourcesList resources={filteredResources.filter(r => hasAudience(r, user.data))} />
