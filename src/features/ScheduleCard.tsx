@@ -1,6 +1,6 @@
 import React, { useState, useContext, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { isSameDay, format, isBefore, isAfter, isWithinRange } from 'date-fns';
+import { isSameDay, format, isWithinRange } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useCourseSchedule, usePlannerItems } from '../api/student';
 import { useAcademicCalendarEvents } from '../api/events';
