@@ -64,7 +64,7 @@ const ScheduleCard = () => {
         );
 
         let plannerItemsOnDay: any[] = [];
-        if (user.isCanvasOptIn) {
+        if (user.isCanvasOptIn && Array.isArray(plannerItems.data)) {
           plannerItemsOnDay = plannerItems.data.filter(item =>
             item.plannable_date ? isSameDay(item.plannable_date, day) : ''
           );
@@ -72,7 +72,7 @@ const ScheduleCard = () => {
 
         return hasCourses || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0;
       }),
-    [nextFiveDays, plannerItems, calEvents, courses, user.isCanvasOptIn]
+    [nextFiveDays, plannerItems.data, calEvents.data, courses.data, user.isCanvasOptIn]
   );
 
   return (
