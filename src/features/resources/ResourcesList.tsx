@@ -7,10 +7,11 @@ import { List, ListItemAnimated, ListItemContentLink } from '../../ui/List';
 import { Color, theme } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 import { Event } from '../../util/gaTracking';
+import { singularPlural } from '../../util/helpers';
 
 const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => (
   <List aria-live="polite" aria-atomic="true">
-    {resources && `found ${resources.length} results`}
+    {resources && `found ${resources.length} ${singularPlural(resources.length, 'result')}`}
     <PoseGroup>
       {resources.length > 0 &&
         resources.map((resource: IResourceResult) => (
