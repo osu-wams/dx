@@ -41,7 +41,7 @@ const ScheduleCard = () => {
   };
 
   let selectedPlannerItems: any[] = [];
-  if (user.isCanvasOptIn && plannerItems.data) {
+  if (user.isCanvasOptIn && Array.isArray(plannerItems.data)) {
     selectedPlannerItems = plannerItems.data.filter(item =>
       item.plannable_date ? isSameDay(item.plannable_date, selectedDay) : ''
     );
