@@ -13,17 +13,11 @@ import Url from '../../util/externalUrls.data';
 import Icon from '../../ui/Icon';
 import courses from '../../assets/courses.svg';
 import { formatTime } from '../../util/helpers';
-import {
-  List,
-  ListItem,
-  ListItemLeadText,
-  ListItemContent,
-  ListItemDescription,
-  ListItemText
-} from '../../ui/List';
+import { List, ListItem, ListItemContent, ListItemDescription, ListItemText } from '../../ui/List';
 import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 import { Event } from '../../util/gaTracking';
 import { courseOnCorvallisCampus } from './schedule-utils';
+import { courseItemLeadText } from '../Courses';
 
 interface ScheduleCardCoursesProps {
   selectedCourses: ICourseSchedule[];
@@ -60,12 +54,7 @@ const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
       !isMidterm(meetingTime) && (
         <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
           <ListItemContent>
-            <ListItemLeadText>
-              <div>{course.attributes.courseSubject}</div>
-              <div>
-                <strong>{course.attributes.courseNumber}</strong>
-              </div>
-            </ListItemLeadText>
+            {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
             <ListItemText>
               <ListItemDescription fontSize={theme.fontSize[16]} color={Color['neutral-700']}>
                 {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
