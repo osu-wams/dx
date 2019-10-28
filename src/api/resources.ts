@@ -18,7 +18,7 @@ export interface IResourceResult {
   id: string;
   title: string;
   icon?: string;
-  uri: string;
+  link: string;
   synonyms: string[];
   categories: string[];
   audiences: string[];
