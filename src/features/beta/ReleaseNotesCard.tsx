@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon, CardFooter} from '../../ui/Card';
+import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import { Color, theme } from '../../theme';
 
 /*
@@ -14,19 +14,10 @@ const BetaReleaseNotes: FC = () => {
     <Card>
       <CardHeader title="Release Notes" badge={<CardIcon icon={faClipboardListCheck} />} />
       <CardContent>
-        <ReleaseTitle>Beta Launch!</ReleaseTitle>
-        <ReleaseSubtitle>September 1, 2019</ReleaseSubtitle>
+        {/* <ReleaseTitle>Beta Launch!</ReleaseTitle>
+        <ReleaseSubtitle>September 1, 2019</ReleaseSubtitle> */}
         <ReleaseContent>
-          The palatable sensation we lovingly refer to as The Cheeseburger has a distinguished and
-          illustrious history.
-        </ReleaseContent>
-        <ReleaseUnorderedList>
-          <li>A great feature.</li>
-          <li>Incredible capabilities.</li>
-          <li>You&apos;re just gonna love it.</li>
-        </ReleaseUnorderedList>
-        <ReleaseContent>
-          It was born from humble roots, only to rise to well-seasoned greatness...
+          Check back here for spicy release notes as we update the dashboard!
         </ReleaseContent>
       </CardContent>
       <CardFooter></CardFooter>
