@@ -34,7 +34,7 @@ const Icon = styled.img`
 `;
 
 const CustomLabel = styled('label')<{ selected: boolean }>`
-  background: ${props => (props.selected ? Color['neutral-500'] : '#fff')};
+  background: ${props => (props.selected ? Color['neutral-550'] : '#fff')};
   color: ${props => (props.selected ? '#fff' : '#000')};
   border: 1px solid ${Color['neutral-300']};
   border-radius: 2rem;
