@@ -44,7 +44,7 @@ export const AcademicOverview = () => {
           fg={Color['orange-400']}
           onClick={() => Event('academic-overview', 'See more in MyDegrees link')}
         >
-          See more in MyDegrees
+          View more in MyDegrees
         </ExternalLink>
       </CardFooter>
     </Card>

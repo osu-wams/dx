@@ -54,11 +54,11 @@ describe('<ResourcesCard />', () => {
   it('should have a link to all category resources', async () => {
     {
       const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
-      await waitForElement(() => getByText('See all financial resources'));
+      await waitForElement(() => getByText('View more financial resources'));
     }
     {
       const { getByText } = render(<ResourcesCard categ="academic" icon={faCube} />);
-      const AllAcademicLink = await waitForElement(() => getByText('See all academic resources'));
+      const AllAcademicLink = await waitForElement(() => getByText('View more academic resources'));
       expect(AllAcademicLink).toBeInTheDocument();
 
       // Google Analytics is setup and fires

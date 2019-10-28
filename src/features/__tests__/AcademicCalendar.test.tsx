@@ -29,7 +29,9 @@ describe('<AcademicCalendar />', () => {
     fireEvent.click(eventTitle);
     expect(mockGAEvent).toHaveBeenCalled();
 
-    const viewCalendar = await waitForElement(() => getByText('View academic calendar'));
+    const viewCalendar = await waitForElement(() =>
+      getByText('View more in the academic calendar')
+    );
     fireEvent.click(viewCalendar);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
@@ -41,7 +43,7 @@ describe('<AcademicCalendar />', () => {
   });
 
   it('should return "No Calendar Events" when no events are loaded', async () => {
-    mockUseAcademicCalendar.mockReturnValue({data: [], loading: false, error: false});
+    mockUseAcademicCalendar.mockReturnValue({ data: [], loading: false, error: false });
     const { getByText } = render(<AcademicCalendar />);
     await waitForElement(() => getByText('No Calendar Events'));
   });

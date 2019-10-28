@@ -121,7 +121,7 @@ const PlannerItems = () => {
             href={Url.canvas.main}
             onClick={() => Event('planner-items', 'View all link clicked')}
           >
-            View all in Canvas
+            View more in Canvas
           </ExternalLink>
         )}
       </CardFooter>

@@ -34,7 +34,7 @@ describe('<AcademicStanding />', () => {
 describe('<Academic Overview />', () => {
   it('Academic Overview has a footer that can be clicked to access My Degrees', async () => {
     const { getByText } = render(<AcademicOverview />);
-    const element = await waitForElement(() => getByText('See more in MyDegrees'));
+    const element = await waitForElement(() => getByText('View more in MyDegrees'));
     fireEvent.click(element);
     expect(mockGAEvent).toHaveBeenCalled();
   });

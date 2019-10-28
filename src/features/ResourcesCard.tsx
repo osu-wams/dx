@@ -98,7 +98,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
             to={`/resources?category=${categories.data[0].name.toLowerCase()}`}
             onClick={() => Event('resources-card', `view all ${categ} link`)}
           >
-            See all {categ} resources
+            View more {categ} resources
           </InternalLink>
         </CardFooter>
       )}

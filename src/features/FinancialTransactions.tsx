@@ -134,9 +134,9 @@ const FinancialTransactions: FC = () => {
       <CardFooter infoButtonId="recent-transactions">
         <ExternalLink
           href={Url.banner.financialTransactions}
-          onClick={() => Event('financial-transactions', 'See all transactions in banner')}
+          onClick={() => Event('financial-transactions', 'View more transactions')}
         >
-          See all transactions
+          View more transactions
         </ExternalLink>
       </CardFooter>
     </Card>

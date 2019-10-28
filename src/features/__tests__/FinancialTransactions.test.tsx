@@ -25,7 +25,7 @@ describe('<FinancialTransactions />', () => {
 
   it('should find link to view all transactions and it triggers analytics', async () => {
     const { getByText } = render(<FinancialTransactions />);
-    const transactions = await waitForElement(() => getByText(/See all transactions/));
+    const transactions = await waitForElement(() => getByText(/View more transactions/));
     fireEvent.click(transactions);
     expect(mockGAEvent).toHaveBeenCalled();
   });
