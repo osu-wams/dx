@@ -49,7 +49,7 @@ export default {
             creditHourSession: 3,
             scheduleType: 'A',
             scheduleDescription: 'Lecture',
-            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           }
         ]
       }
@@ -99,7 +99,7 @@ export default {
             creditHourSession: 1,
             scheduleType: 'C',
             scheduleDescription: 'Recitation',
-            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           }
         ]
       }
@@ -332,7 +332,7 @@ export default {
             creditHourSession: 4,
             scheduleType: 'A',
             scheduleDescription: 'Lecture',
-            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'S']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           },
           {
             beginDate: '2017-12-06',
@@ -362,7 +362,7 @@ export default {
             creditHourSession: 0,
             scheduleType: 'A',
             scheduleDescription: 'Lecture',
-            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           }
         ]
       }
@@ -549,7 +549,7 @@ export default {
             creditHourSession: 0,
             scheduleType: "W",
             scheduleDescription: "Workshop",
-            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           },
           {
             beginDate: beginDate,
@@ -565,7 +565,7 @@ export default {
             creditHourSession: 2,
             scheduleType: "W",
             scheduleDescription: "Workshop",
-            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           }
         ]
       }
@@ -616,7 +616,7 @@ export default {
             creditHourSession: 0,
             scheduleType: "W",
             scheduleDescription: "Workshop",
-            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           },
           {
             beginDate: beginPastDate,
@@ -632,7 +632,7 @@ export default {
             creditHourSession: 2,
             scheduleType: "W",
             scheduleDescription: "Workshop",
-            weeklySchedule: ['M', 'T', 'W', 'Th', 'F']
+            weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           }
         ]
       }
