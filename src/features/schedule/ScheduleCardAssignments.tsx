@@ -23,8 +23,9 @@ import {
 } from '../../ui/List';
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvasCompact';
 import { Event } from '../../util/gaTracking';
+import { courseCodeOrIcon } from '../Courses';
 
-const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
+const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
   const user = useContext<any>(UserContext);
 
   return (
@@ -35,7 +36,14 @@ const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
         {user.isCanvasOptIn &&
           selectedPlannerItems.length > 0 &&
           selectedPlannerItems.map(
-            ({ plannable_id, html_url, plannable_type, plannable_date, plannable: { title } }) => (
+            ({
+              context_name,
+              plannable_id,
+              html_url,
+              plannable_type,
+              plannable_date,
+              plannable: { title }
+            }) => (
               <ListItem key={plannable_id}>
                 <ListItemContentLink
                   href={Url.canvas.main + html_url}
@@ -43,7 +51,11 @@ const ScheduleCardAssignments = ({ selectedPlannerItems }) => {
                     Event('schedule-card', 'canvas-link', `${Url.canvas.main + html_url}`)
                   }
                 >
-                  <Icon icon={faFileAlt} color={Color['orange-200']} />
+                  {courseCodeOrIcon(
+                    context_name,
+                    courseList,
+                    <Icon icon={faFileAlt} color={Color['orange-200']} />
+                  )}
                   <ListItemText>
                     <ListItemHeader>{title} </ListItemHeader>
                     <ListItemDescription>

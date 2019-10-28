@@ -14,6 +14,7 @@ import {
   ListItemText
 } from '../ui/List';
 import { usePlannerItems } from '../api/student/planner-items';
+import { useCourseSchedule } from '../api/student';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import { theme, Color } from '../theme';
 import Url from '../util/externalUrls.data';
@@ -21,6 +22,7 @@ import { ExternalLink } from '../ui/Link';
 import { UserContext } from '../App';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
+import { courseCodeOrIcon } from './Courses';
 
 const NoItems = styled.div`
   display: flex;
@@ -65,36 +67,43 @@ const PlannerItems = () => {
   const { data, loading } = usePlannerItems(() => {
     user.setUser({ ...user, data: { isCanvasOptIn: false } });
   });
+  const courses = useCourseSchedule();
 
   const listOrEmpty = () => {
     if (loading) {
       return <Skeleton count={5} />;
     }
 
-    if (data.length && user.isCanvasOptIn === true) {
+    if (!courses.loading && data.length && user.isCanvasOptIn === true) {
       return (
         <List>
-          {data.map(({ plannable_id, plannable_date, html_url, plannable: { title } }) => (
-            <ListItem key={plannable_id}>
-              <ListItemContentLink
-                href={canvasUrl(html_url)}
-                target="_blank"
-                onClick={() =>
-                  Event('planner-items', 'Canvas planner item click', canvasUrl(html_url))
-                }
-              >
-                <Icon icon={faFileEdit} color={Color['orange-200']} />
-                <ListItemText>
-                  <ListItemHeader>{title}</ListItemHeader>
-                  <ListItemDescription>
-                    {plannable_date &&
-                      plannable_date !== '' &&
-                      format(plannable_date, 'MMM Do [at] h:mma')}
-                  </ListItemDescription>
-                </ListItemText>
-              </ListItemContentLink>
-            </ListItem>
-          ))}
+          {data.map(
+            ({ context_name, plannable_id, plannable_date, html_url, plannable: { title } }) => (
+              <ListItem key={plannable_id}>
+                <ListItemContentLink
+                  href={canvasUrl(html_url)}
+                  target="_blank"
+                  onClick={() =>
+                    Event('planner-items', 'Canvas planner item click', canvasUrl(html_url))
+                  }
+                >
+                  {courseCodeOrIcon(
+                    context_name,
+                    courses.data,
+                    <Icon icon={faFileEdit} color={Color['orange-200']} />
+                  )}
+                  <ListItemText>
+                    <ListItemHeader>{title}</ListItemHeader>
+                    <ListItemDescription>
+                      {plannable_date &&
+                        plannable_date !== '' &&
+                        format(plannable_date, 'MMM Do [at] h:mma')}
+                    </ListItemDescription>
+                  </ListItemText>
+                </ListItemContentLink>
+              </ListItem>
+            )
+          )}
         </List>
       );
     } else if (user.isCanvasOptIn === true) {

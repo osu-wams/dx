@@ -22,6 +22,36 @@ import Url from '../util/externalUrls.data';
 import { ICourseSchedule, IMeetingTime } from '../api/student/course-schedule';
 import { Event } from '../util/gaTracking';
 import { courseOnCorvallisCampus } from './schedule/schedule-utils';
+import { matchedCourseContext } from './course-utils';
+
+/**
+ * Get the course item lead text or the icon
+ * @param contextName the course context name from Canvas
+ * @param courseList the array of courses for the student
+ */
+export const courseCodeOrIcon = (
+  contextName: string,
+  courseList: ICourseSchedule[],
+  iconElement: JSX.Element
+): JSX.Element => {
+  const course = matchedCourseContext(contextName, courseList);
+  if (!course) return iconElement;
+  return courseItemLeadText(course.courseSubject, course.courseNumber);
+};
+
+/**
+ * A component to provide the course items lead text in place of an icon
+ * @param subject the course subject (ie. PSY)
+ * @param number the course number (ie. 492)
+ */
+export const courseItemLeadText = (subject: string, number: string): JSX.Element => (
+  <ListItemLeadText data-testid="course-list-item-header">
+    <div>{subject}</div>
+    <div>
+      <strong>{number}</strong>
+    </div>
+  </ListItemLeadText>
+);
 
 const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime): JSX.Element => (
   <a
@@ -74,12 +104,10 @@ const Courses = () => {
                   Event('courses', 'course clicked', course.attributes.courseTitle);
                 }}
               >
-                <ListItemLeadText data-testid="course-list-item-header">
-                  <div>{course.attributes.courseSubject}</div>
-                  <div>
-                    <strong>{course.attributes.courseNumber}</strong>
-                  </div>
-                </ListItemLeadText>
+                {courseItemLeadText(
+                  course.attributes.courseSubject,
+                  course.attributes.courseNumber
+                )}
                 <ListItemText>
                   <ListItemDescription fontSize={theme.fontSize[16]} color={Color['neutral-700']}>
                     {titleCase(course.attributes.courseTitle)}

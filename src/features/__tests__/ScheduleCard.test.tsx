@@ -57,9 +57,11 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   });
 
   it('should find a course without a clickable map link', async () => {
-    const { queryByText, getByText } = renderWithUserContext(<ScheduleCard />);
-    const course = await waitForElement(() => getByText(/WR 214/));
+    const { queryByText, getByTestId } = renderWithUserContext(<ScheduleCard />);
+    const course = await waitForElement(() => getByTestId('course-list-item-header'));
     expect(course).toBeInTheDocument();
+    expect(course.innerHTML).toContain('WR');
+    expect(course.innerHTML).toContain('214');
     await wait(() => {
       expect(queryByText('View WR 214 location')).not.toBeInTheDocument();
     });

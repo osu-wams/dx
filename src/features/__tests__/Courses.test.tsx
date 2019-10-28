@@ -36,16 +36,14 @@ describe('<Courses />', () => {
     const { queryAllByTestId } = render(<Courses />);
     const courses = await waitForElement(() => queryAllByTestId('course-list-item-header'));
     expect(courses.map(c => c.textContent)).toStrictEqual([
-      'CS 261',
-      'CS 261',
-      'CS 290',
-      'ED 408',
-      'ED 408',
-      'PH 212',
-      'PH 212',
-      'PH 212',
-      'PH 222',
-      'WR 214'
+      'CS261',
+      'CS261',
+      'CS290',
+      'PH212',
+      'PH212',
+      'PH212',
+      'PH222',
+      'WR214'
     ]);
   });
 });
