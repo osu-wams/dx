@@ -28,7 +28,7 @@ describe('<Courses />', () => {
 
   it('Finds "8" as the course count in the Badge', async () => {
     const { getByText } = render(<Courses />);
-    const NumCourses = await waitForElement(() => getByText('8'));
+    const NumCourses = await waitForElement(() => getByText('10'));
     expect(NumCourses).toBeInTheDocument();
   });
 
@@ -39,6 +39,8 @@ describe('<Courses />', () => {
       'CS 261',
       'CS 261',
       'CS 290',
+      'ED 408',
+      'ED 408',
       'PH 212',
       'PH 212',
       'PH 212',

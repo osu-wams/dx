@@ -1,5 +1,5 @@
 import React from 'react';
-import { wait, waitForElement, fireEvent } from '@testing-library/react';
+import { wait, waitForElement, fireEvent, getAllByText } from '@testing-library/react';
 import { renderWithUserContext, authUser } from '../../util/test-utils';
 import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
@@ -39,6 +39,13 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
     const todayCourse = await waitForElement(() => getByText(/Every Day Test/));
     expect(todayCourse).toBeInTheDocument();
+  });
+
+  it('should find one workshop', async () => {
+    const { container, queryByText } = renderWithUserContext(<ScheduleCard />);
+    const todayWorkshop = await waitForElement(() => getAllByText(container, /Workshop/))
+    expect(todayWorkshop).toHaveLength(1);
+    expect(queryByText('Joyce Collin Furman Hall Old')).not.toBeInTheDocument();
   });
 
   it('should find a course with a clickable map link', async () => {
