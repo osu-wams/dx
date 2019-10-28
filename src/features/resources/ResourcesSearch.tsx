@@ -16,12 +16,13 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
   };
   return (
     <SearchWrapper>
-      <InputLabel>
+      <InputLabel htmlFor="resourcesSearch" aria-label="Find resources">
         <Icon icon={faSearch} />
       </InputLabel>
       <Input
         placeholder="Find resources"
         value={query}
+        id="resourcesSearch"
         onChange={e => handleChange(e.target.value)}
       />
     </SearchWrapper>
