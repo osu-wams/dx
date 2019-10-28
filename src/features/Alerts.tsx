@@ -31,7 +31,7 @@ const RaveAlertCard = styled(Card)`
   border-radius: 0;
 `;
 const DxInfoAlertCard = styled(RaveAlertCard)`
-  background-color: ${Color['roguewave-400']};
+  background-color: ${Color['stratosphere-400']};
 `;
 const DxWarnAlertCard = styled(RaveAlertCard)`
   background-color: ${Color['luminance-300']};
