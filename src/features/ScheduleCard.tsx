@@ -89,8 +89,11 @@ const ScheduleCard = () => {
         />
         {plannerItems.loading && <Skeleton count={4} />}
         <div aria-live="assertive" aria-atomic="true">
-          {!plannerItems.loading && (
-            <ScheduleCardAssignments selectedPlannerItems={selectedPlannerItems} />
+          {!courses.loading && !plannerItems.loading && (
+            <ScheduleCardAssignments
+              courseList={courses.data}
+              selectedPlannerItems={selectedPlannerItems}
+            />
           )}
           {courses.loading && <Skeleton count={4} />}
           {!courses.loading && <ScheduleCardCourses selectedCourses={getCoursesOnSelectedDay()} />}

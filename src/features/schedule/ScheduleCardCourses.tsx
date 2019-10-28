@@ -1,6 +1,7 @@
 import React from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
+import { theme, Color } from '../../theme';
 import {
   CardSection,
   SectionHeader,
@@ -9,22 +10,14 @@ import {
   NoItemsText
 } from './ScheduleCardStyles';
 import Url from '../../util/externalUrls.data';
-import { getIconByScheduleType } from '../course-utils';
 import Icon from '../../ui/Icon';
-import { Color } from '../../theme';
 import courses from '../../assets/courses.svg';
 import { formatTime } from '../../util/helpers';
-import {
-  List,
-  ListItem,
-  ListItemHeader,
-  ListItemContent,
-  ListItemDescription,
-  ListItemText
-} from '../../ui/List';
+import { List, ListItem, ListItemContent, ListItemDescription, ListItemText } from '../../ui/List';
 import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 import { Event } from '../../util/gaTracking';
 import { courseOnCorvallisCampus } from './schedule-utils';
+import { courseItemLeadText } from '../Courses';
 
 interface ScheduleCardCoursesProps {
   selectedCourses: ICourseSchedule[];
@@ -61,15 +54,9 @@ const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
       !isMidterm(meetingTime) && (
         <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
           <ListItemContent>
-            <Icon
-              icon={getIconByScheduleType(meetingTime.scheduleType)}
-              color={Color['orange-200']}
-            />
+            {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
             <ListItemText>
-              <ListItemHeader>
-                {course.attributes.courseSubject} {course.attributes.courseNumber}
-              </ListItemHeader>
-              <ListItemDescription>
+              <ListItemDescription fontSize={theme.fontSize[16]} color={Color['neutral-700']}>
                 {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
                 {meetingTime.buildingDescription}
               </ListItemDescription>

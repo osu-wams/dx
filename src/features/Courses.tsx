@@ -1,25 +1,77 @@
 import React, { useState } from 'react';
-import { faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
+import VisuallyHidden from '@reach/visually-hidden';
+import { faMapMarkerAlt, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { useCourseSchedule } from '../api/student';
 import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
 import { ICourseScheduleAttributes } from '../api/student/course-schedule';
-import Icon from '../ui/Icon';
-import { getIconByScheduleType } from './course-utils';
 import { sortedByCourseName } from './schedule/schedule-utils';
 import {
   List,
   ListItem,
   ListItemContentButton,
   ListItemText,
-  ListItemHeader,
+  ListItemLeadText,
   ListItemDescription
 } from '../ui/List';
 import Course from '../features/Course';
+import Icon from '../ui/Icon';
 import { titleCase, singularPlural } from '../util/helpers';
-import { Color } from '../theme';
+import { theme, Color } from '../theme';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
+import { ICourseSchedule, IMeetingTime } from '../api/student/course-schedule';
 import { Event } from '../util/gaTracking';
+import { courseOnCorvallisCampus } from './schedule/schedule-utils';
+import { matchedCourseContext } from './course-utils';
+
+/**
+ * Get the course item lead text or the icon
+ * @param contextName the course context name from Canvas
+ * @param courseList the array of courses for the student
+ */
+export const courseCodeOrIcon = (
+  contextName: string,
+  courseList: ICourseSchedule[],
+  iconElement: JSX.Element
+): JSX.Element => {
+  const course = matchedCourseContext(contextName, courseList);
+  if (!course) return iconElement;
+  return courseItemLeadText(course.courseSubject, course.courseNumber);
+};
+
+/**
+ * A component to provide the course items lead text in place of an icon
+ * @param subject the course subject (ie. PSY)
+ * @param number the course number (ie. 492)
+ */
+export const courseItemLeadText = (subject: string, number: string): JSX.Element => (
+  <ListItemLeadText data-testid="course-list-item-header">
+    <div>{subject}</div>
+    <div>
+      <strong>{number}</strong>
+    </div>
+  </ListItemLeadText>
+);
+
+const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime): JSX.Element => (
+  <a
+    href={Url.campusMap.building + meetingTime.building}
+    target="_blank"
+    rel="noopener noreferrer"
+    onClick={() =>
+      Event(
+        'schedule-card',
+        'course location clicked',
+        `${Url.campusMap.building + meetingTime.building}`
+      )
+    }
+  >
+    <VisuallyHidden>
+      View {course.attributes.courseSubject} {course.attributes.courseNumber} location on map
+    </VisuallyHidden>
+    <Icon icon={faMapMarkerAlt} />
+  </a>
+);
 
 const Courses = () => {
   const courses = useCourseSchedule();
@@ -44,41 +96,32 @@ const Courses = () => {
       />
       <CardContent>
         <List>
-          {sortedByCourseName(courses.data).map(
-            ({
-              id,
-              attributes,
-              attributes: {
-                creditHours,
-                scheduleDescription,
-                scheduleType,
-                courseTitle,
-                courseNumber,
-                courseSubject
-              }
-            }) => (
-              <ListItem key={id}>
-                <ListItemContentButton
-                  onClick={() => {
-                    toggleCourse(attributes);
-                    Event('courses', 'course clicked', attributes.courseTitle);
-                  }}
-                >
-                  <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
-                  <ListItemText>
-                    <ListItemHeader data-testid="course-list-item-header">
-                      {courseSubject} {courseNumber}
-                    </ListItemHeader>
-                    <ListItemDescription>
-                      {titleCase(courseTitle)} <br />
-                      {scheduleDescription} &middot; {creditHours}{' '}
-                      {singularPlural(creditHours, 'Credit')}
-                    </ListItemDescription>
-                  </ListItemText>
-                </ListItemContentButton>
-              </ListItem>
-            )
-          )}
+          {sortedByCourseName(courses.data).map(course => (
+            <ListItem key={course.id}>
+              <ListItemContentButton
+                onClick={() => {
+                  toggleCourse(course.attributes);
+                  Event('courses', 'course clicked', course.attributes.courseTitle);
+                }}
+              >
+                {courseItemLeadText(
+                  course.attributes.courseSubject,
+                  course.attributes.courseNumber
+                )}
+                <ListItemText>
+                  <ListItemDescription fontSize={theme.fontSize[16]} color={Color['neutral-700']}>
+                    {titleCase(course.attributes.courseTitle)}
+                  </ListItemDescription>
+                  <ListItemDescription>
+                    {course.attributes.scheduleDescription} &middot; {course.attributes.creditHours}{' '}
+                    {singularPlural(course.attributes.creditHours, 'Credit')}
+                  </ListItemDescription>
+                </ListItemText>
+                {courseOnCorvallisCampus(course) &&
+                  meetingTimeCampusMap(course, course.attributes.meetingTimes[0])}
+              </ListItemContentButton>
+            </ListItem>
+          ))}
         </List>
         {isOpen && courseAttributes && (
           <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />

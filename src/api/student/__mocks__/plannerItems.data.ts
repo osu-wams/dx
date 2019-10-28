@@ -30,7 +30,7 @@ export default {
         due_at: new Date()
       },
       html_url: '/courses/1724943/assignments/7547408/submissions/6227907',
-      context_name: 'INTRODUCTORY BIOLOGY III (BI_206_C401_S2019)'
+      context_name: 'WRITING STUFF (WR_214_ABC_F2019)'
     },
     {
       context_type: 'Course',

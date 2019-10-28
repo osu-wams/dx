@@ -83,10 +83,22 @@ const ListItemHeader = styled.h4`
   font-weight: normal;
 `;
 
-const ListItemDescription = styled.div`
-  color: ${Color['neutral-550']};
-  font-size: ${theme.fontSize[14]};
+const ListItemDescription = styled.div<{ fontSize?: string; color?: string }>`
+  color: ${props => (props.color ? props.color : Color['neutral-550'])};
+  font-size: ${props => (props.fontSize ? props.fontSize : theme.fontSize[14])};
   line-height: 1.6rem;
+`;
+
+const ListItemLeadText = styled.div`
+  line-height: ${theme.fontSize[14]};
+  text-align: center;
+  padding: 0 ${theme.spacing.unit * 2}px 0 0;
+  color: ${Color['orange-400']};
+  width: ${theme.fontSize[58]};
+  strong {
+    line-height: ${theme.fontSize[20]};
+    font-size: ${theme.fontSize[20]};
+  }
 `;
 
 export {
@@ -98,5 +110,6 @@ export {
   ListItemContentLink,
   ListItemText,
   ListItemHeader,
-  ListItemDescription
+  ListItemDescription,
+  ListItemLeadText
 };
