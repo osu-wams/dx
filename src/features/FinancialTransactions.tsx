@@ -31,7 +31,7 @@ const TransactionName = styled.div`
 
 const TransactionDetail = styled.div`
   font-size: ${theme.fontSize[12]};
-  color: ${Color['neutral-500']};
+  color: ${Color['neutral-550']};
   text-transform: capitalize;
 `;
 
