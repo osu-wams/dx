@@ -69,7 +69,7 @@ const Title = styled.h1`
 `;
 
 const Badge = styled.a`
-  background-color: ${Color['roguewave-400']};
+  background-color: ${Color['stratosphere-400']};
   color: ${Color['white']};
   font-size: ${theme.fontSize[14]};
   line-height: ${theme.fontSize[36]};
