@@ -114,7 +114,7 @@ export const useUser = () => {
   const [user, setUser] = useState<IUserState>({
     data: {},
     error: false,
-    loading: false,
+    loading: true,
     isCanvasOptIn: false
   });
   const u = useAPICall<IUser>(getUser, undefined, data => data, {}, false);
