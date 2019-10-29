@@ -23,7 +23,7 @@ import { Card, CardFooter, CardContent } from '../ui/Card';
 const ScheduleCard = () => {
   const user = useContext<any>(UserContext);
   const plannerItems = usePlannerItems(() => {
-    user.setUser({ ...user, data: { isCanvasOptIn: false } });
+    user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
   });
   const courses = useCourseSchedule();
   const nextFiveDays = getNextFiveDays();
