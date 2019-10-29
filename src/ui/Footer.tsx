@@ -1,22 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { faMask, faUserHeadset, faCommentAltCheck } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
-import { ToastContainer, toast, Zoom } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '@reach/dialog/styles.css';
 import { Event } from '../util/gaTracking';
-import MyDialog from './MyDialog';
 import Button from './Button';
-import Input from './Input';
-import Label from './Label';
 import { Color, theme } from '../theme';
 import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
-import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 import { isNullOrUndefined } from 'util';
 import Url from '../util/externalUrls.data';
-import * as cache from '../util/cache';
+import Masquerade from '../features/Masquerade';
 
 const FooterWrapper = styled.div`
   width: 100%;
@@ -76,59 +72,9 @@ const FooterDeployedContent = styled.span`
 
 const Footer = () => {
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
-  const [masqueradeId, setMasqueradeId] = useState(undefined);
   const user = useContext<any>(UserContext);
   const appContext = useContext<IAppContext>(AppContext);
-
-  useEffect(() => {
-    getMasqueradeUser()
-      .then(data => {
-        if (data && data.masqueradeId) {
-          cache.clear();
-          setMasqueradeId(data.masqueradeId);
-        }
-      })
-      .catch(err => console.log);
-  }, []);
-
   const toggleMasqueradeDialog = () => setShowMasqueradeDialog(!showMasqueradeDialog);
-
-  const masquerade = () => {
-    if (masqueradeId) {
-      postMasqueradeUser(masqueradeId)
-        .then(() => {
-          cache.clear();
-          toggleMasqueradeDialog();
-          toast.success(`Masquerading as OSU ID ${masqueradeId}.`, { transition: Zoom });
-          setTimeout(() => {
-            window.location.reload(true);
-          }, 2000);
-        })
-        .catch(err => console.log(err));
-    } else {
-      postMasqueradeUser()
-        .then(() => {
-          cache.clear();
-          toggleMasqueradeDialog();
-          setMasqueradeId(undefined);
-          toast.info('Masquerade session ended.', { transition: Zoom });
-          setTimeout(() => {
-            window.location.reload(true);
-          }, 2000);
-        })
-        .catch(err => console.log(err));
-    }
-  };
-
-  const handleChange = e => {
-    setMasqueradeId(e.target.value);
-  };
-
-  const handleKeyDown = e => {
-    if (e.key === 'Enter') {
-      masquerade();
-    }
-  };
 
   /**
    * Generate a version link, if possible, for the deployed version
@@ -223,42 +169,12 @@ const Footer = () => {
         )}
         <ToastContainer />
       </FooterWrapper>
-      <MyDialog
-        isOpen={showMasqueradeDialog}
-        data-testid="masquerade-dialog"
-        aria-labelledby="maskDialog-title"
-      >
-        <h2 id="maskDialog-title">Log in as another user</h2>
-        <Label htmlFor="osu-id">
-          Enter user OSU ID
-          <br />
-          <Input
-            type="text"
-            id="osu-id"
-            value={masqueradeId}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-          />
-        </Label>
-        <br />
-        <br />
-        <Button
-          type="submit"
-          onClick={() => {
-            Event('footer', 'masquerade', 'submit form to masquerade');
-            masquerade();
-          }}
-        >
-          Masquerade
-        </Button>
-        <Button
-          bg={Color['neutral-200']}
-          fg={Color['neutral-700']}
-          onClick={toggleMasqueradeDialog}
-        >
-          Cancel
-        </Button>
-      </MyDialog>
+      {user && user.data && user.data.isAdmin && showMasqueradeDialog && (
+        <Masquerade
+          showMasqueradeDialog={showMasqueradeDialog}
+          toggleMasqueradeDialog={toggleMasqueradeDialog}
+        />
+      )}
     </>
   );
 };
