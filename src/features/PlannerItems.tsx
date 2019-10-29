@@ -65,7 +65,7 @@ const canvasUrl = url => {
 const PlannerItems = () => {
   const user = useContext<any>(UserContext);
   const { data, loading } = usePlannerItems(() => {
-    user.setUser({ ...user, data: { isCanvasOptIn: false } });
+    user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
   });
   const courses = useCourseSchedule();
 
