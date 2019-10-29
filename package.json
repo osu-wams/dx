@@ -73,12 +73,20 @@
     "lint-staged": "^9.2.5",
     "webpack-bundle-analyzer": "^3.0.3"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not ie < 11",
+      "not op_mini all"
+    ],
+    "development": [
+      ">0.2%",
+      "not dead",
+      "not ie < 11",
+      "not op_mini all"
+    ]
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
