@@ -18,23 +18,23 @@ const BetaInfo: FC = () => {
           MyOSU and lay the foundation for your OSU digital experience. Here are a few of
           my.oregonstate.edu&#39;s key features:
         </DashboardBetaContentP>
-        <DashboardBetaStyledList>
-          <li>
+        <DashboardBetaStyledList >
+          <BetaStyledListItem>
             Home, where you can see what’s coming up in your courses, access commonly used systems,
             and find events and announcements from across campus
-          </li>
-          <li>
+          </BetaStyledListItem>
+          <BetaStyledListItem>
             Academics, where you can track your GPA and academic standing, and see what’s due in
             Canvas
-          </li>
-          <li>
+          </BetaStyledListItem>
+          <BetaStyledListItem>
             Finances, where you can track your OSU account transactions, set up direct deposit and
             pay your bills
-          </li>
-          <li>
+          </BetaStyledListItem>
+          <BetaStyledListItem>
             Resources, where you can find a comprehensive list of links to the various services and
             resources you need
-          </li>
+          </BetaStyledListItem>
         </DashboardBetaStyledList>
         <DashboardBetaContentP>
           This is still a beta release, and while we plan to add new features and a greater level of
@@ -72,6 +72,11 @@ const DashboardBetaContentP = styled.p`
 const DashboardBetaStyledList = styled.ul`
   margin: ${theme.spacing.unit}px 0 0 0;
   padding: 0 0 0 2.8rem;
+  font-size: ${theme.fontSize[14]};
+`;
+
+const BetaStyledListItem = styled.li`
+  margin-bottom: ${theme.spacing.unit}px;
 `;
 
 const BetaTitle = styled.h3`
