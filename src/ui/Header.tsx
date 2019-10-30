@@ -61,7 +61,7 @@ const UserButton = styled(MenuButton)`
 const ProfileMenuList = styled(MenuList)`
   &[data-reach-menu-list] {
     background-color: ${Color['neutral-700']};
-    border-radius: ${theme.borderRadius};
+    border-radius: ${theme.borderRadius[8]};
     color: ${Color.white};
     min-width: 15rem;
     padding: 0;

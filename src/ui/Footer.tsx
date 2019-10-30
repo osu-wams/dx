@@ -53,7 +53,7 @@ const FooterIconLink = styled.a`
   border: 1px solid ${Color['neutral-400']};
   display: inline-block;
   color: ${Color.white};
-  border-radius: ${theme.borderRadius};
+  border-radius: ${theme.borderRadius[8]};
   padding: 1.2rem;
   font-size: ${theme.fontSize[16]};
   text-decoration: none;
