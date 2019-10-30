@@ -16,7 +16,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
       <PoseGroup>
         {resources.length > 0 &&
           resources.map((resource: IResourceResult) => (
-            <ListItemAnimated spaced key={resource.id} pose="closed">
+            <ListItemAnimated spaced key={resource.id}>
               <ListItemContentLink
                 spaced
                 href={resource.link}

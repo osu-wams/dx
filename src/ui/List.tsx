@@ -14,7 +14,20 @@ const List = styled.ul`
   margin: 0;
 `;
 
-const PosedLi = posed.li({});
+const PosedLi = posed.li({
+  flip: {
+    transition: {
+      type: 'tween',
+      ease: 'linear'
+    }
+  },
+  enter: {
+    opacity: 1
+  },
+  exit: {
+    opacity: 0
+  }
+});
 
 // Copy of ListItem to use posed animation library
 const ListItemAnimated = styled(PosedLi)<SpacedList>`
