@@ -3,7 +3,7 @@ import { Dialog } from '@reach/dialog';
 import { theme, Color } from '../theme';
 
 const MyDialog = styled(Dialog)`
-  border-radius: ${theme.borderRadius};
+  border-radius: ${theme.borderRadius[16]};
   .closeButton {
     float: right;
     margin-right: -2rem;

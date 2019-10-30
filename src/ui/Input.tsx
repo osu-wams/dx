@@ -29,7 +29,7 @@ function inputSize(size?: string) {
 const Input = styled.input<IInput>`
   color: ${Color['neutral-700']};
   text-decoration: none;
-  border-radius: ${theme.borderRadius};
+  border-radius: ${theme.borderRadius[8]};
   border: 1px solid ${Color['neutral-300']};
   ${({ osuSize }) => inputSize(osuSize)};
 `;

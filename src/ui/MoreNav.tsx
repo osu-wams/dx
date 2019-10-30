@@ -43,7 +43,7 @@ const PopoverDisclosure = styled(PD)`
 `;
 
 const Popover = styled(PO)`
-  border-radius: ${theme.borderRadius};
+  border-radius: ${theme.borderRadius[8]};
   background-color: ${Color['neutral-700']};
   width: 94%;
   top: 5rem !important;
