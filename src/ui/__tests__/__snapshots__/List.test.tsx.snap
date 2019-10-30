@@ -13,9 +13,8 @@ exports[`An icon on the right 1`] = `
   list-style-type: none;
 }
 
-.c1:not(:last-child) {
+.c1:last-child {
   margin-bottom: 16px;
-  border-bottom: 0px solid #E9E5E4;
 }
 
 .c1 > button {
@@ -41,7 +40,10 @@ exports[`An icon on the right 1`] = `
   -ms-flex-align: center;
   align-items: center;
   border: none;
-  padding: 1px 10px;
+  border-radius: 8px;
+  -webkit-transition: all 150ms ease-in-out 0s;
+  transition: all 150ms ease-in-out 0s;
+  padding: 12px 12px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -142,9 +144,8 @@ exports[`Default style with icon on left 1`] = `
   list-style-type: none;
 }
 
-.c1:not(:last-child) {
+.c1:last-child {
   margin-bottom: 16px;
-  border-bottom: 0px solid #E9E5E4;
 }
 
 .c1 > button {
@@ -170,7 +171,10 @@ exports[`Default style with icon on left 1`] = `
   -ms-flex-align: center;
   align-items: center;
   border: none;
-  padding: 1px 10px;
+  border-radius: 8px;
+  -webkit-transition: all 150ms ease-in-out 0s;
+  transition: all 150ms ease-in-out 0s;
+  padding: 12px 12px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -270,9 +274,8 @@ exports[`Icon on both left and right 1`] = `
   list-style-type: none;
 }
 
-.c1:not(:last-child) {
+.c1:last-child {
   margin-bottom: 16px;
-  border-bottom: 0px solid #E9E5E4;
 }
 
 .c1 > button {
@@ -298,7 +301,10 @@ exports[`Icon on both left and right 1`] = `
   -ms-flex-align: center;
   align-items: center;
   border: none;
-  padding: 1px 10px;
+  border-radius: 8px;
+  -webkit-transition: all 150ms ease-in-out 0s;
+  transition: all 150ms ease-in-out 0s;
+  padding: 12px 12px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
