@@ -19,7 +19,7 @@ const NavLink = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 12px;
+  margin: 0 8px;
   padding: 0 4px;
   line-height: 30px;
   text-decoration: none;
