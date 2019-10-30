@@ -43,12 +43,10 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    let resourcesToUse: any[] = [];
-
     if (!user.loading && !res.loading) {
-      resourcesToUse = res.data.filter(resource => hasAudience(user.data, resource));
+      const resourcesToUse = res.data.filter(resource => hasAudience(user.data, resource));
+      setResources(resourcesToUse);
     }
-    setResources(resourcesToUse);
   }, [res.data, res.loading, user.data, user.loading]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
@@ -58,8 +56,8 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
-        {resources.loading && <Skeleton count={5} />}
-        {resources.length ? (
+        {res.loading && <Skeleton count={5} />}
+        {!res.loading && resources.length > 0 && (
           <List data-testid="resource-container">
             {resources.map(resource => (
               <ListItem key={resource.id}>
@@ -78,13 +76,13 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
               </ListItem>
             ))}
           </List>
-        ) : !resources.loading && !resources.error ? (
-          <EmptyState />
-        ) : (
-          <FailedState>Oops, something went wrong!</FailedState>
         )}
+
+        {!res.loading && !res.error && resources.length === 0 && <EmptyState />}
+
+        {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
       </ResourcesContainer>
-      {resources.length && (
+      {resources.length > 0 && (
         <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink
             to={`/resources?category=${categ.toLowerCase()}`}
