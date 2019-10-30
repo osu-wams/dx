@@ -15,7 +15,10 @@ import { Color, theme, breakpoints } from '../theme';
 const AlertWrapper = styled.div`
   width: 100%;
   font-size: ${theme.fontSize[14]};
-  padding: 0 0 1rem 0;
+  padding: 0;
+  > div {
+    margin-bottom: 0 !important;
+  }
 `;
 const AlertCardWrapper = styled(Card)`
   width: 100%;
