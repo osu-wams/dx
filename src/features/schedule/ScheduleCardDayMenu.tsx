@@ -1,6 +1,7 @@
 import React from 'react';
 import { format, isSameDay } from 'date-fns';
 import styled from 'styled-components';
+import VisuallyHidden from '@reach/visually-hidden';
 import { theme, Color } from '../../theme';
 import { Event } from '../../util/gaTracking';
 
@@ -16,8 +17,11 @@ const ScheduleCardDayMenu = ({ selectedDay, nextFiveDays, setSelectedDay, daysWi
           }}
           selected={isSameDay(day, selectedDay)}
         >
-          <span>{daysWithEvents.includes(day) ? '\u2022' : ''}</span>
-          <span>{format(day, 'ddd')}</span>
+          <span aria-hidden>{daysWithEvents.includes(day) ? '\u2022' : ''}</span>
+          <span>
+            <span aria-hidden>{format(day, 'ddd')}</span>
+            <VisuallyHidden>{format(day, 'dddd')}</VisuallyHidden>
+          </span>
           <span>{format(day, 'D')}</span>
         </Day>
       ))}
