@@ -36,7 +36,7 @@ const Icon = (props: any) => {
     return (
       <IconWrapper>
         <IconStyle {...others} />
-        <IconCounter>{count}</IconCounter>
+        <IconCounter data-testid="icon-counter">{count}</IconCounter>
       </IconWrapper>
     );
   }

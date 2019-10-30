@@ -1,6 +1,6 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
-import { render, mockAppContext } from '../../util/test-utils';
+import { render, mockAppContext, authUser } from '../../util/test-utils';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from '../../setupTests';
@@ -70,5 +70,20 @@ describe('with an InfoButton in the CardFooter', () => {
 
     const element = await waitForElement(() => getByTestId(validIinfoButtonId));
     expect(element).toBeInTheDocument();
+  });
+});
+
+describe('with a user who has not opted-in Canvas', () => {
+  test('hides the badge count and shows the authorization call to action', async () => {
+    const mockUser = authUser;
+    mockUser.data.isCanvasOptIn = false;
+    mockUser.isCanvasOptIn = false;
+
+    const { queryByTestId, getAllByText } = render(<PlannerItems />, { user: mockUser });
+
+    const element = queryByTestId('icon-counter');
+    expect(element).not.toBeInTheDocument();
+    const authorizeElements = await waitForElement(() => getAllByText(/Authorize Canvas/));
+    expect(authorizeElements.length).toBe(2);
   });
 });

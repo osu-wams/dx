@@ -118,7 +118,10 @@ const PlannerItems = () => {
 
   return (
     <Card>
-      <CardHeader title="Canvas" badge={<CardIcon icon={faFileEdit} count={data.length} />} />
+      <CardHeader
+        title="Canvas"
+        badge={<CardIcon icon={faFileEdit} count={user.isCanvasOptIn ? data.length : undefined} />}
+      />
       <CardContent>
         {/* If not authorized to canvas, we display the link to have them authorize */}
         {!user.isCanvasOptIn && user.isCanvasOptIn !== undefined && <AuthorizeCanvas />}
