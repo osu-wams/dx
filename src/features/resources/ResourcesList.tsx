@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import { PoseGroup } from 'react-pose';
 import Icon from '../../ui/Icon';
-import { List, ListItemAnimated, ListItemContentLink } from '../../ui/List';
+import { List, ListItem, ListItemContentLink } from '../../ui/List';
 import { Color, theme } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 import { Event } from '../../util/gaTracking';
@@ -16,7 +16,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
       <PoseGroup>
         {resources.length > 0 &&
           resources.map((resource: IResourceResult) => (
-            <ListItemAnimated spaced key={resource.id}>
+            <ListItem spaced key={resource.id}>
               <ListItemContentLink
                 spaced
                 href={resource.link}
@@ -30,7 +30,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
                 )}
                 <ResourceName>{resource.title}</ResourceName>
               </ListItemContentLink>
-            </ListItemAnimated>
+            </ListItem>
           ))}
       </PoseGroup>
     </List>

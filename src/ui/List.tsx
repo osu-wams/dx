@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import posed from 'react-pose';
 import { theme, Color } from '../theme';
 
 type SpacedList = {
@@ -12,30 +11,6 @@ const List = styled.ul`
   text-decoration: none;
   padding: 0;
   margin: 0;
-`;
-
-const PosedLi = posed.li({
-  flip: {
-    transition: {
-      type: 'tween',
-      ease: 'linear'
-    }
-  },
-  enter: {
-    opacity: 1
-  },
-  exit: {
-    opacity: 0
-  }
-});
-
-// Copy of ListItem to use posed animation library
-const ListItemAnimated = styled(PosedLi)<SpacedList>`
-  list-style-type: none;
-  &:not(:last-child) {
-    margin-bottom: ${props => (props.spaced ? 0 : theme.spacing.unit * 2)}px;
-    border-bottom: ${props => (props.spaced ? 1 : 0)}px solid ${Color['neutral-200']};
-  }
 `;
 
 const ListItem = styled.li<SpacedList>`
@@ -117,7 +92,6 @@ const ListItemLeadText = styled.div`
 export {
   List,
   ListItem,
-  ListItemAnimated,
   ListItemContent,
   ListItemContentButton,
   ListItemContentLink,
