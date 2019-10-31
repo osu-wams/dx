@@ -10,7 +10,7 @@ import { Event } from '../../util/gaTracking';
 import { singularPlural } from '../../util/helpers';
 
 const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => (
-  <div aria-live="polite" aria-atomic="true">
+  <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">
     {resources && `found ${resources.length} ${singularPlural(resources.length, 'result')}`}
     <List>
       <PoseGroup>

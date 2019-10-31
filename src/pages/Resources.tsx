@@ -12,6 +12,7 @@ import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
 import { hasAudience } from '../api/user';
+import VisuallyHidden from '@reach/visually-hidden';
 
 //import type here
 const Resources = () => {
@@ -111,6 +112,12 @@ const Resources = () => {
                   setQuery={setQuery}
                   setSelectedCategory={setSelectedCategory}
                 />
+                {!res.loading && res.data.length > 0 && (
+                  // Anchor link matches ResourcesList component main div id
+                  <VisuallyHidden>
+                    <a href="#resourcesResults">Skip to results</a>
+                  </VisuallyHidden>
+                )}
                 {categories.loading && <Skeleton />}
                 <ResourcesCategories
                   categories={categories.data}

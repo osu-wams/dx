@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
+import { waitForElement, fireEvent, getByTestId } from '@testing-library/react';
 import { render, authUser } from '../../util/test-utils';
 import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
@@ -43,6 +43,16 @@ describe('<Resources />', () => {
     expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(queryByText(/Webcams/)).toBeNull();
+  });
+
+  it('Should have a link to skip to results with matching ID in the result container', async () => {
+    const { getByText, getByTestId } = render(<Resources />);
+    const skipLink = await waitForElement(() => getByText('Skip to results'));
+    const anchor = skipLink.getAttribute('href').slice(1);
+    const results = await waitForElement(() => getByTestId('resourcesResults'));
+    const resultsId = results.getAttribute('id');
+
+    expect(anchor).toEqual(resultsId);
   });
 
   it('should have a clickable All category', async () => {
