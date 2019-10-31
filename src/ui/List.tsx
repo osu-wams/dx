@@ -54,6 +54,9 @@ const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
   &:active,
   &:focus,
   &:hover {
+    & > div {
+      color: ${Color['orange-400']};
+    }
     box-shadow: rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px;
     transform: translateY(-4px);
   }
