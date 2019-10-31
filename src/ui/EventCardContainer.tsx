@@ -21,6 +21,7 @@ const EventCardContainerWrapper = styled.div`
   }
 `;
 
+<<<<<<< HEAD
 /**
  *  Return an array randomly shuffled.
  * ! Shouldn't be used in huge arrays.. for our case, this is random enough and
@@ -42,6 +43,8 @@ function shuffleArray(arr: any[]) {
   return shuffled;
 }
 
+=======
+>>>>>>> filters makes api call to filtered announcements by page
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
