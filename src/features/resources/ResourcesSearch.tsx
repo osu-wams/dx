@@ -32,7 +32,7 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
 const SearchWrapper = styled.div`
   position: relative;
   display: flex;
-  border-radius: ${theme.borderRadius};
+  border-radius: ${theme.borderRadius[8]};
   margin-bottom: ${theme.spacing.unit}px;
   overflow: hidden;
   border: 1px solid ${Color['neutral-200']};

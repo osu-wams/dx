@@ -13,7 +13,7 @@ interface ICardContentRow {
 const CardBase = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: ${theme.borderRadius};
+  border-radius: ${theme.borderRadius[16]};
   box-shadow: ${shadows[1]};
   background-color: ${Color.white};
   overflow: hidden;

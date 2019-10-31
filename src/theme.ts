@@ -40,7 +40,7 @@ export enum Color {
 }
 
 export const shadows = {
-  1: '0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12)',
+  1: 'rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px',
   2: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)',
   3: '0px 1px 8px 0px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 3px 3px -2px rgba(0, 0, 0, 0.12)',
   4: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
@@ -55,12 +55,15 @@ export const theme = {
   spacing: {
     unit: 8,
     mobile: '1rem', // padding/padding or row/column gaps
-    desktop: '2rem'
+    desktop: '3rem'
   },
   widths: {
     contentMax: '1024px'
   },
-  borderRadius: '8px',
+  borderRadius: {
+    '8': '8px',
+    '16': '16px'
+  },
   fontSize: {
     '12': '1.2rem',
     '14': '1.4rem',

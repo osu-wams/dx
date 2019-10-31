@@ -15,9 +15,8 @@ const List = styled.ul`
 
 const ListItem = styled.li<SpacedList>`
   list-style-type: none;
-  &:not(:last-child) {
+  &:last-child {
     margin-bottom: ${props => (props.spaced ? 0 : theme.spacing.unit * 2)}px;
-    border-bottom: ${props => (props.spaced ? 1 : 0)}px solid ${Color['neutral-200']};
   }
   & > button {
     /* cursor only on buttons, not divs */
@@ -33,8 +32,10 @@ const ListItemContent = styled.div<SpacedList>`
   flex-wrap: nowrap;
   align-items: center;
   border: none;
-  padding: ${props => (props.spaced ? theme.spacing.unit * 3 : 1)}px
-    ${props => (props.spaced ? theme.spacing.unit * 2 : 10)}px;
+  border-radius: 8px;
+  transition: all 150ms ease-in-out 0s;
+  padding: ${props => (props.spaced ? theme.spacing.unit * 2 : 12)}px
+    ${props => (props.spaced ? theme.spacing.unit * 2 : 12)}px;
   svg,
   img {
     height: 3rem;
@@ -47,17 +48,18 @@ const ListItemContent = styled.div<SpacedList>`
   text-decoration: none;
 `;
 
-const ListItemContentButton = styled(ListItemContent).attrs({ as: 'button' })``;
-
 type TLink = React.HTMLProps<HTMLAnchorElement>;
 
 const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
   &:active,
   &:focus,
   &:hover {
-    background-color: ${Color['neutral-100']};
+    box-shadow: rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px;
+    transform: translateY(-4px);
   }
 `;
+
+const ListItemContentButton = styled(ListItemContentLink).attrs({ as: 'button' })``;
 
 const ListItemText = styled.div`
   padding-right: 1.5rem;
