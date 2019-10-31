@@ -23,14 +23,12 @@ const AcademicsDashboard = () => {
   /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
   useEffect(() => {
-    let announcementsToUse: any[] = [];
-
     if (!user.loading && !announcements.loading) {
-      announcementsToUse = announcements.data.filter(announcement =>
+      const announcementsToUse = announcements.data.filter(announcement =>
         hasAudience(user.data, announcement)
       );
+      setEvents(announcementsToUse);
     }
-    setEvents(announcementsToUse);
   }, [announcements.data, announcements.loading, user.data, user.loading]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
@@ -55,7 +53,7 @@ const AcademicsDashboard = () => {
         {events.length > 0 && (
           <>
           <Title as="h2">Announcements</Title>
-          <AnnouncementContainer className="col-span-2" type={announcementType} events={events} />
+          <AnnouncementContainer data-testid="academics-announcements" className="col-span-2" type={announcementType} events={events} />
           </>
         )}
       </SecondGridWrapper>
