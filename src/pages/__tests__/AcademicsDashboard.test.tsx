@@ -5,11 +5,11 @@ import { waitForElement, wait } from '@testing-library/dom';
 import {mockAcademicAnnouncementResult} from '../../api/__mocks__/announcements.data'
 
 
-const mockUseAnnouncements = jest.fn();
+const mockUseAnnouncements = jest.fn()
 
 jest.mock('../../api/announcements', () => ({
   useAnnouncements: () => mockUseAnnouncements()
-}));
+}))
 
 describe('<AcademicsDashboard />', () => {
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('<AcademicsDashboard />', () => {
   it('renders without errors', async () => {
     const { getByTestId } = renderWithUserContext(<AcademicsDashboard />);
     getByTestId('academics-dashboard')
-  });
+  })
 
   it('should not render Announcements with no events', async () => {
     mockUseAnnouncements.mockReturnValue({data: [], loading: false, error: false});

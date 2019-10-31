@@ -49,7 +49,7 @@ const Finances = () => {
       {events.length > 0 && (
           <>
           <Title as="h2">Announcements</Title>
-          <AnnouncementContainer className="col-span-2" type={announcementType} events={events} />
+          <AnnouncementContainer data-testid="finances-announcements" className="col-span-2" type={announcementType} events={events} />
           </>
         )}
       </SecondGridWrapper>
