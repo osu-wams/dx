@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
-import { PoseGroup } from 'react-pose';
 import Icon from '../../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../../ui/List';
 import { Color, theme } from '../../theme';
@@ -13,26 +12,24 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
   <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">
     {resources && `found ${resources.length} ${singularPlural(resources.length, 'result')}`}
     <List>
-      <PoseGroup>
-        {resources.length > 0 &&
-          resources.map((resource: IResourceResult) => (
-            <ListItem spaced key={resource.id}>
-              <ListItemContentLink
-                spaced
-                href={resource.link}
-                onClick={() => Event('resource', resource.title)}
-                target="_blank"
-              >
-                {resource.icon !== undefined ? (
-                  <ResourceImg src={resource.icon} alt="" />
-                ) : (
-                  <ResourceIcon icon={faCube} color={Color.black} />
-                )}
-                <ResourceName>{resource.title}</ResourceName>
-              </ListItemContentLink>
-            </ListItem>
-          ))}
-      </PoseGroup>
+      {resources.length > 0 &&
+        resources.map((resource: IResourceResult) => (
+          <ListItem spaced key={resource.id}>
+            <ListItemContentLink
+              spaced
+              href={resource.link}
+              onClick={() => Event('resource', resource.title)}
+              target="_blank"
+            >
+              {resource.icon !== undefined ? (
+                <ResourceImg src={resource.icon} alt="" />
+              ) : (
+                <ResourceIcon icon={faCube} color={Color.black} />
+              )}
+              <ResourceName>{resource.title}</ResourceName>
+            </ListItemContentLink>
+          </ListItem>
+        ))}
     </List>
   </div>
 );
