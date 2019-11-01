@@ -73,12 +73,8 @@ const EventCardContainer = ({ ...props }) => {
       }
     }
 
-    if (announcementsToUse.length > 5) {
-      announcementsToUse = announcementsToUse.slice(0, 6);
-    }
-    if (eventsToUse.length > 5) {
-      eventsToUse = eventsToUse.slice(0, 6);
-    }
+    announcementsToUse = announcementsToUse.slice(0, 6);
+    eventsToUse = eventsToUse.slice(0, 6);
 
     if (announcementsToUse.length || eventsToUse.length) {
       // Weave two arrays alternating an item from each providing that the array
