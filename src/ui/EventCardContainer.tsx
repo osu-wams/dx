@@ -51,7 +51,6 @@ const EventCardContainer = ({ ...props }) => {
   useEffect(() => {
     let announcementsToUse: any[] = []
     let eventsToUse: any[] = []
-    let shuffledArr: any[] = []
 
     if (!announcements.loading) {
       announcementsToUse = announcements.data;
@@ -70,7 +69,6 @@ const EventCardContainer = ({ ...props }) => {
       if (!bendEvents.loading && atBend) {
         eventsToUse = bendEvents.data;
       }
-      
     }
 
     announcementsToUse = shuffleArray(announcementsToUse).slice(0,6)
