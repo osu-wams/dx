@@ -20,6 +20,25 @@ const EventCardContainerWrapper = styled.div`
   }
 `;
 
+function shuffleArray (arr:any[]) {
+
+  let shuffledArr:any[] = []
+  let temp:any = null
+
+  arr.map((item, index) => {
+    shuffledArr[index] = item
+  })
+
+  for (let i = shuffledArr.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i));
+      temp = shuffledArr[i];
+      shuffledArr[i] = shuffledArr[j];
+      shuffledArr[j] =  temp;
+  }
+
+  return shuffledArr;
+}
+
 const EventCardContainer = ({ ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
@@ -30,8 +49,9 @@ const EventCardContainer = ({ ...props }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
   useEffect(() => {
-    let announcementsToUse: any[] = [];
-    let eventsToUse: any[] = [];
+    let announcementsToUse: any[] = []
+    let eventsToUse: any[] = []
+    let shuffledArr: any[] = []
 
     if (!announcements.loading) {
       announcementsToUse = announcements.data;
@@ -50,7 +70,12 @@ const EventCardContainer = ({ ...props }) => {
       if (!bendEvents.loading && atBend) {
         eventsToUse = bendEvents.data;
       }
+      
     }
+
+    announcementsToUse = shuffleArray(announcementsToUse).slice(0,6)
+    eventsToUse = eventsToUse.slice(0,6)
+
     if (announcementsToUse.length || eventsToUse.length) {
       // Weave two arrays alternating an item from each providing that the array
       // with more elements ends with its remaining items "at the end of the array".
