@@ -20,23 +20,25 @@ const EventCardContainerWrapper = styled.div`
   }
 `;
 
-function shuffleArray (arr:any[]) {
+/**
+ *  Return an array randomly shuffled.
+ * ! Shouldn't be used in huge arrays.. for our case, this is random enough and
+ * ! operating on very small arrays.
+ * @param arr the original array to shuffle
+ */
+function shuffleArray(arr: any[]) {
+  let shuffled: any[] = [];
+  let source: any[] = arr.concat([]);
 
-  let shuffledArr:any[] = []
-  let temp:any = null
-
-  arr.map((item, index) => {
-    shuffledArr[index] = item
-  })
-
-  for (let i = shuffledArr.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i));
-      temp = shuffledArr[i];
-      shuffledArr[i] = shuffledArr[j];
-      shuffledArr[j] =  temp;
+  // Find a random index of the mutated source array, push that element
+  // onto the shuffled array until the mutated source array has been reduced
+  // to 0.
+  while (source.length) {
+    let index = Math.floor(Math.random() * source.length);
+    shuffled.push(source.splice(index, 1)[0]);
   }
 
-  return shuffledArr;
+  return shuffled;
 }
 
 const EventCardContainer = ({ ...props }) => {
@@ -49,8 +51,8 @@ const EventCardContainer = ({ ...props }) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
   useEffect(() => {
-    let announcementsToUse: any[] = []
-    let eventsToUse: any[] = []
+    let announcementsToUse: any[] = [];
+    let eventsToUse: any[] = [];
 
     if (!announcements.loading) {
       announcementsToUse = announcements.data;
@@ -59,8 +61,8 @@ const EventCardContainer = ({ ...props }) => {
     if (!user.loading) {
       const atBend = atCampus(user.data, CAMPUS_CODES.bend);
       if (!announcements.loading) {
-        announcementsToUse = announcements.data.filter(announcement =>
-          hasAudience(user.data, announcement)
+        announcementsToUse = shuffleArray(
+          announcements.data.filter(announcement => hasAudience(user.data, announcement))
         );
       }
       if (!studentExperienceEvents.loading && !atBend) {
@@ -71,8 +73,12 @@ const EventCardContainer = ({ ...props }) => {
       }
     }
 
-    announcementsToUse = shuffleArray(announcementsToUse).slice(0,6)
-    eventsToUse = eventsToUse.slice(0,6)
+    if (announcementsToUse.length > 5) {
+      announcementsToUse = announcementsToUse.slice(0, 6);
+    }
+    if (eventsToUse.length > 5) {
+      eventsToUse = eventsToUse.slice(0, 6);
+    }
 
     if (announcementsToUse.length || eventsToUse.length) {
       // Weave two arrays alternating an item from each providing that the array
