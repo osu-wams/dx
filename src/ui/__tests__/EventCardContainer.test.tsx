@@ -1,8 +1,19 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
+import {
+  waitForElement,
+  fireEvent,
+  getAllByTestId,
+  getNodeText,
+  cleanup
+} from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import EventCardContainer from '../EventCardContainer';
-import { announcementsData, localistData } from '../__mocks__/announcements.data';
+import {
+  announcementsData,
+  announcementsData_10,
+  localistData,
+  localistData_10
+} from '../__mocks__/announcements.data';
 import { mockGAEvent } from '../../setupTests';
 
 const mockUseAnnouncements = jest.fn();
@@ -35,7 +46,6 @@ describe('<EventCardContainer />', () => {
     const { getAllByTestId } = render(<EventCardContainer />);
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
-
     expect(getAllByTestId('eventcard')).toHaveLength(5);
   });
 
@@ -81,5 +91,39 @@ describe('<EventCardContainer />', () => {
     const { getAllByTestId } = render(<EventCardContainer />);
     await waitForElement(() => getAllByTestId('eventcard'));
     expect(getAllByTestId('eventcard')).toHaveLength(3);
+  });
+
+  it('should only display a max of 12 eventcards', async () => {
+    mockUseAnnouncements.mockReturnValue(announcementsData_10);
+    mockUseStudentExperienceEvents.mockReturnValue(localistData_10);
+    const { getAllByTestId } = render(<EventCardContainer />);
+    expect(await waitForElement(() => getAllByTestId('eventcard'))).toHaveLength(12);
+  });
+
+  it('should not display the announcements in the same order everytime', async () => {
+    mockUseAnnouncements.mockReturnValue(announcementsData_10);
+    mockUseStudentExperienceEvents.mockReturnValue(localistData_10);
+
+    let match = true;
+
+    const { getAllByTestId } = render(<EventCardContainer />);
+    const test1 = await waitForElement(() => getAllByTestId('eventcard'));
+
+    // rerendering the screen, not using rerender because the randomizer is in a useEffect that isn't getting triggered by rerender
+    cleanup();
+    render(<EventCardContainer />);
+    const test2 = await waitForElement(() => getAllByTestId('eventcard'));
+
+    // make sure they are the same length first
+    expect(test1.length).toEqual(test2.length);
+
+    // loop through each and check to see if either of the arrays at index x dont match
+    for (let x = 0; x < test1.length; x++) {
+      if (test1[x].innerHTML != test2[x].innerHTML) {
+        match = false;
+      }
+    }
+
+    expect(match).toBeFalsy(); // if the randomizer did it's job, match should have got set to false at some point
   });
 });

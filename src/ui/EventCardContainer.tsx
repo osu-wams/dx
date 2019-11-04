@@ -21,6 +21,27 @@ const EventCardContainerWrapper = styled.div`
   }
 `;
 
+/**
+ *  Return an array randomly shuffled.
+ * ! Shouldn't be used in huge arrays.. for our case, this is random enough and
+ * ! operating on very small arrays.
+ * @param arr the original array to shuffle
+ */
+function shuffleArray(arr: any[]) {
+  let shuffled: any[] = [];
+  let source: any[] = arr.concat([]);
+
+  // Find a random index of the mutated source array, push that element
+  // onto the shuffled array until the mutated source array has been reduced
+  // to 0.
+  while (source.length) {
+    let index = Math.floor(Math.random() * source.length);
+    shuffled.push(source.splice(index, 1)[0]);
+  }
+
+  return shuffled;
+}
+
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
@@ -41,8 +62,8 @@ const EventCardContainer = ({ page, ...props }) => {
     if (!user.loading) {
       const atBend = atCampus(user.data, CAMPUS_CODES.bend);
       if (!announcements.loading) {
-        announcementsToUse = announcements.data.filter(announcement =>
-          hasAudience(user.data, announcement)
+        announcementsToUse = shuffleArray(
+          announcements.data.filter(announcement => hasAudience(user.data, announcement))
         );
       }
       if (!studentExperienceEvents.loading && !atBend) {
@@ -52,6 +73,10 @@ const EventCardContainer = ({ page, ...props }) => {
         eventsToUse = bendEvents.data;
       }
     }
+
+    announcementsToUse = announcementsToUse.slice(0, 6);
+    eventsToUse = eventsToUse.slice(0, 6);
+
     if (announcementsToUse.length || eventsToUse.length) {
       // Weave two arrays alternating an item from each providing that the array
       // with more elements ends with its remaining items "at the end of the array".
