@@ -1,8 +1,21 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import { render } from '../../util/test-utils';
+import { mockGAEvent } from '../../setupTests';
 import PageNotFound from '../PageNotFound';
 
-test('renders', () => {
-  const { getByTestId } = render(<PageNotFound />);
-  expect(getByTestId('404-page')).toBeInTheDocument();
+describe('404 page', () => {
+  it('renders', () => {
+    const { getByTestId } = render(<PageNotFound />);
+    expect(getByTestId('404-page')).toBeInTheDocument();
+  });
+
+  it('has clickable links to dashboard and support page', () => {
+    const { getByText } = render(<PageNotFound />);
+    const dashboard = getByText(/main dashboard/);
+    const support = getByText(/get support/);
+    fireEvent.click(dashboard);
+    fireEvent.click(support);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  });
 });

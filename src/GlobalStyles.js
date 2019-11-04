@@ -39,9 +39,6 @@ const GlobalStyle = createGlobalStyle`
   input, select, textarea, button {
     font-size: inherit;
   }
-  a {
-    color: ${Color['stratosphere-400']};
-  }
   strong {
     font-weight: 600;
   }

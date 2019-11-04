@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, waitForElement, act, getByLabelText, wait } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
 import { render, renderWithUserContext, renderWithAllContexts } from '../../util/test-utils';
 import Footer from '../Footer';
 import { mockGAEvent } from '../../setupTests';
