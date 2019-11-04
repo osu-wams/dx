@@ -9,12 +9,10 @@ import {
   CardFooter,
   CardIcon
 } from '../../ui/Card';
-import Url from '../../util/externalUrls.data';
-import AccountBalance, { AccountBalanceExternalLink } from './AccountBalance';
+import AccountBalance from './AccountBalance';
 import MealPlans from './MealPlans';
 
 export const FinancialOverview = () => {
-  const [footerLink, setFooterLink] = useState(AccountBalanceExternalLink);
   const [hasMealPlan, setHasMealPlan] = useState<boolean>(true);
 
   return (
@@ -23,20 +21,16 @@ export const FinancialOverview = () => {
       <CardContentTable>
         <CardContentRow className="row-span-1">
           <CardContentCell>
-            <AccountBalance renderLink={footerLink.props.href !== Url.bill.main} />
+            <AccountBalance />
           </CardContentCell>
         </CardContentRow>
-        {hasMealPlan && (
-          <>
-            <CardContentRow borderless className="row-span-1">
-              <CardContentCell>
-                <MealPlans setFooterLink={setFooterLink} setHasMealPlan={setHasMealPlan} />
-              </CardContentCell>
-            </CardContentRow>
-          </>
-        )}
+        <CardContentRow className="row-span-1">
+          <CardContentCell>
+            <MealPlans setHasMealPlan={setHasMealPlan} />
+          </CardContentCell>
+        </CardContentRow>
       </CardContentTable>
-      <CardFooter infoButtonId="financial-overview">{footerLink}</CardFooter>
+      <CardFooter infoButtonId="financial-overview"></CardFooter>
     </Card>
   );
 };

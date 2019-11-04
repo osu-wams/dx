@@ -14,18 +14,10 @@ import Url from '../../util/externalUrls.data';
 import { Event } from '../../util/gaTracking';
 import { isNullOrUndefined } from 'util';
 
-export const AccountBalanceExternalLink = () => (
-  <ExternalLink
-    style={{ float: 'right' }}
-    href={Url.bill.main}
-    fg={Color['orange-400']}
-    onClick={() => Event('academic-overview', 'See more in MyDegrees link')}
-  >
-    Make a payment
-  </ExternalLink>
-);
-
-const AccountBalance = (props: { renderLink: boolean }) => {
+/**
+ * Sub card for the Financial Overview card.
+ */
+const AccountBalance = () => {
   const { data, loading } = useAccountBalance();
 
   return (
@@ -41,7 +33,14 @@ const AccountBalance = (props: { renderLink: boolean }) => {
         Your OSU student account balance. It may take up to 24 hours for transactions to be
         reflected.
       </HighlightDescription>
-      {props.renderLink && AccountBalanceExternalLink()}
+      <ExternalLink
+        style={{ float: 'right' }}
+        href={Url.bill.main}
+        fg={Color['orange-400']}
+        onClick={() => Event('account-balance', 'make a payment - my bill link')}
+      >
+        Make a payment
+      </ExternalLink>
     </Highlight>
   );
 };

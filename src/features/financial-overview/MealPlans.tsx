@@ -12,26 +12,12 @@ import {
 import { ExternalLink } from '../../ui/Link';
 import { Event } from '../../util/gaTracking';
 
-const MealPlanExternalLink = () => (
-  <ExternalLink
-    style={{ float: 'right' }}
-    fg={Color['orange-400']}
-    href="http://mycard.oregonstate.edu/"
-    onClick={() => Event('meal-plans', 'Add money to card - mycard link')}
-  >
-    Add money
-  </ExternalLink>
-);
-
 export const MealPlans = props => {
-  const { setFooterLink, setHasMealPlan } = props;
+  const { setHasMealPlan } = props;
 
   const mealPlans = useMealPlans({
     callback: data => {
       if (data.length) {
-        if (data[0].attributes.balance > 0) {
-          setFooterLink(MealPlanExternalLink());
-        }
         setHasMealPlan(data[0].attributes.balance > 0);
       } else {
         setHasMealPlan(false);
@@ -62,6 +48,13 @@ export const MealPlans = props => {
       ) : (
         !mealPlans.loading && <>No meal plans</>
       )}
+      <ExternalLink
+        style={{ float: 'right', paddingTop: '16px' }}
+        href="http://mycard.oregonstate.edu/"
+        onClick={() => Event('meal-plans', 'Add money to card - mycard link')}
+      >
+        Add money
+      </ExternalLink>
     </Highlight>
   );
 };
