@@ -43,3 +43,11 @@ The application is designed to set an application-wide context with data that wi
       const { getByTestId } = render(<Resources />);
       expect(getByTestId('resources-page')).toBeInTheDocument();
     });
+
+## Testing production build locally
+
+We have a simple docker onfig to be able to run production build locally. This is useful for testing IE / Edge on virtual machines, or troubleshoot anything that requires the compiled build code.
+
+- Run `yarn build`
+- Run `docker-compose up -d`
+- Note: do this instead of `yarn start`
