@@ -26,9 +26,7 @@ export const setItem = (key: string, value: string): void => {
 export const getItem = (key: string): any => {
   try {
     const cacheHit = sessionStorage.getItem(key);
-    if (cacheHit && cacheHit.length > 0) {
-      console.log(cacheHit);
-      console.log(JSON.parse(cacheHit));
+    if (cacheHit) {
       // When code is compiled, IE and Edge error out here, so we're skipping them
       if (/Edge\/\d./i.test(navigator.userAgent) || /rv:11.0/i.test(navigator.userAgent)) {
         return null;
