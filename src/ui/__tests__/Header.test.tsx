@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, waitForElement } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render, authUserClassification } from '../../util/test-utils';
 import Header from '../Header';
 import Dashboard from '../../pages/Dashboard';
 import { mockGAEvent } from '../../setupTests';
@@ -15,11 +15,11 @@ global.document.createRange = () => ({
   }
 });
 
-test('renders', () => {
+it('renders', () => {
   render(<Header />);
 });
 
-test('Logout Link is in the menu', async () => {
+it('has a logout link in the menu', async () => {
   const { getByText, getByTestId } = render(<Dashboard />);
 
   await (async () => {
@@ -45,4 +45,33 @@ xtest('User Button and profile link are in the menu and tracked via GA', async (
   fireEvent.click(profileLink);
 
   expect(mockGAEvent).toHaveBeenCalledTimes(2);
+});
+
+describe('as a logged in user', () => {
+  it('renders the appropriate header logo', async () => {
+    const { getByTestId } = render(<Header />);
+    const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
+    expect(appHeader).toBeInTheDocument();
+    expect(appHeader.getAttribute('src')).toBe('osu-logo.svg');
+  });
+});
+
+describe('as a Bend user', () => {
+  it('renders the appropriate header logo', async () => {
+    authUserClassification!.attributes!.campusCode = 'B';
+    const { getByTestId } = render(<Header />);
+    const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
+    expect(appHeader).toBeInTheDocument();
+    expect(appHeader.getAttribute('src')).toBe('osu-cascades.svg');
+  });
+});
+
+describe('as an Ecampus user', () => {
+  it('renders the appropriate header logo', async () => {
+    authUserClassification!.attributes!.campusCode = 'DSC';
+    const { getByTestId } = render(<Header />);
+    const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
+    expect(appHeader).toBeInTheDocument();
+    expect(appHeader.getAttribute('src')).toBe('osu-ecampus.svg');
+  });
 });
