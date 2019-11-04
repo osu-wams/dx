@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from '@reach/router';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,10 +7,14 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuList, MenuButton, MenuLink } from '@reach/menu-button';
 import 'react-toastify/dist/ReactToastify.min.css';
 import logo from '../assets/osu-logo.svg';
+import ecampusLogo from '../assets/osu-ecampus.svg';
+import cascadesLogo from '../assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
 import { theme, Color, breakpoints } from '../theme';
 import { Event } from '../util/gaTracking';
+import { IUser } from '../api/user';
+import { UserContext } from '../App';
 
 const headerMedia = breakpoints[768];
 
@@ -96,44 +100,69 @@ const Logo = styled.img`
   }
 `;
 
-const Header = () => (
-  <HeaderWrapper>
-    <Logo src={logo} alt="Oregon State University" />
-    <ProfileMenu>
-      <Menu>
-        <UserButton
-          data-testid="user-btn"
-          onClick={() => Event('header', 'user-button-menu', 'User button menu expanded')}
-        >
-          <VisuallyHidden>User menu</VisuallyHidden>
-          <FontAwesomeIcon icon={faUserCircle} size="2x" />
-        </UserButton>
-        <ProfileMenuList>
-          <MenuLink
-            as={Link}
-            to="profile"
-            data-testid="profile-link"
-            onClick={() =>
-              Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
-            }
+/**
+ * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
+ * @param user the currently logged in user
+ */
+const campusLogo = (user: IUser | null) => {
+  if (!user || !user.classification || !Object.keys(user.classification).includes('attributes'))
+    return logo;
+  switch (user!.classification!.attributes!.campusCode) {
+    case 'DSC':
+      return ecampusLogo;
+    case 'B':
+      return cascadesLogo;
+    default:
+      return logo;
+  }
+};
+
+const Header = () => {
+  const user = useContext<any>(UserContext);
+
+  return (
+    <HeaderWrapper>
+      <Logo
+        data-testid="app-header-logo"
+        src={campusLogo(user.data)}
+        alt="Oregon State University"
+      />
+      <ProfileMenu>
+        <Menu>
+          <UserButton
+            data-testid="user-btn"
+            onClick={() => Event('header', 'user-button-menu', 'User button menu expanded')}
           >
-            <FontAwesomeIcon icon={faUser} />
-            Profile
-          </MenuLink>
-          <MenuLink
-            as="a"
-            href="/logout"
-            onClick={() => Event('header', 'user-button-menu', 'Logout link clicked')}
-          >
-            <FontAwesomeIcon icon={faSignOut} /> Logout
-          </MenuLink>
-        </ProfileMenuList>
-      </Menu>
-    </ProfileMenu>
-    <Navigation>
-      <MainNav />
-    </Navigation>
-  </HeaderWrapper>
-);
+            <VisuallyHidden>User menu</VisuallyHidden>
+            <FontAwesomeIcon icon={faUserCircle} size="2x" />
+          </UserButton>
+          <ProfileMenuList>
+            <MenuLink
+              as={Link}
+              to="profile"
+              data-testid="profile-link"
+              onClick={() =>
+                Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
+              }
+            >
+              <FontAwesomeIcon icon={faUser} />
+              Profile
+            </MenuLink>
+            <MenuLink
+              as="a"
+              href="/logout"
+              onClick={() => Event('header', 'user-button-menu', 'Logout link clicked')}
+            >
+              <FontAwesomeIcon icon={faSignOut} /> Logout
+            </MenuLink>
+          </ProfileMenuList>
+        </Menu>
+      </ProfileMenu>
+      <Navigation>
+        <MainNav />
+      </Navigation>
+    </HeaderWrapper>
+  );
+};
 
 export default Header;
