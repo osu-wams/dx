@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { UserContext } from '../App';
+import { Title } from '../ui/PageTitle';
 import { useAnnouncements } from '../api/announcements';
 import { useStudentExperienceEvents, useCampusEvents } from '../api/events';
 import { hasAudience, atCampus, CAMPUS_CODES } from '../api/user';
@@ -41,12 +42,12 @@ function shuffleArray(arr: any[]) {
   return shuffled;
 }
 
-const EventCardContainer = ({ ...props }) => {
+const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
   const studentExperienceEvents = useStudentExperienceEvents();
   const bendEvents = useCampusEvents('bend');
-  const announcements = useAnnouncements('');
+  const announcements = useAnnouncements(page);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
@@ -108,15 +109,18 @@ const EventCardContainer = ({ ...props }) => {
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  if (!events.length) {
+  if (events.length === 0) {
     return null;
   }
   return (
-    <EventCardContainerWrapper {...props}>
-      {events.map(item => (
-        <EventCard key={item.id} itemContent={item} />
-      ))}
-    </EventCardContainerWrapper>
+    <>
+      <Title as="h2">Announcements and Events</Title>
+      <EventCardContainerWrapper {...props}>
+        {events.map(item => (
+          <EventCard key={item.id} itemContent={item} />
+        ))}
+      </EventCardContainerWrapper>
+    </>
   );
 };
 export default EventCardContainer;

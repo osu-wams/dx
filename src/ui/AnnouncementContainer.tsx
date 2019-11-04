@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useAnnouncements } from '../api/announcements';
 import EventCard from './EventCard';
+import { Title } from '../ui/PageTitle';
 import { breakpoints } from '../theme';
 import { UserContext } from '../App';
 import { hasAudience } from '../api/user';
@@ -19,10 +20,10 @@ const AnnouncementContainerWrapper = styled.div`
   }
 `;
 
-const AnnouncementContainer = ({ type, ...props }) => {
+const AnnouncementContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
-  const announcements = useAnnouncements(type);
+  const announcements = useAnnouncements(page);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
@@ -38,16 +39,19 @@ const AnnouncementContainer = ({ type, ...props }) => {
   }, [announcements.data, announcements.loading, user.data, user.loading]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  if (!events.length) {
+  if (events.length === 0) {
     return null;
   }
 
   return (
-    <AnnouncementContainerWrapper {...props}>
-      {events.map(item => (
-        <EventCard key={item.id} itemContent={item} />
-      ))}
-    </AnnouncementContainerWrapper>
+    <>
+      <Title as="h2">Announcements</Title>
+      <AnnouncementContainerWrapper {...props}>
+        {events.map(item => (
+          <EventCard key={item.id} itemContent={item} />
+        ))}
+      </AnnouncementContainerWrapper>
+    </>
   );
 };
 

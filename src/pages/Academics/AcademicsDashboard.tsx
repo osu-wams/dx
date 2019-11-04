@@ -5,7 +5,7 @@ import AnnouncementContainer from '../../ui/AnnouncementContainer';
 import { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper } from '../../ui/PageGrid';
 import PlannerItems from '../../features/PlannerItems';
 import AcademicCalendar from '../../features/AcademicCalendar';
-import PageTitle, { Title } from '../../ui/PageTitle';
+import PageTitle from '../../ui/PageTitle';
 import AcademicOverview from '../../features/AcademicOverview';
 import ResourcesCard from '../../features/ResourcesCard';
 import { AcademicSubNav } from './AcademicsSubNav';
@@ -29,8 +29,11 @@ const AcademicsDashboard = () => {
         </MainGrid>
       </MainGridWrapper>
       <SecondGridWrapper>
-        <Title as="h2">Announcements</Title>
-        <AnnouncementContainer className="col-span-2" type="academic" />
+        <AnnouncementContainer
+          data-testid="academics-announcements"
+          className="col-span-2"
+          page="academics"
+        />
       </SecondGridWrapper>
     </>
   );
