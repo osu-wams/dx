@@ -35,6 +35,7 @@ export type IComponents =
   | 'financial-transactions'
   | 'academic-overview'
   | 'resource'
+  | '404'
   | 'resource-search'
   | 'resource-category'
   | 'past-courses-search'
