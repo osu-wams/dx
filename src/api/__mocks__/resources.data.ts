@@ -24,7 +24,7 @@ const resourcesData = {
       link: 'https://oregonstate.edu/bill',
       icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
       audiences: ['Corvallis'],
-      categories: ['Financial'],
+      categories: ['Featured', 'Financial'],
       synonyms: ['boo']
     },
     {

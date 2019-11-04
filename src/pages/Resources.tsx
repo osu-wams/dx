@@ -7,7 +7,12 @@ import { theme } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import { defaultCategoryName, useCategories, useResources } from '../api/resources';
+import {
+  defaultCategoryName,
+  useCategories,
+  useResources,
+  IResourceResult
+} from '../api/resources';
 import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
@@ -22,31 +27,8 @@ const Resources = () => {
   const [debouncedQuery] = useDebounce(query, 250);
   const categories = useCategories();
   const res = useResources();
-
   const [filteredResources, setFilteredResources] = useState<any>([]);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    if (res.data && user.data) {
-      if (!debouncedQuery) {
-        setFilteredResources(res.data);
-      } else {
-        const results = filteredResources.filter(resource => {
-          if (resource.synonyms.length > 0) {
-            let match = resource.synonyms.find(s => s.includes(debouncedQuery.toLowerCase()));
-            if (match) {
-              return true;
-            }
-          }
-          return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
-        });
-        setFilteredResources(results);
-      }
-    }
-  }, [debouncedQuery, res.data, user.data]);
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
   /**
    * A delegate method for children components to call and set the selected category. This
    * pushes the category name to the window history and updates the location bar, when the
@@ -54,12 +36,49 @@ const Resources = () => {
    * @param name the category name
    */
   const setSelectedCategory = (name: string) => {
-    if (history.pushState) {
-      window.history.pushState({ category: name }, name, `?category=${name}`);
-    }
     setActiveCategory(decodeURI(name));
   };
 
+  /**
+   * Filter a list of resources where it has a category in its list matching the provided name
+   * parameter unless the category is 'all'.
+   * @param name the category name to filter on
+   * @param resources a list of resources to inspect for matching category
+   */
+  const filterByCategory = (name: string, resources: IResourceResult[]): IResourceResult[] => {
+    if (name === 'all') return resources;
+
+    return resources.filter(
+      resource =>
+        resource.categories.length > 0 &&
+        resource.categories.findIndex(s => s.toLowerCase().includes(name.toLowerCase())) > -1
+    );
+  };
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    if (res.data && user.data) {
+      if (!debouncedQuery) {
+        const filtered = filterByCategory(activeCategory, res.data);
+        setFilteredResources(filtered);
+      } else {
+        const queriedResources = filteredResources.filter(resource => {
+          if (
+            resource.synonyms.length > 0 &&
+            resource.synonyms.find(s => s.includes(debouncedQuery.toLowerCase()))
+          ) {
+            return true;
+          }
+          return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
+        });
+        const filtered = filterByCategory(activeCategory, queriedResources);
+        setFilteredResources(filtered);
+      }
+    }
+  }, [activeCategory, debouncedQuery, res.data, user.data]);
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
   /**
    * Allows for Back/Forward buttons to click and the component to update its state based on which category
    * had been clicked. This provides the ability to have the category in the location bar for bookmarks, link
@@ -70,33 +89,34 @@ const Resources = () => {
    * * Push the default activeCategory to the history at the start.
    */
   useEffect(() => {
-    if (history.pushState) {
-      window.history.pushState(
-        { category: activeCategory },
-        activeCategory,
-        `?category=${activeCategory}`
-      );
-      let resourcesByCategory = res.data;
-      if (activeCategory !== 'all') {
-        resourcesByCategory = resourcesByCategory.filter(resource => {
-          let match = false;
-          if (resource.categories.length > 0) {
-            match =
-              resource.categories.findIndex(s =>
-                s.toLowerCase().includes(activeCategory.toLowerCase())
-              ) > -1;
-          }
-          return match;
-        });
-      }
-      setFilteredResources(resourcesByCategory);
-    }
     window.onpopstate = function(e) {
       if (e.state) {
         if (e.state.category) setActiveCategory(decodeURI(e.state.category));
       }
     };
-  }, [activeCategory, res.data]);
+  }, []);
+
+  useEffect(() => {
+    /**
+     * Push to the history state if the currently active category doesn't match the previously set
+     * history (the page that was last visited). In the case that the history and active category don't match
+     * AND the active category exists in the window location bar then this is the first time the user has visited
+     * the Resources page so we don't push a state (because the browser handles the first state by default.)
+     */
+    if (history.pushState) {
+      if (
+        history.state &&
+        history.state.category !== activeCategory &&
+        !window.location.search.includes(activeCategory)
+      ) {
+        window.history.pushState(
+          { category: activeCategory },
+          activeCategory,
+          `?category=${activeCategory}`
+        );
+      }
+    }
+  }, [activeCategory]);
   /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
 
   return (
