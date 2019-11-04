@@ -36,6 +36,10 @@ const ProfileMenu = styled.div`
       float: right;
     }
   }
+  @media (min-width: ${breakpoints[1024]}) {
+    /* matches width of osu logo so it center aligns the menu */
+    width: 250px;
+  }
 `;
 
 const Navigation = styled.div`
