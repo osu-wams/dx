@@ -12,5 +12,4 @@ it('should find link to view and make payment and clicking it triggers analytics
   fireEvent.click(MakePayment);
   fireEvent.click(AddMoney);
   expect(mockGAEvent).toHaveBeenCalledTimes(2);
-
 });
