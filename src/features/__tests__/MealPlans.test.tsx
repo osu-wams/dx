@@ -31,5 +31,6 @@ describe('<MealPlans />', () => {
     mockUseMealPlans.mockResolvedValue(Promise.resolve(mockNoData));
     const { getByText } = render(<MealPlans />);
     await waitForElement(() => getByText('No meal plans'));
+    await waitForElement(() => getByText('Add money'));
   });
 });
