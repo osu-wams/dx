@@ -235,10 +235,10 @@ exports[`Renders default CloseButton with the SVG close icon 1`] = `
       fill="currentColor"
     />
   </svg>
-  <span
-    style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+  <div
+    style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
   >
     Close
-  </span>
+  </div>
 </button>
 `;

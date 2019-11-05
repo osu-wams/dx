@@ -1,10 +1,9 @@
 import React from 'react';
-import { faCalendarCheck } from '@fortawesome/pro-light-svg-icons';
 import { CardSection, SectionHeader } from './ScheduleCardStyles';
-import Icon from '../../ui/Icon';
-import { Color } from '../../theme';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
+import { Date, DateDay, DateMonth } from '../../ui/Date';
+import { format } from 'date-fns';
 
 const ScheduleCardAcademicCalendar = ({ calEvents }) => (
   <>
@@ -12,7 +11,7 @@ const ScheduleCardAcademicCalendar = ({ calEvents }) => (
       <CardSection>
         <SectionHeader>Academic Calendar</SectionHeader>
         <List>
-          {calEvents.map(({ title, link }) => (
+          {calEvents.map(({ title, link, pubDate}) => (
             <ListItem key={title}>
               <ListItemContentLink
                 href={link}
@@ -20,7 +19,10 @@ const ScheduleCardAcademicCalendar = ({ calEvents }) => (
                 rel="noopener noreferrer"
                 onClick={() => Event('schedule-card', 'academic-calendar-link', link)}
               >
-                <Icon icon={faCalendarCheck} color={Color['orange-200']} />
+                <Date>
+                  <DateDay>{format(pubDate, 'D')}</DateDay>
+                  <DateMonth>{format(pubDate, 'MMM')}</DateMonth>
+                </Date>
                 <ListItemText>
                   <ListItemHeader>{title} </ListItemHeader>
                 </ListItemText>
