@@ -25,6 +25,7 @@ export interface IUser {
   email?: string;
   isCanvasOptIn?: boolean;
   classification?: IUserClassification;
+  audienceOverride?: IUserAudienceOverride;
 }
 
 export interface IUserState {
@@ -32,6 +33,14 @@ export interface IUserState {
   error: boolean;
   loading: boolean;
   isCanvasOptIn?: boolean;
+}
+
+export interface IUserAudienceOverride {
+  campusCode?: string;
+}
+
+export interface IUserSettings {
+  audienceOverride?: IUserAudienceOverride;
 }
 
 const getUser = (): Promise<IUser> =>
@@ -136,3 +145,12 @@ export const useUser = () => {
     setUser
   };
 };
+
+export const postSettings = (settings: IUserSettings): Promise<IUserSettings> =>
+  axios
+    .post('/api/user/settings', settings)
+    .then(res => res.data)
+    .catch(e => {
+      console.error(e);
+      throw e;
+    });
