@@ -4,13 +4,12 @@ import { render } from '../../util/test-utils';
 import FinancialOverview from '../financial-overview/FinancialOverview';
 import { mockGAEvent } from '../../setupTests';
 
-it('should find link to view and make payment and clicking it triggers analytics, and add money should not be visible when the mealplan is not being rendered', async () => {
-  const { getByText, queryByText } = render(<FinancialOverview />);
+it('should find link to view and make payment and clicking it triggers analytics', async () => {
+  const { getByText } = render(<FinancialOverview />);
   const MakePayment = await waitForElement(() => getByText('Make a payment'));
-  const AddMoney = queryByText('Add money');
+  const AddMoney = await waitForElement(() => getByText('Add money'));
 
   fireEvent.click(MakePayment);
-  
-  expect(mockGAEvent).toHaveBeenCalled();
-  expect(AddMoney).not.toBeInTheDocument()
+  fireEvent.click(AddMoney);
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });

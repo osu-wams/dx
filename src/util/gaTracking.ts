@@ -34,6 +34,7 @@ export type IComponents =
   | 'academic-calendar'
   | 'financial-transactions'
   | 'academic-overview'
+  | 'account-balance'
   | 'resource'
   | '404'
   | 'resource-search'

@@ -20,16 +20,19 @@ describe('<MealPlans />', () => {
   it('should have a $16.88 balance from our mock data', async () => {
     const { getByText } = render(<MealPlans />);
     await waitForElement(() => getByText('$16.88'));
+    await waitForElement(() => getByText('Add money'));
   });
 
   it('should have Meal Plan Balance as title from our mock data', async () => {
     const { getByText } = render(<MealPlans />);
     await waitForElement(() => getByText('Meal Plan Balance'));
+    await waitForElement(() => getByText('Add money'));
   });
 
   it('should not render if no balance ', async () => {
     mockUseMealPlans.mockResolvedValue(Promise.resolve(mockNoData));
     const { getByText } = render(<MealPlans />);
     await waitForElement(() => getByText('No meal plans'));
+    await waitForElement(() => getByText('Add money'));
   });
 });
