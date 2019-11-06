@@ -7,20 +7,18 @@ import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 
 const BetaDashboard = () => {
   return (
-    <div data-testid="betadash-page">
-      <MainGridWrapper>
-        <PageTitle title="Beta" />
-        <MainGrid>
-          <MainGridCol>
-            <BetaInfoCard />
-          </MainGridCol>
-          <MainGridCol>
-            <BetaResourcesCard />
-            <BetaReleaseNotesCard />
-          </MainGridCol>
-        </MainGrid>
-      </MainGridWrapper>
-    </div>
+    <MainGridWrapper data-testid="betadash-page">
+      <PageTitle title="Beta" />
+      <MainGrid>
+        <MainGridCol>
+          <BetaInfoCard />
+        </MainGridCol>
+        <MainGridCol>
+          <BetaResourcesCard />
+          <BetaReleaseNotesCard />
+        </MainGridCol>
+      </MainGrid>
+    </MainGridWrapper>
   );
 };
 

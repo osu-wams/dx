@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useAnnouncements } from '../api/announcements';
+import { SecondGridWrapper } from '../ui/PageGrid';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
 import { breakpoints } from '../theme';
@@ -44,14 +45,14 @@ const AnnouncementContainer = ({ page, ...props }) => {
   }
 
   return (
-    <>
+    <SecondGridWrapper>
       <Title as="h2">Announcements</Title>
       <AnnouncementContainerWrapper {...props}>
         {events.map(item => (
           <EventCard key={item.id} itemContent={item} />
         ))}
       </AnnouncementContainerWrapper>
-    </>
+    </SecondGridWrapper>
   );
 };
 

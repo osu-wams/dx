@@ -10,6 +10,7 @@ const MainGridWrapper = styled.div`
   border-bottom: 1px solid ${Color['neutral-300']};
   background-color: ${Color['neutral-100']};
   padding: 1rem ${theme.spacing.mobile} 2rem;
+  height: 100%;
   @media (min-width: ${breakpoints[768]}) {
     padding: ${theme.spacing.desktop};
   }

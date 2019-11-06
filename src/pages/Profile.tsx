@@ -4,14 +4,12 @@ import OSUProfile from '../features/profile/OSUProfile';
 import { MainGridWrapper, MainGrid } from '../ui/PageGrid';
 
 const Profile = () => (
-  <div data-testid="profile-page">
-    <MainGridWrapper>
-      <PageTitle title="My Profile" />
-      <MainGrid>
-        <OSUProfile />
-      </MainGrid>
-    </MainGridWrapper>
-  </div>
+  <MainGridWrapper data-testid="profile-page">
+    <PageTitle title="My Profile" />
+    <MainGrid>
+      <OSUProfile />
+    </MainGrid>
+  </MainGridWrapper>
 );
 
 export default Profile;
