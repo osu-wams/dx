@@ -15,7 +15,7 @@ const SubNav = styled.nav`
 `;
 
 const SubNavLink = styled(Link)`
-  padding: 0.2rem 0 0;
+  padding: 0.2rem 0;
   line-height: 20px;
   text-decoration: none;
   border-bottom: 3px solid transparent;
@@ -27,6 +27,9 @@ const SubNavLink = styled(Link)`
     margin-right: 0.5rem;
     color: ${Color['neutral-600']};
   }
+  &[aria-current] {
+    font-weight: 600;
+  }
   &:active,
   &:focus,
   &:hover,
@@ -35,8 +38,7 @@ const SubNavLink = styled(Link)`
   &:focus svg,
   &:hover svg,
   &[aria-current] svg {
-    color: ${Color['orange-500']};
-    border-bottom-color: ${Color['orange-500']};
+    border-bottom-color: ${Color['orange-400']};
   }
   & + a {
     margin-left: 2.6rem;

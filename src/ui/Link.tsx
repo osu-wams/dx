@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from '@reach/router';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { Color } from '../theme';
+import { Color, theme } from '../theme';
 
 const LinkStyles = styled.a<StyleProps>`
   :hover,
@@ -14,11 +14,13 @@ const LinkStyles = styled.a<StyleProps>`
   text-decoration: none;
   display: inline-block;
   padding: 0.4rem 0.8rem;
+  border-radius: ${theme.borderRadius[8]};
   &.simple {
     padding: 0;
   }
   background-color: ${props => props.bg || 'transparent'};
   color: ${props => props.fg || Color['orange-400']};
+  font-weight: ${props => (props.bg ? '300' : '500')};
   & > svg {
     margin-left: 1.2rem;
   }

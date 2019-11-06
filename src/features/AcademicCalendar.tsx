@@ -38,6 +38,7 @@ const AcademicCalendar = () => {
                 <ListItemContentLink
                   href={link}
                   onClick={() => Event('academic-calendar', title, link)}
+                  target="_blank"
                 >
                   <Date>
                     <DateDay>{format(pubDate, 'D')}</DateDay>

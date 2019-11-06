@@ -44,7 +44,7 @@ const PopoverDisclosure = styled(PD)`
 
 const Popover = styled(PO)`
   border-radius: ${theme.borderRadius[8]};
-  background-color: ${Color['neutral-700']};
+  background-color: ${Color['neutral-800']};
   width: 94%;
   top: 5rem !important;
   z-index: 2;
@@ -72,7 +72,7 @@ const PrimaryNav = styled.div`
   flex-direction: row;
 `;
 const SecondaryNav = styled.div`
-  background-color: ${Color['neutral-600']};
+  background-color: ${Color['neutral-700']};
   border-top: 1px solid ${Color['neutral-500']};
   padding: 1.6rem;
   border-radius: 0 0 0.8rem 0.8rem;

@@ -20,8 +20,8 @@ import { useAppVersions, AppVersions } from './api/app-versions';
 
 const ContentWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: stretch;
   height: 100%;
   width: 100%;
   flex-grow: 1;
@@ -114,7 +114,7 @@ const App = (props: AppProps) => {
               <PoseGroup>
                 {ReactGA.pageview(location.pathname + location.search + location.hash)}
                 <RouteContainer key={location.key} style={{ width: '100%' }}>
-                  <Router location={location}>
+                  <Router location={location} style={{ height: '100%' }}>
                     <RouterPage path="/" pageComponent={<Dashboard />} />
                     <RouterPage path="profile" pageComponent={<Profile />} />
                     <RouterPage path="academics/*" pageComponent={<Academics />} />

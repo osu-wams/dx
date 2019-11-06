@@ -13,8 +13,10 @@ exports[`Background color is orange-400 1`] = `
   text-decoration: none;
   display: inline-block;
   padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   background-color: #D73F09;
   color: #D73F09;
+  font-weight: 300;
 }
 
 .c0:hover,
@@ -72,8 +74,10 @@ exports[`Background is orange-400, and text is white 1`] = `
   text-decoration: none;
   display: inline-block;
   padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   background-color: #D73F09;
   color: #ffffff;
+  font-weight: 300;
 }
 
 .c0:hover,
@@ -131,8 +135,10 @@ exports[`Default options 1`] = `
   text-decoration: none;
   display: inline-block;
   padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   background-color: transparent;
   color: #D73F09;
+  font-weight: 500;
 }
 
 .c0:hover,
@@ -190,8 +196,10 @@ exports[`Text color is pine-400 1`] = `
   text-decoration: none;
   display: inline-block;
   padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   background-color: #4A773C;
   color: #D73F09;
+  font-weight: 300;
 }
 
 .c0:hover,

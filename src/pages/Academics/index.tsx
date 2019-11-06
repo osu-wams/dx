@@ -8,7 +8,7 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
 
 const Academics = () => {
   return (
-    <Router>
+    <Router style={{ height: '100%' }}>
       <RouterPage pageComponent={<AcademicsDashboard />} path="/" />
       <RouterPage pageComponent={<PastCourses />} path="past-courses" />
     </Router>

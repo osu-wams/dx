@@ -6,6 +6,7 @@ import { useAnnouncements } from '../api/announcements';
 import { useStudentExperienceEvents, useCampusEvents } from '../api/events';
 import { hasAudience, atCampus, CAMPUS_CODES } from '../api/user';
 import EventCard from './EventCard';
+import { SecondGridWrapper } from '../ui/PageGrid';
 import { theme, breakpoints } from '../theme';
 
 const EventCardContainerWrapper = styled.div`
@@ -113,14 +114,14 @@ const EventCardContainer = ({ page, ...props }) => {
     return null;
   }
   return (
-    <>
+    <SecondGridWrapper>
       <Title as="h2">Announcements and Events</Title>
       <EventCardContainerWrapper {...props}>
         {events.map(item => (
           <EventCard key={item.id} itemContent={item} />
         ))}
       </EventCardContainerWrapper>
-    </>
+    </SecondGridWrapper>
   );
 };
 export default EventCardContainer;

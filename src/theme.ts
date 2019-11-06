@@ -11,6 +11,8 @@ export enum Color {
   'neutral-550' = '#7B746F', // minimum contrast for dark text with white background
   'neutral-600' = '#696361', // minimum for dark text with background up to neutral-200
   'neutral-700' = '#423E3C', // use as a text color for backgrounds as dark as neutral-400
+  'neutral-800' = '#2E2B2A',
+  'neutral-900' = '#1F1D1C',
   // Primary
   'orange-100' = '#FFE7DE',
   'orange-200' = '#F79572',
