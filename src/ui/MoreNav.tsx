@@ -10,7 +10,7 @@ import {
   faCommentAltCheck,
   faArrowAltSquareLeft
 } from '@fortawesome/pro-light-svg-icons';
-import { theme, Color, breakpoints } from '../theme';
+import { theme, breakpoints } from '../theme';
 import Icon from './Icon';
 import { Event } from '../util/gaTracking';
 import Url from '../util/externalUrls.data';
@@ -24,9 +24,9 @@ const PopoverDisclosure = styled(PD)`
   line-height: 30px;
   text-decoration: none;
   border: none;
-  background: transparent;
+  background-color: ${({ theme }) => theme.header.mainNavList.background};
   cursor: pointer;
-  color: ${Color['neutral-550']};
+  color: ${({ theme }) => theme.header.mainNavList.color};
   & > svg {
     font-size: 24px;
   }
@@ -38,13 +38,13 @@ const PopoverDisclosure = styled(PD)`
   &:hover > svg,
   &[aria-expanded='true'],
   &[aria-expanded='true'] > svg {
-    color: ${Color['orange-400']};
+    color: ${({ theme }) => theme.header.mainNavList.hoverColor};
   }
 `;
 
 const Popover = styled(PO)`
   border-radius: ${theme.borderRadius[8]};
-  background-color: ${Color['neutral-800']};
+  background-color: ${({ theme }) => theme.header.mainNavList.popOver.background};
   width: 94%;
   top: 5rem !important;
   z-index: 2;
@@ -58,12 +58,12 @@ const NavLink = styled(Link)`
   flex-direction: row;
   line-height: 30px;
   text-decoration: none;
-  color: ${Color.white};
+  color: ${({ theme }) => theme.header.mainNavList.popOver.primaryNav.link.color};
   width: 50%;
   & > svg {
     font-size: 24px;
     margin-right: 1.2rem;
-    color: ${Color['orange-400']};
+    color: ${({ theme }) => theme.header.mainNavList.popOver.primaryNav.link.svg.color};
   }
 `;
 const PrimaryNav = styled.div`
@@ -72,8 +72,8 @@ const PrimaryNav = styled.div`
   flex-direction: row;
 `;
 const SecondaryNav = styled.div`
-  background-color: ${Color['neutral-700']};
-  border-top: 1px solid ${Color['neutral-500']};
+  background-color: ${({ theme }) => theme.header.mainNavList.popOver.secondaryNav.background};
+  border-top: 1px solid ${({ theme }) => theme.header.mainNavList.popOver.secondaryNav.borderTop};
   padding: 1.6rem;
   border-radius: 0 0 0.8rem 0.8rem;
 `;
@@ -83,13 +83,13 @@ const NavContent = styled.div`
     margin-top: 0;
     font-size: ${theme.fontSize[14]};
     line-height: 1.8rem;
-    color: ${Color['neutral-200']};
+    color: ${({ theme }) => theme.header.mainNavList.popOver.primaryNav.color};
   }
 `;
 
 const SecondaryLink = styled.a`
   display: block;
-  color: ${Color.white};
+  color: ${({ theme }) => theme.header.mainNavList.popOver.secondaryNav.link.color};
   padding: 0 0.5rem;
   text-decoration: none;
   & + a {
@@ -97,7 +97,7 @@ const SecondaryLink = styled.a`
   }
   & > svg {
     margin-right: 1.6rem;
-    color: ${Color.white};
+    color: ${({ theme }) => theme.header.mainNavList.popOver.secondaryNav.link.svg.color};
   }
 `;
 

@@ -79,7 +79,7 @@ export const theme = {
   }
 };
 
-interface ThemeConfiguration {
+export interface ThemeConfiguration {
   header: {
     background: string;
     userButton: {
@@ -97,6 +97,33 @@ interface ThemeConfiguration {
       };
       menuItemSelected: {
         background: string;
+      };
+    };
+    mainNavList: {
+      background: string;
+      color: string;
+      hoverColor: string;
+      popOver: {
+        background: string;
+        primaryNav: {
+          color: string;
+          link: {
+            color: string;
+            svg: {
+              color: string;
+            };
+          };
+        };
+        secondaryNav: {
+          background: string;
+          borderTop: string;
+          link: {
+            color: string;
+            svg: {
+              color: string;
+            };
+          };
+        };
       };
     };
   };
@@ -180,6 +207,33 @@ export const lightTheme: ThemeConfiguration = {
       },
       menuItemSelected: {
         background: Color.transparent
+      }
+    },
+    mainNavList: {
+      background: Color.transparent,
+      color: Color['neutral-550'],
+      hoverColor: Color['orange-400'],
+      popOver: {
+        background: Color['neutral-800'],
+        primaryNav: {
+          color: Color.white,
+          link: {
+            color: Color.white,
+            svg: {
+              color: Color['orange-400']
+            }
+          }
+        },
+        secondaryNav: {
+          background: Color['neutral-700'],
+          borderTop: Color['neutral-500'],
+          link: {
+            color: Color.white,
+            svg: {
+              color: Color.white
+            }
+          }
+        }
       }
     }
   },
