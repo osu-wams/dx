@@ -11,7 +11,7 @@ import ecampusLogo from '../assets/osu-ecampus.svg';
 import cascadesLogo from '../assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
-import { theme, Color, breakpoints } from '../theme';
+import { theme, breakpoints } from '../theme';
 import { Event } from '../util/gaTracking';
 import { IUser } from '../api/user';
 import { UserContext } from '../App';
@@ -21,7 +21,7 @@ const headerMedia = breakpoints[768];
 const HeaderWrapper = styled.div`
   display: flex;
   width: 100%;
-  background-color: ${Color.white};
+  background-color: ${({ theme }) => theme.header.background};
   justify-content: space-between;
   flex-flow: row wrap;
   padding: 8px 8px 12px;
@@ -60,17 +60,17 @@ const Navigation = styled.div`
 `;
 
 const UserButton = styled(MenuButton)`
-  color: ${Color['neutral-550']};
-  background: transparent;
+  color: ${({ theme }) => theme.header.userButton.color};
+  background: ${({ theme }) => theme.header.userButton.background};
   border: none;
   cursor: pointer;
 `;
 
 const ProfileMenuList = styled(MenuList)`
   &[data-reach-menu-list] {
-    background-color: ${Color['neutral-800']};
+    background-color: ${({ theme }) => theme.header.profileMenuList.background};
     border-radius: ${theme.borderRadius[8]};
-    color: ${Color.white};
+    color: ${({ theme }) => theme.header.profileMenuList.color};
     min-width: 15rem;
     padding: 0;
     [data-reach-menu-item] {
@@ -81,18 +81,18 @@ const ProfileMenuList = styled(MenuList)`
       align-items: center;
     }
     svg {
-      color: ${Color['orange-400']};
+      color: ${({ theme }) => theme.header.profileMenuList.svg.color};
       margin-right: 1.2rem;
       font-size: ${theme.fontSize[24]};
     }
     div + div {
       [data-reach-menu-item] {
-        border-top: 1px solid ${Color['neutral-500']};
+        border-top: 1px solid ${({ theme }) => theme.header.profileMenuList.menuItem.borderTop};
       }
     }
   }
   [data-reach-menu-item][data-selected] {
-    background-color: transparent;
+    background-color: ${({ theme }) => theme.header.profileMenuList.menuItemSelected.background};
   }
 `;
 

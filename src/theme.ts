@@ -80,6 +80,26 @@ export const theme = {
 };
 
 interface ThemeConfiguration {
+  header: {
+    background: string;
+    userButton: {
+      background: string;
+      color: string;
+    };
+    profileMenuList: {
+      background: string;
+      color: string;
+      svg: {
+        color: string;
+      };
+      menuItem: {
+        borderTop: string;
+      };
+      menuItemSelected: {
+        background: string;
+      };
+    };
+  };
   mainGrid: {
     background: string;
     borderBottom: string;
@@ -91,6 +111,26 @@ interface ThemeConfiguration {
 }
 
 export const lightTheme: ThemeConfiguration = {
+  header: {
+    background: Color.white,
+    userButton: {
+      background: 'transparent',
+      color: Color['neutral-550']
+    },
+    profileMenuList: {
+      background: Color['neutral-700'],
+      color: Color.white,
+      svg: {
+        color: Color['orange-300']
+      },
+      menuItem: {
+        borderTop: Color['neutral-500']
+      },
+      menuItemSelected: {
+        background: 'transparent'
+      }
+    }
+  },
   mainGrid: {
     background: Color['neutral-100'],
     borderBottom: Color['neutral-300'],
