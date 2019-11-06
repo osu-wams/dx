@@ -75,7 +75,7 @@ const Course: FC<{
           !isMidterm(room, scheduleType) && (
             <ListItem key={generateId()}>
               <ListItemContent>
-                <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-200']} />
+                <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-400']} />
                 <ListItemText>
                   <ListItemHeader>{scheduleDescription}</ListItemHeader>
                   <ListItemDescription>

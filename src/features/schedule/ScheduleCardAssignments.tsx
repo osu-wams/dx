@@ -54,7 +54,7 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
                   {courseCodeOrIcon(
                     context_name,
                     courseList,
-                    <Icon icon={faFileAlt} color={Color['orange-200']} />
+                    <Icon icon={faFileAlt} color={Color['orange-400']} />
                   )}
                   <ListItemText>
                     <ListItemHeader>{title} </ListItemHeader>

@@ -90,7 +90,7 @@ const PlannerItems = () => {
                   {courseCodeOrIcon(
                     context_name,
                     courses.data,
-                    <Icon icon={faFileEdit} color={Color['orange-200']} />
+                    <Icon icon={faFileEdit} color={Color['orange-400']} />
                   )}
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>
