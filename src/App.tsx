@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Router, Location, RouteComponentProps } from '@reach/router';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import ReactGA from 'react-ga';
 import GlobalStyles from './GlobalStyles';
@@ -17,6 +17,7 @@ import Footer from './ui/Footer';
 import { useInfoButtons, InfoButtonState } from './api/info-buttons';
 import { useUser } from './api/user';
 import { useAppVersions, AppVersions } from './api/app-versions';
+import { lightTheme } from './theme';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -103,34 +104,36 @@ const App = (props: AppProps) => {
   }, [infoButtons.data, user.error, user.loading, appVersions.data]);
 
   return (
-    <UserContext.Provider value={user}>
-      <AppContext.Provider value={appContext}>
-        <GlobalStyles />
-        <Header />
-        <Alerts />
-        <ContentWrapper>
-          <Location>
-            {({ location }) => (
-              <PoseGroup>
-                {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                <RouteContainer key={location.key} style={{ width: '100%' }}>
-                  <Router location={location} style={{ height: '100%' }}>
-                    <RouterPage path="/" pageComponent={<Dashboard />} />
-                    <RouterPage path="profile" pageComponent={<Profile />} />
-                    <RouterPage path="academics/*" pageComponent={<Academics />} />
-                    <RouterPage path="finances" pageComponent={<Finances />} />
-                    <RouterPage path="resources" pageComponent={<Resources />} />
-                    <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                    <RouterPage default pageComponent={<PageNotFound />} />
-                  </Router>
-                </RouteContainer>
-              </PoseGroup>
-            )}
-          </Location>
-        </ContentWrapper>
-        <Footer />
-      </AppContext.Provider>
-    </UserContext.Provider>
+    <ThemeProvider theme={lightTheme}>
+      <UserContext.Provider value={user}>
+        <AppContext.Provider value={appContext}>
+          <GlobalStyles />
+          <Header />
+          <Alerts />
+          <ContentWrapper>
+            <Location>
+              {({ location }) => (
+                <PoseGroup>
+                  {ReactGA.pageview(location.pathname + location.search + location.hash)}
+                  <RouteContainer key={location.key} style={{ width: '100%' }}>
+                    <Router location={location} style={{ height: '100%' }}>
+                      <RouterPage path="/" pageComponent={<Dashboard />} />
+                      <RouterPage path="profile" pageComponent={<Profile />} />
+                      <RouterPage path="academics/*" pageComponent={<Academics />} />
+                      <RouterPage path="finances" pageComponent={<Finances />} />
+                      <RouterPage path="resources" pageComponent={<Resources />} />
+                      <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                      <RouterPage default pageComponent={<PageNotFound />} />
+                    </Router>
+                  </RouteContainer>
+                </PoseGroup>
+              )}
+            </Location>
+          </ContentWrapper>
+          <Footer />
+        </AppContext.Provider>
+      </UserContext.Provider>
+    </ThemeProvider>
   );
 };
 

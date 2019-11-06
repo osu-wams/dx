@@ -79,4 +79,26 @@ export const theme = {
   }
 };
 
+interface ThemeConfiguration {
+  mainGrid: {
+    background: string;
+    borderBottom: string;
+    borderTop: string;
+  };
+  secondGrid: {
+    background: string;
+  };
+}
+
+export const lightTheme: ThemeConfiguration = {
+  mainGrid: {
+    background: Color['neutral-100'],
+    borderBottom: Color['neutral-300'],
+    borderTop: Color['neutral-200']
+  },
+  secondGrid: {
+    background: Color['neutral-200']
+  }
+};
+
 //export default theme;
