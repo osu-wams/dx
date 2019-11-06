@@ -100,6 +100,37 @@ interface ThemeConfiguration {
       };
     };
   };
+  alert: {
+    background: string;
+    header: {
+      badge: {
+        background: string;
+      };
+    };
+    rave: {
+      background: string;
+      color: string;
+      icon: {
+        color: string;
+      };
+    };
+    dx: {
+      info: {
+        background: string;
+        color: string;
+        icon: {
+          color: string;
+        };
+      };
+      warn: {
+        background: string;
+        color: string;
+        icon: {
+          color: string;
+        };
+      };
+    };
+  };
   mainGrid: {
     background: string;
     borderBottom: string;
@@ -128,6 +159,37 @@ export const lightTheme: ThemeConfiguration = {
       },
       menuItemSelected: {
         background: 'transparent'
+      }
+    }
+  },
+  alert: {
+    background: 'transparent',
+    header: {
+      badge: {
+        background: 'transparent'
+      }
+    },
+    rave: {
+      background: Color['lava-400'],
+      color: Color.white,
+      icon: {
+        color: Color.white
+      }
+    },
+    dx: {
+      info: {
+        background: Color['stratosphere-400'],
+        color: Color.white,
+        icon: {
+          color: Color.white
+        }
+      },
+      warn: {
+        background: Color['luminance-300'],
+        color: Color.black,
+        icon: {
+          color: Color.black
+        }
       }
     }
   },
