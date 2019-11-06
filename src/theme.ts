@@ -139,13 +139,34 @@ interface ThemeConfiguration {
   secondGrid: {
     background: string;
   };
+  footer: {
+    background: string;
+    color: string;
+    link: {
+      color: string;
+    };
+    iconLink: {
+      border: string;
+      color: string;
+      icon: {
+        color: string;
+      };
+    };
+    adminText: {
+      color: string;
+    };
+    masquerade: {
+      background: string;
+      color: string;
+    };
+  };
 }
 
 export const lightTheme: ThemeConfiguration = {
   header: {
     background: Color.white,
     userButton: {
-      background: 'transparent',
+      background: Color.transparent,
       color: Color['neutral-550']
     },
     profileMenuList: {
@@ -158,15 +179,15 @@ export const lightTheme: ThemeConfiguration = {
         borderTop: Color['neutral-500']
       },
       menuItemSelected: {
-        background: 'transparent'
+        background: Color.transparent
       }
     }
   },
   alert: {
-    background: 'transparent',
+    background: Color.transparent,
     header: {
       badge: {
-        background: 'transparent'
+        background: Color.transparent
       }
     },
     rave: {
@@ -200,6 +221,27 @@ export const lightTheme: ThemeConfiguration = {
   },
   secondGrid: {
     background: Color['neutral-200']
+  },
+  footer: {
+    background: Color.black,
+    color: Color.white,
+    link: {
+      color: Color.white
+    },
+    iconLink: {
+      border: Color['neutral-400'],
+      color: Color.white,
+      icon: {
+        color: Color['orange-400']
+      }
+    },
+    adminText: {
+      color: Color['neutral-500']
+    },
+    masquerade: {
+      background: Color.transparent,
+      color: Color.white
+    }
   }
 };
 
