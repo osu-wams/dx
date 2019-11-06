@@ -68,7 +68,7 @@ const UserButton = styled(MenuButton)`
 
 const ProfileMenuList = styled(MenuList)`
   &[data-reach-menu-list] {
-    background-color: ${Color['neutral-700']};
+    background-color: ${Color['neutral-800']};
     border-radius: ${theme.borderRadius[8]};
     color: ${Color.white};
     min-width: 15rem;
@@ -81,7 +81,7 @@ const ProfileMenuList = styled(MenuList)`
       align-items: center;
     }
     svg {
-      color: ${Color['orange-300']};
+      color: ${Color['orange-400']};
       margin-right: 1.2rem;
       font-size: ${theme.fontSize[24]};
     }
