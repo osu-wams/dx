@@ -51,8 +51,6 @@ const ListItemContent = styled.div<SpacedList>`
 type TLink = React.HTMLProps<HTMLAnchorElement>;
 
 const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
-  &:active,
-  &:focus,
   &:hover {
     & > div {
       color: ${Color['orange-400']};
