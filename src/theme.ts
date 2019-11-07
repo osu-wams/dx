@@ -270,6 +270,18 @@ export interface ThemeConfiguration {
     label: {
       color: string;
     };
+    link: {
+      background: string;
+      color: string;
+      icon: {
+        external: {
+          color: string;
+        };
+        internal: {
+          color: string;
+        };
+      };
+    };
   };
 }
 
@@ -463,6 +475,18 @@ export const lightTheme: ThemeConfiguration = {
     },
     label: {
       color: Color['neutral-700']
+    },
+    link: {
+      background: Color.transparent,
+      color: Color['orange-400'],
+      icon: {
+        external: {
+          color: Color['orange-400']
+        },
+        internal: {
+          color: Color['orange-400']
+        }
+      }
     }
   }
 };
