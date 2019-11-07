@@ -282,6 +282,25 @@ export interface ThemeConfiguration {
         };
       };
     };
+    list: {
+      color: string;
+      item: {
+        background: string;
+        header: {
+          color: string;
+        };
+        leadText: {
+          color: string;
+        };
+        description: {
+          color: string;
+        };
+        link: {
+          color: string;
+          boxShadow: string;
+        };
+      };
+    };
   };
 }
 
@@ -485,6 +504,25 @@ export const lightTheme: ThemeConfiguration = {
         },
         internal: {
           color: Color['orange-400']
+        }
+      }
+    },
+    list: {
+      color: Color['neutral-700'],
+      item: {
+        background: Color.transparent,
+        header: {
+          color: Color['neutral-700']
+        },
+        leadText: {
+          color: Color['orange-400']
+        },
+        description: {
+          color: Color['neutral-550']
+        },
+        link: {
+          color: Color['orange-400'],
+          boxShadow: 'rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px'
         }
       }
     }

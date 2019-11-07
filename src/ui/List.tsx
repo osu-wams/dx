@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { theme, Color } from '../theme';
+import { theme } from '../theme';
 
 type SpacedList = {
   spaced?: boolean;
 };
 
 const List = styled.ul`
-  color: ${Color['neutral-700']};
+  color: ${({ theme }) => theme.ui.list.color};
   text-decoration: none;
   padding: 0;
   margin: 0;
@@ -26,7 +26,7 @@ const ListItem = styled.li<SpacedList>`
 
 const ListItemContent = styled.div<SpacedList>`
   width: 100%;
-  background: transparent;
+  background: ${({ theme }) => theme.ui.list.item.background};
   display: flex;
   justify-content: flex-start;
   flex-wrap: nowrap;
@@ -53,9 +53,9 @@ type TLink = React.HTMLProps<HTMLAnchorElement>;
 const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
   &:hover {
     & > div {
-      color: ${Color['orange-400']};
+      color: ${({ theme }) => theme.ui.list.item.link.color};
     }
-    box-shadow: rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px;
+    box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
     transform: translateY(-4px);
   }
 `;
@@ -69,13 +69,13 @@ const ListItemText = styled.div`
 `;
 
 const ListItemHeader = styled.h4`
-  color: ${Color['neutral-700']};
+  color: ${({ theme }) => theme.ui.list.item.header.color};
   margin: 0;
   font-weight: normal;
 `;
 
 const ListItemDescription = styled.div<{ fontSize?: string; color?: string }>`
-  color: ${props => (props.color ? props.color : Color['neutral-550'])};
+  color: ${({ color, theme }) => (color ? color : theme.ui.list.item.description.color)};
   font-size: ${props => (props.fontSize ? props.fontSize : theme.fontSize[14])};
   line-height: 1.6rem;
 `;
@@ -84,7 +84,7 @@ const ListItemLeadText = styled.div`
   line-height: ${theme.fontSize[14]};
   text-align: center;
   padding: 0 ${theme.spacing.unit * 2}px 0 0;
-  color: ${Color['orange-400']};
+  color: ${({ theme }) => theme.ui.list.item.leadText.color};
   width: ${theme.fontSize[58]};
   strong {
     line-height: ${theme.fontSize[20]};
