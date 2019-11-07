@@ -27,7 +27,7 @@ const EventCardTitle = styled.div`
   & > svg {
     margin-left: ${theme.spacing.unit * 2}px;
   }
-  color: #fff;
+  color: ${({ theme }) => theme.ui.eventCard.title.color};
   font-size: ${theme.fontSize['18']};
   font-weight: 600;
 `;
