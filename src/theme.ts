@@ -201,6 +201,38 @@ export interface ThemeConfiguration {
     divider: {
       border: string;
     };
+    eventCard: {
+      color: string;
+      background: string;
+      title: {
+        color: string;
+      };
+      largeTitle: {
+        color: string;
+      };
+      date: {
+        background: string;
+        firstChild: {
+          color: string;
+        };
+        lastChild: {
+          color: string;
+        };
+      };
+      image: {
+        background: string;
+        color: string;
+        title: {
+          color: string;
+        };
+      };
+      button: {
+        color: string;
+        icon: {
+          color: string;
+        };
+      };
+    };
   };
 }
 
@@ -325,6 +357,38 @@ export const lightTheme: ThemeConfiguration = {
     },
     divider: {
       border: Color['neutral-200']
+    },
+    eventCard: {
+      color: Color['neutral-600'],
+      background: Color.white,
+      title: {
+        color: Color['neutral-700']
+      },
+      largeTitle: {
+        color: Color.white
+      },
+      date: {
+        background: Color.white,
+        firstChild: {
+          color: Color['neutral-700']
+        },
+        lastChild: {
+          color: Color['neutral-700']
+        }
+      },
+      image: {
+        background: 'linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55))',
+        color: Color.white,
+        title: {
+          color: Color.white
+        }
+      },
+      button: {
+        color: Color.white,
+        icon: {
+          color: Color.white
+        }
+      }
     }
   }
 };

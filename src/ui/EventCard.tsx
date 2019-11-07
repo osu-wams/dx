@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import { format } from 'date-fns';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { Color, theme, breakpoints } from '../theme';
+import { theme, breakpoints } from '../theme';
 import Button from './Button';
 import { Event } from '../util/gaTracking';
 
@@ -33,14 +33,14 @@ const EventCardTitle = styled.div`
 `;
 
 const EventCardLargeTitle = styled.div`
-  color: ${Color['white']};
+  color: ${({ theme }) => theme.ui.eventCard.largeTitle.color};
   font-size: ${theme.fontSize['24']};
   font-weight: 300;
   text-align: center;
 `;
 
 const EventCardDateStyling = styled.div`
-  background: ${Color['white']};
+  background: ${({ theme }) => theme.ui.eventCard.date.background};
   border: none;
   padding: 0;
   margin: 0 auto;
@@ -54,7 +54,7 @@ const EventCardDateStyling = styled.div`
   border-radius: 50%;
 
   & > span:first-child {
-    color: ${Color['neutral-700']};
+    color: ${({ theme }) => theme.ui.eventCard.date.firstChild.color};
     font-weight: bold;
     font-size: ${theme.fontSize[12]};
     text-transform: uppercase;
@@ -62,7 +62,7 @@ const EventCardDateStyling = styled.div`
   }
 
   & > span:last-child {
-    color: ${Color['neutral-700']};
+    color: ${({ theme }) => theme.ui.eventCard.date.lastChild.color};
     line-height: 20px;
     font-size: ${theme.fontSize[24]};
   }
@@ -84,8 +84,8 @@ const EventCardText = styled.div`
 `;
 
 const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
-  color: ${Color['neutral-600']};
-  background-color: ${Color.white};
+  color: ${({ theme }) => theme.ui.eventCard.color};
+  background-color: ${({ theme }) => theme.ui.eventCard.background};
   padding: ${theme.spacing.unit * 2}px;
   min-height: 220px;
   display: flex;
@@ -95,7 +95,7 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   height: 100%;
   margin: 0;
   & ${EventCardTitle} {
-    color: ${Color['neutral-700']};
+    color: ${({ theme }) => theme.ui.eventCard.title.color};
   }
   @media (min-width: ${breakpoints[768]}) {
     margin-bottom: 0;
@@ -103,16 +103,11 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   ${props => {
     if (props.imageUrl) {
       return `
-        color: ${Color.white};
-        background:
-          linear-gradient(
-            rgba(0, 0, 0, 0.55),
-            rgba(0, 0, 0, 0.55)
-          ),
-          url(${props.imageUrl}) no-repeat center;
+        color: ${props.theme.ui.eventCard.image.color};
+        background: ${props.theme.ui.eventCard.image.background}, url(${props.imageUrl}) no-repeat center;
         background-size: cover;
         & ${EventCardTitle} {
-          color: ${Color.white}
+          color: ${props.theme.ui.eventCard.image.title.color};
         }
       `;
     }
@@ -135,6 +130,8 @@ const EventCardBody = styled.a`
 `;
 
 const EventCardContent = ({ item }) => {
+  const themeContext = useContext(ThemeContext);
+
   return (
     <>
       {!item.body && (
@@ -154,13 +151,13 @@ const EventCardContent = ({ item }) => {
           <>
             {item.action && item.action.title && (
               <ButtonWithIcon
-                fg={Color.white}
+                fg={themeContext.ui.eventCard.button.color}
                 href={item.action.link}
                 onClick={() => Event('dx-event', item.title, item.action.link)}
                 target="_blank"
               >
                 {item.action.title}
-                <Icon icon={faLongArrowRight} color={Color.white} />
+                <Icon icon={faLongArrowRight} color={themeContext.ui.eventCard.button.icon.color} />
               </ButtonWithIcon>
             )}
           </>
