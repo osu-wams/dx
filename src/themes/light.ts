@@ -1,4 +1,4 @@
-import { ThemeConfiguration, Color } from '../theme';
+import { ThemeConfiguration, Color, shadows, gradients } from '../theme';
 
 export const light: ThemeConfiguration = {
   header: {
@@ -130,6 +130,27 @@ export const light: ThemeConfiguration = {
         }
       }
     },
+    card: {
+      boxShadow: shadows[1],
+      background: Color.white,
+      badge: {
+        background: Color['orange-400'],
+        color: Color.white
+      },
+      contentRow: {
+        background: Color.white,
+        borderBottom: Color['neutral-200']
+      },
+      contentCell: {
+        borderLeft: Color['neutral-200']
+      },
+      header: {
+        borderBottom: Color['neutral-200']
+      },
+      icon: {
+        color: Color['neutral-550']
+      }
+    },
     date: {
       color: Color['orange-400']
     },
@@ -155,7 +176,7 @@ export const light: ThemeConfiguration = {
         }
       },
       image: {
-        background: 'linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55))',
+        background: gradients[1],
         color: Color.white,
         title: {
           color: Color.white
@@ -235,7 +256,7 @@ export const light: ThemeConfiguration = {
         },
         link: {
           color: Color['orange-400'],
-          boxShadow: 'rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px'
+          boxShadow: shadows[1]
         }
       }
     },

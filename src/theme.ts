@@ -48,6 +48,10 @@ export const shadows = {
   4: '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
 };
 
+export const gradients = {
+  1: 'linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55))'
+};
+
 export const breakpoints = {
   '768': '768px',
   '1024': '1024px'
@@ -207,6 +211,27 @@ export interface ThemeConfiguration {
         icon: {
           color: string;
         };
+      };
+    };
+    card: {
+      boxShadow: string;
+      background: string;
+      badge: {
+        background: string;
+        color: string;
+      };
+      contentRow: {
+        background: string;
+        borderBottom: string;
+      };
+      contentCell: {
+        borderLeft: string;
+      };
+      header: {
+        borderBottom: string;
+      };
+      icon: {
+        color: string;
       };
     };
     date: {
