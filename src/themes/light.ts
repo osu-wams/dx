@@ -108,6 +108,12 @@ export const light: ThemeConfiguration = {
       color: Color.white
     }
   },
+  pageNotFound: {
+    link: {
+      background: Color['orange-400'],
+      color: Color.white
+    }
+  },
   ui: {
     button: {
       background: Color['orange-400'],

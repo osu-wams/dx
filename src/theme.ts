@@ -191,6 +191,12 @@ export interface ThemeConfiguration {
       color: string;
     };
   };
+  pageNotFound: {
+    link: {
+      background: string;
+      color: string;
+    };
+  };
   ui: {
     button: {
       background: string;
