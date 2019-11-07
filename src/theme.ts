@@ -233,6 +233,43 @@ export interface ThemeConfiguration {
         };
       };
     };
+    highlights: {
+      card: {
+        border: string;
+      };
+      description: {
+        color: string;
+      };
+      emphasis: {
+        color: string;
+      };
+      emphasisInline: {
+        color: string;
+      };
+      title: {
+        color: string;
+      };
+    };
+    icon: {
+      background: string;
+      color: string;
+      counter: {
+        background: string;
+        color: string;
+      };
+    };
+    input: {
+      border: string;
+      default: {
+        color: string;
+      };
+      small: {
+        color: string;
+      };
+    };
+    label: {
+      color: string;
+    };
   };
 }
 
@@ -389,6 +426,43 @@ export const lightTheme: ThemeConfiguration = {
           color: Color.white
         }
       }
+    },
+    highlights: {
+      card: {
+        border: Color['neutral-200']
+      },
+      description: {
+        color: Color['neutral-550']
+      },
+      emphasis: {
+        color: Color['orange-400']
+      },
+      emphasisInline: {
+        color: Color['orange-400']
+      },
+      title: {
+        color: Color['neutral-550']
+      }
+    },
+    icon: {
+      background: Color.transparent,
+      color: Color['neutral-400'],
+      counter: {
+        background: Color['orange-400'],
+        color: Color.white
+      }
+    },
+    input: {
+      border: Color['neutral-300'],
+      default: {
+        color: Color['neutral-700']
+      },
+      small: {
+        color: Color['stratosphere-400']
+      }
+    },
+    label: {
+      color: Color['neutral-700']
     }
   }
 };
