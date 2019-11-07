@@ -18,7 +18,7 @@ const Table = styled.table<ITable>`
     })};
   border-collapse: separate;
   border-spacing: 0;
-  color: ${({ theme }) => theme.table.color};
+  color: ${({ theme }) => theme.ui.table.color};
   font-size: ${styledMap('variant', {
     compact: '1.4rem',
     default: 'inherit'
@@ -35,10 +35,10 @@ const Table = styled.table<ITable>`
     })};
   }
   th {
-    color: ${({ theme }) => theme.table.cell.color};
+    color: ${({ theme }) => theme.ui.table.cell.color};
     font-weight: 600;
     font-size: ${theme.fontSize['14']};
-    border-bottom: 1px solid ${({ theme }) => theme.table.cell.borderBottom};
+    border-bottom: 1px solid ${({ theme }) => theme.ui.table.cell.borderBottom};
     text-align: left;
     padding: ${styledMap('variant', {
       default: '0.4rem 0.8rem',
@@ -49,13 +49,13 @@ const Table = styled.table<ITable>`
   th:not(:first-child) {
     border-left: ${({ theme }) =>
       styledMap('variant', {
-        basic: `1px solid ${theme.table.cell.notFirstChild.borderLeft}`,
+        basic: `1px solid ${theme.ui.table.cell.notFirstChild.borderLeft}`,
         compact: 'none',
-        default: `1px solid ${theme.table.cell.notFirstChild.borderLeft}`
+        default: `1px solid ${theme.ui.table.cell.notFirstChild.borderLeft}`
       })};
   }
   tr:not(:first-child) td {
-    border-top: 1px solid ${({ theme }) => theme.table.row.borderTop};
+    border-top: 1px solid ${({ theme }) => theme.ui.table.row.borderTop};
   }
   ${({ stretch }) =>
     stretch &&
@@ -65,7 +65,7 @@ const Table = styled.table<ITable>`
     striped &&
     `
     tr:nth-child(even) {
-      background: ${theme.table.row.stripedEvenChildren.background};
+      background: ${theme.ui.table.row.stripedEvenChildren.background};
     }
   `};
 `;
