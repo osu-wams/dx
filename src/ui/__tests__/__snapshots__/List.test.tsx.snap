@@ -1,6 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`An icon on the right 1`] = `
+.c6 {
+  color: #F79572;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
 .c0 {
   color: #423E3C;
   -webkit-text-decoration: none;
@@ -78,13 +85,6 @@ exports[`An icon on the right 1`] = `
   color: #7B746F;
   font-size: 1.4rem;
   line-height: 1.6rem;
-}
-
-.c6 {
-  color: #F79572;
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul
@@ -132,6 +132,13 @@ exports[`An icon on the right 1`] = `
 `;
 
 exports[`Default style with icon on left 1`] = `
+.c3 {
+  color: #B7B1AF;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
 .c0 {
   color: #423E3C;
   -webkit-text-decoration: none;
@@ -209,13 +216,6 @@ exports[`Default style with icon on left 1`] = `
   color: #7B746F;
   font-size: 1.4rem;
   line-height: 1.6rem;
-}
-
-.c3 {
-  color: #B7B1AF;
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul
@@ -262,6 +262,13 @@ exports[`Default style with icon on left 1`] = `
 `;
 
 exports[`Icon on both left and right 1`] = `
+.c3 {
+  color: #B7B1AF;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
 .c0 {
   color: #423E3C;
   -webkit-text-decoration: none;
@@ -339,13 +346,6 @@ exports[`Icon on both left and right 1`] = `
   color: #7B746F;
   font-size: 1.4rem;
   line-height: 1.6rem;
-}
-
-.c3 {
-  color: #B7B1AF;
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul

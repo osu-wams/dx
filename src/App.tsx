@@ -17,7 +17,7 @@ import Footer from './ui/Footer';
 import { useInfoButtons, InfoButtonState } from './api/info-buttons';
 import { useUser } from './api/user';
 import { useAppVersions, AppVersions } from './api/app-versions';
-import { lightTheme } from './theme';
+import { light } from './themes';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -104,7 +104,7 @@ const App = (props: AppProps) => {
   }, [infoButtons.data, user.error, user.loading, appVersions.data]);
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={light}>
       <UserContext.Provider value={user}>
         <AppContext.Provider value={appContext}>
           <GlobalStyles />
