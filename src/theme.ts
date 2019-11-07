@@ -187,6 +187,21 @@ export interface ThemeConfiguration {
       color: string;
     };
   };
+  ui: {
+    customButton: {
+      background: string;
+      selectedBackground: string;
+      border: string;
+      color: string;
+      selectedColor: string;
+    };
+    date: {
+      color: string;
+    };
+    divider: {
+      border: string;
+    };
+  };
 }
 
 export const lightTheme: ThemeConfiguration = {
@@ -295,6 +310,21 @@ export const lightTheme: ThemeConfiguration = {
     masquerade: {
       background: Color.transparent,
       color: Color.white
+    }
+  },
+  ui: {
+    customButton: {
+      background: Color.white,
+      selectedBackground: Color['neutral-550'],
+      border: Color['neutral-300'],
+      color: Color.black,
+      selectedColor: Color.white
+    },
+    date: {
+      color: Color['orange-400']
+    },
+    divider: {
+      border: Color['neutral-200']
     }
   }
 };

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { Color, theme } from '../theme';
+import { theme } from '../theme';
 
 const Date = styled.div`
   margin: 0 auto;
   text-align: center;
-  color: ${Color['orange-400']};
+  color: ${({ theme }) => theme.ui.date.color};
   width: 3rem;
   line-height: 1.1;
   & + div {
