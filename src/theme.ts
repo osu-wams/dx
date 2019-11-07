@@ -197,6 +197,15 @@ export interface ThemeConfiguration {
       color: string;
     };
   };
+  features: {
+    academicOverview: {
+      footer: {
+        link: {
+          color: string;
+        };
+      };
+    };
+  };
   ui: {
     button: {
       background: string;

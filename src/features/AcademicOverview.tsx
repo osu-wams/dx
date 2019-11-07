@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { faAnalytics } from '@fortawesome/pro-light-svg-icons';
 import {
   Card,
@@ -13,12 +13,13 @@ import { AcademicStanding } from './academic-overview/AcademicStanding';
 import { StudentHolds } from './academic-overview/StudentHolds';
 import { StudentGpa } from './academic-overview/StudentGpa';
 import { StudentEnrolledCredits } from './academic-overview/StudentEnrolledCredits';
-import { Color } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
+import { ThemeContext } from 'styled-components';
 
 export const AcademicOverview = () => {
+  const themeContext = useContext(ThemeContext);
   return (
     <Card collapsing={false}>
       <CardHeader title="Academic Overview" badge={<CardIcon icon={faAnalytics} />} />
@@ -41,7 +42,7 @@ export const AcademicOverview = () => {
       <CardFooter infoButtonId="academic-overview">
         <ExternalLink
           href={Url.myDegrees.main}
-          fg={Color['orange-400']}
+          fg={themeContext.features.academicOverview.footer.link.color}
           onClick={() => Event('academic-overview', 'See more in MyDegrees link')}
         >
           View more in MyDegrees

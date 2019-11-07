@@ -114,6 +114,15 @@ export const light: ThemeConfiguration = {
       color: Color.white
     }
   },
+  features: {
+    academicOverview: {
+      footer: {
+        link: {
+          color: Color['orange-400']
+        }
+      }
+    }
+  },
   ui: {
     button: {
       background: Color['orange-400'],
