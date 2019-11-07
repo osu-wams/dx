@@ -197,10 +197,10 @@ export const lightTheme: ThemeConfiguration = {
       color: Color['neutral-550']
     },
     profileMenuList: {
-      background: Color['neutral-700'],
+      background: Color['neutral-800'],
       color: Color.white,
       svg: {
-        color: Color['orange-300']
+        color: Color['orange-400']
       },
       menuItem: {
         borderTop: Color['neutral-500']
