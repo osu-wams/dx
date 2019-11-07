@@ -46,14 +46,14 @@ const InfoButton = props => {
   return currentButton ? (
     <>
       <Button
-        bg={themeContext.ui.infoButton.background}
+        bg={themeContext.ui.button.info.background}
         data-testid={props.infoButtonId}
         onClick={(e: React.MouseEvent<HTMLElement>) => {
           toggleDialog(true);
           Event('info-button', currentButton.title);
         }}
       >
-        <Icon icon={faInfoCircle} size="lg" color={themeContext.ui.infoButton.icon.color} />
+        <Icon icon={faInfoCircle} size="lg" color={themeContext.ui.button.info.icon.color} />
         <VisuallyHidden>Information about {currentButton.title}</VisuallyHidden>
       </Button>
       <MyDialog isOpen={dialogVisible} aria-labelledby="infobtn-title">

@@ -35,10 +35,10 @@ const Icon = styled.img`
 
 const CustomLabel = styled('label')<{ selected: boolean }>`
   background: ${({ theme, selected }) =>
-    selected ? theme.ui.customButton.selectedBackground : theme.ui.customButton.background};
+    selected ? theme.ui.button.custom.selectedBackground : theme.ui.button.custom.background};
   color: ${({ theme, selected }) =>
-    selected ? theme.ui.customButton.selectedColor : theme.ui.customButton.color};
-  border: 1px solid ${({ theme }) => theme.ui.customButton.border};
+    selected ? theme.ui.button.custom.selectedColor : theme.ui.button.custom.color};
+  border: 1px solid ${({ theme }) => theme.ui.button.custom.border};
   border-radius: 2rem;
   display: flex;
   align-items: center;

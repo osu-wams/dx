@@ -191,22 +191,22 @@ export interface ThemeConfiguration {
     button: {
       background: string;
       color: string;
-    };
-    closeButton: {
-      background: string;
-      color: string;
-    };
-    customButton: {
-      background: string;
-      selectedBackground: string;
-      border: string;
-      color: string;
-      selectedColor: string;
-    };
-    infoButton: {
-      background: string;
-      icon: {
+      close: {
+        background: string;
         color: string;
+      };
+      custom: {
+        background: string;
+        selectedBackground: string;
+        border: string;
+        color: string;
+        selectedColor: string;
+      };
+      info: {
+        background: string;
+        icon: {
+          color: string;
+        };
       };
     };
     date: {
