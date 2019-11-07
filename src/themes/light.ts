@@ -109,12 +109,26 @@ export const light: ThemeConfiguration = {
     }
   },
   ui: {
+    button: {
+      background: Color['orange-400'],
+      color: Color.white
+    },
+    closeButton: {
+      background: Color.transparent,
+      color: Color.black
+    },
     customButton: {
       background: Color.white,
       selectedBackground: Color['neutral-550'],
       border: Color['neutral-300'],
       color: Color.black,
       selectedColor: Color.white
+    },
+    infoButton: {
+      background: Color.transparent,
+      icon: {
+        color: Color['neutral-600']
+      }
     },
     date: {
       color: Color['orange-400']

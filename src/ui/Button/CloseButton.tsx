@@ -7,8 +7,8 @@ import VisuallyHidden from '@reach/visually-hidden';
 
 const Btn = styled(Button)`
   & {
-    color: black;
-    background: transparent;
+    color: ${({ theme }) => theme.ui.closeButton.color};
+    background: ${({ theme }) => theme.ui.closeButton.background};
     padding: 1rem 2rem;
     font-size: 2.4rem;
   }

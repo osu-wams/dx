@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
-import { theme, Color } from '../../theme';
+import { theme } from '../../theme';
 import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from './index';
@@ -31,6 +31,7 @@ const DialogContent = styled.div`
 `;
 
 const InfoButton = props => {
+  const themeContext = useContext(ThemeContext);
   const appContext = useContext(AppContext);
   const [dialogVisible, toggleDialog] = useState(false);
   const [currentButton, setButton] = useState<InfoButtonState | null>(null);
@@ -45,14 +46,14 @@ const InfoButton = props => {
   return currentButton ? (
     <>
       <Button
-        bg={Color.transparent}
+        bg={themeContext.ui.infoButton.background}
         data-testid={props.infoButtonId}
         onClick={(e: React.MouseEvent<HTMLElement>) => {
           toggleDialog(true);
           Event('info-button', currentButton.title);
         }}
       >
-        <Icon icon={faInfoCircle} size="lg" color={Color['neutral-600']} />
+        <Icon icon={faInfoCircle} size="lg" color={themeContext.ui.infoButton.icon.color} />
         <VisuallyHidden>Information about {currentButton.title}</VisuallyHidden>
       </Button>
       <MyDialog isOpen={dialogVisible} aria-labelledby="infobtn-title">

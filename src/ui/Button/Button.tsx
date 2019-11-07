@@ -1,11 +1,11 @@
 /* eslint-disable */
 import React from 'react';
 import styled from 'styled-components';
-import { theme, Color } from '../../theme';
+import { theme } from '../../theme';
 
 const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>`
-  background-color: ${props => props.bg || Color['orange-400']};
-  color: ${props => props.fg || Color.white};
+  background-color: ${({ bg, theme }) => bg || theme.ui.button.background};
+  color: ${({ fg, theme }) => fg || theme.ui.button.color};
   & + & {
     margin-left: ${theme.spacing.unit}px;
   }
@@ -18,8 +18,8 @@ const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>`
 type IBtnSizes = 'small' | 'large';
 
 type BtnProps = {
-  bg?: Color;
-  fg?: Color;
+  bg?: string;
+  fg?: string;
   btnSize?: IBtnSizes;
 };
 
