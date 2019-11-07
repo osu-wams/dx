@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Dialog } from '@reach/dialog';
-import { theme, Color } from '../theme';
+import { theme } from '../theme';
 
 const MyDialog = styled(Dialog)`
   border-radius: ${theme.borderRadius[16]};
@@ -9,7 +9,7 @@ const MyDialog = styled(Dialog)`
     margin-right: -2rem;
   }
   h2 {
-    color: ${props => props.color || Color['orange-400']};
+    color: ${({ color, theme }) => color || theme.ui.myDialog.h2.color};
     font-size: ${theme.fontSize[24]};
     font-weight: 500;
     margin-bottom: 0;
@@ -17,11 +17,11 @@ const MyDialog = styled(Dialog)`
   }
   h3 {
     font-size: ${theme.fontSize[16]};
-    color: ${Color['neutral-200']};
+    color: ${({ theme }) => theme.ui.myDialog.h3.color};
     margin-bottom: 0.5rem;
   }
   .details {
-    color: ${Color['neutral-600']};
+    color: ${({ theme }) => theme.ui.myDialog.details.color};
     font-size: ${theme.fontSize[14]};
     margin-top: -1rem;
     margin-bottom: 2rem;

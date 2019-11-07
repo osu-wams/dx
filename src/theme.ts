@@ -301,6 +301,41 @@ export interface ThemeConfiguration {
         };
       };
     };
+    myDialog: {
+      h2: {
+        color: string;
+      };
+      h3: {
+        color: string;
+      };
+      details: {
+        color: string;
+      };
+    };
+    pageTitle: {
+      color: string;
+      badge: {
+        background: string;
+        color: string;
+      };
+    };
+    plainCard: {
+      header: {
+        color: string;
+      };
+    };
+    subNav: {
+      link: {
+        borderBottom: string;
+        color: string;
+        svg: {
+          color: string;
+        };
+        currentSvg: {
+          borderBottom: string;
+        };
+      };
+    };
   };
 }
 
@@ -523,6 +558,41 @@ export const lightTheme: ThemeConfiguration = {
         link: {
           color: Color['orange-400'],
           boxShadow: 'rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px'
+        }
+      }
+    },
+    myDialog: {
+      h2: {
+        color: Color['orange-400']
+      },
+      h3: {
+        color: Color['neutral-200']
+      },
+      details: {
+        color: Color['neutral-600']
+      }
+    },
+    pageTitle: {
+      color: Color['neutral-600'],
+      badge: {
+        background: Color['stratosphere-400'],
+        color: Color.white
+      }
+    },
+    plainCard: {
+      header: {
+        color: Color['neutral-550']
+      }
+    },
+    subNav: {
+      link: {
+        borderBottom: Color.transparent,
+        color: Color['neutral-600'],
+        svg: {
+          color: Color['neutral-600']
+        },
+        currentSvg: {
+          borderBottom: Color['orange-400']
         }
       }
     }

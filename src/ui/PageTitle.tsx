@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
-import { Color, theme, breakpoints } from '../theme';
+import { theme, breakpoints } from '../theme';
 import { Event, IComponents } from '../util/gaTracking';
 
 type Props = {
@@ -57,7 +57,7 @@ const PageTitle: FC<Props> = ({ title, badge }) => {
 const Title = styled.h1`
   font-family: Stratum2, sans-serif;
   font-size: ${theme.fontSize[24]};
-  color: ${Color['neutral-600']};
+  color: ${({ theme }) => theme.ui.pageTitle.color};
   font-weight: normal;
   line-height: 43px;
   margin: 0 auto;
@@ -69,8 +69,8 @@ const Title = styled.h1`
 `;
 
 const Badge = styled.a`
-  background-color: ${Color['stratosphere-400']};
-  color: ${Color['white']};
+  background-color: ${({ theme }) => theme.ui.pageTitle.badge.background};
+  color: ${({ theme }) => theme.ui.pageTitle.badge.color};
   font-size: ${theme.fontSize[14]};
   line-height: ${theme.fontSize[36]};
   vertical-align: middle;
