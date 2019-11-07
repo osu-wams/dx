@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import styledMap from 'styled-map';
-import { theme, Color } from '../../theme';
+import { theme } from '../../theme';
 
 interface ITable {
   striped?: boolean;
@@ -9,15 +9,16 @@ interface ITable {
 }
 
 const Table = styled.table<ITable>`
-  border: ${styledMap('variant', {
-    basic: 'none',
-    compact: 'none',
-    spacious: 'none',
-    default: '1px solid rgba(34, 36, 38, 0.15)'
-  })};
+  border: ${({ theme }) =>
+    styledMap('variant', {
+      basic: 'none',
+      compact: 'none',
+      spacious: 'none',
+      default: `1px solid ${theme.ui.table.border}`
+    })};
   border-collapse: separate;
   border-spacing: 0;
-  color: ${Color['neutral-600']};
+  color: ${({ theme }) => theme.table.color};
   font-size: ${styledMap('variant', {
     compact: '1.4rem',
     default: 'inherit'
@@ -34,10 +35,10 @@ const Table = styled.table<ITable>`
     })};
   }
   th {
-    color: ${Color['neutral-550']};
+    color: ${({ theme }) => theme.table.cell.color};
     font-weight: 600;
     font-size: ${theme.fontSize['14']};
-    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+    border-bottom: 1px solid ${({ theme }) => theme.table.cell.borderBottom};
     text-align: left;
     padding: ${styledMap('variant', {
       default: '0.4rem 0.8rem',
@@ -46,24 +47,25 @@ const Table = styled.table<ITable>`
   }
   td:not(:first-child),
   th:not(:first-child) {
-    border-left: ${styledMap('variant', {
-      basic: '1px solid rgba(34, 36, 38, 0.15)',
-      compact: 'none',
-      default: '1px solid rgba(34, 36, 38, 0.15)'
-    })};
+    border-left: ${({ theme }) =>
+      styledMap('variant', {
+        basic: `1px solid ${theme.table.cell.notFirstChild.borderLeft}`,
+        compact: 'none',
+        default: `1px solid ${theme.table.cell.notFirstChild.borderLeft}`
+      })};
   }
   tr:not(:first-child) td {
-    border-top: 1px solid rgba(34, 36, 38, 0.15);
+    border-top: 1px solid ${({ theme }) => theme.table.row.borderTop};
   }
   ${({ stretch }) =>
     stretch &&
     `width: 100%;
   `};
-  ${({ striped }) =>
+  ${({ striped, theme }) =>
     striped &&
     `
     tr:nth-child(even) {
-      background: #f9fafb;
+      background: ${theme.table.row.stripedEvenChildren.background};
     }
   `};
 `;

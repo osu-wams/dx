@@ -294,6 +294,23 @@ export const light: ThemeConfiguration = {
           borderBottom: Color['orange-400']
         }
       }
+    },
+    table: {
+      border: 'rgba(34, 36, 38, 0.15)',
+      color: Color['neutral-600'],
+      cell: {
+        color: Color['neutral-550'],
+        borderBottom: 'rgba(34, 36, 38, 0.15)',
+        notFirstChild: {
+          borderLeft: 'rgba(34, 36, 38, 0.15)'
+        }
+      },
+      row: {
+        borderTop: 'rgba(34, 36, 38, 0.15)',
+        stripedEvenChildren: {
+          background: '#f9fafb'
+        }
+      }
     }
   }
 };

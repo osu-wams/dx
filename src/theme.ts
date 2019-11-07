@@ -378,5 +378,22 @@ export interface ThemeConfiguration {
         };
       };
     };
+    table: {
+      border: string;
+      color: string;
+      cell: {
+        color: string;
+        borderBottom: string;
+        notFirstChild: {
+          borderLeft: string;
+        };
+      };
+      row: {
+        borderTop: string;
+        stripedEvenChildren: {
+          background: string;
+        };
+      };
+    };
   };
 }
