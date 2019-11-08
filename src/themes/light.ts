@@ -117,6 +117,20 @@ export const light: ThemeConfiguration = {
   features: {
     academics: {
       courses: {
+        header: {
+          color: Color['neutral-600']
+        },
+        sectionHeader: {
+          color: Color['neutral-550']
+        },
+        emptyList: {
+          text: {
+            color: Color['neutral-550']
+          },
+          link: {
+            color: Color['orange-400']
+          }
+        },
         dayList: {
           borderBottom: Color['neutral-200'],
           item: {
@@ -258,6 +272,20 @@ export const light: ThemeConfiguration = {
       },
       icon: {
         color: Color['orange-400']
+      }
+    },
+    resources: {
+      name: {
+        color: Color['neutral-700']
+      },
+      icon: {
+        color: Color.black
+      },
+      search: {
+        input: {
+          background: Color.white
+        },
+        border: Color['neutral-200']
       }
     }
   },

@@ -2,7 +2,7 @@ import React from 'react';
 import { format, isSameDay } from 'date-fns';
 import styled from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
-import { theme, Color } from '../../theme';
+import { theme } from '../../theme';
 import { Event } from '../../util/gaTracking';
 
 const ScheduleCardDayMenu = ({ selectedDay, nextFiveDays, setSelectedDay, daysWithEvents }) => {

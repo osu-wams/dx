@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
-import { Color, theme } from '../theme';
+import { theme } from '../theme';
 import { useAccountTransactions } from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';

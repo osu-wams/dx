@@ -200,6 +200,20 @@ export interface ThemeConfiguration {
   features: {
     academics: {
       courses: {
+        header: {
+          color: string;
+        };
+        sectionHeader: {
+          color: string;
+        };
+        emptyList: {
+          text: {
+            color: string;
+          };
+          link: {
+            color: string;
+          };
+        };
         dayList: {
           borderBottom: string;
           item: {
@@ -341,6 +355,20 @@ export interface ThemeConfiguration {
       };
       icon: {
         color: string;
+      };
+    };
+    resources: {
+      name: {
+        color: string;
+      };
+      icon: {
+        color: string;
+      };
+      search: {
+        input: {
+          background: string;
+        };
+        border: string;
       };
     };
   };

@@ -1,12 +1,12 @@
 import React, { FC, useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import { faCube, IconDefinition } from '@fortawesome/pro-light-svg-icons';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
-import { Color, theme } from '../theme';
+import { theme } from '../theme';
 import { useResourcesByQueue } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
@@ -19,7 +19,7 @@ const ResourcesContainer = styled(CardContent)`
 
 const ResourceName = styled.div`
   font-size: ${theme.fontSize[18]};
-  color: ${Color['neutral-700']};
+  color: ${({ theme }) => theme.features.resources.name.color};
   padding-left: ${theme.spacing.unit * 2}px;
 `;
 
@@ -37,6 +37,7 @@ const ResourceIcon = styled(Icon)`
  * Displays resources from a given categorY
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
+  const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<any>([]);
@@ -69,7 +70,10 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
                   {resource.icon !== undefined ? (
                     <ResourceImg src={resource.icon} alt="" />
                   ) : (
-                    <ResourceIcon icon={faCube} color={Color.black} />
+                    <ResourceIcon
+                      icon={faCube}
+                      color={themeContext.features.resources.icon.color}
+                    />
                   )}
                   <ResourceName>{resource.title}</ResourceName>
                 </ListItemContentLink>
