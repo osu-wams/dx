@@ -2,73 +2,28 @@ import React from 'react';
 import { fireEvent, waitForElement, cleanup } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { ScheduleCardCourses } from '../schedule/ScheduleCardCourses';
-
-const mockCourse = {
-  attributes: {
-    academicYear: '1920',
-    academicYearDescription: 'Academic Year 2019-20',
-    continuingEducation: false,
-    courseNumber: '599',
-    courseReferenceNumber: '19708',
-    courseSubject: 'ENGR',
-    courseSubjectDescription: 'Engineering Science',
-    courseTitle: 'TEST COURSE',
-    creditHours: 1,
-    faculty: [
-      {
-        email: 'nobody@testing.com',
-        name: 'N/A',
-        primary: true
-      }
-    ],
-    gradingMode: 'Normal Grading Mode',
-    meetingTimes: [
-      {
-        beginDate: '2019-09-25',
-        beginTime: '08:00:00',
-        building: 'BEXL',
-        buildingDescription: 'Bexell Hall',
-        campus: ' Oregon State - Corvallis',
-        campusCode: 'C',
-        creditHourSession: 1,
-        endDate: '2019-12-06',
-        endTime: '08:50:00',
-        hoursPerWeek: 0.83,
-        room: '321',
-        scheduleDescription: 'Lecture',
-        scheduleType: 'A',
-        weeklySchedule: ['Th']
-      }
-    ],
-    registrationStatus: '**Web Registered**',
-    scheduleDescription: 'Lecture',
-    scheduleType: 'A',
-    sectionNumber: '003',
-    term: '202001',
-    termDescription: 'Fall 2019'
-  },
-  id: 'bogus-id-4',
-  links: { self: null },
-  type: 'class-schedule'
-};
+import mockCourses from '../../api/student/__mocks__/courses.data';
 
 describe('<ScheduleCardCourses />', () => {
-  it('Renders both with a course, and with no courses', () => {
-    render(<ScheduleCardCourses selectedCourses={[mockCourse]} />);
-    cleanup();
+  it('Renders with no courses', () => {
     render(<ScheduleCardCourses selectedCourses={[]} />);
+  })
+
+  it('Renders both with courses', () => {
+    render(<ScheduleCardCourses selectedCourses={mockCourses.data} />);
   });
 
   it('Specific course loads on click, close button closes', async () => {
-    const { getByText, getByTestId, queryByTestId } = render(
-      <ScheduleCardCourses selectedCourses={[mockCourse]} />
+    const { queryAllByText, getByText, getByTestId, queryByTestId } = render(
+      <ScheduleCardCourses selectedCourses={mockCourses.data} />
     );
-    expect(() => getByText('ERROR')).toThrow(); // Testing to make sure stuff we aren't expecting will throw
-    const OpSysBtn = await waitForElement(() => getByText('ENGR')); // Throws if mockCourse doesn't load
+    const wrCourses = await waitForElement(() => queryAllByText('WR'))
+    expect(wrCourses.length).toBeGreaterThan(0) // since queryAll can return an empty array, we want to make sure that didn't happen
+    const OpSysBtn = wrCourses[0] // we really don't care what course we click for this test
     fireEvent.click(OpSysBtn);
     const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
     expect(courseDialog).toBeInTheDocument();
-    expect(courseDialog).toHaveTextContent(/test course/i);
+    expect(courseDialog).toHaveTextContent(/WR/i);
     const closeBtn = await waitForElement(() => getByText('Close'));
     fireEvent.click(closeBtn);
     expect(queryByTestId('course-dialog')).toBeNull();
