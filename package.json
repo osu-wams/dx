@@ -7,6 +7,7 @@
     "@fortawesome/pro-light-svg-icons": "^5.7.2",
     "@fortawesome/pro-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
+    "@material-ui/core": "^4.6.0",
     "@reach/dialog": "^0.5",
     "@reach/menu-button": "^0.5",
     "@reach/router": "^1.2.1",
