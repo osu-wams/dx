@@ -46,14 +46,17 @@ const Day = styled.button<{ selected: selectedBtn }>`
   align-self: flex-end;
 
   & > span:first-child {
-    color: ${Color['orange-400']};
+    color: ${({ theme }) => theme.features.academics.courses.dayList.item.firstChild.color};
     font-weight: bold;
     font-size: ${theme.fontSize[20]};
     line-height: 18px;
   }
 
   & > span:nth-child(2) {
-    color: ${props => (props.selected ? Color['orange-400'] : Color['neutral-550'])};
+    color: ${({ theme, selected }) =>
+      selected
+        ? theme.features.academics.courses.dayList.item.evenChildrenSelected.color
+        : theme.features.academics.courses.dayList.item.evenChildren.color};
     font-weight: bold;
     font-size: ${theme.fontSize[12]};
     text-transform: uppercase;
@@ -61,18 +64,28 @@ const Day = styled.button<{ selected: selectedBtn }>`
   }
 
   & > span:last-child {
-    color: ${props => (props.selected ? Color['orange-400'] : Color['neutral-700'])};
+    color: ${({ theme, selected }) =>
+      selected
+        ? theme.features.academics.courses.dayList.item.lastChildSelected.color
+        : theme.features.academics.courses.dayList.item.lastChild.color};
     line-height: 0.4rem;
     font-size: ${theme.fontSize[24]};
     padding: 1.2rem 1.2rem 2rem;
-    border-bottom: 3px solid ${props => (props.selected ? Color['orange-400'] : 'transparent')};
+    border-bottom: 3px solid
+      ${({ theme, selected }) =>
+        selected
+          ? theme.features.academics.courses.dayList.item.lastChildSelected.color
+          : theme.features.academics.courses.dayList.item.lastChild.color};
   }
   &:hover,
   &:focus,
   &:active {
     span:last-child {
-      border-bottom-color: ${props =>
-        props.selected ? Color['orange-400'] : Color['neutral-300']};
+      border-bottom: 3px solid
+        ${({ theme, selected }) =>
+          selected
+            ? theme.features.academics.courses.dayList.item.childInFocusSelected.color
+            : theme.features.academics.courses.dayList.item.childInFocus.color};
     }
   }
 `;
@@ -81,6 +94,6 @@ const DayList = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: baseline;
-  border-bottom: 1px solid ${Color['neutral-200']};
+  border-bottom: 1px solid ${({ theme }) => theme.features.academics.courses.dayList.borderBottom};
   margin: 0 -1.6rem 1.6rem;
 `;

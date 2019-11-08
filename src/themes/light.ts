@@ -116,6 +116,63 @@ export const light: ThemeConfiguration = {
   },
   features: {
     academics: {
+      courses: {
+        dayList: {
+          borderBottom: Color['neutral-200'],
+          item: {
+            childInFocus: {
+              borderBottom: Color['neutral-300']
+            },
+            childInFocusSelected: {
+              borderBottom: Color['orange-400']
+            },
+            firstChild: {
+              color: Color['orange-400']
+            },
+            evenChildren: {
+              color: Color['neutral-550']
+            },
+            evenChildrenSelected: {
+              color: Color['orange-400']
+            },
+            lastChild: {
+              color: Color['neutral-700'],
+              borderBottom: Color.transparent
+            },
+            lastChildSelected: {
+              color: Color['orange-400'],
+              borderBottom: Color['orange-400']
+            }
+          }
+        },
+        dialog: {
+          meetingTime: {
+            icon: {
+              color: Color['orange-400']
+            }
+          },
+          faculty: {
+            icon: {
+              color: Color['neutral-600']
+            }
+          }
+        },
+        list: {
+          title: {
+            color: Color['neutral-700']
+          }
+        },
+        plannerItems: {
+          list: {
+            icon: {
+              color: Color['orange-400']
+            }
+          },
+          emptyText: {
+            color: Color['neutral-550']
+          }
+        }
+      },
       pastCourses: {
         title: {
           color: Color['neutral-700']

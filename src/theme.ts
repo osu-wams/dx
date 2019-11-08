@@ -199,6 +199,63 @@ export interface ThemeConfiguration {
   };
   features: {
     academics: {
+      courses: {
+        dayList: {
+          borderBottom: string;
+          item: {
+            childInFocus: {
+              borderBottom: string;
+            };
+            childInFocusSelected: {
+              borderBottom: string;
+            };
+            firstChild: {
+              color: string;
+            };
+            evenChildren: {
+              color: string;
+            };
+            evenChildrenSelected: {
+              color: string;
+            };
+            lastChild: {
+              color: string;
+              borderBottom: string;
+            };
+            lastChildSelected: {
+              color: string;
+              borderBottom: string;
+            };
+          };
+        };
+        dialog: {
+          meetingTime: {
+            icon: {
+              color: string;
+            };
+          };
+          faculty: {
+            icon: {
+              color: string;
+            };
+          };
+        };
+        list: {
+          title: {
+            color: string;
+          };
+        };
+        plannerItems: {
+          list: {
+            icon: {
+              color: string;
+            };
+          };
+          emptyText: {
+            color: string;
+          };
+        };
+      };
       pastCourses: {
         title: {
           color: string;

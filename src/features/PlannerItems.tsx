@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
@@ -16,7 +16,7 @@ import {
 import { usePlannerItems } from '../api/student/planner-items';
 import { useCourseSchedule } from '../api/student';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
-import { theme, Color } from '../theme';
+import { theme } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { UserContext } from '../App';
@@ -37,7 +37,7 @@ const NoItemsImage = styled.img`
 `;
 
 const NoItemsText = styled.p`
-  color: ${Color['neutral-550']};
+  color: ${({ theme }) => theme.features.academics.courses.plannerItems.emptyText.color};
   text-align: center;
 `;
 
@@ -63,6 +63,7 @@ const canvasUrl = url => {
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
+  const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
   const { data, loading } = usePlannerItems(() => {
     user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
@@ -90,7 +91,10 @@ const PlannerItems = () => {
                   {courseCodeOrIcon(
                     context_name,
                     courses.data,
-                    <Icon icon={faFileEdit} color={Color['orange-400']} />
+                    <Icon
+                      icon={faFileEdit}
+                      color={themeContext.features.academics.courses.plannerItems.list.icon.color}
+                    />
                   )}
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>
