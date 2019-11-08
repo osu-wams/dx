@@ -48,7 +48,7 @@ const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelecte
 };
 
 const CategoriesWrapper = styled.div`
-  margin-bottom: ${theme.spacing.unit * 2}px;
+  margin-bottom: ${theme.spacing.unit}px;
 `;
 
 export default ResourceCategories;
