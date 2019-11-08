@@ -13,7 +13,7 @@ import transaction from '../assets/transaction.svg';
 import { Event } from '../util/gaTracking';
 
 type ITransactionAmount = {
-  color: string;
+  transactionType: string;
 };
 
 const TransactionsTable = styled(Table)`
@@ -26,12 +26,12 @@ const TransactionAmountHeader = styled(TableHeaderCell)`
 
 const TransactionName = styled.div`
   font-size: ${theme.fontSize[14]};
-  color: ${Color['neutral-700']};
+  color: ${({ theme }) => theme.features.finances.transactions.name.color};
 `;
 
 const TransactionDetail = styled.div`
   font-size: ${theme.fontSize[12]};
-  color: ${Color['neutral-550']};
+  color: ${({ theme }) => theme.features.finances.transactions.detail.color};
   text-transform: capitalize;
 `;
 
@@ -42,7 +42,10 @@ const TransactionAmount = styled(TableCell)`
 
 const TransactionNumber = styled.div<ITransactionAmount>`
   font-size: ${theme.fontSize[14]};
-  color: ${props => props.color};
+  color: ${({ theme, transactionType }) =>
+    transactionType === 'charge'
+      ? theme.features.finances.transactions.amountCharge.color
+      : theme.features.finances.transactions.amount.color};
 `;
 
 const TransactionDetails = styled(TableCell)`
@@ -62,7 +65,7 @@ const NoItemsImage = styled.img`
 `;
 
 const NoItemsText = styled.p`
-  color: ${Color['neutral-550']};
+  color: ${({ theme }) => theme.features.finances.transactions.emptyText.color};
   text-align: center;
 `;
 
@@ -103,13 +106,7 @@ const FinancialTransactions: FC = () => {
               {data.attributes.transactions.map((transaction, index: number) => (
                 <TableRow key={index}>
                   <TransactionAmount>
-                    <TransactionNumber
-                      color={
-                        transaction.transactionType === 'charge'
-                          ? Color['lava-400']
-                          : Color['pine-400']
-                      }
-                    >
+                    <TransactionNumber transactionType={transaction.transactionType}>
                       {formatDollars(transaction.amount)}
                     </TransactionNumber>
                     <TransactionDetail>{transaction.transactionType}</TransactionDetail>

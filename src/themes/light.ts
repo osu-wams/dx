@@ -148,6 +148,38 @@ export const light: ThemeConfiguration = {
         }
       }
     },
+    finances: {
+      accountBalance: {
+        emphasis: {
+          color: Color['neutral-550']
+        }
+      },
+      mealPlans: {
+        emphasisBalance: {
+          color: Color['pine-400']
+        },
+        emphasisNoBalance: {
+          color: Color['lava-400']
+        }
+      },
+      transactions: {
+        amount: {
+          color: Color['pine-400']
+        },
+        amountCharge: {
+          color: Color['lava-400']
+        },
+        name: {
+          color: Color['neutral-700']
+        },
+        detail: {
+          color: Color['neutral-550']
+        },
+        emptyText: {
+          color: Color['neutral-550']
+        }
+      }
+    },
     masquerade: {
       buttonDark: {
         color: Color['neutral-700'],

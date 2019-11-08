@@ -231,6 +231,38 @@ export interface ThemeConfiguration {
         };
       };
     };
+    finances: {
+      accountBalance: {
+        emphasis: {
+          color: string;
+        };
+      };
+      mealPlans: {
+        emphasisBalance: {
+          color: string;
+        };
+        emphasisNoBalance: {
+          color: string;
+        };
+      };
+      transactions: {
+        amount: {
+          color: string;
+        };
+        amountCharge: {
+          color: string;
+        };
+        name: {
+          color: string;
+        };
+        detail: {
+          color: string;
+        };
+        emptyText: {
+          color: string;
+        };
+      };
+    };
     masquerade: {
       buttonDark: {
         color: string;
