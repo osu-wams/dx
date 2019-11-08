@@ -6,7 +6,6 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
 import { Color, theme } from '../theme';
 import { useResourcesByQueue } from '../api/resources';
@@ -27,10 +26,6 @@ const ResourceName = styled.div`
   font-size: ${theme.fontSize[18]};
   color: ${Color['neutral-700']};
   padding-left: ${theme.spacing.unit * 2}px;
-`;
-
-const ResourceIcon = styled(Icon)`
-  height: auto;
 `;
 
 /**

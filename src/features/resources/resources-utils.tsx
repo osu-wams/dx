@@ -15,18 +15,21 @@ import zoom from '../../assets/logo-zoom.png';
  * @param iconName string with the icon name
  */
 const IconLookup = iconName => {
-  const iconSplit = iconName.split('.');
-  if (iconSplit[0] === 'fal' || iconSplit[0] === 'fab') {
-    const lookupIconDefinition: IconDefinition = findIconDefinition({
-      prefix: iconSplit[0],
-      iconName: iconSplit[1]
-    });
-    return <Icon icon={lookupIconDefinition} color={Color['neutral-550']} />;
-  } else if (iconSplit[0] === 'osu') {
-    return <ResourceImg src={logoMapping[iconSplit[1]]} alt={iconSplit[1]} />;
-  } else {
-    return <Icon icon={fal.faCube} color={Color['neutral-550']} />;
+  if (iconName !== undefined) {
+    const iconSplit = iconName.split('.');
+    if (iconSplit[0] === 'fal' || iconSplit[0] === 'fab') {
+      const lookupIconDefinition: IconDefinition = findIconDefinition({
+        prefix: iconSplit[0],
+        iconName: iconSplit[1]
+      });
+      return <Icon icon={lookupIconDefinition} color={Color['neutral-550']} />;
+    } else if (iconSplit[0] === 'osu') {
+      return <ResourceImg src={logoMapping[iconSplit[1]]} alt={iconSplit[1]} />;
+    } else {
+      return <Icon icon={fal.faCube} color={Color['neutral-550']} />;
+    }
   }
+  return <Icon icon={fal.faCube} color={Color['neutral-550']} />;
 };
 
 const ResourceImg = styled.img`
