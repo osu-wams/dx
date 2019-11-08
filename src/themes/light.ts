@@ -147,6 +147,12 @@ export const light: ThemeConfiguration = {
           color: Color['orange-400']
         }
       }
+    },
+    masquerade: {
+      buttonDark: {
+        color: Color['neutral-700'],
+        background: Color['neutral-200']
+      }
     }
   },
   ui: {

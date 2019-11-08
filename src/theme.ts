@@ -231,6 +231,12 @@ export interface ThemeConfiguration {
         };
       };
     };
+    masquerade: {
+      buttonDark: {
+        color: string;
+        background: string;
+      };
+    };
   };
   ui: {
     button: {
