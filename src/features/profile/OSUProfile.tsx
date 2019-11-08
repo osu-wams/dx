@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faEnvelope, faMapMarkerAlt, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import Skeleton from 'react-loading-skeleton';
-import { theme, Color } from '../../theme';
+import { theme } from '../../theme';
 import { formatPhone } from '../../util/helpers';
 import Icon from '../../ui/Icon';
 import { usePerson } from '../../api/persons/persons';
@@ -11,6 +11,7 @@ import { useMailingAddress } from '../../api/persons/addresses';
 import PlainCard from '../../ui/PlainCard';
 
 const OSUProfile = () => {
+  const themeContext = useContext(ThemeContext);
   const person = usePerson();
   const address = useMailingAddress();
 
@@ -40,26 +41,34 @@ const OSUProfile = () => {
               renderInfoIcons(
                 'Primary phone',
                 formatPhone(person.data.attributes.primaryPhone),
-                faPhone
+                faPhone,
+                themeContext.features.profile.icon.color
               )}
             {person.data &&
               person.data.attributes.homePhone !== person.data.attributes.mobilePhone &&
               person.data.attributes.homePhone !== person.data.attributes.mobilePhone &&
-              renderInfoIcons('Home phone', formatPhone(person.data.attributes.homePhone), faPhone)}
+              renderInfoIcons(
+                'Home phone',
+                formatPhone(person.data.attributes.homePhone),
+                faPhone,
+                themeContext.features.profile.icon.color
+              )}
             {renderInfoIcons(
               'Mobile phone',
               formatPhone(person.data ? person.data.attributes.mobilePhone : null),
-              faMobileAlt
+              faMobileAlt,
+              themeContext.features.profile.icon.color
             )}
             {renderInfoIcons(
               'Email',
               person.data && !person.loading ? person.data.attributes.email : '',
-              faEnvelope
+              faEnvelope,
+              themeContext.features.profile.icon.color
             )}
             {!address.loading && address && (
               <div>
                 <dt>
-                  <Icon icon={faMapMarkerAlt} color={Color['orange-400']} />{' '}
+                  <Icon icon={faMapMarkerAlt} color={themeContext.features.profile.icon.color} />{' '}
                   <VisuallyHidden>
                     {address.data ? address.data.attributes.addressTypeDescription : 'No data'}
                   </VisuallyHidden>
@@ -80,12 +89,12 @@ const OSUProfile = () => {
   );
 };
 
-const renderInfoIcons = (title: string, field: any | null, icon: any) => {
+const renderInfoIcons = (title: string, field: any | null, icon: any, color: string) => {
   if (field) {
     return (
       <div>
         <dt>
-          <Icon icon={icon} color={Color['orange-400']} /> <VisuallyHidden>{title}</VisuallyHidden>
+          <Icon icon={icon} color={color} /> <VisuallyHidden>{title}</VisuallyHidden>
         </dt>
         <dd>{field}</dd>
       </div>
@@ -94,7 +103,7 @@ const renderInfoIcons = (title: string, field: any | null, icon: any) => {
 };
 
 const PersonName = styled.h3`
-  color: ${Color['orange-400']};
+  color: ${({ theme }) => theme.features.profile.name.color};
   margin: 0;
   font-weight: 500;
   font-size: ${theme.fontSize[24]};
@@ -109,7 +118,7 @@ const PairData = styled.dl`
   dt {
     font-size: ${theme.fontSize[12]};
     font-weight: 600;
-    color: ${Color['neutral-550']};
+    color: ${({ theme }) => theme.features.profile.detail.color};
   }
   dd {
     margin-left: 0;

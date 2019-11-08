@@ -269,6 +269,17 @@ export interface ThemeConfiguration {
         background: string;
       };
     };
+    profile: {
+      name: {
+        color: string;
+      };
+      detail: {
+        color: string;
+      };
+      icon: {
+        color: string;
+      };
+    };
   };
   ui: {
     button: {

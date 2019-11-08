@@ -185,6 +185,17 @@ export const light: ThemeConfiguration = {
         color: Color['neutral-700'],
         background: Color['neutral-200']
       }
+    },
+    profile: {
+      name: {
+        color: Color['orange-400']
+      },
+      detail: {
+        color: Color['neutral-550']
+      },
+      icon: {
+        color: Color['orange-400']
+      }
     }
   },
   ui: {
