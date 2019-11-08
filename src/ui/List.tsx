@@ -52,6 +52,7 @@ type TLink = React.HTMLProps<HTMLAnchorElement>;
 
 const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
   &:hover {
+    & > svg,
     & > div {
       color: ${Color['orange-400']};
     }

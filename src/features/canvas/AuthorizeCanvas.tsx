@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import canvasLogo from '../../assets/canvas-logo.png';
+import canvasLogo from '../../assets/logo-canvas.png';
 import { ButtonLink } from '../../ui/Button';
 import { Color } from '../../theme';
 import { Event } from '../../util/gaTracking';

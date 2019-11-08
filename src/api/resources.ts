@@ -17,7 +17,7 @@ export interface IUserClassification {
 export interface IResourceResult {
   id: string;
   title: string;
-  icon?: string;
+  iconName?: string;
   link: string;
   synonyms: string[];
   categories: string[];
@@ -34,7 +34,9 @@ export interface ICategory {
  * Resources
  */
 const getResources = (): Promise<IResourceResult[]> =>
-  axios.get(`/api/resources`).then(res => res.data);
+  axios.get(`/api/resources`).then(res => {
+    return res.data
+  });
 
 const useResources = () => {
   return useAPICall<IResourceResult[]>(getResources, undefined, d => d, []);

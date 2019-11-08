@@ -1,6 +1,6 @@
 import React from 'react';
 import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
-import canvasLogo from '../../assets/canvas-logo.png';
+import canvasLogo from '../../assets/logo-canvas.png';
 import { ListItem, ListItemDescription, ListItemText, ListItemContentLink } from '../../ui/List';
 import { Color } from '../../theme';
 import Icon from '../../ui/Icon';
