@@ -115,9 +115,20 @@ export const light: ThemeConfiguration = {
     }
   },
   features: {
-    academicOverview: {
-      footer: {
-        link: {
+    beta: {
+      title: {
+        color: Color['orange-400']
+      },
+      releaseNotes: {
+        title: {
+          color: Color['orange-400']
+        },
+        subTitle: {
+          color: Color['neutral-550']
+        }
+      },
+      resources: {
+        icon: {
           color: Color['orange-400']
         }
       }

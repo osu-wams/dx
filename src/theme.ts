@@ -198,9 +198,20 @@ export interface ThemeConfiguration {
     };
   };
   features: {
-    academicOverview: {
-      footer: {
-        link: {
+    beta: {
+      title: {
+        color: string;
+      };
+      releaseNotes: {
+        title: {
+          color: string;
+        };
+        subTitle: {
+          color: string;
+        };
+      };
+      resources: {
+        icon: {
           color: string;
         };
       };

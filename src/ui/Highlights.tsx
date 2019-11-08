@@ -45,7 +45,7 @@ const HighlightEmphasisInline = styled.em<{ color?: string }>`
   font-weight: bold;
 `;
 
-const HighlightEmphasis = styled.div<{ color: string }>`
+const HighlightEmphasis = styled.div<{ color?: string }>`
   color: ${props => props.color || props.theme.ui.highlights.emphasis.color};
   font-size: ${theme.fontSize[24]};
   padding: 0 1.6rem;

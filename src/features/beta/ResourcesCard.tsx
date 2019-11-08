@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import Icon from '../../ui/Icon';
 import {
   faCogs,
@@ -7,12 +7,13 @@ import {
   faExternalLink
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
-import { Color } from '../../theme';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
 import Url from '../../util/externalUrls.data';
+import { ThemeContext } from 'styled-components';
 
 const BetaResources: FC = () => {
+  const themeContext = useContext(ThemeContext);
   return (
     <Card collapsing={false}>
       <CardHeader title="Beta Resources" badge={<CardIcon icon={faCogs} />} />
@@ -24,7 +25,10 @@ const BetaResources: FC = () => {
               target="_blank"
               onClick={() => Event('beta', 'feedback')}
             >
-              <Icon icon={faCommentAltLines} color={Color['orange-400']} />
+              <Icon
+                icon={faCommentAltLines}
+                color={themeContext.features.beta.resources.icon.color}
+              />
               <ListItemText>
                 <ListItemHeader>Give us feedback on the beta</ListItemHeader>
               </ListItemText>
@@ -36,7 +40,7 @@ const BetaResources: FC = () => {
               target="_blank"
               onClick={() => Event('beta', 'get help')}
             >
-              <Icon icon={faUserHeadset} color={Color['orange-400']} />
+              <Icon icon={faUserHeadset} color={themeContext.features.beta.resources.icon.color} />
               <ListItemText>
                 <ListItemHeader>Get help with the dashboard</ListItemHeader>
               </ListItemText>
@@ -48,7 +52,7 @@ const BetaResources: FC = () => {
               target="_blank"
               onClick={() => Event('beta', 'old my osu')}
             >
-              <Icon icon={faExternalLink} color={Color['orange-400']} />
+              <Icon icon={faExternalLink} color={themeContext.features.beta.resources.icon.color} />
               <ListItemText>
                 <ListItemHeader>Go back to the old MyOSU portal</ListItemHeader>
               </ListItemText>
