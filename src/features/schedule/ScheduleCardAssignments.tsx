@@ -21,7 +21,7 @@ import {
   ListItemText,
   ListItemContentLink
 } from '../../ui/List';
-import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvasCompact';
+import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
 import { Event } from '../../util/gaTracking';
 import { courseCodeOrIcon } from '../Courses';
 

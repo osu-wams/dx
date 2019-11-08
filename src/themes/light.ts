@@ -148,6 +148,12 @@ export const light: ThemeConfiguration = {
         }
       }
     },
+    canvas: {
+      authorizeButton: {
+        background: Color['stratosphere-400'],
+        color: Color.white
+      }
+    },
     finances: {
       accountBalance: {
         emphasis: {

@@ -231,6 +231,12 @@ export interface ThemeConfiguration {
         };
       };
     };
+    canvas: {
+      authorizeButton: {
+        background: string;
+        color: string;
+      };
+    };
     finances: {
       accountBalance: {
         emphasis: {
