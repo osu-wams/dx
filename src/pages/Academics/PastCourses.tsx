@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
 import { useGrades } from '../../api/student';
-import { Color, theme, breakpoints } from '../../theme';
+import { theme, breakpoints } from '../../theme';
 import Input from '../../ui/Input';
 import Icon from '../../ui/Icon';
 import PageTitle from '../../ui/PageTitle';
@@ -25,6 +25,7 @@ import { MainGridWrapper, MainGrid, MainGridCol } from '../../ui/PageGrid';
 import { AcademicSubNav } from './AcademicsSubNav';
 
 const PastCourses = () => {
+  const themeContext = useContext(ThemeContext);
   const grades = useGrades();
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 300);
@@ -71,7 +72,10 @@ const PastCourses = () => {
       <MainGrid>
         <MainGridCol className="col-span-2">
           <SearchWrapper>
-            <Icon icon={faSearch} color={Color['neutral-600']} />
+            <Icon
+              icon={faSearch}
+              color={themeContext.features.academics.pastCourses.search.icon.color}
+            />
             <VisuallyHidden>
               <label htmlFor="course-filter">Find courses</label>
             </VisuallyHidden>
@@ -144,13 +148,13 @@ const HistoryCard = styled(Card)`
 
 const Grade = styled.span`
   font-size: ${theme.fontSize[24]};
-  color: ${Color['orange-400']};
+  color: ${({ theme }) => theme.features.academics.pastCourses.grade.color};
   display: block;
   text-align: center;
 `;
 
 const CourseTitle = styled.span`
-  color: ${Color['neutral-700']};
+  color: ${({ theme }) => theme.features.academics.pastCourses.title.color};
 `;
 const CourseData = styled.div`
   font-size: ${theme.fontSize[14]};

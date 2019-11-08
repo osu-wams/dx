@@ -115,6 +115,21 @@ export const light: ThemeConfiguration = {
     }
   },
   features: {
+    academics: {
+      pastCourses: {
+        title: {
+          color: Color['neutral-700']
+        },
+        grade: {
+          color: Color['orange-400']
+        },
+        search: {
+          icon: {
+            color: Color['neutral-600']
+          }
+        }
+      }
+    },
     beta: {
       title: {
         color: Color['orange-400']

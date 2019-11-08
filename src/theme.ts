@@ -198,6 +198,21 @@ export interface ThemeConfiguration {
     };
   };
   features: {
+    academics: {
+      pastCourses: {
+        title: {
+          color: string;
+        };
+        grade: {
+          color: string;
+        };
+        search: {
+          icon: {
+            color: string;
+          };
+        };
+      };
+    };
     beta: {
       title: {
         color: string;
