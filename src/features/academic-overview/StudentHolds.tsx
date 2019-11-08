@@ -7,13 +7,12 @@ import {
   HighlightEmphasisInline,
   HighlightDescription
 } from '../../ui/Highlights';
-import { theme, Color } from '../../theme';
+import { theme } from '../../theme';
 import { useAccountHolds } from '../../api/student';
 
 const HoldsList = styled.ul`
   margin: 0;
   padding: 0 0 0 20px;
-  color: ${Color['neutral-550']};
   > li {
     font-size: ${theme.fontSize[12]};
   }

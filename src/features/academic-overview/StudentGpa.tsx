@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { Color } from '../../theme';
 import {
   Highlight,
   HighlightTitle,
@@ -21,7 +20,7 @@ export const StudentGpa: React.FC = () => {
   };
   return (
     <Highlight textAlignLeft>
-      <HighlightEmphasis color={Color['orange-400']}>{primaryGpa().gpa}</HighlightEmphasis>
+      <HighlightEmphasis>{primaryGpa().gpa}</HighlightEmphasis>
       <HighlightTitle marginTop={0}>Institutional GPA</HighlightTitle>
       {loading && <Skeleton count={3} />}
       {!loading && (
