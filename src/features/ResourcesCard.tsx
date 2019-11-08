@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 import { fal } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { library, IconDefinition, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import Icon from '../ui/Icon';
@@ -14,24 +14,9 @@ import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
 import { hasAudience } from '../api/user';
-import boxSync from '../assets/logo-box-sync.png';
-import canvasLogo from '../assets/logo-canvas.png';
-import gDrive from '../assets/logo-drive.png';
-import gMail from '../assets/logo-gmail.png';
-import zoom from '../assets/logo-zoom.png';
+import { IconLookup } from './resources/resources-utils';
 
-/**
- * Mappings for all the pngs we need for services that might be rendered on the page.
- */
-const logoMapping = {
-  'logo-box-sync': boxSync,
-  'logo-canvas': canvasLogo,
-  'logo-drive': gDrive,
-  'logo-gmail': gMail,
-  'logo-zoom': zoom
-};
-
-// Setup a font awesome library to use for searching for icons from the backend.
+// Setup a font awesome library to use for searching icons from the backend.
 library.add(fal, fab);
 
 const ResourcesContainer = styled(CardContent)`
@@ -42,10 +27,6 @@ const ResourceName = styled.div`
   font-size: ${theme.fontSize[18]};
   color: ${Color['neutral-700']};
   padding-left: ${theme.spacing.unit * 2}px;
-`;
-
-const ResourceImg = styled.img`
-  width: 3rem;
 `;
 
 const ResourceIcon = styled(Icon)`
@@ -87,11 +68,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
                   target="_blank"
                   onClick={() => Event('resources-card', categ, resource.title)}
                 >
-                  {resource.iconName !== undefined ? (
-                    IconLookupCustom(resource.iconName)
-                  ) : (
-                    <ResourceIcon icon={fal.faCube} color={Color['neutral-550']} />
-                  )}
+                  {IconLookup(resource.iconName)}
                   <ResourceName>{resource.title}</ResourceName>
                 </ListItemContentLink>
               </ListItem>
@@ -120,18 +97,4 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
 // Todo: Replace with actual empty state when ready in mockups.
 const EmptyState = () => <span>No resources available.</span>;
 
-const IconLookupCustom = iconName => {
-  const iconSplit = iconName.split('.');
-  if (iconSplit[0] === 'fal' || iconSplit[0] === 'fab') {
-    const lookupIconDefinition: IconDefinition = findIconDefinition({
-      prefix: iconSplit[0],
-      iconName: iconSplit[1]
-    });
-    return <Icon icon={lookupIconDefinition} color={Color['neutral-550']} />;
-  } else if (iconSplit[0] === 'osu') {
-    return <ResourceImg src={logoMapping[iconSplit[1]]} alt={iconSplit[1]} />;
-  } else {
-    return <Icon icon={fal.faCube} color={Color.black} />;
-  }
-};
 export default ResourcesCard;
