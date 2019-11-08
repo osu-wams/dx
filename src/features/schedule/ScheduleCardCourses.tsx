@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { theme, Color } from '../../theme';
+import { courseOnCorvallisCampus } from './schedule-utils';
 import {
   CardSection,
   SectionHeader,
@@ -9,15 +9,26 @@ import {
   NoItemsImage,
   NoItemsText
 } from './ScheduleCardStyles';
-import Url from '../../util/externalUrls.data';
-import Icon from '../../ui/Icon';
-import courses from '../../assets/courses.svg';
-import { formatTime } from '../../util/helpers';
-import { List, ListItem, ListItemContent, ListItemDescription, ListItemText } from '../../ui/List';
-import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
-import { Event } from '../../util/gaTracking';
-import { courseOnCorvallisCampus } from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
+import {
+  ICourseScheduleAttributes,
+  ICourseSchedule,
+  IMeetingTime
+} from '../../api/student/course-schedule';
+import zcourses from '../../assets/courses.svg';
+import Course from '../../features/Course';
+import { theme, Color } from '../../theme';
+import Icon from '../../ui/Icon';
+import {
+  List,
+  ListItem,
+  ListItemDescription,
+  ListItemText,
+  ListItemContentButton
+} from '../../ui/List';
+import Url from '../../util/externalUrls.data';
+import { Event } from '../../util/gaTracking';
+import { formatTime } from '../../util/helpers';
 
 interface ScheduleCardCoursesProps {
   selectedCourses: ICourseSchedule[];
@@ -47,33 +58,46 @@ const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime
   </a>
 );
 
-const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
-  let filteredCourses;
-  filteredCourses = course.attributes.meetingTimes.map(
-    (meetingTime: IMeetingTime) =>
-      !isMidterm(meetingTime) && (
-        <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
-          <ListItemContent>
-            {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
-            <ListItemText>
-              <ListItemDescription fontSize={theme.fontSize[16]} color={Color['neutral-700']}>
-                {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
-                {meetingTime.buildingDescription}
-              </ListItemDescription>
-              <ListItemDescription>
-                {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
-              </ListItemDescription>
-            </ListItemText>
-            {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
-          </ListItemContent>
-        </ListItem>
-      )
-  );
-  return filteredCourses;
-};
-
 const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
   const { selectedCourses } = props;
+  const [isOpen, setOpen] = useState(false);
+  const [courseAttributes, setCourseAttributes] = useState<ICourseScheduleAttributes | null>(null);
+  const meetingTimeListItems = (course: ICourseSchedule): JSX.Element[] => {
+    let filteredCourses;
+    filteredCourses = course.attributes.meetingTimes.map(
+      (meetingTime: IMeetingTime) =>
+        !isMidterm(meetingTime) && (
+          <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
+            <ListItemContentButton
+              onClick={() => {
+                toggleCourse(course.attributes);
+                Event('courses', 'course clicked', course.attributes.courseTitle);
+              }}
+            >
+              {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
+              <ListItemText>
+                <ListItemDescription fontSize={theme.fontSize[16]} color={Color['neutral-700']}>
+                  {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
+                  {meetingTime.buildingDescription}
+                </ListItemDescription>
+                <ListItemDescription>
+                  {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
+                </ListItemDescription>
+              </ListItemText>
+              {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
+            </ListItemContentButton>
+          </ListItem>
+        )
+    );
+    return filteredCourses;
+  };
+
+  // Hides or shows course details
+  const toggleCourse = courseAttributes => {
+    setOpen(!isOpen);
+    setCourseAttributes(courseAttributes);
+  };
+
   return (
     <CardSection>
       {/* TODO: course should NOT be a link */}
@@ -83,11 +107,14 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
           selectedCourses.map((c: ICourseSchedule) => meetingTimeListItems(c))}
         {selectedCourses.length === 0 && (
           <NoItems as="li">
-            <NoItemsImage src={courses} alt="" />
+            <NoItemsImage src={zcourses} alt="" />
             <NoItemsText>You don&apos;t have any courses scheduled</NoItemsText>
           </NoItems>
         )}
       </List>
+      {isOpen && courseAttributes && (
+        <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />
+      )}
     </CardSection>
   );
 };

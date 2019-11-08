@@ -2,17 +2,17 @@ import React, { useState, useContext, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { isSameDay, format, isWithinRange } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { useCourseSchedule, usePlannerItems } from '../api/student';
-import { useAcademicCalendarEvents } from '../api/events';
-import { UserContext } from '../App';
-import { getNextFiveDays, getDayShortcode, coursesOnDay } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
   ScheduleCardCourses,
   ScheduleCardAssignments,
   ScheduleCardAcademicCalendar
 } from './schedule';
+import { getNextFiveDays, getDayShortcode, coursesOnDay } from './schedule/schedule-utils';
 import { Header } from './schedule/ScheduleCardStyles';
+import { useAcademicCalendarEvents } from '../api/events';
+import { useCourseSchedule, usePlannerItems } from '../api/student';
+import { UserContext } from '../App';
 import { Card, CardFooter, CardContent } from '../ui/Card';
 
 /**
@@ -32,6 +32,7 @@ const ScheduleCard = () => {
 
   const getCoursesOnSelectedDay = () => {
     const selectedDayShortcode = getDayShortcode(selectedDay);
+
     return coursesOnDay(courses.data, selectedDayShortcode).filter(course => {
       course.attributes.meetingTimes = course.attributes.meetingTimes.filter(meeting =>
         isWithinRange(selectedDay, meeting.beginDate, meeting.endDate)
