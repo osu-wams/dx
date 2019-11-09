@@ -58,11 +58,14 @@ const Resources = () => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (res.data && user.data) {
+      let filtered = res.data;
+
+      // When clicking a category we filter all results based on selected category
       if (!debouncedQuery) {
-        const filtered = filterByCategory(activeCategory, res.data);
-        setFilteredResources(filtered);
+        filtered = filterByCategory(activeCategory, res.data);
       } else {
-        const queriedResources = filteredResources.filter(resource => {
+        // When typing we search for synonyms and names to get results
+        const queriedResources = filtered.filter(resource => {
           if (
             resource.synonyms.length > 0 &&
             resource.synonyms.find(s => s.includes(debouncedQuery.toLowerCase()))
@@ -71,9 +74,11 @@ const Resources = () => {
           }
           return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
         });
-        const filtered = filterByCategory(activeCategory, queriedResources);
-        setFilteredResources(filtered);
+
+        // Filter by category when searching in
+        filtered = filterByCategory(activeCategory, queriedResources);
       }
+      setFilteredResources(filtered);
     }
   }, [activeCategory, debouncedQuery, res.data, user.data]);
   /* eslint-enable react-hooks/exhaustive-deps */
@@ -142,6 +147,7 @@ const Resources = () => {
                 <ResourcesCategories
                   categories={categories.data}
                   selectedCategory={activeCategory}
+                  setQuery={setQuery}
                   setSelectedCategory={setSelectedCategory}
                 />
               </>

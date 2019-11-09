@@ -32,7 +32,7 @@ describe('<ResourcesCard />', () => {
   it('should have items with icons and text', async () => {
     const { getByText, container } = render(<ResourcesCard categ="financial" icon={faCube} />);
     await waitForElement(() => getByText('Student Jobs'));
-    expect(container.querySelector('img')).toBeInTheDocument();
+    expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('should have two items', async () => {

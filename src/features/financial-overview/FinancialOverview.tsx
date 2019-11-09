@@ -13,7 +13,7 @@ import AccountBalance from './AccountBalance';
 import MealPlans from './MealPlans';
 
 export const FinancialOverview = () => {
-  const [hasMealPlan, setHasMealPlan] = useState<boolean>(true);
+  const [setHasMealPlan] = useState<boolean>(true);
 
   return (
     <Card collapsing={false}>
