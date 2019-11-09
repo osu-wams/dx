@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
 
-import { UserContext, AppContext, IAppContext } from '../App';
+import { UserContext, AppContext, IAppContext, themesLookup } from '../App';
 import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
 import { light } from '../themes';
 
@@ -49,7 +49,10 @@ export const mockAppContext: IAppContext = {
   appVersions: {
     serverVersion: 'server-test-123',
     appVersion: 'client-test-123'
-  }
+  },
+  themes: Object.keys(themesLookup),
+  selectedTheme: 'light',
+  setTheme: () => {}
 };
 
 const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = {}) => {

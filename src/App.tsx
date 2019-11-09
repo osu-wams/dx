@@ -17,7 +17,7 @@ import Footer from './ui/Footer';
 import { useInfoButtons, InfoButtonState } from './api/info-buttons';
 import { useUser } from './api/user';
 import { useAppVersions, AppVersions } from './api/app-versions';
-import { light } from './themes';
+import { light, dark } from './themes';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -33,12 +33,20 @@ const RouteContainer = posed.div({
   exit: { opacity: 0 }
 });
 
+export const themesLookup = {
+  light,
+  dark
+};
+
 const initialAppContext: IAppContext = {
   infoButtonData: [],
   appVersions: {
     serverVersion: '',
     appVersion: ''
-  }
+  },
+  themes: Object.keys(themesLookup),
+  selectedTheme: 'light',
+  setTheme: (theme: string) => {}
 };
 
 interface User {
@@ -52,6 +60,9 @@ interface AppProps {
 export interface IAppContext {
   infoButtonData: InfoButtonState[];
   appVersions: AppVersions;
+  themes: string[];
+  selectedTheme: string;
+  setTheme: Function;
 }
 
 export const UserContext = React.createContext<any>(null);
@@ -64,14 +75,16 @@ const App = (props: AppProps) => {
   const user = useUser();
   const infoButtons = useInfoButtons();
   const appVersions = useAppVersions(initialAppContext.appVersions);
-  const [appContext, setAppContext] = useState<IAppContext>(initialAppContext);
+  const [theme, setTheme] = useState<string>('light');
+  const [appContext, setAppContext] = useState<IAppContext>({ ...initialAppContext, setTheme });
   const containerElementRef = useRef(props.containerElement);
 
   useEffect(() => {
     setAppContext(previous => ({
       ...previous,
       infoButtonData: infoButtons.data,
-      appVersions: appVersions.data
+      appVersions: appVersions.data,
+      selectedTheme: theme
     }));
 
     if (user.error) {
@@ -101,10 +114,10 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading, appVersions.data]);
+  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme]);
 
   return (
-    <ThemeProvider theme={light}>
+    <ThemeProvider theme={themesLookup[theme]}>
       <UserContext.Provider value={user}>
         <AppContext.Provider value={appContext}>
           <GlobalStyles />

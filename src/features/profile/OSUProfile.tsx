@@ -9,14 +9,23 @@ import Icon from '../../ui/Icon';
 import { usePerson } from '../../api/persons/persons';
 import { useMailingAddress } from '../../api/persons/addresses';
 import PlainCard from '../../ui/PlainCard';
+import { AppContext } from '../../App';
 
 const OSUProfile = () => {
   const themeContext = useContext(ThemeContext);
+  const appContext = useContext(AppContext);
   const person = usePerson();
   const address = useMailingAddress();
 
   return (
     <PlainCard>
+      {/*TODO: Remove/replace the theme selection UI */}
+      {process.env.REACT_APP_EXPERIMENTAL === 'true' &&
+        appContext.themes.map(t => (
+          <a key={t} onClick={e => appContext.setTheme(t)}>
+            {t}{' '}
+          </a>
+        ))}
       {person.loading && <Skeleton count={6} />}
       {!person.loading && !person.data && <p>Cannot find your information</p>}
       {!person.loading && person && Object.keys(person).length && (
