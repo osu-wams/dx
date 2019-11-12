@@ -100,7 +100,6 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
 
   return (
     <CardSection>
-      {/* TODO: course should NOT be a link */}
       <SectionHeader>Courses</SectionHeader>
       <List>
         {selectedCourses.length > 0 &&
