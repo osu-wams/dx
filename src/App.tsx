@@ -17,7 +17,7 @@ import Footer from './ui/Footer';
 import { useInfoButtons, InfoButtonState } from './api/info-buttons';
 import { useUser } from './api/user';
 import { useAppVersions, AppVersions } from './api/app-versions';
-import { light, dark } from './themes';
+import { themesLookup, defaultTheme } from './themes';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -33,11 +33,6 @@ const RouteContainer = posed.div({
   exit: { opacity: 0 }
 });
 
-export const themesLookup = {
-  light,
-  dark
-};
-
 const initialAppContext: IAppContext = {
   infoButtonData: [],
   appVersions: {
@@ -45,7 +40,7 @@ const initialAppContext: IAppContext = {
     appVersion: ''
   },
   themes: Object.keys(themesLookup),
-  selectedTheme: 'light',
+  selectedTheme: defaultTheme,
   setTheme: (theme: string) => {}
 };
 
@@ -75,7 +70,7 @@ const App = (props: AppProps) => {
   const user = useUser();
   const infoButtons = useInfoButtons();
   const appVersions = useAppVersions(initialAppContext.appVersions);
-  const [theme, setTheme] = useState<string>('light');
+  const [theme, setTheme] = useState<string>(defaultTheme);
   const [appContext, setAppContext] = useState<IAppContext>({ ...initialAppContext, setTheme });
   const containerElementRef = useRef(props.containerElement);
 

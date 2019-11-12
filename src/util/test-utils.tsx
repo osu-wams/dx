@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
 
-import { UserContext, AppContext, IAppContext, themesLookup } from '../App';
+import { UserContext, AppContext, IAppContext } from '../App';
 import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
-import { light } from '../themes';
+import { themesLookup, defaultTheme } from '../themes';
 
 export const authUserClassification: IUserClassification = {
   id: '123',
@@ -36,7 +36,7 @@ export const authUser = {
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
   const Wrapper = props => {
     return (
-      <ThemeProvider theme={light}>
+      <ThemeProvider theme={themesLookup[defaultTheme]}>
         <UserContext.Provider value={user} {...props} />
       </ThemeProvider>
     );
@@ -58,7 +58,7 @@ export const mockAppContext: IAppContext = {
 const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = {}) => {
   const Wrapper = props => {
     return (
-      <ThemeProvider theme={light}>
+      <ThemeProvider theme={themesLookup[defaultTheme]}>
         <AppContext.Provider value={appContext} {...props} />
       </ThemeProvider>
     );
@@ -72,7 +72,7 @@ const renderWithAllContexts = (
 ) => {
   const Wrapper = props => {
     return (
-      <ThemeProvider theme={light}>
+      <ThemeProvider theme={themesLookup[defaultTheme]}>
         <UserContext.Provider value={user} {...props}>
           <AppContext.Provider value={appContext} {...props}>
             {props.children}
