@@ -15,7 +15,7 @@ import {
   ICourseSchedule,
   IMeetingTime
 } from '../../api/student/course-schedule';
-import zcourses from '../../assets/courses.svg';
+import coursesSvg from '../../assets/courses.svg';
 import Course from '../../features/Course';
 import { theme, Color } from '../../theme';
 import Icon from '../../ui/Icon';
@@ -107,7 +107,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
           selectedCourses.map((c: ICourseSchedule) => meetingTimeListItems(c))}
         {selectedCourses.length === 0 && (
           <NoItems as="li">
-            <NoItemsImage src={zcourses} alt="" />
+            <NoItemsImage src={coursesSvg} alt="" />
             <NoItemsText>You don&apos;t have any courses scheduled</NoItemsText>
           </NoItems>
         )}
