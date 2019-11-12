@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import canvasLogo from '../../assets/canvas-logo.png';
+import canvasLogo from '../../assets/logo-canvas.png';
 import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
 import { ListItem, ListItemDescription, ListItemText, ListItemContentLink } from '../../ui/List';
 import { ButtonLink } from '../../ui/Button';

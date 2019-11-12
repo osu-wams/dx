@@ -26,6 +26,8 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
 const StyledBtn = styled.button`
   border: 0;
   background: none;
+  /* iOS adds large paddings around buttons, we are reducing it */
+  padding: 0 0.4rem 0.4rem;
 `;
 
 const Icon = styled.img`
@@ -46,6 +48,7 @@ const CustomLabel = styled('label')<{ selected: boolean }>`
   padding: 0.4rem 0.8rem;
   cursor: pointer;
   white-space: nowrap;
+  margin-bottom: 0.6rem;
 `;
 
 export default CustomBtn;

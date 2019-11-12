@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { faCube } from '@fortawesome/pro-light-svg-icons';
-import Icon from '../../ui/Icon';
+import { fal } from '@fortawesome/pro-light-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import { List, ListItem, ListItemContentLink } from '../../ui/List';
 import { theme } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 import { Event } from '../../util/gaTracking';
 import { singularPlural } from '../../util/helpers';
+import { IconLookup } from './resources-utils';
 
+// Setup a font awesome library to use for searching for icons from the backend.
+library.add(fal, fab);
 const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => {
   const themeContext = useContext(ThemeContext);
+
   return (
     <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">
       {resources && `found ${resources.length} ${singularPlural(resources.length, 'result')}`}
@@ -23,11 +28,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
                 onClick={() => Event('resource', resource.title)}
                 target="_blank"
               >
-                {resource.icon !== undefined ? (
-                  <ResourceImg src={resource.icon} alt="" />
-                ) : (
-                  <ResourceIcon icon={faCube} color={themeContext.features.resources.icon.color} />
-                )}
+                {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
                 <ResourceName>{resource.title}</ResourceName>
               </ListItemContentLink>
             </ListItem>
@@ -41,14 +42,6 @@ const ResourceName = styled.div`
   font-size: ${theme.fontSize[18]};
   color: ${({ theme }) => theme.features.resources.name.color};
   padding-left: ${theme.spacing.unit * 2}px;
-`;
-
-const ResourceImg = styled.img`
-  width: 3rem;
-`;
-
-const ResourceIcon = styled(Icon)`
-  height: auto;
 `;
 
 export default ResourcesList;

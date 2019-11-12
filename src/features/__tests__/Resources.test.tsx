@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, fireEvent, getByTestId } from '@testing-library/react';
+import { waitForElement, fireEvent } from '@testing-library/react';
 import { render, authUser } from '../../util/test-utils';
 import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
@@ -28,8 +28,7 @@ describe('<Resources />', () => {
   });
 
   it('should display the title Resources', async () => {
-    const { getByText, debug } = render(<Resources />);
-    debug();
+    const { getByText } = render(<Resources />);
     await waitForElement(() => getByText('Resources'));
   });
 
@@ -68,13 +67,65 @@ describe('<Resources />', () => {
   });
 
   it('should have clickable categories that report to GoogleAnalytics', async () => {
-    const { getByText, debug } = render(<Resources />);
+    const { getByText } = render(<Resources />);
     await sleep(100);
     const BillingInformationResource = await getByText(/Billing Information/);
-    debug();
     expect(BillingInformationResource).not.toBeNull();
     fireEvent.click(BillingInformationResource);
     expect(mockGAEvent).toHaveBeenCalled();
+  });
+
+  it('should empty input and get results for that category only when clicking category link', async () => {
+    const { getByLabelText, getByPlaceholderText, findByText } = render(<Resources />);
+    const featured = await waitForElement(() => getByLabelText('Featured'));
+    expect(featured).toHaveClass('selected');
+
+    const academic = await waitForElement(() => getByLabelText('Academic'));
+    const searchInput = getByPlaceholderText('Find resources') as HTMLInputElement;
+    await sleep(50);
+    // Search input value changed to "noResults"
+    await fireEvent.change(searchInput, {
+      target: {
+        value: 'noResults'
+      }
+    });
+    // Need to wait for debounce
+    await sleep(260);
+    expect(await findByText(/found 0 results/)).toBeInTheDocument();
+    fireEvent.click(academic);
+    expect(await findByText(/Student Athletes/)).toBeInTheDocument();
+
+    // Search input should be clear, 'noResults' should be gone
+    expect(searchInput.value).toEqual('');
+  });
+
+  it('Changes Search term should re-run the search effectively', async () => {
+    const { getByLabelText, queryByText, getByPlaceholderText, findByText } = render(<Resources />);
+    const featured = await waitForElement(() => getByLabelText('Featured'));
+    expect(featured).toHaveClass('selected');
+
+    const academic = await waitForElement(() => getByLabelText('Academic'));
+    const searchInput = getByPlaceholderText('Find resources') as HTMLInputElement;
+    await sleep(50);
+    // Search input value changed to "noResults"
+    await fireEvent.change(searchInput, {
+      target: {
+        value: 'billings'
+      }
+    });
+    // Need to wait for debounce
+    await sleep(260);
+    expect(queryByText(/Billing Information/)).not.toBeInTheDocument();
+
+    await fireEvent.change(searchInput, {
+      target: {
+        value: 'billing'
+      }
+    });
+    // Need to wait for debounce
+    await sleep(260);
+
+    expect(findByText(/Billing Information/));
   });
 
   it('should be able to reselect a category', async () => {
@@ -82,12 +133,13 @@ describe('<Resources />', () => {
     const academic = await waitForElement(() => getByLabelText('Academic'));
     const all = await waitForElement(() => getByLabelText('All'));
     fireEvent.click(all);
-    fireEvent.click(academic);
     await sleep(50);
+    fireEvent.click(academic);
+    await sleep(100);
     expect(academic).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
-    expect(findByText(/Billing Information/)).not.toBeNull();
-    expect(queryByText(/Webcams/)).toBeNull();
+    expect(findByText(/Student Athletes/)).not.toBeNull();
+    expect(queryByText(/Billing Information/)).toBeNull();
   });
 
   it('should load a different category based on the URL parameter', async () => {
@@ -112,24 +164,23 @@ describe('<Resources />', () => {
   });
 
   it('should move to the All category when searching', async () => {
-    const { getByLabelText, findByText, debug, getByPlaceholderText } = render(<Resources />);
+    const { getByLabelText, findByText, queryByText, getByPlaceholderText } = render(<Resources />);
     // await sleep(100);
     let featured = await waitForElement(() => getByLabelText('Featured'));
     let all = await waitForElement(() => getByLabelText('All'));
     await sleep(2000);
     expect(featured).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
-    debug();
     await fireEvent.change(getByPlaceholderText('Find resources'), {
       target: {
-        value: 'example'
+        value: 'student'
       }
     });
     // Need to wait for debounce
     await sleep(600);
     expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
-    expect(findByText(/Billing Information/)).not.toBeNull();
+    expect(queryByText(/Billing Information/)).toBeNull();
     expect(findByText(/Student Jobs/)).not.toBeNull();
   });
 
