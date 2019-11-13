@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 import { theme, breakpoints } from '../theme';
+
+const PageGridWrapper = styled.div`
+  background-color: ${({ theme }) => theme.mainGrid.background};
+  height: 100%;
+`;
+
 /* Page Grid
  * Single column for mobile. 2 column for Desktop
  * Provides row-span and col-span classes to modify width or height of children elements
@@ -7,10 +13,8 @@ import { theme, breakpoints } from '../theme';
 
 const MainGridWrapper = styled.div`
   border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
-  border-bottom: 1px solid ${({ theme }) => theme.mainGrid.borderBottom};
   background-color: ${({ theme }) => theme.mainGrid.background};
   padding: 1rem ${theme.spacing.mobile} 2rem;
-  height: 100%;
   @media (min-width: ${breakpoints[768]}) {
     padding: ${theme.spacing.desktop};
   }
@@ -40,10 +44,11 @@ const MainGridCol = styled.div`
 
 const SecondGridWrapper = styled.div`
   background-color: ${({ theme }) => theme.secondGrid.background};
+  border-top: 1px solid ${({ theme }) => theme.secondGrid.borderTop};
   padding: 2rem ${theme.spacing.mobile};
   @media (min-width: ${breakpoints[768]}) {
     padding: 4rem ${theme.spacing.desktop};
   }
 `;
 
-export { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper };
+export { PageGridWrapper, MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper };

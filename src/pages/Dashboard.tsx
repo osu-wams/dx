@@ -3,12 +3,12 @@ import { faStars } from '@fortawesome/pro-light-svg-icons';
 import PageTitle from '../ui/PageTitle';
 import ScheduleCard from '../features/ScheduleCard';
 import EventCardContainer from '../ui/EventCardContainer';
-import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
+import { MainGridWrapper, MainGrid, MainGridCol, PageGridWrapper } from '../ui/PageGrid';
 import ResourcesCard from '../features/ResourcesCard';
 
 const Dashboard = () => {
   return (
-    <div data-testid="dashboard-page">
+    <PageGridWrapper data-testid="dashboard-page">
       <MainGridWrapper>
         <PageTitle
           title="Student Dashboard"
@@ -29,7 +29,7 @@ const Dashboard = () => {
         </MainGrid>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />
-    </div>
+    </PageGridWrapper>
   );
 };
 
