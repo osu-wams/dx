@@ -1,23 +1,49 @@
 import { ThemeConfiguration, Color, shadows, gradients } from '../theme';
 
-/**
- * TODO: Translate light theme into dark color values
- */
+const neutral100 = Color['neutral-900'];
+const neutral200 = Color['neutral-800'];
+const neutral300 = Color['neutral-700'];
+const neutral400 = Color['neutral-600'];
+const neutral500 = Color['neutral-550'];
+const neutral550 = Color['neutral-500'];
+const neutral600 = Color['neutral-400'];
+const neutral700 = Color['neutral-300'];
+const neutral800 = Color['neutral-200'];
+const neutral900 = Color['neutral-100'];
+
+const primary = Color['orange-400'];
+const alert = Color['lava-400'];
+const warn = Color['luminance-300'];
+const info = Color['stratosphere-400'];
+const success = Color['pine-400'];
+const mainGridBackground = neutral100;
+const mainGridBorderBottom = neutral300;
+const mainGridBorderTop = neutral200;
+const secondGridBackground = neutral200;
+const componentBackground = neutral300;
+const linkForeground = Color.white;
+const iconPrimary = Color.white;
+const iconSecondary = Color.black;
+const buttonPrimary = Color.white;
+const buttonSecondary = Color.black;
+const titlePrimary = Color.white;
+const titleSecondary = Color.black;
+
 export const dark: ThemeConfiguration = {
   header: {
-    background: Color.white,
+    background: componentBackground,
     userButton: {
       background: Color.transparent,
-      color: Color['neutral-550']
+      color: neutral550
     },
     profileMenuList: {
-      background: Color['neutral-800'],
-      color: Color.white,
+      background: neutral800,
+      color: linkForeground,
       svg: {
-        color: Color['orange-400']
+        color: primary
       },
       menuItem: {
-        borderTop: Color['neutral-500']
+        borderTop: neutral500
       },
       menuItemSelected: {
         background: Color.transparent
@@ -25,26 +51,26 @@ export const dark: ThemeConfiguration = {
     },
     mainNavList: {
       background: Color.transparent,
-      color: Color['neutral-550'],
-      hoverColor: Color['orange-400'],
+      color: neutral550,
+      hoverColor: primary,
       popOver: {
-        background: Color['neutral-800'],
+        background: neutral800,
         primaryNav: {
-          color: Color.white,
+          color: linkForeground,
           link: {
-            color: Color.white,
+            color: linkForeground,
             svg: {
-              color: Color['orange-400']
+              color: primary
             }
           }
         },
         secondaryNav: {
-          background: Color['neutral-700'],
-          borderTop: Color['neutral-500'],
+          background: neutral700,
+          borderTop: neutral500,
           link: {
-            color: Color.white,
+            color: linkForeground,
             svg: {
-              color: Color.white
+              color: iconPrimary
             }
           }
         }
@@ -59,431 +85,431 @@ export const dark: ThemeConfiguration = {
       }
     },
     rave: {
-      background: Color['lava-400'],
-      color: Color.white,
+      background: alert,
+      color: linkForeground,
       icon: {
-        color: Color.white
+        color: iconPrimary
       }
     },
     dx: {
       info: {
-        background: Color['stratosphere-400'],
-        color: Color.white,
+        background: info,
+        color: linkForeground,
         icon: {
-          color: Color.white
+          color: iconPrimary
         }
       },
       warn: {
-        background: Color['luminance-300'],
-        color: Color.black,
+        background: warn,
+        color: titleSecondary,
         icon: {
-          color: Color.black
+          color: titleSecondary
         }
       }
     }
   },
   mainGrid: {
-    background: Color.black,
-    borderBottom: Color['neutral-300'],
-    borderTop: Color['neutral-200']
+    background: mainGridBackground,
+    borderBottom: mainGridBorderBottom,
+    borderTop: mainGridBorderTop
   },
   secondGrid: {
-    background: Color['neutral-200']
+    background: secondGridBackground
   },
   footer: {
-    background: Color.black,
-    color: Color.white,
+    background: titleSecondary,
+    color: linkForeground,
     link: {
-      color: Color.white
+      color: linkForeground
     },
     iconLink: {
-      border: Color['neutral-400'],
-      color: Color.white,
+      border: neutral400,
+      color: linkForeground,
       icon: {
-        color: Color['orange-400']
+        color: primary
       }
     },
     adminText: {
-      color: Color['neutral-500']
+      color: neutral500
     },
     masquerade: {
       background: Color.transparent,
-      color: Color.white
+      color: iconPrimary
     }
   },
   pageNotFound: {
     link: {
-      background: Color['orange-400'],
-      color: Color.white
+      background: primary,
+      color: linkForeground
     }
   },
   features: {
     academics: {
       courses: {
         header: {
-          color: Color['neutral-600']
+          color: neutral600
         },
         sectionHeader: {
-          color: Color['neutral-550']
+          color: neutral550
         },
         emptyList: {
           text: {
-            color: Color['neutral-550']
+            color: neutral550
           },
           link: {
-            color: Color['orange-400']
+            color: primary
           }
         },
         dayList: {
-          borderBottom: Color['neutral-200'],
+          borderBottom: neutral200,
           item: {
             childInFocus: {
-              borderBottom: Color['neutral-300']
+              borderBottom: neutral300
             },
             childInFocusSelected: {
-              borderBottom: Color['orange-400']
+              borderBottom: primary
             },
             firstChild: {
-              color: Color['orange-400']
+              color: primary
             },
             evenChildren: {
-              color: Color['neutral-550']
+              color: neutral550
             },
             evenChildrenSelected: {
-              color: Color['orange-400']
+              color: primary
             },
             lastChild: {
-              color: Color['neutral-700'],
+              color: neutral700,
               borderBottom: Color.transparent
             },
             lastChildSelected: {
-              color: Color['orange-400'],
-              borderBottom: Color['orange-400']
+              color: primary,
+              borderBottom: primary
             }
           }
         },
         dialog: {
           meetingTime: {
             icon: {
-              color: Color['orange-400']
+              color: primary
             }
           },
           faculty: {
             icon: {
-              color: Color['neutral-600']
+              color: neutral600
             }
           }
         },
         list: {
           title: {
-            color: Color['neutral-700']
+            color: neutral700
           }
         },
         plannerItems: {
           list: {
             icon: {
-              color: Color['orange-400']
+              color: primary
             }
           },
           emptyText: {
-            color: Color['neutral-550']
+            color: neutral550
           }
         }
       },
       pastCourses: {
         title: {
-          color: Color['neutral-700']
+          color: neutral700
         },
         grade: {
-          color: Color['orange-400']
+          color: primary
         },
         search: {
           icon: {
-            color: Color['neutral-600']
+            color: neutral600
           }
         }
       }
     },
     beta: {
       title: {
-        color: Color['orange-400']
+        color: primary
       },
       releaseNotes: {
         title: {
-          color: Color['orange-400']
+          color: primary
         },
         subTitle: {
-          color: Color['neutral-550']
+          color: neutral550
         }
       },
       resources: {
         icon: {
-          color: Color['orange-400']
+          color: primary
         }
       }
     },
     canvas: {
       authorizeButton: {
-        background: Color['stratosphere-400'],
-        color: Color.white
+        background: info,
+        color: iconPrimary
       }
     },
     finances: {
       accountBalance: {
         emphasis: {
-          color: Color['neutral-550']
+          color: neutral550
         }
       },
       mealPlans: {
         emphasisBalance: {
-          color: Color['pine-400']
+          color: success
         },
         emphasisNoBalance: {
-          color: Color['lava-400']
+          color: alert
         }
       },
       transactions: {
         amount: {
-          color: Color['pine-400']
+          color: success
         },
         amountCharge: {
-          color: Color['lava-400']
+          color: alert
         },
         name: {
-          color: Color['neutral-700']
+          color: neutral700
         },
         detail: {
-          color: Color['neutral-550']
+          color: neutral550
         },
         emptyText: {
-          color: Color['neutral-550']
+          color: neutral550
         }
       }
     },
     masquerade: {
       buttonDark: {
-        color: Color['neutral-700'],
-        background: Color['neutral-200']
+        color: neutral700,
+        background: neutral200
       }
     },
     profile: {
       name: {
-        color: Color['orange-400']
+        color: primary
       },
       detail: {
-        color: Color['neutral-550']
+        color: neutral550
       },
       icon: {
-        color: Color['orange-400']
+        color: primary
       }
     },
     resources: {
       name: {
-        color: Color['neutral-700']
+        color: neutral700
       },
       icon: {
-        color: Color.black
+        color: iconSecondary
       },
       search: {
         input: {
-          background: Color.white
+          background: componentBackground
         },
-        border: Color['neutral-200']
+        border: neutral200
       }
     }
   },
   ui: {
     button: {
-      background: Color['orange-400'],
-      color: Color.white,
+      background: primary,
+      color: buttonPrimary,
       close: {
         background: Color.transparent,
-        color: Color.black
+        color: buttonSecondary
       },
       custom: {
-        background: Color.white,
-        selectedBackground: Color['neutral-550'],
-        border: Color['neutral-300'],
-        color: Color.black,
-        selectedColor: Color.white
+        background: componentBackground,
+        selectedBackground: neutral550,
+        border: neutral300,
+        color: buttonSecondary,
+        selectedColor: buttonPrimary
       },
       info: {
         background: Color.transparent,
         icon: {
-          color: Color['neutral-600']
+          color: neutral600
         }
       }
     },
     card: {
       boxShadow: shadows[1],
-      background: Color.white,
+      background: componentBackground,
       badge: {
-        background: Color['orange-400'],
-        color: Color.white
+        background: primary,
+        color: buttonPrimary
       },
       contentRow: {
-        background: Color.white,
-        borderBottom: Color['neutral-200']
+        background: componentBackground,
+        borderBottom: neutral200
       },
       contentCell: {
-        borderLeft: Color['neutral-200']
+        borderLeft: neutral200
       },
       header: {
-        borderBottom: Color['neutral-200']
+        borderBottom: neutral200
       },
       icon: {
-        color: Color['neutral-550']
+        color: neutral550
       }
     },
     date: {
-      color: Color['orange-400']
+      color: primary
     },
     divider: {
-      border: Color['neutral-200']
+      border: neutral200
     },
     eventCard: {
-      color: Color['neutral-600'],
-      background: Color.white,
+      color: neutral600,
+      background: componentBackground,
       title: {
-        color: Color['neutral-700']
+        color: neutral700
       },
       largeTitle: {
-        color: Color.white
+        color: titlePrimary
       },
       date: {
-        background: Color.white,
+        background: componentBackground,
         firstChild: {
-          color: Color['neutral-700']
+          color: neutral700
         },
         lastChild: {
-          color: Color['neutral-700']
+          color: neutral700
         }
       },
       image: {
         background: gradients[1],
-        color: Color.white,
+        color: linkForeground,
         title: {
-          color: Color.white
+          color: titlePrimary
         }
       },
       button: {
-        color: Color.white,
+        color: buttonPrimary,
         icon: {
-          color: Color.white
+          color: iconPrimary
         }
       }
     },
     highlights: {
       card: {
-        border: Color['neutral-200']
+        border: neutral200
       },
       description: {
-        color: Color['neutral-550']
+        color: neutral550
       },
       emphasis: {
-        color: Color['orange-400']
+        color: primary
       },
       emphasisInline: {
-        color: Color['orange-400']
+        color: primary
       },
       title: {
-        color: Color['neutral-550']
+        color: neutral550
       }
     },
     icon: {
       background: Color.transparent,
-      color: Color['neutral-400'],
+      color: neutral400,
       counter: {
-        background: Color['orange-400'],
-        color: Color.white
+        background: primary,
+        color: titlePrimary
       }
     },
     input: {
-      border: Color['neutral-300'],
+      border: neutral300,
       default: {
-        color: Color['neutral-700']
+        color: neutral700
       },
       large: {
-        color: Color['neutral-700']
+        color: neutral700
       },
       small: {
-        color: Color['stratosphere-400']
+        color: info
       }
     },
     label: {
-      color: Color['neutral-700']
+      color: neutral700
     },
     link: {
       background: Color.transparent,
-      color: Color['orange-400'],
+      color: primary,
       icon: {
         external: {
-          color: Color['orange-400']
+          color: primary
         },
         internal: {
-          color: Color['orange-400']
+          color: primary
         }
       }
     },
     list: {
-      color: Color['neutral-700'],
+      color: neutral700,
       item: {
         background: Color.transparent,
         header: {
-          color: Color['neutral-700']
+          color: neutral700
         },
         leadText: {
-          color: Color['orange-400']
+          color: primary
         },
         description: {
-          color: Color['neutral-550']
+          color: neutral550
         },
         link: {
-          color: Color['orange-400'],
+          color: primary,
           boxShadow: shadows[1]
         }
       }
     },
     myDialog: {
       h2: {
-        color: Color['orange-400']
+        color: primary
       },
       h3: {
-        color: Color['neutral-200']
+        color: neutral200
       },
       details: {
-        color: Color['neutral-600']
+        color: neutral600
       }
     },
     pageTitle: {
-      color: Color['neutral-600'],
+      color: neutral600,
       badge: {
-        background: Color['stratosphere-400'],
-        color: Color.white
+        background: info,
+        color: buttonPrimary
       }
     },
     plainCard: {
       header: {
-        color: Color['neutral-550']
+        color: neutral550
       }
     },
     subNav: {
       link: {
         borderBottom: Color.transparent,
-        color: Color['neutral-600'],
+        color: neutral600,
         svg: {
-          color: Color['neutral-600']
+          color: neutral600
         },
         currentSvg: {
-          borderBottom: Color['orange-400']
+          borderBottom: primary
         }
       }
     },
     table: {
       border: 'rgba(34, 36, 38, 0.15)',
-      color: Color['neutral-600'],
+      color: neutral600,
       cell: {
-        color: Color['neutral-550'],
+        color: neutral550,
         borderBottom: 'rgba(34, 36, 38, 0.15)',
         notFirstChild: {
           borderLeft: 'rgba(34, 36, 38, 0.15)'
