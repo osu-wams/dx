@@ -11,6 +11,8 @@ const neutral700 = Color['neutral-300'];
 const neutral800 = Color['neutral-200'];
 const neutral900 = Color['neutral-100'];
 
+const bodyText = neutral700;
+const bodyBackground = neutral200;
 const primary = Color['orange-400'];
 const alert = Color['lava-400'];
 const warn = Color['luminance-300'];
@@ -30,6 +32,10 @@ const titlePrimary = Color.white;
 const titleSecondary = Color.black;
 
 export const dark: ThemeConfiguration = {
+  body: {
+    color: bodyText,
+    background: bodyBackground
+  },
   header: {
     background: componentBackground,
     userButton: {

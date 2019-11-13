@@ -84,6 +84,10 @@ export const theme = {
 };
 
 export interface ThemeConfiguration {
+  body: {
+    color: string;
+    background: string;
+  };
   header: {
     background: string;
     userButton: {

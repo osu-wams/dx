@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-size: ${theme.fontSize[16]};
     line-height: 1.5;
-    color: ${Color['neutral-700']};
+    color: ${({ theme }) => theme.body.color};
   }
   body:not(.user-is-tabbing) button:focus,
   body:not(.user-is-tabbing) input:focus,
@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
   }
   #root {
-    background-color: ${Color['neutral-200']};
+    background-color: ${({ theme }) => theme.body.background};
     min-height: 100vh;
     display: flex;
     flex-direction: column;
