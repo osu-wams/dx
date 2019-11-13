@@ -171,23 +171,23 @@ export const dark: ThemeConfiguration = {
             childInFocus: {
               borderBottom: neutral300
             },
-            childInFocusSelected: {
+            childSelected: {
               borderBottom: primary
             },
-            firstChild: {
+            dayIndicator: {
               color: primary
             },
-            evenChildren: {
+            dayOfWeek: {
               color: neutral550
             },
-            evenChildrenSelected: {
+            dayOfWeekSelected: {
               color: primary
             },
-            lastChild: {
+            dayOfMonth: {
               color: neutral700,
               borderBottom: Color.transparent
             },
-            lastChildSelected: {
+            dayOfMonthSelected: {
               color: primary,
               borderBottom: primary
             }

@@ -224,23 +224,23 @@ export interface ThemeConfiguration {
             childInFocus: {
               borderBottom: string;
             };
-            childInFocusSelected: {
+            childSelected: {
               borderBottom: string;
             };
-            firstChild: {
+            dayIndicator: {
               color: string;
             };
-            evenChildren: {
+            dayOfWeek: {
               color: string;
             };
-            evenChildrenSelected: {
+            dayOfWeekSelected: {
               color: string;
             };
-            lastChild: {
+            dayOfMonth: {
               color: string;
               borderBottom: string;
             };
-            lastChildSelected: {
+            dayOfMonthSelected: {
               color: string;
               borderBottom: string;
             };
