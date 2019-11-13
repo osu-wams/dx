@@ -9,7 +9,6 @@ const neutral550 = Color['neutral-500'];
 const neutral600 = Color['neutral-400'];
 const neutral700 = Color['neutral-300'];
 const neutral800 = Color['neutral-200'];
-const neutral900 = Color['neutral-100'];
 
 const bodyText = neutral700;
 const bodyBackground = neutral200;

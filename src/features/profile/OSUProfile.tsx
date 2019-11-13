@@ -22,9 +22,9 @@ const OSUProfile = () => {
       {/*TODO: Remove/replace the theme selection UI */}
       {process.env.REACT_APP_EXPERIMENTAL === 'true' &&
         appContext.themes.map(t => (
-          <a key={t} onClick={e => appContext.setTheme(t)}>
+          <button key={t} onClick={e => appContext.setTheme(t)}>
             {t}{' '}
-          </a>
+          </button>
         ))}
       {person.loading && <Skeleton count={6} />}
       {!person.loading && !person.data && <p>Cannot find your information</p>}
