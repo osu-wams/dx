@@ -220,30 +220,28 @@ export interface ThemeConfiguration {
         };
         dayList: {
           borderBottom: string;
-          item: {
-            childInFocus: {
-              borderBottom: string;
-            };
-            childSelected: {
-              borderBottom: string;
-            };
-            dayIndicator: {
-              color: string;
-            };
-            dayOfWeek: {
-              color: string;
-            };
-            dayOfWeekSelected: {
-              color: string;
-            };
-            dayOfMonth: {
-              color: string;
-              borderBottom: string;
-            };
-            dayOfMonthSelected: {
-              color: string;
-              borderBottom: string;
-            };
+          dayInFocus: {
+            borderBottom: string;
+          };
+          daySelected: {
+            borderBottom: string;
+          };
+          dayIndicator: {
+            color: string;
+          };
+          dayOfWeek: {
+            color: string;
+          };
+          dayOfWeekSelected: {
+            color: string;
+          };
+          dayOfMonth: {
+            color: string;
+            borderBottom: string;
+          };
+          dayOfMonthSelected: {
+            color: string;
+            borderBottom: string;
           };
         };
         dialog: {

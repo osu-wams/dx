@@ -167,30 +167,28 @@ export const dark: ThemeConfiguration = {
         },
         dayList: {
           borderBottom: neutral200,
-          item: {
-            childInFocus: {
-              borderBottom: neutral300
-            },
-            childSelected: {
-              borderBottom: primary
-            },
-            dayIndicator: {
-              color: primary
-            },
-            dayOfWeek: {
-              color: neutral550
-            },
-            dayOfWeekSelected: {
-              color: primary
-            },
-            dayOfMonth: {
-              color: neutral700,
-              borderBottom: Color.transparent
-            },
-            dayOfMonthSelected: {
-              color: primary,
-              borderBottom: primary
-            }
+          dayInFocus: {
+            borderBottom: neutral300
+          },
+          daySelected: {
+            borderBottom: primary
+          },
+          dayIndicator: {
+            color: primary
+          },
+          dayOfWeek: {
+            color: neutral550
+          },
+          dayOfWeekSelected: {
+            color: primary
+          },
+          dayOfMonth: {
+            color: neutral700,
+            borderBottom: Color.transparent
+          },
+          dayOfMonthSelected: {
+            color: primary,
+            borderBottom: primary
           }
         },
         dialog: {

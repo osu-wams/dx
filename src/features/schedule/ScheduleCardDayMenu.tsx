@@ -55,14 +55,14 @@ const DaySelector = styled.button<{ selected: selectedBtn }>`
       border-bottom: 3px solid
         ${({ theme, selected }) =>
           selected
-            ? theme.features.academics.courses.dayList.item.childSelected.borderBottom
-            : theme.features.academics.courses.dayList.item.childInFocus.borderBottom};
+            ? theme.features.academics.courses.dayList.daySelected.borderBottom
+            : theme.features.academics.courses.dayList.dayInFocus.borderBottom};
     }
   }
 `;
 
 const DayIndicator = styled.span`
-  color: ${({ theme }) => theme.features.academics.courses.dayList.item.dayIndicator.color};
+  color: ${({ theme }) => theme.features.academics.courses.dayList.dayIndicator.color};
   font-weight: bold;
   font-size: ${theme.fontSize[20]};
   line-height: 18px;
@@ -71,8 +71,8 @@ const DayIndicator = styled.span`
 const DayOfWeek = styled.span<{ selected: selectedBtn }>`
   color: ${({ theme, selected }) =>
     selected
-      ? theme.features.academics.courses.dayList.item.dayOfWeekSelected.color
-      : theme.features.academics.courses.dayList.item.dayOfWeek.color};
+      ? theme.features.academics.courses.dayList.dayOfWeekSelected.color
+      : theme.features.academics.courses.dayList.dayOfWeek.color};
   font-weight: bold;
   font-size: ${theme.fontSize[12]};
   text-transform: uppercase;
@@ -82,16 +82,16 @@ const DayOfWeek = styled.span<{ selected: selectedBtn }>`
 const DayOfMonth = styled.span<{ selected: selectedBtn }>`
   color: ${({ theme, selected }) =>
     selected
-      ? theme.features.academics.courses.dayList.item.dayOfMonthSelected.color
-      : theme.features.academics.courses.dayList.item.dayOfMonth.color};
+      ? theme.features.academics.courses.dayList.dayOfMonthSelected.color
+      : theme.features.academics.courses.dayList.dayOfMonth.color};
   line-height: 0.4rem;
   font-size: ${theme.fontSize[24]};
   padding: 1.2rem 1.2rem 2rem;
   border-bottom: 3px solid
     ${({ theme, selected }) =>
       selected
-        ? theme.features.academics.courses.dayList.item.dayOfMonthSelected.borderBottom
-        : theme.features.academics.courses.dayList.item.dayOfMonth.borderBottom};
+        ? theme.features.academics.courses.dayList.dayOfMonthSelected.borderBottom
+        : theme.features.academics.courses.dayList.dayOfMonth.borderBottom};
 `;
 
 const DayList = styled.div`
