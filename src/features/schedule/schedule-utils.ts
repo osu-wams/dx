@@ -49,15 +49,17 @@ export const coursesOnDay = (
 ): ICourseSchedule[] => {
   const dayCourses = currentCourses(
     sortedByBeginTime(
-      courses.filter(c =>
-        c.attributes.meetingTimes.find(m => {
-          if (m.room === 'MID' || m.scheduleType === 'MID') {
-            // is midterm return skip
-            return [];
-          } else {
-            return m.weeklySchedule.includes(dayShortCode);
-          }
-        })
+      courses.filter(
+        c =>
+          c.attributes.meetingTimes.length > 0 &&
+          c.attributes.meetingTimes.find(m => {
+            if (m.room === 'MID' || m.scheduleType === 'MID') {
+              // exclude midterms
+              return false;
+            } else {
+              return m.weeklySchedule.includes(dayShortCode);
+            }
+          })
       )
     )
   );
