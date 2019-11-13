@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { Color, theme } from './theme';
+import { theme } from './theme';
 import Stratum from './assets/Stratum2WebRegular.woff2';
 
 const GlobalStyle = createGlobalStyle`
