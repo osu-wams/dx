@@ -7,7 +7,7 @@ import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
-import { theme } from '../theme';
+import { themeSettings } from '../theme';
 import { useResourcesByQueue } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
@@ -23,9 +23,9 @@ const ResourcesContainer = styled(CardContent)`
 `;
 
 const ResourceName = styled.div`
-  font-size: ${theme.fontSize[18]};
+  font-size: ${themeSettings.fontSize[18]};
   color: ${({ theme }) => theme.features.resources.name.color};
-  padding-left: ${theme.spacing.unit * 2}px;
+  padding-left: ${themeSettings.spacing.unit * 2}px;
 `;
 
 /**

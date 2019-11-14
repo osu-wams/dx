@@ -290,7 +290,7 @@ export const light: ThemeConfiguration = {
       }
     },
     masquerade: {
-      buttonDark: {
+      buttonAlt: {
         color: neutral700,
         background: neutral200
       }

@@ -11,7 +11,7 @@ import ecampusLogo from '../assets/osu-ecampus.svg';
 import cascadesLogo from '../assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
-import { theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints } from '../theme';
 import { Event } from '../util/gaTracking';
 import { IUser } from '../api/user';
 import { UserContext } from '../App';
@@ -69,13 +69,13 @@ const UserButton = styled(MenuButton)`
 const ProfileMenuList = styled(MenuList)`
   &[data-reach-menu-list] {
     background-color: ${({ theme }) => theme.header.profileMenuList.background};
-    border-radius: ${theme.borderRadius[8]};
+    border-radius: ${themeSettings.borderRadius[8]};
     color: ${({ theme }) => theme.header.profileMenuList.color};
     min-width: 15rem;
     padding: 0;
     [data-reach-menu-item] {
       padding: 1rem 2rem;
-      font-size: ${theme.fontSize[16]};
+      font-size: ${themeSettings.fontSize[16]};
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -83,7 +83,7 @@ const ProfileMenuList = styled(MenuList)`
     svg {
       color: ${({ theme }) => theme.header.profileMenuList.svg.color};
       margin-right: 1.2rem;
-      font-size: ${theme.fontSize[24]};
+      font-size: ${themeSettings.fontSize[24]};
     }
     div + div {
       [data-reach-menu-item] {

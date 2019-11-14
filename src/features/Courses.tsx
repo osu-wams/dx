@@ -16,7 +16,7 @@ import {
 import Course from '../features/Course';
 import Icon from '../ui/Icon';
 import { titleCase, singularPlural } from '../util/helpers';
-import { theme } from '../theme';
+import { themeSettings } from '../theme';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { ICourseSchedule, IMeetingTime } from '../api/student/course-schedule';
@@ -112,7 +112,7 @@ const Courses = () => {
                 )}
                 <ListItemText>
                   <ListItemDescription
-                    fontSize={theme.fontSize[16]}
+                    fontSize={themeSettings.fontSize[16]}
                     color={themeContext.features.academics.courses.list.title.color}
                   >
                     {titleCase(course.attributes.courseTitle)}

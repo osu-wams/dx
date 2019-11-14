@@ -1,6 +1,6 @@
 import React, { FC, InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
-import { theme } from '../theme';
+import { themeSettings } from '../theme';
 
 interface BtnProps {
   text: string;
@@ -44,7 +44,7 @@ const CustomLabel = styled('label')<{ selected: boolean }>`
   border-radius: 2rem;
   display: flex;
   align-items: center;
-  font-size: ${theme.fontSize[12]};
+  font-size: ${themeSettings.fontSize[12]};
   padding: 0.4rem 0.8rem;
   cursor: pointer;
   white-space: nowrap;

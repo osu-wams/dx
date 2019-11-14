@@ -1,6 +1,6 @@
 import { Link } from '@reach/router';
 import styled from 'styled-components';
-import { theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints } from '../theme';
 
 const SubNav = styled.nav`
   display: flex;
@@ -22,7 +22,7 @@ const SubNavLink = styled(Link)`
   color: ${({ theme }) => theme.ui.subNav.link.color};
   display: inline-block;
   text-align: center;
-  font-size: ${theme.fontSize[16]};
+  font-size: ${themeSettings.fontSize[16]};
   svg {
     margin-right: 0.5rem;
     color: ${({ theme }) => theme.ui.subNav.link.svg.color};

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { theme } from '../../theme';
+import { themeSettings } from '../../theme';
 import {
   CardSection,
   SectionHeader,
@@ -57,7 +57,7 @@ const meetingTimeListItems = (course: ICourseSchedule, color: string): JSX.Eleme
           <ListItemContent>
             {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
             <ListItemText>
-              <ListItemDescription fontSize={theme.fontSize[16]} color={color}>
+              <ListItemDescription fontSize={themeSettings.fontSize[16]} color={color}>
                 {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
                 {meetingTime.buildingDescription}
               </ListItemDescription>

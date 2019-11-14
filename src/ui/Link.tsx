@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { Link } from '@reach/router';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { theme } from '../theme';
+import { themeSettings } from '../theme';
 
 const LinkStyles = styled.a<StyleProps>`
   :hover,
@@ -14,7 +14,7 @@ const LinkStyles = styled.a<StyleProps>`
   text-decoration: none;
   display: inline-block;
   padding: 0.4rem 0.8rem;
-  border-radius: ${theme.borderRadius[8]};
+  border-radius: ${themeSettings.borderRadius[8]};
   &.simple {
     padding: 0;
   }

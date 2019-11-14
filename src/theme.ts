@@ -1,3 +1,5 @@
+import baseStyled, { ThemedStyledInterface } from 'styled-components';
+
 export enum Color {
   'transparent' = 'transparent',
   'white' = '#ffffff',
@@ -57,7 +59,7 @@ export const breakpoints = {
   '1024': '1024px'
 };
 
-export const theme = {
+export const themeSettings = {
   spacing: {
     unit: 8,
     mobile: '1rem', // padding/padding or row/column gaps
@@ -343,7 +345,7 @@ export interface ThemeConfiguration {
       };
     };
     masquerade: {
-      buttonDark: {
+      buttonAlt: {
         color: string;
         background: string;
       };
@@ -580,3 +582,5 @@ export interface ThemeConfiguration {
     };
   };
 }
+
+export const styled = baseStyled as ThemedStyledInterface<ThemeConfiguration>;

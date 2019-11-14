@@ -10,11 +10,11 @@ import { Card, CardHeader, CardContent, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { formatDate } from '../util/helpers';
 import { useDxAlerts, useRaveAlerts, Alert } from '../api/alerts';
-import { theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints } from '../theme';
 
 const AlertWrapper = styled.div`
   width: 100%;
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
   padding: 0;
   > div {
     margin-bottom: 0 !important;
@@ -46,7 +46,7 @@ const AlertHeader = styled(CardHeader)`
   padding: 0;
   height: auto;
   span {
-    font-size: ${theme.fontSize[24]};
+    font-size: ${themeSettings.fontSize[24]};
   }
 `;
 const AlertContent = styled(CardContent)`

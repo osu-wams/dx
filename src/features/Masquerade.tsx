@@ -95,6 +95,7 @@ export const Masquerade = (props: MasqueradeProps) => {
    * usage as themselves.
    */
   const masqueradeText = () => {
+    console.log(masqueradeId);
     if (masqueradeId === '') {
       return 'Remove Masquerade';
     } else {
@@ -142,9 +143,9 @@ export const Masquerade = (props: MasqueradeProps) => {
         type="submit"
         disabled={masqueradeDisabled()}
         bg={
-          masqueradeDisabled() ? themeContext.features.masquerade.buttonDark.background : undefined
+          masqueradeDisabled() ? themeContext.features.masquerade.buttonAlt.background : undefined
         }
-        fg={masqueradeDisabled() ? themeContext.features.masquerade.buttonDark.color : undefined}
+        fg={masqueradeDisabled() ? themeContext.features.masquerade.buttonAlt.color : undefined}
         onClick={() => {
           Event('footer', 'masquerade', 'submit form to masquerade');
           performMasquerade();

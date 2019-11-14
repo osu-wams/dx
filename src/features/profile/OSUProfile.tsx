@@ -3,7 +3,7 @@ import styled, { ThemeContext } from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faEnvelope, faMapMarkerAlt, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import Skeleton from 'react-loading-skeleton';
-import { theme } from '../../theme';
+import { themeSettings } from '../../theme';
 import { formatPhone } from '../../util/helpers';
 import Icon from '../../ui/Icon';
 import { usePerson } from '../../api/persons/persons';
@@ -115,7 +115,7 @@ const PersonName = styled.h3`
   color: ${({ theme }) => theme.features.profile.name.color};
   margin: 0;
   font-weight: 500;
-  font-size: ${theme.fontSize[24]};
+  font-size: ${themeSettings.fontSize[24]};
 `;
 
 const PairData = styled.dl`
@@ -125,7 +125,7 @@ const PairData = styled.dl`
     margin-right: 4rem;
   }
   dt {
-    font-size: ${theme.fontSize[12]};
+    font-size: ${themeSettings.fontSize[12]};
     font-weight: 600;
     color: ${({ theme }) => theme.features.profile.detail.color};
   }
@@ -141,7 +141,7 @@ const ContactInfo = styled.dl`
     vertical-align: top;
     padding-bottom: 1.8rem;
     svg {
-      font-size: ${theme.fontSize[24]};
+      font-size: ${themeSettings.fontSize[24]};
     }
   }
 `;

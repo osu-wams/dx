@@ -7,14 +7,14 @@ import {
   HighlightEmphasisInline,
   HighlightDescription
 } from '../../ui/Highlights';
-import { theme } from '../../theme';
+import { themeSettings } from '../../theme';
 import { useAccountHolds } from '../../api/student';
 
 const HoldsList = styled.ul`
   margin: 0;
   padding: 0 0 0 20px;
   > li {
-    font-size: ${theme.fontSize[12]};
+    font-size: ${themeSettings.fontSize[12]};
   }
 `;
 

@@ -16,7 +16,7 @@ import {
 import { usePlannerItems } from '../api/student/planner-items';
 import { useCourseSchedule } from '../api/student';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
-import { theme } from '../theme';
+import { themeSettings } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { UserContext } from '../App';
@@ -29,7 +29,7 @@ const NoItems = styled.div`
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  padding: ${theme.spacing.unit * 4}px ${theme.spacing.unit * 8}px 0px ${theme.spacing.unit * 8}px;
+  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px ${themeSettings.spacing.unit * 8}px;
 `;
 
 const NoItemsImage = styled.img`

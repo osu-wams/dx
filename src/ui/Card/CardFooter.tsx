@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { InfoButton } from '../Button';
-import { theme } from '../../theme';
+import { themeSettings } from '../../theme';
 import { ICollapse } from './ICollapse';
 import { CardContext } from './Card';
 
@@ -19,13 +19,13 @@ const CardFooter = ({ ...props }) => {
 };
 
 const CardFooterWrapper = styled.div<ICollapse>`
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit * 2}px;
   ${props =>
     props.collapsible &&
     `
     display: ${props.collapsed ? 'collapse' : 'visible'}
     height: ${props.collapsed ? 0 : 'auto'};
-    padding: ${props.collapsed ? 0 : `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`};
+    padding: ${props.collapsed ? 0 : `${themeSettings.spacing.unit}px ${themeSettings.spacing.unit * 2}px`};
   `}
   overflow: hidden;
   display: flex;

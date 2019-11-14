@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { theme } from '../theme';
+import { themeSettings } from '../theme';
 
 type IconProps = {
   bg?: string;
@@ -13,7 +13,7 @@ const IconWrapper = styled.div`
 `;
 
 const IconCounter = styled.div`
-  font-size: ${theme.fontSize[12]};
+  font-size: ${themeSettings.fontSize[12]};
   position: absolute;
   bottom: -${12 / 2 / 10}rem;
   right: -${12 / 2 / 10}rem;

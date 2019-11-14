@@ -7,7 +7,7 @@ import { useStudentExperienceEvents, useCampusEvents } from '../api/events';
 import { hasAudience, atCampus, CAMPUS_CODES } from '../api/user';
 import EventCard from './EventCard';
 import { SecondGridWrapper } from '../ui/PageGrid';
-import { theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints } from '../theme';
 
 const EventCardContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
@@ -15,10 +15,10 @@ const EventCardContainerWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: ${theme.spacing.mobile};
+  grid-row-gap: ${themeSettings.spacing.mobile};
   @media screen and (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: ${theme.spacing.desktop};
+    grid-gap: ${themeSettings.spacing.desktop};
   }
 `;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { theme } from '../../theme';
+import { themeSettings } from '../../theme';
 import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';
@@ -48,7 +48,7 @@ const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelecte
 };
 
 const CategoriesWrapper = styled.div`
-  margin-bottom: ${theme.spacing.unit}px;
+  margin-bottom: ${themeSettings.spacing.unit}px;
 `;
 
 export default ResourceCategories;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme, breakpoints } from '../../theme';
+import { themeSettings, breakpoints } from '../../theme';
 
 interface IBadge {
   fg?: string;
@@ -13,13 +13,13 @@ interface ICardContentRow {
 const CardBase = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: ${theme.borderRadius[16]};
+  border-radius: ${themeSettings.borderRadius[16]};
   box-shadow: ${({ theme }) => theme.ui.card.boxShadow};
   background-color: ${({ theme }) => theme.ui.card.background};
   overflow: hidden;
-  margin-bottom: ${theme.spacing.mobile};
+  margin-bottom: ${themeSettings.spacing.mobile};
   @media (min-width: ${breakpoints[768]}) {
-    margin-bottom: ${theme.spacing.desktop};
+    margin-bottom: ${themeSettings.spacing.desktop};
   }
 `;
 
@@ -61,7 +61,7 @@ const CardContentRow = styled.div<ICardContentRow>`
  * A cell intended to be used inside of a CardContentRow UI.
  */
 const CardContentCell = styled.div`
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit * 2}px;
   flex-grow: 1;
   flex-basis: 0;
   & + div {
