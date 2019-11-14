@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../../ui/Icon';
-import { Color, theme } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { Event } from '../../util/gaTracking';
 
 const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }) => {
@@ -32,18 +31,18 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
 const SearchWrapper = styled.div`
   position: relative;
   display: flex;
-  border-radius: ${theme.borderRadius[8]};
-  margin-bottom: ${theme.spacing.unit}px;
+  border-radius: ${themeSettings.borderRadius[8]};
+  margin-bottom: ${themeSettings.spacing.unit}px;
   overflow: hidden;
-  border: 1px solid ${Color['neutral-200']};
+  border: 1px solid ${({ theme }) => theme.features.resources.search.border};
 `;
 
 const Input = styled.input`
-  background: #ffffff;
+  background: ${({ theme }) => theme.features.resources.search.input.background};
   border: none;
   box-sizing: border-box;
   height: 48px;
-  padding: ${theme.spacing.unit}px ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit}px ${themeSettings.spacing.unit * 2}px;
   padding-left: 4.6rem;
   min-width: 0;
   flex: 1;

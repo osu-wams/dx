@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Router, Location, RouteComponentProps } from '@reach/router';
-import styled from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import ReactGA from 'react-ga';
-import GlobalStyles from './GlobalStyles';
 import Header from './ui/Header';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
@@ -17,6 +16,8 @@ import Footer from './ui/Footer';
 import { useInfoButtons, InfoButtonState } from './api/info-buttons';
 import { useUser } from './api/user';
 import { useAppVersions, AppVersions } from './api/app-versions';
+import { themesLookup, defaultTheme } from './theme/themes';
+import { styled, GlobalStyles } from './theme';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -37,7 +38,10 @@ const initialAppContext: IAppContext = {
   appVersions: {
     serverVersion: '',
     appVersion: ''
-  }
+  },
+  themes: Object.keys(themesLookup),
+  selectedTheme: defaultTheme,
+  setTheme: (theme: string) => {}
 };
 
 interface User {
@@ -51,6 +55,9 @@ interface AppProps {
 export interface IAppContext {
   infoButtonData: InfoButtonState[];
   appVersions: AppVersions;
+  themes: string[];
+  selectedTheme: string;
+  setTheme: Function;
 }
 
 export const UserContext = React.createContext<any>(null);
@@ -63,14 +70,16 @@ const App = (props: AppProps) => {
   const user = useUser();
   const infoButtons = useInfoButtons();
   const appVersions = useAppVersions(initialAppContext.appVersions);
-  const [appContext, setAppContext] = useState<IAppContext>(initialAppContext);
+  const [theme, setTheme] = useState<string>(defaultTheme);
+  const [appContext, setAppContext] = useState<IAppContext>({ ...initialAppContext, setTheme });
   const containerElementRef = useRef(props.containerElement);
 
   useEffect(() => {
     setAppContext(previous => ({
       ...previous,
       infoButtonData: infoButtons.data,
-      appVersions: appVersions.data
+      appVersions: appVersions.data,
+      selectedTheme: theme
     }));
 
     if (user.error) {
@@ -100,37 +109,39 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading, appVersions.data]);
+  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme]);
 
   return (
-    <UserContext.Provider value={user}>
-      <AppContext.Provider value={appContext}>
-        <GlobalStyles />
-        <Header />
-        <Alerts />
-        <ContentWrapper>
-          <Location>
-            {({ location }) => (
-              <PoseGroup>
-                {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                <RouteContainer key={location.key} style={{ width: '100%' }}>
-                  <Router location={location} style={{ height: '100%' }}>
-                    <RouterPage path="/" pageComponent={<Dashboard />} />
-                    <RouterPage path="profile" pageComponent={<Profile />} />
-                    <RouterPage path="academics/*" pageComponent={<Academics />} />
-                    <RouterPage path="finances" pageComponent={<Finances />} />
-                    <RouterPage path="resources" pageComponent={<Resources />} />
-                    <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                    <RouterPage default pageComponent={<PageNotFound />} />
-                  </Router>
-                </RouteContainer>
-              </PoseGroup>
-            )}
-          </Location>
-        </ContentWrapper>
-        <Footer />
-      </AppContext.Provider>
-    </UserContext.Provider>
+    <ThemeProvider theme={themesLookup[theme]}>
+      <UserContext.Provider value={user}>
+        <AppContext.Provider value={appContext}>
+          <GlobalStyles />
+          <Header />
+          <Alerts />
+          <ContentWrapper>
+            <Location>
+              {({ location }) => (
+                <PoseGroup>
+                  {ReactGA.pageview(location.pathname + location.search + location.hash)}
+                  <RouteContainer key={location.key} style={{ width: '100%' }}>
+                    <Router location={location} style={{ height: '100%' }}>
+                      <RouterPage path="/" pageComponent={<Dashboard />} />
+                      <RouterPage path="profile" pageComponent={<Profile />} />
+                      <RouterPage path="academics/*" pageComponent={<Academics />} />
+                      <RouterPage path="finances" pageComponent={<Finances />} />
+                      <RouterPage path="resources" pageComponent={<Resources />} />
+                      <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                      <RouterPage default pageComponent={<PageNotFound />} />
+                    </Router>
+                  </RouteContainer>
+                </PoseGroup>
+              )}
+            </Location>
+          </ContentWrapper>
+          <Footer />
+        </AppContext.Provider>
+      </UserContext.Provider>
+    </ThemeProvider>
   );
 };
 

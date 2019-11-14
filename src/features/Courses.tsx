@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { useCourseSchedule } from '../api/student';
@@ -16,7 +16,7 @@ import {
 import Course from '../features/Course';
 import Icon from '../ui/Icon';
 import { titleCase, singularPlural } from '../util/helpers';
-import { theme, Color } from '../theme';
+import { themeSettings, ThemeContext } from '../theme';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { ICourseSchedule, IMeetingTime } from '../api/student/course-schedule';
@@ -74,6 +74,7 @@ const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime
 );
 
 const Courses = () => {
+  const themeContext = useContext(ThemeContext);
   const courses = useCourseSchedule();
   const [isOpen, setOpen] = useState(false);
   const [courseAttributes, setCourseAttributes] = useState<ICourseScheduleAttributes | null>(null);
@@ -109,7 +110,10 @@ const Courses = () => {
                   course.attributes.courseNumber
                 )}
                 <ListItemText>
-                  <ListItemDescription fontSize={theme.fontSize[16]} color={Color['neutral-700']}>
+                  <ListItemDescription
+                    fontSize={themeSettings.fontSize[16]}
+                    color={themeContext.features.academics.courses.list.title.color}
+                  >
                     {titleCase(course.attributes.courseTitle)}
                   </ListItemDescription>
                   <ListItemDescription>
@@ -130,7 +134,6 @@ const Courses = () => {
       <CardFooter infoButtonId="current-courses">
         <ExternalLink
           href={Url.canvas.main}
-          fg={Color['orange-400']}
           onClick={() => Event('courses', 'Link to Canvas clicked')}
         >
           View more in Canvas

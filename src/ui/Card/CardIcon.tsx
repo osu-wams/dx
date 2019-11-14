@@ -1,13 +1,14 @@
-import React, {FC} from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from 'react';
 import { IconDefinition } from '@fortawesome/pro-light-svg-icons';
-import {Color, theme} from '../../theme';
+import { themeSettings, styled, ThemeContext } from '../../theme';
 import Icon from '../Icon';
 
 const CardIcon: FC<{ icon: IconDefinition; count?: number }> = ({ icon, count }) => {
+  const themeContext = useContext(ThemeContext);
+
   return (
     <CardIconWrapper>
-      <CardIconBase icon={icon} color={Color['neutral-550']} count={count} />
+      <CardIconBase icon={icon} color={themeContext.ui.card.icon.color} count={count} />
     </CardIconWrapper>
   );
 };
@@ -17,7 +18,7 @@ const CardIconWrapper = styled.div`
 `;
 
 const CardIconBase = styled(Icon)`
-  font-size: ${theme.fontSize[24]};
+  font-size: ${themeSettings.fontSize[24]};
 `;
 
 export default CardIcon;

@@ -1,6 +1,5 @@
 import React, { FC, InputHTMLAttributes } from 'react';
-import styled from 'styled-components';
-import { theme, Color } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 interface BtnProps {
   text: string;
@@ -36,13 +35,15 @@ const Icon = styled.img`
 `;
 
 const CustomLabel = styled('label')<{ selected: boolean }>`
-  background: ${props => (props.selected ? Color['neutral-550'] : '#fff')};
-  color: ${props => (props.selected ? '#fff' : '#000')};
-  border: 1px solid ${Color['neutral-300']};
+  background: ${({ theme, selected }) =>
+    selected ? theme.ui.button.custom.selectedBackground : theme.ui.button.custom.background};
+  color: ${({ theme, selected }) =>
+    selected ? theme.ui.button.custom.selectedColor : theme.ui.button.custom.color};
+  border: 1px solid ${({ theme }) => theme.ui.button.custom.border};
   border-radius: 2rem;
   display: flex;
   align-items: center;
-  font-size: ${theme.fontSize[12]};
+  font-size: ${themeSettings.fontSize[12]};
   padding: 0.4rem 0.8rem;
   cursor: pointer;
   white-space: nowrap;

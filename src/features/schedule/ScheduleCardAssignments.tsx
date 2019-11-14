@@ -11,7 +11,6 @@ import {
 import { UserContext } from '../../App';
 import Url from '../../util/externalUrls.data';
 import Icon from '../../ui/Icon';
-import { Color } from '../../theme';
 import assignment from '../../assets/assignment.svg';
 import {
   List,
@@ -21,11 +20,13 @@ import {
   ListItemText,
   ListItemContentLink
 } from '../../ui/List';
-import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvasCompact';
+import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
 import { Event } from '../../util/gaTracking';
 import { courseCodeOrIcon } from '../Courses';
+import { ThemeContext } from '../../theme';
 
 const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
+  const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
 
   return (
@@ -54,7 +55,10 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
                   {courseCodeOrIcon(
                     context_name,
                     courseList,
-                    <Icon icon={faFileAlt} color={Color['orange-400']} />
+                    <Icon
+                      icon={faFileAlt}
+                      color={themeContext.features.academics.courses.plannerItems.list.icon.color}
+                    />
                   )}
                   <ListItemText>
                     <ListItemHeader>{title} </ListItemHeader>

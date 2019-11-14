@@ -1,18 +1,17 @@
-import styled from 'styled-components';
-import { theme, breakpoints, Color } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 /* Page Grid
  * Single column for mobile. 2 column for Desktop
  * Provides row-span and col-span classes to modify width or height of children elements
  */
 
 const MainGridWrapper = styled.div`
-  border-top: 1px solid ${Color['neutral-200']};
-  border-bottom: 1px solid ${Color['neutral-300']};
-  background-color: ${Color['neutral-100']};
-  padding: 1rem ${theme.spacing.mobile} 2rem;
+  border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
+  border-bottom: 1px solid ${({ theme }) => theme.mainGrid.borderBottom};
+  background-color: ${({ theme }) => theme.mainGrid.background};
+  padding: 1rem ${themeSettings.spacing.mobile} 2rem;
   height: 100%;
   @media (min-width: ${breakpoints[768]}) {
-    padding: ${theme.spacing.desktop};
+    padding: ${themeSettings.spacing.desktop};
   }
 `;
 const MainGrid = styled.div`
@@ -23,7 +22,7 @@ const MainGrid = styled.div`
   grid-template-columns: 1fr;
   @media (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: ${theme.spacing.desktop};
+    grid-column-gap: ${themeSettings.spacing.desktop};
   }
 `;
 
@@ -39,10 +38,10 @@ const MainGridCol = styled.div`
 `;
 
 const SecondGridWrapper = styled.div`
-  background-color: ${Color['neutral-200']};
-  padding: 2rem ${theme.spacing.mobile};
+  background-color: ${({ theme }) => theme.secondGrid.background};
+  padding: 2rem ${themeSettings.spacing.mobile};
   @media (min-width: ${breakpoints[768]}) {
-    padding: 4rem ${theme.spacing.desktop};
+    padding: 4rem ${themeSettings.spacing.desktop};
   }
 `;
 

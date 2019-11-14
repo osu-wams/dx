@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useAccountBalance } from '../../api/student/account-balance';
-import { Color } from '../../theme';
 import { formatDollars } from '../../util/helpers';
 import {
   Highlight,
@@ -13,16 +12,18 @@ import { ExternalLink } from '../../ui/Link';
 import Url from '../../util/externalUrls.data';
 import { Event } from '../../util/gaTracking';
 import { isNullOrUndefined } from 'util';
+import { ThemeContext } from '../../theme';
 
 /**
  * Sub card for the Financial Overview card.
  */
 const AccountBalance = () => {
+  const themeContext = useContext(ThemeContext);
   const { data, loading } = useAccountBalance();
 
   return (
     <Highlight textAlignLeft>
-      <HighlightEmphasis color={Color['neutral-550']}>
+      <HighlightEmphasis color={themeContext.features.finances.accountBalance.emphasis.color}>
         {loading && <Skeleton />}
         {data && data.attributes && !isNullOrUndefined(data.attributes.currentBalance)
           ? formatDollars(data.attributes.currentBalance)
@@ -36,7 +37,6 @@ const AccountBalance = () => {
       <ExternalLink
         style={{ float: 'right' }}
         href={Url.bill.main}
-        fg={Color['orange-400']}
         onClick={() => Event('account-balance', 'make a payment - my bill link')}
       >
         Make a payment

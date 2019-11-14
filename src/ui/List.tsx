@@ -1,13 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
-import { theme, Color } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 type SpacedList = {
   spaced?: boolean;
 };
 
 const List = styled.ul`
-  color: ${Color['neutral-700']};
+  color: ${({ theme }) => theme.ui.list.color};
   text-decoration: none;
   padding: 0;
   margin: 0;
@@ -16,7 +15,7 @@ const List = styled.ul`
 const ListItem = styled.li<SpacedList>`
   list-style-type: none;
   &:last-child {
-    margin-bottom: ${props => (props.spaced ? 0 : theme.spacing.unit * 2)}px;
+    margin-bottom: ${props => (props.spaced ? 0 : themeSettings.spacing.unit * 2)}px;
   }
   & > button {
     /* cursor only on buttons, not divs */
@@ -26,7 +25,7 @@ const ListItem = styled.li<SpacedList>`
 
 const ListItemContent = styled.div<SpacedList>`
   width: 100%;
-  background: transparent;
+  background: ${({ theme }) => theme.ui.list.item.background};
   display: flex;
   justify-content: flex-start;
   flex-wrap: nowrap;
@@ -34,8 +33,8 @@ const ListItemContent = styled.div<SpacedList>`
   border: none;
   border-radius: 8px;
   transition: all 150ms ease-in-out 0s;
-  padding: ${props => (props.spaced ? theme.spacing.unit * 2 : 12)}px
-    ${props => (props.spaced ? theme.spacing.unit * 2 : 12)}px;
+  padding: ${props => (props.spaced ? themeSettings.spacing.unit * 2 : 12)}px
+    ${props => (props.spaced ? themeSettings.spacing.unit * 2 : 12)}px;
   svg,
   img {
     height: 3rem;
@@ -54,9 +53,9 @@ const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
   &:hover {
     & > svg,
     & > div {
-      color: ${Color['orange-400']};
+      color: ${({ theme }) => theme.ui.list.item.link.color};
     }
-    box-shadow: rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px;
+    box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
     transform: translateY(-4px);
   }
 `;
@@ -70,26 +69,26 @@ const ListItemText = styled.div`
 `;
 
 const ListItemHeader = styled.h4`
-  color: ${Color['neutral-700']};
+  color: ${({ theme }) => theme.ui.list.item.header.color};
   margin: 0;
   font-weight: normal;
 `;
 
 const ListItemDescription = styled.div<{ fontSize?: string; color?: string }>`
-  color: ${props => (props.color ? props.color : Color['neutral-550'])};
-  font-size: ${props => (props.fontSize ? props.fontSize : theme.fontSize[14])};
+  color: ${({ color, theme }) => (color ? color : theme.ui.list.item.description.color)};
+  font-size: ${props => (props.fontSize ? props.fontSize : themeSettings.fontSize[14])};
   line-height: 1.6rem;
 `;
 
 const ListItemLeadText = styled.div`
-  line-height: ${theme.fontSize[14]};
+  line-height: ${themeSettings.fontSize[14]};
   text-align: center;
-  padding: 0 ${theme.spacing.unit * 2}px 0 0;
-  color: ${Color['orange-400']};
-  width: ${theme.fontSize[58]};
+  padding: 0 ${themeSettings.spacing.unit * 2}px 0 0;
+  color: ${({ theme }) => theme.ui.list.item.leadText.color};
+  width: ${themeSettings.fontSize[58]};
   strong {
-    line-height: ${theme.fontSize[20]};
-    font-size: ${theme.fontSize[20]};
+    line-height: ${themeSettings.fontSize[20]};
+    font-size: ${themeSettings.fontSize[20]};
   }
 `;
 

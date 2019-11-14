@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
-import { Color, theme } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import Url from '../../util/externalUrls.data';
 import { Event } from '../../util/gaTracking';
@@ -18,7 +17,7 @@ const BetaInfo: FC = () => {
           MyOSU and lay the foundation for your OSU digital experience. Here are a few of
           my.oregonstate.edu&#39;s key features:
         </DashboardBetaContentP>
-        <DashboardBetaStyledList >
+        <DashboardBetaStyledList>
           <BetaStyledListItem>
             Home, where you can see what’s coming up in your courses, access commonly used systems,
             and find events and announcements from across campus
@@ -66,22 +65,22 @@ const BetaInfo: FC = () => {
 };
 
 const DashboardBetaContentP = styled.p`
-  font-size: ${theme.fontSize['16']};
-  margin: ${theme.spacing.unit}px 0 0 0;
+  font-size: ${themeSettings.fontSize['16']};
+  margin: ${themeSettings.spacing.unit}px 0 0 0;
 `;
 const DashboardBetaStyledList = styled.ul`
-  margin: ${theme.spacing.unit}px 0 0 0;
+  margin: ${themeSettings.spacing.unit}px 0 0 0;
   padding: 0 0 0 2.8rem;
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
 `;
 
 const BetaStyledListItem = styled.li`
-  margin-bottom: ${theme.spacing.unit}px;
+  margin-bottom: ${themeSettings.spacing.unit}px;
 `;
 
 const BetaTitle = styled.h3`
-  color: ${Color['orange-400']};
-  font-size: ${theme.fontSize['18']};
+  color: ${({ theme }) => theme.features.beta.title.color};
+  font-size: ${themeSettings.fontSize['18']};
   font-weight: normal;
   margin: 0px;
 `;

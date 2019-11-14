@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
+import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
 
 import { UserContext, AppContext, IAppContext } from '../App';
 import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
+import { themesLookup, defaultTheme } from '../theme/themes';
 
 export const authUserClassification: IUserClassification = {
   id: '123',
@@ -33,7 +35,11 @@ export const authUser = {
 
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
   const Wrapper = props => {
-    return <UserContext.Provider value={user} {...props} />;
+    return (
+      <ThemeProvider theme={themesLookup[defaultTheme]}>
+        <UserContext.Provider value={user} {...props} />
+      </ThemeProvider>
+    );
   };
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
 };
@@ -43,12 +49,19 @@ export const mockAppContext: IAppContext = {
   appVersions: {
     serverVersion: 'server-test-123',
     appVersion: 'client-test-123'
-  }
+  },
+  themes: Object.keys(themesLookup),
+  selectedTheme: 'light',
+  setTheme: () => {}
 };
 
 const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = {}) => {
   const Wrapper = props => {
-    return <AppContext.Provider value={appContext} {...props} />;
+    return (
+      <ThemeProvider theme={themesLookup[defaultTheme]}>
+        <AppContext.Provider value={appContext} {...props} />
+      </ThemeProvider>
+    );
   };
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
 };
@@ -59,11 +72,13 @@ const renderWithAllContexts = (
 ) => {
   const Wrapper = props => {
     return (
-      <UserContext.Provider value={user} {...props}>
-        <AppContext.Provider value={appContext} {...props}>
-          {props.children}
-        </AppContext.Provider>
-      </UserContext.Provider>
+      <ThemeProvider theme={themesLookup[defaultTheme]}>
+        <UserContext.Provider value={user} {...props}>
+          <AppContext.Provider value={appContext} {...props}>
+            {props.children}
+          </AppContext.Provider>
+        </UserContext.Provider>
+      </ThemeProvider>
     );
   };
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });

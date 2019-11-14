@@ -1,21 +1,31 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faEnvelope, faMapMarkerAlt, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import Skeleton from 'react-loading-skeleton';
-import { theme, Color } from '../../theme';
+import { themeSettings } from '../../theme';
 import { formatPhone } from '../../util/helpers';
 import Icon from '../../ui/Icon';
 import { usePerson } from '../../api/persons/persons';
 import { useMailingAddress } from '../../api/persons/addresses';
 import PlainCard from '../../ui/PlainCard';
+import { AppContext } from '../../App';
+import { styled, ThemeContext } from '../../theme';
 
 const OSUProfile = () => {
+  const themeContext = useContext(ThemeContext);
+  const appContext = useContext(AppContext);
   const person = usePerson();
   const address = useMailingAddress();
 
   return (
     <PlainCard>
+      {/*TODO: Remove/replace the theme selection UI */}
+      {process.env.REACT_APP_EXPERIMENTAL === 'true' &&
+        appContext.themes.map(t => (
+          <button key={t} onClick={e => appContext.setTheme(t)}>
+            {t}{' '}
+          </button>
+        ))}
       {person.loading && <Skeleton count={6} />}
       {!person.loading && !person.data && <p>Cannot find your information</p>}
       {!person.loading && person && Object.keys(person).length && (
@@ -40,26 +50,34 @@ const OSUProfile = () => {
               renderInfoIcons(
                 'Primary phone',
                 formatPhone(person.data.attributes.primaryPhone),
-                faPhone
+                faPhone,
+                themeContext.features.profile.icon.color
               )}
             {person.data &&
               person.data.attributes.homePhone !== person.data.attributes.mobilePhone &&
               person.data.attributes.homePhone !== person.data.attributes.mobilePhone &&
-              renderInfoIcons('Home phone', formatPhone(person.data.attributes.homePhone), faPhone)}
+              renderInfoIcons(
+                'Home phone',
+                formatPhone(person.data.attributes.homePhone),
+                faPhone,
+                themeContext.features.profile.icon.color
+              )}
             {renderInfoIcons(
               'Mobile phone',
               formatPhone(person.data ? person.data.attributes.mobilePhone : null),
-              faMobileAlt
+              faMobileAlt,
+              themeContext.features.profile.icon.color
             )}
             {renderInfoIcons(
               'Email',
               person.data && !person.loading ? person.data.attributes.email : '',
-              faEnvelope
+              faEnvelope,
+              themeContext.features.profile.icon.color
             )}
             {!address.loading && address && (
               <div>
                 <dt>
-                  <Icon icon={faMapMarkerAlt} color={Color['orange-400']} />{' '}
+                  <Icon icon={faMapMarkerAlt} color={themeContext.features.profile.icon.color} />{' '}
                   <VisuallyHidden>
                     {address.data ? address.data.attributes.addressTypeDescription : 'No data'}
                   </VisuallyHidden>
@@ -80,12 +98,12 @@ const OSUProfile = () => {
   );
 };
 
-const renderInfoIcons = (title: string, field: any | null, icon: any) => {
+const renderInfoIcons = (title: string, field: any | null, icon: any, color: string) => {
   if (field) {
     return (
       <div>
         <dt>
-          <Icon icon={icon} color={Color['orange-400']} /> <VisuallyHidden>{title}</VisuallyHidden>
+          <Icon icon={icon} color={color} /> <VisuallyHidden>{title}</VisuallyHidden>
         </dt>
         <dd>{field}</dd>
       </div>
@@ -94,10 +112,10 @@ const renderInfoIcons = (title: string, field: any | null, icon: any) => {
 };
 
 const PersonName = styled.h3`
-  color: ${Color['orange-400']};
+  color: ${({ theme }) => theme.features.profile.name.color};
   margin: 0;
   font-weight: 500;
-  font-size: ${theme.fontSize[24]};
+  font-size: ${themeSettings.fontSize[24]};
 `;
 
 const PairData = styled.dl`
@@ -107,9 +125,9 @@ const PairData = styled.dl`
     margin-right: 4rem;
   }
   dt {
-    font-size: ${theme.fontSize[12]};
+    font-size: ${themeSettings.fontSize[12]};
     font-weight: 600;
-    color: ${Color['neutral-550']};
+    color: ${({ theme }) => theme.features.profile.detail.color};
   }
   dd {
     margin-left: 0;
@@ -123,7 +141,7 @@ const ContactInfo = styled.dl`
     vertical-align: top;
     padding-bottom: 1.8rem;
     svg {
-      font-size: ${theme.fontSize[24]};
+      font-size: ${themeSettings.fontSize[24]};
     }
   }
 `;

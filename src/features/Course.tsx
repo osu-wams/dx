@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import ReactGA from 'react-ga';
 import generateId from 'uuid/v4';
@@ -17,13 +17,13 @@ import {
 import MyDialog, { MyDialogFooter } from '../ui/MyDialog';
 import { titleCase, formatTime, formatDate } from '../util/helpers';
 import { getIconByScheduleType } from './course-utils';
-import { Color } from '../theme';
 import Divider from '../ui/Divider';
 import { ICourseScheduleAttributes, IFaculty } from '../api/student/course-schedule';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
 import { courseOnCorvallisCampus } from './schedule/schedule-utils';
+import { ThemeContext } from '../theme';
 
 function isMidterm(room: string, scheduleType: string) {
   return room === 'MID' || scheduleType === 'MID';
@@ -49,77 +49,89 @@ const Course: FC<{
   attributes: { courseTitle, courseNumber, courseSubject, faculty, meetingTimes },
   isOpen,
   toggleCourse
-}) => (
-  <MyDialog isOpen={isOpen} data-testid="course-dialog" aria-labelledby="course-title">
-    {ReactGA.modalview('/academics/course-details')}
-    <CloseButton onClick={toggleCourse} />
-    <h2 id="course-title">
-      {courseSubject} {courseNumber}
-    </h2>
-    <div className="details">{titleCase(courseTitle)}</div>
-    <List>
-      {meetingTimes.map(
-        ({
-          beginDate,
-          endDate,
-          beginTime,
-          endTime,
-          room,
-          weeklySchedule,
-          building,
-          buildingDescription,
-          scheduleDescription,
-          scheduleType
-        }) =>
-          // Midterms are inconsitently added in banner, so we are not displaying them
-          !isMidterm(room, scheduleType) && (
-            <ListItem key={generateId()}>
-              <ListItemContent>
-                <Icon icon={getIconByScheduleType(scheduleType)} color={Color['orange-400']} />
-                <ListItemText>
-                  <ListItemHeader>{scheduleDescription}</ListItemHeader>
-                  <ListItemDescription>
-                    {room} {building} <br />
-                    {beginDate !== endDate
-                      ? weeklySchedule.map((day, index) => day)
-                      : formatDate(parse(beginDate), 'noYear')}{' '}
-                    {beginTime && `\u00B7 ${formatTime(beginTime)} - ${formatTime(endTime)}`}
-                  </ListItemDescription>
-                </ListItemText>
-                {courseOnCorvallisCampus(meetingTimes) &&
-                  buildingCampusMap(building, buildingDescription)}
-              </ListItemContent>
-            </ListItem>
-          )
-      )}
-    </List>
-    <Divider />
-    <List>
-      {faculty.map((fac: IFaculty, index: number) => (
-        <ListItem key={`${fac.email}-${index}`}>
-          <ListItemContent>
-            <Icon icon={faChalkboardTeacher} color={Color['neutral-600']} />
-            <ListItemText>
-              <ListItemHeader>{fac.name}</ListItemHeader>
-              <ListItemDescription>Instructor</ListItemDescription>
-            </ListItemText>
-            <a
-              href={`mailto:${fac.email}`}
-              onClick={() => Event('course', 'email professor icon clicked', fac.name)}
-            >
-              <VisuallyHidden>E-mail {fac.name}</VisuallyHidden>
-              <Icon icon={faEnvelope} />
-            </a>
-          </ListItemContent>
-        </ListItem>
-      ))}
-    </List>
-    <MyDialogFooter>
-      <ExternalLink href={Url.canvas.main} onClick={() => Event('course', 'view courses clicked')}>
-        View courses
-      </ExternalLink>
-    </MyDialogFooter>
-  </MyDialog>
-);
+}) => {
+  const themeContext = useContext(ThemeContext);
+  return (
+    <MyDialog isOpen={isOpen} data-testid="course-dialog" aria-labelledby="course-title">
+      {ReactGA.modalview('/academics/course-details')}
+      <CloseButton onClick={toggleCourse} />
+      <h2 id="course-title">
+        {courseSubject} {courseNumber}
+      </h2>
+      <div className="details">{titleCase(courseTitle)}</div>
+      <List>
+        {meetingTimes.map(
+          ({
+            beginDate,
+            endDate,
+            beginTime,
+            endTime,
+            room,
+            weeklySchedule,
+            building,
+            buildingDescription,
+            scheduleDescription,
+            scheduleType
+          }) =>
+            // Midterms are inconsitently added in banner, so we are not displaying them
+            !isMidterm(room, scheduleType) && (
+              <ListItem key={generateId()}>
+                <ListItemContent>
+                  <Icon
+                    icon={getIconByScheduleType(scheduleType)}
+                    color={themeContext.features.academics.courses.dialog.meetingTime.icon.color}
+                  />
+                  <ListItemText>
+                    <ListItemHeader>{scheduleDescription}</ListItemHeader>
+                    <ListItemDescription>
+                      {room} {building} <br />
+                      {beginDate !== endDate
+                        ? weeklySchedule.map((day, index) => day)
+                        : formatDate(parse(beginDate), 'noYear')}{' '}
+                      {beginTime && `\u00B7 ${formatTime(beginTime)} - ${formatTime(endTime)}`}
+                    </ListItemDescription>
+                  </ListItemText>
+                  {courseOnCorvallisCampus(meetingTimes) &&
+                    buildingCampusMap(building, buildingDescription)}
+                </ListItemContent>
+              </ListItem>
+            )
+        )}
+      </List>
+      <Divider />
+      <List>
+        {faculty.map((fac: IFaculty, index: number) => (
+          <ListItem key={`${fac.email}-${index}`}>
+            <ListItemContent>
+              <Icon
+                icon={faChalkboardTeacher}
+                color={themeContext.features.academics.courses.dialog.faculty.icon.color}
+              />
+              <ListItemText>
+                <ListItemHeader>{fac.name}</ListItemHeader>
+                <ListItemDescription>Instructor</ListItemDescription>
+              </ListItemText>
+              <a
+                href={`mailto:${fac.email}`}
+                onClick={() => Event('course', 'email professor icon clicked', fac.name)}
+              >
+                <VisuallyHidden>E-mail {fac.name}</VisuallyHidden>
+                <Icon icon={faEnvelope} />
+              </a>
+            </ListItemContent>
+          </ListItem>
+        ))}
+      </List>
+      <MyDialogFooter>
+        <ExternalLink
+          href={Url.canvas.main}
+          onClick={() => Event('course', 'view courses clicked')}
+        >
+          View courses
+        </ExternalLink>
+      </MyDialogFooter>
+    </MyDialog>
+  );
+};
 
 export default Course;

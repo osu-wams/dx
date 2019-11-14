@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useAnnouncements } from '../api/announcements';
 import { SecondGridWrapper } from '../ui/PageGrid';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
-import { breakpoints } from '../theme';
+import { breakpoints, styled } from '../theme';
 import { UserContext } from '../App';
 import { hasAudience } from '../api/user';
 

@@ -1,9 +1,8 @@
 import React, { useContext, FC } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components';
 import Icon from '../Icon';
 import { ICollapse } from './ICollapse';
-import { theme, Color } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { CardContext } from './Card';
 
 const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props }) => {
@@ -38,16 +37,16 @@ const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props
 const CardHeaderWrapper = styled.h2<ICollapse>`
   margin: unset;
   font-weight: normal;
-  font-size: ${theme.fontSize[16]};
+  font-size: ${themeSettings.fontSize[16]};
   height: 64px;
   width: 100%;
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit * 2}px;
   display: flex;
   align-items: center;
   cursor: ${props => (props.collapsible ? 'pointer' : 'default')};
   border: none;
-  border-bottom: ${props =>
-    props.collapsed && props.collapsible ? 'none' : `1px solid ${Color['neutral-200']}`};
+  border-bottom: ${({ collapsed, collapsible, theme }) =>
+    collapsed && collapsible ? 'none' : `1px solid ${theme.ui.card.header.borderBottom}`};
 `;
 
 export default CardHeader;

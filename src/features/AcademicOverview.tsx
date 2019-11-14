@@ -13,7 +13,6 @@ import { AcademicStanding } from './academic-overview/AcademicStanding';
 import { StudentHolds } from './academic-overview/StudentHolds';
 import { StudentGpa } from './academic-overview/StudentGpa';
 import { StudentEnrolledCredits } from './academic-overview/StudentEnrolledCredits';
-import { Color } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
@@ -41,7 +40,6 @@ export const AcademicOverview = () => {
       <CardFooter infoButtonId="academic-overview">
         <ExternalLink
           href={Url.myDegrees.main}
-          fg={Color['orange-400']}
           onClick={() => Event('academic-overview', 'See more in MyDegrees link')}
         >
           View more in MyDegrees

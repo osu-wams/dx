@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
-import { Color, theme } from '../theme';
+import { themeSettings, styled } from '../theme';
 import { useAccountTransactions } from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
@@ -13,7 +12,7 @@ import transaction from '../assets/transaction.svg';
 import { Event } from '../util/gaTracking';
 
 type ITransactionAmount = {
-  color: string;
+  transactionType: string;
 };
 
 const TransactionsTable = styled(Table)`
@@ -25,13 +24,13 @@ const TransactionAmountHeader = styled(TableHeaderCell)`
 `;
 
 const TransactionName = styled.div`
-  font-size: ${theme.fontSize[14]};
-  color: ${Color['neutral-700']};
+  font-size: ${themeSettings.fontSize[14]};
+  color: ${({ theme }) => theme.features.finances.transactions.name.color};
 `;
 
 const TransactionDetail = styled.div`
-  font-size: ${theme.fontSize[12]};
-  color: ${Color['neutral-550']};
+  font-size: ${themeSettings.fontSize[12]};
+  color: ${({ theme }) => theme.features.finances.transactions.detail.color};
   text-transform: capitalize;
 `;
 
@@ -41,8 +40,11 @@ const TransactionAmount = styled(TableCell)`
 `;
 
 const TransactionNumber = styled.div<ITransactionAmount>`
-  font-size: ${theme.fontSize[14]};
-  color: ${props => props.color};
+  font-size: ${themeSettings.fontSize[14]};
+  color: ${({ theme, transactionType }) =>
+    transactionType === 'charge'
+      ? theme.features.finances.transactions.amountCharge.color
+      : theme.features.finances.transactions.amount.color};
 `;
 
 const TransactionDetails = styled(TableCell)`
@@ -54,7 +56,8 @@ const NoItems = styled.div`
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  padding: ${theme.spacing.unit * 4}px ${theme.spacing.unit * 8}px 0px ${theme.spacing.unit * 8}px;
+  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
+    ${themeSettings.spacing.unit * 8}px;
 `;
 
 const NoItemsImage = styled.img`
@@ -62,7 +65,7 @@ const NoItemsImage = styled.img`
 `;
 
 const NoItemsText = styled.p`
-  color: ${Color['neutral-550']};
+  color: ${({ theme }) => theme.features.finances.transactions.emptyText.color};
   text-align: center;
 `;
 
@@ -103,13 +106,7 @@ const FinancialTransactions: FC = () => {
               {data.attributes.transactions.map((transaction, index: number) => (
                 <TableRow key={index}>
                   <TransactionAmount>
-                    <TransactionNumber
-                      color={
-                        transaction.transactionType === 'charge'
-                          ? Color['lava-400']
-                          : Color['pine-400']
-                      }
-                    >
+                    <TransactionNumber transactionType={transaction.transactionType}>
                       {formatDollars(transaction.amount)}
                     </TransactionNumber>
                     <TransactionDetail>{transaction.transactionType}</TransactionDetail>

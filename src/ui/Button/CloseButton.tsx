@@ -1,14 +1,14 @@
 import Button from './Button';
 import React from 'react';
-import styled from 'styled-components';
 import Icon from '../../ui/Icon';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
+import { styled } from '../../theme';
 
 const Btn = styled(Button)`
   & {
-    color: black;
-    background: transparent;
+    color: ${({ theme }) => theme.ui.button.close.color};
+    background: ${({ theme }) => theme.ui.button.close.background};
     padding: 1rem 2rem;
     font-size: 2.4rem;
   }
