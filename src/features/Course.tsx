@@ -23,7 +23,7 @@ import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
 import { courseOnCorvallisCampus } from './schedule/schedule-utils';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from '../theme';
 
 function isMidterm(room: string, scheduleType: string) {
   return room === 'MID' || scheduleType === 'MID';

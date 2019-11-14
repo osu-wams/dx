@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { ICollapse } from './ICollapse';
 import { CardContext } from './Card';
 

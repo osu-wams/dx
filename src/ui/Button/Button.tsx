@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import styled from 'styled-components';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 
 const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>`
   background-color: ${({ bg, theme }) => bg || theme.ui.button.background};

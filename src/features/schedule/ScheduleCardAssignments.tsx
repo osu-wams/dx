@@ -23,7 +23,7 @@ import {
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
 import { Event } from '../../util/gaTracking';
 import { courseCodeOrIcon } from '../Courses';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from '../../theme';
 
 const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
   const themeContext = useContext(ThemeContext);

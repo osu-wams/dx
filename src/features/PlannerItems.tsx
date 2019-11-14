@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
@@ -23,13 +22,15 @@ import { UserContext } from '../App';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { courseCodeOrIcon } from './Courses';
+import { styled, ThemeContext } from '../theme';
 
 const NoItems = styled.div`
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px ${themeSettings.spacing.unit * 8}px;
+  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
+    ${themeSettings.spacing.unit * 8}px;
 `;
 
 const NoItemsImage = styled.img`

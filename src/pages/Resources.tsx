@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { useDebounce } from 'use-debounce';
 import { CardBase } from '../ui/Card';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';

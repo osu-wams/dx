@@ -5,12 +5,11 @@ import {
   faInfoCircle,
   IconDefinition
 } from '@fortawesome/pro-light-svg-icons';
-import styled, { ThemeContext } from 'styled-components';
 import { Card, CardHeader, CardContent, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { formatDate } from '../util/helpers';
 import { useDxAlerts, useRaveAlerts, Alert } from '../api/alerts';
-import { themeSettings, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
 
 const AlertWrapper = styled.div`
   width: 100%;
@@ -23,23 +22,23 @@ const AlertWrapper = styled.div`
 const AlertCardWrapper = styled(Card)`
   width: 100%;
   max-width: ${breakpoints[1024]};
-  background-color: ${({ theme }) => theme.alert.background}
+  background-color: ${({ theme }) => theme.alert.background};
   box-shadow: none;
   margin: 0 auto;
   padding: 1rem 1.6rem !important;
 `;
 const RaveAlertCard = styled(Card)`
-  background-color: ${({ theme }) => theme.alert.rave.background}
-  color: ${({ theme }) => theme.alert.rave.color}
+  background-color: ${({ theme }) => theme.alert.rave.background};
+  color: ${({ theme }) => theme.alert.rave.color};
   border-radius: 0;
 `;
 const DxInfoAlertCard = styled(RaveAlertCard)`
-  background-color: ${({ theme }) => theme.alert.dx.info.background}
-  color: ${({ theme }) => theme.alert.dx.info.color}
+  background-color: ${({ theme }) => theme.alert.dx.info.background};
+  color: ${({ theme }) => theme.alert.dx.info.color};
 `;
 const DxWarnAlertCard = styled(RaveAlertCard)`
-  background-color: ${({ theme }) => theme.alert.dx.warn.background}
-  color: ${({ theme }) => theme.alert.dx.warn.color}
+  background-color: ${({ theme }) => theme.alert.dx.warn.background};
+  color: ${({ theme }) => theme.alert.dx.warn.color};
 `;
 const AlertHeader = styled(CardHeader)`
   border-bottom: none;

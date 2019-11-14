@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
 import { fal } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -9,6 +8,7 @@ import { IResourceResult } from '../../api/resources';
 import { Event } from '../../util/gaTracking';
 import { singularPlural } from '../../util/helpers';
 import { IconLookup } from './resources-utils';
+import { styled, ThemeContext } from '../../theme';
 
 // Setup a font awesome library to use for searching for icons from the backend.
 library.add(fal, fab);

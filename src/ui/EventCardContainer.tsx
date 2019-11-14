@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styled from 'styled-components';
 import { UserContext } from '../App';
 import { Title } from '../ui/PageTitle';
 import { useAnnouncements } from '../api/announcements';
@@ -7,7 +6,7 @@ import { useStudentExperienceEvents, useCampusEvents } from '../api/events';
 import { hasAudience, atCampus, CAMPUS_CODES } from '../api/user';
 import EventCard from './EventCard';
 import { SecondGridWrapper } from '../ui/PageGrid';
-import { themeSettings, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 
 const EventCardContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};

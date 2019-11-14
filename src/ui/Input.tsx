@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 interface IInput
   extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {

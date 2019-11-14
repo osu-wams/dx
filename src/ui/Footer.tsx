@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
 import { faMask, faUserHeadset, faCommentAltCheck } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { ToastContainer } from 'react-toastify';
@@ -7,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import '@reach/dialog/styles.css';
 import { Event } from '../util/gaTracking';
 import Button from './Button';
-import { themeSettings } from '../theme';
+import { themeSettings, styled, ThemeContext } from '../theme';
 import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
 import { isNullOrUndefined } from 'util';

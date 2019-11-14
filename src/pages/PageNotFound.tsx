@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
-import styled, { ThemeContext } from 'styled-components';
 import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import image404 from '../assets/404.svg';
 import { InternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
+import { styled, ThemeContext } from '../theme';
 
 const Content = styled.div`
   text-align: center;

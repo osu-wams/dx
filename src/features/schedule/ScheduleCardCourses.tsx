@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings } from '../../theme';
+import { themeSettings, ThemeContext } from '../../theme';
 import {
   CardSection,
   SectionHeader,
@@ -18,7 +18,6 @@ import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule
 import { Event } from '../../util/gaTracking';
 import { courseOnCorvallisCampus } from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
-import { ThemeContext } from 'styled-components';
 
 interface ScheduleCardCoursesProps {
   selectedCourses: ICourseSchedule[];
@@ -83,7 +82,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
       <List>
         {selectedCourses.length > 0 &&
           selectedCourses.map((c: ICourseSchedule) =>
-            meetingTimeListItems(c, themeContext.features.academics.courses.list.title)
+            meetingTimeListItems(c, themeContext.features.academics.courses.list.title.color)
           )}
         {selectedCourses.length === 0 && (
           <NoItems as="li">

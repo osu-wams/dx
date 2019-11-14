@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { themeSettings, breakpoints } from '../../theme';
+import { themeSettings, breakpoints, styled } from '../../theme';
 
 interface IBadge {
   fg?: string;

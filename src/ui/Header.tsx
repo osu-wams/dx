@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Link } from '@reach/router';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faUser, faSignOut } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -11,7 +10,7 @@ import ecampusLogo from '../assets/osu-ecampus.svg';
 import cascadesLogo from '../assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
-import { themeSettings, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 import { Event } from '../util/gaTracking';
 import { IUser } from '../api/user';
 import { UserContext } from '../App';

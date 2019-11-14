@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import Url from '../../util/externalUrls.data';
 import { Event } from '../../util/gaTracking';

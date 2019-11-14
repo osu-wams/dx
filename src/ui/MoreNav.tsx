@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { usePopoverState, Popover as PO, PopoverDisclosure as PD } from 'reakit/Popover';
 import { Link } from '@reach/router';
 import {
@@ -10,7 +9,7 @@ import {
   faCommentAltCheck,
   faArrowAltSquareLeft
 } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 import Icon from './Icon';
 import { Event } from '../util/gaTracking';
 import Url from '../util/externalUrls.data';

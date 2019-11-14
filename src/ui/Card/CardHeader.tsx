@@ -1,9 +1,8 @@
 import React, { useContext, FC } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components';
 import Icon from '../Icon';
 import { ICollapse } from './ICollapse';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { CardContext } from './Card';
 
 const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props }) => {

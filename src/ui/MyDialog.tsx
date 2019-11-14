@@ -1,6 +1,5 @@
-import styled from 'styled-components';
 import { Dialog } from '@reach/dialog';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 const MyDialog = styled(Dialog)`
   border-radius: ${themeSettings.borderRadius[16]};

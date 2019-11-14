@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
-import styled, { ThemeContext } from 'styled-components';
 import { format } from 'date-fns';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { themeSettings, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
 import Button from './Button';
 import { Event } from '../util/gaTracking';
 

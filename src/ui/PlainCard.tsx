@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { Card, CardContent, CardFooter } from '../ui/Card';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 const Header = styled.h2`
   color: ${({ theme }) => theme.ui.plainCard.header.color};

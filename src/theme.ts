@@ -1,4 +1,4 @@
-import baseStyled, { ThemedStyledInterface } from 'styled-components';
+import baseStyled, { ThemedStyledInterface, ThemeContext as TS } from 'styled-components';
 
 export enum Color {
   'transparent' = 'transparent',
@@ -583,4 +583,5 @@ export interface ThemeConfiguration {
   };
 }
 
+export const ThemeContext = TS as React.Context<ThemeConfiguration>;
 export const styled = baseStyled as ThemedStyledInterface<ThemeConfiguration>;

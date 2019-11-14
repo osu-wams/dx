@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';

@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled, { ThemeContext } from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
 import { useGrades } from '../../api/student';
-import { themeSettings, breakpoints } from '../../theme';
+import { themeSettings, breakpoints, styled, ThemeContext } from '../../theme';
 import Input from '../../ui/Input';
 import Icon from '../../ui/Icon';
 import PageTitle from '../../ui/PageTitle';

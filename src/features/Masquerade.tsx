@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { Event } from '../util/gaTracking';
 import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 import * as cache from '../util/cache';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from '../theme';
 
 interface MasqueradeProps {
   showMasqueradeDialog: boolean;
@@ -154,8 +154,8 @@ export const Masquerade = (props: MasqueradeProps) => {
         {masqueradeText()}
       </Button>
       <Button
-        bg={themeContext.features.masquerade.buttonDark.background}
-        fg={themeContext.features.masquerade.buttonDark.color}
+        bg={themeContext.features.masquerade.buttonAlt.background}
+        fg={themeContext.features.masquerade.buttonAlt.color}
         onClick={toggleMasqueradeDialog}
       >
         Cancel

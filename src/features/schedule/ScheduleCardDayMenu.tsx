@@ -1,6 +1,5 @@
 import React from 'react';
 import { format, isSameDay } from 'date-fns';
-// import styled from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { themeSettings, styled } from '../../theme';
 import { Event } from '../../util/gaTracking';

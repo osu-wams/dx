@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faEnvelope, faMapMarkerAlt, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import Skeleton from 'react-loading-skeleton';
@@ -10,6 +9,7 @@ import { usePerson } from '../../api/persons/persons';
 import { useMailingAddress } from '../../api/persons/addresses';
 import PlainCard from '../../ui/PlainCard';
 import { AppContext } from '../../App';
+import { styled, ThemeContext } from '../../theme';
 
 const OSUProfile = () => {
   const themeContext = useContext(ThemeContext);

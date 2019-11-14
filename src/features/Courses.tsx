@@ -16,14 +16,13 @@ import {
 import Course from '../features/Course';
 import Icon from '../ui/Icon';
 import { titleCase, singularPlural } from '../util/helpers';
-import { themeSettings } from '../theme';
+import { themeSettings, ThemeContext } from '../theme';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { ICourseSchedule, IMeetingTime } from '../api/student/course-schedule';
 import { Event } from '../util/gaTracking';
 import { courseOnCorvallisCampus } from './schedule/schedule-utils';
 import { matchedCourseContext } from './course-utils';
-import { ThemeContext } from 'styled-components';
 
 /**
  * Get the course item lead text or the icon

@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { themeSettings, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 /* Page Grid
  * Single column for mobile. 2 column for Desktop
  * Provides row-span and col-span classes to modify width or height of children elements

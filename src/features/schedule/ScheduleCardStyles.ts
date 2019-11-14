@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { CardBase } from '../../ui/Card';
 
 const CardSection = styled.div`

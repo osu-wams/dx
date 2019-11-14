@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 const Date = styled.div`
   margin: 0 auto;

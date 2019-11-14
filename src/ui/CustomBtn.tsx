@@ -1,6 +1,5 @@
 import React, { FC, InputHTMLAttributes } from 'react';
-import styled from 'styled-components';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 interface BtnProps {
   text: string;

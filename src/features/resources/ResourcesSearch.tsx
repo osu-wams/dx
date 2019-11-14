@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../../ui/Icon';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { Event } from '../../util/gaTracking';
 
 const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }) => {

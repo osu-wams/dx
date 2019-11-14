@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { themeSettings } from '../theme';
+import { css } from 'styled-components';
+import { themeSettings, styled } from '../theme';
 import { CardBase } from '../ui/Card';
 
 const HighlightsCard = styled(CardBase)`

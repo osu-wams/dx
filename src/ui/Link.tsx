@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
 import { Link } from '@reach/router';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { themeSettings } from '../theme';
+import { themeSettings, styled, ThemeContext } from '../theme';
 
 const LinkStyles = styled.a<StyleProps>`
   :hover,

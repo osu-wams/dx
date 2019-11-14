@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 type SpacedList = {
   spaced?: boolean;

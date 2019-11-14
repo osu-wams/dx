@@ -1,13 +1,12 @@
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
 import {
   Highlight,
   HighlightTitle,
   HighlightEmphasisInline,
   HighlightDescription
 } from '../../ui/Highlights';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { useAccountHolds } from '../../api/student';
 
 const HoldsList = styled.ul`

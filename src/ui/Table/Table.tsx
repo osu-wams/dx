@@ -1,6 +1,5 @@
-import styled from 'styled-components';
 import styledMap from 'styled-map';
-import { themeSettings } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 
 interface ITable {
   striped?: boolean;

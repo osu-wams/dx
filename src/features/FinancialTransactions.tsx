@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 import { useAccountTransactions } from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
@@ -57,7 +56,8 @@ const NoItems = styled.div`
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px ${themeSettings.spacing.unit * 8}px;
+  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
+    ${themeSettings.spacing.unit * 8}px;
 `;
 
 const NoItemsImage = styled.img`

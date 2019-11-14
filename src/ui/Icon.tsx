@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { themeSettings } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 type IconProps = {
   bg?: string;

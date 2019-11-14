@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import Helmet from 'react-helmet';
-import { themeSettings, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 import { Event, IComponents } from '../util/gaTracking';
 
 type Props = {
