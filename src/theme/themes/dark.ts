@@ -474,6 +474,7 @@ export const dark: ThemeConfiguration = {
       }
     },
     myDialog: {
+      background: componentBackground,
       h2: {
         color: primary
       },

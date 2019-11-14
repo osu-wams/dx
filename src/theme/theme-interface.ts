@@ -444,6 +444,7 @@ export interface ThemeConfiguration {
       };
     };
     myDialog: {
+      background: string;
       h2: {
         color: string;
       };

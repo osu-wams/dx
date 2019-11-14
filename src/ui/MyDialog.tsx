@@ -2,6 +2,7 @@ import { Dialog } from '@reach/dialog';
 import { themeSettings, styled } from '../theme';
 
 const MyDialog = styled(Dialog)`
+  background: ${({ theme }) => theme.ui.myDialog.background};
   border-radius: ${themeSettings.borderRadius[16]};
   .closeButton {
     float: right;
@@ -27,9 +28,10 @@ const MyDialog = styled(Dialog)`
   }
   @media screen and (max-width: 767px) {
     &[data-reach-dialog-content] {
-      width: 92%;
-      margin: 2rem auto;
+      width: 100%;
+      margin: 0;
       padding-top: 0.5rem;
+      border-radius: 0;
     }
   }
   @media (min-width: 768px) {
