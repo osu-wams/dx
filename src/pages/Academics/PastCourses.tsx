@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled, { ThemeContext } from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
 import { useGrades } from '../../api/student';
-import { theme, breakpoints } from '../../theme';
+import { themeSettings, breakpoints, styled, ThemeContext } from '../../theme';
 import Input from '../../ui/Input';
 import Icon from '../../ui/Icon';
 import PageTitle from '../../ui/PageTitle';
@@ -147,7 +146,7 @@ const HistoryCard = styled(Card)`
 `;
 
 const Grade = styled.span`
-  font-size: ${theme.fontSize[24]};
+  font-size: ${themeSettings.fontSize[24]};
   color: ${({ theme }) => theme.features.academics.pastCourses.grade.color};
   display: block;
   text-align: center;
@@ -157,7 +156,7 @@ const CourseTitle = styled.span`
   color: ${({ theme }) => theme.features.academics.pastCourses.title.color};
 `;
 const CourseData = styled.div`
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
 `;
 
 const SearchWrapper = styled.div`
@@ -166,14 +165,14 @@ const SearchWrapper = styled.div`
     position: absolute;
     top: 2rem;
     right: 1.6rem;
-    font-size: ${theme.fontSize[24]};
+    font-size: ${themeSettings.fontSize[24]};
   }
   margin-bottom: 2rem;
 `;
 const FilterInput = styled(Input)`
   width: 100%;
   padding: 1.6rem;
-  font-size: ${theme.fontSize[24]};
+  font-size: ${themeSettings.fontSize[24]};
 `;
 
 const HistoryGrid = styled.div`
@@ -182,13 +181,13 @@ const HistoryGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: ${theme.spacing.mobile};
+  grid-row-gap: ${themeSettings.spacing.mobile};
   grid-auto-rows: minmax(min-content, max-content);
   & > div {
     height: min-content;
   }
   @media screen and (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: ${theme.spacing.desktop};
+    grid-gap: ${themeSettings.spacing.desktop};
   }
 `;

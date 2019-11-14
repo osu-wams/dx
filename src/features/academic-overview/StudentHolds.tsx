@@ -1,20 +1,19 @@
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
 import {
   Highlight,
   HighlightTitle,
   HighlightEmphasisInline,
   HighlightDescription
 } from '../../ui/Highlights';
-import { theme } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { useAccountHolds } from '../../api/student';
 
 const HoldsList = styled.ul`
   margin: 0;
   padding: 0 0 0 20px;
   > li {
-    font-size: ${theme.fontSize[12]};
+    font-size: ${themeSettings.fontSize[12]};
   }
 `;
 

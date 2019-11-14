@@ -1,13 +1,12 @@
 /* eslint-disable */
 import React from 'react';
-import styled from 'styled-components';
-import { theme } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 
 const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>`
   background-color: ${({ bg, theme }) => bg || theme.ui.button.background};
   color: ${({ fg, theme }) => fg || theme.ui.button.color};
   & + & {
-    margin-left: ${theme.spacing.unit}px;
+    margin-left: ${themeSettings.spacing.unit}px;
   }
   border: none;
   border-radius: 0.4rem;
@@ -28,11 +27,11 @@ function btnSizes(value?: IBtnSizes) {
   let fontSize = '';
   if (value === 'small') {
     padding = '.2rem .3rem;';
-    fontSize = theme.fontSize[14];
+    fontSize = themeSettings.fontSize[14];
   }
   if (value === 'large') {
     padding = '1rem 1.8rem;';
-    fontSize = theme.fontSize[18] + ';';
+    fontSize = themeSettings.fontSize[18] + ';';
   }
   if (fontSize) {
     fontSize = 'font-size: ' + fontSize + ';';

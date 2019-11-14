@@ -10,7 +10,7 @@ import {
 } from '../../ui/Highlights';
 import { ExternalLink } from '../../ui/Link';
 import { Event } from '../../util/gaTracking';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from '../../theme';
 
 export const MealPlans = props => {
   const themeContext = useContext(ThemeContext);

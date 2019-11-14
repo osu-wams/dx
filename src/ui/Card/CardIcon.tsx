@@ -1,7 +1,6 @@
 import React, { FC, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
 import { IconDefinition } from '@fortawesome/pro-light-svg-icons';
-import { theme } from '../../theme';
+import { themeSettings, styled, ThemeContext } from '../../theme';
 import Icon from '../Icon';
 
 const CardIcon: FC<{ icon: IconDefinition; count?: number }> = ({ icon, count }) => {
@@ -19,7 +18,7 @@ const CardIconWrapper = styled.div`
 `;
 
 const CardIconBase = styled(Icon)`
-  font-size: ${theme.fontSize[24]};
+  font-size: ${themeSettings.fontSize[24]};
 `;
 
 export default CardIcon;

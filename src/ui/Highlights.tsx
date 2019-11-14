@@ -1,9 +1,9 @@
-import styled, { css } from 'styled-components';
-import { theme } from '../theme';
+import { css } from 'styled-components';
+import { themeSettings, styled } from '../theme';
 import { CardBase } from '../ui/Card';
 
 const HighlightsCard = styled(CardBase)`
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit * 2}px;
   flex-direction: row;
   padding: 0;
   > div {
@@ -27,7 +27,7 @@ const Highlight = styled.div<IHighlight>`
 `;
 
 const HighlightTitle = styled.h2<{ marginTop?: number }>`
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
   color: ${({ theme }) => theme.ui.highlights.title.color};
   font-weight: 600;
   margin-bottom: 0;
@@ -47,12 +47,12 @@ const HighlightEmphasisInline = styled.em<{ color?: string }>`
 
 const HighlightEmphasis = styled.div<{ color?: string }>`
   color: ${props => props.color || props.theme.ui.highlights.emphasis.color};
-  font-size: ${theme.fontSize[24]};
+  font-size: ${themeSettings.fontSize[24]};
   padding: 0 1.6rem;
 `;
 
 const HighlightDescription = styled.div`
-  font-size: ${theme.fontSize[12]};
+  font-size: ${themeSettings.fontSize[12]};
   color: ${({ theme }) => theme.ui.highlights.description.color};
   padding: 0 1.6rem;
 `;

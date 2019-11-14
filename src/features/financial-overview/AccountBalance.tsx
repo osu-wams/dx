@@ -12,7 +12,7 @@ import { ExternalLink } from '../../ui/Link';
 import Url from '../../util/externalUrls.data';
 import { Event } from '../../util/gaTracking';
 import { isNullOrUndefined } from 'util';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from '../../theme';
 
 /**
  * Sub card for the Financial Overview card.

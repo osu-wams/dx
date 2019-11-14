@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from '../theme';
 
 const Label = styled.label`
   color: ${({ theme }) => theme.ui.label.color};

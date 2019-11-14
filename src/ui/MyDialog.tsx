@@ -1,28 +1,27 @@
-import styled from 'styled-components';
 import { Dialog } from '@reach/dialog';
-import { theme } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 const MyDialog = styled(Dialog)`
-  border-radius: ${theme.borderRadius[16]};
+  border-radius: ${themeSettings.borderRadius[16]};
   .closeButton {
     float: right;
     margin-right: -2rem;
   }
   h2 {
     color: ${({ color, theme }) => color || theme.ui.myDialog.h2.color};
-    font-size: ${theme.fontSize[24]};
+    font-size: ${themeSettings.fontSize[24]};
     font-weight: 500;
     margin-bottom: 0;
     margin-top: 0.5rem;
   }
   h3 {
-    font-size: ${theme.fontSize[16]};
+    font-size: ${themeSettings.fontSize[16]};
     color: ${({ theme }) => theme.ui.myDialog.h3.color};
     margin-bottom: 0.5rem;
   }
   .details {
     color: ${({ theme }) => theme.ui.myDialog.details.color};
-    font-size: ${theme.fontSize[14]};
+    font-size: ${themeSettings.fontSize[14]};
     margin-top: -1rem;
     margin-bottom: 2rem;
   }

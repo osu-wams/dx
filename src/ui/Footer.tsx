@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
 import { faMask, faUserHeadset, faCommentAltCheck } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { ToastContainer } from 'react-toastify';
@@ -7,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import '@reach/dialog/styles.css';
 import { Event } from '../util/gaTracking';
 import Button from './Button';
-import { theme } from '../theme';
+import { themeSettings, styled, ThemeContext } from '../theme';
 import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
 import { isNullOrUndefined } from 'util';
@@ -42,7 +41,7 @@ const FooterWrapper = styled.div`
 `;
 
 const FooterContent = styled.div`
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
 `;
 
 const FooterButtonWrapper = styled.div`
@@ -53,9 +52,9 @@ const FooterIconLink = styled.a`
   border: 1px solid ${({ theme }) => theme.footer.iconLink.border};
   display: inline-block;
   color: ${({ theme }) => theme.footer.iconLink.color};
-  border-radius: ${theme.borderRadius[8]};
+  border-radius: ${themeSettings.borderRadius[8]};
   padding: 1.2rem;
-  font-size: ${theme.fontSize[16]};
+  font-size: ${themeSettings.fontSize[16]};
   text-decoration: none;
   svg {
     margin-bottom: 1rem;

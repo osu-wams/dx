@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { IconDefinition, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fal } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../../ui/Icon';
@@ -8,6 +7,7 @@ import canvasLogo from '../../assets/logo-canvas.png';
 import gDrive from '../../assets/logo-drive.png';
 import gMail from '../../assets/logo-gmail.png';
 import zoom from '../../assets/logo-zoom.png';
+import { styled } from '../../theme';
 
 /**
  * Evaluates icons and displays fontawsome icon or explicit png

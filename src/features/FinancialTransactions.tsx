@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { formatDate, formatDollars } from '../util/helpers';
-import { theme } from '../theme';
+import { themeSettings, styled } from '../theme';
 import { useAccountTransactions } from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
@@ -25,12 +24,12 @@ const TransactionAmountHeader = styled(TableHeaderCell)`
 `;
 
 const TransactionName = styled.div`
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
   color: ${({ theme }) => theme.features.finances.transactions.name.color};
 `;
 
 const TransactionDetail = styled.div`
-  font-size: ${theme.fontSize[12]};
+  font-size: ${themeSettings.fontSize[12]};
   color: ${({ theme }) => theme.features.finances.transactions.detail.color};
   text-transform: capitalize;
 `;
@@ -41,7 +40,7 @@ const TransactionAmount = styled(TableCell)`
 `;
 
 const TransactionNumber = styled.div<ITransactionAmount>`
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
   color: ${({ theme, transactionType }) =>
     transactionType === 'charge'
       ? theme.features.finances.transactions.amountCharge.color
@@ -57,7 +56,8 @@ const NoItems = styled.div`
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  padding: ${theme.spacing.unit * 4}px ${theme.spacing.unit * 8}px 0px ${theme.spacing.unit * 8}px;
+  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
+    ${themeSettings.spacing.unit * 8}px;
 `;
 
 const NoItemsImage = styled.img`

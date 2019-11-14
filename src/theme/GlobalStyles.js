@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import { theme } from './theme';
-import Stratum from './assets/Stratum2WebRegular.woff2';
+import { themeSettings } from './';
+import Stratum from '../assets/Stratum2WebRegular.woff2';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-size: ${theme.fontSize[16]};
+    font-size: ${themeSettings.fontSize[16]};
     line-height: 1.5;
     color: ${({ theme }) => theme.body.color};
   }

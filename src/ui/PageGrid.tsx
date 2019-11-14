@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 
 const PageGridWrapper = styled.div`
   background-color: ${({ theme }) => theme.mainGrid.background};
@@ -14,9 +13,9 @@ const PageGridWrapper = styled.div`
 const MainGridWrapper = styled.div`
   border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
   background-color: ${({ theme }) => theme.mainGrid.background};
-  padding: 1rem ${theme.spacing.mobile} 2rem;
+  padding: 1rem ${themeSettings.spacing.mobile} 2rem;
   @media (min-width: ${breakpoints[768]}) {
-    padding: ${theme.spacing.desktop};
+    padding: ${themeSettings.spacing.desktop};
   }
 `;
 const MainGrid = styled.div`
@@ -27,7 +26,7 @@ const MainGrid = styled.div`
   grid-template-columns: 1fr;
   @media (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: ${theme.spacing.desktop};
+    grid-column-gap: ${themeSettings.spacing.desktop};
   }
 `;
 
@@ -45,9 +44,9 @@ const MainGridCol = styled.div`
 const SecondGridWrapper = styled.div`
   background-color: ${({ theme }) => theme.secondGrid.background};
   border-top: 1px solid ${({ theme }) => theme.secondGrid.borderTop};
-  padding: 2rem ${theme.spacing.mobile};
+  padding: 2rem ${themeSettings.spacing.mobile};
   @media (min-width: ${breakpoints[768]}) {
-    padding: 4rem ${theme.spacing.desktop};
+    padding: 4rem ${themeSettings.spacing.desktop};
   }
 `;
 

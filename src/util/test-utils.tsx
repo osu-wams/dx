@@ -4,7 +4,7 @@ import { render as testingLibraryRender } from '@testing-library/react';
 
 import { UserContext, AppContext, IAppContext } from '../App';
 import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
-import { themesLookup, defaultTheme } from '../themes';
+import { themesLookup, defaultTheme } from '../theme/themes';
 
 export const authUserClassification: IUserClassification = {
   id: '123',

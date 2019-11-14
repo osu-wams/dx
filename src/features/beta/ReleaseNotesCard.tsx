@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
-import { theme } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 
 const BetaReleaseNotes: FC = () => {
   return (
@@ -20,7 +19,7 @@ const BetaReleaseNotes: FC = () => {
 
 const ReleaseTitle = styled.h3`
   color: ${({ theme }) => theme.features.beta.releaseNotes.title.color};
-  font-size: ${theme.fontSize['18']};
+  font-size: ${themeSettings.fontSize['18']};
   font-weight: normal;
   margin: 0px;
 `;
@@ -28,7 +27,7 @@ const ReleaseTitle = styled.h3`
 const ReleaseSubtitle = styled.p`
   margin: 0px;
   color: ${({ theme }) => theme.features.beta.releaseNotes.subTitle.color};
-  font-size: ${theme.fontSize['14']};
+  font-size: ${themeSettings.fontSize['14']};
   font-weight: 600;
   line-height: 19px;
 `;

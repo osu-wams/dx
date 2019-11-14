@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { usePopoverState, Popover as PO, PopoverDisclosure as PD } from 'reakit/Popover';
 import { Link } from '@reach/router';
 import {
@@ -10,7 +9,7 @@ import {
   faCommentAltCheck,
   faArrowAltSquareLeft
 } from '@fortawesome/pro-light-svg-icons';
-import { theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 import Icon from './Icon';
 import { Event } from '../util/gaTracking';
 import Url from '../util/externalUrls.data';
@@ -43,7 +42,7 @@ const PopoverDisclosure = styled(PD)`
 `;
 
 const Popover = styled(PO)`
-  border-radius: ${theme.borderRadius[8]};
+  border-radius: ${themeSettings.borderRadius[8]};
   background-color: ${({ theme }) => theme.header.mainNavList.popOver.background};
   width: 94%;
   top: 5rem !important;
@@ -81,7 +80,7 @@ const SecondaryNav = styled.div`
 const NavContent = styled.div`
   p {
     margin-top: 0;
-    font-size: ${theme.fontSize[14]};
+    font-size: ${themeSettings.fontSize[14]};
     line-height: 1.8rem;
     color: ${({ theme }) => theme.header.mainNavList.popOver.primaryNav.color};
   }

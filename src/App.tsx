@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Router, Location, RouteComponentProps } from '@reach/router';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import ReactGA from 'react-ga';
-import GlobalStyles from './GlobalStyles';
 import Header from './ui/Header';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
@@ -17,7 +16,8 @@ import Footer from './ui/Footer';
 import { useInfoButtons, InfoButtonState } from './api/info-buttons';
 import { useUser } from './api/user';
 import { useAppVersions, AppVersions } from './api/app-versions';
-import { themesLookup, defaultTheme } from './themes';
+import { themesLookup, defaultTheme } from './theme/themes';
+import { styled, GlobalStyles } from './theme';
 
 const ContentWrapper = styled.div`
   display: flex;

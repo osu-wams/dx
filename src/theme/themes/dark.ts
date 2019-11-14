@@ -1,15 +1,14 @@
-import { ThemeConfiguration, Color, shadows, gradients } from '../theme';
+import { ThemeConfiguration, Color, shadows, gradients } from '..';
 
-const neutral100 = Color['neutral-100'];
-const neutral200 = Color['neutral-200'];
-const neutral300 = Color['neutral-300'];
-const neutral400 = Color['neutral-400'];
-const neutral500 = Color['neutral-500'];
-const neutral550 = Color['neutral-550'];
-const neutral600 = Color['neutral-600'];
-const neutral700 = Color['neutral-700'];
-const neutral800 = Color['neutral-800'];
-const neutral900 = Color['neutral-900'];
+const neutral100 = Color['neutral-900'];
+const neutral200 = Color['neutral-800'];
+const neutral300 = Color['neutral-700'];
+const neutral400 = Color['neutral-600'];
+const neutral500 = Color['neutral-550'];
+const neutral550 = Color['neutral-500'];
+const neutral600 = Color['neutral-400'];
+const neutral700 = Color['neutral-300'];
+const neutral800 = Color['neutral-200'];
 
 const bodyText = neutral700;
 const bodyBackground = neutral200;
@@ -22,7 +21,7 @@ const mainGridBackground = neutral100;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
 const secondGridBorderTop = neutral300;
-const componentBackground = Color.white;
+const componentBackground = neutral300;
 const linkForeground = Color.white;
 const iconPrimary = Color.white;
 const iconSecondary = Color.black;
@@ -31,7 +30,7 @@ const buttonSecondary = Color.black;
 const titlePrimary = Color.white;
 const titleSecondary = Color.black;
 
-export const light: ThemeConfiguration = {
+export const dark: ThemeConfiguration = {
   body: {
     color: bodyText,
     background: bodyBackground
@@ -168,30 +167,28 @@ export const light: ThemeConfiguration = {
         },
         dayList: {
           borderBottom: neutral200,
-          item: {
-            childInFocus: {
-              borderBottom: neutral300
-            },
-            childInFocusSelected: {
-              borderBottom: primary
-            },
-            firstChild: {
-              color: primary
-            },
-            evenChildren: {
-              color: neutral550
-            },
-            evenChildrenSelected: {
-              color: primary
-            },
-            lastChild: {
-              color: neutral700,
-              borderBottom: Color.transparent
-            },
-            lastChildSelected: {
-              color: primary,
-              borderBottom: primary
-            }
+          dayInFocus: {
+            borderBottom: neutral300
+          },
+          daySelected: {
+            borderBottom: primary
+          },
+          dayIndicator: {
+            color: primary
+          },
+          dayOfWeek: {
+            color: neutral550
+          },
+          dayOfWeekSelected: {
+            color: primary
+          },
+          dayOfMonth: {
+            color: neutral700,
+            borderBottom: Color.transparent
+          },
+          dayOfMonthSelected: {
+            color: primary,
+            borderBottom: primary
           }
         },
         dialog: {
@@ -293,7 +290,7 @@ export const light: ThemeConfiguration = {
       }
     },
     masquerade: {
-      buttonDark: {
+      buttonAlt: {
         color: neutral700,
         background: neutral200
       }
@@ -531,4 +528,4 @@ export const light: ThemeConfiguration = {
   }
 };
 
-export default light;
+export default dark;

@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { useDebounce } from 'use-debounce';
 import { CardBase } from '../ui/Card';
-import { theme } from '../theme';
+import { themeSettings, styled } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
@@ -179,7 +178,7 @@ const getInitialCategory = () => {
 };
 
 const ResourcesWrapper = styled(CardBase)`
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit * 2}px;
 `;
 
 export default Resources;

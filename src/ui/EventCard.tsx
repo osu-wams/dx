@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
-import styled, { ThemeContext } from 'styled-components';
 import { format } from 'date-fns';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
 import Button from './Button';
 import { Event } from '../util/gaTracking';
 
@@ -18,23 +17,23 @@ const ButtonWithIcon = styled(Button).attrs({
     text-decoration: none;
   }
   & > svg {
-    margin-left: ${theme.spacing.unit * 2}px;
+    margin-left: ${themeSettings.spacing.unit * 2}px;
   }
   align-self: flex-start;
 `;
 
 const EventCardTitle = styled.div`
   & > svg {
-    margin-left: ${theme.spacing.unit * 2}px;
+    margin-left: ${themeSettings.spacing.unit * 2}px;
   }
   color: ${({ theme }) => theme.ui.eventCard.title.color};
-  font-size: ${theme.fontSize['18']};
+  font-size: ${themeSettings.fontSize['18']};
   font-weight: 600;
 `;
 
 const EventCardLargeTitle = styled.div`
   color: ${({ theme }) => theme.ui.eventCard.largeTitle.color};
-  font-size: ${theme.fontSize['24']};
+  font-size: ${themeSettings.fontSize['24']};
   font-weight: 300;
   text-align: center;
 `;
@@ -56,15 +55,15 @@ const EventCardDateStyling = styled.div`
   & > span:first-child {
     color: ${({ theme }) => theme.ui.eventCard.date.firstChild.color};
     font-weight: bold;
-    font-size: ${theme.fontSize[12]};
+    font-size: ${themeSettings.fontSize[12]};
     text-transform: uppercase;
-    margin-bottom: ${theme.spacing.unit * 0.5}px;
+    margin-bottom: ${themeSettings.spacing.unit * 0.5}px;
   }
 
   & > span:last-child {
     color: ${({ theme }) => theme.ui.eventCard.date.lastChild.color};
     line-height: 20px;
-    font-size: ${theme.fontSize[24]};
+    font-size: ${themeSettings.fontSize[24]};
   }
 `;
 
@@ -78,15 +77,15 @@ const EventCardDate = ({ month, day }) => {
 };
 
 const EventCardText = styled.div`
-  font-size: ${theme.fontSize['16']};
-  margin-bottom: ${theme.spacing.unit * 2}px;
+  font-size: ${themeSettings.fontSize['16']};
+  margin-bottom: ${themeSettings.spacing.unit * 2}px;
   flex-grow: 2;
 `;
 
 const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   color: ${({ theme }) => theme.ui.eventCard.color};
   background-color: ${({ theme }) => theme.ui.eventCard.background};
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit * 2}px;
   min-height: 220px;
   display: flex;
   flex-direction: column;

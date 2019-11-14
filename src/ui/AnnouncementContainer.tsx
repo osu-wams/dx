@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useAnnouncements } from '../api/announcements';
 import { SecondGridWrapper } from '../ui/PageGrid';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
 import { UserContext } from '../App';
 import { hasAudience } from '../api/user';
-import { theme, breakpoints } from '../theme';
+import { styled, themeSettings, breakpoints } from '../theme';
 
 const AnnouncementContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
@@ -14,10 +13,10 @@ const AnnouncementContainerWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: ${theme.spacing.mobile};
+  grid-row-gap: ${themeSettings.spacing.mobile};
   @media screen and (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: ${theme.spacing.desktop};
+    grid-gap: ${themeSettings.spacing.desktop};
   }
 `;
 

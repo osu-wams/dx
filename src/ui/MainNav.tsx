@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from '@reach/router';
-import styled from 'styled-components';
 import { faHome, faGraduationCap, faHandsUsd } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
 import { Event } from '../util/gaTracking';
 import { MoreNav } from './MoreNav';
+import { styled } from '../theme';
 
 const Nav = styled.nav`
   display: flex;

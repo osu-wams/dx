@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { Event } from '../util/gaTracking';
 import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 import * as cache from '../util/cache';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from '../theme';
 
 interface MasqueradeProps {
   showMasqueradeDialog: boolean;
@@ -95,6 +95,7 @@ export const Masquerade = (props: MasqueradeProps) => {
    * usage as themselves.
    */
   const masqueradeText = () => {
+    console.log(masqueradeId);
     if (masqueradeId === '') {
       return 'Remove Masquerade';
     } else {
@@ -142,9 +143,9 @@ export const Masquerade = (props: MasqueradeProps) => {
         type="submit"
         disabled={masqueradeDisabled()}
         bg={
-          masqueradeDisabled() ? themeContext.features.masquerade.buttonDark.background : undefined
+          masqueradeDisabled() ? themeContext.features.masquerade.buttonAlt.background : undefined
         }
-        fg={masqueradeDisabled() ? themeContext.features.masquerade.buttonDark.color : undefined}
+        fg={masqueradeDisabled() ? themeContext.features.masquerade.buttonAlt.color : undefined}
         onClick={() => {
           Event('footer', 'masquerade', 'submit form to masquerade');
           performMasquerade();
@@ -153,8 +154,8 @@ export const Masquerade = (props: MasqueradeProps) => {
         {masqueradeText()}
       </Button>
       <Button
-        bg={themeContext.features.masquerade.buttonDark.background}
-        fg={themeContext.features.masquerade.buttonDark.color}
+        bg={themeContext.features.masquerade.buttonAlt.background}
+        fg={themeContext.features.masquerade.buttonAlt.color}
         onClick={toggleMasqueradeDialog}
       >
         Cancel

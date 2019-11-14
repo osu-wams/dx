@@ -10,7 +10,7 @@ import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Ca
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
 import Url from '../../util/externalUrls.data';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from '../../theme';
 
 const BetaResources: FC = () => {
   const themeContext = useContext(ThemeContext);
