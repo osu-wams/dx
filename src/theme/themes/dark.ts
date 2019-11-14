@@ -1,4 +1,4 @@
-import { ThemeConfiguration, Color, shadows, gradients } from '../theme';
+import { ThemeConfiguration, Color, shadows, gradients } from '..';
 
 const neutral100 = Color['neutral-900'];
 const neutral200 = Color['neutral-800'];

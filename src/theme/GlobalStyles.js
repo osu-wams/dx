@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import { themeSettings } from './theme';
-import Stratum from './assets/Stratum2WebRegular.woff2';
+import { themeSettings } from './';
+import Stratum from '../assets/Stratum2WebRegular.woff2';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
