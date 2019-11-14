@@ -5,11 +5,11 @@ import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import FinancialTransactions from '../features/FinancialTransactions';
 import FinancialOverview from '../features/financial-overview/FinancialOverview';
-import { MainGridWrapper, MainGrid, MainGridCol, PageGridWrapper } from '../ui/PageGrid';
+import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 
 const Finances = () => {
   return (
-    <PageGridWrapper>
+    <>
       <MainGridWrapper data-testid="finances-page">
         <PageTitle title="Finances" />
         <MainGrid>
@@ -23,7 +23,7 @@ const Finances = () => {
         </MainGrid>
       </MainGridWrapper>
       <AnnouncementContainer data-testid="finances-announcements" page="finances" />
-    </PageGridWrapper>
+    </>
   );
 };
 

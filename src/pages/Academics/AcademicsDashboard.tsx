@@ -2,7 +2,7 @@ import React from 'react';
 import { faGraduationCap } from '@fortawesome/pro-light-svg-icons';
 import Courses from '../../features/Courses';
 import AnnouncementContainer from '../../ui/AnnouncementContainer';
-import { MainGridWrapper, MainGrid, MainGridCol, PageGridWrapper } from '../../ui/PageGrid';
+import { MainGridWrapper, MainGrid, MainGridCol } from '../../ui/PageGrid';
 import PlannerItems from '../../features/PlannerItems';
 import AcademicCalendar from '../../features/AcademicCalendar';
 import PageTitle from '../../ui/PageTitle';
@@ -12,11 +12,11 @@ import { AcademicSubNav } from './AcademicsSubNav';
 
 const AcademicsDashboard = () => {
   return (
-    <PageGridWrapper>
-      <MainGridWrapper>
+    <>
+      <MainGridWrapper data-testid="academics-dashboard">
         <PageTitle title="Academics" />
         <AcademicSubNav />
-        <MainGrid data-testid="academics-dashboard">
+        <MainGrid>
           <MainGridCol>
             <AcademicOverview />
             <PlannerItems />
@@ -29,7 +29,7 @@ const AcademicsDashboard = () => {
         </MainGrid>
       </MainGridWrapper>
       <AnnouncementContainer data-testid="academics-announcements" page="academics" />
-    </PageGridWrapper>
+    </>
   );
 };
 

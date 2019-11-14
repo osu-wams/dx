@@ -1,15 +1,13 @@
 import { themeSettings, breakpoints, styled } from '../theme';
 
-const PageGridWrapper = styled.div`
-  background-color: ${({ theme }) => theme.mainGrid.background};
-  height: 100%;
-`;
-
 /* Page Grid
  * Single column for mobile. 2 column for Desktop
  * Provides row-span and col-span classes to modify width or height of children elements
  */
-
+const PageGridWrapper = styled.div`
+  background-color: ${({ theme }) => theme.mainGrid.background};
+  height: 100%;
+`;
 const MainGridWrapper = styled.div`
   border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
   background-color: ${({ theme }) => theme.mainGrid.background};
@@ -45,9 +43,10 @@ const SecondGridWrapper = styled.div`
   background-color: ${({ theme }) => theme.secondGrid.background};
   border-top: 1px solid ${({ theme }) => theme.secondGrid.borderTop};
   padding: 2rem ${themeSettings.spacing.mobile};
+  flex: 1; /* Fill all available vertical space */
   @media (min-width: ${breakpoints[768]}) {
     padding: 4rem ${themeSettings.spacing.desktop};
   }
 `;
 
-export { PageGridWrapper, MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper };
+export { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper, PageGridWrapper };

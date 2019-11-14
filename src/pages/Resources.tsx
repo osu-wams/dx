@@ -124,11 +124,11 @@ const Resources = () => {
   /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
 
   return (
-    <MainGridWrapper>
+    <MainGridWrapper data-testid="resources-page">
       <PageTitle title="Resources" />
       <MainGrid>
         <MainGridCol className="col-span-2">
-          <ResourcesWrapper data-testid="resources-page">
+          <ResourcesWrapper>
             {activeCategory !== '' && (
               <>
                 <ResourcesSearch
