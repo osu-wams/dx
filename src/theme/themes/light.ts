@@ -18,9 +18,9 @@ const warn = Color['luminance-300'];
 const info = Color['stratosphere-400'];
 const success = Color['pine-400'];
 const mainGridBackground = neutral100;
-const mainGridBorderBottom = neutral300;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
+const secondGridBorderTop = neutral300;
 const componentBackground = Color.white;
 const linkForeground = Color.white;
 const iconPrimary = Color.white;
@@ -115,11 +115,11 @@ export const light: ThemeConfiguration = {
   },
   mainGrid: {
     background: mainGridBackground,
-    borderBottom: mainGridBorderBottom,
     borderTop: mainGridBorderTop
   },
   secondGrid: {
-    background: secondGridBackground
+    background: secondGridBackground,
+    borderTop: secondGridBorderTop
   },
   footer: {
     background: titleSecondary,

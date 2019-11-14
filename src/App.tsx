@@ -28,7 +28,13 @@ const ContentWrapper = styled.div`
   flex-grow: 1;
 `;
 
-const RouteContainer = posed.div({
+// Child of the ContentWrapper
+const PageGridWrapper = styled.div`
+  background-color: ${({ theme }) => theme.mainGrid.background};
+  width: 100%;
+`;
+
+const RouteContainer = posed(PageGridWrapper)({
   enter: { opacity: 1, delay: 100, beforeChildren: true },
   exit: { opacity: 0 }
 });
@@ -123,8 +129,8 @@ const App = (props: AppProps) => {
               {({ location }) => (
                 <PoseGroup>
                   {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                  <RouteContainer key={location.key} style={{ width: '100%' }}>
-                    <Router location={location} style={{ height: '100%' }}>
+                  <RouteContainer key={location.key}>
+                    <Router location={location} className="router-styles">
                       <RouterPage path="/" pageComponent={<Dashboard />} />
                       <RouterPage path="profile" pageComponent={<Profile />} />
                       <RouterPage path="academics/*" pageComponent={<Academics />} />

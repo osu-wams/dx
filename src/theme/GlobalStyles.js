@@ -42,6 +42,12 @@ const GlobalStyle = createGlobalStyle`
   strong {
     font-weight: 600;
   }
+  /* Router helper */
+  .router-styles {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
 `;
 
 export default GlobalStyle;

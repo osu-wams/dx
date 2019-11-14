@@ -85,11 +85,11 @@ export interface ThemeConfiguration {
   };
   mainGrid: {
     background: string;
-    borderBottom: string;
     borderTop: string;
   };
   secondGrid: {
     background: string;
+    borderTop: string;
   };
   footer: {
     background: string;

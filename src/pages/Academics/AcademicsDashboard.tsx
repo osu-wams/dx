@@ -13,10 +13,10 @@ import { AcademicSubNav } from './AcademicsSubNav';
 const AcademicsDashboard = () => {
   return (
     <>
-      <MainGridWrapper>
+      <MainGridWrapper data-testid="academics-dashboard">
         <PageTitle title="Academics" />
         <AcademicSubNav />
-        <MainGrid data-testid="academics-dashboard">
+        <MainGrid>
           <MainGridCol>
             <AcademicOverview />
             <PlannerItems />

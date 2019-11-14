@@ -8,8 +8,8 @@ import ResourcesCard from '../features/ResourcesCard';
 
 const Dashboard = () => {
   return (
-    <div data-testid="dashboard-page">
-      <MainGridWrapper>
+    <>
+      <MainGridWrapper data-testid="dashboard-page">
         <PageTitle
           title="Student Dashboard"
           badge={{
@@ -29,7 +29,7 @@ const Dashboard = () => {
         </MainGrid>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />
-    </div>
+    </>
   );
 };
 
