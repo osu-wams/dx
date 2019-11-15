@@ -21,10 +21,10 @@ const mainGridBackground = neutral100;
 const mainGridBorderBottom = neutral300;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
-const componentBackground = neutral300;
+const componentBackground = neutral200;
 const linkForeground = Color.white;
 const iconPrimary = Color.white;
-const iconSecondary = Color.black;
+const iconSecondary = neutral500;
 const buttonPrimary = Color.white;
 const buttonSecondary = Color.black;
 const titlePrimary = Color.white;
@@ -36,7 +36,7 @@ export const dark: ThemeConfiguration = {
     background: bodyBackground
   },
   header: {
-    background: componentBackground,
+    background: Color.black,
     userButton: {
       background: Color.transparent,
       color: neutral550
@@ -205,7 +205,7 @@ export const dark: ThemeConfiguration = {
         },
         list: {
           title: {
-            color: neutral700
+            color: neutral400
           }
         },
         plannerItems: {
@@ -344,7 +344,7 @@ export const dark: ThemeConfiguration = {
       }
     },
     card: {
-      boxShadow: shadows[1],
+      boxShadow: '',
       background: componentBackground,
       badge: {
         background: primary,
@@ -469,7 +469,7 @@ export const dark: ThemeConfiguration = {
         },
         link: {
           color: primary,
-          boxShadow: shadows[1]
+          boxShadow: ''
         }
       }
     },

@@ -9,7 +9,7 @@ exports[`An icon on the right 1`] = `
 }
 
 .c0 {
-  color: #423E3C;
+  color: #D4CFCD;
   -webkit-text-decoration: none;
   text-decoration: none;
   padding: 0;
@@ -76,13 +76,13 @@ exports[`An icon on the right 1`] = `
 }
 
 .c4 {
-  color: #423E3C;
+  color: #D4CFCD;
   margin: 0;
   font-weight: normal;
 }
 
 .c5 {
-  color: #7B746F;
+  color: #8F8582;
   font-size: 1.4rem;
   line-height: 1.6rem;
 }
@@ -133,14 +133,14 @@ exports[`An icon on the right 1`] = `
 
 exports[`Default style with icon on left 1`] = `
 .c3 {
-  color: #B7B1AF;
+  color: #696361;
   background-color: transparent;
   padding: 0;
   border-radius: 0;
 }
 
 .c0 {
-  color: #423E3C;
+  color: #D4CFCD;
   -webkit-text-decoration: none;
   text-decoration: none;
   padding: 0;
@@ -207,13 +207,13 @@ exports[`Default style with icon on left 1`] = `
 }
 
 .c5 {
-  color: #423E3C;
+  color: #D4CFCD;
   margin: 0;
   font-weight: normal;
 }
 
 .c6 {
-  color: #7B746F;
+  color: #8F8582;
   font-size: 1.4rem;
   line-height: 1.6rem;
 }
@@ -263,14 +263,14 @@ exports[`Default style with icon on left 1`] = `
 
 exports[`Icon on both left and right 1`] = `
 .c3 {
-  color: #B7B1AF;
+  color: #696361;
   background-color: transparent;
   padding: 0;
   border-radius: 0;
 }
 
 .c0 {
-  color: #423E3C;
+  color: #D4CFCD;
   -webkit-text-decoration: none;
   text-decoration: none;
   padding: 0;
@@ -337,13 +337,13 @@ exports[`Icon on both left and right 1`] = `
 }
 
 .c5 {
-  color: #423E3C;
+  color: #D4CFCD;
   margin: 0;
   font-weight: normal;
 }
 
 .c6 {
-  color: #7B746F;
+  color: #8F8582;
   font-size: 1.4rem;
   line-height: 1.6rem;
 }

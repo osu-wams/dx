@@ -8,12 +8,15 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import logo from '../assets/osu-logo.svg';
 import ecampusLogo from '../assets/osu-ecampus.svg';
 import cascadesLogo from '../assets/osu-cascades.svg';
+import logoDark from '../assets/osu-logo-dark.svg';
+import ecampusLogoDark from '../assets/osu-ecampus-dark.svg';
+import cascadesLogoDark from '../assets/osu-cascades-dark.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
 import { themeSettings, breakpoints, styled } from '../theme';
 import { Event } from '../util/gaTracking';
 import { IUser } from '../api/user';
-import { UserContext } from '../App';
+import { UserContext, AppContext, IAppContext } from '../App';
 
 const headerMedia = breakpoints[768];
 
@@ -107,27 +110,46 @@ const Logo = styled.img`
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
  */
-const campusLogo = (user: IUser | null) => {
-  if (!user || !user.classification || !Object.keys(user.classification).includes('attributes'))
-    return logo;
-  switch (user!.classification!.attributes!.campusCode) {
-    case 'DSC':
-      return ecampusLogo;
-    case 'B':
-      return cascadesLogo;
-    default:
-      return logo;
-  }
-};
+
+ const lightColoredThemes = ['light'];
+ const darkColoredThemes = ['dark'];
+ const campusLogo = (user: IUser | null, appContext:IAppContext) => {
+   if (!user || !user.classification || !Object.keys(user.classification).includes('attributes')) {
+     if(darkColoredThemes.includes(appContext.selectedTheme)) {
+       return logoDark;
+     } else {
+       return logo;
+     }
+   }
+   switch (user!.classification!.attributes!.campusCode || appContext.selectedTheme) {
+     case 'DSC':
+       if(darkColoredThemes.includes(appContext.selectedTheme))
+         return ecampusLogoDark;
+       else
+         return ecampusLogo;
+     case 'B':
+       if(darkColoredThemes.includes(appContext.selectedTheme))
+         return cascadesLogoDark;
+      else
+       return cascadesLogo;
+     default:
+       if(darkColoredThemes.includes(appContext.selectedTheme)) {
+         return logoDark;
+       } else {
+         return logo;
+       }
+     }
+   };
 
 const Header = () => {
   const user = useContext<any>(UserContext);
+  const appContext = useContext(AppContext);
 
   return (
     <HeaderWrapper>
       <Logo
         data-testid="app-header-logo"
-        src={campusLogo(user.data)}
+        src={campusLogo(user.data, appContext)}
         alt="Oregon State University"
       />
       <ProfileMenu>

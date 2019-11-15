@@ -1,7 +1,7 @@
 import { light } from './light';
 import { dark } from './dark';
 
-const defaultTheme = 'light';
+const defaultTheme = 'dark';
 
 const themesLookup = {
   light,

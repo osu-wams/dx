@@ -5,7 +5,7 @@ exports[`<Table /> BasicTable no border around table element 1`] = `
   border: none;
   border-collapse: separate;
   border-spacing: 0;
-  color: #696361;
+  color: #B7B1AF;
   font-size: inherit;
   overflow-x: scroll;
 }
@@ -16,7 +16,7 @@ exports[`<Table /> BasicTable no border around table element 1`] = `
 }
 
 .c0 th {
-  color: #7B746F;
+  color: #8F8582;
   font-weight: 600;
   font-size: 1.4rem;
   border-bottom: 1px solid rgba(34,36,38,0.15);
@@ -67,7 +67,7 @@ exports[`<Table /> CompactTable smaller paddings and font size 1`] = `
   border: none;
   border-collapse: separate;
   border-spacing: 0;
-  color: #696361;
+  color: #B7B1AF;
   font-size: 1.4rem;
   overflow-x: scroll;
 }
@@ -78,7 +78,7 @@ exports[`<Table /> CompactTable smaller paddings and font size 1`] = `
 }
 
 .c0 th {
-  color: #7B746F;
+  color: #8F8582;
   font-weight: 600;
   font-size: 1.4rem;
   border-bottom: 1px solid rgba(34,36,38,0.15);
@@ -129,7 +129,7 @@ exports[`<Table /> DefaultTable gets rendered with border around table 1`] = `
   border: 1px solid rgba(34,36,38,0.15);
   border-collapse: separate;
   border-spacing: 0;
-  color: #696361;
+  color: #B7B1AF;
   font-size: inherit;
   overflow-x: scroll;
 }
@@ -140,7 +140,7 @@ exports[`<Table /> DefaultTable gets rendered with border around table 1`] = `
 }
 
 .c0 th {
-  color: #7B746F;
+  color: #8F8582;
   font-weight: 600;
   font-size: 1.4rem;
   border-bottom: 1px solid rgba(34,36,38,0.15);
@@ -191,7 +191,7 @@ exports[`<Table /> Stetch table gets 100% width 1`] = `
   border: none;
   border-collapse: separate;
   border-spacing: 0;
-  color: #696361;
+  color: #B7B1AF;
   font-size: inherit;
   overflow-x: scroll;
   width: 100%;
@@ -203,7 +203,7 @@ exports[`<Table /> Stetch table gets 100% width 1`] = `
 }
 
 .c0 th {
-  color: #7B746F;
+  color: #8F8582;
   font-weight: 600;
   font-size: 1.4rem;
   border-bottom: 1px solid rgba(34,36,38,0.15);
@@ -266,7 +266,7 @@ exports[`<Table /> StripedTable alternates background color on rows 1`] = `
   border: none;
   border-collapse: separate;
   border-spacing: 0;
-  color: #696361;
+  color: #B7B1AF;
   font-size: inherit;
   overflow-x: scroll;
 }
@@ -277,7 +277,7 @@ exports[`<Table /> StripedTable alternates background color on rows 1`] = `
 }
 
 .c0 th {
-  color: #7B746F;
+  color: #8F8582;
   font-weight: 600;
   font-size: 1.4rem;
   border-bottom: 1px solid rgba(34,36,38,0.15);
