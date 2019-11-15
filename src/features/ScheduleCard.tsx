@@ -96,7 +96,12 @@ const ScheduleCard = () => {
             />
           )}
           {courses.loading && <Skeleton count={4} />}
-          {!courses.loading && <ScheduleCardCourses selectedCourses={getCoursesOnSelectedDay()} />}
+          {!courses.loading && (
+            <ScheduleCardCourses
+              courses={courses.data}
+              selectedCourses={getCoursesOnSelectedDay()}
+            />
+          )}
           <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
         </div>
       </CardContent>
