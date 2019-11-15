@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, waitForElement } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render, mockAppContext } from '../../util/test-utils';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
 import { mockGAEvent } from '../../setupTests';
@@ -26,9 +26,9 @@ describe('<Courses />', () => {
     expect(courseTitle).toBeInTheDocument();
   });
 
-  it('Finds "8" as the course count in the Badge', async () => {
+  it('Finds "7" as the course count in the Badge', async () => {
     const { getByText } = render(<Courses />);
-    const NumCourses = await waitForElement(() => getByText('10'));
+    const NumCourses = await waitForElement(() => getByText('7'));
     expect(NumCourses).toBeInTheDocument();
   });
 
@@ -37,12 +37,9 @@ describe('<Courses />', () => {
     const courses = await waitForElement(() => queryAllByTestId('course-list-item-header'));
     expect(courses.map(c => c.textContent)).toStrictEqual([
       'CS261',
-      'CS261',
+      'CS262',
       'CS290',
       'ED408',
-      'ED408',
-      'PH212',
-      'PH212',
       'PH212',
       'PH222',
       'WR214'
@@ -133,23 +130,17 @@ describe('with an InfoButton in the CardFooter', () => {
   const validIinfoButtonId = 'current-courses';
 
   test('does not display the button when the infoButtonData is missing it', async () => {
-    const { queryByTestId } = render(<Courses />, {
-      appContext: {
-        infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
-      }
-    });
-
+    mockAppContext.infoButtonData = [{ id: 'invalid-id', content: 'content', title: 'title' }];
+    const { queryByTestId } = render(<Courses />, { appContext: mockAppContext });
     const element = queryByTestId(validIinfoButtonId);
     expect(element).not.toBeInTheDocument();
   });
 
   test('displays the button when the infoButtonData is included', async () => {
-    const { getByTestId } = render(<Courses />, {
-      appContext: {
-        infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
-      }
-    });
-
+    mockAppContext.infoButtonData = [
+      { id: validIinfoButtonId, content: 'content', title: 'title' }
+    ];
+    const { getByTestId } = render(<Courses />, { appContext: mockAppContext });
     const element = await waitForElement(() => getByTestId(validIinfoButtonId));
     expect(element).toBeInTheDocument();
   });
