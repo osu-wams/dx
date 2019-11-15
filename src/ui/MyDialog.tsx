@@ -6,7 +6,8 @@ const MyDialog = styled(Dialog)`
   border-radius: ${themeSettings.borderRadius[16]};
   .closeButton {
     float: right;
-    margin-right: -2rem;
+    margin-right: -1.5rem;
+    font-size: ${themeSettings.fontSize[26]};
   }
   h2 {
     color: ${({ color, theme }) => color || theme.ui.myDialog.h2.color};
@@ -27,10 +28,13 @@ const MyDialog = styled(Dialog)`
     margin-bottom: 2rem;
   }
   @media screen and (max-width: 767px) {
+    hr {
+      margin: 0;
+    }
     &[data-reach-dialog-content] {
       width: 100%;
       margin: 0;
-      padding-top: 0.5rem;
+      padding: 0;
       border-radius: 0;
     }
   }
@@ -50,5 +54,19 @@ const MyDialogFooter = styled.div`
   }
 `;
 
-export { MyDialogFooter };
+const MyDialogHeader = styled.div`
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid ${({ theme }) => theme.ui.myDialog.header.border};
+  > div {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    padding-top: 0;
+  }
+`;
+
+export { MyDialogHeader, MyDialogFooter };
 export default MyDialog;

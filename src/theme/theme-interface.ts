@@ -168,6 +168,17 @@ export interface ThemeConfiguration {
             };
           };
           faculty: {
+            link: {
+              color: string;
+            };
+            icon: {
+              color: string;
+            };
+          };
+          map: {
+            link: {
+              color: string;
+            };
             icon: {
               color: string;
             };
@@ -450,6 +461,9 @@ export interface ThemeConfiguration {
       };
       h3: {
         color: string;
+      };
+      header: {
+        border: string;
       };
       details: {
         color: string;

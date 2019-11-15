@@ -194,12 +194,23 @@ export const dark: ThemeConfiguration = {
         dialog: {
           meetingTime: {
             icon: {
-              color: primary
+              color: neutral600
             }
           },
           faculty: {
+            link: {
+              color: primary
+            },
             icon: {
-              color: neutral600
+              color: primary
+            }
+          },
+          map: {
+            link: {
+              color: primary
+            },
+            icon: {
+              color: primary
             }
           }
         },
@@ -480,6 +491,9 @@ export const dark: ThemeConfiguration = {
       },
       h3: {
         color: neutral200
+      },
+      header: {
+        border: neutral200
       },
       details: {
         color: neutral600
