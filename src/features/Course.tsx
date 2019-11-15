@@ -60,6 +60,9 @@ const MapLink = styled(FacultyLink)`
   color: ${({ theme }) => theme.features.academics.courses.dialog.map.link.color};
   svg {
     margin-right: 0;
+    font-size: ${themeSettings.fontSize[26]} !important;
+    width: ${themeSettings.fontSize[26]} !important;
+    height: ${themeSettings.fontSize[26]} !important;
   }
 `;
 
@@ -71,7 +74,7 @@ const meetingDateTime = (meetingTime: IMeetingTime): string => {
   const time =
     meetingTime.beginTime &&
     `\u00B7 ${formatTime(meetingTime.beginTime)} - ${formatTime(meetingTime.endTime)}`;
-  return `${date} ${time}`;
+  return `${date || ''} ${time || ''}`;
 };
 
 const meetingTimeListItem = (
@@ -79,15 +82,13 @@ const meetingTimeListItem = (
   themeContext: ThemeConfiguration
 ): JSX.Element => (
   <CourseListItem key={generateId()}>
-    <ListItemContent>
+    <ListItemContent style={{ paddingBottom: 0 }}>
       <Icon
         icon={getIconByScheduleType(meetingTime.scheduleType)}
         color={themeContext.features.academics.courses.dialog.meetingTime.icon.color}
       />
       <ListItemText>
         <ListItemHeader>{meetingTime.scheduleDescription}</ListItemHeader>
-        <ListItemDescription>{meetingTime.buildingDescription}</ListItemDescription>
-        <ListItemDescription>{meetingDateTime(meetingTime)}</ListItemDescription>
       </ListItemText>
       {meetingTimeOnCorvallisCampus(meetingTime) &&
         buildingCampusMap(
@@ -96,6 +97,15 @@ const meetingTimeListItem = (
           meetingTime.room,
           themeContext
         )}
+    </ListItemContent>
+    <ListItemContent style={{ marginTop: 0, marginBottom: 0, paddingBottom: 0 }}>
+      <ListItemText>
+        <ListItemDescription>
+          {meetingTime.room && meetingTime.room}{' '}
+          {meetingTime.buildingDescription && meetingTime.buildingDescription}
+        </ListItemDescription>
+        <ListItemDescription>{meetingDateTime(meetingTime)}</ListItemDescription>
+      </ListItemText>
     </ListItemContent>
   </CourseListItem>
 );
@@ -106,7 +116,7 @@ const facultyListItem = (
   themeContext: ThemeConfiguration
 ): JSX.Element => (
   <CourseListItem key={`${faculty.email}-${index}`}>
-    <ListItemContent>
+    <ListItemContent style={{ paddingBottom: 0 }}>
       <FacultyLink
         href={`mailto:${faculty.email}`}
         onClick={() => Event('course', 'email professor icon clicked', faculty.name)}
@@ -141,8 +151,7 @@ const buildingCampusMap = (
       <Icon
         icon={faMapMarkerAlt}
         color={themeContext.features.academics.courses.dialog.map.icon.color}
-      />{' '}
-      {building} {room}
+      />
     </ListItemText>
   </MapLink>
 );
@@ -174,8 +183,9 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
           </ListItemText>
         </div>
       </MyDialogHeader>
-      {coursesMap.courses.map(course => (
+      {coursesMap.courses.map((course, index) => (
         <div key={generateId()} style={{ padding: '0.5rem' }}>
+          {index > 0 && <Divider />}
           <List>
             {exceptMeetingTypes(course.attributes.meetingTimes, ['MID', 'FNL']).map(m =>
               meetingTimeListItem(m, themeContext)
@@ -186,28 +196,32 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
               facultyListItem(fac, index, themeContext)
             )}
           </List>
-          <Divider />
         </div>
       ))}
-      <List>
-        <CourseListItem key={generateId()}>
-          <ListItemContent style={{ paddingBottom: 0 }}>
-            <ListItemText>
-              <ListItemHeader>Other Meetings</ListItemHeader>
-            </ListItemText>
-          </ListItemContent>
-        </CourseListItem>
-        {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL', 'MID']).map(m => (
-          <CourseListItem key={generateId()}>
-            <ListItemContent>
-              <ListItemText>
-                <ListItemHeader>{examName(m.room)}</ListItemHeader>
-                <ListItemDescription>{meetingDateTime(m)}</ListItemDescription>
-              </ListItemText>
-            </ListItemContent>
-          </CourseListItem>
-        ))}
-      </List>
+      {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL', 'MID']).length > 0 && (
+        <>
+          <Divider />
+          <List>
+            <CourseListItem key={generateId()}>
+              <ListItemContent style={{ paddingBottom: 0 }}>
+                <ListItemText>
+                  <ListItemHeader>Other Meetings</ListItemHeader>
+                </ListItemText>
+              </ListItemContent>
+            </CourseListItem>
+            {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL', 'MID']).map(m => (
+              <CourseListItem key={generateId()}>
+                <ListItemContent>
+                  <ListItemText>
+                    <ListItemHeader>{examName(m)}</ListItemHeader>
+                    <ListItemDescription>{meetingDateTime(m)}</ListItemDescription>
+                  </ListItemText>
+                </ListItemContent>
+              </CourseListItem>
+            ))}
+          </List>
+        </>
+      )}
       <MyDialogFooter>
         <ExternalLink
           href={Url.canvas.main}

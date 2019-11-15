@@ -157,6 +157,12 @@ export const meetingTimeOnCorvallisCampus = (m: IMeetingTime): boolean => {
   return m.campus.toLowerCase().includes('corvallis');
 };
 
+/**
+ * Filter out any meeting times that include one of the provided types, this is used to target and remove
+ * final exam and midterm meetings.
+ * @param meetings list of meetingTimes to filter
+ * @param types scheduleType or meeting room to filter out
+ */
 export const exceptMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMeetingTime[] => {
   return meetings.filter(meeting => {
     if (types.includes(meeting.scheduleType) || types.includes(meeting.room)) {
@@ -166,6 +172,12 @@ export const exceptMeetingTypes = (meetings: IMeetingTime[], types: string[]): I
   });
 };
 
+/**
+ * Filter any meeting times that include one of the provided types, this is used to target and retain
+ * final exam and midterm meetings.
+ * @param meetings list of meetingTimes to filter
+ * @param types scheduleType or meeting room to filter out
+ */
 export const onlyMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMeetingTime[] => {
   return meetings.filter(meeting => {
     if (types.includes(meeting.scheduleType) || types.includes(meeting.room)) {
@@ -175,13 +187,13 @@ export const onlyMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMe
   });
 };
 
-export const examName = (room: string) => {
-  switch (room.toLowerCase()) {
-    case 'fnl':
-      return 'Final Exam';
-    case 'mid':
-      return 'Midterm';
-    default:
-      return '';
-  }
+/**
+ * Determine what type of exam label to display depending on the variety of data value options
+ * being returned from the API.
+ * @param meeting the meeting time to consider
+ */
+export const examName = (m: IMeetingTime) => {
+  const roomTypes = [m.room.toLowerCase(), m.scheduleType.toLowerCase()];
+  if (roomTypes.includes('fnl')) return 'Final Exam';
+  if (roomTypes.includes('mid')) return 'Midterm';
 };
