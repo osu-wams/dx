@@ -159,7 +159,12 @@ const buildingCampusMap = (
 const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
   const themeContext = useContext(ThemeContext);
   return (
-    <MyDialog isOpen={isOpen} data-testid="course-dialog" aria-labelledby="course-title">
+    <MyDialog
+      padding="false"
+      isOpen={isOpen}
+      data-testid="course-dialog"
+      aria-labelledby="course-title"
+    >
       {ReactGA.modalview('/academics/course-details')}
       <MyDialogHeader>
         <CloseButton onClick={toggleCourse} />

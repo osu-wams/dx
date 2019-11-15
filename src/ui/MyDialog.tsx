@@ -1,7 +1,7 @@
 import { Dialog } from '@reach/dialog';
 import { themeSettings, styled } from '../theme';
 
-const MyDialog = styled(Dialog)`
+const MyDialog = styled(Dialog)<{ padding?: string }>`
   background: ${({ theme }) => theme.ui.myDialog.background};
   border-radius: ${themeSettings.borderRadius[16]};
   .closeButton {
@@ -34,7 +34,7 @@ const MyDialog = styled(Dialog)`
     &[data-reach-dialog-content] {
       width: 100%;
       margin: 0;
-      padding: 0;
+      ${props => (props.padding === 'false' ? 'padding: 0;' : '')}
       border-radius: 0;
     }
   }
