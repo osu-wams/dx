@@ -4,6 +4,7 @@ import { render, mockAppContext } from '../../util/test-utils';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
 import { mockGAEvent } from '../../setupTests';
+import { format } from 'date-fns';
 
 const mockUseCourseSchedule = jest.fn();
 
@@ -91,7 +92,7 @@ test('Various Links are present as well as Google Analytics events are recorded'
   expect(mockGAEvent).toHaveBeenCalled();
 });
 
-test('Course spells out the month and day "december 6" for Final exams', async () => {
+test('Course spells out the month and day for Final exams', async () => {
   const { getByText, getByTestId } = render(<Courses />);
 
   const TestoBtn = await waitForElement(() => getByText(/testo physics/i));
@@ -102,7 +103,8 @@ test('Course spells out the month and day "december 6" for Final exams', async (
   expect(courseDialog).toBeInTheDocument();
 
   // For Final exams we spell out the month and day
-  expect(courseDialog).toHaveTextContent(/december 6/i);
+  const monthDay = format(Date.now(), 'MMMM DD');
+  expect(courseDialog).toHaveTextContent(monthDay);
 });
 
 test('Course Midterm data is excluded from view', async () => {

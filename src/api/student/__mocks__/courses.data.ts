@@ -1,5 +1,5 @@
-const beginDate = new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString().slice(0, 10);
-const endDate = new Date(Date.now()).toISOString().slice(0, 10);
+const currentBeginDate = new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString().slice(0, 10);
+const currentEndDate = new Date(Date.now()).toISOString().slice(0, 10);
 const beginPastDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString().slice(0, 10);
 const endPastDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString().slice(0, 10);
 export default {
@@ -37,9 +37,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '10:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '10:50:00',
             room: '123',
             building: 'SMB',
@@ -87,9 +87,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '09:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '09:50:00',
             room: '285',
             building: 'WNGR',
@@ -137,9 +137,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '09:30:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '11:20:00',
             room: '305',
             building: 'PHAR',
@@ -152,9 +152,9 @@ export default {
             weeklySchedule: ['Th']
           },
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '11:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '11:50:00',
             room: '305',
             building: 'PHAR',
@@ -202,9 +202,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '10:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '10:50:00',
             room: '110',
             building: 'STAG',
@@ -252,9 +252,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '15:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '15:50:00',
             room: '210',
             building: 'LINC',
@@ -320,9 +320,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '16:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '16:50:00',
             room: '151',
             building: 'WNGR',
@@ -335,9 +335,9 @@ export default {
             weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           },
           {
-            beginDate: beginDate,
+            beginDate: currentEndDate,
             beginTime: '16:00:00',
-            endDate: endDate,
+            endDate: currentEndDate, // intentionally matching date to beginDate, the exam is on one day
             endTime: '17:50:00',
             room: 'FNL',
             building: 'GRP',
@@ -350,9 +350,9 @@ export default {
             weeklySchedule: ['W']
           },
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '20:30:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '21:50:00',
             room: 'MID',
             building: 'GRP',
@@ -418,9 +418,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '14:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '15:50:00',
             room: '212',
             building: 'WNGR',
@@ -486,9 +486,9 @@ export default {
         ],
         meetingTimes: [
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '14:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '15:50:00',
             room: '238',
             building: 'WNGR',
@@ -552,9 +552,9 @@ export default {
             weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           },
           {
-            beginDate: beginDate,
+            beginDate: currentBeginDate,
             beginTime: '09:00:00',
-            endDate: endDate,
+            endDate: currentEndDate,
             endTime: '14:50:00',
             room: '101',
             building: 'FURM',
