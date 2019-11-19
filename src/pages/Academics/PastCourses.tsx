@@ -103,7 +103,14 @@ const PastCourses = () => {
                       <TableBody>
                         {gradesByTerm[key].map(
                           (
-                            { courseNumber, courseSubject, creditHours, gradeFinal, courseTitle },
+                            {
+                              courseNumber,
+                              courseSubject,
+                              repeatedCourseInd,
+                              creditHours,
+                              gradeFinal,
+                              courseTitle
+                            },
                             subindex
                           ) => {
                             return (
@@ -119,6 +126,9 @@ const PastCourses = () => {
                                 </TableCell>
                                 <TableCell>
                                   <Grade>{gradeFinal}</Grade>
+                                  {repeatedCourseInd && repeatedCourseInd === 'E' && (
+                                    <ExcludedFromGPA>Excluded from GPA</ExcludedFromGPA>
+                                  )}
                                 </TableCell>
                               </TableRow>
                             );
@@ -143,6 +153,12 @@ export default PastCourses;
 
 const HistoryCard = styled(Card)`
   margin-bottom: 0;
+`;
+
+const ExcludedFromGPA = styled.div`
+  font-size: ${themeSettings.fontSize[12]};
+  margin: 0 auto;
+  text-align: center;
 `;
 
 const Grade = styled.span`

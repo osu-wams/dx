@@ -21,6 +21,7 @@ export default {
         scheduleDescription: 'Lecture',
         scheduleType: 'A',
         creditHours: 4,
+        repeatedCourseInd: null,
         registrationStatus: '**Web Registered**',
         courseLevel: 'Undergraduate'
       }
@@ -42,6 +43,7 @@ export default {
         courseTitle: 'INTRODUCTION TO ECE: TOOLS',
         sectionNumber: '001',
         term: '201501',
+        repeatedCourseInd: 'S',
         termDescription: 'Fall 2014',
         scheduleDescription: 'Lecture',
         scheduleType: 'A',
@@ -66,6 +68,7 @@ export default {
         courseNumber: '161',
         courseTitle: 'INTRO TO COMPUTER SCIENCE I',
         sectionNumber: '001',
+        repeatedCourseInd: 'E',
         term: '201501',
         termDescription: 'Fall 2014',
         scheduleDescription: 'Lecture',
