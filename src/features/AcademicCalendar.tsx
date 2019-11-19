@@ -34,7 +34,7 @@ const AcademicCalendar = () => {
         {calEvents.data.length ? (
           <List>
             {calEvents.data.slice(0, 5).map(({ title, link, pubDate }) => (
-              <ListItem key={title}>
+              <ListItem key={title + pubDate}>
                 <ListItemContentLinkSVG
                   href={link}
                   onClick={() => Event('academic-calendar', title, link)}
