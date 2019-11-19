@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings, ThemeContext } from '../../theme';
+import { themeSettings, ThemeContext, ThemeConfiguration } from '../../theme';
 import {
   CardSection,
   SectionHeader,
@@ -11,20 +11,30 @@ import {
 } from './ScheduleCardStyles';
 import Url from '../../util/externalUrls.data';
 import Icon from '../../ui/Icon';
-import courses from '../../assets/courses.svg';
+import coursesSvg from '../../assets/courses.svg';
 import { formatTime } from '../../util/helpers';
-import { List, ListItem, ListItemContent, ListItemDescription, ListItemText } from '../../ui/List';
+import {
+  List,
+  ListItem,
+  ListItemDescription,
+  ListItemText,
+  ListItemContentButton
+} from '../../ui/List';
 import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 import { Event } from '../../util/gaTracking';
-import { courseOnCorvallisCampus } from './schedule-utils';
+import {
+  courseOnCorvallisCampus,
+  sortedGroupedByCourseName,
+  ICoursesMap,
+  exceptMeetingTypes,
+  examName
+} from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
+import Course from '../Course';
 
 interface ScheduleCardCoursesProps {
   selectedCourses: ICourseSchedule[];
-}
-
-function isMidterm(meetingTime: IMeetingTime) {
-  return meetingTime.room === 'MID' || meetingTime.scheduleType === 'MID';
+  courses: ICourseSchedule[];
 }
 
 const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime): JSX.Element => (
@@ -47,48 +57,79 @@ const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime
   </a>
 );
 
-const meetingTimeListItems = (course: ICourseSchedule, color: string): JSX.Element[] => {
-  let filteredCourses;
-  filteredCourses = course.attributes.meetingTimes.map(
-    (meetingTime: IMeetingTime) =>
-      !isMidterm(meetingTime) && (
-        <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
-          <ListItemContent>
-            {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
-            <ListItemText>
-              <ListItemDescription fontSize={themeSettings.fontSize[16]} color={color}>
-                {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
-                {meetingTime.buildingDescription}
-              </ListItemDescription>
-              <ListItemDescription>
-                {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
-              </ListItemDescription>
-            </ListItemText>
-            {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
-          </ListItemContent>
-        </ListItem>
-      )
-  );
-  return filteredCourses;
-};
-
 const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
   const themeContext = useContext(ThemeContext);
-  const { selectedCourses } = props;
+  const [isOpen, setOpen] = useState(false);
+  const [showCoursesMap, setShowCoursesMap] = useState<ICoursesMap | null>(null);
+  const { selectedCourses, courses } = props;
+  // use sortedGroupedByCourseName as a convenience method for getting a coursesMap
+  const coursesMap: Map<string, ICoursesMap> = sortedGroupedByCourseName(courses);
+
+  const toggleCourse = (coursesMap: ICoursesMap | undefined) => {
+    setOpen(!isOpen);
+    if (coursesMap !== undefined) {
+      setShowCoursesMap(coursesMap);
+    }
+  };
+
+  const meetingTimeDescription = (meetingTime: IMeetingTime) => {
+    const finalExam = examName(meetingTime);
+    if (finalExam !== undefined) return finalExam;
+    return `${meetingTime.room} ${meetingTime.buildingDescription}`;
+  };
+
+  const meetingTimeListItems = (
+    coursesMap: Map<string, ICoursesMap>,
+    course: ICourseSchedule,
+    themeContext: ThemeConfiguration
+  ): JSX.Element[] =>
+    exceptMeetingTypes(course.attributes.meetingTimes, ['MID']).map((meetingTime: IMeetingTime) => (
+      <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
+        <ListItemContentButton
+          onClick={() => {
+            toggleCourse(
+              coursesMap.get(`${course.attributes.courseSubject}${course.attributes.courseNumber}`)
+            );
+            Event(
+              'schedule-card',
+              'course clicked',
+              `${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`
+            );
+          }}
+        >
+          {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
+          <ListItemText>
+            <ListItemDescription
+              fontSize={themeSettings.fontSize[16]}
+              color={themeContext.features.academics.courses.list.title.color}
+            >
+              {course.attributes.scheduleDescription} &bull; {meetingTimeDescription(meetingTime)}
+            </ListItemDescription>
+            <ListItemDescription>
+              {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
+            </ListItemDescription>
+          </ListItemText>
+          {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
+        </ListItemContentButton>
+      </ListItem>
+    ));
+
   return (
     <CardSection>
-      {/* TODO: course should NOT be a link */}
       <SectionHeader>Courses</SectionHeader>
       <List>
         {selectedCourses.length > 0 &&
           selectedCourses.map((c: ICourseSchedule) =>
-            meetingTimeListItems(c, themeContext.features.academics.courses.list.title.color)
+            meetingTimeListItems(coursesMap, c, themeContext)
           )}
         {selectedCourses.length === 0 && (
           <NoItems as="li">
-            <NoItemsImage src={courses} alt="" />
+            <NoItemsImage src={coursesSvg} alt="" />
             <NoItemsText>You don&apos;t have any courses scheduled</NoItemsText>
           </NoItems>
+        )}
+        {isOpen && showCoursesMap && showCoursesMap.courses.length > 0 && (
+          <Course coursesMap={showCoursesMap} toggleCourse={toggleCourse} isOpen />
         )}
       </List>
     </CardSection>

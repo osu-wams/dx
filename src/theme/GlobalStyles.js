@@ -48,6 +48,11 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     flex-direction: column;
   }
+  @media screen and (max-width: 767px) {
+    [data-reach-dialog-overlay] {
+      background: ${({ theme }) => theme.ui.myDialog.background} !important;
+    }
+  }
 `;
 
 export default GlobalStyle;

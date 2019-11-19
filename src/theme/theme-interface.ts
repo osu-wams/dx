@@ -168,6 +168,17 @@ export interface ThemeConfiguration {
             };
           };
           faculty: {
+            link: {
+              color: string;
+            };
+            icon: {
+              color: string;
+            };
+          };
+          map: {
+            link: {
+              color: string;
+            };
             icon: {
               color: string;
             };
@@ -444,11 +455,15 @@ export interface ThemeConfiguration {
       };
     };
     myDialog: {
+      background: string;
       h2: {
         color: string;
       };
       h3: {
         color: string;
+      };
+      header: {
+        border: string;
       };
       details: {
         color: string;
