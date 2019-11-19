@@ -11,11 +11,15 @@ export interface ICoursesMap {
   title: string;
 }
 
+export const getStartDate = () => {
+  return new Date();
+};
+
 /**
  * Utility functions
  */
-export const getNextFiveDays = () => {
-  let rangeStart = new Date();
+export const getNextFiveDays = (startDate: Date) => {
+  let rangeStart = startDate;
   let rangeEnd = addDays(rangeStart, 4);
   let nextFiveDays = eachDay(rangeStart, rangeEnd);
 

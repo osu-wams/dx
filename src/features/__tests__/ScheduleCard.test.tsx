@@ -3,11 +3,13 @@ import { wait, waitForElement, fireEvent, getAllByText } from '@testing-library/
 import { renderWithUserContext, authUser } from '../../util/test-utils';
 import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
-import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
+import mockCourseSchedule, { mockSimpleSchedule } from '../../api/student/__mocks__/courses.data';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from '../../setupTests';
 import { format } from 'date-fns';
+import { getDayShortcode } from '../schedule/schedule-utils';
 
+const mockGetStartDate = jest.fn();
 const mockUsePlannerItems = jest.fn();
 const mockUseCourseSchedule = jest.fn();
 const mockUseAcademicCalendarEvents = jest.fn();
@@ -20,6 +22,15 @@ jest.mock('../../api/student', () => ({
   usePlannerItems: () => mockUsePlannerItems(),
   useCourseSchedule: () => mockUseCourseSchedule()
 }));
+jest.mock('../schedule/schedule-utils.ts', () => {
+  const utils = jest.requireActual('../schedule/schedule-utils.ts');
+  return {
+    ...utils,
+    getStartDate: jest.fn(() => {
+      return mockGetStartDate();
+    })
+  };
+});
 
 describe('<ScheduleCard /> with data and canvas authorized user', () => {
   // Set mock function result before running any tests
@@ -27,6 +38,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
+    mockGetStartDate.mockReturnValue(new Date());
   });
 
   it('should find the card header even though it is visually hidden', async () => {
@@ -125,6 +137,7 @@ describe('<ScheduleCard /> accessibility checks', () => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
+    mockGetStartDate.mockReturnValue(new Date());
   });
 
   it('should find appropriate aria attributes', async () => {
@@ -146,6 +159,7 @@ describe('<ScheduleCard /> accessibility checks', () => {
 
 describe('<ScheduleCard /> without data for given days', () => {
   it('should not find "Academic Calendar" subtitle since no events are present', async () => {
+    mockGetStartDate.mockReturnValue(new Date());
     mockUseAcademicCalendarEvents.mockReturnValue(mockNoData);
     const { queryByText } = renderWithUserContext(<ScheduleCard />);
 
@@ -153,6 +167,7 @@ describe('<ScheduleCard /> without data for given days', () => {
   });
 
   it(`should find "You don't have any courses scheduled for today"`, async () => {
+    mockGetStartDate.mockReturnValue(new Date());
     mockUseCourseSchedule.mockReturnValue(mockNoData);
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
@@ -163,6 +178,7 @@ describe('<ScheduleCard /> without data for given days', () => {
   });
 
   it('should find "No Canvas assignments" text in card', async () => {
+    mockGetStartDate.mockReturnValue(new Date());
     mockUsePlannerItems.mockReturnValue(mockNoData);
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
@@ -179,6 +195,7 @@ describe('<ScheduleCard /> without canvas authorization', () => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
+    mockGetStartDate.mockReturnValue(new Date());
 
     const { getByText } = renderWithUserContext(<ScheduleCard />, { user: noCanvasAuthUser });
 
@@ -186,5 +203,47 @@ describe('<ScheduleCard /> without canvas authorization', () => {
       getByText(/Authorize Canvas to see your assignments/)
     );
     expect(todayPlannerItem).toBeInTheDocument();
+  });
+});
+
+describe('<ScheduleCard /> with a simple schedule', () => {
+  // Set mock function result before running any tests
+  beforeAll(() => {
+    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
+  });
+
+  [1, 2, 3, 4, 5, 6, 7].forEach(async daysAgo => {
+    it(`finds meeting times ${daysAgo} days ago`, async () => {
+      const startDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
+      const todayShortCode = getDayShortcode(startDate);
+      mockGetStartDate.mockReturnValue(startDate);
+      mockUseCourseSchedule.mockReturnValue(
+        mockSimpleSchedule(startDate.toISOString().slice(0, 10))
+      );
+      const { getByText } = renderWithUserContext(<ScheduleCard />);
+      switch (todayShortCode) {
+        case 'M':
+        case 'F':
+          const morningText = await waitForElement(() => getByText(/Morning Building/));
+          expect(morningText).toBeInTheDocument();
+          const mfAfternoonText = await waitForElement(() => getByText(/Afternoon Building/));
+          expect(mfAfternoonText).toBeInTheDocument();
+          break;
+        case 'T':
+        case 'Th':
+        case 'Sa':
+        case 'Su':
+          const noCoursesText = await waitForElement(() =>
+            getByText(/You don't have any courses scheduled/)
+          );
+          expect(noCoursesText).toBeInTheDocument();
+          break;
+        case 'W':
+          const wAfternoonText = await waitForElement(() => getByText(/Afternoon Building/));
+          expect(wAfternoonText).toBeInTheDocument();
+          break;
+      }
+    });
   });
 });

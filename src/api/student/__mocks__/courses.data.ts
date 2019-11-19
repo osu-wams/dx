@@ -641,3 +641,79 @@ export default {
   loading: false,
   error: false
 };
+
+export const mockSimpleSchedule = (startDate: string) => {
+  return {
+    data: [
+      {
+        type: 'class-schedule',
+        id: 'simple-id-1',
+        links: {
+          self: null
+        },
+        attributes: {
+          academicYear: '1920',
+          academicYearDescription: 'Academic Year 2019-20',
+          courseReferenceNumber: '8675309',
+          courseSubject: 'ART',
+          courseSubjectDescription: 'Art',
+          courseNumber: '410',
+          courseTitle: 'ART APPRECIATION',
+          sectionNumber: '001',
+          term: '202001',
+          termDescription: 'Fall 2019',
+          scheduleDescription: 'Workshop',
+          scheduleType: 'W',
+          creditHours: 2,
+          registrationStatus: '**Web Registered**',
+          gradingMode: 'Normal Grading Mode',
+          continuingEducation: false,
+          faculty: [
+            {
+              osuId: '1234567895',
+              name: 'Ross, Bob',
+              email: null,
+              primary: true
+            }
+          ],
+          meetingTimes: [
+            {
+              beginDate: startDate,
+              beginTime: '14:00:00',
+              endDate: startDate,
+              endTime: '16:20:00',
+              room: '101',
+              building: 'PHAR',
+              buildingDescription: 'Afternoon Building',
+              campusCode: 'C',
+              campus: ' Oregon State - Corvallis',
+              hoursPerWeek: 9.83,
+              creditHourSession: 0,
+              scheduleType: 'W',
+              scheduleDescription: 'Workshop',
+              weeklySchedule: ['M', 'W', 'F']
+            },
+            {
+              beginDate: startDate,
+              beginTime: '02:00:00',
+              endDate: startDate,
+              endTime: '04:20:00',
+              room: '101',
+              building: 'PHAR',
+              buildingDescription: 'Morning Building',
+              campusCode: 'C',
+              campus: ' Oregon State - Corvallis',
+              hoursPerWeek: 9.83,
+              creditHourSession: 0,
+              scheduleType: 'A',
+              scheduleDescription: 'Lecture',
+              weeklySchedule: ['M', 'F']
+            }
+          ]
+        }
+      }
+    ],
+    loading: false,
+    error: false
+  };
+};
