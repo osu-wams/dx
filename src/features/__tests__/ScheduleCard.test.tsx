@@ -34,14 +34,14 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     expect(getByTestId('scheduleCardHeader')).toBeInTheDocument();
   });
 
-  it('should find "Every Day Test" Course in card and have clickable map link', async () => {
+  it('should find "Every Day Test" Course in card', async () => {
     const { getByText } = renderWithUserContext(<ScheduleCard />);
 
     const todayCourse = await waitForElement(() => getByText(/Every Day Test/));
     expect(todayCourse).toBeInTheDocument();
   });
 
-  it('should find one workshop', async () => {
+  it('should find one workshop and not the meeting time set to the past', async () => {
     const { container, queryByText } = renderWithUserContext(<ScheduleCard />);
     const todayWorkshop = await waitForElement(() => getAllByText(container, /Workshop/));
     expect(todayWorkshop).toHaveLength(1);
@@ -56,7 +56,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     expect(mockGAEvent).toHaveBeenCalled();
   });
 
-  it('should find a course without a clickable map link', async () => {
+  it('should find a course without a clickable map link because it is in Bend', async () => {
     const { queryByText, getAllByTestId } = renderWithUserContext(<ScheduleCard />);
     const courses = await waitForElement(() => getAllByTestId('course-list-item-header'));
     expect(courses[0]).toHaveTextContent('WR214');
@@ -71,6 +71,14 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
     // Mid terms are currently excluded due to inconsistent data source
     expect(queryByText(/MID Group Events/)).not.toBeInTheDocument();
+  });
+
+  it('should find a course with a Final Exam associated', async () => {
+    const { queryByText, getAllByText } = renderWithUserContext(<ScheduleCard />);
+    await waitForElement(() => getAllByText(/PH 212/));
+
+    // Mid terms are currently excluded due to inconsistent data source
+    expect(queryByText(/Final Exam/)).toBeInTheDocument();
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {

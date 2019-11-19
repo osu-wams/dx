@@ -335,9 +335,9 @@ export default {
             weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           },
           {
-            beginDate: '2017-12-06',
+            beginDate: beginDate,
             beginTime: '16:00:00',
-            endDate: '2017-12-06',
+            endDate: endDate,
             endTime: '17:50:00',
             room: 'FNL',
             building: 'GRP',

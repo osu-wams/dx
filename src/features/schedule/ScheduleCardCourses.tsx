@@ -26,7 +26,8 @@ import {
   courseOnCorvallisCampus,
   sortedGroupedByCourseName,
   ICoursesMap,
-  exceptMeetingTypes
+  exceptMeetingTypes,
+  examName
 } from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
 import Course from '../Course';
@@ -71,6 +72,12 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
     }
   };
 
+  const meetingTimeDescription = (meetingTime: IMeetingTime) => {
+    const finalExam = examName(meetingTime);
+    if (finalExam !== undefined) return finalExam;
+    return `${meetingTime.room} ${meetingTime.buildingDescription}`;
+  };
+
   const meetingTimeListItems = (
     coursesMap: Map<string, ICoursesMap>,
     course: ICourseSchedule,
@@ -96,8 +103,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
               fontSize={themeSettings.fontSize[16]}
               color={themeContext.features.academics.courses.list.title.color}
             >
-              {course.attributes.scheduleDescription} &bull; {meetingTime.room}{' '}
-              {meetingTime.buildingDescription}
+              {course.attributes.scheduleDescription} &bull; {meetingTimeDescription(meetingTime)}
             </ListItemDescription>
             <ListItemDescription>
               {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
