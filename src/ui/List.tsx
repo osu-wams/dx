@@ -66,7 +66,7 @@ const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
 const ListItemContentLinkSVG = styled(ListItemContentLink)`
   &:hover {
     & > svg {
-      color: ${({ theme }) => theme.ui.list.item.link.color};
+      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
     }
   }
 `;

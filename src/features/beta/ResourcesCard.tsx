@@ -7,7 +7,7 @@ import {
   faExternalLink
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
-import { List, ListItem, ListItemText, ListItemContentLink, ListItemContentLinkName } from '../../ui/List';
+import { List, ListItem, ListItemText, ListItemContentLinkSVG, ListItemContentLinkName } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
 import Url from '../../util/externalUrls.data';
 import { ThemeContext } from '../../theme';
@@ -20,43 +20,43 @@ const BetaResources: FC = () => {
       <CardContent>
         <List>
           <ListItem>
-            <ListItemContentLink
+            <ListItemContentLinkSVG
               href={Url.feedback.main}
               target="_blank"
               onClick={() => Event('beta', 'feedback')}
             >
               <Icon
                 icon={faCommentAltLines}
-                color={themeContext.features.beta.resources.icon.color}
+                color={themeContext.ui.list.item.link.color}
               />
               <ListItemText>
                 <ListItemContentLinkName>Give us feedback on the beta</ListItemContentLinkName>
               </ListItemText>
-            </ListItemContentLink>
+            </ListItemContentLinkSVG>
           </ListItem>
           <ListItem>
-            <ListItemContentLink
+            <ListItemContentLinkSVG
               href={Url.support.main}
               target="_blank"
               onClick={() => Event('beta', 'get help')}
             >
-              <Icon icon={faUserHeadset} color={themeContext.features.beta.resources.icon.color} />
+              <Icon icon={faUserHeadset} color={themeContext.ui.list.item.link.color} />
               <ListItemText>
                 <ListItemContentLinkName>Get help with the dashboard</ListItemContentLinkName>
               </ListItemText>
-            </ListItemContentLink>
+            </ListItemContentLinkSVG>
           </ListItem>
           <ListItem>
-            <ListItemContentLink
+            <ListItemContentLinkSVG
               href={Url.myosu.main}
               target="_blank"
               onClick={() => Event('beta', 'old my osu')}
             >
-              <Icon icon={faExternalLink} color={themeContext.features.beta.resources.icon.color} />
+              <Icon icon={faExternalLink} color={themeContext.ui.list.item.link.color} />
               <ListItemText>
                 <ListItemContentLinkName>Go back to the old MyOSU portal</ListItemContentLinkName>
               </ListItemText>
-            </ListItemContentLink>
+            </ListItemContentLinkSVG>
           </ListItem>
         </List>
       </CardContent>
