@@ -4,20 +4,9 @@ import { renderWithUserContext } from '../../util/test-utils';
 import MoreNav from '../MainNav';
 import { mockGAEvent } from '../../setupTests';
 
-// required because of the overlay from Reakit
-global.document.createRange = () => ({
-  setStart: () => {},
-  setEnd: () => {},
-  commonAncestorContainer: {
-    nodeName: 'BODY',
-    ownerDocument: document
-  }
-});
-
 test('More menu has links that are tracked via Google Analytics', async () => {
   const { getByText } = renderWithUserContext(<MoreNav />);
 
-  //Profile icon click - this text is visually hidden
   const resources = getByText('Resources');
   const beta = getByText('Beta');
   const support = getByText('Get Support');
