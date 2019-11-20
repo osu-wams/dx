@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { themeSettings, breakpoints, styled } from '../theme';
 import { Event, IComponents } from '../util/gaTracking';
 
@@ -41,7 +41,7 @@ const PageTitle: FC<Props> = ({ title, badge }) => {
   }
 
   return (
-    <>
+    <HelmetProvider>
       <Title>
         {title}
         {showBadge && myBadge}
@@ -49,7 +49,7 @@ const PageTitle: FC<Props> = ({ title, badge }) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-    </>
+    </HelmetProvider>
   );
 };
 

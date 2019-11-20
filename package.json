@@ -11,8 +11,8 @@
     "@material-ui/core": "^4.6.0",
     "@reach/dialog": "^0.6.1",
     "@reach/menu-button": "^0.6.1",
-    "@reach/visually-hidden": "^0.6.1",
     "@reach/router": "^1.2.1",
+    "@reach/visually-hidden": "^0.6.1",
     "@types/jest": "^23.3.12",
     "@types/node": "^10.12.21",
     "@types/reach__router": "^1.2.6",
@@ -28,7 +28,7 @@
     "react-app-polyfill": "^1.0.4",
     "react-dom": "16.12.0",
     "react-ga": "^2.7.0",
-    "react-helmet": "^5.2.1",
+    "react-helmet-async": "^1.0.4",
     "react-loading-skeleton": "^1.2.0",
     "react-pose": "^4.0.9",
     "react-responsive": "^6.1.1",
@@ -108,7 +108,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "cross-env CI=true yarn run test --findRelatedTests **/*.{js,jsx,ts,tsx}"
+      "pre-push": "cross-env CI=true yarn run test"
     }
   },
   "lint-staged": {
