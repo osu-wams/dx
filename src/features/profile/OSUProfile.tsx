@@ -15,13 +15,6 @@ const OSUProfile = () => {
 
   return (
     <PlainCard>
-      {/*TODO: Remove/replace the theme selection UI */}
-      {process.env.REACT_APP_EXPERIMENTAL === 'true' &&
-        appContext.themes.map(t => (
-          <button key={t} onClick={e => appContext.setTheme(t)}>
-            {t}{' '}
-          </button>
-        ))}
       {person.loading && <Skeleton count={6} />}
       {!person.loading && !person.data && <p>Cannot find your information</p>}
       {!person.loading &&
