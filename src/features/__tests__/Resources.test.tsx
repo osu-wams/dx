@@ -1,13 +1,9 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
-import { render, authUser } from '../../util/test-utils';
+import { render, authUser, sleep } from '../../util/test-utils';
 import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
 import { mockGAEvent } from '../../setupTests';
-
-const sleep = (ms: number) => {
-  return new Promise(res => setTimeout(res, ms));
-};
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
@@ -104,7 +100,7 @@ describe('<Resources />', () => {
     const featured = await waitForElement(() => getByLabelText('Featured'));
     expect(featured).toHaveClass('selected');
 
-    const academic = await waitForElement(() => getByLabelText('Academic'));
+    // const academic = await waitForElement(() => getByLabelText('Academic'));
     const searchInput = getByPlaceholderText('Find resources') as HTMLInputElement;
     await sleep(50);
     // Search input value changed to "noResults"
@@ -165,7 +161,6 @@ describe('<Resources />', () => {
 
   it('should move to the All category when searching', async () => {
     const { getByLabelText, findByText, queryByText, getByPlaceholderText } = render(<Resources />);
-    // await sleep(100);
     let featured = await waitForElement(() => getByLabelText('Featured'));
     let all = await waitForElement(() => getByLabelText('All'));
     await sleep(2000);
@@ -186,7 +181,7 @@ describe('<Resources />', () => {
 
   describe('with audiences', () => {
     it('shows all resources', async () => {
-      const newAuthUser = { ...authUser, classification: { id: authUser.osuId } };
+      const newAuthUser = { ...authUser, classification: { id: authUser.data.osuId } };
       const { getByLabelText, findByText } = render(<Resources />, {
         user: newAuthUser
       });

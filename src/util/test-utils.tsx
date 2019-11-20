@@ -94,8 +94,13 @@ const renderWithAllContexts = (
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
 };
 
+// Adds a delay, sometimes necessary when running tests
+const sleep = (ms: number) => {
+  return new Promise(res => setTimeout(res, ms));
+};
+
 const render = renderWithAllContexts;
 // Pass a different user
 // const { getByTestId } = renderWithUserContext(<Dashboard />, { user: authUser });
 
-export { renderWithUserContext, renderWithAppContext, renderWithAllContexts, render };
+export { renderWithUserContext, renderWithAppContext, renderWithAllContexts, sleep, render };

@@ -5,16 +5,11 @@ import {
   act,
   getByTestId,
   findAllByText,
-  queryAllByText,
-  getAllByText
+  queryAllByText
 } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render, sleep } from '../../util/test-utils';
 import PastCourses from '../Academics/PastCourses';
 import mockGrades from '../../api/student/__mocks__/grades.data';
-
-const sleep = (ms: number) => {
-  return new Promise(res => setTimeout(res, ms));
-};
 
 const mockUseGrades = jest.fn();
 
