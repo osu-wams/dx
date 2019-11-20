@@ -1,6 +1,13 @@
 import axios from 'axios';
 import useAPICall from './useAPICall';
 import { useEffect, useState } from 'react';
+import { defaultTheme } from '../theme/themes';
+
+export const CLASSIFICATIONS = {
+  firstYear: 'First Year',
+  international: 'International Student',
+  graduate: 'Graduate Student'
+};
 
 export const CAMPUS_CODES = {
   bend: 'B',
@@ -18,14 +25,15 @@ export interface IUserClassificationAttributes {
 
 export interface IUserClassification {
   attributes?: IUserClassificationAttributes;
-  id: string;
+  id?: string;
 }
 
 export interface IUser {
   email?: string;
   isCanvasOptIn?: boolean;
-  classification?: IUserClassification;
-  audienceOverride?: IUserAudienceOverride;
+  classification: IUserClassification;
+  audienceOverride: IUserAudienceOverride;
+  theme: string;
 }
 
 export interface IUserState {
@@ -41,7 +49,14 @@ export interface IUserAudienceOverride {
 
 export interface IUserSettings {
   audienceOverride?: IUserAudienceOverride;
+  theme?: string;
 }
+
+const initialUser: IUser = {
+  classification: {},
+  audienceOverride: {},
+  theme: defaultTheme
+};
 
 const getUser = (): Promise<IUser> =>
   axios
@@ -52,63 +67,60 @@ const getUser = (): Promise<IUser> =>
       return e;
     });
 
-/**
- * Get a list of the users classifications
- * @param user - the user to determine classifications for
- */
-export const userClassifications = (user: IUser): string[] => {
-  const results: string[] = [];
-  if (user.classification !== undefined && user.classification.attributes !== undefined) {
-    const { level, campus, classification, isInternational } = user.classification.attributes;
-    if (level === 'Graduate') results.push('Graduate Student');
-    if (classification === 'Freshman') results.push('First Year');
-    if (isInternational) results.push('International Student');
-    if (campus) results.push(campus);
-  }
-  return results;
+const isFirstYear = (user: IUser): boolean =>
+  user.classification.attributes!.classification.toLowerCase() ===
+  CLASSIFICATIONS.firstYear.toLowerCase();
+
+const isInternational = (user: IUser): boolean => user.classification.attributes!.isInternational;
+
+const isGraduate = (user: IUser): boolean =>
+  user.classification.attributes!.level.toLowerCase() === CLASSIFICATIONS.graduate.toLowerCase();
+
+export const usersCampus = (
+  user: IUser
+): { campusName: string | undefined; campusCode: string } => {
+  const { campusCode } = user.classification!.attributes || { campusCode: 'C' };
+  const { campusCode: campusCodeOverride } = user.audienceOverride;
+  const selectedCampusCode = campusCodeOverride || campusCode;
+  console.log(selectedCampusCode);
+  // Find the key name associated to the users campusCode to use for matching in the audiences
+  // set for the announcement
+  const campusName = Object.keys(CAMPUS_CODES)
+    .map(k => k.toLowerCase())
+    .find(key => CAMPUS_CODES[key].toLowerCase() === selectedCampusCode.toLowerCase());
+  return { campusCode: selectedCampusCode, campusName };
 };
 
-/* classifications need to be added to the audience...
- *if (level === 'Graduate') results.push('Graduate Student');
-  if (classification === 'Freshman') results.push('First Year');
-  if (isInternational) re
- */
-
 export const hasAudience = (user: IUser, item: { audiences: string[] }): boolean => {
-  const classifications: string[] = [];
-  if (item.audiences && item.audiences.length === 0) return true;
-  if (user.classification !== undefined && user.classification.attributes !== undefined) {
-    // Find the key name associated to the users campusCode to use for matching in the audiences
-    // set for the announcement
-    const usersCampusName = Object.keys(CAMPUS_CODES)
-      .map(k => k.toLowerCase())
-      .find(
-        key =>
-          CAMPUS_CODES[key].toLowerCase() ===
-          user.classification!.attributes!.campusCode.toLowerCase()
-      );
-    if (!usersCampusName) {
-      // If there is no matching campusCode, then default to displaying the announcement
-      console.error(
-        `Expected campus code ${
-          user.classification!.attributes!.campusCode
-        } not found in configuration, this is an unexpected circumstance that needs to be repaired.`
-      );
-      // return true;
-    } else {
-      classifications.push(usersCampusName);
-    }
-    if (user.classification.attributes.level === 'Graduate')
-      classifications.push('Graduate Student');
-    if (user.classification.attributes.classification === 'Freshman')
-      classifications.push('First Year');
-    if (user.classification.attributes.isInternational)
-      classifications.push('International Student');
-    // The user has a classification and the item has audiences specified, return if
-    // this users campusCode exists in the audience list.
-    return item.audiences.some(a => classifications.includes(a.toLowerCase()));
+  const foundAudiences: string[] = [];
+  const { audiences } = item;
+  if (
+    (audiences && audiences.length === 0) ||
+    user.classification === undefined ||
+    user.classification.attributes === undefined
+  )
+    return true;
+
+  const { campusName, campusCode } = usersCampus(user) as {
+    campusName: string | undefined;
+    campusCode: string;
+  };
+
+  if (!campusName) {
+    console.error(
+      `Expected campus code ${campusCode} not found in configuration, this is an unexpected circumstance that needs to be repaired.`
+    );
+  } else {
+    foundAudiences.push(campusName);
   }
-  return true;
+
+  if (isGraduate(user)) foundAudiences.push(CLASSIFICATIONS.graduate);
+  if (isFirstYear(user)) foundAudiences.push(CLASSIFICATIONS.firstYear);
+  if (isInternational(user)) foundAudiences.push(CLASSIFICATIONS.international);
+
+  // The user has a classification and the item has audiences specified, return if
+  // this users campusCode exists in the audience list.
+  return item.audiences.some(a => foundAudiences.includes(a.toLowerCase()));
 };
 
 export const atCampus = (user: IUser, campusCode: string): boolean => {
@@ -121,12 +133,12 @@ export const atCampus = (user: IUser, campusCode: string): boolean => {
 
 export const useUser = () => {
   const [user, setUser] = useState<IUserState>({
-    data: {},
+    data: initialUser,
     error: false,
     loading: true,
     isCanvasOptIn: false
   });
-  const u = useAPICall<IUser>(getUser, undefined, data => data, {}, false);
+  const u = useAPICall<IUser>(getUser, undefined, data => data, initialUser, false);
 
   useEffect(() => {
     setUser({

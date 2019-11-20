@@ -85,8 +85,10 @@ const App = (props: AppProps) => {
       ...previous,
       infoButtonData: infoButtons.data,
       appVersions: appVersions.data,
-      selectedTheme: theme
+      selectedTheme: user.data ? user.data.theme : theme
     }));
+
+    if (user.data) setTheme(user.data.theme);
 
     if (user.error) {
       window.location.href = '/login';
@@ -115,7 +117,7 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme]);
+  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data]);
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>
