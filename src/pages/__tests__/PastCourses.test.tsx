@@ -24,7 +24,7 @@ jest.mock('../../api/student/grades', () => ({
 
 describe('<PastCourses />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseGrades.mockReturnValue(mockGrades);
   });
 
