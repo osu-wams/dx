@@ -85,12 +85,11 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     expect(queryByText(/MID Group Events/)).not.toBeInTheDocument();
   });
 
-  xit('should find final exams rendered for schedule card', async () => {
-    const { queryAllByText, getAllByText } = renderWithUserContext(<ScheduleCard />);
-    await waitForElement(() => getAllByText(/PH 212/));
+  it('should find 2 final exams for this student', async () => {
+    const { getAllByText } = renderWithUserContext(<ScheduleCard />);
 
-    // Mid terms are currently excluded due to inconsistent data source
-    expect(queryAllByText(/Final Exam/)).toHaveLength(2);
+    const arrayOfFinals = await waitForElement(() => getAllByText(/Final Exam/));
+    expect(arrayOfFinals).toHaveLength(2);
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
@@ -217,8 +216,8 @@ describe('<ScheduleCard /> with a simple schedule', () => {
     it(`finds meeting times ${daysAgo} days ago`, async () => {
       const startDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
       const todayShortCode = getDayShortcode(startDate);
-      mockGetStartDate.mockReturnValue(startDate);
-      mockUseCourseSchedule.mockReturnValue(
+      mockGetStartDate.mockReturnValueOnce(startDate);
+      mockUseCourseSchedule.mockReturnValueOnce(
         mockSimpleSchedule(startDate.toISOString().slice(0, 10))
       );
       const { getByText } = renderWithUserContext(<ScheduleCard />);
