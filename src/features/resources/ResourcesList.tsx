@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { fal } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { List, ListItem, ListItemContentLink } from '../../ui/List';
+import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../../ui/List';
 import { themeSettings } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 import { Event } from '../../util/gaTracking';
@@ -22,26 +22,20 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
         {resources.length > 0 &&
           resources.map((resource: IResourceResult) => (
             <ListItem spaced key={resource.id}>
-              <ListItemContentLink
+              <ListItemContentLinkSVG
                 spaced
                 href={resource.link}
                 onClick={() => Event('resource', resource.title)}
                 target="_blank"
               >
                 {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
-                <ResourceName>{resource.title}</ResourceName>
-              </ListItemContentLink>
+                <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
+              </ListItemContentLinkSVG>
             </ListItem>
           ))}
       </List>
     </div>
   );
 };
-
-const ResourceName = styled.div`
-  font-size: ${themeSettings.fontSize[18]};
-  color: ${({ theme }) => theme.features.resources.name.color};
-  padding-left: ${themeSettings.spacing.unit * 2}px;
-`;
 
 export default ResourcesList;

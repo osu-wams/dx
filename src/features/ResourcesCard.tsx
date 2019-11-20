@@ -5,7 +5,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { List, ListItem, ListItemContentLink } from '../ui/List';
+import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
 import { styled, ThemeContext, themeSettings } from '../theme';
 import { useResourcesByQueue } from '../api/resources';
 import { InternalLink } from '../ui/Link';
@@ -19,12 +19,6 @@ library.add(fal, fab);
 
 const ResourcesContainer = styled(CardContent)`
   padding-bottom: 0;
-`;
-
-const ResourceName = styled.div`
-  font-size: ${themeSettings.fontSize[18]};
-  color: ${({ theme }) => theme.features.resources.name.color};
-  padding-left: ${themeSettings.spacing.unit * 2}px;
 `;
 
 /**
@@ -58,14 +52,14 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
           <List data-testid="resource-container">
             {resources.map(resource => (
               <ListItem key={resource.id}>
-                <ListItemContentLink
+                <ListItemContentLinkSVG
                   href={resource.link}
                   target="_blank"
                   onClick={() => Event('resources-card', categ, resource.title)}
                 >
                   {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
-                  <ResourceName>{resource.title}</ResourceName>
-                </ListItemContentLink>
+                  <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
+                </ListItemContentLinkSVG>
               </ListItem>
             ))}
           </List>

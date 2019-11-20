@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faCalendar } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../ui/List';
+import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
 import { useAcademicCalendarEvents } from '../api/events';
 import { Date, DateDay, DateMonth } from '../ui/Date';
 import { ExternalLink } from '../ui/Link';
@@ -35,7 +35,7 @@ const AcademicCalendar = () => {
           <List>
             {calEvents.data.slice(0, 5).map(({ title, link, pubDate }) => (
               <ListItem key={title}>
-                <ListItemContentLink
+                <ListItemContentLinkSVG
                   href={link}
                   onClick={() => Event('academic-calendar', title, link)}
                   target="_blank"
@@ -47,7 +47,7 @@ const AcademicCalendar = () => {
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>
                   </ListItemText>
-                </ListItemContentLink>
+                </ListItemContentLinkSVG>
               </ListItem>
             ))}
           </List>

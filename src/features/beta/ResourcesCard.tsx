@@ -7,7 +7,7 @@ import {
   faExternalLink
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
-import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../../ui/List';
+import { List, ListItem, ListItemText, ListItemContentLink, ListItemContentLinkName } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
 import Url from '../../util/externalUrls.data';
 import { ThemeContext } from '../../theme';
@@ -30,7 +30,7 @@ const BetaResources: FC = () => {
                 color={themeContext.features.beta.resources.icon.color}
               />
               <ListItemText>
-                <ListItemHeader>Give us feedback on the beta</ListItemHeader>
+                <ListItemContentLinkName>Give us feedback on the beta</ListItemContentLinkName>
               </ListItemText>
             </ListItemContentLink>
           </ListItem>
@@ -42,7 +42,7 @@ const BetaResources: FC = () => {
             >
               <Icon icon={faUserHeadset} color={themeContext.features.beta.resources.icon.color} />
               <ListItemText>
-                <ListItemHeader>Get help with the dashboard</ListItemHeader>
+                <ListItemContentLinkName>Get help with the dashboard</ListItemContentLinkName>
               </ListItemText>
             </ListItemContentLink>
           </ListItem>
@@ -54,7 +54,7 @@ const BetaResources: FC = () => {
             >
               <Icon icon={faExternalLink} color={themeContext.features.beta.resources.icon.color} />
               <ListItemText>
-                <ListItemHeader>Go back to the old MyOSU portal</ListItemHeader>
+                <ListItemContentLinkName>Go back to the old MyOSU portal</ListItemContentLinkName>
               </ListItemText>
             </ListItemContentLink>
           </ListItem>

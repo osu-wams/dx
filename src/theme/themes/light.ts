@@ -468,7 +468,8 @@ export const light: ThemeConfiguration = {
           color: neutral550
         },
         link: {
-          color: primary,
+          color: neutral700,
+          hoverColor: primary,
           boxShadow: shadows[1]
         }
       }
