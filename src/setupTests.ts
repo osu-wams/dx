@@ -15,6 +15,12 @@ jest.mock('../src/util/gaTracking', () => ({
   }
 }));
 
+// Supress missing CSS warnings in tests from @reach ui components
+jest.mock('@reach/utils', () => ({
+  ...jest.requireActual('@reach/utils'),
+  checkStyles: jest.fn()
+}));
+
 mockGAEvent.mockResolvedValue(Promise.resolve(true));
 
 // Mock matchMedia for test env
