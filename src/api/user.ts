@@ -45,6 +45,9 @@ export interface IUserState {
 
 export interface IUserAudienceOverride {
   campusCode?: string;
+  firstYear?: boolean;
+  graduate?: boolean;
+  international?: boolean;
 }
 
 export interface IUserSettings {
@@ -52,7 +55,7 @@ export interface IUserSettings {
   theme?: string;
 }
 
-const initialUser: IUser = {
+export const initialUser: IUser = {
   classification: {},
   audienceOverride: {},
   theme: defaultTheme
@@ -67,22 +70,68 @@ const getUser = (): Promise<IUser> =>
       return e;
     });
 
-const isFirstYear = (user: IUser): boolean =>
-  user.classification.attributes!.classification.toLowerCase() ===
-  CLASSIFICATIONS.firstYear.toLowerCase();
+/**
+ * Returns the audience override value or users classification in that order
+ * of precedence.
+ * @param user the user to inspect
+ * @returns whether or not the override or user classification is true
+ */
+const isFirstYear = (user: IUser): boolean => {
+  if (user.audienceOverride && user.audienceOverride.firstYear !== undefined) {
+    return user.audienceOverride.firstYear;
+  }
+  return (
+    user.classification.attributes !== undefined &&
+    user.classification.attributes.classification.toLowerCase() ===
+      CLASSIFICATIONS.firstYear.toLowerCase()
+  );
+};
 
-const isInternational = (user: IUser): boolean => user.classification.attributes!.isInternational;
+/**
+ * Returns the audience override value or users classification in that order
+ * of precedence.
+ * @param user the user to inspect
+ * @returns whether or not the override or user classification is true
+ */
+const isInternational = (user: IUser): boolean => {
+  if (user.audienceOverride && user.audienceOverride.international !== undefined) {
+    return user.audienceOverride.international;
+  }
+  return (
+    user.classification.attributes !== undefined && user.classification.attributes.isInternational
+  );
+};
 
-const isGraduate = (user: IUser): boolean =>
-  user.classification.attributes!.level.toLowerCase() === CLASSIFICATIONS.graduate.toLowerCase();
+/**
+ * Returns the audience override value or users classification in that order
+ * of precedence.
+ * @param user the user to inspect
+ * @returns whether or not the override or user classification is true
+ */
+const isGraduate = (user: IUser): boolean => {
+  if (user.audienceOverride && user.audienceOverride.graduate !== undefined) {
+    return user.audienceOverride.graduate;
+  }
+  return (
+    user.classification.attributes !== undefined &&
+    user.classification.attributes.level.toLowerCase() === CLASSIFICATIONS.graduate.toLowerCase()
+  );
+};
 
+/**
+ * Returns the audience override value or users classification in that order
+ * of precedence.
+ * @param user the user to inspect
+ * @returns the campus name and campus code that the user is associated with
+ */
 export const usersCampus = (
   user: IUser
 ): { campusName: string | undefined; campusCode: string } => {
-  const { campusCode } = user.classification!.attributes || { campusCode: 'C' };
+  const { campusCode } = (user.classification && user.classification.attributes) || {
+    campusCode: 'C'
+  };
   const { campusCode: campusCodeOverride } = user.audienceOverride;
   const selectedCampusCode = campusCodeOverride || campusCode;
-  console.log(selectedCampusCode);
   // Find the key name associated to the users campusCode to use for matching in the audiences
   // set for the announcement
   const campusName = Object.keys(CAMPUS_CODES)
@@ -91,13 +140,19 @@ export const usersCampus = (
   return { campusCode: selectedCampusCode, campusName };
 };
 
+/**
+ * Detects if the user is associated with any of the audiences that are provided. An audience could be
+ * the users campus code or the classifications (both of which take into account the user override settings)
+ * @param user the user to inspect
+ * @param item a list of audiences to detect
+ */
 export const hasAudience = (user: IUser, item: { audiences: string[] }): boolean => {
   const foundAudiences: string[] = [];
   const { audiences } = item;
   if (
     (audiences && audiences.length === 0) ||
-    user.classification === undefined ||
-    user.classification.attributes === undefined
+    ((user.classification === undefined || user.classification.attributes === undefined) &&
+      user.audienceOverride === undefined)
   )
     return true;
 
@@ -120,7 +175,9 @@ export const hasAudience = (user: IUser, item: { audiences: string[] }): boolean
 
   // The user has a classification and the item has audiences specified, return if
   // this users campusCode exists in the audience list.
-  return item.audiences.some(a => foundAudiences.includes(a.toLowerCase()));
+  return item.audiences.some(a =>
+    foundAudiences.map(fa => fa.toLowerCase()).includes(a.toLowerCase())
+  );
 };
 
 export const atCampus = (user: IUser, campusCode: string): boolean => {

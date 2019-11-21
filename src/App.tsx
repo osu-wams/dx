@@ -88,7 +88,7 @@ const App = (props: AppProps) => {
       selectedTheme: user.data ? user.data.theme : theme
     }));
 
-    if (user.data) setTheme(user.data.theme);
+    setTheme(user.data ? user.data.theme : theme);
 
     if (user.error) {
       window.location.href = '/login';

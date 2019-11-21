@@ -1,34 +1,38 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Fieldset, Legend } from '../../../ui/forms';
-import { usersCampus, CAMPUS_CODES, postSettings } from '../../../api/user';
+import { CAMPUS_CODES, postSettings } from '../../../api/user';
 import { titleCase } from '../../../util/helpers';
 import { UserContext } from '../../../App';
+import { ISettingsProps } from '../Settings';
 
-export const RadioButtonsGroup = () => {
+export const RadioButtonsGroup = (props: ISettingsProps) => {
+  const { audienceOverride } = props.settings;
   const userContext = useContext(UserContext);
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    setValue(usersCampus(userContext.data).campusCode);
-  }, [userContext.data]);
+    if (audienceOverride) setValue(audienceOverride.campusCode || 'C');
+  }, [audienceOverride]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = (event.target as HTMLInputElement).value;
-    postSettings({ audienceOverride: { campusCode: selectedValue } }).then(d => {
+    const { audienceOverride } = userContext.data;
+    audienceOverride.campusCode = selectedValue;
+
+    postSettings({ audienceOverride }).then(d => {
       userContext.setUser({
         ...userContext,
-        data: { ...userContext.data, audienceOverride: { campusCode: selectedValue } }
+        data: { ...userContext.data, audienceOverride }
       });
-      setValue(selectedValue);
     });
   };
 
   return (
     <Fieldset>
-      {console.log('value', value)}
+      {console.log('campus', value, audienceOverride)}
       <Legend>Campus</Legend>
       <RadioGroup aria-label="campus" name="campus" value={value} onChange={handleChange}>
         {Object.keys(CAMPUS_CODES).map(key => (
