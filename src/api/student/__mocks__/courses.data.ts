@@ -149,7 +149,7 @@ export default {
             creditHourSession: 0,
             scheduleType: 'FNL',
             scheduleDescription: 'Final Exam',
-            weeklySchedule: ['Th']
+            weeklySchedule: ['T']
           },
           {
             beginDate: currentBeginDate,
@@ -336,9 +336,9 @@ export default {
           },
           {
             beginDate: currentEndDate,
-            beginTime: '16:00:00',
+            beginTime: '09:00:00',
             endDate: currentEndDate, // intentionally matching date to beginDate, the exam is on one day
-            endTime: '17:50:00',
+            endTime: '09:50:00',
             room: 'FNL',
             building: 'GRP',
             buildingDescription: 'Group Events',
@@ -347,7 +347,7 @@ export default {
             creditHourSession: 0,
             scheduleType: 'FNL',
             scheduleDescription: 'Final Exam',
-            weeklySchedule: ['W']
+            weeklySchedule: ['F']
           },
           {
             beginDate: currentBeginDate,
