@@ -3,6 +3,7 @@ import React from 'react';
 import { render } from '../../util/test-utils';
 import * as cache from '../../util/cache';
 import useAPICall from '../useAPICall';
+import { act, wait } from '@testing-library/react';
 
 jest.mock('../../util/cache.ts');
 
@@ -49,7 +50,9 @@ beforeEach(() => {
 describe('useAPICall', () => {
   it('performs the call', async () => {
     const { getByTestId, queryByTestId } = render(<HookWrapper />);
-    expect(testArgs.api).toHaveBeenCalled();
+
+    // Awaiting the initial call avoids act test warnings
+    await wait(() => expect(testArgs.api).toHaveBeenCalled());
     expect(testArgs.errorCallback).not.toHaveBeenCalled();
 
     const isLoading = await getByTestId('loading');
@@ -67,7 +70,7 @@ describe('useAPICall', () => {
   it('handles an HTTP 401', async () => {
     testArgs.api.mockRejectedValue({ response: { status: 401 } });
     render(<HookWrapper />);
-    expect(testArgs.api).toHaveBeenCalled();
+    await wait(() => expect(testArgs.api).toHaveBeenCalled());
     expect(testArgs.errorCallback).not.toHaveBeenCalled();
     setTimeout(() => {
       expect(window.location.assign).toHaveBeenCalled();
@@ -77,7 +80,7 @@ describe('useAPICall', () => {
   it('handles an HTTP 403', async () => {
     testArgs.api.mockRejectedValue({ response: { status: 403 } });
     const { getByTestId } = render(<HookWrapper />);
-    expect(testArgs.api).toHaveBeenCalled();
+    await wait(() => expect(testArgs.api).toHaveBeenCalled());
 
     setTimeout(async () => {
       const isLoading = await getByTestId('loading');
@@ -95,7 +98,7 @@ describe('useAPICall', () => {
   it('handles an HTTP 500', async () => {
     testArgs.api.mockRejectedValue({ response: { status: 500 } });
     const { getByTestId } = render(<HookWrapper />);
-    expect(testArgs.api).toHaveBeenCalled();
+    await wait(() => expect(testArgs.api).toHaveBeenCalled());
 
     setTimeout(async () => {
       const isLoading = await getByTestId('loading');
