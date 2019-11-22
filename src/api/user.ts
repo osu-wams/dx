@@ -259,14 +259,11 @@ export const hasAudience = (user: IUser, item: { audiences: string[] }): boolean
 /**
  * Detect if the users classification indicates that they are part of the campus provided
  * @param user the user to inspect
- * @param campusCode the campus code for comparison
+ * @param code the campus code for comparison
  */
-export const atCampus = (user: IUser, campusCode: string): boolean => {
-  return (
-    user.classification.attributes !== undefined &&
-    user.classification.attributes.campusCode !== undefined &&
-    user.classification.attributes.campusCode.toLowerCase() === campusCode.toLowerCase()
-  );
+export const atCampus = (user: IUser, code: string): boolean => {
+  const { campusCode } = usersCampus(user);
+  return campusCode.toLowerCase() === code.toLowerCase();
 };
 
 /**
