@@ -47,7 +47,13 @@ export const SwitchesGroup = () => {
       <Legend>Affiliations</Legend>
       <FormGroup>
         <FormControlLabel
-          control={<Switch checked={state.firstYear} onChange={handleChange('firstYear')} />}
+          control={
+            <Switch
+              data-testid="firstYear"
+              checked={state.firstYear}
+              onChange={handleChange('firstYear')}
+            />
+          }
           label={
             <Label>
               First Year Student
@@ -61,7 +67,11 @@ export const SwitchesGroup = () => {
         />
         <FormControlLabel
           control={
-            <Switch checked={state.international} onChange={handleChange('international')} />
+            <Switch
+              data-testid="international"
+              checked={state.international}
+              onChange={handleChange('international')}
+            />
           }
           label={
             <Label>
@@ -75,7 +85,13 @@ export const SwitchesGroup = () => {
           }
         />
         <FormControlLabel
-          control={<Switch checked={state.graduate} onChange={handleChange('graduate')} />}
+          control={
+            <Switch
+              data-testid="graduate"
+              checked={state.graduate}
+              onChange={handleChange('graduate')}
+            />
+          }
           label={
             <Label>
               Graduate Student
