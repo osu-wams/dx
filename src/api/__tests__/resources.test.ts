@@ -1,15 +1,13 @@
 /* eslint-disable no-unused-vars */
-
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { authUser } from '../../util/test-utils';
 import { getResources, getResourcesByQueue, getCategories } from '../resources';
 import { resourcesData, categoriesData } from '../__mocks__/resources.data';
 
 const mock = new MockAdapter(axios);
 
 describe('getResources', () => {
-  it.skip('gets all resources for a non-student', async () => {
+  it('gets all resources for a non-student', async () => {
     mock.onGet('/api/resources').reply(200, resourcesData.data);
     const result = await getResources();
     expect(result.map(r => r.title)).toStrictEqual(resourcesData.data.map(r => r.title));
