@@ -38,9 +38,11 @@ const ScheduleCard = () => {
   const getCoursesOnSelectedDay = () => {
     const selectedDayShortcode = getDayShortcode(selectedDay);
     return coursesOnDay(courses.data, selectedDayShortcode).filter(course => {
-      course.attributes.meetingTimes = course.attributes.meetingTimes.filter(meeting =>
-        isWithinRange(selectedDay, meeting.beginDate, meeting.endDate)
-      );
+      course.attributes.meetingTimes = course.attributes.meetingTimes.filter(meeting => {
+        console.log(meeting, selectedDay);
+        console.log(isWithinRange(selectedDay, meeting.beginDate, meeting.endDate));
+        return isWithinRange(selectedDay, meeting.beginDate, meeting.endDate);
+      });
       return course.attributes.meetingTimes.length;
     });
   };

@@ -1,5 +1,12 @@
 import React from 'react';
-import { wait, waitForElement, fireEvent, getAllByText } from '@testing-library/react';
+import {
+  wait,
+  waitForElement,
+  fireEvent,
+  getAllByText,
+  findByTitle,
+  getByTestId
+} from '@testing-library/react';
 import { renderWithUserContext, authUser } from '../../util/test-utils';
 import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
@@ -85,11 +92,14 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     expect(queryByText(/MID Group Events/)).not.toBeInTheDocument();
   });
 
-  // 2 classes have finals and depending on day of the week 1 or 2 finals might show up
-  it('should find 1 or 2 final exams for this student', async () => {
-    const { getAllByText } = renderWithUserContext(<ScheduleCard />);
-    const arrayOfFinals = await waitForElement(() => getAllByText(/Final Exam/));
-    expect(arrayOfFinals).toHaveLength(arrayOfFinals.length);
+  it('should find Testo Physics, open modal and find the final exam for that course', async () => {
+    const { getAllByText, getByTestId } = renderWithUserContext(<ScheduleCard />);
+    const course = await waitForElement(() => getAllByText(/Lecture Testo/));
+
+    await fireEvent.click(course[0]);
+    const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
+    expect(courseDialog).toHaveTextContent(/TESTO Physics/i);
+    expect(courseDialog).toHaveTextContent(/Final Exam/i);
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
@@ -215,7 +225,7 @@ describe('<ScheduleCard /> with a simple schedule', () => {
   [1, 2, 3, 4, 5, 6, 7].forEach(async daysAgo => {
     it(`finds meeting times ${daysAgo} days ago`, async () => {
       const startDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
-      console.log(startDate);
+      console.log(startDate.toString());
       const todayShortCode = getDayShortcode(startDate);
       mockGetStartDate.mockReturnValueOnce(startDate);
       mockUseCourseSchedule.mockReturnValueOnce(

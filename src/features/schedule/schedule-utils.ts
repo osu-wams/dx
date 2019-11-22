@@ -12,7 +12,9 @@ export interface ICoursesMap {
 }
 
 export const getStartDate = () => {
-  return new Date();
+  const offset = new Date().getTimezoneOffset();
+  const currentDate = new Date();
+  // FNS time functions
 };
 
 /**

@@ -149,7 +149,7 @@ export default {
             creditHourSession: 0,
             scheduleType: 'FNL',
             scheduleDescription: 'Final Exam',
-            weeklySchedule: ['T']
+            weeklySchedule: ['M'] // every day so we can test display
           },
           {
             beginDate: currentBeginDate,
@@ -286,7 +286,7 @@ export default {
         sectionNumber: '070',
         term: '201801',
         termDescription: 'Fall 2017',
-        scheduleDescription: 'Lecture',
+        scheduleDescription: 'Lecture Testo',
         scheduleType: 'A',
         creditHours: 4,
         registrationStatus: '**Web Registered**',
@@ -695,9 +695,9 @@ export const mockSimpleSchedule = (startDate: string) => {
             },
             {
               beginDate: startDate,
-              beginTime: '02:00:00',
+              beginTime: '09:00:00',
               endDate: startDate,
-              endTime: '04:20:00',
+              endTime: '09:20:00',
               room: '101',
               building: 'PHAR',
               buildingDescription: 'Morning Building',
