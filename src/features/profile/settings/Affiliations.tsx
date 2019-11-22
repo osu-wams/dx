@@ -2,34 +2,42 @@ import React, { useEffect, useState, useContext } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { Fieldset, Legend, FormGroup } from '../../../ui/forms';
-import { hasAudience, CLASSIFICATIONS, postSettings, IUserSettings } from '../../../api/user';
+import { postSettings, usersSettings } from '../../../api/user';
 import { UserContext } from '../../../App';
-import { ISettingsProps } from '../Settings';
+import { styled, themeSettings } from '../../../theme';
+import { settingIsOverridden } from '../../../api/user';
 
-export const SwitchesGroup = (props: ISettingsProps) => {
+const Label = styled.span`
+  font-size: ${themeSettings.fontSize[16]};
+  > span {
+    color: ${({ theme }) => theme.features.profile.settings.emphasis.color};
+  }
+`;
+
+export const SwitchesGroup = () => {
   const userContext = useContext(UserContext);
   const [state, setState] = useState({ firstYear: false, international: false, graduate: false });
 
   useEffect(() => {
-    if (props.settings.audienceOverride) {
-      const { firstYear, graduate, international } = props.settings.audienceOverride;
+    if (userContext.data.audienceOverride) {
+      const { firstYear, graduate, international } = userContext.data.audienceOverride;
       setState({
         firstYear: firstYear !== undefined ? firstYear : false,
         graduate: graduate !== undefined ? graduate : false,
         international: international !== undefined ? international : false
       });
     }
-  }, [props.settings]);
+  }, [userContext.data]);
 
   const handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = (event.target as HTMLInputElement).checked;
-    const { audienceOverride } = userContext.data;
-    audienceOverride[name] = checked;
-    postSettings({ audienceOverride }).then(d => {
-      console.log(audienceOverride);
+    const settings = usersSettings(userContext.data);
+    settings.audienceOverride![name] = checked;
+
+    postSettings({ audienceOverride: settings.audienceOverride }).then(d => {
       userContext.setUser({
         ...userContext,
-        data: { ...userContext.data, audienceOverride }
+        data: { ...userContext.data, ...settings }
       });
     });
   };
@@ -40,17 +48,44 @@ export const SwitchesGroup = (props: ISettingsProps) => {
       <FormGroup>
         <FormControlLabel
           control={<Switch checked={state.firstYear} onChange={handleChange('firstYear')} />}
-          label="First Year Student"
+          label={
+            <Label>
+              First Year Student
+              <span>
+                {settingIsOverridden(userContext.data, 'firstYear', state.firstYear, false)
+                  ? ' (Override) '
+                  : ''}
+              </span>
+            </Label>
+          }
         />
         <FormControlLabel
           control={
             <Switch checked={state.international} onChange={handleChange('international')} />
           }
-          label="International Student"
+          label={
+            <Label>
+              International Student
+              <span>
+                {settingIsOverridden(userContext.data, 'international', state.international, false)
+                  ? ' (Override) '
+                  : ''}
+              </span>
+            </Label>
+          }
         />
         <FormControlLabel
           control={<Switch checked={state.graduate} onChange={handleChange('graduate')} />}
-          label="Graduate Student"
+          label={
+            <Label>
+              Graduate Student
+              <span>
+                {settingIsOverridden(userContext.data, 'graduate', state.graduate, false)
+                  ? ' (Override) '
+                  : ''}
+              </span>
+            </Label>
+          }
         />
       </FormGroup>
     </Fieldset>

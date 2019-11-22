@@ -3,6 +3,8 @@ import useAPICall from './useAPICall';
 import { useEffect, useState } from 'react';
 import { defaultTheme } from '../theme/themes';
 
+export const defaultCampus = 'C';
+
 export const CLASSIFICATIONS = {
   firstYear: 'First Year',
   international: 'International Student',
@@ -119,6 +121,80 @@ const isGraduate = (user: IUser): boolean => {
 };
 
 /**
+ * This method returns a fully populated user settings theme and overrides taking into consideration
+ * thier student classification as well as any potentially persisted overrides
+ * @param user the user to inspect
+ */
+export const usersSettings = (user: IUser): IUserSettings => ({
+  theme: user.theme,
+  audienceOverride: {
+    campusCode: usersCampus(user).campusCode,
+    firstYear: isFirstYear(user),
+    international: isInternational(user),
+    graduate: isGraduate(user)
+  }
+});
+
+/**
+ * Detect if the user setting matches the default, taking into consideration the student classification if it exists.
+ * @param user the user to inspect
+ * @param propertyName check the student classification property value
+ * @param currentValue the value to consider when the student classification doesn't exist
+ * @param defaultValue the default value for comparison
+ */
+export const settingIsDefault = (
+  user: IUser,
+  propertyName: string,
+  currentValue: string,
+  defaultValue: string
+): boolean => {
+  const {
+    classification: { attributes }
+  } = user;
+  if (attributes) {
+    return attributes[propertyName] === defaultValue;
+  } else {
+    return currentValue === defaultValue;
+  }
+};
+
+/**
+ * Detect if the user setting is an override of the default, taking into consideration the student classification if it exists.
+ * @param user the user to inspect
+ * @param propertyName check the student classification property value
+ * @param currentValue the value to consider when the student classification doesn't exist
+ * @param defaultValue the default value for comparison
+ */
+export const settingIsOverridden = (
+  user: IUser,
+  propertyName: string,
+  currentValue: boolean,
+  defaultValue: boolean
+): boolean => {
+  const {
+    classification: { attributes }
+  } = user;
+  if (attributes) {
+    const { isInternational, classification, level } = attributes;
+    switch (propertyName) {
+      case 'international':
+        return isInternational !== currentValue;
+      case 'firstYear':
+        return (
+          (classification.toLowerCase() === CLASSIFICATIONS.firstYear.toLowerCase()) !==
+          currentValue
+        );
+      case 'graduate':
+        return (level.toLowerCase() === CLASSIFICATIONS.graduate.toLowerCase()) !== currentValue;
+      default:
+        return false;
+    }
+  } else {
+    return currentValue !== defaultValue;
+  }
+};
+
+/**
  * Returns the audience override value or users classification in that order
  * of precedence.
  * @param user the user to inspect
@@ -180,14 +256,23 @@ export const hasAudience = (user: IUser, item: { audiences: string[] }): boolean
   );
 };
 
+/**
+ * Detect if the users classification indicates that they are part of the campus provided
+ * @param user the user to inspect
+ * @param campusCode the campus code for comparison
+ */
 export const atCampus = (user: IUser, campusCode: string): boolean => {
   return (
-    user.classification !== undefined &&
     user.classification.attributes !== undefined &&
+    user.classification.attributes.campusCode !== undefined &&
     user.classification.attributes.campusCode.toLowerCase() === campusCode.toLowerCase()
   );
 };
 
+/**
+ * The primary hook to fetch the user session and set the user for access throughout the application, this
+ * is intended to be set near the root level of the application and exposed by way of the UserContext.
+ */
 export const useUser = () => {
   const [user, setUser] = useState<IUserState>({
     data: initialUser,
@@ -215,6 +300,10 @@ export const useUser = () => {
   };
 };
 
+/**
+ * Send the settings to the backend to be saved.
+ * @param settings the settings to persist to the backend
+ */
 export const postSettings = (settings: IUserSettings): Promise<IUserSettings> =>
   axios
     .post('/api/user/settings', settings)

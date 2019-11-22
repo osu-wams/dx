@@ -3,14 +3,12 @@ import { faEnvelope, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-ico
 import Skeleton from 'react-loading-skeleton';
 import { usePerson, IPersonsAttributes } from '../../api/persons/persons';
 import PlainCard from '../../ui/PlainCard';
-import { AppContext } from '../../App';
 import { ThemeContext } from '../../theme';
 import { ContactInfo, PairData, PersonName, renderPhone } from './osuprofile/osuprofile-utils';
 import { ProfileAddress } from './osuprofile/ProfileAddress';
 
 const OSUProfile = () => {
   const themeContext = useContext(ThemeContext);
-  const appContext = useContext(AppContext);
   const person = usePerson();
 
   return (

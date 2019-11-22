@@ -315,6 +315,11 @@ export const dark: ThemeConfiguration = {
       },
       icon: {
         color: primary
+      },
+      settings: {
+        emphasis: {
+          color: primary
+        }
       }
     },
     resources: {

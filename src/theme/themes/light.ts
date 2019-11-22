@@ -315,6 +315,11 @@ export const light: ThemeConfiguration = {
       },
       icon: {
         color: primary
+      },
+      settings: {
+        emphasis: {
+          color: primary
+        }
       }
     },
     resources: {
