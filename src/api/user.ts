@@ -6,6 +6,11 @@ import { defaultTheme } from '../theme/themes';
 export const defaultCampus = 'C';
 
 export const CLASSIFICATIONS = {
+  firstYear: ['freshman', 'vet med-first year'],
+  graduate: ['graduate', 'cascades partner grad course', 'e-campus graduate course']
+};
+
+export const CLASSIFICATION_AUDIENCES = {
   firstYear: 'First Year',
   international: 'International Student',
   graduate: 'Graduate Student'
@@ -84,8 +89,7 @@ const isFirstYear = (user: IUser): boolean => {
   }
   return (
     user.classification.attributes !== undefined &&
-    user.classification.attributes.classification.toLowerCase() ===
-      CLASSIFICATIONS.firstYear.toLowerCase()
+    CLASSIFICATIONS.firstYear.includes(user.classification.attributes.classification.toLowerCase())
   );
 };
 
@@ -116,7 +120,7 @@ const isGraduate = (user: IUser): boolean => {
   }
   return (
     user.classification.attributes !== undefined &&
-    user.classification.attributes.level.toLowerCase() === CLASSIFICATIONS.graduate.toLowerCase()
+    CLASSIFICATIONS.graduate.includes(user.classification.attributes.level.toLowerCase())
   );
 };
 
@@ -178,14 +182,26 @@ export const settingIsOverridden = (
     const { isInternational, classification, level } = attributes;
     switch (propertyName) {
       case 'international':
-        return isInternational !== currentValue;
+        if (isInternational && currentValue !== undefined) {
+          return !currentValue;
+        } else {
+          return false;
+        }
       case 'firstYear':
-        return (
-          (classification.toLowerCase() === CLASSIFICATIONS.firstYear.toLowerCase()) !==
-          currentValue
-        );
+        if (
+          CLASSIFICATIONS.firstYear.includes(classification.toLowerCase()) &&
+          currentValue !== undefined
+        ) {
+          return !currentValue;
+        } else {
+          return false;
+        }
       case 'graduate':
-        return (level.toLowerCase() === CLASSIFICATIONS.graduate.toLowerCase()) !== currentValue;
+        if (CLASSIFICATIONS.graduate.includes(level.toLowerCase()) && currentValue !== undefined) {
+          return !currentValue;
+        } else {
+          return false;
+        }
       default:
         return false;
     }
@@ -245,9 +261,9 @@ export const hasAudience = (user: IUser, item: { audiences: string[] }): boolean
     foundAudiences.push(campusName);
   }
 
-  if (isGraduate(user)) foundAudiences.push(CLASSIFICATIONS.graduate);
-  if (isFirstYear(user)) foundAudiences.push(CLASSIFICATIONS.firstYear);
-  if (isInternational(user)) foundAudiences.push(CLASSIFICATIONS.international);
+  if (isGraduate(user)) foundAudiences.push(CLASSIFICATION_AUDIENCES.graduate);
+  if (isFirstYear(user)) foundAudiences.push(CLASSIFICATION_AUDIENCES.firstYear);
+  if (isInternational(user)) foundAudiences.push(CLASSIFICATION_AUDIENCES.international);
 
   // The user has a classification and the item has audiences specified, return if
   // this users campusCode exists in the audience list.
