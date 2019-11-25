@@ -203,7 +203,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
           </List>
         </div>
       ))}
-      {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL', 'MID']).length > 0 && (
+      {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL']).length > 0 && (
         <>
           <Divider />
           <List>
@@ -214,7 +214,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
                 </ListItemText>
               </ListItemContent>
             </CourseListItem>
-            {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL', 'MID']).map(m => (
+            {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL']).map(m => (
               <CourseListItem key={generateId()}>
                 <ListItemContent>
                   <ListItemText>
