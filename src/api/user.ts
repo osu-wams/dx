@@ -156,7 +156,7 @@ export const settingIsDefault = (
     classification: { attributes }
   } = user;
   if (attributes) {
-    return attributes[propertyName] === defaultValue;
+    return attributes[propertyName] === currentValue;
   } else {
     return currentValue === defaultValue;
   }
