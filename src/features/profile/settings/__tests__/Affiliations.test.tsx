@@ -13,17 +13,17 @@ jest.mock('../../../../api/user', () => ({
 }));
 
 describe('<Affiliations />', () => {
-  it('renders with default test data as overridden settings', async () => {
-    const { getAllByText } = render(<Affiliations />);
-    expect(getAllByText('(Override)')).toHaveLength(3);
-  });
-
-  it('renders with test data as not overridden settings', async () => {
-    authUserAudienceOverride.firstYear = true;
-    authUserAudienceOverride.graduate = true;
-    authUserAudienceOverride.international = true;
+  it('renders with default test data settings', async () => {
     const { queryAllByText } = render(<Affiliations />);
     expect(queryAllByText('(Override)')).toHaveLength(0);
+  });
+
+  it('renders with test data as overridden settings', async () => {
+    authUserAudienceOverride.firstYear = false;
+    authUserAudienceOverride.graduate = false;
+    authUserAudienceOverride.international = false;
+    const { queryAllByText } = render(<Affiliations />);
+    expect(queryAllByText('(Override)')).toHaveLength(3);
   });
 
   it('submits updates when a change is fired', async () => {

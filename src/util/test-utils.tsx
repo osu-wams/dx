@@ -8,10 +8,10 @@ import { themesLookup, defaultTheme } from '../theme/themes';
 import { IUserAudienceOverride } from '../api/user';
 
 export const authUserAudienceOverride: IUserAudienceOverride = {
-  campusCode: 'B',
-  graduate: false,
-  international: false,
-  firstYear: false
+  campusCode: 'C',
+  graduate: true,
+  international: true,
+  firstYear: true
 };
 
 export const authUserClassification: IUserClassification = {
