@@ -1,6 +1,6 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render, mockAppContext } from '../../util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import { resourcesData } from '../../api/__mocks__/resources.data';
 import ResourcesCard from '../ResourcesCard';
@@ -79,10 +79,9 @@ describe('with an InfoButton in the CardFooter', () => {
   });
 
   test('does not display the button when the infoButtonData is missing it', async () => {
+    mockAppContext.infoButtonData = [{ id: 'invalid-id', content: 'content', title: 'title' }];
     const { queryByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
-      appContext: {
-        infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
-      }
+      appContext: mockAppContext
     });
 
     const element = queryByTestId(validIinfoButtonId);
@@ -90,10 +89,11 @@ describe('with an InfoButton in the CardFooter', () => {
   });
 
   test('displays the button when the infoButtonData is included', async () => {
+    mockAppContext.infoButtonData = [
+      { id: validIinfoButtonId, content: 'content', title: 'title' }
+    ];
     const { getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
-      appContext: {
-        infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
-      }
+      appContext: mockAppContext
     });
 
     const element = await waitForElement(() => getByTestId(validIinfoButtonId));
