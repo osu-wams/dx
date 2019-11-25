@@ -50,7 +50,7 @@ export const RadioButtonsGroup = () => {
           <FormControlLabel
             key={key}
             value={CAMPUS_CODES[key]}
-            control={<Radio />}
+            control={<Radio data-testid={key} />}
             label={
               <Label>
                 {titleCase(key)}

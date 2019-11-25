@@ -2,8 +2,6 @@ import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render, authUserAudienceOverride } from '../../../../util/test-utils';
 import Affiliations from '../Affiliations';
-//import { gpaData, gpaUndergraduateData } from '../../api/student/__mocks__/gpa.data';
-//import { gpaInitialState } from '../../api/student/gpa';
 
 const mockPostSettings = jest.fn(() => Promise.resolve());
 
@@ -27,7 +25,7 @@ describe('<Affiliations />', () => {
   });
 
   it('submits updates when a change is fired', async () => {
-    const { getByTestId, debug } = render(<Affiliations />);
+    const { getByTestId } = render(<Affiliations />);
     const firstYearSwitch = getByTestId('firstYear');
     fireEvent.click(firstYearSwitch.children[0].children[0]);
     const internationalSwitch = getByTestId('international');

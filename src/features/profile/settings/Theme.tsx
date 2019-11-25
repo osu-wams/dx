@@ -36,7 +36,12 @@ export const RadioButtonsGroup = () => {
       <Legend>Theme</Legend>
       <RadioGroup aria-label="theme" name="theme" value={value} onChange={handleChange}>
         {appContext.themes.map(t => (
-          <FormControlLabel key={t} value={t} control={<Radio />} label={titleCase(t)} />
+          <FormControlLabel
+            key={t}
+            value={t}
+            control={<Radio data-testid={t} />}
+            label={titleCase(t)}
+          />
         ))}
       </RadioGroup>
     </Fieldset>
