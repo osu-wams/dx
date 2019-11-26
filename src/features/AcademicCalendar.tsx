@@ -1,6 +1,5 @@
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { format } from 'date-fns';
 import { faCalendar } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLinkSVG } from '../ui/List';
@@ -9,6 +8,7 @@ import { Date, DateDay, DateMonth } from '../ui/Date';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
+import { format } from '../util/helpers';
 
 /**
  * Academic Calendar Card
@@ -41,7 +41,7 @@ const AcademicCalendar = () => {
                   target="_blank"
                 >
                   <Date>
-                    <DateDay>{format(pubDate, 'D')}</DateDay>
+                    <DateDay>{format(pubDate, 'd')}</DateDay>
                     <DateMonth>{format(pubDate, 'MMM')}</DateMonth>
                   </Date>
                   <ListItemText>

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { formatDate, formatDollars } from '../util/helpers';
+import { format, formatDollars } from '../util/helpers';
 import { themeSettings, styled } from '../theme';
 import { useAccountTransactions } from '../api/student/account-transactions';
 import { ExternalLink } from '../ui/Link';
@@ -113,7 +113,7 @@ const FinancialTransactions: FC = () => {
                   </TransactionAmount>
                   <TransactionDetails>
                     <TransactionName>{transaction.description}</TransactionName>
-                    <TransactionDetail>{formatDate(transaction.entryDate)}</TransactionDetail>
+                    <TransactionDetail>{format(transaction.entryDate)}</TransactionDetail>
                   </TransactionDetails>
                 </TableRow>
               ))}
