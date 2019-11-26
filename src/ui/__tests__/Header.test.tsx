@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, waitForElement } from '@testing-library/react';
-import { render, authUserClassification } from '../../util/test-utils';
+import { render, authUserClassification, authUserAudienceOverride } from '../../util/test-utils';
 import Header from '../Header';
 import Dashboard from '../../pages/Dashboard';
 import { mockGAEvent } from '../../setupTests';
@@ -59,6 +59,7 @@ describe('as a logged in user', () => {
 describe('as a Bend user', () => {
   it('renders the appropriate header logo', async () => {
     authUserClassification!.attributes!.campusCode = 'B';
+    authUserAudienceOverride.campusCode = 'B';
     const { getByTestId } = render(<Header />);
     const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
     expect(appHeader).toBeInTheDocument();
@@ -69,6 +70,7 @@ describe('as a Bend user', () => {
 describe('as an Ecampus user', () => {
   it('renders the appropriate header logo', async () => {
     authUserClassification!.attributes!.campusCode = 'DSC';
+    authUserAudienceOverride.campusCode = 'DSC';
     const { getByTestId } = render(<Header />);
     const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
     expect(appHeader).toBeInTheDocument();

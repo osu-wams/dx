@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from '@reach/router';
-import styled from 'styled-components';
 import { faHome, faGraduationCap, faHandsUsd } from '@fortawesome/pro-light-svg-icons';
-import { Color } from '../theme';
 import Icon from './Icon';
 import { Event } from '../util/gaTracking';
 import { MoreNav } from './MoreNav';
+import { styled } from '../theme';
 
 const Nav = styled.nav`
   display: flex;
@@ -23,7 +22,8 @@ const NavLink = styled(Link)`
   padding: 0 4px;
   line-height: 30px;
   text-decoration: none;
-  color: ${Color['neutral-550']};
+  background-color: ${({ theme }) => theme.header.mainNavList.background};
+  color: ${({ theme }) => theme.header.mainNavList.color};
   /* select and hover styles */
   &[aria-current],
   &[aria-current] > svg,
@@ -33,7 +33,7 @@ const NavLink = styled(Link)`
   &:focus > svg,
   &:hover,
   &:hover > svg {
-    color: ${Color['orange-400']};
+    color: ${({ theme }) => theme.header.mainNavList.hoverColor};
   }
   & > svg {
     font-size: 24px;

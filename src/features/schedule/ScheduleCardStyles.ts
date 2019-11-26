@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { theme, Color } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { CardBase } from '../../ui/Card';
 
 const CardSection = styled.div`
@@ -9,13 +8,13 @@ const CardSection = styled.div`
 `;
 
 const Card = styled(CardBase)`
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit * 2}px;
 `;
 
 const Header = styled.div`
-  color: ${Color['neutral-600']};
-  font-size: ${theme.fontSize[18]};
-  margin-bottom: ${theme.spacing.unit * 2}px;
+  color: ${({ theme }) => theme.features.academics.courses.header.color};
+  font-size: ${themeSettings.fontSize[18]};
+  margin-bottom: ${themeSettings.spacing.unit * 2}px;
 `;
 
 const NoItems = styled.div`
@@ -29,9 +28,9 @@ const NoItemsImage = styled.img`
 `;
 
 const NoItemsText = styled.p`
-  color: ${Color['neutral-550']};
+  color: ${({ theme }) => theme.features.academics.courses.emptyList.text.color};
   a {
-    color: ${Color['orange-400']};
+    color: ${({ theme }) => theme.features.academics.courses.emptyList.link.color};
     text-decoration: none;
     font-weight: 600;
     &:hover,
@@ -43,10 +42,10 @@ const NoItemsText = styled.p`
 `;
 
 const SectionHeader = styled.h3`
-  color: ${Color['neutral-550']};
+  color: ${({ theme }) => theme.features.academics.courses.sectionHeader.color};
   font-weight: 600;
-  font-size: ${theme.fontSize[16]};
-  margin-bottom: ${theme.spacing.unit}px;
+  font-size: ${themeSettings.fontSize[16]};
+  margin-bottom: ${themeSettings.spacing.unit}px;
   margin-top: 0;
 `;
 

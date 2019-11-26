@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import MyDialog from '../ui/MyDialog';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import Label from '../ui/Label';
-import { Color } from '../theme';
 import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { Event } from '../util/gaTracking';
 import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
 import * as cache from '../util/cache';
+import { ThemeContext } from '../theme';
 
 interface MasqueradeProps {
   showMasqueradeDialog: boolean;
@@ -16,6 +16,7 @@ interface MasqueradeProps {
 }
 
 export const Masquerade = (props: MasqueradeProps) => {
+  const themeContext = useContext(ThemeContext);
   const { showMasqueradeDialog, toggleMasqueradeDialog } = props;
   const [masqueradeId, setMasqueradeId] = useState('');
   const [masqueradeReason, setMasqueradeReason] = useState('');
@@ -94,6 +95,7 @@ export const Masquerade = (props: MasqueradeProps) => {
    * usage as themselves.
    */
   const masqueradeText = () => {
+    console.log(masqueradeId);
     if (masqueradeId === '') {
       return 'Remove Masquerade';
     } else {
@@ -140,8 +142,10 @@ export const Masquerade = (props: MasqueradeProps) => {
       <Button
         type="submit"
         disabled={masqueradeDisabled()}
-        bg={masqueradeDisabled() ? Color['neutral-200'] : undefined}
-        fg={masqueradeDisabled() ? Color['neutral-700'] : undefined}
+        bg={
+          masqueradeDisabled() ? themeContext.features.masquerade.buttonAlt.background : undefined
+        }
+        fg={masqueradeDisabled() ? themeContext.features.masquerade.buttonAlt.color : undefined}
         onClick={() => {
           Event('footer', 'masquerade', 'submit form to masquerade');
           performMasquerade();
@@ -149,7 +153,11 @@ export const Masquerade = (props: MasqueradeProps) => {
       >
         {masqueradeText()}
       </Button>
-      <Button bg={Color['neutral-200']} fg={Color['neutral-700']} onClick={toggleMasqueradeDialog}>
+      <Button
+        bg={themeContext.features.masquerade.buttonAlt.background}
+        fg={themeContext.features.masquerade.buttonAlt.color}
+        onClick={toggleMasqueradeDialog}
+      >
         Cancel
       </Button>
     </MyDialog>

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
@@ -16,20 +15,22 @@ import {
 import { usePlannerItems } from '../api/student/planner-items';
 import { useCourseSchedule } from '../api/student';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
-import { theme, Color } from '../theme';
+import { themeSettings } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { UserContext } from '../App';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { courseCodeOrIcon } from './Courses';
+import { styled, ThemeContext } from '../theme';
 
 const NoItems = styled.div`
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  padding: ${theme.spacing.unit * 4}px ${theme.spacing.unit * 8}px 0px ${theme.spacing.unit * 8}px;
+  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
+    ${themeSettings.spacing.unit * 8}px;
 `;
 
 const NoItemsImage = styled.img`
@@ -37,7 +38,7 @@ const NoItemsImage = styled.img`
 `;
 
 const NoItemsText = styled.p`
-  color: ${Color['neutral-550']};
+  color: ${({ theme }) => theme.features.academics.courses.plannerItems.emptyText.color};
   text-align: center;
 `;
 
@@ -63,6 +64,7 @@ const canvasUrl = url => {
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
+  const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
   const { data, loading } = usePlannerItems(() => {
     user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
@@ -90,7 +92,10 @@ const PlannerItems = () => {
                   {courseCodeOrIcon(
                     context_name,
                     courses.data,
-                    <Icon icon={faFileEdit} color={Color['orange-200']} />
+                    <Icon
+                      icon={faFileEdit}
+                      color={themeContext.features.academics.courses.plannerItems.list.icon.color}
+                    />
                   )}
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>

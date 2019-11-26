@@ -1,34 +1,30 @@
 import React, { FC, useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
-import { faCube, IconDefinition } from '@fortawesome/pro-light-svg-icons';
+import { fal } from '@fortawesome/pro-light-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import Icon from '../ui/Icon';
 import { List, ListItem, ListItemContentLink } from '../ui/List';
-import { Color, theme } from '../theme';
+import { styled, ThemeContext, themeSettings } from '../theme';
 import { useResourcesByQueue } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
 import { hasAudience } from '../api/user';
+import { IconLookup } from './resources/resources-utils';
+
+// Setup a font awesome library to use for searching icons from the backend.
+library.add(fal, fab);
 
 const ResourcesContainer = styled(CardContent)`
   padding-bottom: 0;
 `;
 
 const ResourceName = styled.div`
-  font-size: ${theme.fontSize[18]};
-  color: ${Color['neutral-700']};
-  padding-left: ${theme.spacing.unit * 2}px;
-`;
-
-const ResourceImg = styled.img`
-  width: 3rem;
-`;
-
-const ResourceIcon = styled(Icon)`
-  height: auto;
+  font-size: ${themeSettings.fontSize[18]};
+  color: ${({ theme }) => theme.features.resources.name.color};
+  padding-left: ${themeSettings.spacing.unit * 2}px;
 `;
 
 /**
@@ -37,6 +33,7 @@ const ResourceIcon = styled(Icon)`
  * Displays resources from a given categorY
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
+  const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<any>([]);
@@ -66,11 +63,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
                   target="_blank"
                   onClick={() => Event('resources-card', categ, resource.title)}
                 >
-                  {resource.icon !== undefined ? (
-                    <ResourceImg src={resource.icon} alt="" />
-                  ) : (
-                    <ResourceIcon icon={faCube} color={Color.black} />
-                  )}
+                  {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
                   <ResourceName>{resource.title}</ResourceName>
                 </ListItemContentLink>
               </ListItem>

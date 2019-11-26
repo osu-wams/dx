@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useMealPlans } from '../../api/persons/meal-plans';
-import { Color } from '../../theme';
 import { formatDollars } from '../../util/helpers';
 import {
   Highlight,
@@ -11,8 +10,10 @@ import {
 } from '../../ui/Highlights';
 import { ExternalLink } from '../../ui/Link';
 import { Event } from '../../util/gaTracking';
+import { ThemeContext } from '../../theme';
 
 export const MealPlans = props => {
+  const themeContext = useContext(ThemeContext);
   const { setHasMealPlan } = props;
 
   const mealPlans = useMealPlans({
@@ -36,7 +37,11 @@ export const MealPlans = props => {
       {mealPlans && mealPlans.data && mealPlans.data.length ? (
         <>
           <HighlightEmphasis
-            color={mealPlans.data[0].attributes.balance > 0 ? Color['pine-400'] : Color['lava-400']}
+            color={
+              mealPlans.data[0].attributes.balance > 0
+                ? themeContext.features.finances.mealPlans.emphasisBalance.color
+                : themeContext.features.finances.mealPlans.emphasisNoBalance.color
+            }
           >
             {formatDollars(mealPlans.data[0].attributes.balance)}
           </HighlightEmphasis>

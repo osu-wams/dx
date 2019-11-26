@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   faExclamationTriangle,
   faCommentAltExclamation,
   faInfoCircle,
   IconDefinition
 } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components';
 import { Card, CardHeader, CardContent, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { formatDate } from '../util/helpers';
 import { useDxAlerts, useRaveAlerts, Alert } from '../api/alerts';
-import { Color, theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
 
 const AlertWrapper = styled.div`
   width: 100%;
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
   padding: 0;
   > div {
     margin-bottom: 0 !important;
@@ -23,29 +22,30 @@ const AlertWrapper = styled.div`
 const AlertCardWrapper = styled(Card)`
   width: 100%;
   max-width: ${breakpoints[1024]};
-  background-color: transparent;
+  background-color: ${({ theme }) => theme.alert.background};
   box-shadow: none;
   margin: 0 auto;
   padding: 1rem 1.6rem !important;
 `;
 const RaveAlertCard = styled(Card)`
-  background-color: ${Color['lava-400']};
-  color: ${Color.white};
+  background-color: ${({ theme }) => theme.alert.rave.background};
+  color: ${({ theme }) => theme.alert.rave.color};
   border-radius: 0;
 `;
 const DxInfoAlertCard = styled(RaveAlertCard)`
-  background-color: ${Color['stratosphere-400']};
+  background-color: ${({ theme }) => theme.alert.dx.info.background};
+  color: ${({ theme }) => theme.alert.dx.info.color};
 `;
 const DxWarnAlertCard = styled(RaveAlertCard)`
-  background-color: ${Color['luminance-300']};
-  color: ${Color.black};
+  background-color: ${({ theme }) => theme.alert.dx.warn.background};
+  color: ${({ theme }) => theme.alert.dx.warn.color};
 `;
 const AlertHeader = styled(CardHeader)`
   border-bottom: none;
   padding: 0;
   height: auto;
   span {
-    font-size: ${theme.fontSize[24]};
+    font-size: ${themeSettings.fontSize[24]};
   }
 `;
 const AlertContent = styled(CardContent)`
@@ -58,7 +58,7 @@ const AlertContent = styled(CardContent)`
 
 interface IconProps {
   icon: IconDefinition;
-  color: Color;
+  color: string;
 }
 
 /**
@@ -68,13 +68,14 @@ interface IconProps {
 const Alerts = () => {
   const raveAlerts = useRaveAlerts();
   const dxAlerts = useDxAlerts();
+  const themeContext = useContext(ThemeContext);
 
   const cardBody = (alert: Alert, iconProps: IconProps): JSX.Element => (
     <AlertCardWrapper>
       <AlertHeader
         title={alert.title}
         badge={
-          <Badge bg={Color.transparent}>
+          <Badge bg={themeContext.alert.header.badge.background}>
             <Icon {...iconProps} size="2x" />
           </Badge>
         }
@@ -92,19 +93,25 @@ const Alerts = () => {
       case 'rave':
         return (
           <RaveAlertCard>
-            {cardBody(alert, { icon: faExclamationTriangle, color: Color.white })}
+            {cardBody(alert, {
+              icon: faExclamationTriangle,
+              color: themeContext.alert.rave.icon.color
+            })}
           </RaveAlertCard>
         );
       case 'info':
         return (
           <DxInfoAlertCard>
-            {cardBody(alert, { icon: faInfoCircle, color: Color.white })}
+            {cardBody(alert, { icon: faInfoCircle, color: themeContext.alert.dx.info.icon.color })}
           </DxInfoAlertCard>
         );
       case 'warn':
         return (
           <DxWarnAlertCard>
-            {cardBody(alert, { icon: faCommentAltExclamation, color: Color.black })}
+            {cardBody(alert, {
+              icon: faCommentAltExclamation,
+              color: themeContext.alert.dx.warn.icon.color
+            })}
           </DxWarnAlertCard>
         );
       default:

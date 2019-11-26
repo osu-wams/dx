@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useAnnouncements } from '../api/announcements';
+import { SecondGridWrapper } from '../ui/PageGrid';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
-import { breakpoints } from '../theme';
 import { UserContext } from '../App';
 import { hasAudience } from '../api/user';
+import { styled, themeSettings, breakpoints } from '../theme';
 
 const AnnouncementContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
@@ -13,10 +13,10 @@ const AnnouncementContainerWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: 16px;
-  @media screen and (min-width: 768px) {
+  grid-row-gap: ${themeSettings.spacing.mobile};
+  @media screen and (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-gap: ${themeSettings.spacing.desktop};
   }
 `;
 
@@ -44,14 +44,14 @@ const AnnouncementContainer = ({ page, ...props }) => {
   }
 
   return (
-    <>
+    <SecondGridWrapper>
       <Title as="h2">Announcements</Title>
       <AnnouncementContainerWrapper {...props}>
         {events.map(item => (
           <EventCard key={item.id} itemContent={item} />
         ))}
       </AnnouncementContainerWrapper>
-    </>
+    </SecondGridWrapper>
   );
 };
 

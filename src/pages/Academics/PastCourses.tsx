@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
 import { useGrades } from '../../api/student';
-import { Color, theme, breakpoints } from '../../theme';
+import { themeSettings, breakpoints, styled, ThemeContext } from '../../theme';
 import Input from '../../ui/Input';
 import Icon from '../../ui/Icon';
 import PageTitle from '../../ui/PageTitle';
@@ -25,6 +24,7 @@ import { MainGridWrapper, MainGrid, MainGridCol } from '../../ui/PageGrid';
 import { AcademicSubNav } from './AcademicsSubNav';
 
 const PastCourses = () => {
+  const themeContext = useContext(ThemeContext);
   const grades = useGrades();
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 300);
@@ -71,7 +71,10 @@ const PastCourses = () => {
       <MainGrid>
         <MainGridCol className="col-span-2">
           <SearchWrapper>
-            <Icon icon={faSearch} color={Color['neutral-600']} />
+            <Icon
+              icon={faSearch}
+              color={themeContext.features.academics.pastCourses.search.icon.color}
+            />
             <VisuallyHidden>
               <label htmlFor="course-filter">Find courses</label>
             </VisuallyHidden>
@@ -100,7 +103,14 @@ const PastCourses = () => {
                       <TableBody>
                         {gradesByTerm[key].map(
                           (
-                            { courseNumber, courseSubject, creditHours, gradeFinal, courseTitle },
+                            {
+                              courseNumber,
+                              courseSubject,
+                              repeatedCourseInd,
+                              creditHours,
+                              gradeFinal,
+                              courseTitle
+                            },
                             subindex
                           ) => {
                             return (
@@ -116,6 +126,9 @@ const PastCourses = () => {
                                 </TableCell>
                                 <TableCell>
                                   <Grade>{gradeFinal}</Grade>
+                                  {repeatedCourseInd && repeatedCourseInd === 'E' && (
+                                    <ExcludedFromGPA>Excluded from GPA</ExcludedFromGPA>
+                                  )}
                                 </TableCell>
                               </TableRow>
                             );
@@ -142,18 +155,24 @@ const HistoryCard = styled(Card)`
   margin-bottom: 0;
 `;
 
+const ExcludedFromGPA = styled.div`
+  font-size: ${themeSettings.fontSize[12]};
+  margin: 0 auto;
+  text-align: center;
+`;
+
 const Grade = styled.span`
-  font-size: ${theme.fontSize[24]};
-  color: ${Color['orange-400']};
+  font-size: ${themeSettings.fontSize[24]};
+  color: ${({ theme }) => theme.features.academics.pastCourses.grade.color};
   display: block;
   text-align: center;
 `;
 
 const CourseTitle = styled.span`
-  color: ${Color['neutral-700']};
+  color: ${({ theme }) => theme.features.academics.pastCourses.title.color};
 `;
 const CourseData = styled.div`
-  font-size: ${theme.fontSize[14]};
+  font-size: ${themeSettings.fontSize[14]};
 `;
 
 const SearchWrapper = styled.div`
@@ -162,14 +181,14 @@ const SearchWrapper = styled.div`
     position: absolute;
     top: 2rem;
     right: 1.6rem;
-    font-size: ${theme.fontSize[24]};
+    font-size: ${themeSettings.fontSize[24]};
   }
   margin-bottom: 2rem;
 `;
 const FilterInput = styled(Input)`
   width: 100%;
   padding: 1.6rem;
-  font-size: ${theme.fontSize[24]};
+  font-size: ${themeSettings.fontSize[24]};
 `;
 
 const HistoryGrid = styled.div`
@@ -178,13 +197,13 @@ const HistoryGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: ${theme.spacing.mobile};
+  grid-row-gap: ${themeSettings.spacing.mobile};
   grid-auto-rows: minmax(min-content, max-content);
   & > div {
     height: min-content;
   }
   @media screen and (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: ${theme.spacing.desktop};
+    grid-gap: ${themeSettings.spacing.desktop};
   }
 `;

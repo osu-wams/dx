@@ -1,6 +1,5 @@
 import { Link } from '@reach/router';
-import styled from 'styled-components';
-import { theme, Color, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 
 const SubNav = styled.nav`
   display: flex;
@@ -15,17 +14,20 @@ const SubNav = styled.nav`
 `;
 
 const SubNavLink = styled(Link)`
-  padding: 0.2rem 0 0;
+  padding: 0.2rem 0;
   line-height: 20px;
   text-decoration: none;
-  border-bottom: 3px solid transparent;
-  color: ${Color['neutral-600']};
+  border-bottom: 3px solid ${({ theme }) => theme.ui.subNav.link.borderBottom};
+  color: ${({ theme }) => theme.ui.subNav.link.color};
   display: inline-block;
   text-align: center;
-  font-size: ${theme.fontSize[16]};
+  font-size: ${themeSettings.fontSize[16]};
   svg {
     margin-right: 0.5rem;
-    color: ${Color['neutral-600']};
+    color: ${({ theme }) => theme.ui.subNav.link.svg.color};
+  }
+  &[aria-current] {
+    font-weight: 600;
   }
   &:active,
   &:focus,
@@ -35,8 +37,7 @@ const SubNavLink = styled(Link)`
   &:focus svg,
   &:hover svg,
   &[aria-current] svg {
-    color: ${Color['orange-500']};
-    border-bottom-color: ${Color['orange-500']};
+    border-bottom-color: ${({ theme }) => theme.ui.subNav.link.currentSvg.borderBottom};
   }
   & + a {
     margin-left: 2.6rem;

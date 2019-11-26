@@ -1,9 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
 import { Link } from '@reach/router';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { Color } from '../theme';
+import { themeSettings, styled, ThemeContext } from '../theme';
 
 const LinkStyles = styled.a<StyleProps>`
   :hover,
@@ -14,26 +13,33 @@ const LinkStyles = styled.a<StyleProps>`
   text-decoration: none;
   display: inline-block;
   padding: 0.4rem 0.8rem;
+  border-radius: ${themeSettings.borderRadius[8]};
   &.simple {
     padding: 0;
   }
-  background-color: ${props => props.bg || 'transparent'};
-  color: ${props => props.fg || Color['orange-400']};
+  background-color: ${({ bg, theme }) => bg || theme.ui.link.background};
+  color: ${({ fg, theme }) => fg || theme.ui.link.color};
+  font-weight: ${props => (props.bg ? '300' : '500')};
   & > svg {
     margin-left: 1.2rem;
   }
 `;
 
 type StyleProps = {
-  fg?: Color;
-  bg?: Color;
+  fg?: string;
+  bg?: string;
 };
 
 const ExternalLink = ({ children, ...props }) => {
+  const themeContext = useContext(ThemeContext);
+
   return (
     <LinkStyles {...props} target="_blank">
       {children}
-      <Icon icon={faLongArrowRight} color={props.fg ? props.fg : Color['orange-400']} />
+      <Icon
+        icon={faLongArrowRight}
+        color={props.fg ? props.fg : themeContext.ui.link.icon.external.color}
+      />
     </LinkStyles>
   );
 };
@@ -45,10 +51,15 @@ const SimpleExternalLink = ({ children, ...props }) => (
 );
 
 const InternalLink = ({ children, ...props }) => {
+  const themeContext = useContext(ThemeContext);
+
   return (
     <LinkStyles as={Link} {...props}>
       {children}
-      <Icon icon={faLongArrowRight} color={props.fg ? props.fg : Color['orange-400']} />
+      <Icon
+        icon={faLongArrowRight}
+        color={props.fg ? props.fg : themeContext.ui.link.icon.internal.color}
+      />
     </LinkStyles>
   );
 };

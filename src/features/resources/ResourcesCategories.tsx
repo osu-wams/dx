@@ -1,11 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
-import { theme } from '../../theme';
+import { themeSettings, styled } from '../../theme';
 import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';
 
-const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory }) => {
+const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelectedCategory }) => {
   return (
     <CategoriesWrapper>
       {categories.length > 0 && (
@@ -29,6 +28,8 @@ const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory 
               key={category.id}
               clickHandler={() => {
                 setSelectedCategory(category.name);
+                // Clear search bar, since we are showing all results for the category
+                setQuery('');
                 Event('resource-category', category.name);
               }}
               name="categories"
@@ -46,7 +47,7 @@ const ResourceCategories = ({ categories, selectedCategory, setSelectedCategory 
 };
 
 const CategoriesWrapper = styled.div`
-  margin-bottom: ${theme.spacing.unit * 2}px;
+  margin-bottom: ${themeSettings.spacing.unit}px;
 `;
 
 export default ResourceCategories;

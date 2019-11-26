@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import { Color, theme } from './theme';
-import Stratum from './assets/Stratum2WebRegular.woff2';
+import { themeSettings } from './';
+import Stratum from '../assets/Stratum2WebRegular.woff2';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -20,9 +20,9 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-size: ${theme.fontSize[16]};
+    font-size: ${themeSettings.fontSize[16]};
     line-height: 1.5;
-    color: ${Color['neutral-700']};
+    color: ${({ theme }) => theme.body.color};
   }
   body:not(.user-is-tabbing) button:focus,
   body:not(.user-is-tabbing) input:focus,
@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
   }
   #root {
-    background-color: ${Color['neutral-200']};
+    background-color: ${({ theme }) => theme.body.background};
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -41,6 +41,17 @@ const GlobalStyle = createGlobalStyle`
   }
   strong {
     font-weight: 600;
+  }
+  /* Router helper */
+  .router-styles {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+  @media screen and (max-width: 767px) {
+    [data-reach-dialog-overlay] {
+      background: ${({ theme }) => theme.ui.myDialog.background} !important;
+    }
   }
 `;
 

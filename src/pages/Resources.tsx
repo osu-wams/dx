@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { useDebounce } from 'use-debounce';
 import { CardBase } from '../ui/Card';
-import { theme } from '../theme';
+import { themeSettings, styled } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
@@ -58,11 +57,14 @@ const Resources = () => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (res.data && user.data) {
+      let filtered = res.data;
+
+      // When clicking a category we filter all results based on selected category
       if (!debouncedQuery) {
-        const filtered = filterByCategory(activeCategory, res.data);
-        setFilteredResources(filtered);
+        filtered = filterByCategory(activeCategory, res.data);
       } else {
-        const queriedResources = filteredResources.filter(resource => {
+        // When typing we search for synonyms and names to get results
+        const queriedResources = filtered.filter(resource => {
           if (
             resource.synonyms.length > 0 &&
             resource.synonyms.find(s => s.includes(debouncedQuery.toLowerCase()))
@@ -71,9 +73,11 @@ const Resources = () => {
           }
           return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
         });
-        const filtered = filterByCategory(activeCategory, queriedResources);
-        setFilteredResources(filtered);
+
+        // Filter by category when searching in
+        filtered = filterByCategory(activeCategory, queriedResources);
       }
+      setFilteredResources(filtered);
     }
   }, [activeCategory, debouncedQuery, res.data, user.data]);
   /* eslint-enable react-hooks/exhaustive-deps */
@@ -120,11 +124,11 @@ const Resources = () => {
   /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
 
   return (
-    <MainGridWrapper>
+    <MainGridWrapper data-testid="resources-page">
       <PageTitle title="Resources" />
       <MainGrid>
         <MainGridCol className="col-span-2">
-          <ResourcesWrapper data-testid="resources-page">
+          <ResourcesWrapper>
             {activeCategory !== '' && (
               <>
                 <ResourcesSearch
@@ -142,13 +146,14 @@ const Resources = () => {
                 <ResourcesCategories
                   categories={categories.data}
                   selectedCategory={activeCategory}
+                  setQuery={setQuery}
                   setSelectedCategory={setSelectedCategory}
                 />
               </>
             )}
             {res.loading && <Skeleton count={5} />}
             {!res.loading && res.data.length > 0 ? (
-              <ResourcesList resources={filteredResources.filter(r => hasAudience(r, user.data))} />
+              <ResourcesList resources={filteredResources.filter(r => hasAudience(user.data, r))} />
             ) : (
               !res.loading && (
                 /* @TODO need mockup styling to do and messaging for no results */
@@ -173,7 +178,7 @@ const getInitialCategory = () => {
 };
 
 const ResourcesWrapper = styled(CardBase)`
-  padding: ${theme.spacing.unit * 2}px;
+  padding: ${themeSettings.spacing.unit * 2}px;
 `;
 
 export default Resources;

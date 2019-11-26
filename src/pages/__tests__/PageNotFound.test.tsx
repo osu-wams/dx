@@ -12,10 +12,8 @@ describe('404 page', () => {
 
   it('has clickable links to dashboard and support page', () => {
     const { getByText } = render(<PageNotFound />);
-    const dashboard = getByText(/main dashboard/);
-    const support = getByText(/get support/);
+    const dashboard = getByText(/to dashboard/);
     fireEvent.click(dashboard);
-    fireEvent.click(support);
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,28 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
-import styled from 'styled-components';
 import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import image404 from '../assets/404.svg';
-import { SimpleExternalLink } from '../ui/Link';
-import Url from '../util/externalUrls.data';
+import { InternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
-import { Color } from '../theme';
+import { styled, ThemeContext } from '../theme';
 
 const Content = styled.div`
   text-align: center;
-  a {
-    color: ${Color['orange-500']};
-    text-decoration: none;
-    &:active,
-    &:focus,
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `;
-const PageNotFound = () => (
-  <div data-testid="404-page">
-    <MainGridWrapper>
+const PageNotFound = () => {
+  const themeContext = useContext(ThemeContext);
+
+  return (
+    <MainGridWrapper data-testid="404-page">
       <VisuallyHidden>
         <h1>Page Not Found</h1>
       </VisuallyHidden>
@@ -33,24 +24,20 @@ const PageNotFound = () => (
             <h2>Dam.</h2>
             <p>
               We couldn’t find the page you were looking for. <br />
-              Go back to the{' '}
-              <a href="/" onClick={() => Event('404', 'main dashboard')}>
-                main dashboard
-              </a>{' '}
-              or{' '}
-              <SimpleExternalLink
-                href={Url.support.main}
-                onClick={() => Event('404', 'get support')}
+              <InternalLink
+                to="/"
+                bg={themeContext.pageNotFound.link.background}
+                fg={themeContext.pageNotFound.link.color}
+                onClick={() => Event('404', 'main dashboard')}
               >
-                get support
-              </SimpleExternalLink>
-              .
+                Return to dashboard
+              </InternalLink>
             </p>
           </Content>
         </MainGridCol>
       </MainGrid>
     </MainGridWrapper>
-  </div>
-);
+  );
+};
 
 export default PageNotFound;

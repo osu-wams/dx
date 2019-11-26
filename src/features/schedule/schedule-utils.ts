@@ -2,11 +2,24 @@ import { addDays, eachDay, format } from 'date-fns';
 import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 import { isNullOrUndefined } from 'util';
 
+export interface ICoursesMap {
+  courses: ICourseSchedule[];
+  meetingTimes: IMeetingTime[];
+  creditHours: number;
+  subject: string;
+  number: string;
+  title: string;
+}
+
+export const getStartDate = () => {
+  return new Date();
+};
+
 /**
  * Utility functions
  */
-export const getNextFiveDays = () => {
-  let rangeStart = new Date();
+export const getNextFiveDays = (startDate: Date) => {
+  let rangeStart = startDate;
   let rangeEnd = addDays(rangeStart, 4);
   let nextFiveDays = eachDay(rangeStart, rangeEnd);
 
@@ -49,15 +62,17 @@ export const coursesOnDay = (
 ): ICourseSchedule[] => {
   const dayCourses = currentCourses(
     sortedByBeginTime(
-      courses.filter(c =>
-        c.attributes.meetingTimes.find(m => {
-          if (m.room === 'MID' || m.scheduleType === 'MID') {
-            // is midterm return skip
-            return [];
-          } else {
-            return m.weeklySchedule.includes(dayShortCode);
-          }
-        })
+      courses.filter(
+        c =>
+          c.attributes.meetingTimes.length > 0 &&
+          c.attributes.meetingTimes.find(m => {
+            if (m.room === 'MID' || m.scheduleType === 'MID') {
+              // exclude midterms
+              return false;
+            } else {
+              return m.weeklySchedule.includes(dayShortCode);
+            }
+          })
       )
     )
   );
@@ -82,17 +97,41 @@ const sortedByBeginTime = (courses: ICourseSchedule[]): ICourseSchedule[] => {
 };
 
 /**
- *  Return an array of courses that have been lexically sorted on the concatenated course subject and number.
- * * An example might look like 'PSY400' sorting after 'HST220'.
+ * Return a sorted Map of courses grouped by the subject and number (PSY400, PSY410, etc). The Map is sorted
+ * in lexical fashion on the <subject><number>. The returned Map includes
+ * calculated credit hours, a subject and number, and the complete array of matching courses.
  * @param courses an array of courses to be sorted
- * @returns ICourseSchedule[] - an array of courses
+ * @returns Map<string, ICoursesMap> - a sorted Map with computed values and the courses array
  */
-export const sortedByCourseName = (courses: ICourseSchedule[]): ICourseSchedule[] => {
-  return courses.sort((a, b) => {
-    const aSubject = `${a.attributes.courseSubject}${a.attributes.courseNumber}`;
-    const bSubject = `${b.attributes.courseSubject}${b.attributes.courseNumber}`;
-    return aSubject > bSubject ? 1 : aSubject < bSubject ? -1 : 0;
-  });
+export const sortedGroupedByCourseName = (courses: ICourseSchedule[]): Map<string, ICoursesMap> => {
+  // Reduce the courses list by accumulating an array of courses which have matching subject/number,
+  // * example object returned might be { 'PSY400': [course,course,course], 'PSY410': [course] }
+  const grouped: { [key: string]: ICourseSchedule[] } = courses.reduce((groups, course) => {
+    const subjectNumber = `${course.attributes.courseSubject}${course.attributes.courseNumber}`;
+    groups[subjectNumber] = groups[subjectNumber] || [];
+    groups[subjectNumber].push(course);
+    return groups;
+  }, {});
+
+  // Iterate the a sorted array of the keys in the grouped object and set the Map (it retains the sorted
+  // order of the keys) with each of the computed values and the array of courses that were grouped
+  const sorted: Map<string, ICoursesMap> = new Map();
+  Object.keys(grouped)
+    .sort()
+    .forEach(key =>
+      sorted.set(key, {
+        subject: grouped[key][0].attributes.courseSubject,
+        number: grouped[key][0].attributes.courseNumber,
+        title: grouped[key][0].attributes.courseTitle,
+        courses: grouped[key],
+        meetingTimes: grouped[key].reduce(
+          (p, v) => p.concat(v.attributes.meetingTimes),
+          new Array<IMeetingTime>()
+        ),
+        creditHours: grouped[key].reduce((p, v) => (p += v.attributes.creditHours), 0)
+      })
+    );
+  return sorted;
 };
 
 /**
@@ -113,7 +152,52 @@ export const courseOnCorvallisCampus = (o: ICourseSchedule | IMeetingTime[]): bo
     meetingTimes
       .filter(m => !isNullOrUndefined(m))
       .find((m: IMeetingTime) => {
-        return m.campus.toLowerCase().includes('corvallis');
+        return meetingTimeOnCorvallisCampus(m);
       })
   );
+};
+
+export const meetingTimeOnCorvallisCampus = (m: IMeetingTime): boolean => {
+  return m.campus.toLowerCase().includes('corvallis');
+};
+
+/**
+ * Filter out any meeting times that include one of the provided types, this is used to target and remove
+ * final exam and midterm meetings.
+ * @param meetings list of meetingTimes to filter
+ * @param types scheduleType or meeting room to filter out
+ */
+export const exceptMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMeetingTime[] => {
+  return meetings.filter(meeting => {
+    if (types.includes(meeting.scheduleType) || types.includes(meeting.room)) {
+      return false;
+    }
+    return true;
+  });
+};
+
+/**
+ * Filter any meeting times that include one of the provided types, this is used to target and retain
+ * final exam and midterm meetings.
+ * @param meetings list of meetingTimes to filter
+ * @param types scheduleType or meeting room to filter out
+ */
+export const onlyMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMeetingTime[] => {
+  return meetings.filter(meeting => {
+    if (types.includes(meeting.scheduleType) || types.includes(meeting.room)) {
+      return true;
+    }
+    return false;
+  });
+};
+
+/**
+ * Determine what type of exam label to display depending on the variety of data value options
+ * being returned from the API.
+ * @param meeting the meeting time to consider
+ */
+export const examName = (m: IMeetingTime) => {
+  const roomTypes = [m.room.toLowerCase(), m.scheduleType.toLowerCase()];
+  if (roomTypes.includes('fnl')) return 'Final Exam';
+  if (roomTypes.includes('mid')) return 'Midterm';
 };

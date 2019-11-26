@@ -5,7 +5,12 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { useCourseSchedule, usePlannerItems } from '../api/student';
 import { useAcademicCalendarEvents } from '../api/events';
 import { UserContext } from '../App';
-import { getNextFiveDays, getDayShortcode, coursesOnDay } from './schedule/schedule-utils';
+import {
+  getNextFiveDays,
+  getDayShortcode,
+  coursesOnDay,
+  getStartDate
+} from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
   ScheduleCardCourses,
@@ -26,7 +31,7 @@ const ScheduleCard = () => {
     user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
   });
   const courses = useCourseSchedule();
-  const nextFiveDays = getNextFiveDays();
+  const nextFiveDays = getNextFiveDays(getStartDate());
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const calEvents = useAcademicCalendarEvents();
 
@@ -96,7 +101,12 @@ const ScheduleCard = () => {
             />
           )}
           {courses.loading && <Skeleton count={4} />}
-          {!courses.loading && <ScheduleCardCourses selectedCourses={getCoursesOnSelectedDay()} />}
+          {!courses.loading && (
+            <ScheduleCardCourses
+              courses={courses.data}
+              selectedCourses={getCoursesOnSelectedDay()}
+            />
+          )}
           <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
         </div>
       </CardContent>

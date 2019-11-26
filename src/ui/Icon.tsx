@@ -1,11 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { theme, Color } from '../theme';
+import { themeSettings, styled } from '../theme';
 
 type IconProps = {
-  bg?: Color;
-  color?: Color;
+  bg?: string;
+  color?: string;
 };
 
 const IconWrapper = styled.div`
@@ -13,19 +12,19 @@ const IconWrapper = styled.div`
 `;
 
 const IconCounter = styled.div`
-  font-size: ${theme.fontSize[12]};
+  font-size: ${themeSettings.fontSize[12]};
   position: absolute;
   bottom: -${12 / 2 / 10}rem;
   right: -${12 / 2 / 10}rem;
-  color: ${Color.white};
-  background-color: ${Color['orange-400']};
+  color: ${({ theme }) => theme.ui.icon.counter.color};
+  background-color: ${({ theme }) => theme.ui.icon.counter.background};
   padding: 0 ${12 / 2 / 10}rem !important;
   border-radius: ${(12 * (3 / 4)) / 10}rem;
 `;
 
 const IconStyle = styled(FontAwesomeIcon)<IconProps>`
-  color: ${props => props.color || Color['neutral-400']};
-  background-color: ${props => props.bg || 'transparent'};
+  color: ${props => props.color || props.theme.ui.icon.color};
+  background-color: ${props => props.bg || props.theme.ui.icon.background};
   padding: ${props => (props.bg ? '.5rem' : '0')};
   border-radius: ${props => (props.bg ? '50%' : '0')};
 `;

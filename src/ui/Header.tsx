@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { Link } from '@reach/router';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faUser, faSignOut } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -11,9 +10,9 @@ import ecampusLogo from '../assets/osu-ecampus.svg';
 import cascadesLogo from '../assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
-import { theme, Color, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled } from '../theme';
 import { Event } from '../util/gaTracking';
-import { IUser } from '../api/user';
+import { IUser, usersCampus, CAMPUS_CODES } from '../api/user';
 import { UserContext } from '../App';
 
 const headerMedia = breakpoints[768];
@@ -21,7 +20,7 @@ const headerMedia = breakpoints[768];
 const HeaderWrapper = styled.div`
   display: flex;
   width: 100%;
-  background-color: ${Color.white};
+  background-color: ${({ theme }) => theme.header.background};
   justify-content: space-between;
   flex-flow: row wrap;
   padding: 8px 8px 12px;
@@ -60,39 +59,39 @@ const Navigation = styled.div`
 `;
 
 const UserButton = styled(MenuButton)`
-  color: ${Color['neutral-550']};
-  background: transparent;
+  color: ${({ theme }) => theme.header.userButton.color};
+  background: ${({ theme }) => theme.header.userButton.background};
   border: none;
   cursor: pointer;
 `;
 
 const ProfileMenuList = styled(MenuList)`
   &[data-reach-menu-list] {
-    background-color: ${Color['neutral-700']};
-    border-radius: ${theme.borderRadius[8]};
-    color: ${Color.white};
+    background-color: ${({ theme }) => theme.header.profileMenuList.background};
+    border-radius: ${themeSettings.borderRadius[8]};
+    color: ${({ theme }) => theme.header.profileMenuList.color};
     min-width: 15rem;
     padding: 0;
     [data-reach-menu-item] {
       padding: 1rem 2rem;
-      font-size: ${theme.fontSize[16]};
+      font-size: ${themeSettings.fontSize[16]};
       display: flex;
       flex-direction: row;
       align-items: center;
     }
     svg {
-      color: ${Color['orange-300']};
+      color: ${({ theme }) => theme.header.profileMenuList.svg.color};
       margin-right: 1.2rem;
-      font-size: ${theme.fontSize[24]};
+      font-size: ${themeSettings.fontSize[24]};
     }
     div + div {
       [data-reach-menu-item] {
-        border-top: 1px solid ${Color['neutral-500']};
+        border-top: 1px solid ${({ theme }) => theme.header.profileMenuList.menuItem.borderTop};
       }
     }
   }
   [data-reach-menu-item][data-selected] {
-    background-color: transparent;
+    background-color: ${({ theme }) => theme.header.profileMenuList.menuItemSelected.background};
   }
 `;
 
@@ -108,13 +107,12 @@ const Logo = styled.img`
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
  */
-const campusLogo = (user: IUser | null) => {
-  if (!user || !user.classification || !Object.keys(user.classification).includes('attributes'))
-    return logo;
-  switch (user!.classification!.attributes!.campusCode) {
-    case 'DSC':
+const campusLogo = (user: IUser) => {
+  const { campusCode } = usersCampus(user);
+  switch (campusCode) {
+    case CAMPUS_CODES.ecampus:
       return ecampusLogo;
-    case 'B':
+    case CAMPUS_CODES.bend:
       return cascadesLogo;
     default:
       return logo;

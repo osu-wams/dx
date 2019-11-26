@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components';
 import { format } from 'date-fns';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { Color, theme, breakpoints } from '../theme';
+import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
 import Button from './Button';
 import { Event } from '../util/gaTracking';
 
@@ -18,29 +17,29 @@ const ButtonWithIcon = styled(Button).attrs({
     text-decoration: none;
   }
   & > svg {
-    margin-left: ${theme.spacing.unit * 2}px;
+    margin-left: ${themeSettings.spacing.unit * 2}px;
   }
   align-self: flex-start;
 `;
 
 const EventCardTitle = styled.div`
   & > svg {
-    margin-left: ${theme.spacing.unit * 2}px;
+    margin-left: ${themeSettings.spacing.unit * 2}px;
   }
-  color: #fff;
-  font-size: ${theme.fontSize['18']};
+  color: ${({ theme }) => theme.ui.eventCard.title.color};
+  font-size: ${themeSettings.fontSize['18']};
   font-weight: 600;
 `;
 
 const EventCardLargeTitle = styled.div`
-  color: ${Color['white']};
-  font-size: ${theme.fontSize['24']};
+  color: ${({ theme }) => theme.ui.eventCard.largeTitle.color};
+  font-size: ${themeSettings.fontSize['24']};
   font-weight: 300;
   text-align: center;
 `;
 
 const EventCardDateStyling = styled.div`
-  background: ${Color['white']};
+  background: ${({ theme }) => theme.ui.eventCard.date.background};
   border: none;
   padding: 0;
   margin: 0 auto;
@@ -54,17 +53,17 @@ const EventCardDateStyling = styled.div`
   border-radius: 50%;
 
   & > span:first-child {
-    color: ${Color['neutral-700']};
+    color: ${({ theme }) => theme.ui.eventCard.date.firstChild.color};
     font-weight: bold;
-    font-size: ${theme.fontSize[12]};
+    font-size: ${themeSettings.fontSize[12]};
     text-transform: uppercase;
-    margin-bottom: ${theme.spacing.unit * 0.5}px;
+    margin-bottom: ${themeSettings.spacing.unit * 0.5}px;
   }
 
   & > span:last-child {
-    color: ${Color['neutral-700']};
+    color: ${({ theme }) => theme.ui.eventCard.date.lastChild.color};
     line-height: 20px;
-    font-size: ${theme.fontSize[24]};
+    font-size: ${themeSettings.fontSize[24]};
   }
 `;
 
@@ -78,15 +77,15 @@ const EventCardDate = ({ month, day }) => {
 };
 
 const EventCardText = styled.div`
-  font-size: ${theme.fontSize['16']};
-  margin-bottom: ${theme.spacing.unit * 2}px;
+  font-size: ${themeSettings.fontSize['16']};
+  margin-bottom: ${themeSettings.spacing.unit * 2}px;
   flex-grow: 2;
 `;
 
 const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
-  color: ${Color['neutral-600']};
-  background-color: ${Color.white};
-  padding: ${theme.spacing.unit * 2}px;
+  color: ${({ theme }) => theme.ui.eventCard.color};
+  background-color: ${({ theme }) => theme.ui.eventCard.background};
+  padding: ${themeSettings.spacing.unit * 2}px;
   min-height: 220px;
   display: flex;
   flex-direction: column;
@@ -95,7 +94,7 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   height: 100%;
   margin: 0;
   & ${EventCardTitle} {
-    color: ${Color['neutral-700']};
+    color: ${({ theme }) => theme.ui.eventCard.title.color};
   }
   @media (min-width: ${breakpoints[768]}) {
     margin-bottom: 0;
@@ -103,16 +102,11 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   ${props => {
     if (props.imageUrl) {
       return `
-        color: ${Color.white};
-        background:
-          linear-gradient(
-            rgba(0, 0, 0, 0.55),
-            rgba(0, 0, 0, 0.55)
-          ),
-          url(${props.imageUrl}) no-repeat center;
+        color: ${props.theme.ui.eventCard.image.color};
+        background: ${props.theme.ui.eventCard.image.background}, url(${props.imageUrl}) no-repeat center;
         background-size: cover;
         & ${EventCardTitle} {
-          color: ${Color.white}
+          color: ${props.theme.ui.eventCard.image.title.color};
         }
       `;
     }
@@ -135,6 +129,8 @@ const EventCardBody = styled.a`
 `;
 
 const EventCardContent = ({ item }) => {
+  const themeContext = useContext(ThemeContext);
+
   return (
     <>
       {!item.body && (
@@ -154,13 +150,13 @@ const EventCardContent = ({ item }) => {
           <>
             {item.action && item.action.title && (
               <ButtonWithIcon
-                fg={Color.white}
+                fg={themeContext.ui.eventCard.button.color}
                 href={item.action.link}
                 onClick={() => Event('dx-event', item.title, item.action.link)}
                 target="_blank"
               >
                 {item.action.title}
-                <Icon icon={faLongArrowRight} color={Color.white} />
+                <Icon icon={faLongArrowRight} color={themeContext.ui.eventCard.button.icon.color} />
               </ButtonWithIcon>
             )}
           </>
