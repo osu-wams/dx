@@ -1,7 +1,10 @@
-const currentBeginDate = new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString().slice(0, 10);
-const currentEndDate = new Date(Date.now()).toISOString().slice(0, 10);
-const beginPastDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString().slice(0, 10);
-const endPastDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString().slice(0, 10);
+import { getStartDate } from './../../../features/schedule/schedule-utils';
+const todayUTC = Date.parse(getStartDate().toString());
+const currentBeginDate = new Date(todayUTC - 1000 * 60 * 60 * 24).toISOString().slice(0, 10);
+const currentEndDate = new Date(todayUTC).toISOString().slice(0, 10);
+const beginPastDate = new Date(todayUTC - 1000 * 60 * 60 * 24 * 10).toISOString().slice(0, 10);
+const endPastDate = new Date(todayUTC - 1000 * 60 * 60 * 24 * 5).toISOString().slice(0, 10);
+
 export default {
   data: [
     {
@@ -154,7 +157,7 @@ export default {
           {
             beginDate: currentBeginDate,
             beginTime: '11:00:00',
-            endDate: currentEndDate,
+            endDate: currentBeginDate,
             endTime: '11:50:00',
             room: '305',
             building: 'PHAR',
@@ -335,9 +338,9 @@ export default {
             weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           },
           {
-            beginDate: currentEndDate,
+            beginDate: currentBeginDate,
             beginTime: '09:00:00',
-            endDate: currentEndDate, // intentionally matching date to beginDate, the exam is on one day
+            endDate: currentBeginDate, // intentionally matching date to beginDate, the exam is on one day
             endTime: '09:50:00',
             room: 'FNL',
             building: 'GRP',

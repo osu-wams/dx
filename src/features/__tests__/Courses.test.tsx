@@ -4,19 +4,22 @@ import { render, mockAppContext } from '../../util/test-utils';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
 import { mockGAEvent } from '../../setupTests';
-import { format } from 'date-fns';
+import { format } from '../../util/helpers';
+import { getStartDate } from '../schedule/schedule-utils';
 
 const mockUseCourseSchedule = jest.fn();
 
 jest.mock('../../api/student', () => ({
-  useCourseSchedule: () => mockUseCourseSchedule()
+  useCourseSchedule: () => {
+    return mockUseCourseSchedule();
+  }
 }));
 
-describe('<Courses />', () => {
-  beforeAll(() => {
-    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
-  });
+beforeEach(() => {
+  mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
+});
 
+describe('<Courses />', () => {
   it('renders', () => {
     render(<Courses />);
   });
@@ -93,17 +96,20 @@ test('Various Links are present as well as Google Analytics events are recorded'
 });
 
 test('Course spells out the month and day for Final exams', async () => {
-  const { getByText, getByTestId } = render(<Courses />);
+  const { getByText, findByText, debug, getByTestId } = render(<Courses />);
+  // const title = await waitForElement(() => findByText(/current courses/i));
 
-  const TestoBtn = await waitForElement(() => getByText(/testo physics/i));
+  const TestoBtn = await waitForElement(() => findByText(/testo physics/i));
+  debug();
   fireEvent.click(TestoBtn);
-
+  // debug();
   // Dialg is present and displays the corrent course
   const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
   expect(courseDialog).toBeInTheDocument();
+  debug(courseDialog);
 
-  // For Final exams we spell out the month and day
-  const monthDay = format(Date.now(), 'MMMM DD');
+  // For Final exams we spell out the month and day (match meetingDateTime format on Course.tsx)
+  const monthDay = format(getStartDate(), 'MMMM d');
   expect(courseDialog).toHaveTextContent(monthDay);
 });
 
