@@ -6,7 +6,7 @@ import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
-import { styled, ThemeContext, themeSettings } from '../theme';
+import { styled, ThemeContext } from '../theme';
 import { useResourcesByQueue } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
