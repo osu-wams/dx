@@ -5,11 +5,13 @@ import FinancialOverview from '../financial-overview/FinancialOverview';
 import { mockGAEvent } from '../../setupTests';
 
 it('should find link to view and make payment and clicking it triggers analytics', async () => {
-  const { getByText } = render(<FinancialOverview />);
+  const { getByText, findByText } = render(<FinancialOverview />);
+  await findByText('Financial Overview');
   const MakePayment = await waitForElement(() => getByText('Make a payment'));
   const AddMoney = await waitForElement(() => getByText('Add money'));
 
-  fireEvent.click(MakePayment);
-  fireEvent.click(AddMoney);
+  await fireEvent.click(MakePayment);
+  await fireEvent.click(AddMoney);
+
   expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });
