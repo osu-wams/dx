@@ -206,7 +206,7 @@ describe('<ScheduleCard /> without canvas authorization', () => {
   });
 });
 
-describe('<ScheduleCard /> with a simple schedule', () => {
+xdescribe('<ScheduleCard /> with a simple schedule', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
