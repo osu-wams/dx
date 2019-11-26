@@ -30,7 +30,7 @@ export function formatTime(hours: string) {
  * Deals with strings and numbers and Dates
  * Default format returned: November 06, 2019
  */
-export function format(date: Date | string | number, type: string = 'MMMM d, yyyy') {
+export const format = (date: Date | string | number, type: string = 'MMMM d, yyyy') => {
   if (type === 'dueAt') {
     type = "MMM do 'at' h:mm";
   }
@@ -46,7 +46,7 @@ export function format(date: Date | string | number, type: string = 'MMMM d, yyy
   } else {
     return fns(date, type);
   }
-}
+};
 
 /* Preferred Money format for simple strings to dollars
 @input 2600.50 output $2,600.50  */

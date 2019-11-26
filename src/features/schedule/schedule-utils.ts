@@ -15,12 +15,14 @@ export interface ICoursesMap {
 
 export const pstTimeZone = 'America/Los_Angeles';
 
-export const getStartDate = () => {
+export const startDate = () => {
   const UTCDate = new Date();
   const PSTDate = utcToZonedTime(UTCDate, pstTimeZone);
 
   return PSTDate;
 };
+
+export const getStartDate = startDate;
 
 /**
  * Utility functions

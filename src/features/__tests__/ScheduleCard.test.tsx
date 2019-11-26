@@ -25,15 +25,10 @@ jest.mock('../../api/student', () => ({
 }));
 
 // Keeping this commented out for now
-// jest.mock('../schedule/schedule-utils.ts', () => {
-//   const utils = jest.requireActual('../schedule/schedule-utils.ts');
-//   return {
-//     ...utils,
-//     getStartDate: jest.fn(() => {
-//       return mockGetStartDate();
-//     })
-//   };
-// });
+jest.mock('../schedule/schedule-utils', () => ({
+  ...jest.requireActual('../schedule/schedule-utils'),
+  startDate: () => mockGetStartDate()
+}));
 
 describe('<ScheduleCard /> with data and canvas authorized user', () => {
   // Set mock function result before running any tests
@@ -41,7 +36,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
-    // mockGetStartDate.mockReturnValue(getStartDate());
+    mockGetStartDate.mockReturnValue(getStartDate());
   });
 
   it('should find the card header even though it is visually hidden', async () => {
@@ -211,7 +206,7 @@ describe('<ScheduleCard /> without canvas authorization', () => {
   });
 });
 
-xdescribe('<ScheduleCard /> with a simple schedule', () => {
+describe('<ScheduleCard /> with a simple schedule', () => {
   // Set mock function result before running any tests
   beforeAll(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
