@@ -450,6 +450,7 @@ export interface ThemeConfiguration {
         };
         link: {
           color: string;
+          hoverColor: string;
           boxShadow: string;
         };
       };
