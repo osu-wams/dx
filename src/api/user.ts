@@ -220,7 +220,7 @@ export const usersCampus = (
   user: IUser
 ): { campusName: string | undefined; campusCode: string } => {
   const { campusCode } = (user.classification && user.classification.attributes) || {
-    campusCode: 'C'
+    campusCode: defaultCampus
   };
   const { campusCode: campusCodeOverride } = user.audienceOverride;
   const selectedCampusCode = campusCodeOverride || campusCode;

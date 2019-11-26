@@ -85,7 +85,7 @@ const App = (props: AppProps) => {
       ...previous,
       infoButtonData: infoButtons.data,
       appVersions: appVersions.data,
-      selectedTheme: user.data ? user.data.theme : theme
+      selectedTheme: user.data && user.data.theme ? user.data.theme : theme
     }));
 
     setTheme(user.data && user.data.theme ? user.data.theme : theme);
