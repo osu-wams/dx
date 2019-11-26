@@ -63,7 +63,7 @@ const Courses = () => {
     }
   };
 
-  if (!courses.data.length) {
+  if (courses && !courses.data.length) {
     return null;
   }
 
@@ -74,36 +74,40 @@ const Courses = () => {
         badge={
           <CardIcon
             icon={faChalkboardTeacher}
-            count={sortedGroupedByCourseName(courses.data).size}
+            count={courses && courses.data ? sortedGroupedByCourseName(courses.data).size : 0}
           />
         }
       />
       <CardContent>
-        <List>
-          {Array.from(sortedGroupedByCourseName(courses.data).entries(), ([key, coursesMap]) => (
-            <ListItem key={key}>
-              <ListItemContentButton
-                onClick={() => {
-                  toggleCourse(coursesMap);
-                  Event('courses', 'course clicked', key);
-                }}
-              >
-                {courseItemLeadText(coursesMap.subject, coursesMap.number)}
-                <ListItemText>
-                  <ListItemDescription
-                    fontSize={themeSettings.fontSize[16]}
-                    color={themeContext.features.academics.courses.list.title.color}
-                  >
-                    {titleCase(coursesMap.title)}
-                  </ListItemDescription>
-                  <ListItemDescription>
-                    {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
-                  </ListItemDescription>
-                </ListItemText>
-              </ListItemContentButton>
-            </ListItem>
-          ))}
-        </List>
+        {courses && courses.data.length ? (
+          <List>
+            {Array.from(sortedGroupedByCourseName(courses.data).entries(), ([key, coursesMap]) => (
+              <ListItem key={key}>
+                <ListItemContentButton
+                  onClick={() => {
+                    toggleCourse(coursesMap);
+                    Event('courses', 'course clicked', key);
+                  }}
+                >
+                  {courseItemLeadText(coursesMap.subject, coursesMap.number)}
+                  <ListItemText>
+                    <ListItemDescription
+                      fontSize={themeSettings.fontSize[16]}
+                      color={themeContext.features.academics.courses.list.title.color}
+                    >
+                      {titleCase(coursesMap.title)}
+                    </ListItemDescription>
+                    <ListItemDescription>
+                      {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
+                    </ListItemDescription>
+                  </ListItemText>
+                </ListItemContentButton>
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <p>No courses this term</p>
+        )}
         {isOpen && showCoursesMap && showCoursesMap.courses.length > 0 && (
           <Course coursesMap={showCoursesMap} toggleCourse={toggleCourse} isOpen />
         )}
