@@ -3,12 +3,11 @@ import { fal } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../../ui/List';
-import { themeSettings } from '../../theme';
 import { IResourceResult } from '../../api/resources';
 import { Event } from '../../util/gaTracking';
 import { singularPlural } from '../../util/helpers';
 import { IconLookup } from './resources-utils';
-import { styled, ThemeContext } from '../../theme';
+import { ThemeContext } from '../../theme';
 
 // Setup a font awesome library to use for searching for icons from the backend.
 library.add(fal, fab);
