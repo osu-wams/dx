@@ -2,8 +2,8 @@ import React from 'react';
 import { CardSection, SectionHeader } from './ScheduleCardStyles';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
-import { Date, DateDay, DateMonth } from '../../ui/Date';
-import { format } from 'date-fns';
+import { Date as D, DateDay, DateMonth } from '../../ui/Date';
+import { format } from '../../util/helpers';
 
 const ScheduleCardAcademicCalendar = ({ calEvents }) => (
   <>
@@ -11,7 +11,7 @@ const ScheduleCardAcademicCalendar = ({ calEvents }) => (
       <CardSection>
         <SectionHeader>Academic Calendar</SectionHeader>
         <List>
-          {calEvents.map(({ title, link, pubDate}) => (
+          {calEvents.map(({ title, link, pubDate }) => (
             <ListItem key={title}>
               <ListItemContentLink
                 href={link}
@@ -19,10 +19,10 @@ const ScheduleCardAcademicCalendar = ({ calEvents }) => (
                 rel="noopener noreferrer"
                 onClick={() => Event('schedule-card', 'academic-calendar-link', link)}
               >
-                <Date>
-                  <DateDay>{format(pubDate, 'D')}</DateDay>
-                  <DateMonth>{format(pubDate, 'MMM')}</DateMonth>
-                </Date>
+                <D>
+                  <DateDay>{format(pubDate, 'd')}</DateDay>
+                  <DateMonth>{format(Date.parse(pubDate), 'MMM')}</DateMonth>
+                </D>
                 <ListItemText>
                   <ListItemHeader>{title} </ListItemHeader>
                 </ListItemText>

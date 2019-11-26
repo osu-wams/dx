@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { faFileAlt } from '@fortawesome/pro-light-svg-icons';
-import { format } from 'date-fns';
 import {
   CardSection,
   SectionHeader,
@@ -24,6 +23,7 @@ import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
 import { Event } from '../../util/gaTracking';
 import { courseCodeOrIcon } from '../Courses';
 import { ThemeContext } from '../../theme';
+import { format } from '../../util/helpers';
 
 const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
   const themeContext = useContext(ThemeContext);
@@ -64,7 +64,7 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
                     <ListItemHeader>{title} </ListItemHeader>
                     <ListItemDescription>
                       {plannable_type !== 'announcement'
-                        ? `Due ${format(plannable_date, 'MMM Do [at] h:mma')}`
+                        ? `Due ${format(plannable_date, 'dueAt')}`
                         : ''}
                     </ListItemDescription>
                   </ListItemText>

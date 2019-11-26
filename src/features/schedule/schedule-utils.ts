@@ -1,6 +1,8 @@
-import { addDays, eachDay, format } from 'date-fns';
-import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
+import { addDays, eachDayOfInterval } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 import { isNullOrUndefined } from 'util';
+import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
+import { format } from '../../util/helpers';
 
 export interface ICoursesMap {
   courses: ICourseSchedule[];
@@ -11,10 +13,13 @@ export interface ICoursesMap {
   title: string;
 }
 
+export const pstTimeZone = 'America/Los_Angeles';
+
 export const getStartDate = () => {
-  const offset = new Date().getTimezoneOffset();
-  const currentDate = new Date();
-  // FNS time functions
+  const UTCDate = new Date();
+  const PSTDate = utcToZonedTime(UTCDate, pstTimeZone);
+
+  return PSTDate;
 };
 
 /**
@@ -23,7 +28,7 @@ export const getStartDate = () => {
 export const getNextFiveDays = (startDate: Date) => {
   let rangeStart = startDate;
   let rangeEnd = addDays(rangeStart, 4);
-  let nextFiveDays = eachDay(rangeStart, rangeEnd);
+  let nextFiveDays = eachDayOfInterval({ start: rangeStart, end: rangeEnd });
 
   return nextFiveDays;
 };
@@ -34,9 +39,9 @@ export const getNextFiveDays = (startDate: Date) => {
  */
 export const getDayShortcode = (date: Date) => {
   let twoLetterShortcodes = ['Th', 'Sa', 'Su'];
-
-  let shortcode = format(date, 'dddd').substr(0, 2);
+  let shortcode = format(date, 'EEEE').substr(0, 2);
   shortcode = twoLetterShortcodes.includes(shortcode) ? shortcode : shortcode.substr(0, 1);
+
   return shortcode;
 };
 
@@ -47,7 +52,10 @@ export const getDayShortcode = (date: Date) => {
  */
 export const currentCourses = (courses: ICourseSchedule[]): ICourseSchedule[] => {
   return courses.filter(c =>
-    c.attributes.meetingTimes.filter(m => m.beginDate && Date.parse(m.beginDate) <= Date.now())
+    c.attributes.meetingTimes.filter(
+      // !TODO date to look into PST / UTC
+      m => m.beginDate && Date.parse(m.beginDate.toString()) <= Date.now()
+    )
   );
 };
 
