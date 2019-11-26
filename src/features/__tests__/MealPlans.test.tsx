@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
+import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
 import MealPlans from '../financial-overview/MealPlans';

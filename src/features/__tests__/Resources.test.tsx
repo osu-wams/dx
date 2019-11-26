@@ -15,7 +15,7 @@ jest.mock('../../api/resources', () => ({
   defaultCategoryName: () => mockDefaultCategory()
 }));
 
-xdescribe('<Resources />', () => {
+describe('<Resources />', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
     mockUseResources.mockReturnValue(resourcesData);

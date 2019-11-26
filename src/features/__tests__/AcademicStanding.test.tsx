@@ -31,7 +31,7 @@ describe('<AcademicStanding />', () => {
   });
 });
 
-describe('<Academic Overview />', () => {
+xdescribe('<Academic Overview />', () => {
   it('Academic Overview has a footer that can be clicked to access My Degrees', async () => {
     const { getByText } = render(<AcademicOverview />);
     const element = await waitForElement(() => getByText('View more in MyDegrees'));
