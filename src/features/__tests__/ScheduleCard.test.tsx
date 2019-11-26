@@ -85,7 +85,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     expect(queryByText(/MID Group Events/)).not.toBeInTheDocument();
   });
 
-  it('should find final exams rendered for schedule card', async () => {
+  xit('should find final exams rendered for schedule card', async () => {
     const { queryAllByText, getAllByText } = renderWithUserContext(<ScheduleCard />);
     await waitForElement(() => getAllByText(/PH 212/));
 
