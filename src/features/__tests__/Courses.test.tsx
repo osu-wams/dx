@@ -96,17 +96,14 @@ test('Various Links are present as well as Google Analytics events are recorded'
 });
 
 test('Course spells out the month and day for Final exams', async () => {
-  const { getByText, findByText, debug, getByTestId } = render(<Courses />);
-  // const title = await waitForElement(() => findByText(/current courses/i));
+  const { findByText, getByTestId } = render(<Courses />);
 
   const TestoBtn = await waitForElement(() => findByText(/testo physics/i));
-  debug();
   fireEvent.click(TestoBtn);
-  // debug();
+
   // Dialg is present and displays the corrent course
   const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
   expect(courseDialog).toBeInTheDocument();
-  debug(courseDialog);
 
   // For Final exams we spell out the month and day (match meetingDateTime format on Course.tsx)
   const monthDay = format(getStartDate(), 'MMMM d');

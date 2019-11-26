@@ -3,17 +3,10 @@ import { render } from '../../util/test-utils';
 import Resources from '../Resources';
 
 describe('<Resources> main page', () => {
-  it('renders with test id', async () => {
-    const { findByTestId } = render(<Resources />);
-
-    const testId = await findByTestId('resources-page');
+  it('finds "Resources" and renders with test id', async () => {
+    const { findByText, getByTestId } = render(<Resources />);
+    await findByText('Resources');
+    const testId = await getByTestId('resources-page');
     expect(testId).toBeInTheDocument();
-  });
-
-  it('should display the title Resources', async () => {
-    const { findByText } = render(<Resources />);
-
-    const resources = await findByText('Resources');
-    expect(resources).toBeInTheDocument();
   });
 });

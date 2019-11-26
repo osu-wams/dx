@@ -338,9 +338,9 @@ export default {
             weeklySchedule: ['M', 'T', 'W', 'Th', 'F', 'Sa', 'Su']
           },
           {
-            beginDate: currentBeginDate,
+            beginDate: todayUTC,
             beginTime: '09:00:00',
-            endDate: currentBeginDate, // intentionally matching date to beginDate, the exam is on one day
+            endDate: todayUTC, // intentionally matching date to beginDate, the exam is on one day
             endTime: '09:50:00',
             room: 'FNL',
             building: 'GRP',
