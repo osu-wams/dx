@@ -1,15 +1,23 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
 import OSUProfile from '../features/profile/OSUProfile';
-import { MainGridWrapper, MainGrid } from '../ui/PageGrid';
+import Settings from '../features/profile/Settings';
+import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 
 const Profile = () => (
-  <MainGridWrapper data-testid="profile-page">
-    <PageTitle title="My Profile" />
-    <MainGrid>
-      <OSUProfile />
-    </MainGrid>
-  </MainGridWrapper>
+  <div data-testid="profile-page">
+    <MainGridWrapper>
+      <PageTitle title="My Profile" />
+      <MainGrid>
+        <MainGridCol>
+          <OSUProfile />
+        </MainGridCol>
+        <MainGridCol>
+          <Settings />
+        </MainGridCol>
+      </MainGrid>
+    </MainGridWrapper>
+  </div>
 );
 
 export default Profile;

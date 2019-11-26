@@ -286,6 +286,11 @@ export interface ThemeConfiguration {
       icon: {
         color: string;
       };
+      settings: {
+        emphasis: {
+          color: string;
+        };
+      };
     };
     resources: {
       name: {

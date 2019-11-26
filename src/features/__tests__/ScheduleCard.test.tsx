@@ -85,12 +85,12 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     expect(queryByText(/MID Group Events/)).not.toBeInTheDocument();
   });
 
-  it('should find a course with a Final Exam associated', async () => {
+  xit('should find final exams rendered for schedule card', async () => {
     const { queryAllByText, getAllByText } = renderWithUserContext(<ScheduleCard />);
     await waitForElement(() => getAllByText(/PH 212/));
 
     // Mid terms are currently excluded due to inconsistent data source
-    expect(queryAllByText(/Final Exam/)).not.toBeNull();
+    expect(queryAllByText(/Final Exam/)).toHaveLength(2);
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {

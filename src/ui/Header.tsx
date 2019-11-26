@@ -12,7 +12,7 @@ import '@reach/menu-button/styles.css';
 import MainNav from './MainNav';
 import { themeSettings, breakpoints, styled } from '../theme';
 import { Event } from '../util/gaTracking';
-import { IUser } from '../api/user';
+import { IUser, usersCampus, CAMPUS_CODES } from '../api/user';
 import { UserContext } from '../App';
 
 const headerMedia = breakpoints[768];
@@ -107,13 +107,12 @@ const Logo = styled.img`
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
  */
-const campusLogo = (user: IUser | null) => {
-  if (!user || !user.classification || !Object.keys(user.classification).includes('attributes'))
-    return logo;
-  switch (user!.classification!.attributes!.campusCode) {
-    case 'DSC':
+const campusLogo = (user: IUser) => {
+  const { campusCode } = usersCampus(user);
+  switch (campusCode) {
+    case CAMPUS_CODES.ecampus:
       return ecampusLogo;
-    case 'B':
+    case CAMPUS_CODES.bend:
       return cascadesLogo;
     default:
       return logo;

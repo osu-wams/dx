@@ -5,6 +5,14 @@ import { render as testingLibraryRender } from '@testing-library/react';
 import { UserContext, AppContext, IAppContext } from '../App';
 import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
 import { themesLookup, defaultTheme } from '../theme/themes';
+import { IUserAudienceOverride } from '../api/user';
+
+export const authUserAudienceOverride: IUserAudienceOverride = {
+  campusCode: 'C',
+  graduate: true,
+  international: true,
+  firstYear: true
+};
 
 export const authUserClassification: IUserClassification = {
   id: '123',
@@ -25,7 +33,9 @@ export const authUser = {
     lastName: 'LastTesto',
     isAdmin: true,
     isCanvasOptIn: true,
-    classification: authUserClassification
+    theme: 'light',
+    classification: authUserClassification,
+    audienceOverride: authUserAudienceOverride
   },
   error: false,
   loading: false,
