@@ -20,7 +20,7 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn run lint
-          yarn run test:coverage -w 1
+          yarn run test:coverage -w 1 --silent
         env:
           CI: true
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
