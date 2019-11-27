@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
-
 import { UserContext, AppContext, IAppContext } from '../App';
 import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
 import { themesLookup, defaultTheme } from '../theme/themes';
@@ -35,7 +34,8 @@ export const authUser = {
     isCanvasOptIn: true,
     theme: 'light',
     classification: authUserClassification,
-    audienceOverride: authUserAudienceOverride
+    audienceOverride: authUserAudienceOverride,
+    refreshToken: 'fresh'
   },
   error: false,
   loading: false,
