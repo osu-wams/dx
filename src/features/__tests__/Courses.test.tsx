@@ -5,7 +5,7 @@ import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
 import { mockGAEvent } from '../../setupTests';
 import { format } from '../../util/helpers';
-import { getStartDate } from '../schedule/schedule-utils';
+import { startDate } from '../schedule/schedule-utils';
 
 const mockUseCourseSchedule = jest.fn();
 
@@ -106,7 +106,7 @@ test('Course spells out the month and day for Final exams', async () => {
   expect(courseDialog).toBeInTheDocument();
 
   // For Final exams we spell out the month and day (match meetingDateTime format on Course.tsx)
-  const monthDay = format(getStartDate(), 'MMMM d');
+  const monthDay = format(startDate(), 'MMMM d');
   expect(courseDialog).toHaveTextContent(monthDay);
 });
 
