@@ -1,5 +1,4 @@
-import { getStartDate } from './../../../features/schedule/schedule-utils';
-const todayUTC = Date.parse(getStartDate().toString());
+const todayUTC = Date.now();
 const currentBeginDate = new Date(todayUTC - 1000 * 60 * 60 * 24).toISOString().slice(0, 10);
 const currentEndDate = new Date(todayUTC).toISOString().slice(0, 10);
 const beginPastDate = new Date(todayUTC - 1000 * 60 * 60 * 24 * 10).toISOString().slice(0, 10);

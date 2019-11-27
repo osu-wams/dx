@@ -9,7 +9,7 @@ import {
   getNextFiveDays,
   getDayShortcode,
   coursesOnDay,
-  getStartDate
+  startDate
 } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
@@ -32,7 +32,7 @@ const ScheduleCard = () => {
     user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
   });
   const courses = useCourseSchedule();
-  const nextFiveDays = getNextFiveDays(getStartDate());
+  const nextFiveDays = getNextFiveDays(startDate());
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const calEvents = useAcademicCalendarEvents();
 

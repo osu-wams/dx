@@ -1,5 +1,4 @@
 import { addDays, eachDayOfInterval } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
 import { isNullOrUndefined } from 'util';
 import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 import { format } from '../../util/helpers';
@@ -13,24 +12,17 @@ export interface ICoursesMap {
   title: string;
 }
 
-export const pstTimeZone = 'America/Los_Angeles';
-
 export const startDate = () => {
-  const UTCDate = new Date();
-  const PSTDate = utcToZonedTime(UTCDate, pstTimeZone);
-
-  return PSTDate;
+  return new Date();
 };
-
-export const getStartDate = startDate;
 
 /**
  * Utility functions
  */
 export const getNextFiveDays = (startDate: Date) => {
-  let rangeStart = startDate;
-  let rangeEnd = addDays(rangeStart, 4);
-  let nextFiveDays = eachDayOfInterval({ start: rangeStart, end: rangeEnd });
+  const rangeStart = startDate;
+  const rangeEnd = addDays(rangeStart, 4);
+  const nextFiveDays = eachDayOfInterval({ start: rangeStart, end: rangeEnd });
 
   return nextFiveDays;
 };
@@ -56,7 +48,7 @@ export const currentCourses = (courses: ICourseSchedule[]): ICourseSchedule[] =>
   return courses.filter(c =>
     c.attributes.meetingTimes.filter(
       // !TODO date to look into PST / UTC
-      m => m.beginDate && Date.parse(m.beginDate.toString()) <= Date.now()
+      m => m.beginDate && Date.parse(m.beginDate.toString()) <= startDate().getTime()
     )
   );
 };
