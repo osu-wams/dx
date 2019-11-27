@@ -3,7 +3,6 @@ import VisuallyHidden from '@reach/visually-hidden';
 import ReactGA from 'react-ga';
 import generateId from 'uuid/v4';
 import { faMapMarkerAlt, faEnvelope } from '@fortawesome/pro-light-svg-icons';
-import { parse } from 'date-fns';
 import Icon from '../ui/Icon';
 import { CloseButton } from '../ui/Button';
 import {
@@ -16,7 +15,7 @@ import {
   ListItemLeadText
 } from '../ui/List';
 import MyDialog, { MyDialogFooter, MyDialogHeader } from '../ui/MyDialog';
-import { titleCase, formatTime, formatDate, singularPlural } from '../util/helpers';
+import { titleCase, formatTime, format, singularPlural } from '../util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import Divider from '../ui/Divider';
 import { IFaculty, IMeetingTime } from '../api/student/course-schedule';
@@ -70,7 +69,7 @@ const meetingDateTime = (meetingTime: IMeetingTime): string => {
   const date =
     meetingTime.beginDate !== meetingTime.endDate
       ? meetingTime.weeklySchedule.map(day => day)
-      : formatDate(parse(meetingTime.beginDate), 'noYear');
+      : format(meetingTime.beginDate, 'MMMM d');
   const time =
     meetingTime.beginTime &&
     `\u00B7 ${formatTime(meetingTime.beginTime)} - ${formatTime(meetingTime.endTime)}`;

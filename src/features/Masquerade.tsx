@@ -24,7 +24,6 @@ export const Masquerade = (props: MasqueradeProps) => {
   useEffect(() => {
     getMasqueradeUser()
       .then(data => {
-        console.log(data);
         if (data && data.masqueradeId !== '') {
           cache.clear();
           setMasqueradeId(data.masqueradeId);
@@ -95,7 +94,6 @@ export const Masquerade = (props: MasqueradeProps) => {
    * usage as themselves.
    */
   const masqueradeText = () => {
-    console.log(masqueradeId);
     if (masqueradeId === '') {
       return 'Remove Masquerade';
     } else {

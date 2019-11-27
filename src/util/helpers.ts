@@ -1,4 +1,4 @@
-import format from 'date-fns/format';
+import { format as fns, parseISO, isValid } from 'date-fns';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 // Format any WORDS SENTENCE/word sentence/wOrD sEnTenCe to Title Case: Word Sentence
@@ -25,21 +25,27 @@ export function formatTime(hours: string) {
   return result;
 }
 
-/* Format our day and time into preferred format
-using the npm package date-fns. We change number dates to:
-"December 09, 2018" format. */
-export function formatDate(date: Date, type: string = 'long') {
-  // Compact format returns 10/20/19
-  if (type === 'compact') {
-    return format(date, 'MM/DD/YY');
+/*
+ * Wrapper around format from date-fns
+ * Deals with strings and numbers and Dates
+ * Default format returned: November 06, 2019
+ */
+export const format = (date: Date | string | number, type: string = 'MMMM d, yyyy') => {
+  if (type === 'dueAt') {
+    type = "MMM do 'at' h:mm";
   }
-  // noYear returns: November 6
-  if (type === 'noYear') {
-    return format(date, 'MMMM D');
+
+  if (typeof date === 'string') {
+    // if parseISO understands the date as valid we use it
+    if (isValid(parseISO(date))) {
+      date = parseISO(date);
+    } else {
+      date = new Date(Date.parse(date));
+    }
   }
-  // Default returns: November 06, 2018
-  return format(date, 'MMMM DD, YYYY');
-}
+
+  return fns(date, type);
+};
 
 /* Preferred Money format for simple strings to dollars
 @input 2600.50 output $2,600.50  */

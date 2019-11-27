@@ -25,6 +25,31 @@ const LinkStyles = styled.a<StyleProps>`
   }
 `;
 
+/**
+ * !TODO: When StyledComponent gets updated
+ * chek this again to remove duplication since a={Link} currently throws error
+ */
+const LinkStyles2 = styled(Link)<StyleProps>`
+  :hover,
+  :active,
+  :focus {
+    text-decoration: underline;
+  }
+  text-decoration: none;
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: ${themeSettings.borderRadius[8]};
+  &.simple {
+    padding: 0;
+  }
+  background-color: ${({ bg, theme }) => bg || theme.ui.link.background};
+  color: ${({ fg, theme }) => fg || theme.ui.link.color};
+  font-weight: ${props => (props.bg ? '300' : '500')};
+  & > svg {
+    margin-left: 1.2rem;
+  }
+`;
+
 type StyleProps = {
   fg?: string;
   bg?: string;
@@ -54,13 +79,13 @@ const InternalLink = ({ children, ...props }) => {
   const themeContext = useContext(ThemeContext);
 
   return (
-    <LinkStyles as={Link} {...props}>
+    <LinkStyles2 to={props.to} {...props}>
       {children}
       <Icon
         icon={faLongArrowRight}
         color={props.fg ? props.fg : themeContext.ui.link.icon.internal.color}
       />
-    </LinkStyles>
+    </LinkStyles2>
   );
 };
 

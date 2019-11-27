@@ -15,6 +15,24 @@ jest.mock('../src/util/gaTracking', () => ({
   }
 }));
 
+// required because of the overlay from Reakit
+if (global.document) {
+  global.document.createRange = () => ({
+    setStart: () => {},
+    setEnd: () => {},
+    commonAncestorContainer: {
+      nodeName: 'BODY',
+      ownerDocument: document
+    }
+  });
+}
+
+// Supress missing CSS warnings in tests from @reach ui components
+jest.mock('@reach/utils', () => ({
+  ...jest.requireActual('@reach/utils'),
+  checkStyles: jest.fn()
+}));
+
 mockGAEvent.mockResolvedValue(Promise.resolve(true));
 
 // Mock matchMedia for test env

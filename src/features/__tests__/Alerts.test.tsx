@@ -59,7 +59,7 @@ describe('<Alerts />', () => {
       mockUseDxAlerts.mockReturnValue(dxAlerts);
     });
     it('should not find the Rave alert', async () => {
-      const { getByText, queryByText } = render(<Alerts />);
+      const { getByText } = render(<Alerts />);
       const dxTitle = await waitForElement(() => getByText('BobRoss'));
       const raveTitle = getByText('First Rave');
       expect(dxTitle).toBeInTheDocument();
@@ -72,8 +72,7 @@ describe('<Alerts />', () => {
       mockUseDxAlerts.mockReturnValue(mockNoData);
     });
     it('should not find any alerts', async () => {
-      const { getByText, queryByText, debug } = render(<Alerts />);
-      debug();
+      const { queryByText } = render(<Alerts />);
       const dxTitle = queryByText('BobRoss');
       const raveTitle = queryByText('First Rave');
       expect(dxTitle).not.toBeInTheDocument();

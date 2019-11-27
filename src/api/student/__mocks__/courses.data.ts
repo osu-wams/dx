@@ -1,7 +1,9 @@
-const currentBeginDate = new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString().slice(0, 10);
-const currentEndDate = new Date(Date.now()).toISOString().slice(0, 10);
-const beginPastDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString().slice(0, 10);
-const endPastDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString().slice(0, 10);
+const todayUTC = Date.now();
+const currentBeginDate = new Date(todayUTC - 1000 * 60 * 60 * 24).toISOString().slice(0, 10);
+const currentEndDate = new Date(todayUTC).toISOString().slice(0, 10);
+const beginPastDate = new Date(todayUTC - 1000 * 60 * 60 * 24 * 10).toISOString().slice(0, 10);
+const endPastDate = new Date(todayUTC - 1000 * 60 * 60 * 24 * 5).toISOString().slice(0, 10);
+
 export default {
   data: [
     {
@@ -149,12 +151,12 @@ export default {
             creditHourSession: 0,
             scheduleType: 'FNL',
             scheduleDescription: 'Final Exam',
-            weeklySchedule: ['Th']
+            weeklySchedule: ['M'] // every day so we can test display
           },
           {
             beginDate: currentBeginDate,
             beginTime: '11:00:00',
-            endDate: currentEndDate,
+            endDate: currentBeginDate,
             endTime: '11:50:00',
             room: '305',
             building: 'PHAR',
@@ -286,7 +288,7 @@ export default {
         sectionNumber: '070',
         term: '201801',
         termDescription: 'Fall 2017',
-        scheduleDescription: 'Lecture',
+        scheduleDescription: 'Lecture Testo',
         scheduleType: 'A',
         creditHours: 4,
         registrationStatus: '**Web Registered**',
@@ -336,9 +338,9 @@ export default {
           },
           {
             beginDate: currentEndDate,
-            beginTime: '16:00:00',
-            endDate: currentEndDate, // intentionally matching date to beginDate, the exam is on one day
-            endTime: '17:50:00',
+            beginTime: '09:00:00',
+            endDate: currentEndDate, // intentionally matching date to endDate, the exam is on one day
+            endTime: '09:50:00',
             room: 'FNL',
             building: 'GRP',
             buildingDescription: 'Group Events',
@@ -347,7 +349,7 @@ export default {
             creditHourSession: 0,
             scheduleType: 'FNL',
             scheduleDescription: 'Final Exam',
-            weeklySchedule: ['W']
+            weeklySchedule: ['F']
           },
           {
             beginDate: currentBeginDate,
@@ -695,9 +697,9 @@ export const mockSimpleSchedule = (startDate: string) => {
             },
             {
               beginDate: startDate,
-              beginTime: '02:00:00',
+              beginTime: '09:00:00',
               endDate: startDate,
-              endTime: '04:20:00',
+              endTime: '09:20:00',
               room: '101',
               building: 'PHAR',
               buildingDescription: 'Morning Building',

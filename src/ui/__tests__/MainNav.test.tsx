@@ -4,16 +4,6 @@ import { renderWithUserContext } from '../../util/test-utils';
 import MainNav from '../MainNav';
 import { mockGAEvent } from '../../setupTests';
 
-// required because of the overlay from Reakit
-global.document.createRange = () => ({
-  setStart: () => {},
-  setEnd: () => {},
-  commonAncestorContainer: {
-    nodeName: 'BODY',
-    ownerDocument: document
-  }
-});
-
 test('Main Navigation Links to be present and tracked in Google Analytics', async () => {
   const { getByText } = renderWithUserContext(<MainNav />);
 

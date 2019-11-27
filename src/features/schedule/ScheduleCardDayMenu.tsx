@@ -1,14 +1,16 @@
 import React from 'react';
-import { format, isSameDay } from 'date-fns';
+import { isSameDay } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { themeSettings, styled } from '../../theme';
 import { Event } from '../../util/gaTracking';
+import { format } from '../../util/helpers';
 
 const ScheduleCardDayMenu = ({ selectedDay, nextFiveDays, setSelectedDay, daysWithEvents }) => {
   return (
     <DayList>
       {nextFiveDays.map((day, index) => {
         const selected = isSameDay(day, selectedDay);
+
         return (
           <DaySelector
             key={day.toUTCString()}
@@ -20,10 +22,10 @@ const ScheduleCardDayMenu = ({ selectedDay, nextFiveDays, setSelectedDay, daysWi
           >
             <DayIndicator aria-hidden>{daysWithEvents.includes(day) ? '\u2022' : ''}</DayIndicator>
             <DayOfWeek aria-hidden selected={selected}>
-              {format(day, 'ddd')}
+              {format(day, 'EEE')}
             </DayOfWeek>
-            <VisuallyHidden>{format(day, 'dddd')}</VisuallyHidden>
-            <DayOfMonth selected={selected}>{format(day, 'D')}</DayOfMonth>
+            <VisuallyHidden>{format(day, 'EEEE')}</VisuallyHidden>
+            <DayOfMonth selected={selected}>{format(day, 'd')}</DayOfMonth>
           </DaySelector>
         );
       })}

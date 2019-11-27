@@ -1,6 +1,6 @@
 import { shadows, gradients, breakpoints, themeSettings } from './theme-settings';
 import { Color } from './theme-colors';
-import { ThemeContext, ThemeConfiguration, styled } from './theme-interface';
+import { ThemeContext, ThemeConfiguration as TC, styled } from './theme-interface';
 import GlobalStyles from './GlobalStyles';
 export {
   shadows,
@@ -13,4 +13,4 @@ export {
   styled
 };
 
-export type ThemeConfiguration = ThemeConfiguration;
+export type ThemeConfiguration = TC;

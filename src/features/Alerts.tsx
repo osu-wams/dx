@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
-import { formatDate } from '../util/helpers';
+import { format } from '../util/helpers';
 import { useDxAlerts, useRaveAlerts, Alert } from '../api/alerts';
 import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
 
@@ -82,7 +82,7 @@ const Alerts = () => {
       />
       <AlertContent>
         <p>
-          {formatDate(alert.date)}: {alert.content}
+          {format(alert.date)}: {alert.content}
         </p>
       </AlertContent>
     </AlertCardWrapper>

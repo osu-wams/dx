@@ -1,13 +1,9 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
-import { render, authUser } from '../../util/test-utils';
+import { waitForElement, fireEvent, act } from '@testing-library/react';
+import { render, authUser, sleep } from '../../util/test-utils';
 import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
 import { mockGAEvent } from '../../setupTests';
-
-const sleep = (ms: number) => {
-  return new Promise(res => setTimeout(res, ms));
-};
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
@@ -58,17 +54,15 @@ describe('<Resources />', () => {
     const { getByLabelText, findByText } = render(<Resources />);
     const featured = await waitForElement(() => getByLabelText('Featured'));
     const all = await waitForElement(() => getByLabelText('All'));
-    fireEvent.click(all);
-    await sleep(50);
+    await fireEvent.click(all);
     expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
-    expect(findByText(/Student Jobs/)).not.toBeNull();
-    expect(findByText(/Billing Information/)).not.toBeNull();
+    expect(await findByText(/Student Jobs/)).not.toBeNull();
+    expect(await findByText(/Billing Information/)).not.toBeNull();
   });
 
   it('should have clickable categories that report to GoogleAnalytics', async () => {
     const { getByText } = render(<Resources />);
-    await sleep(100);
     const BillingInformationResource = await getByText(/Billing Information/);
     expect(BillingInformationResource).not.toBeNull();
     fireEvent.click(BillingInformationResource);
@@ -82,19 +76,18 @@ describe('<Resources />', () => {
 
     const academic = await waitForElement(() => getByLabelText('Academic'));
     const searchInput = getByPlaceholderText('Find resources') as HTMLInputElement;
-    await sleep(50);
+
     // Search input value changed to "noResults"
     await fireEvent.change(searchInput, {
       target: {
         value: 'noResults'
       }
     });
-    // Need to wait for debounce
-    await sleep(260);
-    expect(await findByText(/found 0 results/)).toBeInTheDocument();
-    fireEvent.click(academic);
-    expect(await findByText(/Student Athletes/)).toBeInTheDocument();
 
+    expect(await findByText(/found 0 results/)).toBeInTheDocument();
+    await fireEvent.click(academic);
+    expect(await findByText(/Student Athletes/)).toBeInTheDocument();
+    expect(await findByText(/found 1 result/)).toBeInTheDocument();
     // Search input should be clear, 'noResults' should be gone
     expect(searchInput.value).toEqual('');
   });
@@ -104,17 +97,16 @@ describe('<Resources />', () => {
     const featured = await waitForElement(() => getByLabelText('Featured'));
     expect(featured).toHaveClass('selected');
 
-    const academic = await waitForElement(() => getByLabelText('Academic'));
+    // const academic = await waitForElement(() => getByLabelText('Academic'));
     const searchInput = getByPlaceholderText('Find resources') as HTMLInputElement;
-    await sleep(50);
     // Search input value changed to "noResults"
     await fireEvent.change(searchInput, {
       target: {
-        value: 'billings'
+        value: 'billingNotThere'
       }
     });
-    // Need to wait for debounce
-    await sleep(260);
+
+    expect(await findByText(/found 0 results/)).toBeInTheDocument();
     expect(queryByText(/Billing Information/)).not.toBeInTheDocument();
 
     await fireEvent.change(searchInput, {
@@ -122,20 +114,16 @@ describe('<Resources />', () => {
         value: 'billing'
       }
     });
-    // Need to wait for debounce
-    await sleep(260);
 
-    expect(findByText(/Billing Information/));
+    expect(await findByText(/Billing Information/));
   });
 
   it('should be able to reselect a category', async () => {
     const { getByLabelText, queryByText, findByText } = render(<Resources />);
     const academic = await waitForElement(() => getByLabelText('Academic'));
     const all = await waitForElement(() => getByLabelText('All'));
-    fireEvent.click(all);
-    await sleep(50);
-    fireEvent.click(academic);
-    await sleep(100);
+    await fireEvent.click(all);
+    await fireEvent.click(academic);
     expect(academic).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
     expect(findByText(/Student Athletes/)).not.toBeNull();
@@ -153,49 +141,51 @@ describe('<Resources />', () => {
     });
 
     const { getByLabelText, findByText } = render(<Resources />);
-    await sleep(50);
     const featured = await waitForElement(() => getByLabelText('Featured'));
     const all = await waitForElement(() => getByLabelText('All'));
     expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
-    expect(findByText(/Billing Information/)).not.toBeNull();
-    expect(findByText(/Student Jobs/)).not.toBeNull();
+    expect(await findByText(/Billing Information/)).not.toBeNull();
+    expect(await findByText(/Student Jobs/)).not.toBeNull();
     location.search = '';
   });
 
   it('should move to the All category when searching', async () => {
-    const { getByLabelText, findByText, queryByText, getByPlaceholderText } = render(<Resources />);
-    // await sleep(100);
+    const { getByLabelText, findByText, queryByText, getByPlaceholderText, debug } = render(
+      <Resources />
+    );
     let featured = await waitForElement(() => getByLabelText('Featured'));
     let all = await waitForElement(() => getByLabelText('All'));
-    await sleep(2000);
+    const input = await waitForElement(() => getByPlaceholderText('Find resources'));
+    // await sleep(2000);
     expect(featured).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
-    await fireEvent.change(getByPlaceholderText('Find resources'), {
+    await fireEvent.change(input, {
       target: {
-        value: 'student'
+        value: 'student job'
       }
     });
     // Need to wait for debounce
-    await sleep(600);
+    expect(await findByText(/found 1 result/)).toBeInTheDocument();
+    expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+    // expect()
     expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
+
     expect(queryByText(/Billing Information/)).toBeNull();
-    expect(findByText(/Student Jobs/)).not.toBeNull();
   });
 
   describe('with audiences', () => {
     it('shows all resources', async () => {
-      const newAuthUser = { ...authUser, classification: { id: authUser.osuId } };
+      const newAuthUser = { ...authUser, classification: { id: authUser.data.osuId } };
       const { getByLabelText, findByText } = render(<Resources />, {
         user: newAuthUser
       });
       const all = await waitForElement(() => getByLabelText('All'));
-      fireEvent.click(all);
-      await sleep(50);
+      await fireEvent.click(all);
       expect(all).toHaveClass('selected');
-      expect(findByText(/Billing Information/)).not.toBeNull();
-      expect(findByText(/Student Jobs/)).not.toBeNull();
+      expect(await findByText(/Billing Information/)).not.toBeNull();
+      expect(await findByText(/Student Jobs/)).not.toBeNull();
     });
   });
 });

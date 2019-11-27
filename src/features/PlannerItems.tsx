@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { format } from 'date-fns';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import Icon from '../ui/Icon';
@@ -23,6 +22,7 @@ import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { courseCodeOrIcon } from './Courses';
 import { styled, ThemeContext } from '../theme';
+import { format } from '../util/helpers';
 
 const NoItems = styled.div`
   display: flex;
@@ -100,9 +100,7 @@ const PlannerItems = () => {
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>
                     <ListItemDescription>
-                      {plannable_date &&
-                        plannable_date !== '' &&
-                        format(plannable_date, 'MMM Do [at] h:mma')}
+                      {plannable_date && plannable_date !== '' && format(plannable_date, 'dueAt')}
                     </ListItemDescription>
                   </ListItemText>
                 </ListItemContentLink>
