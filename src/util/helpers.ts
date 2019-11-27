@@ -1,4 +1,4 @@
-import { format as fns, parseISO } from 'date-fns';
+import { format as fns, parseISO, isValid } from 'date-fns';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 // Format any WORDS SENTENCE/word sentence/wOrD sEnTenCe to Title Case: Word Sentence
@@ -36,16 +36,15 @@ export const format = (date: Date | string | number, type: string = 'MMMM d, yyy
   }
 
   if (typeof date === 'string') {
-    let parsedDate = parseISO(date);
-
-    // If parseISO fails and can't recognize a date, we default to Date.parse
-    if (parsedDate.toString() === 'Invalid Date') {
-      parsedDate = new Date(Date.parse(date));
+    // if parseISO understands the date as valid we use it
+    if (isValid(parseISO(date))) {
+      date = parseISO(date);
+    } else {
+      date = new Date(Date.parse(date));
     }
-    return fns(parsedDate, type);
-  } else {
-    return fns(date, type);
   }
+
+  return fns(date, type);
 };
 
 /* Preferred Money format for simple strings to dollars
