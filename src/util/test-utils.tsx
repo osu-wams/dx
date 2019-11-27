@@ -35,7 +35,8 @@ export const authUser = {
     isCanvasOptIn: true,
     theme: 'light',
     classification: authUserClassification,
-    audienceOverride: authUserAudienceOverride
+    audienceOverride: authUserAudienceOverride,
+    refreshToken: 'epic'
   },
   error: false,
   loading: false,

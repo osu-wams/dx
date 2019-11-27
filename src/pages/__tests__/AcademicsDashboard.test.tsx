@@ -1,36 +1,85 @@
 import React from 'react';
-import { renderWithUserContext, render } from '../../util/test-utils';
+import { render } from '../../util/test-utils';
 import AcademicsDashboard from '../Academics/AcademicsDashboard';
-import { waitForElement, wait } from '@testing-library/dom';
-import {mockAcademicAnnouncementResult} from '../../api/__mocks__/announcements.data'
+import { waitForElement } from '@testing-library/dom';
+import { mockAcademicAnnouncementResult } from '../../api/__mocks__/announcements.data';
+import { gpaUndergraduateData } from '../../api/student/__mocks__/gpa.data';
+import { academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
+import { resourcesData } from '../../api/__mocks__/resources.data';
 
+const mockUseAcademicCalendar = jest.fn();
+jest.mock('../../api/events', () => ({
+  useAcademicCalendarEvents: () => mockUseAcademicCalendar()
+}));
 
-const mockUseAnnouncements = jest.fn()
+const mockUseResourcesByQueue = jest.fn();
+jest.mock('../../api/resources', () => ({
+  useResourcesByQueue: () => mockUseResourcesByQueue()
+}));
+
+const mockUseAcademicStatus = jest.fn();
+const mockUseStudentGpa = jest.fn();
+const mockUseCourseSchedule = jest.fn();
+const mockUseAccountHolds = jest.fn();
+const mockUseAnnouncements = jest.fn();
+
+jest.mock('../../api/student/holds', () => ({
+  useAccountHolds: () => mockUseAccountHolds()
+}));
+
+jest.mock('../../api/student/course-schedule', () => ({
+  useCourseSchedule: () => mockUseCourseSchedule()
+}));
+
+jest.mock('../../api/student/academic-status', () => ({
+  useAcademicStatus: () => mockUseAcademicStatus()
+}));
+
+jest.mock('../../api/student/gpa', () => ({
+  useGpa: () => mockUseStudentGpa()
+}));
 
 jest.mock('../../api/announcements', () => ({
   useAnnouncements: () => mockUseAnnouncements()
-}))
+}));
 
 describe('<AcademicsDashboard />', () => {
   beforeEach(() => {
-    mockUseAnnouncements.mockReturnValue(mockAcademicAnnouncementResult)
-  })
+    mockUseResourcesByQueue.mockReturnValue(resourcesData);
+    mockUseAcademicCalendar.mockReturnValue(academicCalendar6);
+    mockUseAnnouncements.mockReturnValue(mockAcademicAnnouncementResult);
+    mockUseStudentGpa.mockReturnValue({ data: gpaUndergraduateData, loading: false, error: false });
+    mockUseAcademicStatus.mockReturnValue({
+      data: { academicStanding: 'Good Standing' },
+      loading: false,
+      error: false
+    });
+    mockUseCourseSchedule.mockReturnValue({
+      data: 7,
+      loading: false,
+      error: false
+    });
+    mockUseAccountHolds.mockReturnValue({
+      data: [{ description: 'blah' }, { description: 'BobRoss' }],
+      loading: false,
+      error: false
+    });
+  });
 
   it('renders without errors', async () => {
-    const { getByTestId } = renderWithUserContext(<AcademicsDashboard />);
-    getByTestId('academics-dashboard')
-  })
+    const { getByTestId } = render(<AcademicsDashboard />);
+    getByTestId('academics-dashboard');
+  });
 
   it('should not render Announcements with no events', async () => {
-    mockUseAnnouncements.mockReturnValue({data: [], loading: false, error: false});
-    const { getByTestId } = render(<AcademicsDashboard />)
-    expect(() => getByTestId('academics-announcements')).toThrow() //will throw if announcements is being displayed
-  })
+    mockUseAnnouncements.mockReturnValue({ data: [], loading: false, error: false });
+    const { getByTestId } = render(<AcademicsDashboard />);
+    expect(() => getByTestId('academics-announcements')).toThrow(); //will throw if announcements is being displayed
+  });
 
   it('should render Announcements and event cards when at least one event is present', async () => {
-    const { getAllByTestId, getByTestId } = render(<AcademicsDashboard />)
-    await waitForElement(() => getByTestId('academics-announcements')) //will throw if no results
-    await waitForElement(() => getAllByTestId('eventcard')) //will throw if no results
-  }) 
-
+    const { getAllByTestId, getByTestId } = render(<AcademicsDashboard />);
+    await waitForElement(() => getByTestId('academics-announcements')); //will throw if no results
+    await waitForElement(() => getAllByTestId('eventcard')); //will throw if no results
+  });
 });
