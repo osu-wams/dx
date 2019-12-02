@@ -50,9 +50,10 @@ const ScheduleCard = () => {
   };
 
   let selectedPlannerItems: any[] = [];
+
   if (user.isCanvasOptIn && Array.isArray(plannerItems.data)) {
     selectedPlannerItems = plannerItems.data.filter(item =>
-      item.plannable_date ? isSameDay(item.plannable_date, selectedDay) : ''
+      item.plannable_date ? isSameDay(Date.parse(item.plannable_date), selectedDay) : false
     );
   }
 
@@ -74,9 +75,9 @@ const ScheduleCard = () => {
 
         let plannerItemsOnDay: any[] = [];
         if (user.isCanvasOptIn && Array.isArray(plannerItems.data)) {
-          plannerItemsOnDay = plannerItems.data.filter(item =>
-            item.plannable_date ? isSameDay(item.plannable_date, day) : ''
-          );
+          plannerItemsOnDay = plannerItems.data.filter(item => {
+            return item.plannable_date ? isSameDay(Date.parse(item.plannable_date), day) : false;
+          });
         }
 
         return hasCourses || plannerItemsOnDay.length > 0 || calendarEventsOnDay.length > 0;

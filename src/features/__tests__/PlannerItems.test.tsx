@@ -13,11 +13,6 @@ jest.mock('../../api/student/planner-items', () => ({
 }));
 
 describe('<PlannerItems />', () => {
-  // Set mock function result before running any tests
-  // beforeEach(() => {
-  //   mockUsePlannerItems.mockReturnValue(mockPlannerItems);
-  // });
-
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     const { findByText } = render(<PlannerItems />);
@@ -62,13 +57,12 @@ describe('with an InfoButton in the CardFooter', () => {
       ...mockAppContext,
       infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
     };
-    const { queryByTestId, debug, findByText } = render(<PlannerItems />, {
+    const { queryByTestId, findByText } = render(<PlannerItems />, {
       appContext: testAppContext
     });
     await findByText(/You have no upcoming Canvas assignments/);
 
     const element = queryByTestId(validIinfoButtonId);
-    debug();
     expect(element).not.toBeInTheDocument();
   });
 
