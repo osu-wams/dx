@@ -13,7 +13,7 @@ jest.mock('../../api/student/account-transactions', () => ({
 
 describe('<FinancialTransactions />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseFinancialTransactions.mockReturnValue(mockFinancialTransactions);
   });
 

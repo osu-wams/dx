@@ -16,7 +16,7 @@ jest.mock('../../api/announcements', () => {
   };
 });
 describe('<AnnouncementContainer> as Academics', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseAnnouncements.mockReturnValue(AcademicsAnnouncementsData);
   });
   afterEach(() => {
@@ -44,7 +44,7 @@ describe('<AnnouncementContainer> as Academics', () => {
 });
 
 describe('<AnnouncementContainer> as Finances', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseAnnouncements.mockReturnValue(FinancesAnnouncementsData);
   });
   afterEach(() => {

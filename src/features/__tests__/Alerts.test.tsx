@@ -15,7 +15,7 @@ jest.mock('../../api/alerts', () => ({
 
 describe('<Alerts />', () => {
   describe('with a Rave alert and no DX Alert', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(raveAlerts);
       mockUseDxAlerts.mockReturnValue(mockNoData);
     });
@@ -28,7 +28,7 @@ describe('<Alerts />', () => {
     });
   });
   describe('with an info DX alert and no Rave Alert', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(mockNoData);
       mockUseDxAlerts.mockReturnValue(dxAlerts);
     });
@@ -41,7 +41,7 @@ describe('<Alerts />', () => {
     });
   });
   describe('with a warn DX alert and no Rave Alert', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(mockNoData);
       mockUseDxAlerts.mockReturnValue({ data: [dxAlerts.data[1]], loading: false, error: false });
     });
@@ -54,7 +54,7 @@ describe('<Alerts />', () => {
     });
   });
   describe('with a DX alert and a Rave Alert', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(raveAlerts);
       mockUseDxAlerts.mockReturnValue(dxAlerts);
     });
@@ -67,7 +67,7 @@ describe('<Alerts />', () => {
     });
   });
   describe('with no alerts', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(mockNoData);
       mockUseDxAlerts.mockReturnValue(mockNoData);
     });

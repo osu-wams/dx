@@ -9,10 +9,11 @@ import { mockGAEvent } from '../../setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
 import { format } from '../../util/helpers';
 
-const mockGetStartDate = jest.fn(() => {
+const getThisDate = () => {
   const d = new Date();
   return new Date(d.getTime() - d.getTimezoneOffset() * 60000);
-});
+};
+const mockGetStartDate = jest.fn(getThisDate);
 const mockUsePlannerItems = jest.fn();
 const mockUseCourseSchedule = jest.fn();
 const mockUseAcademicCalendarEvents = jest.fn();
@@ -36,6 +37,7 @@ jest.mock('../schedule/schedule-utils', () => ({
 describe('<ScheduleCard /> with data and canvas authorized user', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
+    mockGetStartDate.mockReturnValue(getThisDate());
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
@@ -135,10 +137,11 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
 describe('<ScheduleCard /> accessibility checks', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
+    mockGetStartDate.mockReturnValue(getThisDate());
   });
 
   it('should find appropriate aria attributes', async () => {
@@ -159,6 +162,12 @@ describe('<ScheduleCard /> accessibility checks', () => {
 });
 
 describe('<ScheduleCard /> without data for given days', () => {
+  beforeEach(() => {
+    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
+    mockGetStartDate.mockReturnValue(getThisDate());
+  });
   it('should not find "Academic Calendar" subtitle since no events are present', async () => {
     mockUseAcademicCalendarEvents.mockReturnValue(mockNoData);
     const { queryByText } = renderWithUserContext(<ScheduleCard />);
@@ -193,6 +202,7 @@ describe('<ScheduleCard /> without canvas authorization', () => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
+    mockGetStartDate.mockReturnValue(getThisDate());
 
     const { getByText } = renderWithUserContext(<ScheduleCard />, { user: noCanvasAuthUser });
 
@@ -205,7 +215,7 @@ describe('<ScheduleCard /> without canvas authorization', () => {
 
 describe('<ScheduleCard /> with a simple schedule', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockUsePlannerItems.mockReturnValue(mockPlannerItems);
   });

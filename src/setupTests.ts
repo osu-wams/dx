@@ -18,7 +18,6 @@ jest.mock('../src/util/gaTracking', () => ({
 mockGAEvent.mockResolvedValue(Promise.resolve(true));
 
 beforeEach(() => {
-  cache.clear();
   mockGAEvent.mockClear();
 });
 
@@ -57,4 +56,5 @@ beforeEach(() => {
   Storage.prototype.getItem = jest.fn();
   Storage.prototype.setItem = jest.fn();
   Storage.prototype.removeItem = jest.fn();
+  cache.clear();
 });

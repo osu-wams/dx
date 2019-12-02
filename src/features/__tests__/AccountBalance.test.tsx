@@ -12,7 +12,7 @@ jest.mock('../../api/student/account-balance', () => ({
 
 describe('<AccountBalance />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseAccountBalance.mockReturnValue(mockAccountBalance);
   });
 

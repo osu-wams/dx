@@ -14,7 +14,7 @@ jest.mock('../../api/resources', () => ({
 
 describe('<ResourcesCard />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseResourcesByQueue.mockReturnValue(resourcesData);
   });
 
@@ -74,7 +74,7 @@ describe('<ResourcesCard />', () => {
 describe('with an InfoButton in the CardFooter', () => {
   const validIinfoButtonId = 'financial-resources';
 
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseResourcesByQueue.mockReturnValue(resourcesData);
   });
 

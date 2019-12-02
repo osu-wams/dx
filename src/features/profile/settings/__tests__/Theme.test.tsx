@@ -11,6 +11,9 @@ jest.mock('../../../../api/user', () => ({
 }));
 
 describe('<Theme />', () => {
+  beforeEach(() => {
+    mockPostSettings.mockReturnValue(Promise.resolve());
+  });
   it('renders with the themes listed', async () => {
     const { container } = render(<Theme />);
     const buttons = container.querySelectorAll("input[type='radio']");
