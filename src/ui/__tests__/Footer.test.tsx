@@ -70,7 +70,7 @@ it('Links to be present and tracked in Google Analytics', async () => {
   fireEvent.click(disclaimerLink);
   fireEvent.click(accessibilityLink);
   fireEvent.click(maskLink);
-  expect(mockGAEvent).toHaveBeenCalledTimes(9);
+  expect(mockGAEvent).toHaveBeenCalledTimes(6);
 });
 
 it('Application deployed versions', async () => {

@@ -104,6 +104,7 @@ export const Masquerade = (props: MasqueradeProps) => {
   return (
     <MyDialog
       isOpen={showMasqueradeDialog}
+      onDismiss={() => toggleMasqueradeDialog()}
       data-testid="masquerade-dialog"
       aria-labelledby="maskDialog-title"
     >
