@@ -90,6 +90,7 @@
     ]
   },
   "jest": {
+    "resetMocks": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/index.tsx",
