@@ -1,4 +1,6 @@
+import React, { useRef, useState, useEffect } from 'react';
 import { themeSettings, breakpoints, styled } from '../theme';
+import useMediaQuery from '../util/useMediaQuery';
 
 /* Page Grid
  * Single column for mobile. 2 column for Desktop
@@ -49,4 +51,65 @@ const SecondGridWrapper = styled.div`
   }
 `;
 
-export { MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper, PageGridWrapper };
+// Masonry
+const MasonryDiv = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  max-width: 1024px;
+  margin: 0 auto;
+  grid-gap: ${themeSettings.spacing.desktop};
+`;
+
+const Col = styled.div`
+  display: grid;
+  grid-gap: ${themeSettings.spacing.desktop};
+  grid-auto-rows: max-content;
+`;
+
+const Masonry = ({ children }) => {
+  const cols = Array;
+  const ref = useRef<HTMLDivElement>(null);
+  const numCols = 2;
+  // If we want to allow for 3 columns later...
+
+  // const [numCols, setNumCols] = useState(2);
+  // const [timerId, setTimerId] = useState(0);
+  // const minWidth = 330;
+
+  // const calcNumCols = () => {
+  //   clearTimeout(timerId);
+  //   const newTimerId = setTimeout(() => {
+  //     setNumCols(Math.floor(ref.current.offsetWidth / minWidth));
+  //   }, 1000);
+  //   setTimerId(newTimerId);
+  // };
+  // useEffect(() => {
+  //   window.addEventListener(`resize`, calcNumCols);
+  //   calcNumCols();
+  //   return () => window.removeEventListener(`resize`, calcNumCols);
+  // }, []);
+
+  const createCols = () => {
+    for (let i = 0; i < numCols; i++) cols[i] = [];
+    children.forEach((child, i) => cols[i % numCols].push(child));
+  };
+
+  const isMobile = !useMediaQuery('(min-width: 768px)');
+
+  createCols();
+  if (isMobile) {
+    return <MainGrid>{children}</MainGrid>;
+  } else {
+    return (
+      <MasonryDiv ref={ref}>
+        {Array(numCols)
+          .fill('')
+          .map((el, i) => (
+            <Col key={i}>{cols[i]}</Col>
+          ))}
+      </MasonryDiv>
+    );
+  }
+};
+
+export { Masonry, MainGridWrapper, MainGrid, MainGridCol, SecondGridWrapper, PageGridWrapper };
