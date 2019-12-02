@@ -1,6 +1,7 @@
 import ReactGA from 'react-ga';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
+import * as cache from './util/cache';
 
 ReactGA.initialize('UA-48705802-13', {
   testMode: true
@@ -17,6 +18,7 @@ jest.mock('../src/util/gaTracking', () => ({
 mockGAEvent.mockResolvedValue(Promise.resolve(true));
 
 beforeEach(() => {
+  cache.clear();
   mockGAEvent.mockClear();
 });
 
