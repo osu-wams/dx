@@ -15,6 +15,12 @@ jest.mock('../src/util/gaTracking', () => ({
   }
 }));
 
+mockGAEvent.mockResolvedValue(Promise.resolve(true));
+
+beforeEach(() => {
+  mockGAEvent.mockClear();
+});
+
 // required because of the overlay from Reakit
 if (global.document) {
   global.document.createRange = () => ({
@@ -32,8 +38,6 @@ jest.mock('@reach/utils', () => ({
   ...jest.requireActual('@reach/utils'),
   checkStyles: jest.fn()
 }));
-
-mockGAEvent.mockResolvedValue(Promise.resolve(true));
 
 // Mock matchMedia for test env
 const matchMedia = () => ({

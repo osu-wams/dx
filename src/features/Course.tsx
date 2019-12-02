@@ -161,6 +161,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
     <MyDialog
       padding="false"
       isOpen={isOpen}
+      onDismiss={() => toggleCourse()}
       data-testid="course-dialog"
       aria-labelledby="course-title"
     >
