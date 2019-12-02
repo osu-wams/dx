@@ -39,7 +39,7 @@ describe('formatTime', () => {
   });
 });
 
-xdescribe('format dates', () => {
+describe('format dates', () => {
   // Localist Event Calendar format, and academicCalendar format
   const eventCalendar = '2019-11-26T19:30:00-08:00';
   const academicCalendar = 'Thu, 28 Nov 2019 00:00:00 -0800';

@@ -32,8 +32,7 @@ it('has a logout link in the menu', async () => {
   });
 });
 
-// !TODO revise this test - passing/failing is inconsistent
-xtest('User Button and profile link are in the menu and tracked via GA', async () => {
+it('User Button and profile link are in the menu and tracked via GA', async () => {
   const { getByText, getByTestId } = render(<Header />);
 
   const userLink = await waitForElement(() => getByTestId('user-btn'));
