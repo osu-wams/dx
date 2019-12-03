@@ -201,7 +201,8 @@ export const onlyMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMe
  * @param meeting the meeting time to consider
  */
 export const examName = (m: IMeetingTime) => {
-  const roomTypes = [m.room.toLowerCase(), m.scheduleType.toLowerCase()];
+  const room = m.room ? m.room.toLowerCase() : '';
+  const roomTypes = [room, m.scheduleType.toLowerCase()];
   if (roomTypes.includes('fnl')) return 'Final Exam';
   if (roomTypes.includes('mid')) return 'Midterm';
 };

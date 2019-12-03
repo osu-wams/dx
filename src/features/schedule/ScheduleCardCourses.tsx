@@ -106,7 +106,8 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
               {course.attributes.scheduleDescription} &bull; {meetingTimeDescription(meetingTime)}
             </ListItemDescription>
             <ListItemDescription>
-              {formatTime(meetingTime.beginTime)} - {formatTime(meetingTime.endTime)}
+              {meetingTime.beginTime && formatTime(meetingTime.beginTime) + ' - '}
+              {meetingTime.endTime && formatTime(meetingTime.endTime)}
             </ListItemDescription>
           </ListItemText>
           {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
