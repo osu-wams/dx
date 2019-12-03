@@ -24,7 +24,7 @@ jest.mock('../../api/persons/persons', () => ({
 
 describe('<OSUProfile />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUsePerson.mockReturnValue(personsData);
     mockUseMailingAddress.mockReturnValue(personsMailingAddressData);
   });

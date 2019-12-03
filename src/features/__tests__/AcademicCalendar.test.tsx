@@ -1,6 +1,6 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render, mockAppContext } from '../../util/test-utils';
 import { academicCalendar3, academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
 import AcademicCalendar from '../AcademicCalendar';
 import { mockGAEvent } from '../../setupTests';
@@ -13,7 +13,7 @@ jest.mock('../../api/events', () => ({
 
 describe('<AcademicCalendar />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseAcademicCalendar.mockReturnValue(academicCalendar6);
   });
 
@@ -51,10 +51,14 @@ describe('<AcademicCalendar />', () => {
 
 describe('with an InfoButton in the CardFooter', () => {
   const validIinfoButtonId = 'academic-calendar';
+  beforeEach(() => {
+    mockUseAcademicCalendar.mockReturnValue(academicCalendar6);
+  });
 
   test('does not display the button when the infoButtonData is missing it', async () => {
     const { queryByTestId } = render(<AcademicCalendar />, {
       appContext: {
+        ...mockAppContext,
         infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
       }
     });
@@ -66,6 +70,7 @@ describe('with an InfoButton in the CardFooter', () => {
   test('displays the button when the infoButtonData is included', async () => {
     const { getByTestId } = render(<AcademicCalendar />, {
       appContext: {
+        ...mockAppContext,
         infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
       }
     });

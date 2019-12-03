@@ -39,6 +39,7 @@ describe('formatTime', () => {
   });
 });
 
+// TODO: Fix these on Github Actions consistent failures
 xdescribe('format dates', () => {
   // Localist Event Calendar format, and academicCalendar format
   const eventCalendar = '2019-11-26T19:30:00-08:00';

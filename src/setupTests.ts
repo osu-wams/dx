@@ -1,6 +1,7 @@
 import ReactGA from 'react-ga';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
+import * as cache from './util/cache';
 
 ReactGA.initialize('UA-48705802-13', {
   testMode: true
@@ -55,4 +56,5 @@ beforeEach(() => {
   Storage.prototype.getItem = jest.fn();
   Storage.prototype.setItem = jest.fn();
   Storage.prototype.removeItem = jest.fn();
+  cache.clear();
 });

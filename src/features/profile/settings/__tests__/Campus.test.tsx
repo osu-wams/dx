@@ -11,6 +11,9 @@ jest.mock('../../../../api/user', () => ({
 }));
 
 describe('<Campus />', () => {
+  beforeEach(() => {
+    mockPostSettings.mockReturnValue(Promise.resolve());
+  });
   it('renders with default test data settings having only 1 default campus', async () => {
     const { getByText, queryAllByText } = render(<Campus />);
     const defaultCampus = getByText('(Default)');

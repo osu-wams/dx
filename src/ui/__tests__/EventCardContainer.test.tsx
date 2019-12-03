@@ -36,7 +36,7 @@ jest.mock('../../api/events', () => {
 
 describe('<EventCardContainer />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseAnnouncements.mockReturnValue(announcementsData);
     mockUseStudentExperienceEvents.mockReturnValue(localistData);
     mockUseCampusEvents.mockReturnValue(localistData);

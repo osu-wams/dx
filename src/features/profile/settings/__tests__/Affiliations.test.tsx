@@ -11,6 +11,9 @@ jest.mock('../../../../api/user', () => ({
 }));
 
 describe('<Affiliations />', () => {
+  beforeEach(() => {
+    mockPostSettings.mockReturnValue(Promise.resolve());
+  });
   it('renders with default test data settings', async () => {
     const { queryAllByText } = render(<Affiliations />);
     expect(queryAllByText('(Override)')).toHaveLength(0);

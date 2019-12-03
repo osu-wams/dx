@@ -90,6 +90,7 @@
     ]
   },
   "jest": {
+    "resetMocks": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/index.tsx",
@@ -109,7 +110,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "cross-env CI=true yarn run test"
+      "pre-push": "yarn run test --all --silent --watchAll=false"
     }
   },
   "lint-staged": {

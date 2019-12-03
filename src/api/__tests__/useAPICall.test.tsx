@@ -43,6 +43,8 @@ const HookWrapper: React.FC = () => {
 };
 
 beforeEach(() => {
+  testArgs.api = jest.fn();
+  testArgs.errorCallback = jest.fn();
   testArgs.dataTransform = jest.fn(d => d);
   testArgs.api.mockResolvedValue({ bob: 'ross' });
 });
@@ -74,7 +76,7 @@ describe('useAPICall', () => {
     expect(testArgs.errorCallback).not.toHaveBeenCalled();
     setTimeout(() => {
       expect(window.location.assign).toHaveBeenCalled();
-    }, 5);
+    }, 50);
   });
 
   it('handles an HTTP 403', async () => {
@@ -92,7 +94,7 @@ describe('useAPICall', () => {
       expect(cache.removeItem).toHaveBeenCalled();
 
       expect(testArgs.errorCallback).toHaveBeenCalled();
-    }, 5);
+    }, 50);
   });
 
   it('handles an HTTP 500', async () => {
@@ -109,6 +111,6 @@ describe('useAPICall', () => {
 
       expect(cache.removeItem).toHaveBeenCalled();
       expect(testArgs.errorCallback).toHaveBeenCalled();
-    }, 5);
+    }, 50);
   });
 });

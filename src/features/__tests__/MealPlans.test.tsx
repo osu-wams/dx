@@ -13,7 +13,7 @@ jest.mock('../../api/persons/meal-plans', () => ({
 
 describe('<MealPlans />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
+  beforeEach(() => {
     mockUseMealPlans.mockReturnValue(mockMealPlans);
   });
 
