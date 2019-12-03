@@ -5,7 +5,14 @@ import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { Grades } from '../../api/student/grades';
 import { useGrades } from '../../api/student';
-import { themeSettings, breakpoints, styled, ThemeContext } from '../../theme';
+import {
+  themeSettings,
+  breakpoints,
+  styled,
+  ThemeContext,
+  MainGridWrapper,
+  MainGrid
+} from '../../theme';
 import Input from '../../ui/Input';
 import Icon from '../../ui/Icon';
 import PageTitle from '../../ui/PageTitle';
@@ -20,7 +27,6 @@ import {
 } from '../../ui/Table';
 import { singularPlural, titleCase } from '../../util/helpers';
 import { Event } from '../../util/gaTracking';
-import { MainGridWrapper, MainGrid, MainGridCol } from '../../ui/PageGrid';
 import { AcademicSubNav } from './AcademicsSubNav';
 
 const PastCourses = () => {
@@ -69,81 +75,79 @@ const PastCourses = () => {
       <PageTitle title="Past Courses" />
       <AcademicSubNav />
       <MainGrid>
-        <MainGridCol className="col-span-2">
-          <SearchWrapper>
-            <Icon
-              icon={faSearch}
-              color={themeContext.features.academics.pastCourses.search.icon.color}
-            />
-            <VisuallyHidden>
-              <label htmlFor="course-filter">Find courses</label>
-            </VisuallyHidden>
-            <FilterInput
-              type="text"
-              placeholder="Find past courses"
-              value={query}
-              id="course-filter"
-              onChange={e => setQuery(e.target.value)}
-            />
-          </SearchWrapper>
-          {grades.loading && <Skeleton count={5} />}
-          {grades.data.length > 0 ? (
-            <HistoryGrid aria-live="polite" aria-atomic="true">
-              {Object.keys(gradesByTerm).map((key, index) => (
-                <HistoryCard key={index} collapsing={CardCollapse(index, query)}>
-                  <CardHeader title={key} />
-                  <CardContent className="flush">
-                    <Table variant="spacious" stretch>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHeaderCell>Course</TableHeaderCell>
-                          <TableHeaderCell>Final Grade</TableHeaderCell>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {gradesByTerm[key].map(
-                          (
-                            {
-                              courseNumber,
-                              courseSubject,
-                              repeatedCourseInd,
-                              creditHours,
-                              gradeFinal,
-                              courseTitle
-                            },
-                            subindex
-                          ) => {
-                            return (
-                              <TableRow key={subindex}>
-                                <TableCell>
-                                  <CourseTitle>{titleCase(courseTitle)}</CourseTitle>
-                                  <CourseData>
-                                    <strong>
-                                      {courseSubject} {courseNumber} &middot;
-                                    </strong>{' '}
-                                    {creditHours} {singularPlural(creditHours, 'Credit')}
-                                  </CourseData>
-                                </TableCell>
-                                <TableCell>
-                                  <Grade>{gradeFinal}</Grade>
-                                  {repeatedCourseInd && repeatedCourseInd === 'E' && (
-                                    <ExcludedFromGPA>Excluded from GPA</ExcludedFromGPA>
-                                  )}
-                                </TableCell>
-                              </TableRow>
-                            );
-                          }
-                        )}
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </HistoryCard>
-              ))}
-            </HistoryGrid>
-          ) : (
-            !grades.loading && <div>No course history yet</div>
-          )}
-        </MainGridCol>
+        <SearchWrapper>
+          <Icon
+            icon={faSearch}
+            color={themeContext.features.academics.pastCourses.search.icon.color}
+          />
+          <VisuallyHidden>
+            <label htmlFor="course-filter">Find courses</label>
+          </VisuallyHidden>
+          <FilterInput
+            type="text"
+            placeholder="Find past courses"
+            value={query}
+            id="course-filter"
+            onChange={e => setQuery(e.target.value)}
+          />
+        </SearchWrapper>
+        {grades.loading && <Skeleton count={5} />}
+        {grades.data.length > 0 ? (
+          <HistoryGrid aria-live="polite" aria-atomic="true">
+            {Object.keys(gradesByTerm).map((key, index) => (
+              <HistoryCard key={index} collapsing={CardCollapse(index, query)}>
+                <CardHeader title={key} />
+                <CardContent className="flush">
+                  <Table variant="spacious" stretch>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHeaderCell>Course</TableHeaderCell>
+                        <TableHeaderCell>Final Grade</TableHeaderCell>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {gradesByTerm[key].map(
+                        (
+                          {
+                            courseNumber,
+                            courseSubject,
+                            repeatedCourseInd,
+                            creditHours,
+                            gradeFinal,
+                            courseTitle
+                          },
+                          subindex
+                        ) => {
+                          return (
+                            <TableRow key={subindex}>
+                              <TableCell>
+                                <CourseTitle>{titleCase(courseTitle)}</CourseTitle>
+                                <CourseData>
+                                  <strong>
+                                    {courseSubject} {courseNumber} &middot;
+                                  </strong>{' '}
+                                  {creditHours} {singularPlural(creditHours, 'Credit')}
+                                </CourseData>
+                              </TableCell>
+                              <TableCell>
+                                <Grade>{gradeFinal}</Grade>
+                                {repeatedCourseInd && repeatedCourseInd === 'E' && (
+                                  <ExcludedFromGPA>Excluded from GPA</ExcludedFromGPA>
+                                )}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        }
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </HistoryCard>
+            ))}
+          </HistoryGrid>
+        ) : (
+          !grades.loading && <div>No course history yet</div>
+        )}
       </MainGrid>
     </MainGridWrapper>
   );

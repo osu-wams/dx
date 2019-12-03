@@ -2,7 +2,7 @@ import React from 'react';
 import { faGraduationCap } from '@fortawesome/pro-light-svg-icons';
 import Courses from '../../features/Courses';
 import AnnouncementContainer from '../../ui/AnnouncementContainer';
-import { MainGridWrapper, Masonry, MainGrid, MainGridCol } from '../../ui/PageGrid';
+import { MainGridWrapper, Masonry } from '../../theme';
 import PlannerItems from '../../features/PlannerItems';
 import AcademicCalendar from '../../features/AcademicCalendar';
 import PageTitle from '../../ui/PageTitle';
@@ -18,9 +18,9 @@ const AcademicsDashboard = () => {
         <AcademicSubNav />
         <Masonry>
           <AcademicOverview />
+          <ResourcesCard categ="academic" icon={faGraduationCap} />
           <PlannerItems />
           <Courses />
-          <ResourcesCard categ="academic" icon={faGraduationCap} />
           <AcademicCalendar />
         </Masonry>
       </MainGridWrapper>

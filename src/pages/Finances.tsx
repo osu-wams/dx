@@ -5,22 +5,18 @@ import ResourcesCard from '../features/ResourcesCard';
 import AnnouncementContainer from '../ui/AnnouncementContainer';
 import FinancialTransactions from '../features/FinancialTransactions';
 import FinancialOverview from '../features/financial-overview/FinancialOverview';
-import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
+import { MainGridWrapper, Masonry } from '../theme';
 
 const Finances = () => {
   return (
     <>
       <MainGridWrapper data-testid="finances-page">
         <PageTitle title="Finances" />
-        <MainGrid>
-          <MainGridCol>
-            <FinancialOverview />
-            <FinancialTransactions />
-          </MainGridCol>
-          <MainGridCol>
-            <ResourcesCard categ="financial" icon={faDollarSign} />
-          </MainGridCol>
-        </MainGrid>
+        <Masonry>
+          <FinancialOverview />
+          <ResourcesCard categ="financial" icon={faDollarSign} />
+          <FinancialTransactions />
+        </Masonry>
       </MainGridWrapper>
       <AnnouncementContainer data-testid="finances-announcements" page="finances" />
     </>
