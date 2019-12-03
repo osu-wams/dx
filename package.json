@@ -35,7 +35,6 @@
     "react-responsive": "^6.1.1",
     "react-scripts": "^3.2.0",
     "react-swipeable": "^5.4.0",
-    "react-test-renderer": "^16.12.0",
     "react-toastify": "5.3.0",
     "reakit": "^1.0.0-beta.12",
     "styled-components": "^4.4.1",
@@ -54,8 +53,9 @@
     "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json"
   },
   "devDependencies": {
+    "react-test-renderer": "^16.12.0",
     "@fortawesome/fontawesome-pro": "^5.7.2",
-    "@testing-library/jest-dom": "4.2.3",
+    "@testing-library/jest-dom": "4.2.4",
     "@testing-library/react": "9.3.2",
     "@testing-library/react-hooks": "^3.2.1",
     "@typescript-eslint/eslint-plugin": "2.6.1",
