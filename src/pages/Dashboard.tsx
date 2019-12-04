@@ -3,7 +3,7 @@ import { faStars } from '@fortawesome/pro-light-svg-icons';
 import PageTitle from '../ui/PageTitle';
 import ScheduleCard from '../features/ScheduleCard';
 import EventCardContainer from '../ui/EventCardContainer';
-import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
+import { MainGridWrapper, Masonry } from '../theme';
 import ResourcesCard from '../features/ResourcesCard';
 
 const Dashboard = () => {
@@ -19,14 +19,10 @@ const Dashboard = () => {
             eventAction: 'Beta link clicked'
           }}
         />
-        <MainGrid>
-          <MainGridCol>
-            <ScheduleCard />
-          </MainGridCol>
-          <MainGridCol>
-            <ResourcesCard categ="featured" icon={faStars} />
-          </MainGridCol>
-        </MainGrid>
+        <Masonry>
+          <ScheduleCard />
+          <ResourcesCard categ="featured" icon={faStars} />
+        </Masonry>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />
     </>

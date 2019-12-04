@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
-import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import image404 from '../assets/404.svg';
 import { InternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
-import { styled, ThemeContext } from '../theme';
+import { styled, ThemeContext, MainGridWrapper, MainGrid } from '../theme';
 
 const Content = styled.div`
   text-align: center;
@@ -18,23 +17,21 @@ const PageNotFound = () => {
         <h1>Page Not Found</h1>
       </VisuallyHidden>
       <MainGrid>
-        <MainGridCol className="col-span-2">
-          <img src={image404} alt="" />
-          <Content>
-            <h2>Dam.</h2>
-            <p>
-              We couldn’t find the page you were looking for. <br />
-              <InternalLink
-                to="/"
-                bg={themeContext.pageNotFound.link.background}
-                fg={themeContext.pageNotFound.link.color}
-                onClick={() => Event('404', 'main dashboard')}
-              >
-                Return to dashboard
-              </InternalLink>
-            </p>
-          </Content>
-        </MainGridCol>
+        <img src={image404} alt="" />
+        <Content>
+          <h2>Dam.</h2>
+          <p>
+            We couldn’t find the page you were looking for. <br />
+            <InternalLink
+              to="/"
+              bg={themeContext.pageNotFound.link.background}
+              fg={themeContext.pageNotFound.link.color}
+              onClick={() => Event('404', 'main dashboard')}
+            >
+              Return to dashboard
+            </InternalLink>
+          </p>
+        </Content>
       </MainGrid>
     </MainGridWrapper>
   );

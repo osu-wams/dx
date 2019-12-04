@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useDebounce } from 'use-debounce';
 import { CardBase } from '../ui/Card';
-import { themeSettings, styled } from '../theme';
+import { themeSettings, styled, MainGridWrapper, MainGrid } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
@@ -12,7 +12,6 @@ import {
   useResources,
   IResourceResult
 } from '../api/resources';
-import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
 import { hasAudience } from '../api/user';
@@ -127,41 +126,39 @@ const Resources = () => {
     <MainGridWrapper data-testid="resources-page">
       <PageTitle title="Resources" />
       <MainGrid>
-        <MainGridCol className="col-span-2">
-          <ResourcesWrapper>
-            {activeCategory !== '' && (
-              <>
-                <ResourcesSearch
-                  query={query}
-                  setQuery={setQuery}
-                  setSelectedCategory={setSelectedCategory}
-                />
-                {!res.loading && res.data.length > 0 && (
-                  // Anchor link matches ResourcesList component main div id
-                  <VisuallyHidden>
-                    <a href="#resourcesResults">Skip to results</a>
-                  </VisuallyHidden>
-                )}
-                {categories.loading && <Skeleton />}
-                <ResourcesCategories
-                  categories={categories.data}
-                  selectedCategory={activeCategory}
-                  setQuery={setQuery}
-                  setSelectedCategory={setSelectedCategory}
-                />
-              </>
-            )}
-            {res.loading && <Skeleton count={5} />}
-            {!res.loading && res.data.length > 0 ? (
-              <ResourcesList resources={filteredResources.filter(r => hasAudience(user.data, r))} />
-            ) : (
-              !res.loading && (
-                /* @TODO need mockup styling to do and messaging for no results */
-                <div>No results</div>
-              )
-            )}
-          </ResourcesWrapper>
-        </MainGridCol>
+        <ResourcesWrapper>
+          {activeCategory !== '' && (
+            <>
+              <ResourcesSearch
+                query={query}
+                setQuery={setQuery}
+                setSelectedCategory={setSelectedCategory}
+              />
+              {!res.loading && res.data.length > 0 && (
+                // Anchor link matches ResourcesList component main div id
+                <VisuallyHidden>
+                  <a href="#resourcesResults">Skip to results</a>
+                </VisuallyHidden>
+              )}
+              {categories.loading && <Skeleton />}
+              <ResourcesCategories
+                categories={categories.data}
+                selectedCategory={activeCategory}
+                setQuery={setQuery}
+                setSelectedCategory={setSelectedCategory}
+              />
+            </>
+          )}
+          {res.loading && <Skeleton count={5} />}
+          {!res.loading && res.data.length > 0 ? (
+            <ResourcesList resources={filteredResources.filter(r => hasAudience(user.data, r))} />
+          ) : (
+            !res.loading && (
+              /* @TODO need mockup styling to do and messaging for no results */
+              <div>No results</div>
+            )
+          )}
+        </ResourcesWrapper>
       </MainGrid>
     </MainGridWrapper>
   );

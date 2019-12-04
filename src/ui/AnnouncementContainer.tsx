@@ -1,11 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useAnnouncements } from '../api/announcements';
-import { SecondGridWrapper } from '../ui/PageGrid';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
 import { UserContext } from '../App';
 import { hasAudience } from '../api/user';
-import { styled, themeSettings, breakpoints } from '../theme';
+import { styled, themeSettings, breakpoints, SecondGridWrapper } from '../theme';
 
 const AnnouncementContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
