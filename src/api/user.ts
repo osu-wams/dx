@@ -89,6 +89,7 @@ const isFirstYear = (user: IUser): boolean => {
   }
   return (
     user.classification.attributes !== undefined &&
+    user.classification.attributes!.classification !== null &&
     CLASSIFICATIONS.firstYear.includes(user.classification.attributes.classification.toLowerCase())
   );
 };
@@ -120,6 +121,7 @@ const isGraduate = (user: IUser): boolean => {
   }
   return (
     user.classification.attributes !== undefined &&
+    user.classification.attributes!.level !== null &&
     CLASSIFICATIONS.graduate.includes(user.classification.attributes.level.toLowerCase())
   );
 };
@@ -189,6 +191,7 @@ export const settingIsOverridden = (
         }
       case 'firstYear':
         if (
+          classification &&
           CLASSIFICATIONS.firstYear.includes(classification.toLowerCase()) &&
           currentValue !== undefined
         ) {
@@ -197,7 +200,11 @@ export const settingIsOverridden = (
           return false;
         }
       case 'graduate':
-        if (CLASSIFICATIONS.graduate.includes(level.toLowerCase()) && currentValue !== undefined) {
+        if (
+          level &&
+          CLASSIFICATIONS.graduate.includes(level.toLowerCase()) &&
+          currentValue !== undefined
+        ) {
           return !currentValue;
         } else {
           return false;
