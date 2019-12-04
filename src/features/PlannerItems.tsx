@@ -7,6 +7,7 @@ import {
   List,
   ListItem,
   ListItemContentLink,
+  ListItemContent,
   ListItemDescription,
   ListItemHeader,
   ListItemText
@@ -51,6 +52,9 @@ const NoItemsText = styled.p`
  */
 
 const canvasUrl = url => {
+  if (!url) {
+    return Url.canvas.main;
+  }
   if (url.startsWith(Url.canvas.main) || url.startsWith(Url.canvas.test)) {
     return url;
   } else {
@@ -82,28 +86,48 @@ const PlannerItems = () => {
           {data.map(
             ({ context_name, plannable_id, plannable_date, html_url, plannable: { title } }) => (
               <ListItem key={plannable_id}>
-                <ListItemContentLink
-                  href={canvasUrl(html_url)}
-                  target="_blank"
-                  onClick={() =>
-                    Event('planner-items', 'Canvas planner item click', canvasUrl(html_url))
-                  }
-                >
-                  {courseCodeOrIcon(
-                    context_name,
-                    courses.data,
-                    <Icon
-                      icon={faFileEdit}
-                      color={themeContext.features.academics.courses.plannerItems.list.icon.color}
-                    />
-                  )}
-                  <ListItemText>
-                    <ListItemHeader>{title}</ListItemHeader>
-                    <ListItemDescription>
-                      {plannable_date && plannable_date !== '' && format(plannable_date, 'dueAt')}
-                    </ListItemDescription>
-                  </ListItemText>
-                </ListItemContentLink>
+                {/* Some canvas items have no url assigned to them */}
+                {html_url ? (
+                  <ListItemContentLink
+                    href={canvasUrl(html_url)}
+                    target="_blank"
+                    onClick={() =>
+                      Event('planner-items', 'Canvas planner item click', canvasUrl(html_url))
+                    }
+                  >
+                    {courseCodeOrIcon(
+                      context_name,
+                      courses.data,
+                      <Icon
+                        icon={faFileEdit}
+                        color={themeContext.features.academics.courses.plannerItems.list.icon.color}
+                      />
+                    )}
+                    <ListItemText>
+                      <ListItemHeader>{title}</ListItemHeader>
+                      <ListItemDescription>
+                        {plannable_date && plannable_date !== '' && format(plannable_date, 'dueAt')}
+                      </ListItemDescription>
+                    </ListItemText>
+                  </ListItemContentLink>
+                ) : (
+                  <ListItemContent>
+                    {courseCodeOrIcon(
+                      context_name,
+                      courses.data,
+                      <Icon
+                        icon={faFileEdit}
+                        color={themeContext.features.academics.courses.plannerItems.list.icon.color}
+                      />
+                    )}
+                    <ListItemText>
+                      <ListItemHeader>{title}</ListItemHeader>
+                      <ListItemDescription>
+                        {plannable_date && plannable_date !== '' && format(plannable_date, 'dueAt')}
+                      </ListItemDescription>
+                    </ListItemText>
+                  </ListItemContent>
+                )}
               </ListItem>
             )
           )}
