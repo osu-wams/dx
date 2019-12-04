@@ -14,6 +14,8 @@ const CardContent = ({ ...props }) => {
       aria-labelledby={collapsed ? undefined : `${uuid}header`}
       aria-live={collapsed ? 'polite' : undefined}
       aria-atomic={collapsed ? true : undefined}
+      // Want to move this back to the CardContentWrapper at some point, but tests were failing
+      style={{ visibility: collapsible && collapsed ? 'collapse' : 'visible' }}
       {...props}
     />
   );
@@ -25,7 +27,6 @@ const CardContentWrapper = styled.div<ICollapse>`
     props.collapsible &&
     `
     flex: ${props.collapsed ? 'none' : 1};
-    visibility: ${props.collapsed ? 'collapse' : 'visible'};
     height: ${props.collapsed ? 0 : 'auto'};
     padding: ${props.collapsed ? 0 : themeSettings.spacing.unit * 2}px;
   `}

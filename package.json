@@ -53,7 +53,6 @@
     "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json"
   },
   "devDependencies": {
-    "react-test-renderer": "^16.12.0",
     "@fortawesome/fontawesome-pro": "^5.7.2",
     "@testing-library/jest-dom": "4.2.4",
     "@testing-library/react": "9.3.2",
@@ -75,6 +74,7 @@
     "husky": "^3.1.0",
     "jest-styled-components": "^6.3.4",
     "lint-staged": "^9.2.5",
+    "react-test-renderer": "^16.12.0",
     "webpack-bundle-analyzer": "^3.6.0"
   },
   "browserslist": {
