@@ -20,8 +20,7 @@ export const AcademicStanding: React.FC = () => {
       {academicStatus.loading && <Skeleton />}
       {!academicStatus.loading && (
         <HighlightDescription>
-          {academicStatus.data.academicStanding &&
-          academicStatus.data.academicStanding.length > 0 ? (
+          {academicStatus.data.academicStanding?.length > 0 ? (
             <>
               Your academic standing is{' '}
               <HighlightEmphasisInline>

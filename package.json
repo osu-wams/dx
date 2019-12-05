@@ -33,13 +33,13 @@
     "react-loading-skeleton": "^1.2.0",
     "react-pose": "^4.0.9",
     "react-responsive": "^6.1.1",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "3.3.0-next.62",
     "react-swipeable": "^5.4.0",
     "react-toastify": "5.3.0",
     "reakit": "^1.0.0-beta.12",
     "styled-components": "^4.4.1",
     "styled-map": "^3.3",
-    "typescript": "^3.3.3",
+    "typescript": "^3.7.3",
     "use-debounce": "^2.2.1"
   },
   "scripts": {
