@@ -120,9 +120,8 @@ const isGraduate = (user: IUser): boolean => {
     return user.audienceOverride.graduate;
   }
   return (
-    user.classification.attributes !== undefined &&
-    user.classification.attributes!.level !== null &&
-    CLASSIFICATIONS.graduate.includes(user.classification.attributes.level.toLowerCase())
+    user.classification.attributes?.level !== undefined &&
+    CLASSIFICATIONS.graduate.includes(user.classification.attributes!.level?.toLowerCase())
   );
 };
 
