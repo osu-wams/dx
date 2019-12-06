@@ -31,12 +31,12 @@ const AcademicCalendar = () => {
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
         {calEvents.loading && <Skeleton count={5} />}
-        {calEvents.data.length ? (
+        {calEvents.data.length > 0 ? (
           <List>
             {calEvents.data.slice(0, 5).map(({ title, link, pubDate }) => (
               <ListItem key={title + pubDate}>
                 <ListItemContentLinkSVG
-                  href={link}
+                  href={link ?? Url.events.academicCalendar}
                   onClick={() => Event('academic-calendar', title, link)}
                   target="_blank"
                 >

@@ -108,8 +108,7 @@ const Resources = () => {
      */
     if (history.pushState) {
       if (
-        history.state &&
-        history.state.category !== activeCategory &&
+        history.state?.category !== activeCategory &&
         !window.location.search.includes(activeCategory)
       ) {
         window.history.pushState(
