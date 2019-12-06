@@ -16,5 +16,5 @@ interface IAccountBalance {
 export type IAccountBalanceAttributes = {
   currentBalance: number;
 };
-// export { getAccountBalance };
+
 export { getAccountBalance, useAccountBalance };

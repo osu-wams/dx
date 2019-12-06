@@ -45,7 +45,7 @@ const renderProfile = (
       <PairData>
         <div>
           <dt>ONID</dt>
-          <dd>{username ? username : 'No username'}</dd>
+          <dd>{username ?? 'No username'}</dd>
         </div>
         <div>
           <dt>OSU ID</dt>

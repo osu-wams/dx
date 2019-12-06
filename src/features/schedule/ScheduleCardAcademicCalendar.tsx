@@ -7,7 +7,7 @@ import { format } from '../../util/helpers';
 
 const ScheduleCardAcademicCalendar = ({ calEvents }) => (
   <>
-    {calEvents.length > 0 && (
+    {calEvents.length && (
       <CardSection>
         <SectionHeader>Academic Calendar</SectionHeader>
         <List>

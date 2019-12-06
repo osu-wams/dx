@@ -22,9 +22,9 @@ export const SwitchesGroup = () => {
     if (userContext.data.audienceOverride) {
       const { firstYear, graduate, international } = userContext.data.audienceOverride;
       setState({
-        firstYear: firstYear !== undefined ? firstYear : false,
-        graduate: graduate !== undefined ? graduate : false,
-        international: international !== undefined ? international : false
+        firstYear: firstYear ?? false,
+        graduate: graduate ?? false,
+        international: international ?? false
       });
     }
   }, [userContext.data]);

@@ -5,7 +5,7 @@ import Icon from '../../../ui/Icon';
 import { styled, themeSettings } from '../../../theme';
 
 const renderPhone = (title: string, field: string | null, icon: any, color: string) => {
-  if (field) {
+  if (field && title && icon) {
     return (
       <div>
         <dt>

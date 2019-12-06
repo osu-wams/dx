@@ -47,9 +47,9 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
             }) => (
               <ListItem key={plannable_id}>
                 <ListItemContentLink
-                  href={Url.canvas.main + html_url}
+                  href={Url.canvas.main + html_url ?? ''}
                   onClick={() =>
-                    Event('schedule-card', 'canvas-link', `${Url.canvas.main + html_url}`)
+                    Event('schedule-card', 'canvas-link', `${Url.canvas.main + html_url ?? title}`)
                   }
                 >
                   {courseCodeOrIcon(
@@ -63,9 +63,10 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
                   <ListItemText>
                     <ListItemHeader>{title} </ListItemHeader>
                     <ListItemDescription>
-                      {plannable_type !== 'announcement'
-                        ? `Due ${format(plannable_date, 'dueAt')}`
-                        : ''}
+                      {plannable_type &&
+                        plannable_date &&
+                        plannable_type !== 'announcement' &&
+                        `Due ${format(plannable_date, 'dueAt')}`}
                     </ListItemDescription>
                   </ListItemText>
                 </ListItemContentLink>

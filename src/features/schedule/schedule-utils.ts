@@ -68,9 +68,9 @@ export const coursesOnDay = (
     sortedByBeginTime(
       courses.filter(
         c =>
-          c.attributes.meetingTimes.length > 0 &&
+          c.attributes.meetingTimes.length &&
           c.attributes.meetingTimes.find(m => {
-            if (m.room === 'MID' || m.scheduleType === 'MID') {
+            if ((m.room && m.room === 'MID') || (m.scheduleType && m.scheduleType === 'MID')) {
               // exclude midterms
               return false;
             } else {
@@ -111,7 +111,8 @@ export const sortedGroupedByCourseName = (courses: ICourseSchedule[]): Map<strin
   // Reduce the courses list by accumulating an array of courses which have matching subject/number,
   // * example object returned might be { 'PSY400': [course,course,course], 'PSY410': [course] }
   const grouped: { [key: string]: ICourseSchedule[] } = courses.reduce((groups, course) => {
-    const subjectNumber = `${course.attributes.courseSubject}${course.attributes.courseNumber}`;
+    const subjectNumber = `${course.attributes.courseSubject ?? ''}${course.attributes
+      .courseNumber ?? ''}`;
     groups[subjectNumber] = groups[subjectNumber] || [];
     groups[subjectNumber].push(course);
     return groups;
@@ -124,12 +125,12 @@ export const sortedGroupedByCourseName = (courses: ICourseSchedule[]): Map<strin
     .sort()
     .forEach(key =>
       sorted.set(key, {
-        subject: grouped[key][0].attributes.courseSubject,
-        number: grouped[key][0].attributes.courseNumber,
-        title: grouped[key][0].attributes.courseTitle,
+        subject: grouped[key][0].attributes?.courseSubject ?? '',
+        number: grouped[key][0].attributes?.courseNumber ?? '',
+        title: grouped[key][0].attributes?.courseTitle ?? '',
         courses: grouped[key],
         meetingTimes: grouped[key].reduce(
-          (p, v) => p.concat(v.attributes.meetingTimes),
+          (p, v) => p.concat(v.attributes.meetingTimes ?? ''),
           new Array<IMeetingTime>()
         ),
         creditHours: grouped[key].reduce((p, v) => (p += v.attributes.creditHours), 0)
@@ -201,8 +202,7 @@ export const onlyMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMe
  * @param meeting the meeting time to consider
  */
 export const examName = (m: IMeetingTime) => {
-  const room = m.room ? m.room.toLowerCase() : '';
-  const roomTypes = [room, m.scheduleType.toLowerCase()];
+  const roomTypes = [m.room?.toLowerCase(), m.scheduleType?.toLowerCase()];
   if (roomTypes.includes('fnl')) return 'Final Exam';
   if (roomTypes.includes('mid')) return 'Midterm';
 };
