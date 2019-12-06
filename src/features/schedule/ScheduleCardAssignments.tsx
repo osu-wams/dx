@@ -29,11 +29,19 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
   const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
 
+  const noAssignmentsDue = () => (
+    <NoItems as="li">
+      <NoItemsImage src={assignment} alt="" />
+      <NoItemsText>No Canvas assignments due</NoItemsText>
+    </NoItems>
+  );
+
   return (
     <CardSection>
       <SectionHeader>Assignments</SectionHeader>
       <List>
-        {user.isCanvasOptIn !== undefined && !user.isCanvasOptIn && <AuthorizeCanvasCompact />}
+        {!user.isCanvasOptIn && <AuthorizeCanvasCompact />}
+        {user.isCanvasOptIn && selectedPlannerItems.length === 0 && noAssignmentsDue()}
         {user.isCanvasOptIn &&
           selectedPlannerItems.length > 0 &&
           selectedPlannerItems.map(
@@ -73,12 +81,6 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
               </ListItem>
             )
           )}
-        {user.isCanvasOptIn && selectedPlannerItems.length === 0 && (
-          <NoItems as="li">
-            <NoItemsImage src={assignment} alt="" />
-            <NoItemsText>No Canvas assignments due</NoItemsText>
-          </NoItems>
-        )}
       </List>
     </CardSection>
   );

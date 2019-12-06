@@ -18,7 +18,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
     <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">
       {`found ${resources?.length} ${singularPlural(resources?.length, 'result')}`}
       <List>
-        {resources.length &&
+        {resources.length > 0 &&
           resources.map((resource: IResourceResult) => (
             <ListItem spaced key={resource.id}>
               <ListItemContentLinkSVG

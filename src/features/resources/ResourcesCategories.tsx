@@ -7,7 +7,7 @@ import { Event } from '../../util/gaTracking';
 const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelectedCategory }) => {
   return (
     <CategoriesWrapper>
-      {categories.length && (
+      {categories.length > 0 && (
         <>
           <CustomBtn
             icon="https://data.dx.oregonstate.edu/sites/default/files/2019-05/th.svg"

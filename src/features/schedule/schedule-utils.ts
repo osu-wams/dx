@@ -68,7 +68,7 @@ export const coursesOnDay = (
     sortedByBeginTime(
       courses.filter(
         c =>
-          c.attributes.meetingTimes.length &&
+          c.attributes.meetingTimes.length > 0 &&
           c.attributes.meetingTimes.find(m => {
             if ((m.room && m.room === 'MID') || (m.scheduleType && m.scheduleType === 'MID')) {
               // exclude midterms
