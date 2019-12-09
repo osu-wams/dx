@@ -3,13 +3,37 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { mockUser } from '../../util/test-utils';
-import { settingIsDefault, postSettings, settingIsOverridden, IUser } from '../user';
+import {
+  settingIsDefault,
+  postSettings,
+  settingIsOverridden,
+  IUser,
+  hasPrimaryAffiliation,
+  AFFILIATIONS
+} from '../user';
 import { settingsData, audienceOverride } from '../__mocks__/user.data';
 
 const mock = new MockAdapter(axios);
 const mockedUser = jest.fn();
 
 describe('User model', () => {
+  describe('hasPrimaryAffiliation', () => {
+    beforeEach(() => mockedUser.mockReturnValue(mockUser));
+
+    it('can identify a student', async () => {
+      expect(hasPrimaryAffiliation(mockedUser(), [AFFILIATIONS.student])).toBeTruthy();
+    });
+    it('can identify an employee', async () => {
+      mockedUser.mockReturnValue({ ...mockUser, primaryAffiliation: AFFILIATIONS.employee });
+      expect(hasPrimaryAffiliation(mockedUser(), [AFFILIATIONS.employee])).toBeTruthy();
+    });
+    it('can identify multi-affiliation needs', async () => {
+      expect(
+        hasPrimaryAffiliation(mockedUser(), [AFFILIATIONS.employee, AFFILIATIONS.student])
+      ).toBeTruthy();
+    });
+  });
+
   describe('settingIsDefault', () => {
     beforeEach(() => mockedUser.mockReturnValue(mockUser));
 

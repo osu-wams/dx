@@ -133,6 +133,17 @@ const isGraduate = (user: IUser): boolean => {
 };
 
 /**
+ * Returns whether or not the users current primaryAffiliation is one of the supplied affiliations.
+ * This intends to check if the user is a student or an employee while giving the application the ability
+ * to specify scenarios where the user is in a number of affiliations.
+ * @param user the user to inspect
+ * @param affiliations the affiliations to check if the user is associated with
+ */
+export const hasPrimaryAffiliation = (user: IUser, affiliations: string[]): boolean => {
+  return affiliations.includes(user.primaryAffiliation);
+};
+
+/**
  * This method returns a fully populated user settings theme and overrides taking into consideration
  * thier student classification as well as any potentially persisted overrides
  * @param user the user to inspect
