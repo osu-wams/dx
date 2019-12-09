@@ -22,6 +22,11 @@ export const CAMPUS_CODES = {
   ecampus: 'DSC'
 };
 
+export const AFFILIATIONS = {
+  employee: 'employee',
+  student: 'student'
+};
+
 export interface IUserClassificationAttributes {
   level: string;
   campus: string;
@@ -41,6 +46,7 @@ export interface IUser {
   classification: IUserClassification;
   audienceOverride: IUserAudienceOverride;
   theme: string;
+  primaryAffiliation: string;
 }
 
 export interface IUserState {
@@ -65,7 +71,8 @@ export interface IUserSettings {
 export const initialUser: IUser = {
   classification: {},
   audienceOverride: {},
-  theme: defaultTheme
+  theme: defaultTheme,
+  primaryAffiliation: AFFILIATIONS.employee
 };
 
 const getUser = (): Promise<IUser> =>
@@ -123,6 +130,17 @@ const isGraduate = (user: IUser): boolean => {
     user.classification.attributes?.level !== undefined &&
     CLASSIFICATIONS.graduate.includes(user.classification.attributes!.level?.toLowerCase())
   );
+};
+
+/**
+ * Returns whether or not the users current primaryAffiliation is one of the supplied affiliations.
+ * This intends to check if the user is a student or an employee while giving the application the ability
+ * to specify scenarios where the user is in a number of affiliations.
+ * @param user the user to inspect
+ * @param affiliations the affiliations to check if the user is associated with
+ */
+export const hasPrimaryAffiliation = (user: IUser, affiliations: string[]): boolean => {
+  return affiliations.includes(user.primaryAffiliation);
 };
 
 /**
