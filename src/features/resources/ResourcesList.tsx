@@ -16,7 +16,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
 
   return (
     <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">
-      {resources && `found ${resources.length} ${singularPlural(resources.length, 'result')}`}
+      {`found ${resources?.length} ${singularPlural(resources?.length, 'result')}`}
       <List>
         {resources.length > 0 &&
           resources.map((resource: IResourceResult) => (

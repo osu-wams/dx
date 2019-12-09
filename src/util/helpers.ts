@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from 'util';
 import { format as fns, parseISO, isValid } from 'date-fns';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
@@ -55,7 +56,10 @@ const formatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2
 });
 
-export function formatDollars(amount: number) {
+export function formatDollars(amount: number | undefined) {
+  if (isNullOrUndefined(amount)) {
+    return undefined;
+  }
   let result = formatter.format(amount);
 
   // More user-friendly text if the return is NaN

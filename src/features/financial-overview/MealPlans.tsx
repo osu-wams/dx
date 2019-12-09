@@ -34,16 +34,16 @@ export const MealPlans = props => {
           <Skeleton count={4} />
         </HighlightTitle>
       )}
-      {mealPlans && mealPlans.data && mealPlans.data.length ? (
+      {mealPlans?.data?.length ? (
         <>
           <HighlightEmphasis
             color={
-              mealPlans.data[0].attributes.balance > 0
+              mealPlans.data[0].attributes?.balance && mealPlans.data[0].attributes?.balance > 0
                 ? themeContext.features.finances.mealPlans.emphasisBalance.color
                 : themeContext.features.finances.mealPlans.emphasisNoBalance.color
             }
           >
-            {formatDollars(mealPlans.data[0].attributes.balance)}
+            {formatDollars(mealPlans.data[0].attributes?.balance)}
           </HighlightEmphasis>
           <HighlightTitle marginTop={0}>Meal Plan Balance</HighlightTitle>
           <HighlightDescription>

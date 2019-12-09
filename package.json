@@ -48,8 +48,8 @@
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "react-scripts test --env=jsdom --coverage --watchAll=false",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .ts,.tsx,.js src/**/*",
-    "lint:fix": "eslint --ext .ts,.tsx,.js src/**/* --fix",
+    "lint": "eslint --ext .ts,.tsx,.js 'src/**/*'",
+    "lint:fix": "eslint --ext .ts,.tsx,.js 'src/**/*' --fix",
     "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json"
   },
   "devDependencies": {

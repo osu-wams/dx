@@ -30,9 +30,7 @@ export const StudentHolds: React.FC = () => {
           <span>{data.length !== 1 ? 'holds' : 'hold'} on your student account.</span>
           {data.length > 0 && (
             <HoldsList>
-              {data.map((h, i) => (
-                <li key={i}>{h.description}</li>
-              ))}
+              {data.map((h, i) => h.description && <li key={i}>{h.description}</li>)}
             </HoldsList>
           )}
         </HighlightDescription>

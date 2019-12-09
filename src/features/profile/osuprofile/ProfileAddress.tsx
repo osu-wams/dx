@@ -26,13 +26,12 @@ const renderAddress = (
   <div>
     <dt>
       <Icon icon={faMapMarkerAlt} color={color} />{' '}
-      <VisuallyHidden>{addressTypeDescription ? addressTypeDescription : 'No data'}</VisuallyHidden>
+      <VisuallyHidden>{addressTypeDescription ?? 'No address description'}</VisuallyHidden>
     </dt>
     <dd>
-      {addressLine1 ? addressLine1 : ''}
+      {addressLine1 && addressLine1}
       <br />
-      {city ? city : 'No city name'}, {stateCode ? stateCode : 'No state title'}{' '}
-      {postalCode ? postalCode : 'No postal code'}
+      {city ?? 'No city name'}, {stateCode ?? 'No state title'} {postalCode ?? 'No postal code'}
     </dd>
   </div>
 );

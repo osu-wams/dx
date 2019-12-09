@@ -11,6 +11,7 @@ import { useGpa } from '../../api/student';
 export const StudentGpa: React.FC = () => {
   const { data, loading } = useGpa();
 
+  // We expect the first item in the array to be the primary one this is sorted in the server
   const primaryGpa = () => {
     if (data && data.length) {
       return data[0];

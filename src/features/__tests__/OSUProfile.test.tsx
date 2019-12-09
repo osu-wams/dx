@@ -82,7 +82,7 @@ describe('<OSUProfile />', () => {
 
     mockUseMailingAddress.mockReturnValue(personsMinimalAddressData);
     const { getByText } = render(<OSUProfile />);
-    expect(await waitForElement(() => getByText(/No data/))).toBeInTheDocument();
+    expect(await waitForElement(() => getByText(/No address description/))).toBeInTheDocument();
     expect(await waitForElement(() => getByText(/No city name/))).toBeInTheDocument();
     expect(await waitForElement(() => getByText(/No state title/))).toBeInTheDocument();
     expect(await waitForElement(() => getByText(/No postal code/))).toBeInTheDocument();

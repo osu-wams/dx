@@ -82,7 +82,7 @@ const Alerts = () => {
       />
       <AlertContent>
         <p>
-          {format(alert.date)}: {alert.content}
+          {format(alert.date)}: {alert.content ?? ''}
         </p>
       </AlertContent>
     </AlertCardWrapper>

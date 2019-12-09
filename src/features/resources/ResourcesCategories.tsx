@@ -18,7 +18,7 @@ const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelecte
               setSelectedCategory('all');
               Event('resource-category', 'all');
             }}
-            selected={selectedCategory && selectedCategory.toLowerCase() === 'all' ? true : false}
+            selected={selectedCategory?.toLowerCase() === 'all' ? true : false}
           />
           {categories.map((category: ICategory) => (
             <CustomBtn
@@ -34,9 +34,7 @@ const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelecte
               }}
               name="categories"
               selected={
-                selectedCategory && selectedCategory.toLowerCase() === category.name.toLowerCase()
-                  ? true
-                  : false
+                selectedCategory?.toLowerCase() === category.name.toLowerCase() ? true : false
               }
             />
           ))}{' '}
