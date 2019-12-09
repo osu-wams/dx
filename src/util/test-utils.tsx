@@ -4,7 +4,7 @@ import { render as testingLibraryRender } from '@testing-library/react';
 import { UserContext, AppContext, IAppContext } from '../App';
 import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
 import { themesLookup, defaultTheme } from '../theme/themes';
-import { IUserAudienceOverride } from '../api/user';
+import { IUserAudienceOverride, AFFILIATIONS, defaultCampus } from '../api/user';
 
 export const authUserAudienceOverride: IUserAudienceOverride = {
   campusCode: 'C',
@@ -18,25 +18,27 @@ export const authUserClassification: IUserClassification = {
   attributes: {
     level: 'Graduate',
     campus: '',
-    campusCode: 'C',
+    campusCode: defaultCampus,
     classification: 'Freshman',
     isInternational: true
   }
 };
 
+export const mockUser = {
+  osuId: '123',
+  email: 'testo@oregonstate.edu',
+  firstName: 'Testo',
+  lastName: 'LastTesto',
+  isAdmin: true,
+  isCanvasOptIn: true,
+  theme: defaultTheme,
+  primaryAffiliation: AFFILIATIONS.student,
+  classification: authUserClassification,
+  audienceOverride: authUserAudienceOverride
+};
+
 export const authUser = {
-  data: {
-    osuId: '123',
-    email: 'testo@oregonstate.edu',
-    firstName: 'Testo',
-    lastName: 'LastTesto',
-    isAdmin: true,
-    isCanvasOptIn: true,
-    theme: 'light',
-    classification: authUserClassification,
-    audienceOverride: authUserAudienceOverride,
-    refreshToken: 'fresh'
-  },
+  data: mockUser,
   error: false,
   loading: false,
   setUser: jest.fn(),

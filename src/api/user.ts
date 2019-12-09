@@ -22,6 +22,11 @@ export const CAMPUS_CODES = {
   ecampus: 'DSC'
 };
 
+export const AFFILIATIONS = {
+  employee: 'employee',
+  student: 'student'
+};
+
 export interface IUserClassificationAttributes {
   level: string;
   campus: string;
@@ -41,6 +46,7 @@ export interface IUser {
   classification: IUserClassification;
   audienceOverride: IUserAudienceOverride;
   theme: string;
+  primaryAffiliation: string;
 }
 
 export interface IUserState {
@@ -65,7 +71,8 @@ export interface IUserSettings {
 export const initialUser: IUser = {
   classification: {},
   audienceOverride: {},
-  theme: defaultTheme
+  theme: defaultTheme,
+  primaryAffiliation: AFFILIATIONS.employee
 };
 
 const getUser = (): Promise<IUser> =>
