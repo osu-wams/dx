@@ -1,10 +1,14 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
 import { UserContext, AppContext, IAppContext } from '../App';
-import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
 import { themesLookup, defaultTheme } from '../theme/themes';
-import { IUserAudienceOverride, AFFILIATIONS, defaultCampus } from '../api/user';
+import {
+  IUserAudienceOverride,
+  IUserClassification,
+  AFFILIATIONS,
+  defaultCampus
+} from '../api/user';
 
 export const authUserAudienceOverride: IUserAudienceOverride = {
   campusCode: 'C',
@@ -35,6 +39,25 @@ export const mockUser = {
   primaryAffiliation: AFFILIATIONS.student,
   classification: authUserClassification,
   audienceOverride: authUserAudienceOverride
+};
+
+export const mockEmployeeUser = {
+  data: {
+    osuId: '123',
+    email: 'testo@oregonstate.edu',
+    firstName: 'Testo',
+    lastName: 'LastTesto',
+    isAdmin: false,
+    isCanvasOptIn: false,
+    theme: defaultTheme,
+    primaryAffiliation: AFFILIATIONS.employee,
+    classification: {},
+    audienceOverride: {}
+  },
+  error: false,
+  loading: false,
+  isCanvasOptIn: false,
+  setUser: jest.fn()
 };
 
 export const authUser = {
