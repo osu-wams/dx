@@ -1,19 +1,6 @@
 import axios from 'axios';
 import useAPICall from './useAPICall';
 
-export interface IUserClassificationAttributes {
-  level: string;
-  campus: string;
-  campusCode: string;
-  classification: string;
-  isInternational: boolean;
-}
-
-export interface IUserClassification {
-  attributes?: IUserClassificationAttributes;
-  id: string;
-}
-
 export interface IResourceResult {
   id: string;
   title: string;
@@ -35,7 +22,7 @@ export interface ICategory {
  */
 const getResources = (): Promise<IResourceResult[]> =>
   axios.get(`/api/resources`).then(res => {
-    return res.data
+    return res.data;
   });
 
 const useResources = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { renderWithUserContext } from '../../util/test-utils';
-import MoreNav from '../MainNav';
+import MoreNav from '../MainNav/';
 import { mockGAEvent } from '../../setupTests';
 
 test('More menu has links that are tracked via Google Analytics', async () => {

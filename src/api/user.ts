@@ -91,13 +91,15 @@ const getUser = (): Promise<IUser> =>
  * @returns whether or not the override or user classification is true
  */
 const isFirstYear = (user: IUser): boolean => {
-  if (user.audienceOverride && user.audienceOverride.firstYear !== undefined) {
+  if (user?.audienceOverride?.firstYear !== undefined) {
     return user.audienceOverride.firstYear;
   }
   return (
     user.classification.attributes !== undefined &&
-    user.classification.attributes!.classification !== null &&
-    CLASSIFICATIONS.firstYear.includes(user.classification.attributes.classification.toLowerCase())
+    user.classification.attributes.classification !== null &&
+    CLASSIFICATIONS.firstYear.includes(
+      user!.classification!.attributes!.classification.toLowerCase()
+    )
   );
 };
 
@@ -108,7 +110,7 @@ const isFirstYear = (user: IUser): boolean => {
  * @returns whether or not the override or user classification is true
  */
 const isInternational = (user: IUser): boolean => {
-  if (user.audienceOverride && user.audienceOverride.international !== undefined) {
+  if (user.audienceOverride?.international !== undefined) {
     return user.audienceOverride.international;
   }
   return (
@@ -123,7 +125,7 @@ const isInternational = (user: IUser): boolean => {
  * @returns whether or not the override or user classification is true
  */
 const isGraduate = (user: IUser): boolean => {
-  if (user.audienceOverride && user.audienceOverride.graduate !== undefined) {
+  if (user.audienceOverride?.graduate !== undefined) {
     return user.audienceOverride.graduate;
   }
   return (

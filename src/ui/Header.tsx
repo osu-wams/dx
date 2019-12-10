@@ -9,7 +9,7 @@ import logo from '../assets/osu-logo.svg';
 import ecampusLogo from '../assets/osu-ecampus.svg';
 import cascadesLogo from '../assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
-import MainNav from './MainNav';
+import MainNav from './MainNav/';
 import { themeSettings, breakpoints, styled } from '../theme';
 import { Event } from '../util/gaTracking';
 import { IUser, usersCampus, CAMPUS_CODES } from '../api/user';
