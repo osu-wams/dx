@@ -9,10 +9,10 @@ import {
   faCommentAltCheck,
   faArrowAltSquareLeft
 } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings, breakpoints, styled } from '../theme';
-import Icon from './Icon';
-import { Event } from '../util/gaTracking';
-import Url from '../util/externalUrls.data';
+import { themeSettings, breakpoints, styled } from '../../theme';
+import Icon from '../Icon';
+import { Event } from '../../util/gaTracking';
+import Url from '../../util/externalUrls.data';
 
 const PopoverDisclosure = styled(PD)`
   display: flex;
@@ -105,14 +105,17 @@ const MoreNav = () => {
 
   return (
     <>
-      <PopoverDisclosure {...popover} onClick={() => Event('navigation-main', 'More link clicked')}>
+      <PopoverDisclosure
+        {...popover}
+        onClick={() => Event('student-navigation-main', 'More link clicked')}
+      >
         <Icon icon={faPlusCircle} /> More
       </PopoverDisclosure>
       <Popover {...popover} aria-label="Other menus">
         <PrimaryNav>
           <NavLink
             to="resources"
-            onClick={() => Event('navigation-main', 'Resources link clicked')}
+            onClick={() => Event('student-navigation-main', 'Resources link clicked')}
           >
             <Icon icon={faToolbox} />
             <NavContent>
@@ -120,7 +123,7 @@ const MoreNav = () => {
               <p>Find tools, services, links and more.</p>
             </NavContent>
           </NavLink>
-          <NavLink to="beta" onClick={() => Event('navigation-main', 'Beta link clicked')}>
+          <NavLink to="beta" onClick={() => Event('student-navigation-main', 'Beta link clicked')}>
             <Icon icon={faFlaskPotion} />
             <NavContent>
               Beta
@@ -132,7 +135,7 @@ const MoreNav = () => {
           <SecondaryLink
             href={Url.support.main}
             target="_blank"
-            onClick={() => Event('navigation-main', 'Get Support link clicked')}
+            onClick={() => Event('student-navigation-main', 'Get Support link clicked')}
           >
             <Icon icon={faUserHeadset} />
             Get Support
@@ -140,7 +143,7 @@ const MoreNav = () => {
           <SecondaryLink
             href={Url.feedback.main}
             target="_blank"
-            onClick={() => Event('navigation-main', 'Give Feedback link clicked')}
+            onClick={() => Event('student-navigation-main', 'Give Feedback link clicked')}
           >
             <Icon icon={faCommentAltCheck} />
             Give Feedback
@@ -148,7 +151,7 @@ const MoreNav = () => {
           <SecondaryLink
             href={Url.myosu.main}
             target="_blank"
-            onClick={() => Event('navigation-main', 'Go to MyOSU link clicked')}
+            onClick={() => Event('student-navigation-main', 'Go to MyOSU link clicked')}
           >
             <Icon icon={faArrowAltSquareLeft} />
             Go to MyOSU
