@@ -6,6 +6,7 @@ const resourcesData = {
       link: 'https://success.oregonstate.edu/',
       icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/badge-check.svg',
       audiences: ['Bend'],
+      affiliation: [],
       categories: ['Featured'],
       synonyms: ['help', 'tutoring', 'writing', 'math']
     },
@@ -15,6 +16,7 @@ const resourcesData = {
       link: 'https://studentathlete.oregonstate.edu/',
       icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/running.svg',
       audiences: [],
+      affiliation: ['student', 'employee'],
       categories: ['Academic'],
       synonyms: []
     },
@@ -24,6 +26,7 @@ const resourcesData = {
       link: 'https://oregonstate.edu/bill',
       icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
       audiences: ['Corvallis'],
+      affiliation: [],
       categories: ['Featured', 'Financial'],
       synonyms: ['boo']
     },
@@ -34,7 +37,28 @@ const resourcesData = {
       icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
       audiences: ['Corvallis'],
       categories: ['Financial'],
+      affiliation: ['student'],
       synonyms: ['boo']
+    },
+    {
+      id: '5',
+      title: 'Listservs',
+      link: 'https://oregonstate.edu/bill',
+      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
+      audiences: ['Corvallis'],
+      affiliation: ['employee'],
+      categories: ['Financial'],
+      synonyms: []
+    },
+    {
+      id: '6',
+      title: 'Employee Only',
+      link: 'https://oregonstate.edu/bill',
+      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
+      audiences: ['Corvallis'],
+      affiliation: ['employee'],
+      categories: ['Featured'],
+      synonyms: []
     }
   ],
   loading: false,
@@ -45,6 +69,7 @@ const resourcesDataByCategory = {
   data: [
     {
       audiences: [],
+      affiliation: [],
       id: '825d22a1-938c-4ca7-8b9d-625a639bcdde',
       title: 'Billing Information',
       icon: 'http://dev-api-dx.pantheonsite.io/sites/default/files/2019-05/money-bill-wave.svg',

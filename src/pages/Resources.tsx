@@ -40,27 +40,55 @@ const Resources = () => {
   /**
    * Filter a list of resources where it has a category in its list matching the provided name
    * parameter unless the category is 'all'.
-   * @param name the category name to filter on
-   * @param resources a list of resources to inspect for matching category
+   * @param {string} name the category name to filter on
+   * @param {IResourceResult[]} resources a list of resources to inspect for matching category
    */
   const filterByCategory = (name: string, resources: IResourceResult[]): IResourceResult[] => {
     if (name === 'all') return resources;
 
     return resources.filter(
       resource =>
-        resource.categories.length > 0 &&
+        resource.categories?.length > 0 &&
         resource.categories.findIndex(s => s.toLowerCase().includes(name.toLowerCase())) > -1
     );
+  };
+
+  /**
+   * Checks the affiliation data coming from user object and determines if a resource should
+   * or should not appear for the given user.
+   * @param resource object with the details of the resource
+   * @returns {boolean} true or false depending if the item is associated with the primaryAffiliation
+   */
+  const checkAffiliation = resource => {
+    if (
+      resource.affiliation?.length === 0 ||
+      resource.affiliation?.findIndex(s => s.toLowerCase().includes(user.data.primaryAffiliation)) >
+        -1
+      // resource.affiliation?.findIndex(s => s.toLowerCase().includes('student')) > -1
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  /**
+   * Leverages checkAffiliation function filter an array of resources for a given user
+   * @param {IResourceResult[]} resources full list of resources
+   * @returns {IResourceResult[]} filtered list of resources by primary affiliation
+   */
+  const filterByAffiliation = (resources: IResourceResult[]): IResourceResult[] => {
+    return resources.filter(checkAffiliation);
   };
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (res.data && user.data) {
-      let filtered = res.data;
+      let filtered = filterByAffiliation(res.data);
 
       // When clicking a category we filter all results based on selected category
       if (!debouncedQuery) {
-        filtered = filterByCategory(activeCategory, res.data);
+        filtered = filterByCategory(activeCategory, filtered);
       } else {
         // When typing we search for synonyms and names to get results
         const queriedResources = filtered.filter(resource => {

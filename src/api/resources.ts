@@ -9,6 +9,7 @@ export interface IResourceResult {
   synonyms: string[];
   categories: string[];
   audiences: string[];
+  affiliation: string[];
 }
 
 export interface ICategory {
