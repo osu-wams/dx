@@ -1,11 +1,11 @@
 import React from 'react';
 import { waitForElement } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render, mockEmployeeUser } from '../../util/test-utils';
 import Dashboard from '../Dashboard';
 
 it('renders', async () => {
   const { getByTestId } = render(<Dashboard />);
-  expect(getByTestId('dashboard-page')).toBeInTheDocument();
+  expect(getByTestId('student-dashboard-page')).toBeInTheDocument();
 });
 
 it('should display the title Student Dashboard', async () => {
@@ -15,4 +15,10 @@ it('should display the title Student Dashboard', async () => {
   expect(title).toBeInTheDocument();
   expect(badge).toBeInTheDocument();
   expect(badge.closest('a')).toHaveAttribute('href', '/beta');
+});
+
+it('should display the title Employee Dashboard', async () => {
+  const { getByText } = render(<Dashboard />, { user: mockEmployeeUser });
+  const title = await waitForElement(() => getByText('Employee Dashboard'));
+  expect(title).toBeInTheDocument();
 });

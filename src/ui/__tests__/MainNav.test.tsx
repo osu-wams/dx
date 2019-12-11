@@ -1,11 +1,11 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { renderWithUserContext, mockEmployeeUser, render } from '../../util/test-utils';
+import { mockEmployeeUser, render } from '../../util/test-utils';
 import MainNav from '../MainNav/';
 import { mockGAEvent } from '../../setupTests';
 
 it('Main Navigation Links for students are to be present and tracked in Google Analytics', async () => {
-  const { getByText } = renderWithUserContext(<MainNav />);
+  const { getByText } = render(<MainNav />);
 
   const home = getByText('Home');
   const academics = getByText('Academics');
