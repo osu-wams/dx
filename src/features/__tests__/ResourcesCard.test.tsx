@@ -36,9 +36,11 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should have two items', async () => {
-    const { getByText, getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />);
+    const { getByText, debug, getByTestId } = render(
+      <ResourcesCard categ="financial" icon={faCube} />
+    );
     await waitForElement(() => getByText('Student Jobs'));
-    expect(getByTestId('resource-container').children).toHaveLength(3);
+    expect(getByTestId('resource-container').children).toHaveLength(5);
   });
 
   it('should have a clickable resource that fires GooglaAnalytics', async () => {
