@@ -64,7 +64,6 @@ const Resources = () => {
       resource.affiliation?.length === 0 ||
       resource.affiliation?.findIndex(s => s.toLowerCase().includes(user.data.primaryAffiliation)) >
         -1
-      // resource.affiliation?.findIndex(s => s.toLowerCase().includes('student')) > -1
     ) {
       return true;
     } else {
