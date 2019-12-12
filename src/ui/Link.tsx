@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from '@reach/router';
-import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
+import { faLongArrowRight, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
 import { themeSettings, styled, ThemeContext } from '../theme';
 
@@ -50,6 +50,22 @@ const LinkStyles2 = styled(Link)<StyleProps>`
   }
 `;
 
+const HighlightExternalLinkStyles = styled.a<StyleProps>`
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: underline;
+  }
+  text-decoration: none;
+  color: ${({ fg, theme }) => fg || theme.ui.link.color};
+  background-color: ${({ bg, theme }) => bg || theme.ui.link.background};
+  font-weight: 600;
+  & > svg {
+    margin-left: 1.2rem;
+  }
+  font-size: ${themeSettings.fontSize[24]};
+`;
+
 type StyleProps = {
   fg?: string;
   bg?: string;
@@ -61,11 +77,19 @@ const ExternalLink = ({ children, ...props }) => {
   return (
     <LinkStyles {...props} target="_blank">
       {children}
-      <Icon
-        icon={faLongArrowRight}
-        color={props.fg ? props.fg : themeContext.ui.link.icon.external.color}
-      />
+      <Icon icon={faLongArrowRight} color={props.fg ?? themeContext.ui.link.icon.external.color} />
     </LinkStyles>
+  );
+};
+
+const HighlightExternalLink = ({ children, ...props }) => {
+  const themeContext = useContext(ThemeContext);
+
+  return (
+    <HighlightExternalLinkStyles {...props} target="_blank">
+      {children}
+      <Icon icon={faExternalLink} color={props.fg ?? themeContext.ui.link.icon.external.color} />
+    </HighlightExternalLinkStyles>
   );
 };
 
@@ -81,12 +105,9 @@ const InternalLink = ({ children, ...props }) => {
   return (
     <LinkStyles2 to={props.to} {...props}>
       {children}
-      <Icon
-        icon={faLongArrowRight}
-        color={props.fg ? props.fg : themeContext.ui.link.icon.internal.color}
-      />
+      <Icon icon={faLongArrowRight} color={props.fg ?? themeContext.ui.link.icon.internal.color} />
     </LinkStyles2>
   );
 };
 
-export { ExternalLink, InternalLink, SimpleExternalLink };
+export { ExternalLink, InternalLink, SimpleExternalLink, HighlightExternalLink };
