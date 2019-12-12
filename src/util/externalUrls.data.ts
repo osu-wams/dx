@@ -31,6 +31,13 @@ const Url = {
   },
   registrar: {
     academicStanding: 'https://registrar.oregonstate.edu/grades-honor-roll-academic-standing'
+  },
+  empcenter: {
+    main: 'https://osu.workforcehosting.com/'
+  },
+  evals: {
+    // !TODO: update this link when there is standalone Evals
+    main: 'https://myosu.oregonstate.edu/'
   }
 };
 
