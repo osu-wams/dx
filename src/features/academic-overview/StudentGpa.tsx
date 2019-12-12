@@ -13,7 +13,7 @@ export const StudentGpa: React.FC = () => {
 
   // We expect the first item in the array to be the primary one this is sorted in the server
   const primaryGpa = () => {
-    if (data && data.length) {
+    if (data?.length) {
       return data[0];
     } else {
       return { gpa: '', level: '', gpaType: '' };

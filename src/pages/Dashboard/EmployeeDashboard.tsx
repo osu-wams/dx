@@ -4,6 +4,7 @@ import PageTitle from '../../ui/PageTitle';
 import EventCardContainer from '../../ui/EventCardContainer';
 import { MainGridWrapper, Masonry } from '../../theme';
 import ResourcesCard from '../../features/ResourcesCard';
+import { EmployeeTools } from '../../features/employee-only/EmployeeTools';
 
 const EmployeeDashboard = () => {
   return (
@@ -19,8 +20,7 @@ const EmployeeDashboard = () => {
           }}
         />
         <Masonry>
-          <div>Evals</div>
-          <div>Empcenter</div>
+          <EmployeeTools />
           <ResourcesCard categ="featured" icon={faStars} />
         </Masonry>
       </MainGridWrapper>
