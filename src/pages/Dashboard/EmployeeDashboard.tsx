@@ -21,7 +21,7 @@ const EmployeeDashboard = () => {
         />
         <Masonry>
           <EmployeeTools />
-          <ResourcesCard categ="featured" icon={faStars} />
+          <ResourcesCard categ="employee_featured" icon={faStars} />
         </Masonry>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />
