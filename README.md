@@ -9,8 +9,6 @@ Add it to your .bashrc .zshrc or preferred file of choice.
 ## Setup for Local Development OAuth flow
 
 - Go to the server directory and read its README
-- Edit /etc/hosts file
-  - Add `127.0.0.1 dev.my.oregonstate.edu` to the end of file
 - Run `export NODE_ENV=production`
   - To clear this run `unset NODE_ENV`
   - NOTE: We only need this if we want to test SAML and CANVAS OAUTH on our local machine
