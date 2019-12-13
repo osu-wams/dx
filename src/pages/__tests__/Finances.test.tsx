@@ -4,7 +4,7 @@ import Finances from '../Finances';
 import { render } from '../../util/test-utils';
 import { mockAcademicAnnouncementResult } from '../../api/__mocks__/announcements.data';
 import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
-import { resourcesData } from '../../api/__mocks__/resources.data';
+import { resourcesCardData } from '../../api/__mocks__/resources.data';
 import mockFinancialTransactions from '../../api/student/__mocks__/accountTransactions.data';
 import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
 
@@ -38,7 +38,7 @@ describe('Finances page with standard data', () => {
   beforeEach(() => {
     mockUseAnnouncements.mockReturnValue(mockAcademicAnnouncementResult);
     mockUseMealPlans.mockReturnValue(mockMealPlans);
-    mockUseResourcesByQueue.mockReturnValue(resourcesData);
+    mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
     mockUseFinancialTransactions.mockReturnValue(mockFinancialTransactions);
     mockUseAccountBalance.mockReturnValue(mockAccountBalance);
   });

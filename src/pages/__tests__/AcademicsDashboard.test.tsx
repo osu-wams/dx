@@ -5,7 +5,7 @@ import { waitForElement } from '@testing-library/dom';
 import { mockAcademicAnnouncementResult } from '../../api/__mocks__/announcements.data';
 import { gpaUndergraduateData } from '../../api/student/__mocks__/gpa.data';
 import { academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
-import { resourcesData } from '../../api/__mocks__/resources.data';
+import { resourcesCardData } from '../../api/__mocks__/resources.data';
 
 const mockUseAcademicCalendar = jest.fn();
 jest.mock('../../api/events', () => ({
@@ -17,35 +17,34 @@ jest.mock('../../api/resources', () => ({
   useResourcesByQueue: () => mockUseResourcesByQueue()
 }));
 
-const mockUseAcademicStatus = jest.fn();
-const mockUseStudentGpa = jest.fn();
-const mockUseCourseSchedule = jest.fn();
 const mockUseAccountHolds = jest.fn();
-const mockUseAnnouncements = jest.fn();
-
 jest.mock('../../api/student/holds', () => ({
   useAccountHolds: () => mockUseAccountHolds()
 }));
 
+const mockUseCourseSchedule = jest.fn();
 jest.mock('../../api/student/course-schedule', () => ({
   useCourseSchedule: () => mockUseCourseSchedule()
 }));
 
+const mockUseAcademicStatus = jest.fn();
 jest.mock('../../api/student/academic-status', () => ({
   useAcademicStatus: () => mockUseAcademicStatus()
 }));
 
+const mockUseStudentGpa = jest.fn();
 jest.mock('../../api/student/gpa', () => ({
   useGpa: () => mockUseStudentGpa()
 }));
 
+const mockUseAnnouncements = jest.fn();
 jest.mock('../../api/announcements', () => ({
   useAnnouncements: () => mockUseAnnouncements()
 }));
 
 describe('<AcademicsDashboard />', () => {
   beforeEach(() => {
-    mockUseResourcesByQueue.mockReturnValue(resourcesData);
+    mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
     mockUseAcademicCalendar.mockReturnValue(academicCalendar6);
     mockUseAnnouncements.mockReturnValue(mockAcademicAnnouncementResult);
     mockUseStudentGpa.mockReturnValue({ data: gpaUndergraduateData, loading: false, error: false });
