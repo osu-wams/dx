@@ -12,6 +12,11 @@ export interface IResourceResult {
   affiliation: string[];
 }
 
+export interface IEntityQueueResourceResult {
+  entityQueueTitle: string;
+  items: IResourceResult[];
+}
+
 export interface ICategory {
   id: string;
   name: string;
@@ -37,7 +42,10 @@ const getResourcesByQueue = (category: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources/category/${category}`).then(res => res.data);
 
 const useResourcesByQueue = (category: string) =>
-  useAPICall<IResourceResult[]>(getResourcesByQueue, category, d => d, []);
+  useAPICall<IEntityQueueResourceResult>(getResourcesByQueue, category, d => d, {
+    entityQueueTitle: '',
+    items: []
+  });
 
 /**
  * Categories

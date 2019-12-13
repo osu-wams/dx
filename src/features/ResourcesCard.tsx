@@ -7,7 +7,7 @@ import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
 import { styled, ThemeContext } from '../theme';
-import { useResourcesByQueue } from '../api/resources';
+import { useResourcesByQueue, IResourceResult } from '../api/resources';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
@@ -30,25 +30,25 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
   const res = useResourcesByQueue(categ);
-  const [resources, setResources] = useState<any>([]);
+  const [resources, setResources] = useState<IResourceResult[]>([]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!user.loading && !res.loading) {
-      const resourcesToUse = res.data.filter(resource => hasAudience(user.data, resource));
+      const resourcesToUse = res.data?.items?.filter(r => hasAudience(user.data, r));
       setResources(resourcesToUse);
     }
   }, [res.data, res.loading, user.data, user.loading]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
+  const cardTitle = res.data.entityQueueTitle + ' Resources';
 
   return (
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
         {res.loading && <Skeleton count={5} />}
-        {!res.loading && resources.length > 0 && (
+        {!res.loading && resources?.length > 0 && (
           <List data-testid="resource-container">
             {resources.map(resource => (
               <ListItem key={resource.id}>
@@ -65,11 +65,11 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
           </List>
         )}
 
-        {!res.loading && !res.error && resources.length === 0 && <EmptyState />}
+        {!res.loading && !res.error && resources?.length === 0 && <EmptyState />}
 
         {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
       </ResourcesContainer>
-      {resources.length > 0 && (
+      {resources?.length > 0 && (
         <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink
             to={`/resources?category=${categ.toLowerCase()}`}

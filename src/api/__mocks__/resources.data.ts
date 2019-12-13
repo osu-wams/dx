@@ -1,66 +1,78 @@
+// Reusable array for both Resources and ResourcesCard
+const resourcesArray = [
+  {
+    id: '1',
+    title: 'Bend Testo Success Center',
+    link: 'https://success.oregonstate.edu/',
+    icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/badge-check.svg',
+    audiences: ['Bend'],
+    affiliation: [],
+    categories: ['Featured'],
+    synonyms: ['help', 'tutoring', 'writing', 'math']
+  },
+  {
+    id: '2',
+    title: 'Academics for Student Athletes',
+    link: 'https://studentathlete.oregonstate.edu/',
+    icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/running.svg',
+    audiences: [],
+    affiliation: ['student', 'employee'],
+    categories: ['Academic'],
+    synonyms: []
+  },
+  {
+    id: '3',
+    title: 'Billing Information',
+    link: 'https://oregonstate.edu/bill',
+    icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
+    audiences: ['Corvallis'],
+    affiliation: [],
+    categories: ['Featured', 'Financial'],
+    synonyms: ['boo']
+  },
+  {
+    id: '4',
+    title: 'Student Jobs',
+    link: 'https://testo.com',
+    icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
+    audiences: ['Corvallis'],
+    categories: ['Financial'],
+    affiliation: ['student'],
+    synonyms: ['boo']
+  },
+  {
+    id: '5',
+    title: 'Listservs',
+    link: 'https://oregonstate.edu/bill',
+    icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
+    audiences: ['Corvallis'],
+    affiliation: ['employee'],
+    categories: ['Financial'],
+    synonyms: []
+  },
+  {
+    id: '6',
+    title: 'Employee Only',
+    link: 'https://oregonstate.edu/bill',
+    icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
+    audiences: ['Corvallis'],
+    affiliation: ['employee'],
+    categories: ['Featured'],
+    synonyms: []
+  }
+];
+
 const resourcesData = {
-  data: [
-    {
-      id: '1',
-      title: 'Bend Testo Success Center',
-      link: 'https://success.oregonstate.edu/',
-      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/badge-check.svg',
-      audiences: ['Bend'],
-      affiliation: [],
-      categories: ['Featured'],
-      synonyms: ['help', 'tutoring', 'writing', 'math']
-    },
-    {
-      id: '2',
-      title: 'Academics for Student Athletes',
-      link: 'https://studentathlete.oregonstate.edu/',
-      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/running.svg',
-      audiences: [],
-      affiliation: ['student', 'employee'],
-      categories: ['Academic'],
-      synonyms: []
-    },
-    {
-      id: '3',
-      title: 'Billing Information',
-      link: 'https://oregonstate.edu/bill',
-      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
-      audiences: ['Corvallis'],
-      affiliation: [],
-      categories: ['Featured', 'Financial'],
-      synonyms: ['boo']
-    },
-    {
-      id: '4',
-      title: 'Student Jobs',
-      link: 'https://testo.com',
-      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
-      audiences: ['Corvallis'],
-      categories: ['Financial'],
-      affiliation: ['student'],
-      synonyms: ['boo']
-    },
-    {
-      id: '5',
-      title: 'Listservs',
-      link: 'https://oregonstate.edu/bill',
-      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
-      audiences: ['Corvallis'],
-      affiliation: ['employee'],
-      categories: ['Financial'],
-      synonyms: []
-    },
-    {
-      id: '6',
-      title: 'Employee Only',
-      link: 'https://oregonstate.edu/bill',
-      icon: 'https://data.dx.oregonstate.edu/sites/default/files/2019-05/align-justify.svg',
-      audiences: ['Corvallis'],
-      affiliation: ['employee'],
-      categories: ['Featured'],
-      synonyms: []
-    }
-  ],
+  data: resourcesArray,
+  loading: false,
+  error: false
+};
+
+const resourcesCardData = {
+  data: {
+    entityQueueTitle: 'Featured',
+    items: resourcesArray
+  },
   loading: false,
   error: false
 };
@@ -104,4 +116,10 @@ const categoriesData = {
 
 const defaultCategory = 'Featured';
 
-export { resourcesData, resourcesDataByCategory, categoriesData, defaultCategory };
+export {
+  resourcesData,
+  resourcesDataByCategory,
+  categoriesData,
+  defaultCategory,
+  resourcesCardData
+};
