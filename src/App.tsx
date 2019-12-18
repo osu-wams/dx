@@ -50,10 +50,6 @@ const initialAppContext: IAppContext = {
   setTheme: (theme: string) => {}
 };
 
-interface User {
-  email: String;
-}
-
 interface AppProps {
   containerElement: HTMLElement;
 }
@@ -85,10 +81,10 @@ const App = (props: AppProps) => {
       ...previous,
       infoButtonData: infoButtons.data,
       appVersions: appVersions.data,
-      selectedTheme: user.data && user.data.theme ? user.data.theme : theme
+      selectedTheme: user.data?.theme ?? theme
     }));
 
-    setTheme(user.data && user.data.theme ? user.data.theme : theme);
+    setTheme(user.data?.theme ?? theme);
 
     if (user.error) {
       window.location.href = '/login';
