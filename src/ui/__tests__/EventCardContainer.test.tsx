@@ -41,21 +41,23 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should render all cards for students', async () => {
-    const { getAllByTestId, getByText } = render(<EventCardContainer page="dashboard" />);
+    const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />);
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
-    expect(getByText(/Announcement test title 2/i)).toBeInTheDocument();
+    expect(getByText(/Student Only Announcement/i)).toBeInTheDocument();
+    expect(queryByText(/Employee Only Announcement/i)).not.toBeInTheDocument();
     expect(getAllByTestId('eventcard')).toHaveLength(5);
   });
 
   it('should show announcements for Employees', async () => {
-    const { getAllByTestId, getByText } = render(<EventCardContainer page="dashboard" />, {
+    const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />, {
       user: mockEmployeeUser
     });
     const events = await waitForElement(() => getAllByTestId('eventcard'));
-    const employeeAnnouncement = getByText(/Employee Only Announcemen/i);
+    const employeeAnnouncement = getByText(/Employee Only Announcement/i);
     expect(events).toHaveLength(5);
     expect(employeeAnnouncement).toBeInTheDocument();
+    expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
   });
 
   it('should display text', async () => {
@@ -85,13 +87,6 @@ describe('<EventCardContainer />', () => {
     expect(cards[2]).toContainElement(bodyText[1]);
     expect(cards[1]).not.toContainElement(bodyText[0]);
     expect(cards[1]).not.toContainElement(bodyText[1]);
-  });
-
-  it('should show Dashboard or no tagged Announcements.', async () => {
-    const { queryByText, getAllByTestId } = render(<EventCardContainer page="dashboard" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
-    expect(queryByText(/Academics Announcement Title/)).not.toBeInTheDocument();
-    expect(queryByText(/Finances Announcement Title/)).not.toBeInTheDocument();
   });
 
   it('should render only announcements when no localist events loaded', async () => {
