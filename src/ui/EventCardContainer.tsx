@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { Title } from '../ui/PageTitle';
 import { useAnnouncements } from '../api/announcements';
-import { useStudentExperienceEvents, useCampusEvents } from '../api/events';
+import { useStudentExperienceEvents, useCampusEvents, useEmployeeEvents } from '../api/events';
 import { hasAudience, atCampus, CAMPUS_CODES } from '../api/user';
 import EventCard from './EventCard';
 import { themeSettings, breakpoints, styled, SecondGridWrapper } from '../theme';
@@ -45,6 +45,8 @@ const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
   const studentExperienceEvents = useStudentExperienceEvents();
+  const employeeEvents = useEmployeeEvents();
+
   const bendEvents = useCampusEvents('bend');
   const announcements = useAnnouncements(page);
 
@@ -59,17 +61,26 @@ const EventCardContainer = ({ page, ...props }) => {
     }
 
     if (!user.loading) {
-      const atBend = atCampus(user.data, CAMPUS_CODES.bend);
+      /**
+       * Checks to see if you are an employee or a student at Bend or Corvallis
+       * Returns the appropriate events based on that
+       */
+      if (user?.data?.primaryAffiliation === 'employee' && !employeeEvents.loading) {
+        eventsToUse = employeeEvents.data;
+      } else {
+        const atBend = atCampus(user.data, CAMPUS_CODES.bend);
+        if (!studentExperienceEvents.loading && !atBend) {
+          eventsToUse = studentExperienceEvents.data;
+        }
+        if (!bendEvents.loading && atBend) {
+          eventsToUse = bendEvents.data;
+        }
+      }
+
       if (!announcements.loading) {
         announcementsToUse = shuffleArray(
           announcements.data.filter(announcement => hasAudience(user.data, announcement))
         );
-      }
-      if (!studentExperienceEvents.loading && !atBend) {
-        eventsToUse = studentExperienceEvents.data;
-      }
-      if (!bendEvents.loading && atBend) {
-        eventsToUse = bendEvents.data;
       }
     }
 
@@ -104,7 +115,9 @@ const EventCardContainer = ({ page, ...props }) => {
     user.data,
     user.loading,
     bendEvents.data,
-    bendEvents.loading
+    bendEvents.loading,
+    employeeEvents.data,
+    employeeEvents.loading
   ]);
   /* eslint-enable react-hooks/exhaustive-deps */
 

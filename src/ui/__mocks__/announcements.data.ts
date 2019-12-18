@@ -1,7 +1,7 @@
 const announcementsData = {
   data: [
     {
-      id: '12345',
+      id: '11',
       date: null,
       title: 'Announcement test title 1',
       body: 'Announcement test body text 1',
@@ -11,13 +11,10 @@ const announcementsData = {
         link: 'https://oregonstate.edu'
       },
       audiences: [],
-      pages: [
-        'Dashboard',
-        'Academics'
-      ]
+      pages: ['Dashboard', 'Academics']
     },
     {
-      id: '67890',
+      id: '22',
       date: null,
       title: 'Announcement test title 2',
       body: 'Announcement test body text 2',
@@ -29,7 +26,7 @@ const announcementsData = {
       pages: []
     },
     {
-      id: '67891',
+      id: '33',
       date: null,
       title: 'Announcement test title 3',
       body: 'Announcement test body text 3',
@@ -38,10 +35,7 @@ const announcementsData = {
         link: 'https://oregonstate.edu'
       },
       audiences: ['Bend'],
-      pages: [
-        'Dashboard',
-        'Finances'
-      ]
+      pages: ['Dashboard', 'Finances']
     }
   ],
   loading: false,
@@ -51,7 +45,7 @@ const announcementsData = {
 const announcementsData_10 = {
   data: [
     {
-      id: '12345',
+      id: '11',
       date: null,
       title: 'Announcement test title 1',
       body: 'Announcement test body text 1',
@@ -63,7 +57,7 @@ const announcementsData_10 = {
       audiences: []
     },
     {
-      id: '67890',
+      id: '22',
       date: null,
       title: 'Announcement test title 2',
       body: 'Announcement test body text 2',
@@ -74,7 +68,7 @@ const announcementsData_10 = {
       audiences: []
     },
     {
-      id: '67890',
+      id: '33',
       date: null,
       title: 'Announcement test title 3',
       body: 'Announcement test body text 3',
@@ -85,7 +79,7 @@ const announcementsData_10 = {
       audiences: ['Bend']
     },
     {
-      id: '67890',
+      id: '44',
       date: null,
       title: 'Announcement test title 4',
       body: 'Announcement test body text 4',
@@ -96,7 +90,7 @@ const announcementsData_10 = {
       audiences: []
     },
     {
-      id: '67890',
+      id: '55',
       date: null,
       title: 'Announcement test title 5',
       body: 'Announcement test body text 5',
@@ -107,7 +101,7 @@ const announcementsData_10 = {
       audiences: []
     },
     {
-      id: '67890',
+      id: '66',
       date: null,
       title: 'Announcement test title 6',
       body: 'Announcement test body text 6',
@@ -118,7 +112,7 @@ const announcementsData_10 = {
       audiences: []
     },
     {
-      id: '67890',
+      id: '77',
       date: null,
       title: 'Announcement test title 7',
       body: 'Announcement test body text 7',
@@ -129,7 +123,7 @@ const announcementsData_10 = {
       audiences: []
     },
     {
-      id: '67890',
+      id: '88',
       date: null,
       title: 'Announcement test title 8',
       body: 'Announcement test body text 8',
@@ -140,7 +134,7 @@ const announcementsData_10 = {
       audiences: []
     },
     {
-      id: '67890',
+      id: '99',
       date: null,
       title: 'Announcement test title 9',
       body: 'Announcement test body text 9',
@@ -151,7 +145,7 @@ const announcementsData_10 = {
       audiences: []
     },
     {
-      id: '67890',
+      id: '1010',
       date: null,
       title: 'Announcement test title 10',
       body: 'Announcement test body text 10',
@@ -166,142 +160,4 @@ const announcementsData_10 = {
   error: false
 };
 
-const localistData = {
-  data: [
-    {
-      action: {
-        link:
-          'https://events.oregonstate.edu/event/sea-inspired_paintings_on_exhibit_at_hatfield_visitor_center_until_july_7'
-      },
-      bg_image:
-        'https://images.localist.com/photos/849707/huge/dc9bddd1554ee9119d1109f337d82d700118bba1.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Localist test title 1',
-      type: 'localist'
-    },
-    {
-      action: { link: 'https://events.oregonstate.edu/event/pathogetesto' },
-      bg_image: 'https://images.localist.com/photos/30318536347604/huge/testo.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Pathogen Environmental Monitoring Workshop for Pacific Northwest Food Ind',
-      type: 'localist'
-    },
-    {
-      action: { link: 'https://events.oregonstate.edu/testo' },
-      bg_image: 'https://images.localist.com/photos/30443006289764/huge/testo.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Katherine Dziedzic - Integrative Biology PhD Defense Seminar',
-      type: 'localist'
-    }
-  ],
-  loading: false,
-  error: false
-};
-
-const localistData_10 = {
-  data: [
-    {
-      action: {
-        link:
-          'https://events.oregonstate.edu/event/sea-inspired_paintings_on_exhibit_at_hatfield_visitor_center_until_july_7'
-      },
-      bg_image:
-        'https://images.localist.com/photos/849707/huge/dc9bddd1554ee9119d1109f337d82d700118bba1.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Localist test title 1',
-      type: 'localist'
-    },
-    {
-      action: { link: 'https://events.oregonstate.edu/event/pathogetesto' },
-      bg_image: 'https://images.localist.com/photos/30318536347604/huge/testo.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Pathogen Environmental Monitoring Workshop for Pacific Northwest Food Ind',
-      type: 'localist'
-    },
-    {
-      action: { link: 'https://events.oregonstate.edu/testo' },
-      bg_image: 'https://images.localist.com/photos/30443006289764/huge/testo.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Katherine Dziedzic - Integrative Biology PhD Defense Seminar',
-      type: 'localist'
-    },
-    {
-      action: {
-        link:
-          'https://events.oregonstate.edu/event/sea-inspired_paintings_on_exhibit_at_hatfield_visitor_center_until_july_7'
-      },
-      bg_image:
-        'https://images.localist.com/photos/849707/huge/dc9bddd1554ee9119d1109f337d82d700118bba1.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Localist test title 1',
-      type: 'localist'
-    },
-    {
-      action: { link: 'https://events.oregonstate.edu/event/pathogetesto' },
-      bg_image: 'https://images.localist.com/photos/30318536347604/huge/testo.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Pathogen Environmental Monitoring Workshop for Pacific Northwest Food Ind',
-      type: 'localist'
-    },
-    {
-      action: { link: 'https://events.oregonstate.edu/testo' },
-      bg_image: 'https://images.localist.com/photos/30443006289764/huge/testo.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Katherine Dziedzic - Integrative Biology PhD Defense Seminar',
-      type: 'localist'
-    },
-    {
-      action: {
-        link:
-          'https://events.oregonstate.edu/event/sea-inspired_paintings_on_exhibit_at_hatfield_visitor_center_until_july_7'
-      },
-      bg_image:
-        'https://images.localist.com/photos/849707/huge/dc9bddd1554ee9119d1109f337d82d700118bba1.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Localist test title 1',
-      type: 'localist'
-    },
-    {
-      action: { link: 'https://events.oregonstate.edu/event/pathogetesto' },
-      bg_image: 'https://images.localist.com/photos/30318536347604/huge/testo.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Pathogen Environmental Monitoring Workshop for Pacific Northwest Food Ind',
-      type: 'localist'
-    },
-    {
-      action: { link: 'https://events.oregonstate.edu/testo' },
-      bg_image: 'https://images.localist.com/photos/30443006289764/huge/testo.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Katherine Dziedzic - Integrative Biology PhD Defense Seminar',
-      type: 'localist'
-    },
-    {
-      action: {
-        link:
-          'https://events.oregonstate.edu/event/sea-inspired_paintings_on_exhibit_at_hatfield_visitor_center_until_july_7'
-      },
-      bg_image:
-        'https://images.localist.com/photos/849707/huge/dc9bddd1554ee9119d1109f337d82d700118bba1.jpg',
-      date: '2019-10-24T10:00:00-07:00',
-      id: 31069217151072,
-      title: 'Localist test title 1',
-      type: 'localist'
-    }
-  ],
-  loading: false,
-  error: false
-};
-
-export { announcementsData, announcementsData_10, localistData, localistData_10 };
+export { announcementsData, announcementsData_10 };
