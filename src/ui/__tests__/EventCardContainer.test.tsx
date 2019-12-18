@@ -9,7 +9,6 @@ import {
   studentExperienceEvents_10
 } from '../__mocks__/events.data';
 import { mockGAEvent } from '../../setupTests';
-
 const mockUseAnnouncements = jest.fn();
 const mockUseStudentExperienceEvents = jest.fn();
 const mockUseCampusEvents = jest.fn();
@@ -19,6 +18,7 @@ const mockNoData = { data: [], loading: false, error: false };
 
 jest.mock('../../api/announcements', () => {
   return {
+    ...jest.requireActual('../../api/announcements'),
     useAnnouncements: () => mockUseAnnouncements()
   };
 });
@@ -40,11 +40,22 @@ describe('<EventCardContainer />', () => {
     mockUseEmployeeEvents.mockReturnValue(employeeEvents);
   });
 
-  it('should render all cards', async () => {
-    const { getAllByTestId } = render(<EventCardContainer page="dashboard" />);
+  it('should render all cards for students', async () => {
+    const { getAllByTestId, getByText } = render(<EventCardContainer page="dashboard" />);
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
+    expect(getByText(/Announcement test title 2/i)).toBeInTheDocument();
     expect(getAllByTestId('eventcard')).toHaveLength(5);
+  });
+
+  it('should show announcements for Employees', async () => {
+    const { getAllByTestId, getByText } = render(<EventCardContainer page="dashboard" />, {
+      user: mockEmployeeUser
+    });
+    const events = await waitForElement(() => getAllByTestId('eventcard'));
+    const employeeAnnouncement = getByText(/Employee Only Announcemen/i);
+    expect(events).toHaveLength(5);
+    expect(employeeAnnouncement).toBeInTheDocument();
   });
 
   it('should display text', async () => {
@@ -100,7 +111,7 @@ describe('<EventCardContainer />', () => {
 
   it('should only display a max of 12 eventcards', async () => {
     mockUseAnnouncements.mockReturnValue(announcementsData_10);
-    mockUseStudentExperienceEvents.mockReturnValue(studentExperienceEvents_10);
+    mockUseStudentExperienceEvents.mockReturnValue(localistData_10);
     const { getAllByTestId } = render(<EventCardContainer page="dashboard" />);
     expect(await waitForElement(() => getAllByTestId('eventcard'))).toHaveLength(12);
   });

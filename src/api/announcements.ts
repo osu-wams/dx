@@ -1,5 +1,6 @@
 import axios from 'axios';
 import useAPICall from './useAPICall';
+import { IUser } from '../api/user';
 
 export interface IResourceResult {
   id: string;
@@ -13,8 +14,36 @@ export interface ICategory {
   name: string;
   icon: string;
 }
+/**
+ * Interface for an Announcement.
+ */
+export interface IAnnouncement {
+  id: string;
+  title: string,
+  body: string,
+  bg_image?: string,
+  affiliation: string[],
+  audiences: string[],
+  pages: string[],
+  action?: object,
+}
 
 const getAnnouncements = (type): Promise<any> =>
   axios.get(`/api/announcements/${type}`).then(res => res.data);
 export const useAnnouncements = (type: string) =>
   useAPICall<any[]>(getAnnouncements, type, d => d, []);
+
+/**
+ * Filter callback to see if the user and the announcement have the same affiliation or if the announcement affiliations are blank.
+ * @param user User to filter against
+ * @param announcement Announcement to filter against
+ * @returns {boolean} true or false based on the affiliation of the user and the affiliation of the announcement
+ */
+export const hasAffiliation = (user: IUser, announcement: IAnnouncement): boolean => {
+  if (announcement?.affiliation.length === 0 ||
+    announcement?.affiliation.findIndex(s => s.toLowerCase().includes(user.primaryAffiliation)) > -1) {
+    return true;
+  } else {
+    return false;
+  }
+}

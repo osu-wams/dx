@@ -10,6 +10,7 @@ const announcementsData = {
         title: 'Announcement link title',
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: [],
       pages: ['Dashboard', 'Academics']
     },
@@ -22,6 +23,7 @@ const announcementsData = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: ['Student'],
       audiences: [],
       pages: []
     },
@@ -34,8 +36,44 @@ const announcementsData = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: ['Student'],
       audiences: ['Bend'],
-      pages: ['Dashboard', 'Finances']
+      pages: [
+        'Dashboard',
+        'Finances'
+      ]
+    },
+    {
+      id: '67892',
+      date: null,
+      title: 'Bend Employee Announcement',
+      body: 'Announcement test body text 3',
+      action: {
+        title: null,
+        link: 'https://oregonstate.edu'
+      },
+      affiliation: ['Employee'],
+      audiences: ['Bend'],
+      pages: [
+        'Dashboard',
+        'Finances'
+      ]
+    },
+    {
+      id: '67893',
+      date: null,
+      title: 'Employee Only Announcement',
+      body: 'Announcement test body text 3',
+      action: {
+        title: null,
+        link: 'https://oregonstate.edu'
+      },
+      affiliation: ['Employee'],
+      audiences: [],
+      pages: [
+        'Dashboard',
+        'Finances'
+      ]
     }
   ],
   loading: false,
@@ -54,6 +92,7 @@ const announcementsData_10 = {
         title: 'Announcement link title',
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     },
     {
@@ -65,6 +104,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     },
     {
@@ -76,6 +116,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: ['Bend']
     },
     {
@@ -87,6 +128,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     },
     {
@@ -98,6 +140,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     },
     {
@@ -109,6 +152,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     },
     {
@@ -120,6 +164,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     },
     {
@@ -131,6 +176,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     },
     {
@@ -142,6 +188,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     },
     {
@@ -153,6 +200,7 @@ const announcementsData_10 = {
         title: null,
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: []
     }
   ],

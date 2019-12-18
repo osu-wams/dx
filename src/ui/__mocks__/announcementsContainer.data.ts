@@ -9,6 +9,7 @@ const AcademicsAnnouncementsData = {
         title: 'Every Page Announcement Link',
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: [],
       pages: []
     },
@@ -21,6 +22,7 @@ const AcademicsAnnouncementsData = {
         title: 'Academics Announcement Link',
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: [],
       pages: ['Academics']
     }
@@ -37,6 +39,7 @@ const FinancesAnnouncementsData = {
         title: 'Every Page Announcement Link',
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: [],
       pages: []
     },
@@ -49,6 +52,7 @@ const FinancesAnnouncementsData = {
         title: 'Finances Announcement Link',
         link: 'https://oregonstate.edu'
       },
+      affiliation: [],
       audiences: [],
       pages: ['Finances']
     }
