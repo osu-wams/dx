@@ -20,7 +20,7 @@ const useAcademicCalendarEvents = () =>
 
 // Employee Events for use in the EmployeeDashboard
 const getEmployeeEvents = (): Promise<IEvents> =>
-  axios.get('/api/events/employee-events').then(res => res.data);
+  axios.get('/api/events/employee').then(res => res.data);
 
 const useEmployeeEvents = () => useAPICall<IEvents>(getEmployeeEvents, undefined, data => data, []);
 
