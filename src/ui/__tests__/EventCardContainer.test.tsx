@@ -40,7 +40,7 @@ describe('<EventCardContainer />', () => {
     mockUseEmployeeEvents.mockReturnValue(employeeEvents);
   });
 
-  it('should render all cards for students', async () => {
+  it('should show 5 student event cards', async () => {
     const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />);
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
@@ -49,13 +49,13 @@ describe('<EventCardContainer />', () => {
     expect(getAllByTestId('eventcard')).toHaveLength(5);
   });
 
-  it('should show announcements for Employees', async () => {
+  it('should show 7 employee event cards', async () => {
     const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />, {
       user: mockEmployeeUser
     });
     const events = await waitForElement(() => getAllByTestId('eventcard'));
     const employeeAnnouncement = getByText(/Employee Only Announcement/i);
-    expect(events).toHaveLength(5);
+    expect(events).toHaveLength(7);
     expect(employeeAnnouncement).toBeInTheDocument();
     expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
   });
@@ -106,7 +106,7 @@ describe('<EventCardContainer />', () => {
 
   it('should only display a max of 12 eventcards', async () => {
     mockUseAnnouncements.mockReturnValue(announcementsData_10);
-    mockUseStudentExperienceEvents.mockReturnValue(localistData_10);
+    mockUseStudentExperienceEvents.mockReturnValue(studentExperienceEvents_10);
     const { getAllByTestId } = render(<EventCardContainer page="dashboard" />);
     expect(await waitForElement(() => getAllByTestId('eventcard'))).toHaveLength(12);
   });
@@ -156,7 +156,7 @@ describe('<EventCardContainer />', () => {
         }
       );
       await waitForElement(() => getAllByTestId('eventcard'));
-      expect(getByText(/Announcement test body text 2/i)).toBeInTheDocument();
+      expect(getByText(/Announcement test body text 3/i)).toBeInTheDocument();
       expect(getByText(/Announcement link title/i)).toBeInTheDocument();
       expect(queryByText(/Localist test title 1/i)).not.toBeInTheDocument();
       expect(getByText(/2019 Oregon Employees/i)).toBeInTheDocument();
