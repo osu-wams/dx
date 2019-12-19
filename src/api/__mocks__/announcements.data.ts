@@ -6,6 +6,7 @@ export const mockAcademicAnnouncementResult = {
     date: '2019-01-01',
     title: 'Academic Announcement',
     body: 'Academic announcement body',
+    affiliation: [],
     audiences: ['Corvallis', 'Bend', 'Ecampus']
   },
   {
@@ -14,6 +15,7 @@ export const mockAcademicAnnouncementResult = {
     date: '2019-01-01',
     title: 'Academic Announcement 2',
     body: 'Academic announcement body 2',
+    affiliation: [],
     audiences: ['Ecampus']
   }
 ],
@@ -31,7 +33,9 @@ export const mockFinancialAnnouncementResult = {
     body: 'Financial announcement body',
     bg_image: 'https://data.dx.oregonstate.edu/image_path',
     audiences: ['Corvallis', 'Bend'],
-    action: { title: 'Action Title', link: 'http://somelink' }
+    action: { title: 'Action Title', link: 'http://somelink' },
+    affiliation: [],
+    pages: []
   }
 ],
 loading:false,

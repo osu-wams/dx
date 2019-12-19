@@ -39,6 +39,7 @@ jest.mock('../../api/student/gpa', () => ({
 
 const mockUseAnnouncements = jest.fn();
 jest.mock('../../api/announcements', () => ({
+  ...jest.requireActual('../../api/announcements'),
   useAnnouncements: () => mockUseAnnouncements()
 }));
 

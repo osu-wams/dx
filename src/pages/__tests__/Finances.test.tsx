@@ -15,6 +15,7 @@ const mockUseFinancialTransactions = jest.fn();
 const mockUseAccountBalance = jest.fn();
 
 jest.mock('../../api/announcements', () => ({
+  ...jest.requireActual('../../api/announcements'),
   useAnnouncements: () => mockUseAnnouncements()
 }));
 
