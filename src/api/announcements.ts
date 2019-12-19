@@ -41,7 +41,7 @@ export const useAnnouncements = (type: string) =>
  */
 export const hasAffiliation = (user: IUser, announcement: IAnnouncement): boolean => {
   if (announcement?.affiliation.length === 0 ||
-    announcement?.affiliation.findIndex(s => s.toLowerCase().includes(user.primaryAffiliation)) > -1) {
+    announcement?.affiliation.findIndex(s => s.toLowerCase().includes(user.primaryAffiliation.toLowerCase())) > -1) {
     return true;
   } else {
     return false;
