@@ -31,6 +31,7 @@ describe('<AnnouncementContainer> as Academics', () => {
     expect(getByText(/Every Page Announcement Title/)).toBeInTheDocument();
     expect(getByText(/Academics Announcement Title/)).toBeInTheDocument();
     expect(queryByText(/Finances Announcement Title/)).not.toBeInTheDocument();
+    expect(queryByText(/Employee Announcement Title/i)).not.toBeInTheDocument();
   });
 
   it('should track clicks to annoucements', async () => {
@@ -59,6 +60,7 @@ describe('<AnnouncementContainer> as Finances', () => {
     expect(getByText(/Every Page Announcement Title/)).toBeInTheDocument();
     expect(getByText(/Finances Announcement Title/)).toBeInTheDocument();
     expect(queryByText(/Academics Announcement Title/)).not.toBeInTheDocument();
+    expect(queryByText(/Employee Announcement Title/i)).not.toBeInTheDocument();
   });
 
   it('should track clicks to annoucements', async () => {
