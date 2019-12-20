@@ -151,6 +151,14 @@ export const hasPrimaryAffiliation = (user: IUser, affiliations: string[]): bool
 };
 
 /**
+ * Returns your primary affiliation or the affiliationOverride if one is present
+ * @param user the user to inspect
+ */
+export const getAffiliation = (user: IUser): string => {
+  return user.primaryAffiliationOverride ?? user.primaryAffiliation;
+};
+
+/**
  * This method returns a fully populated user settings theme and overrides taking into consideration
  * thier student classification as well as any potentially persisted overrides
  * @param user the user to inspect
