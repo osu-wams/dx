@@ -44,4 +44,6 @@ export type IComponents =
   | 'past-courses-search'
   | 'info-button'
   | 'canvas-auth'
-  | 'badge';
+  | 'badge'
+  | 'it-system-status'
+  | 'it-system-status-sticky';
