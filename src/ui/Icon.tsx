@@ -28,7 +28,7 @@ const IconStyle = styled(FontAwesomeIcon)<IconProps>`
   background-color: ${props => props.bg || props.theme.ui.icon.background};
   padding: ${props => (props.bg ? '.5rem' : '0')};
   border-radius: ${props => (props.bg ? '50%' : '0')};
-  font-size: ${props => (props.fontSize ? props.fontSize : 'inherit')};
+  ${props => (props.fontSize ? `font-size: ${props.fontSize}` : '')}
 `;
 
 const Icon = (props: any) => {
