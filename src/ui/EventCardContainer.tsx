@@ -3,7 +3,13 @@ import { UserContext } from '../App';
 import { Title } from '../ui/PageTitle';
 import { useAnnouncements, hasAffiliation } from '../api/announcements';
 import { useStudentExperienceEvents, useCampusEvents, useEmployeeEvents } from '../api/events';
-import { hasAudience, atCampus, CAMPUS_CODES } from '../api/user';
+import {
+  hasAudience,
+  atCampus,
+  CAMPUS_CODES,
+  hasPrimaryAffiliation,
+  AFFILIATIONS
+} from '../api/user';
 import EventCard from './EventCard';
 import { themeSettings, breakpoints, styled, SecondGridWrapper } from '../theme';
 
@@ -65,7 +71,7 @@ const EventCardContainer = ({ page, ...props }) => {
        * Checks to see if you are an employee or a student at Bend or Corvallis
        * Returns the appropriate events based on that
        */
-      if (user?.data?.primaryAffiliation === 'employee' && !employeeEvents.loading) {
+      if (hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee]) && !employeeEvents.loading) {
         eventsToUse = employeeEvents.data;
       } else {
         const atBend = atCampus(user.data, CAMPUS_CODES.bend);
