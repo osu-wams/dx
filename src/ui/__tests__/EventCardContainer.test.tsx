@@ -9,7 +9,6 @@ import {
   studentExperienceEvents_10
 } from '../__mocks__/events.data';
 import { mockGAEvent } from '../../setupTests';
-
 const mockUseAnnouncements = jest.fn();
 const mockUseStudentExperienceEvents = jest.fn();
 const mockUseCampusEvents = jest.fn();
@@ -19,6 +18,7 @@ const mockNoData = { data: [], loading: false, error: false };
 
 jest.mock('../../api/announcements', () => {
   return {
+    ...jest.requireActual('../../api/announcements'),
     useAnnouncements: () => mockUseAnnouncements()
   };
 });
@@ -40,11 +40,24 @@ describe('<EventCardContainer />', () => {
     mockUseEmployeeEvents.mockReturnValue(employeeEvents);
   });
 
-  it('should render all cards', async () => {
-    const { getAllByTestId } = render(<EventCardContainer page="dashboard" />);
+  it('should show 5 student event cards', async () => {
+    const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />);
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
+    expect(getByText(/Student Only Announcement/i)).toBeInTheDocument();
+    expect(queryByText(/Employee Only Announcement/i)).not.toBeInTheDocument();
     expect(getAllByTestId('eventcard')).toHaveLength(5);
+  });
+
+  it('should show 7 employee event cards', async () => {
+    const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />, {
+      user: mockEmployeeUser
+    });
+    const events = await waitForElement(() => getAllByTestId('eventcard'));
+    const employeeAnnouncement = getByText(/Employee Only Announcement/i);
+    expect(events).toHaveLength(7);
+    expect(employeeAnnouncement).toBeInTheDocument();
+    expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
   });
 
   it('should display text', async () => {
@@ -74,13 +87,6 @@ describe('<EventCardContainer />', () => {
     expect(cards[2]).toContainElement(bodyText[1]);
     expect(cards[1]).not.toContainElement(bodyText[0]);
     expect(cards[1]).not.toContainElement(bodyText[1]);
-  });
-
-  it('should show Dashboard or no tagged Announcements.', async () => {
-    const { queryByText, getAllByTestId } = render(<EventCardContainer page="dashboard" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
-    expect(queryByText(/Academics Announcement Title/)).not.toBeInTheDocument();
-    expect(queryByText(/Finances Announcement Title/)).not.toBeInTheDocument();
   });
 
   it('should render only announcements when no localist events loaded', async () => {
@@ -150,7 +156,7 @@ describe('<EventCardContainer />', () => {
         }
       );
       await waitForElement(() => getAllByTestId('eventcard'));
-      expect(getByText(/Announcement test body text 2/i)).toBeInTheDocument();
+      expect(getByText(/Announcement test body text 3/i)).toBeInTheDocument();
       expect(getByText(/Announcement link title/i)).toBeInTheDocument();
       expect(queryByText(/Localist test title 1/i)).not.toBeInTheDocument();
       expect(getByText(/2019 Oregon Employees/i)).toBeInTheDocument();

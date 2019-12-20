@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { Title } from '../ui/PageTitle';
-import { useAnnouncements } from '../api/announcements';
+import { useAnnouncements, hasAffiliation } from '../api/announcements';
 import { useStudentExperienceEvents, useCampusEvents, useEmployeeEvents } from '../api/events';
 import { hasAudience, atCampus, CAMPUS_CODES } from '../api/user';
 import EventCard from './EventCard';
@@ -79,7 +79,10 @@ const EventCardContainer = ({ page, ...props }) => {
 
       if (!announcements.loading) {
         announcementsToUse = shuffleArray(
-          announcements.data.filter(announcement => hasAudience(user.data, announcement))
+          announcements.data.filter(
+            announcement =>
+              hasAudience(user.data, announcement) && hasAffiliation(user.data, announcement)
+          )
         );
       }
     }
