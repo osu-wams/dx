@@ -14,7 +14,7 @@ import {
 } from '../api/resources';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
-import { hasAudience } from '../api/user';
+import { hasAudience, getAffiliation } from '../api/user';
 import VisuallyHidden from '@reach/visually-hidden';
 
 //import type here
@@ -57,13 +57,14 @@ const Resources = () => {
    * Checks the affiliation data coming from user object and determines if a resource should
    * or should not appear for the given user.
    * @param resource object with the details of the resource
-   * @returns {boolean} true or false depending if the item is associated with the primaryAffiliation
+   * @returns {boolean} true or false depending if the item is associated with the current affiliation
    */
   const checkAffiliation = resource => {
     if (
       resource.affiliation?.length === 0 ||
-      resource.affiliation?.findIndex(s => s.toLowerCase().includes(user.data.primaryAffiliation)) >
-        -1
+      resource.affiliation?.findIndex(s =>
+        s.toLowerCase().includes(getAffiliation(user.data).toLowerCase())
+      ) > -1
     ) {
       return true;
     } else {
