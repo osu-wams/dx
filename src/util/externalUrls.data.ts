@@ -38,6 +38,9 @@ const Url = {
   evals: {
     // !TODO: update this link when there is standalone Evals
     main: 'https://myosu.oregonstate.edu/'
+  },
+  itSystemStatus: {
+    main: 'https://status.is.oregonstate.edu'
   }
 };
 
