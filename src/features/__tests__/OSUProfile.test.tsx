@@ -5,7 +5,12 @@ import {
   personsMailingAddressData,
   personsMinimalAddressData
 } from '../../api/persons/__mocks__/addresses.data';
-import { personsData, preferredName, nullName } from '../../api/persons/__mocks__/person.data';
+import {
+  personsData,
+  preferredName,
+  nullName,
+  preferredFirstName
+} from '../../api/persons/__mocks__/person.data';
 import OSUProfile from '../profile/OSUProfile';
 
 jest.unmock('../../api/persons/addresses');
@@ -88,10 +93,21 @@ describe('<OSUProfile />', () => {
     expect(await waitForElement(() => getByText(/No postal code/))).toBeInTheDocument();
   });
 
-  it('should find "PreferredName" instead of "FirstName"', async () => {
+  it('should find "displayFirstName" instead of "FirstName"', async () => {
     mockUsePerson.mockReturnValue(preferredName);
     const { getByText, queryByText } = render(<OSUProfile />);
-    expect(await waitForElement(() => getByText('PreferredName Testo'))).toBeInTheDocument();
+    expect(
+      await waitForElement(() => getByText('displayFirstName displayMiddleName displayLastName'))
+    ).toBeInTheDocument();
+    await wait(() => {
+      expect(queryByText('FirstName Testo')).not.toBeInTheDocument();
+    });
+  });
+
+  it('should find "displayFirstName Testo" instead of "FirstName Testo"', async () => {
+    mockUsePerson.mockReturnValue(preferredFirstName);
+    const { getByText, queryByText } = render(<OSUProfile />);
+    expect(await waitForElement(() => getByText('displayFirstName Testo'))).toBeInTheDocument();
     await wait(() => {
       expect(queryByText('FirstName Testo')).not.toBeInTheDocument();
     });

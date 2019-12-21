@@ -20,10 +20,12 @@ export interface IPersons {
 export interface IPersonsAttributes {
   id: string;
   birthDate: string;
-  firstName: string;
+  firstName: string | null;
   middleName: string | null;
-  preferredName: string | null;
   lastName: string;
+  displayFirstName: string | null;
+  displayMiddleName: string | null;
+  displayLastName: string | null;
   previousRecords: [] | never;
   homePhone: string | null;
   alternatePhone: string | null;

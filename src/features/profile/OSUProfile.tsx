@@ -27,9 +27,12 @@ const renderProfile = (
   {
     id,
     firstName,
-    preferredName,
-    username,
+    middleName,
     lastName,
+    displayFirstName,
+    displayMiddleName,
+    displayLastName,
+    username,
     primaryPhone,
     homePhone,
     mobilePhone,
@@ -37,11 +40,27 @@ const renderProfile = (
   }: IPersonsAttributes,
   iconColor: string
 ) => {
+  /**
+   * Build a single string to display
+   */
+  const nameToDisplay = () => {
+    let fn, mn;
+    if (firstName || displayFirstName) {
+      fn = displayFirstName ?? firstName;
+    }
+
+    const ln = displayLastName ?? lastName;
+
+    if (middleName || displayMiddleName) {
+      mn = middleName ?? displayMiddleName;
+      return `${fn} ${mn} ${ln}`;
+    }
+
+    return `${fn} ${ln}`;
+  };
   return (
     <>
-      <PersonName>
-        {preferredName ? preferredName + ' ' + lastName : firstName + ' ' + lastName}
-      </PersonName>
+      <PersonName>{nameToDisplay()}</PersonName>
       <PairData>
         <div>
           <dt>ONID</dt>
@@ -49,7 +68,7 @@ const renderProfile = (
         </div>
         <div>
           <dt>OSU ID</dt>
-          <dd>{id ? id : 'No ID'}</dd>
+          <dd>{id ?? 'No ID'}</dd>
         </div>
       </PairData>
       <ContactInfo>

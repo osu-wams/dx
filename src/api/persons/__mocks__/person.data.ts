@@ -40,7 +40,39 @@ const preferredName = {
     middleName: null,
     mobilePhone: '1234mobile',
     osuUID: null,
-    preferredName: 'PreferredName',
+    displayFirstName: 'displayFirstName',
+    displayLastName: 'displayLastName',
+    displayMiddleName: 'displayMiddleName',
+    previousRecords: [],
+    primaryPhone: '1234mobile',
+    sex: 'F',
+    ssnStatus: 'vault',
+    username: null
+  },
+  loading: false,
+  error: false
+};
+
+const preferredFirstName = {
+  data: {
+    id: '12345',
+    alternatePhone: null,
+    birthDate: '1973-02-08',
+    citizen: null,
+    confidential: false,
+    currentEmployee: false,
+    currentStudent: false,
+    email: null,
+    employeeStatus: null,
+    firstName: 'FirstName',
+    homePhone: '1234home',
+    lastName: 'Testo',
+    middleName: null,
+    mobilePhone: '1234mobile',
+    osuUID: null,
+    displayFirstName: 'displayFirstName',
+    displayLastName: null,
+    displayMiddleName: null,
     previousRecords: [],
     primaryPhone: '1234mobile',
     sex: 'F',
@@ -79,4 +111,4 @@ const nullName = {
   error: false
 };
 
-export { personsData, nullName, preferredName };
+export { personsData, nullName, preferredFirstName, preferredName };
