@@ -1,6 +1,6 @@
 import axios from 'axios';
 import useAPICall from './useAPICall';
-import { IUser } from '../api/user';
+import { IUser, getAffiliation } from '../api/user';
 
 export interface IResourceResult {
   id: string;
@@ -19,13 +19,13 @@ export interface ICategory {
  */
 export interface IAnnouncement {
   id: string;
-  title: string,
-  body: string,
-  bg_image?: string,
-  affiliation: string[],
-  audiences: string[],
-  pages: string[],
-  action?: object,
+  title: string;
+  body: string;
+  bg_image?: string;
+  affiliation: string[];
+  audiences: string[];
+  pages: string[];
+  action?: object;
 }
 
 const getAnnouncements = (type): Promise<any> =>
@@ -40,10 +40,14 @@ export const useAnnouncements = (type: string) =>
  * @returns {boolean} true or false based on the affiliation of the user and the affiliation of the announcement
  */
 export const hasAffiliation = (user: IUser, announcement: IAnnouncement): boolean => {
-  if (announcement?.affiliation.length === 0 ||
-    announcement?.affiliation.findIndex(s => s.toLowerCase().includes(user.primaryAffiliation.toLowerCase())) > -1) {
+  if (
+    announcement?.affiliation.length === 0 ||
+    announcement?.affiliation.findIndex(s =>
+      s.toLowerCase().includes(getAffiliation(user).toLowerCase())
+    ) > -1
+  ) {
     return true;
   } else {
     return false;
   }
-}
+};

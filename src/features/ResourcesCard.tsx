@@ -43,6 +43,11 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
 
   const cardTitle = res.data.entityQueueTitle + ' Resources';
 
+  // For employee_featured, we don't want the employee part...
+  if (categ.split('_')[1]) {
+    categ = categ.split('_')[1];
+  }
+
   return (
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
@@ -64,7 +69,6 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
             ))}
           </List>
         )}
-
         {!res.loading && !res.error && resources?.length === 0 && <EmptyState />}
 
         {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}

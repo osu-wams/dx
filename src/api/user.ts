@@ -47,6 +47,7 @@ export interface IUser {
   audienceOverride: IUserAudienceOverride;
   theme: string;
   primaryAffiliation: string;
+  primaryAffiliationOverride?: string;
 }
 
 export interface IUserState {
@@ -65,6 +66,7 @@ export interface IUserAudienceOverride {
 
 export interface IUserSettings {
   audienceOverride?: IUserAudienceOverride;
+  primaryAffiliationOverride?: string;
   theme?: string;
 }
 
@@ -142,7 +144,18 @@ const isGraduate = (user: IUser): boolean => {
  * @param affiliations the affiliations to check if the user is associated with
  */
 export const hasPrimaryAffiliation = (user: IUser, affiliations: string[]): boolean => {
+  if (user.primaryAffiliationOverride) {
+    return affiliations.includes(user.primaryAffiliationOverride);
+  }
   return affiliations.includes(user.primaryAffiliation);
+};
+
+/**
+ * Returns your primary affiliation or the affiliationOverride if one is present
+ * @param user the user to inspect
+ */
+export const getAffiliation = (user: IUser): string => {
+  return user.primaryAffiliationOverride ?? user.primaryAffiliation;
 };
 
 /**
@@ -157,7 +170,8 @@ export const usersSettings = (user: IUser): IUserSettings => ({
     firstYear: isFirstYear(user),
     international: isInternational(user),
     graduate: isGraduate(user)
-  }
+  },
+  primaryAffiliationOverride: user.primaryAffiliationOverride
 });
 
 /**
@@ -210,8 +224,7 @@ export const settingIsOverridden = (
         }
       case 'firstYear':
         if (
-          classification &&
-          CLASSIFICATIONS.firstYear.includes(classification.toLowerCase()) &&
+          CLASSIFICATIONS.firstYear.includes(classification?.toLowerCase()) &&
           currentValue !== undefined
         ) {
           return !currentValue;
@@ -219,11 +232,7 @@ export const settingIsOverridden = (
           return false;
         }
       case 'graduate':
-        if (
-          level &&
-          CLASSIFICATIONS.graduate.includes(level.toLowerCase()) &&
-          currentValue !== undefined
-        ) {
+        if (CLASSIFICATIONS.graduate.includes(level?.toLowerCase()) && currentValue !== undefined) {
           return !currentValue;
         } else {
           return false;
@@ -245,7 +254,7 @@ export const settingIsOverridden = (
 export const usersCampus = (
   user: IUser
 ): { campusName: string | undefined; campusCode: string } => {
-  const { campusCode } = (user.classification && user.classification.attributes) || {
+  const { campusCode } = user.classification?.attributes || {
     campusCode: defaultCampus
   };
   const { campusCode: campusCodeOverride } = user.audienceOverride;
@@ -268,9 +277,8 @@ export const hasAudience = (user: IUser, item: { audiences: string[] }): boolean
   const foundAudiences: string[] = [];
   const { audiences } = item;
   if (
-    (audiences && audiences.length === 0) ||
-    ((user.classification === undefined || user.classification.attributes === undefined) &&
-      user.audienceOverride === undefined)
+    audiences?.length === 0 ||
+    (user.classification?.attributes === undefined && user.audienceOverride === undefined)
   )
     return true;
 
