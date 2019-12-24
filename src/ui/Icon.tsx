@@ -5,6 +5,7 @@ import { themeSettings, styled } from '../theme';
 type IconProps = {
   bg?: string;
   color?: string;
+  fontSize?: string;
 };
 
 const IconWrapper = styled.div`
@@ -27,6 +28,7 @@ const IconStyle = styled(FontAwesomeIcon)<IconProps>`
   background-color: ${props => props.bg || props.theme.ui.icon.background};
   padding: ${props => (props.bg ? '.5rem' : '0')};
   border-radius: ${props => (props.bg ? '50%' : '0')};
+  ${props => (props.fontSize ? `font-size: ${props.fontSize}` : '')}
 `;
 
 const Icon = (props: any) => {
