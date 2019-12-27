@@ -9,9 +9,10 @@ import {
   settingIsOverridden,
   IUser,
   hasPrimaryAffiliation,
-  AFFILIATIONS
+  AFFILIATIONS,
+  getClassification
 } from '../user';
-import { settingsData, audienceOverride } from '../__mocks__/user.data';
+import { settingsData, audienceOverride, classificationData } from '../__mocks__/user.data';
 
 const mock = new MockAdapter(axios);
 const mockedUser = jest.fn();
@@ -122,5 +123,17 @@ describe('postSettings', () => {
   it('returns an error', async () => {
     mock.onPost('/api/user/settings').reply(500);
     await expect(postSettings({ audienceOverride })).rejects.toThrow();
+  });
+});
+
+describe('getClassification', () => {
+  it('returns users classification', async () => {
+    mock.onGet('/api/user/classification').reply(200, classificationData);
+    const result = await getClassification();
+    expect(result).toStrictEqual(classificationData);
+  });
+  it('returns an error', async () => {
+    mock.onGet('/api/user/classification').reply(500);
+    await expect(getClassification()).rejects.toThrow();
   });
 });
