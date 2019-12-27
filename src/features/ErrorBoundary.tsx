@@ -58,10 +58,8 @@ const ErrorBoundary = Catch(
   (error, info, callback) => {
     postError(error)
       .then(v => console.debug('Error boundary reported to server:', error))
-      .catch(err => console.error)
-      .finally(() => {
-        if (callback) callback();
-      });
+      .catch(err => console.error);
+    if (callback) callback();
   }
 );
 
