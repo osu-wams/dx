@@ -86,6 +86,9 @@ const getUser = (): Promise<IUser> =>
       return e;
     });
 
+export const getClassification = (): Promise<IUserClassification> =>
+  axios.get('/api/user/classification').then(res => res.data);
+
 /**
  * Returns the audience override value or users classification in that order
  * of precedence.
@@ -328,15 +331,22 @@ export const useUser = () => {
     isCanvasOptIn: false
   });
   const u = useAPICall<IUser>(getUser, undefined, data => data, initialUser, false);
+  const classification = useAPICall<IUserClassification>(
+    getClassification,
+    undefined,
+    data => data,
+    {},
+    true
+  );
 
   useEffect(() => {
     setUser({
-      data: u.data,
+      data: { ...u.data, classification: { ...classification.data } },
       error: u.error,
       loading: u.loading,
       isCanvasOptIn: u.data.isCanvasOptIn
     });
-  }, [u.data, u.error, u.loading]);
+  }, [u.data, u.error, u.loading, classification.data, classification.loading]);
 
   return {
     error: user!.error,
