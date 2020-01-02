@@ -40,10 +40,8 @@ describe('<PastCourses />', () => {
 
   it('should find only one instace of a course excluded from GPA', async () => {
     const { getByText, queryAllByText } = render(<PastCourses />);
-    const excluded = await waitForElement(() => getByText(/Excluded from GPA/));
-    expect(excluded).toBeInTheDocument();
-
-    const excludedArray = await waitForElement(() => queryAllByText(/Excluded from GPA/));
+    const excludedArray = await waitForElement(() => queryAllByText(/Excluded - GPA\/Credits/));
+    expect(excludedArray[0]).toBeInTheDocument();
     expect(excludedArray).toHaveLength(1);
   });
 

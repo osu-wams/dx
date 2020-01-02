@@ -132,7 +132,7 @@ const PastCourses = () => {
                               <TableCell>
                                 <Grade>{gradeFinal}</Grade>
                                 {repeatedCourseInd && repeatedCourseInd === 'E' && (
-                                  <ExcludedFromGPA>Excluded from GPA</ExcludedFromGPA>
+                                  <ExcludedFromGPA>Excluded - GPA/Credits</ExcludedFromGPA>
                                 )}
                               </TableCell>
                             </TableRow>
