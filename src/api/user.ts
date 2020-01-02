@@ -254,10 +254,10 @@ export const settingIsOverridden = (
 export const usersCampus = (
   user: IUser
 ): { campusName: string | undefined; campusCode: string } => {
-  const { campusCode } = user.classification?.attributes || {
+  const { campusCode } = user.classification?.attributes ?? {
     campusCode: defaultCampus
   };
-  const { campusCode: campusCodeOverride } = user.audienceOverride;
+  const campusCodeOverride = user.audienceOverride?.campusCode ?? defaultCampus;
   const selectedCampusCode = campusCodeOverride || campusCode;
   // Find the key name associated to the users campusCode to use for matching in the audiences
   // set for the announcement

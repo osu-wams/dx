@@ -40,14 +40,12 @@ export const useAnnouncements = (type: string) =>
  * @returns {boolean} true or false based on the affiliation of the user and the affiliation of the announcement
  */
 export const hasAffiliation = (user: IUser, announcement: IAnnouncement): boolean => {
-  if (
-    announcement?.affiliation.length === 0 ||
-    announcement?.affiliation.findIndex(s =>
+  if (!announcement?.affiliation) return true;
+
+  return (
+    announcement?.affiliation?.length === 0 ||
+    announcement?.affiliation?.findIndex(s =>
       s.toLowerCase().includes(getAffiliation(user).toLowerCase())
     ) > -1
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+  );
 };
