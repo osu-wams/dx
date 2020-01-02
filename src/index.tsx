@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga';
 import App from './App';
+import ErrorBoundary from './features/ErrorBoundary';
 import * as cache from './util/cache';
 import { postError } from './api/errors';
 
@@ -11,6 +12,9 @@ import { postError } from './api/errors';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isTest = process.env.NODE_ENV === 'test';
 const isGADebug = process.env.REACT_APP_GA_DEBUG === 'true';
+
+const applicationRoot = document.getElementById('root') as HTMLElement;
+const redirectToError = () => window.location.assign('./error.html');
 
 try {
   // When running tests, intialize in ./setupTests.js instead
@@ -28,9 +32,12 @@ try {
   // user gets fresh data.
   cache.clear();
 
-  const applicationRoot = document.getElementById('root') as HTMLElement;
-  ReactDOM.render(<App containerElement={applicationRoot} />, applicationRoot);
+  ReactDOM.render(
+    <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
+      <App containerElement={applicationRoot} />
+    </ErrorBoundary>,
+    applicationRoot
+  );
 } catch (e) {
-  postError(e);
-  window.location.assign('/error.html');
+  postError(e).then(v => redirectToError());
 }

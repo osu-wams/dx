@@ -2,18 +2,7 @@ import axios from 'axios';
 import useAPICall from './useAPICall';
 
 export const getInfoButtons = (): Promise<InfoButtonState[]> =>
-  axios
-    .get(`/api/info-buttons`)
-    .then((res: InfoButtonData) => {
-      if (res.data) {
-        return res.data;
-      }
-      return [];
-    })
-    .catch(() => {
-      console.error('InfoButtons API failed, returning empty data');
-      return [];
-    });
+  axios.get(`/api/info-buttons`).then((res: InfoButtonData) => res.data ?? []);
 
 export const useInfoButtons = () =>
   useAPICall<InfoButtonState[]>(getInfoButtons, undefined, data => data, []);

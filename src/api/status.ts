@@ -1,6 +1,5 @@
 import axios from 'axios';
 import useAPICall from './useAPICall';
-import statusResponse from './__mocks__/status.data'; // eslint-disable-line no-unused-vars
 
 export const STATUS_SORT = {
   4: 1,
