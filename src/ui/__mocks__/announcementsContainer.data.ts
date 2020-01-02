@@ -9,11 +9,12 @@ const AcademicsAnnouncementsData = {
         title: 'Every Page Announcement Link',
         link: 'https://oregonstate.edu'
       },
+      affiliation: ['Student'],
       audiences: [],
       pages: []
     },
     {
-      id: '67892',
+      id: '67891',
       date: null,
       title: 'Academics Announcement Title',
       body: 'Academics Announcement Body',
@@ -21,8 +22,22 @@ const AcademicsAnnouncementsData = {
         title: 'Academics Announcement Link',
         link: 'https://oregonstate.edu'
       },
+      affiliation: ['Student'],
       audiences: [],
       pages: ['Academics']
+    },
+    {
+      id: '67892',
+      date: null,
+      title: 'Employee Announcement Title',
+      body: 'Employee Announcement Body',
+      action: {
+        title: 'Employee Announcement Link',
+        link: 'https://oregonstate.edu'
+      },
+      affiliation: ['Employee'],
+      audiences: [],
+      pages: []
     }
   ]
 }
@@ -37,11 +52,12 @@ const FinancesAnnouncementsData = {
         title: 'Every Page Announcement Link',
         link: 'https://oregonstate.edu'
       },
+      affiliation: ['Student'],
       audiences: [],
       pages: []
     },
     {
-      id: '67893',
+      id: '67891',
       date: null,
       title: 'Finances Announcement Title',
       body: 'Finances Announcement Body',
@@ -49,8 +65,22 @@ const FinancesAnnouncementsData = {
         title: 'Finances Announcement Link',
         link: 'https://oregonstate.edu'
       },
+      affiliation: ['Student'],
       audiences: [],
       pages: ['Finances']
+    },
+    {
+      id: '67891',
+      date: null,
+      title: 'Employee Announcement Title',
+      body: 'Employee Announcement Body',
+      action: {
+        title: 'Employee Announcement Link',
+        link: 'https://oregonstate.edu'
+      },
+      affiliation: ['Employee'],
+      audiences: [],
+      pages: []
     }
   ]
 }

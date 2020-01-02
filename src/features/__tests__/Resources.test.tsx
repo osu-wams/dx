@@ -1,6 +1,6 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
-import { render, authUser, sleep } from '../../util/test-utils';
+import { render, authUser, sleep, mockEmployeeUser } from '../../util/test-utils';
 import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import Resources from '../../pages/Resources';
 import { mockGAEvent } from '../../setupTests';
@@ -164,7 +164,7 @@ describe('<Resources />', () => {
     // Need to wait for debounce
     expect(await findByText(/found 1 result/)).toBeInTheDocument();
     expect(await findByText(/Student Jobs/)).toBeInTheDocument();
-    // expect()
+
     expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
 
@@ -180,8 +180,104 @@ describe('<Resources />', () => {
       const all = await waitForElement(() => getByLabelText('All'));
       await fireEvent.click(all);
       expect(all).toHaveClass('selected');
-      expect(await findByText(/Billing Information/)).not.toBeNull();
-      expect(await findByText(/Student Jobs/)).not.toBeNull();
+      expect(await findByText(/Billing Information/)).toBeInTheDocument();
+      expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+    });
+  });
+
+  describe('with student and employee affiliations', () => {
+    it('finds Listservs as an employee but not Student Jobs, since that is student only', async () => {
+      const { queryByText, findByText, getByLabelText } = render(<Resources />, {
+        user: mockEmployeeUser
+      });
+      const all = await waitForElement(() => getByLabelText('All'));
+      await fireEvent.click(all);
+      expect(all).toHaveClass('selected');
+      await findByText(/found 4 results/);
+
+      expect(await findByText(/Listservs/)).toBeInTheDocument();
+      expect(await queryByText(/Student Jobs/)).toBeNull();
+    });
+
+    it('finds Listservs as an employee when clicking the Financial category', async () => {
+      const { queryByText, findByText, getByLabelText } = render(<Resources />, {
+        user: mockEmployeeUser
+      });
+      const financial = await waitForElement(() => getByLabelText('Financial'));
+      await fireEvent.click(financial);
+      expect(financial).toHaveClass('selected');
+      await findByText(/found 2 results/);
+
+      expect(await findByText(/Listservs/)).toBeInTheDocument();
+      expect(await queryByText(/Student Jobs/)).toBeNull();
+    });
+
+    it('cannot find "Student Jobs" when searching as an Employee, but finds "Listservs"', async () => {
+      const { queryByText, findByText, getByPlaceholderText } = render(<Resources />, {
+        user: mockEmployeeUser
+      });
+      const input = await waitForElement(() => getByPlaceholderText('Find resources'));
+
+      await fireEvent.change(input, {
+        target: {
+          value: 'student job'
+        }
+      });
+
+      expect(await queryByText(/Student Jobs/)).toBeNull();
+
+      await fireEvent.change(input, {
+        target: {
+          value: 'Listservs'
+        }
+      });
+
+      expect(await findByText(/Listservs/)).toBeInTheDocument();
+    });
+
+    it('cannot find "Listservs" when searching as a Student, but finds "Student Jobs"', async () => {
+      const { queryByText, findByText, getByPlaceholderText } = render(<Resources />);
+      const input = await waitForElement(() => getByPlaceholderText('Find resources'));
+
+      await fireEvent.change(input, {
+        target: {
+          value: 'student job'
+        }
+      });
+      expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+
+      await fireEvent.change(input, {
+        target: {
+          value: 'Listservs'
+        }
+      });
+      expect(await queryByText(/Listservs/)).toBeNull();
+    });
+
+    it('finds "Student Jobs" and "Billing Information" but not "Listservs" when clicking the Financial category', async () => {
+      const { queryByText, findByText, getByLabelText } = render(<Resources />);
+      const tech = await waitForElement(() => getByLabelText('Financial'));
+      await fireEvent.click(tech);
+      expect(tech).toHaveClass('selected');
+
+      await findByText(/found 2 results/);
+
+      expect(await queryByText(/Listservs/)).toBeNull();
+      expect(await queryByText(/Student Jobs/)).toBeInTheDocument();
+      expect(await queryByText(/Billing Information/)).toBeInTheDocument();
+    });
+
+    it('finds the 3 student resources and cannot find Listservs employee resource', async () => {
+      const { getByLabelText, queryByText, findByText } = render(<Resources />);
+
+      const all = await waitForElement(() => getByLabelText('All'));
+      await fireEvent.click(all);
+      expect(all).toHaveClass('selected');
+
+      await findByText(/found 3 results/);
+
+      expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+      expect(await queryByText(/Listservs/)).toBeNull();
     });
   });
 });

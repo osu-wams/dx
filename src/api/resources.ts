@@ -1,19 +1,6 @@
 import axios from 'axios';
 import useAPICall from './useAPICall';
 
-export interface IUserClassificationAttributes {
-  level: string;
-  campus: string;
-  campusCode: string;
-  classification: string;
-  isInternational: boolean;
-}
-
-export interface IUserClassification {
-  attributes?: IUserClassificationAttributes;
-  id: string;
-}
-
 export interface IResourceResult {
   id: string;
   title: string;
@@ -22,6 +9,12 @@ export interface IResourceResult {
   synonyms: string[];
   categories: string[];
   audiences: string[];
+  affiliation: string[];
+}
+
+export interface IEntityQueueResourceResult {
+  entityQueueTitle: string;
+  items: IResourceResult[];
 }
 
 export interface ICategory {
@@ -35,7 +28,7 @@ export interface ICategory {
  */
 const getResources = (): Promise<IResourceResult[]> =>
   axios.get(`/api/resources`).then(res => {
-    return res.data
+    return res.data;
   });
 
 const useResources = () => {
@@ -49,7 +42,10 @@ const getResourcesByQueue = (category: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources/category/${category}`).then(res => res.data);
 
 const useResourcesByQueue = (category: string) =>
-  useAPICall<IResourceResult[]>(getResourcesByQueue, category, d => d, []);
+  useAPICall<IEntityQueueResourceResult>(getResourcesByQueue, category, d => d, {
+    entityQueueTitle: '',
+    items: []
+  });
 
 /**
  * Categories

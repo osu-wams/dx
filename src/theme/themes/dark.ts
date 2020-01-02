@@ -300,6 +300,44 @@ export const dark: ThemeConfiguration = {
         }
       }
     },
+    itStatus: {
+      item: {
+        emptyText: {
+          color: neutral550
+        },
+        name: {
+          color: neutral700
+        },
+        status: {
+          color: neutral550
+        },
+        icon: {
+          unknown: neutral500,
+          operational: Color['pine-300'],
+          performanceIssues: Color['luminance-400'],
+          partialOutage: Color['luminance-400'],
+          majorOutage: Color['lava-400']
+        }
+      },
+      sticky: {
+        message: {
+          color: neutral550
+        },
+        title: {
+          color: neutral600
+        },
+        date: {
+          color: neutral700
+        },
+        icon: {
+          color: alert
+        },
+        badge: {
+          background: neutral550,
+          color: titlePrimary
+        }
+      }
+    },
     masquerade: {
       buttonAlt: {
         color: neutral700,

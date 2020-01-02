@@ -1,21 +1,21 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../App';
-import { hasPrimaryAffiliation, AFFILIATIONS } from '../api/user';
-import { StudentDashboard } from './Dashboard/StudentDashboard';
-import { EmployeeDashboard } from './Dashboard/EmployeeDashboard';
+import { MainNavStudent } from './MainNavStudent';
+import { MainNavEmployee } from './MainNavEmployee';
+import { UserContext } from '../../App';
+import { hasPrimaryAffiliation, AFFILIATIONS } from '../../api/user';
 
 /**
  * Uses the user context to determine what main navigation the user is getting.
  * Defaults to student navigation
  * @returns the MainNav component based on your primary affiliation
  */
-const Dashboard = () => {
+const MainNav = () => {
   const user = useContext<any>(UserContext);
   if (hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee])) {
-    return <EmployeeDashboard />;
+    return <MainNavEmployee />;
   } else {
-    return <StudentDashboard />;
+    return <MainNavStudent />;
   }
 };
 
-export default Dashboard;
+export default MainNav;

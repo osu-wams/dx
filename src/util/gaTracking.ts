@@ -20,7 +20,9 @@ export type IComponents =
   | 'beta'
   | 'beta-info'
   | 'header'
-  | 'navigation-main'
+  | 'student-navigation-main'
+  | 'employee-navigation-main'
+  | 'employee-tools'
   | 'schedule-card'
   | 'resources-card'
   | 'anouncements'
@@ -42,4 +44,6 @@ export type IComponents =
   | 'past-courses-search'
   | 'info-button'
   | 'canvas-auth'
-  | 'badge';
+  | 'badge'
+  | 'it-system-status'
+  | 'it-system-status-sticky';

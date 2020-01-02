@@ -270,6 +270,44 @@ export interface ThemeConfiguration {
         };
       };
     };
+    itStatus: {
+      item: {
+        emptyText: {
+          color: string;
+        };
+        name: {
+          color: string;
+        };
+        status: {
+          color: string;
+        };
+        icon: {
+          unknown: string;
+          operational: string;
+          performanceIssues: string;
+          partialOutage: string;
+          majorOutage: string;
+        };
+      };
+      sticky: {
+        message: {
+          color: string;
+        };
+        title: {
+          color: string;
+        };
+        date: {
+          color: string;
+        };
+        icon: {
+          color: string;
+        };
+        badge: {
+          background: string;
+          color: string;
+        };
+      };
+    };
     masquerade: {
       buttonAlt: {
         color: string;

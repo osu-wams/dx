@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useAnnouncements } from '../api/announcements';
+import { useAnnouncements, hasAffiliation } from '../api/announcements';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
 import { UserContext } from '../App';
@@ -30,8 +30,9 @@ const AnnouncementContainer = ({ page, ...props }) => {
     let announcementsToUse: any[] = [];
 
     if (!user.loading && !announcements.loading) {
-      announcementsToUse = announcements.data.filter(announcement =>
-        hasAudience(user.data, announcement)
+      announcementsToUse = announcements.data.filter(
+        announcement =>
+          hasAudience(user.data, announcement) && hasAffiliation(user.data, announcement)
       );
     }
     setEvents(announcementsToUse);
