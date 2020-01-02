@@ -58,13 +58,13 @@ const useAPICall = <T>(
         setLoading(false);
       })
       .catch(async e => {
-        await postError(e);
         // API calls fail when the cookie expires, this causes the front-end to
         // flow through the login process while providing the backend the target
         // url to redirect the user to after a successful login.
         if (e.response?.status === 401) {
           window.location.assign(`/login?return=${window.location.pathname}`);
         } else {
+          await postError(e);
           cache.removeItem(cacheKey);
           setError(true);
           setLoading(false);
