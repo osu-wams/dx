@@ -64,11 +64,6 @@ const useAPICall = <T>(
         // url to redirect the user to after a successful login.
         if (e.response?.status === 401) {
           window.location.assign(`/login?return=${window.location.pathname}`);
-        } else if (e.response?.status === 403) {
-          cache.removeItem(cacheKey);
-          setError(true);
-          setLoading(false);
-          if (errorCallback) errorCallback();
         } else {
           cache.removeItem(cacheKey);
           setError(true);
