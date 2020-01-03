@@ -81,11 +81,11 @@ it('Application deployed versions', async () => {
   expect(serverText).toBeInTheDocument();
 });
 
-describe('as a user who is not an admin', () => {
+describe('as a user who does not belong to masquerade group', () => {
   let regularUser;
   beforeEach(() => {
     regularUser = authUser;
-    regularUser.data.isAdmin = false;
+    regularUser.data.groups = [];
   });
 
   it('Masquerade link should not be present if user is not an admin', async () => {
