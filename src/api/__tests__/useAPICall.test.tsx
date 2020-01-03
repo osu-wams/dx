@@ -74,9 +74,7 @@ describe('useAPICall', () => {
     render(<HookWrapper />);
     await wait(() => expect(testArgs.api).toHaveBeenCalled());
     expect(testArgs.errorCallback).not.toHaveBeenCalled();
-    setTimeout(() => {
-      expect(window.location.assign).toHaveBeenCalled();
-    }, 50);
+    expect(window.location.assign).toHaveBeenCalled();
   });
 
   it('handles an HTTP 403', async () => {
