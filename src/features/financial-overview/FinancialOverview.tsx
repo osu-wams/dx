@@ -13,8 +13,6 @@ import AccountBalance from './AccountBalance';
 import MealPlans from './MealPlans';
 
 export const FinancialOverview = () => {
-  const [setHasMealPlan] = useState<boolean>(true);
-
   return (
     <Card collapsing={false}>
       <CardHeader title="Financial Overview" badge={<CardIcon icon={faUsdSquare} />} />
@@ -26,7 +24,7 @@ export const FinancialOverview = () => {
         </CardContentRow>
         <CardContentRow className="row-span-1">
           <CardContentCell>
-            <MealPlans setHasMealPlan={setHasMealPlan} />
+            <MealPlans />
           </CardContentCell>
         </CardContentRow>
       </CardContentTable>
