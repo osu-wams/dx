@@ -27,6 +27,11 @@ export const AFFILIATIONS = {
   student: 'student'
 };
 
+export const GROUPS = {
+  admin: 'admin',
+  masquerade: 'masquerade'
+};
+
 export interface IUserClassificationAttributes {
   level: string;
   campus: string;
@@ -43,6 +48,8 @@ export interface IUserClassification {
 export interface IUser {
   email?: string;
   isCanvasOptIn?: boolean;
+  isAdmin: boolean;
+  groups: string[];
   classification: IUserClassification;
   audienceOverride: IUserAudienceOverride;
   theme: string;
@@ -73,6 +80,8 @@ export interface IUserSettings {
 export const initialUser: IUser = {
   classification: {},
   audienceOverride: {},
+  isAdmin: false,
+  groups: [],
   theme: defaultTheme,
   primaryAffiliation: AFFILIATIONS.employee
 };

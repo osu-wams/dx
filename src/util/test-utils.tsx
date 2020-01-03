@@ -7,7 +7,8 @@ import {
   IUserAudienceOverride,
   IUserClassification,
   AFFILIATIONS,
-  defaultCampus
+  defaultCampus,
+  GROUPS
 } from '../api/user';
 
 export const authUserAudienceOverride: IUserAudienceOverride = {
@@ -34,6 +35,7 @@ export const mockUser = {
   firstName: 'Testo',
   lastName: 'LastTesto',
   isAdmin: true,
+  groups: [GROUPS.admin, GROUPS.masquerade],
   isCanvasOptIn: true,
   theme: defaultTheme,
   primaryAffiliation: AFFILIATIONS.student,
@@ -48,6 +50,7 @@ export const mockEmployeeUser = {
     firstName: 'Testo',
     lastName: 'LastTesto',
     isAdmin: false,
+    groups: [],
     isCanvasOptIn: false,
     theme: defaultTheme,
     primaryAffiliation: AFFILIATIONS.employee,
