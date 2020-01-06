@@ -35,15 +35,17 @@ it('has a logout link in the menu', async () => {
 it('User Button and profile link are in the menu and tracked via GA', async () => {
   const { getByText, getByTestId } = render(<Header />);
 
-  const userLink = await waitForElement(() => getByTestId('user-btn'));
-  expect(userLink).toBeInTheDocument();
-  fireEvent.click(userLink);
+  await (async () => {
+    const userLink = await waitForElement(() => getByTestId('user-btn'));
+    expect(userLink).toBeInTheDocument();
+    await fireEvent.click(userLink);
 
-  const profileLink = await waitForElement(() => getByText(/Profile/));
-  expect(profileLink).toBeInTheDocument();
-  fireEvent.click(profileLink);
+    const profileLink = await waitForElement(() => getByText('Profile'));
+    expect(profileLink).toBeInTheDocument();
+    fireEvent.click(profileLink);
 
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe('as a logged in user', () => {

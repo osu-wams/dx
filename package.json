@@ -57,7 +57,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-pro": "^5.7.2",
     "@testing-library/jest-dom": "4.2.4",
-    "@testing-library/react": "9.3.2",
+    "@testing-library/react": "9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@typescript-eslint/eslint-plugin": "2.6.1",
     "@typescript-eslint/parser": "2.6.1",
