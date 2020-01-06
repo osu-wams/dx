@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { faUsdSquare } from '@fortawesome/pro-light-svg-icons';
 import {
   Card,
