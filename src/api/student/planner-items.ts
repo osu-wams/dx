@@ -7,6 +7,6 @@ const getPlannerItems = (): Promise<any> =>
   axios.get('/api/student/planner-items').then(res => res.data);
 
 const usePlannerItems = (errorCallback: Function) =>
-  useAPICall<any[]>(getPlannerItems, undefined, data => data, [], true, errorCallback);
+  useAPICall<any[]>(getPlannerItems, undefined, data => data, [], true, errorCallback, [403]);
 
 export { getPlannerItems, usePlannerItems };
