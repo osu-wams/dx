@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { wait } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { mockEmployeeUser, render } from '../../util/test-utils';
 import MainNav from '../MainNav/';
 import { mockGAEvent } from '../../setupTests';
@@ -11,12 +12,12 @@ it('Main Navigation Links for students are to be present and tracked in Google A
   const academics = getByText('Academics');
   const finances = getByText('Finances');
   const more = getByText('More');
-  fireEvent.click(home);
-  fireEvent.click(academics);
-  fireEvent.click(finances);
-  fireEvent.click(more);
+  userEvent.click(home);
+  userEvent.click(academics);
+  userEvent.click(finances);
+  userEvent.click(more);
 
-  await expect(mockGAEvent).toHaveBeenCalledTimes(4);
+  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(4));
 });
 
 it('Main Navigation for Employee visible and tracked in Google Analytics', async () => {
@@ -33,9 +34,9 @@ it('Main Navigation for Employee visible and tracked in Google Analytics', async
   // Not present in employee nav
   const more = queryByText('More');
   await expect(more).not.toBeInTheDocument();
-  fireEvent.click(home);
-  fireEvent.click(beta);
-  fireEvent.click(resources);
+  userEvent.click(home);
+  userEvent.click(beta);
+  userEvent.click(resources);
 
-  await expect(mockGAEvent).toHaveBeenCalledTimes(3);
+  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(3));
 });
