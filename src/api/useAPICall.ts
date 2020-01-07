@@ -41,7 +41,8 @@ const useAPICall = <T>(
   dataTransform: Function,
   initialState: T,
   useCache?: boolean,
-  errorCallback?: Function
+  errorCallback?: Function,
+  skipPostErrorStatuses?: number[]
 ): IAPIResult<T> => {
   const [data, setData] = useState<T>(initialState);
   const [error, setError] = useState<boolean>(false);
@@ -64,7 +65,13 @@ const useAPICall = <T>(
         if (e.response?.status === 401) {
           window.location.assign(`/login?return=${window.location.pathname}`);
         } else {
-          await postError(e);
+          // Gives the ability for an API call to bypass posting an error to the server in
+          // certain circumstances, such as an HTTP 403 from Planner Item API call when the user
+          // has not yet opted-in for Canvas. This is an expected error response and needs not
+          // be posted to the backend for monitoring.
+          if (!skipPostErrorStatuses?.includes(e.response?.status)) {
+            await postError(e);
+          }
           cache.removeItem(cacheKey);
           setError(true);
           setLoading(false);
