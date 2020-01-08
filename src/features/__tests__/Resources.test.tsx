@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, wait } from '@testing-library/react';
+import { wait } from '@testing-library/react';
 import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
 import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import userEvent from '@testing-library/user-event';
@@ -61,7 +61,7 @@ describe('<Resources />', () => {
 
   it('should have the Featured tag selected', async () => {
     const { all, featured, queryByText, findByText } = renderResources();
-    userEvent.click(featured);
+
     await wait(() => expect(featured).toHaveClass('selected'));
     expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
@@ -81,7 +81,8 @@ describe('<Resources />', () => {
   it('should have "Featured" selected and clickable All category that gets appripriate results', async () => {
     const { findByText, all, featured } = renderResources();
 
-    expect(featured).toHaveClass('selected');
+    expect(featured).toHaveClass('selected'); // default selected
+
     userEvent.click(all);
 
     expect(featured).not.toHaveClass('selected');
