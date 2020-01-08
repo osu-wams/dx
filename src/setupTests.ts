@@ -21,6 +21,10 @@ beforeEach(() => {
   mockGAEvent.mockClear();
 });
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 // required because of the overlay from Reakit
 if (global.document) {
   global.document.createRange = () => ({
