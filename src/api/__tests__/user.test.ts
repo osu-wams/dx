@@ -7,7 +7,6 @@ import {
   settingIsDefault,
   postSettings,
   settingIsOverridden,
-  IUser,
   hasPrimaryAffiliation,
   AFFILIATIONS,
   getClassification
@@ -121,8 +120,11 @@ describe('postSettings', () => {
     expect(result).toStrictEqual({ audienceOverride });
   });
   it('returns an error', async () => {
+    // remove error from terminal output since error is expected
+    jest.spyOn(console, 'error').mockImplementation(() => {});
     mock.onPost('/api/user/settings').reply(500);
     await expect(postSettings({ audienceOverride })).rejects.toThrow();
+    expect(console.error).toHaveBeenCalledTimes(1);
   });
 });
 

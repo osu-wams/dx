@@ -21,6 +21,13 @@ beforeEach(() => {
   mockGAEvent.mockClear();
 });
 
+afterEach(() => {
+  // don't output debug statements to console
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+
+  jest.clearAllMocks();
+});
+
 // required because of the overlay from Reakit
 if (global.document) {
   global.document.createRange = () => ({

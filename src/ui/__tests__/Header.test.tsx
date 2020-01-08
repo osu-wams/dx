@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, waitForElement } from '@testing-library/react';
+import { waitForElement, wait } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { render, authUserClassification, authUserAudienceOverride } from '../../util/test-utils';
 import Header from '../Header';
-import Dashboard from '../../pages/Dashboard';
 import { mockGAEvent } from '../../setupTests';
 
 // required because of the overlay from Reakit
@@ -15,35 +15,25 @@ global.document.createRange = () => ({
   }
 });
 
-it('renders', () => {
-  render(<Header />);
-});
-
 it('has a logout link in the menu', async () => {
-  const { getByText, getByTestId } = render(<Dashboard />);
+  const { getByText, getByTestId } = render(<Header />);
 
-  await (async () => {
-    expect(getByTestId('dashboard-page')).toBeInTheDocument();
+  userEvent.click(getByTestId('user-btn'));
+  const logoutLink = await waitForElement(() => getByText('Logout'));
 
-    fireEvent.click(getByTestId('user-btn'));
-
-    const logoutLink = await waitForElement(() => getByText('Logout'));
-    expect(logoutLink).toBeInTheDocument();
-  });
+  await wait(() => expect(logoutLink).toBeInTheDocument());
 });
 
 it('User Button and profile link are in the menu and tracked via GA', async () => {
   const { getByText, getByTestId } = render(<Header />);
 
-  const userLink = await waitForElement(() => getByTestId('user-btn'));
-  expect(userLink).toBeInTheDocument();
-  fireEvent.click(userLink);
+  const userLink = getByTestId('user-btn');
+  userEvent.click(userLink);
 
-  const profileLink = await waitForElement(() => getByText(/Profile/));
-  expect(profileLink).toBeInTheDocument();
-  fireEvent.click(profileLink);
+  const profileLink = await waitForElement(() => getByText('Profile'));
+  userEvent.click(profileLink);
 
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
 });
 
 describe('as a logged in user', () => {
