@@ -18,6 +18,11 @@ beforeEach(() => {
   mockedPostError.mockResolvedValue(undefined);
 });
 
+// Do not report to console.error or console.debug since we are expecting these
+afterEach(() => {
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+});
+
 describe('<ErrorBoundary />', () => {
   it('should render inner component without an error', async () => {
     const { getByText, queryByText } = render(
@@ -37,6 +42,7 @@ describe('<ErrorBoundary />', () => {
     expect(getByText('Error')).toBeInTheDocument();
     expect(await queryByText('Success')).not.toBeInTheDocument();
     expect(mockedPostError).toBeCalledTimes(1);
+    expect(console.error).toHaveBeenCalledTimes(2);
   });
   it('should call the ErrorHandlerCallback when an error happens', async () => {
     const { getByText, queryByText } = render(
@@ -51,5 +57,6 @@ describe('<ErrorBoundary />', () => {
     expect(await queryByText('Success')).not.toBeInTheDocument();
     expect(mockedPostError).toBeCalledTimes(1);
     expect(mockedErrorCallback).toBeCalledTimes(1);
+    expect(console.error).toHaveBeenCalledTimes(2);
   });
 });
