@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, waitForElement } from '@testing-library/react';
+import { waitForElement } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { render, mockAppContext } from '../../util/test-utils';
 import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
 import Courses from '../Courses';
@@ -20,13 +21,9 @@ beforeEach(() => {
 });
 
 describe('<Courses />', () => {
-  it('renders', () => {
-    render(<Courses />);
-  });
-
   it('renders a list of courses for the current user', async () => {
-    const { getByText } = render(<Courses />);
-    const courseTitle = await waitForElement(() => getByText(/data structures/i));
+    const { findByText } = render(<Courses />);
+    const courseTitle = await findByText(/data structures/i);
     expect(courseTitle).toBeInTheDocument();
   });
 
@@ -51,58 +48,57 @@ describe('<Courses />', () => {
   });
 });
 
-test('Specific course loads on click, close button closes', async () => {
-  const { getByText, getByTestId, queryByTestId } = render(<Courses />);
+it('loads a modal with course details when clicked, close button dismisses it', async () => {
+  const { getByText, findByTestId, queryByTestId } = render(<Courses />);
 
-  const OpSysBtn = await waitForElement(() => getByText(/data structures/i));
-  fireEvent.click(OpSysBtn);
+  const OpSysBtn = getByText(/data structures/i);
+  userEvent.click(OpSysBtn);
 
   // Dialg is present and displays the current course
-  const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
+  const courseDialog = await findByTestId('course-dialog');
   expect(courseDialog).toBeInTheDocument();
   expect(courseDialog).toHaveTextContent(/data structures/i);
 
   // Close dialog
   const closeBtn = await waitForElement(() => getByText('Close'));
-  fireEvent.click(closeBtn);
+  userEvent.click(closeBtn);
   expect(queryByTestId('course-dialog')).toBeNull();
 });
 
 test('Various Links are present as well as Google Analytics events are recorded', async () => {
-  const { getByText, getByTestId } = render(<Courses />);
+  const { findByText, findByTestId } = render(<Courses />);
 
-  const OpSysBtn = await waitForElement(() => getByText(/data structures/i));
-  fireEvent.click(OpSysBtn);
-  expect(mockGAEvent).toHaveBeenCalled();
+  const OpSysBtn = await findByText(/data structures/i);
+  userEvent.click(OpSysBtn);
 
   // Dialog is present and displays the current course
-  const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
+  const courseDialog = await findByTestId('course-dialog');
   expect(courseDialog).toHaveTextContent(/data structures/i);
 
   // MapLink is present and clickable
-  const MapLink = await waitForElement(() => getByText(/View Strand Agriculture Hall/i));
-  fireEvent.click(MapLink);
-  expect(mockGAEvent).toHaveBeenCalled();
+  const MapLink = await findByText(/View Strand Agriculture Hall/i);
+  userEvent.click(MapLink);
 
   // Professor email link is clickable
-  const ContactProfessorLink = await waitForElement(() => getByText(/E-mail Hess/i));
-  fireEvent.click(ContactProfessorLink);
-  expect(mockGAEvent).toHaveBeenCalled();
+  const ContactProfessorLink = await findByText(/E-mail Hess/i);
+  userEvent.click(ContactProfessorLink);
 
   // All Courses Link
-  const ViewCoursesLink = await waitForElement(() => getByText(/view courses/i));
-  fireEvent.click(ViewCoursesLink);
-  expect(mockGAEvent).toHaveBeenCalled();
+  const ViewCoursesLink = await findByText(/view courses/i);
+  userEvent.click(ViewCoursesLink);
+
+  // We click 4 links, so 4 GA events need to have been triggered
+  expect(mockGAEvent).toHaveBeenCalledTimes(4);
 });
 
-test('Course spells out the month and day for Final exams', async () => {
-  const { findByText, getByTestId } = render(<Courses />);
+it('Course spells out the month and day for Final exams', async () => {
+  const { findByText, findByTestId } = render(<Courses />);
 
-  const TestoBtn = await waitForElement(() => findByText(/testo physics/i));
-  fireEvent.click(TestoBtn);
+  const TestoBtn = await findByText(/testo physics/i);
+  userEvent.click(TestoBtn);
 
   // Dialg is present and displays the corrent course
-  const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
+  const courseDialog = await findByTestId('course-dialog');
   expect(courseDialog).toBeInTheDocument();
 
   // For Final exams we spell out the month and day (match meetingDateTime format on Course.tsx)
@@ -111,13 +107,13 @@ test('Course spells out the month and day for Final exams', async () => {
 });
 
 test('Course Midterm data is excluded from view', async () => {
-  const { getByText, queryByText, getByTestId } = render(<Courses />);
+  const { getByText, queryByText, findByTestId } = render(<Courses />);
 
-  const TestoBtn = await waitForElement(() => getByText(/testo physics/i));
-  fireEvent.click(TestoBtn);
+  const TestoBtn = getByText(/testo physics/i);
+  userEvent.click(TestoBtn);
 
   // Dialg is present and displays the corrent course
-  const courseDialog = await waitForElement(() => getByTestId('course-dialog'));
+  const courseDialog = await findByTestId('course-dialog');
   expect(courseDialog).toBeInTheDocument();
 
   // Mid terms are currently excluded due to inconsistent data source
@@ -126,27 +122,51 @@ test('Course Midterm data is excluded from view', async () => {
 
 test('Footer has a Link that when clicked and Google Analytics Event fired', async () => {
   const { getByText } = render(<Courses />);
-  const CanvasLink = await waitForElement(() => getByText(/View more in Canvas/i));
-  fireEvent.click(CanvasLink);
-  expect(mockGAEvent).toHaveBeenCalled();
+
+  const CanvasLink = getByText(/View more in Canvas/i);
+  userEvent.click(CanvasLink);
+
+  expect(mockGAEvent).toHaveBeenCalledTimes(1);
 });
 
 describe('with an InfoButton in the CardFooter', () => {
   const validIinfoButtonId = 'current-courses';
 
-  test('does not display the button when the infoButtonData is missing it', async () => {
+  it('does not display the button when the infoButtonData is missing it', async () => {
     mockAppContext.infoButtonData = [{ id: 'invalid-id', content: 'content', title: 'title' }];
     const { queryByTestId } = render(<Courses />, { appContext: mockAppContext });
     const element = queryByTestId(validIinfoButtonId);
-    expect(element).not.toBeInTheDocument();
+    expect(element).toBeNull();
   });
 
-  test('displays the button when the infoButtonData is included', async () => {
+  it('displays the button when the infoButtonData is included', async () => {
     mockAppContext.infoButtonData = [
       { id: validIinfoButtonId, content: 'content', title: 'title' }
     ];
     const { getByTestId } = render(<Courses />, { appContext: mockAppContext });
-    const element = await waitForElement(() => getByTestId(validIinfoButtonId));
+    const element = getByTestId(validIinfoButtonId);
     expect(element).toBeInTheDocument();
+  });
+});
+
+describe('without courses present', () => {
+  beforeEach(() => {
+    mockUseCourseSchedule.mockReturnValue({ data: [] });
+  });
+
+  it('contains message about no courses scheduled this term', () => {
+    const { getByText } = render(<Courses />);
+
+    expect(getByText(/do not have any courses scheduled/i)).toBeInTheDocument();
+  });
+
+  it('contains past courses link and tracked in GA', () => {
+    const { getByText } = render(<Courses />);
+
+    const pastCoursesLink = getByText(/past courses and grades/i, { selector: 'a' });
+    expect(pastCoursesLink).toBeInTheDocument();
+
+    userEvent.click(pastCoursesLink);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 });
