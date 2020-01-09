@@ -40,6 +40,7 @@ interface ICourse {
 const CourseListItem = styled(ListItem)`
   &:last-child {
     margin-bottom: 0;
+  }
 `;
 
 const FacultyLink = styled.a`

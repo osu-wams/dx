@@ -11,14 +11,16 @@ import {
   ListItemLeadText,
   ListItemDescription
 } from '../ui/List';
+import coursesImg from '../assets/courses.svg';
 import Course from '../features/Course';
 import { titleCase, singularPlural } from '../util/helpers';
 import { themeSettings, ThemeContext } from '../theme';
-import { ExternalLink } from '../ui/Link';
+import { ExternalLink, InternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { ICourseSchedule } from '../api/student/course-schedule';
 import { Event } from '../util/gaTracking';
 import { matchedCourseContext } from './course-utils';
+import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 
 /**
  * Get the course item lead text or the icon
@@ -63,9 +65,55 @@ const Courses = () => {
     }
   };
 
-  if (courses && !courses.data.length) {
-    return null;
-  }
+  const CourseList = () => (
+    <List>
+      {Array.from(sortedGroupedByCourseName(courses.data).entries(), ([key, coursesMap]) => (
+        <ListItem key={key}>
+          <ListItemContentButton
+            onClick={() => {
+              toggleCourse(coursesMap);
+              Event('courses', 'course clicked', key);
+            }}
+          >
+            {courseItemLeadText(coursesMap.subject, coursesMap.number)}
+            <ListItemText>
+              <ListItemDescription
+                fontSize={themeSettings.fontSize[16]}
+                color={themeContext.features.academics.courses.list.title.color}
+              >
+                {titleCase(coursesMap.title)}
+              </ListItemDescription>
+              <ListItemDescription>
+                {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
+              </ListItemDescription>
+            </ListItemText>
+          </ListItemContentButton>
+        </ListItem>
+      ))}
+    </List>
+  );
+
+  const FooterLink = () => (
+    <ExternalLink href={Url.canvas.main} onClick={() => Event('courses', 'Link to Canvas clicked')}>
+      View more in Canvas
+    </ExternalLink>
+  );
+
+  const NoCourses = () => (
+    <EmptyState>
+      <EmptyStateImage src={coursesImg} alt="" />
+      <EmptyStateText>You do not have any courses scheduled for this term.</EmptyStateText>
+    </EmptyState>
+  );
+
+  const NoCoursesFooterLink = () => (
+    <InternalLink
+      to="past-courses"
+      onClick={() => Event('courses', 'Empty state card footer link to Past Courses clicked')}
+    >
+      See past courses and grades
+    </InternalLink>
+  );
 
   return (
     <Card>
@@ -79,46 +127,13 @@ const Courses = () => {
         }
       />
       <CardContent>
-        {courses && courses.data.length ? (
-          <List>
-            {Array.from(sortedGroupedByCourseName(courses.data).entries(), ([key, coursesMap]) => (
-              <ListItem key={key}>
-                <ListItemContentButton
-                  onClick={() => {
-                    toggleCourse(coursesMap);
-                    Event('courses', 'course clicked', key);
-                  }}
-                >
-                  {courseItemLeadText(coursesMap.subject, coursesMap.number)}
-                  <ListItemText>
-                    <ListItemDescription
-                      fontSize={themeSettings.fontSize[16]}
-                      color={themeContext.features.academics.courses.list.title.color}
-                    >
-                      {titleCase(coursesMap.title)}
-                    </ListItemDescription>
-                    <ListItemDescription>
-                      {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
-                    </ListItemDescription>
-                  </ListItemText>
-                </ListItemContentButton>
-              </ListItem>
-            ))}
-          </List>
-        ) : (
-          <p>No courses this term</p>
-        )}
+        {courses && courses.data.length ? <CourseList /> : <NoCourses />}
         {isOpen && showCoursesMap && showCoursesMap.courses.length > 0 && (
           <Course coursesMap={showCoursesMap} toggleCourse={toggleCourse} isOpen />
         )}
       </CardContent>
       <CardFooter infoButtonId="current-courses">
-        <ExternalLink
-          href={Url.canvas.main}
-          onClick={() => Event('courses', 'Link to Canvas clicked')}
-        >
-          View more in Canvas
-        </ExternalLink>
+        {courses && courses.data.length ? <FooterLink /> : <NoCoursesFooterLink />}
       </CardFooter>
     </Card>
   );

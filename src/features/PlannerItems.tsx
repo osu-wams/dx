@@ -15,33 +15,15 @@ import {
 import { usePlannerItems } from '../api/student/planner-items';
 import { useCourseSchedule } from '../api/student';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
-import { themeSettings } from '../theme';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { UserContext } from '../App';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { courseCodeOrIcon } from './Courses';
-import { styled, ThemeContext } from '../theme';
+import { ThemeContext } from '../theme';
 import { format } from '../util/helpers';
-
-const NoItems = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  align-items: center;
-  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
-    ${themeSettings.spacing.unit * 8}px;
-`;
-
-const NoItemsImage = styled.img`
-  height: 60px;
-`;
-
-const NoItemsText = styled.p`
-  color: ${({ theme }) => theme.features.academics.courses.plannerItems.emptyText.color};
-  text-align: center;
-`;
+import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 
 /**
  * Some Canvas link include the full path including https://instructure...
@@ -50,7 +32,6 @@ const NoItemsText = styled.p`
  * If that's not there we add that ourselves. (Most links don't have it)
  *
  */
-
 const canvasUrl = url => {
   if (!url) {
     return Url.canvas.main;
@@ -135,10 +116,10 @@ const PlannerItems = () => {
       );
     } else if (user.isCanvasOptIn === true) {
       return (
-        <NoItems>
-          <NoItemsImage src={assignment} alt="" />
-          <NoItemsText>You have no upcoming Canvas assignments</NoItemsText>
-        </NoItems>
+        <EmptyState>
+          <EmptyStateImage src={assignment} alt="" />
+          <EmptyStateText>You have no upcoming Canvas assignments</EmptyStateText>
+        </EmptyState>
       );
     }
   };

@@ -55,7 +55,7 @@ describe('<AcademicsDashboard />', () => {
       error: false
     });
     mockUseCourseSchedule.mockReturnValue({
-      data: 7,
+      data: [],
       loading: false,
       error: false
     });
