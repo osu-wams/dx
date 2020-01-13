@@ -40,6 +40,13 @@ describe('<BetaDashboard />', () => {
     expect(await findByText('beta list item', { selector: 'li' })).toBeInTheDocument();
   });
 
+  it('should find the release notes card with appripriate content', async () => {
+    const { findByText } = render(<BetaDashboard />);
+    expect(await findByText('Test Release Note')).toBeInTheDocument();
+    expect(await findByText('Winter test 2019')).toBeInTheDocument();
+    expect(await findByText(/test release note body content/i)).toBeInTheDocument();
+  });
+
   it('should have links that are tracked via GA', async () => {
     const { getByText } = render(<BetaDashboard />);
     const oldMyOSU = getByText(/old MyOSU portal/);
