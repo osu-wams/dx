@@ -86,14 +86,7 @@ export const initialUser: IUser = {
   primaryAffiliation: AFFILIATIONS.employee
 };
 
-const getUser = (): Promise<IUser> =>
-  axios
-    .get('/api/user')
-    .then(res => res.data)
-    .catch(e => {
-      window.location.href = '/login';
-      return e;
-    });
+const getUser = (): Promise<IUser> => axios.get('/api/user').then(res => res.data);
 
 export const getClassification = (): Promise<IUserClassification> =>
   axios.get('/api/user/classification').then(res => res.data);

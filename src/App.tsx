@@ -86,9 +86,7 @@ const App = (props: AppProps) => {
 
     setTheme(user.data?.theme ?? theme);
 
-    if (user.error) {
-      window.location.href = '/login';
-    } else if (!user.loading) {
+    if (!user.loading) {
       containerElementRef.current.style.opacity = '1';
     }
 
