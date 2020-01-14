@@ -63,7 +63,7 @@ const useAPICall = <T>(
         // flow through the login process while providing the backend the target
         // url to redirect the user to after a successful login.
         if (e.response?.status === 401) {
-          window.location.assign(`/login?return=${window.location.pathname}`);
+          window.location.assign(`/login?returnTo=${window.location.pathname}`);
         } else {
           // Gives the ability for an API call to bypass posting an error to the server in
           // certain circumstances, such as an HTTP 403 from Planner Item API call when the user
