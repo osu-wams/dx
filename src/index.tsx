@@ -6,7 +6,7 @@ import ReactGA from 'react-ga';
 import App from './App';
 import ErrorBoundary from './features/ErrorBoundary';
 import * as cache from './util/cache';
-import { postError } from './api/errors';
+import { postError, IGNORED_ERRORS } from './api/errors';
 
 // Initialize Google Analytics
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -39,5 +39,9 @@ try {
     applicationRoot
   );
 } catch (e) {
-  postError(e).then(v => redirectToError());
+  if (IGNORED_ERRORS.includes(e.toString())) {
+    console.warn(`DX Application caught an ignored error "${e.toString()}".`);
+  } else {
+    postError(e).then(v => redirectToError());
+  }
 }
