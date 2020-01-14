@@ -164,7 +164,7 @@ const Footer = () => {
             </>
           )}
         </FooterContent>
-        {user?.data?.groups.includes(GROUPS.masquerade) && (
+        {user?.data?.groups?.includes(GROUPS.masquerade) && (
           <Button
             onClick={() => {
               toggleMasqueradeDialog();
@@ -178,7 +178,7 @@ const Footer = () => {
         )}
         <ToastContainer />
       </FooterWrapper>
-      {user?.data?.groups.includes(GROUPS.masquerade) && showMasqueradeDialog && (
+      {user?.data?.groups?.includes(GROUPS.masquerade) && showMasqueradeDialog && (
         <Masquerade
           showMasqueradeDialog={showMasqueradeDialog}
           toggleMasqueradeDialog={toggleMasqueradeDialog}
