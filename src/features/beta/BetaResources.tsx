@@ -7,7 +7,13 @@ import {
   faExternalLink
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
-import { List, ListItem, ListItemText, ListItemContentLinkSVG, ListItemContentLinkName } from '../../ui/List';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemContentLinkSVG,
+  ListItemContentLinkName
+} from '../../ui/List';
 import { Event } from '../../util/gaTracking';
 import Url from '../../util/externalUrls.data';
 import { ThemeContext } from '../../theme';
@@ -25,10 +31,7 @@ const BetaResources: FC = () => {
               target="_blank"
               onClick={() => Event('beta', 'feedback')}
             >
-              <Icon
-                icon={faCommentAltLines}
-                color={themeContext.ui.list.item.link.color}
-              />
+              <Icon icon={faCommentAltLines} color={themeContext.ui.list.item.link.color} />
               <ListItemText>
                 <ListItemContentLinkName>Give us feedback on the beta</ListItemContentLinkName>
               </ListItemText>

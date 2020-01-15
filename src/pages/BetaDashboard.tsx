@@ -1,8 +1,8 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
-import BetaInfoCard from '../features/beta/InfoCard';
-import BetaResourcesCard from '../features/beta/ResourcesCard';
-import BetaReleaseNotesCard from '../features/beta/ReleaseNotesCard';
+import BetaInfo from '../features/beta/BetaInfo';
+import BetaResources from '../features/beta/BetaResources';
+import BetaReleaseNotes from '../features/beta/BetaReleaseNotes';
 import { MainGridWrapper, Masonry } from '../theme';
 
 const BetaDashboard = () => {
@@ -10,9 +10,9 @@ const BetaDashboard = () => {
     <MainGridWrapper data-testid="betadash-page">
       <PageTitle title="Beta" />
       <Masonry>
-        <BetaInfoCard />
-        <BetaResourcesCard />
-        <BetaReleaseNotesCard />
+        <BetaInfo />
+        <BetaResources />
+        <BetaReleaseNotes />
       </Masonry>
     </MainGridWrapper>
   );

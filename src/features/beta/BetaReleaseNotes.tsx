@@ -2,15 +2,18 @@ import React, { FC } from 'react';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import { themeSettings, styled } from '../../theme';
+import { useReleaseNotes } from '../../api/release-notes';
 
 const BetaReleaseNotes: FC = () => {
+  const releaseNotes = useReleaseNotes();
+
   return (
     <Card>
       <CardHeader title="Release Notes" badge={<CardIcon icon={faClipboardListCheck} />} />
       <CardContent>
-        <ReleaseTitle>Beta Launch!</ReleaseTitle>
-        <ReleaseSubtitle>Fall 2019</ReleaseSubtitle>
-        <p>Check back here for spicy release notes as we update the dashboard!</p>
+        <ReleaseTitle>{releaseNotes.data[0]?.title}</ReleaseTitle>
+        <ReleaseSubtitle>{releaseNotes.data[0]?.date}</ReleaseSubtitle>
+        <div dangerouslySetInnerHTML={{ __html: releaseNotes.data[0]?.content }}></div>
       </CardContent>
       <CardFooter></CardFooter>
     </Card>
@@ -24,7 +27,7 @@ const ReleaseTitle = styled.h3`
   margin: 0px;
 `;
 
-const ReleaseSubtitle = styled.p`
+const ReleaseSubtitle = styled.h4`
   margin: 0px;
   color: ${({ theme }) => theme.features.beta.releaseNotes.subTitle.color};
   font-size: ${themeSettings.fontSize['14']};

@@ -18,7 +18,7 @@
     "@types/reach__router": "^1.2.6",
     "@types/react": "16.9.17",
     "@types/react-dom": "^16.9.4",
-    "@types/styled-components": "^4.4.1",
+    "@types/styled-components": "^4.4.2",
     "axios": "^0.19.1",
     "concurrently": "^4.1.1",
     "date-fns": "^2.8.1",
@@ -39,7 +39,7 @@
     "reakit": "^1.0.0-beta.12",
     "serialize-javascript": "^2.1.1",
     "stacktrace-js": "^2.0.1",
-    "styled-components": "^4.4.1",
+    "styled-components": "^5.0.0",
     "styled-map": "^3.3",
     "typescript": "^3.7.3",
     "use-debounce": "^2.2.1"
@@ -76,7 +76,7 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^2.0.1",
     "husky": "^3.1.0",
-    "jest-styled-components": "^6.3.4",
+    "jest-styled-components": "^7.0.0",
     "lint-staged": "^9.2.5",
     "react-test-renderer": "^16.12.0",
     "webpack-bundle-analyzer": "^3.6.0"
