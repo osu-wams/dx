@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useAPICall from './useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 import { useEffect, useState } from 'react';
 import { defaultTheme } from '../theme/themes';
 
@@ -332,14 +332,18 @@ export const useUser = () => {
     loading: true,
     isCanvasOptIn: false
   });
-  const u = useAPICall<IUser>(getUser, undefined, data => data, initialUser, false);
-  const classification = useAPICall<IUserClassification>(
-    getClassification,
-    undefined,
-    data => data,
-    {},
-    true
-  );
+  const u = useAPICall<IUser>({
+    api: getUser,
+    dataTransform: data => data,
+    initialState: initialUser,
+    useCache: false
+  });
+  const classification = useAPICall<IUserClassification>({
+    api: getClassification,
+    dataTransform: data => data,
+    initialState: {},
+    useCache: true
+  });
 
   useEffect(() => {
     setUser({

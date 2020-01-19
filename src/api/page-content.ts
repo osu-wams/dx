@@ -1,11 +1,16 @@
 import axios from 'axios';
-import useAPICall from './useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 export const getPageContent = (pageTitle: string): Promise<IpageContent[]> =>
   axios.get(`/api/page-content/${pageTitle}`).then((res: InfoButtonData) => res.data ?? []);
 
 export const usePageContent = (pageTitle: string) =>
-  useAPICall<IpageContent[]>(getPageContent, pageTitle, data => data, []);
+  useAPICall<IpageContent[]>({
+    api: getPageContent,
+    query: pageTitle,
+    dataTransform: data => data,
+    initialState: []
+  });
 
 export interface IpageContent {
   title: string;

@@ -14,7 +14,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "baseUrl": "."
   },
   "include": ["src"]
 }

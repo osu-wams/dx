@@ -1,14 +1,13 @@
 import axios from 'axios';
-import useAPICall from '../useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 const getPerson = (): Promise<IPersons> => axios.get(`/api/persons`).then(res => res.data);
 const usePerson = () =>
-  useAPICall<IPersonsAttributes | null>(
-    getPerson,
-    undefined,
-    data => ({ ...data.attributes, id: data.id }),
-    null
-  );
+  useAPICall<IPersonsAttributes | null>({
+    api: getPerson,
+    dataTransform: data => ({ ...data.attributes, id: data.id }),
+    initialState: null
+  });
 
 export interface IPersons {
   id: string;

@@ -1,10 +1,10 @@
 import axios from 'axios';
-import useAPICall from '../useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 export const getGrades = (): Promise<Grades[]> =>
   axios.get(`/api/student/grades`).then(res => res.data);
 export const useGrades = ({ callback = data => data } = {}) =>
-  useAPICall<Grades[]>(getGrades, undefined, callback, []);
+  useAPICall<Grades[]>({ api: getGrades, dataTransform: callback, initialState: [] });
 
 export type Grades = {
   type: string;

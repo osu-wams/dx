@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useAPICall from './useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 export interface IResourceResult {
   id: string;
@@ -32,7 +32,11 @@ const getResources = (): Promise<IResourceResult[]> =>
   });
 
 const useResources = () => {
-  return useAPICall<IResourceResult[]>(getResources, undefined, d => d, []);
+  return useAPICall<IResourceResult[]>({
+    api: getResources,
+    dataTransform: d => d,
+    initialState: []
+  });
 };
 
 /**
@@ -42,9 +46,14 @@ const getResourcesByQueue = (category: string): Promise<IResourceResult[]> =>
   axios.get(`/api/resources/category/${category}`).then(res => res.data);
 
 const useResourcesByQueue = (category: string) =>
-  useAPICall<IEntityQueueResourceResult>(getResourcesByQueue, category, d => d, {
-    entityQueueTitle: '',
-    items: []
+  useAPICall<IEntityQueueResourceResult>({
+    api: getResourcesByQueue,
+    query: category,
+    dataTransform: d => d,
+    initialState: {
+      entityQueueTitle: '',
+      items: []
+    }
   });
 
 /**
@@ -58,7 +67,7 @@ const getCategories = (): Promise<ICategory[]> =>
  * @param callback (optional) data transformation function
  */
 const useCategories = (callback: Function = data => data) => {
-  return useAPICall<ICategory[]>(getCategories, undefined, callback, []);
+  return useAPICall<ICategory[]>({ api: getCategories, dataTransform: callback, initialState: [] });
 };
 
 // Category selected by default. Currently the 'featured' category id

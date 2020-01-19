@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useAPICall from './useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 export const STATUS_SORT = {
   4: 1,
@@ -39,7 +39,7 @@ export const getStatus = (): Promise<ICachetComponent[]> =>
   axios.get(`/api/status`).then(res => res.data);
 
 export const useStatus = () =>
-  useAPICall<ICachetComponent[]>(getStatus, undefined, data => data, []);
+  useAPICall<ICachetComponent[]>({ api: getStatus, dataTransform: data => data, initialState: [] });
 
 export interface ICachetIncident {
   id: number;

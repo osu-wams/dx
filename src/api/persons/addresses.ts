@@ -1,10 +1,14 @@
 import axios from 'axios';
-import useAPICall from '../useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 const getMailingAddress = (): Promise<IMailingAddress> =>
   axios.get(`/api/persons/addresses`).then(res => res.data);
 const useMailingAddress = () =>
-  useAPICall<IMailingAddress | null>(getMailingAddress, undefined, data => data, null);
+  useAPICall<IMailingAddress | null>({
+    api: getMailingAddress,
+    dataTransform: data => data,
+    initialState: null
+  });
 
 export interface IMailingAddress {
   id: string;

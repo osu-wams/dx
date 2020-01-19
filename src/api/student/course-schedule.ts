@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useAPICall from '../useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 const getCourseSchedule = (term = 'current'): Promise<ICourseSchedule[]> =>
   axios.get(`/api/student/class-schedule?term=${term}`).then(res => res.data);
@@ -11,7 +11,12 @@ const getCourseSchedule = (term = 'current'): Promise<ICourseSchedule[]> =>
  * @param object containing a term and callback function
  */
 const useCourseSchedule = ({ term = 'current', callback = data => data } = {}) =>
-  useAPICall<ICourseSchedule[]>(getCourseSchedule, term, callback, []);
+  useAPICall<ICourseSchedule[]>({
+    api: getCourseSchedule,
+    query: term,
+    dataTransform: callback,
+    initialState: []
+  });
 
 export interface IFaculty {
   email: string;

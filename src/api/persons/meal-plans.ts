@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useAPICall from '../useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 interface MealPlansCallback {
   setFooterLink: Function;
@@ -11,7 +11,7 @@ const getMealPlans = (): Promise<IMealPlans[]> =>
   axios.get(`/api/persons/meal-plans`).then(res => res.data);
 
 const useMealPlans = ({ callback = data => data } = {}) =>
-  useAPICall<IMealPlans[]>(getMealPlans, undefined, callback, []);
+  useAPICall<IMealPlans[]>({ api: getMealPlans, dataTransform: callback, initialState: [] });
 
 export interface IMealPlans {
   attributes: IMealPlansAttributes;

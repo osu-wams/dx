@@ -1,15 +1,14 @@
 import axios from 'axios';
-import useAPICall from '../useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 
 export const getAccountTransactions = (): Promise<IAccountTransactions> =>
   axios.get('/api/student/account-transactions').then(res => res.data);
 export const useAccountTransactions = () =>
-  useAPICall<IAccountTransactions>(
-    getAccountTransactions,
-    undefined,
-    data => data,
-    {} as IAccountTransactions
-  );
+  useAPICall<IAccountTransactions>({
+    api: getAccountTransactions,
+    dataTransform: data => data,
+    initialState: {} as IAccountTransactions
+  });
 
 export interface IAccountTransactions {
   attributes: { transactions: [ITransaction] };

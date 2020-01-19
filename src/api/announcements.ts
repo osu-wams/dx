@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useAPICall from './useAPICall';
+import { useAPICall } from '@osu-wams/hooks';
 import { IUser, getAffiliation } from '../api/user';
 
 export interface IResourceResult {
@@ -31,7 +31,12 @@ export interface IAnnouncement {
 const getAnnouncements = (type): Promise<any> =>
   axios.get(`/api/announcements/${type}`).then(res => res.data);
 export const useAnnouncements = (type: string) =>
-  useAPICall<any[]>(getAnnouncements, type, d => d, []);
+  useAPICall<any[]>({
+    api: getAnnouncements,
+    query: type,
+    dataTransform: d => d,
+    initialState: []
+  });
 
 /**
  * Filter callback to see if the user and the announcement have the same affiliation or if the announcement affiliations are blank.
