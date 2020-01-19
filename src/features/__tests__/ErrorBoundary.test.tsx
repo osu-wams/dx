@@ -9,10 +9,15 @@ const ComponentWithError = () => {
   return <span>Success {badMethod()}</span>;
 };
 
-jest.mock('../../api/errors.ts');
-const errors = require('../../api/errors');
-const mockedPostError = jest.spyOn(errors, 'postError');
+const mockedPostError = jest.fn();
 const mockedErrorCallback = jest.fn();
+
+jest.mock('@osu-wams/hooks', () => ({
+  __esModule: true,
+  api: {
+    postError: () => mockedPostError()
+  }
+}));
 
 beforeEach(() => {
   mockedPostError.mockResolvedValue(undefined);

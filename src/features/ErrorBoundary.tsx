@@ -1,5 +1,5 @@
 import React from 'react';
-import { postError } from '../api/errors';
+import { api } from '@osu-wams/hooks';
 
 type ErrorHandler = (error: Error, info: React.ErrorInfo, errorHandlerCallback?: Function) => void;
 type ErrorHandlingComponent<Props> = (props: Props, error?: Error) => React.ReactNode;
@@ -56,7 +56,8 @@ const ErrorBoundary = Catch(
     }
   },
   (error, info, callback) => {
-    postError(error)
+    api
+      .postError(error)
       .then(v => console.debug('Error boundary reported to server:', error))
       .catch(err => console.error);
     if (callback) callback();

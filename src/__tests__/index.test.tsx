@@ -1,15 +1,16 @@
+import { api } from '@osu-wams/hooks';
+
 jest.mock('../util/cache.ts', () => ({
   clear: () => {
     throw new Error('blah');
   }
 }));
 
-jest.mock('../api/errors.ts');
-
 describe('application index', () => {
   it('reports an unhandled error', async () => {
-    const errors = require('../api/errors');
-    const mockedPostError = jest.spyOn(errors, 'postError');
+    const hooks = require('@osu-wams/hooks');
+    const api = hooks.api;
+    const mockedPostError = jest.spyOn(api, 'postError');
     mockedPostError.mockResolvedValue(undefined);
     require('../index');
     expect(mockedPostError).toHaveBeenCalledTimes(1);
