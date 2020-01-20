@@ -1,17 +1,21 @@
 import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import { raveAlerts, dxAlerts } from '../../api/__mocks__/alerts.data';
 import Alerts from '../Alerts';
+import { Alerts as alertsHooks } from '@osu-wams/hooks';
 
+const { raveAlerts, dxAlerts } = alertsHooks.mockAlerts;
 const mockUseDxAlerts = jest.fn();
 const mockUseRaveAlerts = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/alerts', () => ({
-  useDxAlerts: () => mockUseDxAlerts(),
-  useRaveAlerts: () => mockUseRaveAlerts()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useDxAlerts: () => mockUseDxAlerts(),
+    useRaveAlerts: () => mockUseRaveAlerts()
+  };
+});
 
 describe('<Alerts />', () => {
   describe('with a Rave alert and no DX Alert', () => {
