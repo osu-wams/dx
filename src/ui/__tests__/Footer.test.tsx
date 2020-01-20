@@ -9,10 +9,15 @@ import { authUser } from '../../util/test-utils';
 const mockGetMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
 
-jest.mock('../../api/masquerade', () => ({
-  getMasqueradeUser: () => mockGetMasqueradeUser(),
-  postMasqueradeUser: () => mockPostMasqueradeUser()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    Masquerade: {
+      getMasqueradeUser: () => mockGetMasqueradeUser(),
+      postMasqueradeUser: () => mockPostMasqueradeUser()
+    }
+  };
+});
 
 beforeEach(() => {
   Storage.prototype.clear = jest.fn();
