@@ -13,10 +13,12 @@ import { Event } from '../../util/gaTracking';
 import { ExternalLink } from '../../ui/Link';
 import Url from '../../util/externalUrls.data';
 import { ITSystemSticky } from './ITSystemSticky';
-import { useStatus, withStickyIncidents, sortedByStatus, allOperational } from '../../api/status';
+import { Status, useStatus } from '@osu-wams/hooks';
 import { ITSystemItem } from './ITSystemItem';
 import { styled, breakpoints, themeSettings } from '../../theme';
 import operationalStatus from '../../assets/systems-status-operational.svg';
+
+const { withStickyIncidents, sortedByStatus, allOperational } = Status;
 
 const NoItems = styled.div`
   display: flex;
