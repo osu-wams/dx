@@ -13,11 +13,9 @@ const mockedPostError = jest.fn();
 const mockedErrorCallback = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => ({
-  __esModule: true,
-  api: {
-    Errors: {
-      postError: () => mockedPostError()
-    }
+  ...jest.requireActual('@osu-wams/hooks'),
+  Errors: {
+    postError: () => mockedPostError()
   }
 }));
 

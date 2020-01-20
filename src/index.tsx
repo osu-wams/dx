@@ -6,9 +6,9 @@ import ReactGA from 'react-ga';
 import App from './App';
 import ErrorBoundary from './features/ErrorBoundary';
 import * as cache from './util/cache';
-import { api } from '@osu-wams/hooks';
+import { Errors } from '@osu-wams/hooks';
 
-const { postError, IGNORED_ERRORS } = api.Errors;
+const { postError, IGNORED_ERRORS } = Errors;
 
 // Initialize Google Analytics
 const isDevelopment = process.env.NODE_ENV === 'development';

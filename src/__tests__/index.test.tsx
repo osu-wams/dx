@@ -1,5 +1,3 @@
-import { api } from '@osu-wams/hooks';
-
 const mockedPostError = jest.fn();
 
 jest.mock('../util/cache.ts', () => ({
@@ -9,11 +7,10 @@ jest.mock('../util/cache.ts', () => ({
 }));
 
 jest.mock('@osu-wams/hooks', () => ({
-  api: {
-    Errors: {
-      postError: () => mockedPostError(),
-      IGNORED_ERRORS: []
-    }
+  ...jest.requireActual('@osu-wams/hooks'),
+  Errors: {
+    postError: () => mockedPostError(),
+    IGNORED_ERRORS: []
   }
 }));
 describe('application index', () => {
