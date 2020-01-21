@@ -2,23 +2,22 @@ import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import AnnouncementContainer from '../AnnouncementContainer';
-import {
-  AcademicsAnnouncementsData,
-  FinancesAnnouncementsData
-} from '../__mocks__/announcementsContainer.data';
 import { mockGAEvent } from '../../setupTests';
+import { Announcements } from '@osu-wams/hooks';
 
+const { academicAnnouncementResult, financialAnnouncementResult } = Announcements.mockAnnouncements;
 const mockUseAnnouncements = jest.fn();
 
-jest.mock('../../api/announcements', () => {
+jest.mock('@osu-wams/hooks', () => {
   return {
-    ...jest.requireActual('../../api/announcements'),
+    ...jest.requireActual('@osu-wams/hooks'),
     useAnnouncements: () => mockUseAnnouncements()
   };
 });
+
 describe('<AnnouncementContainer> as Academics', () => {
   beforeEach(() => {
-    mockUseAnnouncements.mockReturnValue(AcademicsAnnouncementsData);
+    mockUseAnnouncements.mockReturnValue(academicAnnouncementResult);
   });
   afterEach(() => {
     jest.clearAllMocks();
@@ -47,7 +46,7 @@ describe('<AnnouncementContainer> as Academics', () => {
 
 describe('<AnnouncementContainer> as Finances', () => {
   beforeEach(() => {
-    mockUseAnnouncements.mockReturnValue(FinancesAnnouncementsData);
+    mockUseAnnouncements.mockReturnValue(financialAnnouncementResult);
   });
   afterEach(() => {
     jest.clearAllMocks();

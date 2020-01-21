@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { Title } from '../ui/PageTitle';
-import { useAnnouncements, hasAffiliation } from '../api/announcements';
 import { useStudentExperienceEvents, useCampusEvents, useEmployeeEvents } from '../api/events';
 import {
   hasAudience,
   atCampus,
   CAMPUS_CODES,
   hasPrimaryAffiliation,
-  AFFILIATIONS
+  AFFILIATIONS,
+  getAffiliation
 } from '../api/user';
 import EventCard from './EventCard';
 import { themeSettings, breakpoints, styled, SecondGridWrapper } from '../theme';
+import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 
 const EventCardContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
@@ -55,6 +56,7 @@ const EventCardContainer = ({ page, ...props }) => {
 
   const bendEvents = useCampusEvents('bend');
   const announcements = useAnnouncements(page);
+  const { hasAffiliation } = Announcements;
 
   /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
@@ -87,7 +89,8 @@ const EventCardContainer = ({ page, ...props }) => {
         announcementsToUse = shuffleArray(
           announcements.data.filter(
             announcement =>
-              hasAudience(user.data, announcement) && hasAffiliation(user.data, announcement)
+              hasAudience(user.data, announcement) &&
+              hasAffiliation(getAffiliation(user.data), announcement)
           )
         );
       }

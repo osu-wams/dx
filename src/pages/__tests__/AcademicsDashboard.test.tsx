@@ -2,23 +2,25 @@ import React from 'react';
 import { render } from '../../util/test-utils';
 import AcademicsDashboard from '../Academics/AcademicsDashboard';
 import { waitForElement } from '@testing-library/dom';
-import { mockAcademicAnnouncementResult } from '../../api/__mocks__/announcements.data';
 import { gpaUndergraduateData } from '../../api/student/__mocks__/gpa.data';
 import { academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
-import { Resources } from '@osu-wams/hooks';
+import { Announcements, Resources } from '@osu-wams/hooks';
 
 const { resourcesCardData } = Resources.mockResources;
+const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 
 const mockUseAcademicCalendar = jest.fn();
 jest.mock('../../api/events', () => ({
   useAcademicCalendarEvents: () => mockUseAcademicCalendar()
 }));
 
+const mockUseAnnouncements = jest.fn();
 const mockUseResourcesByQueue = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useResourcesByQueue: () => mockUseResourcesByQueue()
+    useResourcesByQueue: () => mockUseResourcesByQueue(),
+    useAnnouncements: () => mockUseAnnouncements()
   };
 });
 
@@ -42,17 +44,11 @@ jest.mock('../../api/student/gpa', () => ({
   useGpa: () => mockUseStudentGpa()
 }));
 
-const mockUseAnnouncements = jest.fn();
-jest.mock('../../api/announcements', () => ({
-  ...jest.requireActual('../../api/announcements'),
-  useAnnouncements: () => mockUseAnnouncements()
-}));
-
 describe('<AcademicsDashboard />', () => {
   beforeEach(() => {
     mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
     mockUseAcademicCalendar.mockReturnValue(academicCalendar6);
-    mockUseAnnouncements.mockReturnValue(mockAcademicAnnouncementResult);
+    mockUseAnnouncements.mockReturnValue(academicAnnouncementResult);
     mockUseStudentGpa.mockReturnValue({ data: gpaUndergraduateData, loading: false, error: false });
     mockUseAcademicStatus.mockReturnValue({
       data: { academicStanding: 'Good Standing' },

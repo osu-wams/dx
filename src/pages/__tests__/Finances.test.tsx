@@ -2,24 +2,19 @@ import React from 'react';
 import { waitForElement, wait } from '@testing-library/react';
 import Finances from '../Finances';
 import { render } from '../../util/test-utils';
-import { mockAcademicAnnouncementResult } from '../../api/__mocks__/announcements.data';
 import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
-import { Resources } from '@osu-wams/hooks';
+import { Announcements, Resources } from '@osu-wams/hooks';
 import mockFinancialTransactions from '../../api/student/__mocks__/accountTransactions.data';
 import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
 
 const { resourcesCardData } = Resources.mockResources;
+const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 
 const mockUseAnnouncements = jest.fn();
 const mockUseMealPlans = jest.fn();
 const mockUseResourcesByQueue = jest.fn();
 const mockUseFinancialTransactions = jest.fn();
 const mockUseAccountBalance = jest.fn();
-
-jest.mock('../../api/announcements', () => ({
-  ...jest.requireActual('../../api/announcements'),
-  useAnnouncements: () => mockUseAnnouncements()
-}));
 
 jest.mock('../../api/persons/meal-plans', () => ({
   useMealPlans: () => mockUseMealPlans()
@@ -28,7 +23,8 @@ jest.mock('../../api/persons/meal-plans', () => ({
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useResourcesByQueue: () => mockUseResourcesByQueue()
+    useResourcesByQueue: () => mockUseResourcesByQueue(),
+    useAnnouncements: () => mockUseAnnouncements()
   };
 });
 
@@ -42,7 +38,7 @@ jest.mock('../../api/student/account-balance', () => ({
 
 describe('Finances page with standard data', () => {
   beforeEach(() => {
-    mockUseAnnouncements.mockReturnValue(mockAcademicAnnouncementResult);
+    mockUseAnnouncements.mockReturnValue(academicAnnouncementResult);
     mockUseMealPlans.mockReturnValue(mockMealPlans);
     mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
     mockUseFinancialTransactions.mockReturnValue(mockFinancialTransactions);

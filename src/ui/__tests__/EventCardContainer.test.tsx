@@ -2,13 +2,15 @@ import React from 'react';
 import { waitForElement, fireEvent, cleanup } from '@testing-library/react';
 import EventCardContainer from '../EventCardContainer';
 import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
-import { announcementsData, announcementsData_10 } from '../__mocks__/announcements.data';
+import { Announcements } from '@osu-wams/hooks';
 import {
   employeeEvents,
   studentExperienceEvents,
   studentExperienceEvents_10
 } from '../__mocks__/events.data';
 import { mockGAEvent } from '../../setupTests';
+
+const { announcementsData, announcementsData_10 } = Announcements.mockAnnouncements;
 const mockUseAnnouncements = jest.fn();
 const mockUseStudentExperienceEvents = jest.fn();
 const mockUseCampusEvents = jest.fn();
@@ -16,9 +18,9 @@ const mockUseEmployeeEvents = jest.fn();
 
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/announcements', () => {
+jest.mock('@osu-wams/hooks', () => {
   return {
-    ...jest.requireActual('../../api/announcements'),
+    ...jest.requireActual('@osu-wams/hooks'),
     useAnnouncements: () => mockUseAnnouncements()
   };
 });
@@ -41,7 +43,9 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should show 5 student event cards', async () => {
-    const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />);
+    const { getAllByTestId, getByText, queryByText } = render(
+      <EventCardContainer page="dashboard" />
+    );
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
     expect(getByText(/Student Only Announcement/i)).toBeInTheDocument();
@@ -50,9 +54,12 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should show 7 employee event cards', async () => {
-    const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />, {
-      user: mockEmployeeUser
-    });
+    const { getAllByTestId, getByText, queryByText } = render(
+      <EventCardContainer page="dashboard" />,
+      {
+        user: mockEmployeeUser
+      }
+    );
     const events = await waitForElement(() => getAllByTestId('eventcard'));
     const employeeAnnouncement = getByText(/Employee Only Announcement/i);
     expect(events).toHaveLength(7);
