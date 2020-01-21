@@ -1478,20 +1478,20 @@
     fastq "^1.6.0"
 
 "@osu-wams/hooks@*":
-  version "0.0.2-alpha.16"
-  resolved "https://registry.yarnpkg.com/@osu-wams/hooks/-/hooks-0.0.2-alpha.16.tgz#46db2ff41602dfbfcb8dc892c11a09c9e99ca453"
-  integrity sha512-rxoISdPnS3TBznqnAixudSfW1w9A7xGXiqUivmJGQlXkBlFerfT+NZeArL/tr5rnJ+EIpWBS5sPfm5CyO5c6fw==
+  version "0.0.2-alpha.40"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/0.0.2-alpha.40/88edbed6ed02f2d6e168776415740c2076d8942a137361ce16d61a9684d41b3d#f176bbdbd46f147caebde8ab4780b75fbeb874a1"
+  integrity sha512-+aFnxxsXIv8aNmk+eRYOSW8YcLTjU4sPcRW74t5b0PFAl1h15pSarvCbVtkmUl6Vutduu/+f3jNuw66IPC2AdQ==
   dependencies:
-    "@osu-wams/utils" "^0.0.2-alpha.12"
+    "@osu-wams/utils" "^0.0.2-alpha.40"
     axios "^0.19.1"
     react "^16.12.0"
     react-dom "^16.12.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/utils@^0.0.2-alpha.12":
-  version "0.0.2-alpha.12"
-  resolved "https://registry.yarnpkg.com/@osu-wams/utils/-/utils-0.0.2-alpha.12.tgz#e5dd62103e66be7083de100f6e193a54a96df64b"
-  integrity sha512-GrhRXX9PdcDPT5AUkdh7pGvsipz7mlkhX+nqImNqj7ERPj0TceGrh/jA2FNNE7RD+8MQ0AHJsq25PBwuOC3bXg==
+"@osu-wams/utils@^0.0.2-alpha.40":
+  version "0.0.2-alpha.40"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.2-alpha.40/470b2f4d0833c789b93a746d646e0dc000e4f8442141e0ae110c7d08ad48cf4c#c542a99ee9d306d5d71b6eabd85e4ba83bca5519"
+  integrity sha512-exuPGWxmtXCYWVlY+BshaJaUAPeIkoGf8pLQvM2JnkUzQzGjcgW7g4wQw/35BNiZMkgo0LiuoM08F7CLZXOMgw==
 
 "@popmotion/easing@^1.0.1":
   version "1.0.2"
