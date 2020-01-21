@@ -1,31 +1,21 @@
 import React from 'react';
 import { wait, waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import {
-  personsData,
-  preferredName,
-  nullName,
-  preferredFirstName
-} from '../../api/persons/__mocks__/person.data';
 import OSUProfile from '../profile/OSUProfile';
 import { Person } from '@osu-wams/hooks';
 
 const { personsMailingAddressData, personsMinimalAddressData } = Person.Addresses.mockAddresses;
-
-jest.unmock('../../api/persons/persons');
+const { personsData, preferredName, nullName, preferredFirstName } = Person.Persons.mockPersons;
 
 const mockUseAddresses = jest.fn();
 const mockUsePerson = jest.fn();
 const mockNoData = { data: null, loading: false, error: false };
 
-jest.mock('../../api/persons/persons', () => ({
-  usePerson: () => mockUsePerson()
-}));
-
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useAddresses: () => mockUseAddresses()
+    useAddresses: () => mockUseAddresses(),
+    usePerson: () => mockUsePerson()
   };
 });
 
