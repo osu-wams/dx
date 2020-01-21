@@ -5,7 +5,9 @@ import { waitForElement } from '@testing-library/dom';
 import { mockAcademicAnnouncementResult } from '../../api/__mocks__/announcements.data';
 import { gpaUndergraduateData } from '../../api/student/__mocks__/gpa.data';
 import { academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
-import { resourcesCardData } from '../../api/__mocks__/resources.data';
+import { Resources } from '@osu-wams/hooks';
+
+const { resourcesCardData } = Resources.mockResources;
 
 const mockUseAcademicCalendar = jest.fn();
 jest.mock('../../api/events', () => ({
@@ -13,9 +15,12 @@ jest.mock('../../api/events', () => ({
 }));
 
 const mockUseResourcesByQueue = jest.fn();
-jest.mock('../../api/resources', () => ({
-  useResourcesByQueue: () => mockUseResourcesByQueue()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useResourcesByQueue: () => mockUseResourcesByQueue()
+  };
+});
 
 const mockUseAccountHolds = jest.fn();
 jest.mock('../../api/student/holds', () => ({

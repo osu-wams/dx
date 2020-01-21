@@ -7,12 +7,13 @@ import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
 import { styled, ThemeContext } from '../theme';
-import { useResourcesByQueue, IResourceResult } from '../api/resources';
+import { useResourcesByQueue } from '@osu-wams/hooks';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
 import { hasAudience } from '../api/user';
 import { IconLookup } from './resources/resources-utils';
+import { IResourceResult } from '@osu-wams/hooks/dist/api/resources';
 
 // Setup a font awesome library to use for searching icons from the backend.
 library.add(fal, fab);

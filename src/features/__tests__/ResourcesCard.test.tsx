@@ -2,15 +2,19 @@ import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
 import { render, mockAppContext } from '../../util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
-import { resourcesCardData } from '../../api/__mocks__/resources.data';
 import ResourcesCard from '../ResourcesCard';
 import { mockGAEvent } from '../../setupTests';
+import { Resources } from '@osu-wams/hooks';
+
+const { resourcesCardData } = Resources.mockResources;
 
 const mockUseResourcesByQueue = jest.fn();
-
-jest.mock('../../api/resources', () => ({
-  useResourcesByQueue: () => mockUseResourcesByQueue()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useResourcesByQueue: () => mockUseResourcesByQueue()
+  };
+});
 
 describe('<ResourcesCard />', () => {
   // Set mock function result before running any tests
