@@ -2,13 +2,13 @@ import React from 'react';
 import { waitForElement, wait } from '@testing-library/react';
 import Finances from '../Finances';
 import { render } from '../../util/test-utils';
-import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
-import { Announcements, Resources } from '@osu-wams/hooks';
+import { Announcements, Person, Resources } from '@osu-wams/hooks';
 import mockFinancialTransactions from '../../api/student/__mocks__/accountTransactions.data';
 import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
 
 const { resourcesCardData } = Resources.mockResources;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
+const mockMealPlans = Person.MealPlans.mockMealPlans;
 
 const mockUseAnnouncements = jest.fn();
 const mockUseMealPlans = jest.fn();
@@ -16,15 +16,12 @@ const mockUseResourcesByQueue = jest.fn();
 const mockUseFinancialTransactions = jest.fn();
 const mockUseAccountBalance = jest.fn();
 
-jest.mock('../../api/persons/meal-plans', () => ({
-  useMealPlans: () => mockUseMealPlans()
-}));
-
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useResourcesByQueue: () => mockUseResourcesByQueue(),
-    useAnnouncements: () => mockUseAnnouncements()
+    useAnnouncements: () => mockUseAnnouncements(),
+    useMealPlans: () => mockUseMealPlans(),
+    useResourcesByQueue: () => mockUseResourcesByQueue()
   };
 });
 
