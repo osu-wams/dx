@@ -3,22 +3,27 @@ import userEvent from '@testing-library/user-event';
 import { render } from '../../util/test-utils';
 import BetaDashboard from '../../pages/BetaDashboard';
 import { mockGAEvent } from '../../setupTests';
-import betaContentMock from '../../api/__mocks__/pageContent.data';
+import { PageContents } from '@osu-wams/hooks';
 import betaReleaseNotes from '../../api/__mocks__/releaseNotes.data';
+
+const mockPageContent = PageContents.mockPageContents;
 
 const mockUsePageContent = jest.fn();
 const mockUseReleaseNotes = jest.fn();
 
-jest.mock('../../api/page-content', () => ({
-  usePageContent: () => mockUsePageContent()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    usePageContent: () => mockUsePageContent()
+  };
+});
 
 jest.mock('../../api/release-notes', () => ({
   useReleaseNotes: () => mockUseReleaseNotes()
 }));
 
 beforeEach(() => {
-  mockUsePageContent.mockReturnValue(betaContentMock);
+  mockUsePageContent.mockReturnValue(mockPageContent);
   mockUseReleaseNotes.mockReturnValue(betaReleaseNotes);
 });
 
