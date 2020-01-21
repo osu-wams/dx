@@ -10,6 +10,7 @@ import Icon from '../ui/Icon';
 import { format } from '../util/helpers';
 import { useDxAlerts, useRaveAlerts } from '@osu-wams/hooks';
 import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
+import { Alert } from '@osu-wams/hooks/dist/api/alerts';
 
 const AlertWrapper = styled.div`
   width: 100%;

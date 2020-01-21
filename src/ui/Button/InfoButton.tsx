@@ -5,10 +5,10 @@ import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from './index';
 import { AppContext } from '../../App';
-import { InfoButtonState } from '../../api/info-buttons';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Button from './Button';
 import { Event } from '../../util/gaTracking';
+import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 
 const DialogHeader = styled.div`
   display: flex;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { themeSettings, styled } from '../../theme';
-import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';
+import { ICategory } from '@osu-wams/hooks/dist/api/resources';
 
 const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelectedCategory }) => {
   return (

@@ -18,6 +18,7 @@ import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { styled, GlobalStyles } from './theme';
 import { Versions } from '@osu-wams/hooks/dist/api/appVersions';
+import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 
 const ContentWrapper = styled.div`
   display: flex;
