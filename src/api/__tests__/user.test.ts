@@ -8,13 +8,24 @@ import {
   postSettings,
   settingIsOverridden,
   hasPrimaryAffiliation,
-  AFFILIATIONS,
-  getClassification
+  AFFILIATIONS
 } from '../user';
-import { settingsData, audienceOverride, classificationData } from '../__mocks__/user.data';
+import { Classification } from '@osu-wams/hooks';
+import { settingsData, audienceOverride } from '../__mocks__/user.data';
 
+const mockClassification = Classification.mockClassification;
 const mock = new MockAdapter(axios);
 const mockedUser = jest.fn();
+const mockGetClassification = jest.fn();
+
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    Classification: {
+      getClassification: () => mockGetClassification()
+    }
+  };
+});
 
 describe('User model', () => {
   describe('hasPrimaryAffiliation', () => {
@@ -125,17 +136,5 @@ describe('postSettings', () => {
     mock.onPost('/api/user/settings').reply(500);
     await expect(postSettings({ audienceOverride })).rejects.toThrow();
     expect(console.error).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('getClassification', () => {
-  it('returns users classification', async () => {
-    mock.onGet('/api/user/classification').reply(200, classificationData);
-    const result = await getClassification();
-    expect(result).toStrictEqual(classificationData);
-  });
-  it('returns an error', async () => {
-    mock.onGet('/api/user/classification').reply(500);
-    await expect(getClassification()).rejects.toThrow();
   });
 });

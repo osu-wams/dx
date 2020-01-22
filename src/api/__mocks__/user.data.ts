@@ -9,14 +9,3 @@ export const settingsData = {
     }
   }
 };
-
-export const classificationData = {
-  attributes: {
-    level: 'level',
-    campus: 'Corvallis',
-    campusCode: 'C',
-    classification: 'classification',
-    isInternational: false
-  },
-  id: '123456789'
-};

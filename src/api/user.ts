@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useAPICall } from '@osu-wams/hooks';
+import { useAPICall, Classification } from '@osu-wams/hooks';
 import { useEffect, useState } from 'react';
 import { defaultTheme } from '../theme/themes';
 
@@ -87,9 +87,6 @@ export const initialUser: IUser = {
 };
 
 const getUser = (): Promise<IUser> => axios.get('/api/user').then(res => res.data);
-
-export const getClassification = (): Promise<IUserClassification> =>
-  axios.get('/api/user/classification').then(res => res.data);
 
 /**
  * Returns the audience override value or users classification in that order
@@ -339,7 +336,7 @@ export const useUser = () => {
     useCache: false
   });
   const classification = useAPICall<IUserClassification>({
-    api: getClassification,
+    api: Classification.getClassification,
     dataTransform: data => data,
     initialState: {},
     useCache: true
