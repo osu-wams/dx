@@ -3,12 +3,12 @@ import { wait, waitForElement, fireEvent, getAllByText } from '@testing-library/
 import { renderWithUserContext, authUser } from '../../util/test-utils';
 import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
 import { Student } from '@osu-wams/hooks';
-import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from '../../setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
 import { format } from '../../util/helpers';
 
+const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
 const mockSimpleSchedule = Student.CourseSchedule.mockCourseSchedule.simpleSchedule;
 const getThisDate = (): number => {
@@ -23,7 +23,8 @@ const mockNoData = { data: [], loading: false, error: false };
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useCourseSchedule: () => mockUseCourseSchedule()
+    useCourseSchedule: () => mockUseCourseSchedule(),
+    usePlannerItems: () => mockUsePlannerItems()
   };
 });
 
@@ -31,11 +32,6 @@ jest.mock('../../api/events', () => ({
   useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents()
 }));
 
-jest.mock('../../api/student', () => ({
-  usePlannerItems: () => mockUsePlannerItems()
-}));
-
-// Keeping this commented out for now
 jest.mock('../schedule/schedule-utils', () => ({
   ...jest.requireActual('../schedule/schedule-utils'),
   startDate: () => mockGetStartDate()

@@ -12,8 +12,7 @@ import {
   ListItemHeader,
   ListItemText
 } from '../ui/List';
-import { usePlannerItems } from '../api/student/planner-items';
-import { useCourseSchedule } from '@osu-wams/hooks';
+import { useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';

@@ -2,8 +2,7 @@ import React, { useState, useContext, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { useCourseSchedule } from '@osu-wams/hooks';
-import { usePlannerItems } from '../api/student';
+import { useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
 import { useAcademicCalendarEvents } from '../api/events';
 import { UserContext } from '../App';
 import {

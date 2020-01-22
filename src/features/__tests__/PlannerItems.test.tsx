@@ -2,16 +2,20 @@ import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { render, mockAppContext, authUser } from '../../util/test-utils';
-import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from '../../setupTests';
+import { Student } from '@osu-wams/hooks';
 
+const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockUsePlannerItems = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/student/planner-items', () => ({
-  usePlannerItems: () => mockUsePlannerItems()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    usePlannerItems: () => mockUsePlannerItems()
+  };
+});
 
 describe('<PlannerItems />', () => {
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
