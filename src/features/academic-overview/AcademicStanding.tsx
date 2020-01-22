@@ -6,7 +6,7 @@ import {
   HighlightEmphasisInline,
   HighlightDescription
 } from '../../ui/Highlights';
-import { useAcademicStatus } from '../../api/student/academic-status';
+import { useAcademicStatus } from '@osu-wams/hooks';
 import Url from '../../util/externalUrls.data';
 import { SimpleExternalLink } from '../../ui/Link';
 import { Event } from '../../util/gaTracking';
@@ -20,7 +20,7 @@ export const AcademicStanding: React.FC = () => {
       {academicStatus.loading && <Skeleton />}
       {!academicStatus.loading && (
         <HighlightDescription>
-          {academicStatus.data.academicStanding?.length > 0 ? (
+          {academicStatus.data.academicStanding?.length ?? 0 > 0 ? (
             <>
               Your academic standing is{' '}
               <HighlightEmphasisInline>
