@@ -2,29 +2,30 @@ import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import StudentHolds from '../academic-overview/StudentHolds';
+import { Student } from '@osu-wams/hooks';
 
-const mockUseAccountHolds = jest.fn();
+const mockUseHolds = jest.fn();
+const mockHolds = Student.Holds.mockHolds;
 
-jest.mock('../../api/student/holds', () => ({
-  useAccountHolds: () => mockUseAccountHolds()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useHolds: () => mockUseHolds()
+  };
+});
 
 describe('<StudentHolds />', () => {
   it('should render and have a single hold', async () => {
-    mockUseAccountHolds.mockReturnValue({
-      data: [{ description: 'blah' }],
-      loading: false,
-      error: false
-    });
+    mockUseHolds.mockReturnValue(mockHolds);
     const { getByText } = render(<StudentHolds />);
-    const element = await waitForElement(() => getByText('blah'));
+    const element = await waitForElement(() => getByText('Bill is overdue'));
     expect(element).toBeInTheDocument();
     expect(getByText('1')).toBeInTheDocument();
     expect(getByText('hold on your student account.')).toBeInTheDocument();
   });
 
   it('should render and have a multiple holds', async () => {
-    mockUseAccountHolds.mockReturnValue({
+    mockUseHolds.mockReturnValue({
       data: [{ description: 'blah' }, { description: 'BobRoss' }],
       loading: false,
       error: false
@@ -38,7 +39,7 @@ describe('<StudentHolds />', () => {
   });
 
   it('should return appropriate text when data is empty', async () => {
-    mockUseAccountHolds.mockReturnValue({ data: [], loading: false, error: false });
+    mockUseHolds.mockReturnValue({ data: [], loading: false, error: false });
     const { getByText } = render(<StudentHolds />);
     const element = await waitForElement(() => getByText('0'));
     expect(element).toBeInTheDocument();
