@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from '../../util/test-utils';
 import AcademicsDashboard from '../Academics/AcademicsDashboard';
 import { waitForElement } from '@testing-library/dom';
-import { gpaUndergraduateData } from '../../api/student/__mocks__/gpa.data';
 import { academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
 import { Announcements, Resources, Student } from '@osu-wams/hooks';
 
@@ -10,6 +9,7 @@ const { resourcesCardData } = Resources.mockResources;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus;
 const { schedule: mockCourseSchedule } = Student.CourseSchedule.mockCourseSchedule;
+const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
 
 const mockUseAcademicCalendar = jest.fn();
 jest.mock('../../api/events', () => ({
@@ -19,6 +19,7 @@ jest.mock('../../api/events', () => ({
 const mockUseAcademicStatus = jest.fn();
 const mockUseAnnouncements = jest.fn();
 const mockUseCourseSchedule = jest.fn();
+const mockUseStudentGpa = jest.fn();
 const mockUseResourcesByQueue = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
@@ -26,7 +27,8 @@ jest.mock('@osu-wams/hooks', () => {
     useAcademicStatus: () => mockUseAcademicStatus(),
     useAnnouncements: () => mockUseAnnouncements(),
     useCourseSchedule: () => mockUseCourseSchedule(),
-    useResourcesByQueue: () => mockUseResourcesByQueue()
+    useResourcesByQueue: () => mockUseResourcesByQueue(),
+    useGpa: () => mockUseStudentGpa()
   };
 });
 
@@ -35,17 +37,12 @@ jest.mock('../../api/student/holds', () => ({
   useAccountHolds: () => mockUseAccountHolds()
 }));
 
-const mockUseStudentGpa = jest.fn();
-jest.mock('../../api/student/gpa', () => ({
-  useGpa: () => mockUseStudentGpa()
-}));
-
 describe('<AcademicsDashboard />', () => {
   beforeEach(() => {
     mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
     mockUseAcademicCalendar.mockReturnValue(academicCalendar6);
     mockUseAnnouncements.mockReturnValue(academicAnnouncementResult);
-    mockUseStudentGpa.mockReturnValue({ data: gpaUndergraduateData, loading: false, error: false });
+    mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: gpaUndergraduateData });
     mockUseAcademicStatus.mockReturnValue(mockAcademicStatus);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockUseAccountHolds.mockReturnValue({

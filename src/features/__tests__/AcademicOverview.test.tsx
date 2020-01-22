@@ -2,10 +2,10 @@ import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import AcademicOverview from '../AcademicOverview';
-import { gpaUndergraduateData } from '../../api/student/__mocks__/gpa.data';
 import { mockGAEvent } from '../../setupTests';
 import { Student } from '@osu-wams/hooks';
 
+const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus;
 const mockUseAcademicStatus = jest.fn();
 const mockUseStudentGpa = jest.fn();
@@ -17,7 +17,8 @@ jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
     useAcademicStatus: () => mockUseAcademicStatus(),
-    useCourseSchedule: () => mockUseCourseSchedule()
+    useCourseSchedule: () => mockUseCourseSchedule(),
+    useGpa: () => mockUseStudentGpa()
   };
 });
 
@@ -25,13 +26,9 @@ jest.mock('../../api/student/holds', () => ({
   useAccountHolds: () => mockUseAccountHolds()
 }));
 
-jest.mock('../../api/student/gpa', () => ({
-  useGpa: () => mockUseStudentGpa()
-}));
-
 describe('<Academic Overview />', () => {
   it('Academic Overview has a footer that can be clicked to access My Degrees', async () => {
-    mockUseStudentGpa.mockReturnValue({ data: gpaUndergraduateData, loading: false, error: false });
+    mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: gpaUndergraduateData });
     mockUseAcademicStatus.mockReturnValue(mockAcademicStatus);
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockUseAccountHolds.mockReturnValue({
