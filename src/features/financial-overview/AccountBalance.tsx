@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { useAccountBalance } from '../../api/student/account-balance';
+import { useAccountBalance } from '@osu-wams/hooks';
 import { formatDollars } from '../../util/helpers';
 import {
   Highlight,

@@ -1,14 +1,18 @@
 import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
 import AccountBalance from '../financial-overview/AccountBalance';
+import { Student } from '@osu-wams/hooks';
 
+const mockAccountBalance = Student.AccountBalance.mockAccountBalance;
 const mockUseAccountBalance = jest.fn();
 
-jest.mock('../../api/student/account-balance', () => ({
-  useAccountBalance: () => mockUseAccountBalance()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useAccountBalance: () => mockUseAccountBalance()
+  };
+});
 
 describe('<AccountBalance />', () => {
   // Set mock function result before running any tests
