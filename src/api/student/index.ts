@@ -3,13 +3,5 @@ import { useGrades } from './grades';
 import { useGpa } from './gpa';
 import { useAccountHolds } from './holds';
 import { usePlannerItems } from './planner-items';
-import { useAccountTransactions } from './account-transactions';
 
-export {
-  useAccountHolds,
-  useGrades,
-  useCourseSchedule,
-  usePlannerItems,
-  useGpa,
-  useAccountTransactions
-};
+export { useAccountHolds, useGrades, useCourseSchedule, usePlannerItems, useGpa };
