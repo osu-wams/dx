@@ -3,8 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
-import { Grades } from '../../api/student/grades';
-import { useGrades } from '../../api/student';
+import { useGrades } from '@osu-wams/hooks';
 import {
   themeSettings,
   breakpoints,
@@ -28,6 +27,7 @@ import {
 import { singularPlural, titleCase } from '../../util/helpers';
 import { Event } from '../../util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
+import { Grades } from '@osu-wams/hooks/dist/api/student/grades';
 
 const PastCourses = () => {
   const themeContext = useContext(ThemeContext);

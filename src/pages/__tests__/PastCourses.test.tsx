@@ -3,13 +3,17 @@ import { waitForElement, getByTestId, findAllByText, queryAllByText } from '@tes
 import { render } from '../../util/test-utils';
 import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
-import mockGrades from '../../api/student/__mocks__/grades.data';
+import { Student } from '@osu-wams/hooks';
 
+const mockGrades = Student.Grades.mockGrades;
 const mockUseGrades = jest.fn();
 
-jest.mock('../../api/student/grades', () => ({
-  useGrades: () => mockUseGrades()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useGrades: () => mockUseGrades()
+  };
+});
 
 describe('<PastCourses />', () => {
   // Set mock function result before running any tests
