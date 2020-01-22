@@ -9,22 +9,20 @@ import { Student } from '@osu-wams/hooks';
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus;
 const mockUseAcademicStatus = jest.fn();
 const mockUseStudentGpa = jest.fn();
+const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
 const mockUseCourseSchedule = jest.fn();
 const mockUseAccountHolds = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useAcademicStatus: () => mockUseAcademicStatus()
+    useAcademicStatus: () => mockUseAcademicStatus(),
+    useCourseSchedule: () => mockUseCourseSchedule()
   };
 });
 
 jest.mock('../../api/student/holds', () => ({
   useAccountHolds: () => mockUseAccountHolds()
-}));
-
-jest.mock('../../api/student/course-schedule', () => ({
-  useCourseSchedule: () => mockUseCourseSchedule()
 }));
 
 jest.mock('../../api/student/gpa', () => ({
@@ -35,11 +33,7 @@ describe('<Academic Overview />', () => {
   it('Academic Overview has a footer that can be clicked to access My Degrees', async () => {
     mockUseStudentGpa.mockReturnValue({ data: gpaUndergraduateData, loading: false, error: false });
     mockUseAcademicStatus.mockReturnValue(mockAcademicStatus);
-    mockUseCourseSchedule.mockReturnValue({
-      data: 7,
-      loading: false,
-      error: false
-    });
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockUseAccountHolds.mockReturnValue({
       data: [{ description: 'blah' }, { description: 'BobRoss' }],
       loading: false,

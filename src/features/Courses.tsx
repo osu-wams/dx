@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
-import { useCourseSchedule } from '../api/student';
+import { useCourseSchedule } from '@osu-wams/hooks';
 import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
 import { sortedGroupedByCourseName, ICoursesMap } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
 import {
@@ -17,10 +17,10 @@ import { titleCase, singularPlural } from '../util/helpers';
 import { themeSettings, ThemeContext } from '../theme';
 import { ExternalLink, InternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
-import { ICourseSchedule } from '../api/student/course-schedule';
 import { Event } from '../util/gaTracking';
 import { matchedCourseContext } from './course-utils';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
+import { CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 /**
  * Get the course item lead text or the icon
@@ -29,7 +29,7 @@ import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
  */
 export const courseCodeOrIcon = (
   contextName: string,
-  courseList: ICourseSchedule[],
+  courseList: CourseSchedule[],
   iconElement: JSX.Element
 ): JSX.Element => {
   const course = matchedCourseContext(contextName, courseList);

@@ -2,19 +2,21 @@ import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, mockAppContext } from '../../util/test-utils';
-import mockCourseSchedule from '../../api/student/__mocks__/courses.data';
+import { Student } from '@osu-wams/hooks';
 import Courses from '../Courses';
 import { mockGAEvent } from '../../setupTests';
 import { format } from '../../util/helpers';
 import { startDate } from '../schedule/schedule-utils';
 
+const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
 const mockUseCourseSchedule = jest.fn();
 
-jest.mock('../../api/student', () => ({
-  useCourseSchedule: () => {
-    return mockUseCourseSchedule();
-  }
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useCourseSchedule: () => mockUseCourseSchedule()
+  };
+});
 
 beforeEach(() => {
   mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);

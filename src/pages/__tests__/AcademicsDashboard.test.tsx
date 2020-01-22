@@ -9,6 +9,7 @@ import { Announcements, Resources, Student } from '@osu-wams/hooks';
 const { resourcesCardData } = Resources.mockResources;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus;
+const { schedule: mockCourseSchedule } = Student.CourseSchedule.mockCourseSchedule;
 
 const mockUseAcademicCalendar = jest.fn();
 jest.mock('../../api/events', () => ({
@@ -17,12 +18,14 @@ jest.mock('../../api/events', () => ({
 
 const mockUseAcademicStatus = jest.fn();
 const mockUseAnnouncements = jest.fn();
+const mockUseCourseSchedule = jest.fn();
 const mockUseResourcesByQueue = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
     useAcademicStatus: () => mockUseAcademicStatus(),
     useAnnouncements: () => mockUseAnnouncements(),
+    useCourseSchedule: () => mockUseCourseSchedule(),
     useResourcesByQueue: () => mockUseResourcesByQueue()
   };
 });
@@ -30,11 +33,6 @@ jest.mock('@osu-wams/hooks', () => {
 const mockUseAccountHolds = jest.fn();
 jest.mock('../../api/student/holds', () => ({
   useAccountHolds: () => mockUseAccountHolds()
-}));
-
-const mockUseCourseSchedule = jest.fn();
-jest.mock('../../api/student/course-schedule', () => ({
-  useCourseSchedule: () => mockUseCourseSchedule()
 }));
 
 const mockUseStudentGpa = jest.fn();
@@ -49,11 +47,7 @@ describe('<AcademicsDashboard />', () => {
     mockUseAnnouncements.mockReturnValue(academicAnnouncementResult);
     mockUseStudentGpa.mockReturnValue({ data: gpaUndergraduateData, loading: false, error: false });
     mockUseAcademicStatus.mockReturnValue(mockAcademicStatus);
-    mockUseCourseSchedule.mockReturnValue({
-      data: [],
-      loading: false,
-      error: false
-    });
+    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockUseAccountHolds.mockReturnValue({
       data: [{ description: 'blah' }, { description: 'BobRoss' }],
       loading: false,
