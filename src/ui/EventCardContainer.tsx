@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { Title } from '../ui/PageTitle';
-import { useStudentExperienceEvents, useCampusEvents, useEmployeeEvents } from '../api/events';
+import { useStudentExperienceEvents, useCampusEvents, useEmployeeEvents } from '@osu-wams/hooks';
 import {
   hasAudience,
   atCampus,

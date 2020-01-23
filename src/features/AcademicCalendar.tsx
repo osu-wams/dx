@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { faCalendar } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLinkSVG } from '../ui/List';
-import { useAcademicCalendarEvents } from '../api/events';
+import { useAcademicCalendarEvents } from '@osu-wams/hooks';
 import { Date, DateDay, DateMonth } from '../ui/Date';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';

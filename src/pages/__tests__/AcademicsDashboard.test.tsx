@@ -2,8 +2,7 @@ import React from 'react';
 import { render } from '../../util/test-utils';
 import AcademicsDashboard from '../Academics/AcademicsDashboard';
 import { waitForElement } from '@testing-library/dom';
-import { academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
-import { Announcements, Resources, Student } from '@osu-wams/hooks';
+import { Announcements, Events, Resources, Student } from '@osu-wams/hooks';
 
 const { resourcesCardData } = Resources.mockResources;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
@@ -11,12 +10,8 @@ const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus;
 const { schedule: mockCourseSchedule } = Student.CourseSchedule.mockCourseSchedule;
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
 const mockHolds = Student.Holds.mockHolds;
-
+const { academicCalendar6 } = Events.mockEvents;
 const mockUseAcademicCalendar = jest.fn();
-jest.mock('../../api/events', () => ({
-  useAcademicCalendarEvents: () => mockUseAcademicCalendar()
-}));
-
 const mockUseAcademicStatus = jest.fn();
 const mockUseAnnouncements = jest.fn();
 const mockUseCourseSchedule = jest.fn();
@@ -26,6 +21,7 @@ const mockUseResourcesByQueue = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
+    useAcademicCalendarEvents: () => mockUseAcademicCalendar(),
     useAcademicStatus: () => mockUseAcademicStatus(),
     useAnnouncements: () => mockUseAnnouncements(),
     useCourseSchedule: () => mockUseCourseSchedule(),

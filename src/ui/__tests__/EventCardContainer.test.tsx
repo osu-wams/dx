@@ -1,15 +1,11 @@
 import React from 'react';
 import { waitForElement, fireEvent, cleanup } from '@testing-library/react';
 import EventCardContainer from '../EventCardContainer';
-import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
-import { Announcements } from '@osu-wams/hooks';
-import {
-  employeeEvents,
-  studentExperienceEvents,
-  studentExperienceEvents_10
-} from '../__mocks__/events.data';
+import { render, mockEmployeeUser } from '../../util/test-utils';
+import { Announcements, Events } from '@osu-wams/hooks';
 import { mockGAEvent } from '../../setupTests';
 
+const { employeeEvents, studentExperienceEvents, studentExperienceEvents_10 } = Events.mockEvents;
 const { announcementsData, announcementsData_10 } = Announcements.mockAnnouncements;
 const mockUseAnnouncements = jest.fn();
 const mockUseStudentExperienceEvents = jest.fn();
@@ -21,12 +17,7 @@ const mockNoData = { data: [], loading: false, error: false };
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useAnnouncements: () => mockUseAnnouncements()
-  };
-});
-
-jest.mock('../../api/events', () => {
-  return {
+    useAnnouncements: () => mockUseAnnouncements(),
     useStudentExperienceEvents: () => mockUseStudentExperienceEvents(),
     useCampusEvents: () => mockUseCampusEvents(),
     useEmployeeEvents: () => mockUseEmployeeEvents()
