@@ -1478,9 +1478,9 @@
     fastq "^1.6.0"
 
 "@osu-wams/hooks@*":
-  version "0.0.2-alpha.43"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/0.0.2-alpha.43/1478e56df516512acff1e5443def8817f11e0c22e71f93d22dd50e963ee7aca8#a97f9dffa89dcf7b241a4d18bb13f6f650ce77b5"
-  integrity sha512-/2RwYbVdp0pcjuczckh4LZmCgtou2QqscA0JHXRtTHZMcGS+2NUTDwB8M5SGKbtX2/WxEq6vmJTzqFH3Je24Qw==
+  version "0.0.2-alpha.44"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/0.0.2-alpha.44/15c4cdf784abd3121f65321d6627df3a3822a67a64fe3064d1b2b6898168605e#5d473ba8c52c6fc0daa68040dd668b346f1e2771"
+  integrity sha512-HJWhiZqOn4v+YH1sGGfcdTDijxQ/Tm+ZGj13vcNMOjj/Nys6nlBthslkCOBBc6o32/a3V3gxTAYlOCD1l4HzdQ==
   dependencies:
     "@osu-wams/utils" "^0.0.2-alpha.43"
     axios "^0.19.1"
