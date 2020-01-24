@@ -2,10 +2,11 @@ import React, { useEffect, useState, useContext } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { Fieldset, Legend, FormGroup } from '../../../ui/forms';
-import { postSettings, usersSettings } from '../../../api/user';
+import { User } from '@osu-wams/hooks';
 import { UserContext } from '../../../App';
 import { styled, themeSettings } from '../../../theme';
-import { settingIsOverridden } from '../../../api/user';
+
+const { postSettings, usersSettings, settingIsOverridden } = User;
 
 const Label = styled.span`
   font-size: ${themeSettings.fontSize[16]};

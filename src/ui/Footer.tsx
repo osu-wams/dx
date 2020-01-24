@@ -12,7 +12,9 @@ import Icon from './Icon';
 import { isNullOrUndefined } from 'util';
 import Url from '../util/externalUrls.data';
 import Masquerade from '../features/Masquerade';
-import { GROUPS } from '../api/user';
+import { User } from '@osu-wams/hooks';
+
+const { GROUPS } = User;
 
 const FooterWrapper = styled.div`
   width: 100%;

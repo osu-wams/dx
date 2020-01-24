@@ -11,12 +11,14 @@ import { useResourcesByQueue } from '@osu-wams/hooks';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
-import { hasAudience } from '../api/user';
+import { User } from '@osu-wams/hooks';
 import { IconLookup } from './resources/resources-utils';
 import { IResourceResult } from '@osu-wams/hooks/dist/api/resources';
 
 // Setup a font awesome library to use for searching icons from the backend.
 library.add(fal, fab);
+
+const { hasAudience } = User;
 
 const ResourcesContainer = styled(CardContent)`
   padding-bottom: 0;

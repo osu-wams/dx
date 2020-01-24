@@ -2,9 +2,11 @@ import React, { useContext, useState, useEffect } from 'react';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
 import { UserContext } from '../App';
-import { hasAudience, getAffiliation } from '../api/user';
+import { User } from '@osu-wams/hooks';
 import { styled, themeSettings, breakpoints, SecondGridWrapper } from '../theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
+
+const { hasAudience, getAffiliation } = User;
 
 const AnnouncementContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};

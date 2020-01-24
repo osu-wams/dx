@@ -1,18 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../App';
 import { Title } from '../ui/PageTitle';
-import { useStudentExperienceEvents, useCampusEvents, useEmployeeEvents } from '@osu-wams/hooks';
 import {
+  User,
+  useStudentExperienceEvents,
+  useCampusEvents,
+  useEmployeeEvents
+} from '@osu-wams/hooks';
+import EventCard from './EventCard';
+import { themeSettings, breakpoints, styled, SecondGridWrapper } from '../theme';
+import { Announcements, useAnnouncements } from '@osu-wams/hooks';
+
+const {
   hasAudience,
   atCampus,
   CAMPUS_CODES,
   hasPrimaryAffiliation,
   AFFILIATIONS,
   getAffiliation
-} from '../api/user';
-import EventCard from './EventCard';
-import { themeSettings, breakpoints, styled, SecondGridWrapper } from '../theme';
-import { Announcements, useAnnouncements } from '@osu-wams/hooks';
+} = User;
 
 const EventCardContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};

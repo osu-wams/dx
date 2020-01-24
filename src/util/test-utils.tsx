@@ -3,73 +3,28 @@ import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
 import { UserContext, AppContext, IAppContext } from '../App';
 import { themesLookup, defaultTheme } from '../theme/themes';
-import {
-  IUserAudienceOverride,
-  IUserClassification,
-  AFFILIATIONS,
-  defaultCampus,
-  GROUPS
-} from '../api/user';
+import { User } from '@osu-wams/hooks';
+const { AFFILIATIONS } = User;
 
-export const authUserAudienceOverride: IUserAudienceOverride = {
-  campusCode: 'C',
-  graduate: true,
-  international: true,
-  firstYear: true
-};
-
-export const authUserClassification: IUserClassification = {
-  id: '123',
-  attributes: {
-    level: 'Graduate',
-    campus: '',
-    campusCode: defaultCampus,
-    classification: 'Freshman',
-    isInternational: true
-  }
-};
-
-export const mockUser = {
-  osuId: '123',
-  email: 'testo@oregonstate.edu',
-  firstName: 'Testo',
-  lastName: 'LastTesto',
-  isAdmin: true,
-  groups: [GROUPS.admin, GROUPS.masquerade],
-  isCanvasOptIn: true,
-  theme: defaultTheme,
-  primaryAffiliation: AFFILIATIONS.student,
-  classification: authUserClassification,
-  audienceOverride: authUserAudienceOverride
-};
+export const mockUser = User.mockUser.user;
+export const authUserAudienceOverride = User.mockUser.userAudienceOverride;
+export const authUserClassification = User.mockUser.userClassification;
 
 export const mockEmployeeUser = {
+  ...mockUser,
   data: {
-    osuId: '123',
+    ...mockUser.data,
     email: 'testo@oregonstate.edu',
-    firstName: 'Testo',
-    lastName: 'LastTesto',
-    isAdmin: false,
     groups: [],
+    isAdmin: false,
     isCanvasOptIn: false,
-    theme: defaultTheme,
     primaryAffiliation: AFFILIATIONS.employee,
     classification: {},
     audienceOverride: {}
-  },
-  error: false,
-  loading: false,
-  isCanvasOptIn: false,
-  setUser: jest.fn()
+  }
 };
 
-export const authUser = {
-  data: mockUser,
-  error: false,
-  loading: false,
-  setUser: jest.fn(),
-  isCanvasOptIn: true
-};
+export const authUser = mockUser;
 
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
   const Wrapper = props => {

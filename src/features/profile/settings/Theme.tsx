@@ -3,10 +3,12 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Fieldset, Legend } from '../../../ui/forms';
-import { postSettings, usersSettings } from '../../../api/user';
+import { User } from '@osu-wams/hooks';
 import { titleCase } from '../../../util/helpers';
 import { UserContext, AppContext } from '../../../App';
 import { defaultTheme } from '../../../theme/themes';
+
+const { postSettings, usersSettings } = User;
 
 export const RadioButtonsGroup = () => {
   const appContext = useContext(AppContext);

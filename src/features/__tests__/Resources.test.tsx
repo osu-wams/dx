@@ -76,7 +76,7 @@ describe('<Resources />', () => {
   it('Should have a link to skip to results with matching ID in the result container', async () => {
     const { getByText, findByTestId } = render(<Resources />);
     const skipLink = getByText('Skip to results');
-    const anchor = skipLink.getAttribute('href').slice(1);
+    const anchor = skipLink.getAttribute('href')!.slice(1);
     const results = await findByTestId('resourcesResults');
     const resultsId = results.getAttribute('id');
 
@@ -195,7 +195,7 @@ describe('<Resources />', () => {
       userEvent.click(all);
 
       expect(all).toHaveClass('selected');
-      expect(await findByText(/found 4 results/)).toBeInTheDocument();
+      expect(await findByText(/found 5 results/)).toBeInTheDocument();
       expect(await findByText(/Listservs/)).toBeInTheDocument();
       expect(await queryByText(/Student Jobs/)).toBeNull();
     });

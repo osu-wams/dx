@@ -13,7 +13,7 @@ import BetaDashboard from './pages/BetaDashboard';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useUser } from './api/user';
+import { useUser } from '@osu-wams/hooks';
 import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { styled, GlobalStyles } from './theme';
