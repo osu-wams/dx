@@ -15,7 +15,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com
           scope: '@osu-wams'
-          always-auth: true
       - name: yarn install, lint, test
         run: |
           yarn install --frozen-lockfile
