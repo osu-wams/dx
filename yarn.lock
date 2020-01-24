@@ -1477,7 +1477,7 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@osu-wams/hooks@*":
+"@osu-wams/hooks@^0.0.2-alpha.44":
   version "0.0.2-alpha.44"
   resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/0.0.2-alpha.44/15c4cdf784abd3121f65321d6627df3a3822a67a64fe3064d1b2b6898168605e#5d473ba8c52c6fc0daa68040dd668b346f1e2771"
   integrity sha512-HJWhiZqOn4v+YH1sGGfcdTDijxQ/Tm+ZGj13vcNMOjj/Nys6nlBthslkCOBBc6o32/a3V3gxTAYlOCD1l4HzdQ==
