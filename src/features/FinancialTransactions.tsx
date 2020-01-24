@@ -87,7 +87,7 @@ const FinancialTransactions: FC = () => {
       />
       <CardContent className="flush">
         {loading && <Skeleton count={5} />}
-        {data?.attributes.transactions?.length ?? 0 > 0 ? (
+        {data?.attributes.transactions?.length ?? 0 ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
             <TableHeader>
               <TableRow>
