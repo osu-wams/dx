@@ -1,15 +1,19 @@
 import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
 import MealPlans from '../financial-overview/MealPlans';
+import { Person } from '@osu-wams/hooks';
 
+const mockMealPlans = Person.MealPlans.mockMealPlans;
 const mockUseMealPlans = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/persons/meal-plans', () => ({
-  useMealPlans: () => mockUseMealPlans()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useMealPlans: () => mockUseMealPlans()
+  };
+});
 
 describe('<MealPlans />', () => {
   // Set mock function result before running any tests

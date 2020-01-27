@@ -3,12 +3,17 @@ import { fireEvent } from '@testing-library/react';
 import { render, authUserClassification } from '../../../../util/test-utils';
 import Campus from '../Campus';
 
-const mockPostSettings = jest.fn(() => Promise.resolve());
-
-jest.mock('../../../../api/user', () => ({
-  ...jest.requireActual('../../../../api/user'),
-  postSettings: () => mockPostSettings()
-}));
+const mockPostSettings = jest.fn();
+jest.mock('@osu-wams/hooks', () => {
+  const original = jest.requireActual('@osu-wams/hooks');
+  return {
+    ...original,
+    User: {
+      ...original.User,
+      postSettings: () => mockPostSettings()
+    }
+  };
+});
 
 describe('<Campus />', () => {
   beforeEach(() => {

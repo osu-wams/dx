@@ -2,20 +2,21 @@ import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import AcademicStanding from '../academic-overview/AcademicStanding';
+import { Student } from '@osu-wams/hooks';
 
+const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus;
 const mockUseAcademicStatus = jest.fn();
 
-jest.mock('../../api/student/academic-status', () => ({
-  useAcademicStatus: () => mockUseAcademicStatus()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useAcademicStatus: () => mockUseAcademicStatus()
+  };
+});
 
 describe('<AcademicStanding />', () => {
   it('should render and have the approriate standing', async () => {
-    mockUseAcademicStatus.mockReturnValue({
-      data: { academicStanding: 'Good Standing' },
-      loading: false,
-      error: false
-    });
+    mockUseAcademicStatus.mockReturnValue(mockAcademicStatus);
     const { getByText } = render(<AcademicStanding />);
     const element = await waitForElement(() => getByText('Good Standing'));
     expect(element).toBeInTheDocument();

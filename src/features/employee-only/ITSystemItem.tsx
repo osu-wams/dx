@@ -5,10 +5,10 @@ import {
   faTachometerAlt,
   faQuestionCircle
 } from '@fortawesome/pro-light-svg-icons';
-import { ICachetComponent } from '../../api/status';
 import { ListItem } from '../../ui/List';
 import { themeSettings, ThemeContext, styled, ThemeConfiguration } from '../../theme';
 import Icon from '../../ui/Icon';
+import { ICachetComponent } from '@osu-wams/hooks/dist/api/status';
 
 const Container = styled.div`
   display: flex;

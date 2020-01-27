@@ -1,34 +1,34 @@
 import React from 'react';
 import { wait, waitForElement, fireEvent, getAllByText } from '@testing-library/react';
 import { renderWithUserContext, authUser } from '../../util/test-utils';
-import { academicCalendar3 } from '../../api/__mocks__/academicCalendar.data';
-import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
-import mockCourseSchedule, { mockSimpleSchedule } from '../../api/student/__mocks__/courses.data';
+import { Events, Student } from '@osu-wams/hooks';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from '../../setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
 import { format } from '../../util/helpers';
 
-const getThisDate = () => {
-  const d = new Date();
-  return new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
+const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
+const mockSimpleSchedule = Student.CourseSchedule.mockCourseSchedule.simpleSchedule;
+const getThisDate = (): number => {
+  return Date.now();
 };
-const mockGetStartDate = jest.fn(getThisDate);
+const mockGetStartDate = jest.fn();
 const mockUsePlannerItems = jest.fn();
 const mockUseCourseSchedule = jest.fn();
+const { academicCalendar3 } = Events.mockEvents;
 const mockUseAcademicCalendarEvents = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/events', () => ({
-  useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents(),
+    useCourseSchedule: () => mockUseCourseSchedule(),
+    usePlannerItems: () => mockUsePlannerItems()
+  };
+});
 
-jest.mock('../../api/student', () => ({
-  usePlannerItems: () => mockUsePlannerItems(),
-  useCourseSchedule: () => mockUseCourseSchedule()
-}));
-
-// Keeping this commented out for now
 jest.mock('../schedule/schedule-utils', () => ({
   ...jest.requireActual('../schedule/schedule-utils'),
   startDate: () => mockGetStartDate()
@@ -226,7 +226,7 @@ describe('<ScheduleCard /> with a simple schedule', () => {
       const startDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
       const todayShortCode = getDayShortcode(startDate);
       mockGetStartDate.mockImplementation(() => {
-        return startDate;
+        return startDate.getTime();
       });
       mockUseCourseSchedule.mockReturnValueOnce(
         mockSimpleSchedule(startDate.toISOString().slice(0, 10))

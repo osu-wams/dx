@@ -1,28 +1,27 @@
 import { addDays, eachDayOfInterval } from 'date-fns';
 import { isNullOrUndefined } from 'util';
-import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 import { format } from '../../util/helpers';
+import { MeetingTime, CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 export interface ICoursesMap {
-  courses: ICourseSchedule[];
-  meetingTimes: IMeetingTime[];
+  courses: CourseSchedule[];
+  meetingTimes: MeetingTime[];
   creditHours: number;
   subject: string;
   number: string;
   title: string;
 }
 
-export const startDate = () => {
-  return new Date();
+export const startDate = (): number => {
+  return Date.now();
 };
 
 /**
  * Utility functions
  */
-export const getNextFiveDays = (startDate: Date) => {
-  const rangeStart = startDate;
-  const rangeEnd = addDays(rangeStart, 4);
-  const nextFiveDays = eachDayOfInterval({ start: rangeStart, end: rangeEnd });
+export const getNextFiveDays = (startDate: number) => {
+  const rangeEnd = addDays(startDate, 4);
+  const nextFiveDays = eachDayOfInterval({ start: startDate, end: rangeEnd });
 
   return nextFiveDays;
 };
@@ -44,11 +43,10 @@ export const getDayShortcode = (date: Date) => {
  * @param courses the full list of courses returned from API
  * @returns ICourseSchedule[] - an array of courses
  */
-export const currentCourses = (courses: ICourseSchedule[]): ICourseSchedule[] => {
+export const currentCourses = (courses: CourseSchedule[]): CourseSchedule[] => {
   return courses.filter(c =>
     c.attributes.meetingTimes.filter(
-      // !TODO date to look into PST / UTC
-      m => m.beginDate && Date.parse(m.beginDate.toString()) <= startDate().getTime()
+      m => m.beginDate && Date.parse(m.beginDate.toString()) <= startDate()
     )
   );
 };
@@ -60,10 +58,7 @@ export const currentCourses = (courses: ICourseSchedule[]): ICourseSchedule[] =>
  * @param dayShortCode a day short code (M, T, W, Th, F)
  * @returns ICourseSchedule[] - an array of filtered and sorted courses
  */
-export const coursesOnDay = (
-  courses: ICourseSchedule[],
-  dayShortCode: string
-): ICourseSchedule[] => {
+export const coursesOnDay = (courses: CourseSchedule[], dayShortCode: string): CourseSchedule[] => {
   const dayCourses = currentCourses(
     sortedByBeginTime(
       courses.filter(
@@ -92,7 +87,7 @@ export const coursesOnDay = (
  * @param courses an array of courses to be sorted
  * @returns ICourseSchedule[] - an array of courses
  */
-const sortedByBeginTime = (courses: ICourseSchedule[]): ICourseSchedule[] => {
+const sortedByBeginTime = (courses: CourseSchedule[]): CourseSchedule[] => {
   return courses.sort((a, b) => {
     const aTimes = a.attributes.meetingTimes.map(m => m.beginTime).reduce((p, c) => p + c);
     const bTimes = b.attributes.meetingTimes.map(m => m.beginTime).reduce((p, c) => p + c);
@@ -107,10 +102,10 @@ const sortedByBeginTime = (courses: ICourseSchedule[]): ICourseSchedule[] => {
  * @param courses an array of courses to be sorted
  * @returns Map<string, ICoursesMap> - a sorted Map with computed values and the courses array
  */
-export const sortedGroupedByCourseName = (courses: ICourseSchedule[]): Map<string, ICoursesMap> => {
+export const sortedGroupedByCourseName = (courses: CourseSchedule[]): Map<string, ICoursesMap> => {
   // Reduce the courses list by accumulating an array of courses which have matching subject/number,
   // * example object returned might be { 'PSY400': [course,course,course], 'PSY410': [course] }
-  const grouped: { [key: string]: ICourseSchedule[] } = courses.reduce((groups, course) => {
+  const grouped: { [key: string]: CourseSchedule[] } = courses.reduce((groups, course) => {
     const subjectNumber = `${course.attributes.courseSubject ?? ''}${course.attributes
       .courseNumber ?? ''}`;
     groups[subjectNumber] = groups[subjectNumber] || [];
@@ -131,7 +126,7 @@ export const sortedGroupedByCourseName = (courses: ICourseSchedule[]): Map<strin
         courses: grouped[key],
         meetingTimes: grouped[key].reduce(
           (p, v) => p.concat(v.attributes.meetingTimes ?? ''),
-          new Array<IMeetingTime>()
+          new Array<MeetingTime>()
         ),
         creditHours: grouped[key].reduce((p, v) => (p += v.attributes.creditHours), 0)
       })
@@ -146,8 +141,8 @@ export const sortedGroupedByCourseName = (courses: ICourseSchedule[]): Map<strin
  * @param course the course to be evaluated for campus location
  * @returns boolean - true if a course meeting time has a campus detail of Corvallis
  */
-export const courseOnCorvallisCampus = (o: ICourseSchedule | IMeetingTime[]): boolean => {
-  let meetingTimes: IMeetingTime[];
+export const courseOnCorvallisCampus = (o: CourseSchedule | MeetingTime[]): boolean => {
+  let meetingTimes: MeetingTime[];
   if (o instanceof Array) {
     meetingTimes = o;
   } else {
@@ -156,13 +151,13 @@ export const courseOnCorvallisCampus = (o: ICourseSchedule | IMeetingTime[]): bo
   return !isNullOrUndefined(
     meetingTimes
       .filter(m => !isNullOrUndefined(m))
-      .find((m: IMeetingTime) => {
+      .find((m: MeetingTime) => {
         return meetingTimeOnCorvallisCampus(m);
       })
   );
 };
 
-export const meetingTimeOnCorvallisCampus = (m: IMeetingTime): boolean => {
+export const meetingTimeOnCorvallisCampus = (m: MeetingTime): boolean => {
   return m.campus.toLowerCase().includes('corvallis');
 };
 
@@ -172,7 +167,7 @@ export const meetingTimeOnCorvallisCampus = (m: IMeetingTime): boolean => {
  * @param meetings list of meetingTimes to filter
  * @param types scheduleType or meeting room to filter out
  */
-export const exceptMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMeetingTime[] => {
+export const exceptMeetingTypes = (meetings: MeetingTime[], types: string[]): MeetingTime[] => {
   return meetings.filter(meeting => {
     if (types.includes(meeting.scheduleType) || types.includes(meeting.room)) {
       return false;
@@ -187,7 +182,7 @@ export const exceptMeetingTypes = (meetings: IMeetingTime[], types: string[]): I
  * @param meetings list of meetingTimes to filter
  * @param types scheduleType or meeting room to filter out
  */
-export const onlyMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMeetingTime[] => {
+export const onlyMeetingTypes = (meetings: MeetingTime[], types: string[]): MeetingTime[] => {
   return meetings.filter(meeting => {
     if (types.includes(meeting.scheduleType) || types.includes(meeting.room)) {
       return true;
@@ -201,7 +196,7 @@ export const onlyMeetingTypes = (meetings: IMeetingTime[], types: string[]): IMe
  * being returned from the API.
  * @param meeting the meeting time to consider
  */
-export const examName = (m: IMeetingTime) => {
+export const examName = (m: MeetingTime) => {
   const roomTypes = [m.room?.toLowerCase(), m.scheduleType?.toLowerCase()];
   if (roomTypes.includes('fnl')) return 'Final Exam';
   if (roomTypes.includes('mid')) return 'Midterm';

@@ -3,12 +3,17 @@ import { fireEvent } from '@testing-library/react';
 import { render, authUserAudienceOverride } from '../../../../util/test-utils';
 import Affiliations from '../Affiliations';
 
-const mockPostSettings = jest.fn(() => Promise.resolve());
-
-jest.mock('../../../../api/user', () => ({
-  ...jest.requireActual('../../../../api/user'),
-  postSettings: () => mockPostSettings()
-}));
+const mockPostSettings = jest.fn();
+jest.mock('@osu-wams/hooks', () => {
+  const original = jest.requireActual('@osu-wams/hooks');
+  return {
+    ...original,
+    User: {
+      ...original.User,
+      postSettings: () => mockPostSettings()
+    }
+  };
+});
 
 describe('<Affiliations />', () => {
   beforeEach(() => {

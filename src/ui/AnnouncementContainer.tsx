@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useAnnouncements, hasAffiliation } from '../api/announcements';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
 import { UserContext } from '../App';
-import { hasAudience } from '../api/user';
+import { User } from '@osu-wams/hooks';
 import { styled, themeSettings, breakpoints, SecondGridWrapper } from '../theme';
+import { Announcements, useAnnouncements } from '@osu-wams/hooks';
+
+const { hasAudience, getAffiliation } = User;
 
 const AnnouncementContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
@@ -23,6 +25,7 @@ const AnnouncementContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
   const announcements = useAnnouncements(page);
+  const { hasAffiliation } = Announcements;
 
   /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
@@ -32,7 +35,8 @@ const AnnouncementContainer = ({ page, ...props }) => {
     if (!user.loading && !announcements.loading) {
       announcementsToUse = announcements.data.filter(
         announcement =>
-          hasAudience(user.data, announcement) && hasAffiliation(user.data, announcement)
+          hasAudience(user.data, announcement) &&
+          hasAffiliation(getAffiliation(user.data), announcement)
       );
     }
     setEvents(announcementsToUse);

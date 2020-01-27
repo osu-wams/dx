@@ -6,7 +6,7 @@ import {
   HighlightEmphasis,
   HighlightDescription
 } from '../../ui/Highlights';
-import { useGpa } from '../../api/student';
+import { useGpa } from '@osu-wams/hooks';
 
 export const StudentGpa: React.FC = () => {
   const { data, loading } = useGpa();

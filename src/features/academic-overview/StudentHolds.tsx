@@ -7,7 +7,7 @@ import {
   HighlightDescription
 } from '../../ui/Highlights';
 import { themeSettings, styled } from '../../theme';
-import { useAccountHolds } from '../../api/student';
+import { useHolds } from '@osu-wams/hooks';
 
 const HoldsList = styled.ul`
   margin: 0;
@@ -18,7 +18,7 @@ const HoldsList = styled.ul`
 `;
 
 export const StudentHolds: React.FC = () => {
-  const { data, loading } = useAccountHolds();
+  const { data, loading } = useHolds();
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Holds</HighlightTitle>

@@ -20,7 +20,6 @@ import {
   ListItemText,
   ListItemContentButton
 } from '../../ui/List';
-import { ICourseSchedule, IMeetingTime } from '../../api/student/course-schedule';
 import { Event } from '../../util/gaTracking';
 import {
   courseOnCorvallisCampus,
@@ -31,13 +30,14 @@ import {
 } from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
 import Course from '../Course';
+import { CourseSchedule, MeetingTime } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 interface ScheduleCardCoursesProps {
-  selectedCourses: ICourseSchedule[];
-  courses: ICourseSchedule[];
+  selectedCourses: CourseSchedule[];
+  courses: CourseSchedule[];
 }
 
-const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime): JSX.Element => (
+const meetingTimeCampusMap = (course: CourseSchedule, meetingTime: MeetingTime): JSX.Element => (
   <a
     href={Url.campusMap.building + meetingTime.building}
     target="_blank"
@@ -72,7 +72,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
     }
   };
 
-  const meetingTimeDescription = (meetingTime: IMeetingTime) => {
+  const meetingTimeDescription = (meetingTime: MeetingTime) => {
     const finalExam = examName(meetingTime);
     if (finalExam !== undefined) return finalExam;
     return `${meetingTime.room} ${meetingTime.buildingDescription}`;
@@ -80,10 +80,10 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
 
   const meetingTimeListItems = (
     coursesMap: Map<string, ICoursesMap>,
-    course: ICourseSchedule,
+    course: CourseSchedule,
     themeContext: ThemeConfiguration
   ): JSX.Element[] =>
-    exceptMeetingTypes(course.attributes.meetingTimes, ['MID']).map((meetingTime: IMeetingTime) => (
+    exceptMeetingTypes(course.attributes.meetingTimes, ['MID']).map((meetingTime: MeetingTime) => (
       <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
         <ListItemContentButton
           onClick={() => {
@@ -120,7 +120,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
       <SectionHeader>Courses</SectionHeader>
       <List>
         {selectedCourses.length > 0 &&
-          selectedCourses.map((c: ICourseSchedule) =>
+          selectedCourses.map((c: CourseSchedule) =>
             meetingTimeListItems(coursesMap, c, themeContext)
           )}
         {selectedCourses.length === 0 && (

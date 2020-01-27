@@ -1,14 +1,12 @@
 import React from 'react';
 import { waitForElement, fireEvent, cleanup } from '@testing-library/react';
 import EventCardContainer from '../EventCardContainer';
-import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
-import { announcementsData, announcementsData_10 } from '../__mocks__/announcements.data';
-import {
-  employeeEvents,
-  studentExperienceEvents,
-  studentExperienceEvents_10
-} from '../__mocks__/events.data';
+import { render, mockEmployeeUser } from '../../util/test-utils';
+import { Announcements, Events } from '@osu-wams/hooks';
 import { mockGAEvent } from '../../setupTests';
+
+const { employeeEvents, studentExperienceEvents, studentExperienceEvents_10 } = Events.mockEvents;
+const { announcementsData, announcementsData_10 } = Announcements.mockAnnouncements;
 const mockUseAnnouncements = jest.fn();
 const mockUseStudentExperienceEvents = jest.fn();
 const mockUseCampusEvents = jest.fn();
@@ -16,15 +14,10 @@ const mockUseEmployeeEvents = jest.fn();
 
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/announcements', () => {
+jest.mock('@osu-wams/hooks', () => {
   return {
-    ...jest.requireActual('../../api/announcements'),
-    useAnnouncements: () => mockUseAnnouncements()
-  };
-});
-
-jest.mock('../../api/events', () => {
-  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useAnnouncements: () => mockUseAnnouncements(),
     useStudentExperienceEvents: () => mockUseStudentExperienceEvents(),
     useCampusEvents: () => mockUseCampusEvents(),
     useEmployeeEvents: () => mockUseEmployeeEvents()
@@ -41,7 +34,9 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should show 5 student event cards', async () => {
-    const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />);
+    const { getAllByTestId, getByText, queryByText } = render(
+      <EventCardContainer page="dashboard" />
+    );
     // Need to wait for data to come in
     await waitForElement(() => getAllByTestId('eventcard'));
     expect(getByText(/Student Only Announcement/i)).toBeInTheDocument();
@@ -50,13 +45,16 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should show 7 employee event cards', async () => {
-    const { getAllByTestId, getByText, queryByText } = render(<EventCardContainer page="dashboard" />, {
-      user: mockEmployeeUser
-    });
+    const { getAllByTestId, getByText, queryByText } = render(
+      <EventCardContainer page="dashboard" />,
+      {
+        user: mockEmployeeUser
+      }
+    );
     const events = await waitForElement(() => getAllByTestId('eventcard'));
-    const employeeAnnouncement = getByText(/Employee Only Announcement/i);
-    expect(events).toHaveLength(7);
-    expect(employeeAnnouncement).toBeInTheDocument();
+    expect(events).toHaveLength(8);
+    expect(getByText(/Bend Employee Announcement/i)).toBeInTheDocument();
+    expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
     expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
   });
 
@@ -156,7 +154,8 @@ describe('<EventCardContainer />', () => {
         }
       );
       await waitForElement(() => getAllByTestId('eventcard'));
-      expect(getByText(/Announcement test body text 3/i)).toBeInTheDocument();
+      expect(getByText(/Bend Employee Announcement/i)).toBeInTheDocument();
+      expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
       expect(getByText(/Announcement link title/i)).toBeInTheDocument();
       expect(queryByText(/Localist test title 1/i)).not.toBeInTheDocument();
       expect(getByText(/2019 Oregon Employees/i)).toBeInTheDocument();

@@ -1,6 +1,6 @@
 import React from 'react';
-import { postError } from '../api/errors';
-
+import { Errors } from '@osu-wams/hooks';
+const { postError } = Errors;
 type ErrorHandler = (error: Error, info: React.ErrorInfo, errorHandlerCallback?: Function) => void;
 type ErrorHandlingComponent<Props> = (props: Props, error?: Error) => React.ReactNode;
 type ErrorState = { error?: Error };

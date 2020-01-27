@@ -4,11 +4,11 @@ import { CardContentCell } from '../../ui/Card';
 import { Event } from '../../util/gaTracking';
 import { ExternalLink } from '../../ui/Link';
 import Url from '../../util/externalUrls.data';
-import { ICachetIncident, ICachetComponent } from '../../api/status';
 import { ListItem } from '../../ui/List';
 import { themeSettings, ThemeContext, styled } from '../../theme';
 import { format } from '../../util/helpers';
 import Icon from '../../ui/Icon';
+import { ICachetComponent, ICachetIncident } from '@osu-wams/hooks/dist/api/status';
 
 const Header = styled.div`
   display: flex;

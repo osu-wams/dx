@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { useMealPlans } from '../../api/persons/meal-plans';
+import { useMealPlans } from '@osu-wams/hooks';
 import { formatDollars } from '../../util/helpers';
 import {
   Highlight,

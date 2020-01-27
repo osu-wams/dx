@@ -7,7 +7,9 @@ import { Menu, MenuList, MenuButton, MenuLink } from '@reach/menu-button';
 import { themeSettings, breakpoints, styled } from '../theme';
 import { Event } from '../util/gaTracking';
 import { UserContext } from '../App';
-import { postSettings, usersSettings, AFFILIATIONS } from '../api/user';
+import { User } from '@osu-wams/hooks';
+
+const { postSettings, usersSettings, AFFILIATIONS } = User;
 
 const UserButton = styled(MenuButton)`
   color: ${({ theme }) => theme.header.userButton.color};

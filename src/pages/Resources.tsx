@@ -6,16 +6,15 @@ import { themeSettings, styled, MainGridWrapper, MainGrid } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import {
-  defaultCategoryName,
-  useCategories,
-  useResources,
-  IResourceResult
-} from '../api/resources';
+import { Resources as hooksResources, useCategories, useResources } from '@osu-wams/hooks';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
-import { hasAudience, getAffiliation } from '../api/user';
+import { User } from '@osu-wams/hooks';
 import VisuallyHidden from '@reach/visually-hidden';
+import { IResourceResult } from '@osu-wams/hooks/dist/api/resources';
+
+const { defaultCategoryName } = hooksResources;
+const { hasAudience, getAffiliation } = User;
 
 //import type here
 const Resources = () => {

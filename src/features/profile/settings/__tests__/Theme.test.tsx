@@ -3,16 +3,21 @@ import { fireEvent } from '@testing-library/react';
 import { render } from '../../../../util/test-utils';
 import Theme from '../Theme';
 
-const mockPostSettings = jest.fn(() => Promise.resolve());
-
-jest.mock('../../../../api/user', () => ({
-  ...jest.requireActual('../../../../api/user'),
-  postSettings: () => mockPostSettings()
-}));
+const mockPostSettings = jest.fn();
+jest.mock('@osu-wams/hooks', () => {
+  const original = jest.requireActual('@osu-wams/hooks');
+  return {
+    ...original,
+    User: {
+      ...original.User,
+      postSettings: () => mockPostSettings()
+    }
+  };
+});
 
 describe('<Theme />', () => {
   beforeEach(() => {
-    mockPostSettings.mockReturnValue(Promise.resolve());
+    mockPostSettings.mockResolvedValue(Promise.resolve({}));
   });
   it('renders with the themes listed', async () => {
     const { container } = render(<Theme />);

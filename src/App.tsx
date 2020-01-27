@@ -13,11 +13,12 @@ import BetaDashboard from './pages/BetaDashboard';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useInfoButtons, InfoButtonState } from './api/info-buttons';
-import { useUser } from './api/user';
-import { useAppVersions, AppVersions } from './api/app-versions';
+import { useUser } from '@osu-wams/hooks';
+import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { styled, GlobalStyles } from './theme';
+import { Versions } from '@osu-wams/hooks/dist/api/appVersions';
+import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -56,7 +57,7 @@ interface AppProps {
 
 export interface IAppContext {
   infoButtonData: InfoButtonState[];
-  appVersions: AppVersions;
+  appVersions: Versions;
   themes: string[];
   selectedTheme: string;
   setTheme: Function;

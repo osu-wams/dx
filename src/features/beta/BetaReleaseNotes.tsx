@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
 import { themeSettings, styled } from '../../theme';
-import { useReleaseNotes } from '../../api/release-notes';
+import { useReleaseNotes } from '@osu-wams/hooks';
 
 const BetaReleaseNotes: FC = () => {
   const releaseNotes = useReleaseNotes();

@@ -18,7 +18,6 @@ import MyDialog, { MyDialogFooter, MyDialogHeader } from '../ui/MyDialog';
 import { titleCase, formatTime, format, singularPlural } from '../util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import Divider from '../ui/Divider';
-import { IFaculty, IMeetingTime } from '../api/student/course-schedule';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
@@ -30,6 +29,7 @@ import {
   examName
 } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
 import { ThemeContext, themeSettings, ThemeConfiguration, styled } from '../theme';
+import { Faculty, MeetingTime } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 interface ICourse {
   coursesMap: ICoursesMap;
@@ -66,7 +66,7 @@ const MapLink = styled(FacultyLink)`
   }
 `;
 
-const meetingDateTime = (meetingTime: IMeetingTime): string => {
+const meetingDateTime = (meetingTime: MeetingTime): string => {
   const date =
     meetingTime.beginDate !== meetingTime.endDate
       ? meetingTime.weeklySchedule.map(day => day)
@@ -78,7 +78,7 @@ const meetingDateTime = (meetingTime: IMeetingTime): string => {
 };
 
 const meetingTimeListItem = (
-  meetingTime: IMeetingTime,
+  meetingTime: MeetingTime,
   themeContext: ThemeConfiguration
 ): JSX.Element => (
   <CourseListItem key={generateId()}>
@@ -111,7 +111,7 @@ const meetingTimeListItem = (
 );
 
 const facultyListItem = (
-  faculty: IFaculty,
+  faculty: Faculty,
   index: number,
   themeContext: ThemeConfiguration
 ): JSX.Element => (
@@ -198,7 +198,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
             )}
           </List>
           <List>
-            {course.attributes.faculty.map((fac: IFaculty, index: number) =>
+            {course.attributes.faculty.map((fac: Faculty, index: number) =>
               facultyListItem(fac, index, themeContext)
             )}
           </List>

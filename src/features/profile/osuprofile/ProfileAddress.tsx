@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { useMailingAddress, IMailingAddress } from '../../../api/persons/addresses';
+import { useAddresses } from '@osu-wams/hooks';
 import Icon from '../../../ui/Icon';
 import { ThemeContext } from '../../../theme';
+import { MailingAddress } from '@osu-wams/hooks/dist/api/person/addresses';
 
 const ProfileAddress = () => {
-  const address = useMailingAddress();
+  const address = useAddresses();
   const themeContext = useContext(ThemeContext);
   return (
     <>
@@ -20,7 +21,7 @@ const ProfileAddress = () => {
 const renderAddress = (
   {
     attributes: { addressTypeDescription, addressLine1, city, stateCode, postalCode }
-  }: IMailingAddress,
+  }: MailingAddress,
   color
 ) => (
   <div>

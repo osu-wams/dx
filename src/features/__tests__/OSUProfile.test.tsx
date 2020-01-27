@@ -1,37 +1,29 @@
 import React from 'react';
 import { wait, waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import {
-  personsMailingAddressData,
-  personsMinimalAddressData
-} from '../../api/persons/__mocks__/addresses.data';
-import {
-  personsData,
-  preferredName,
-  nullName,
-  preferredFirstName
-} from '../../api/persons/__mocks__/person.data';
 import OSUProfile from '../profile/OSUProfile';
+import { Person } from '@osu-wams/hooks';
 
-jest.unmock('../../api/persons/addresses');
-jest.unmock('../../api/persons/persons');
+const { personsMailingAddressData, personsMinimalAddressData } = Person.Addresses.mockAddresses;
+const { personsData, preferredName, nullName, preferredFirstName } = Person.Persons.mockPersons;
 
-const mockUseMailingAddress = jest.fn();
+const mockUseAddresses = jest.fn();
 const mockUsePerson = jest.fn();
 const mockNoData = { data: null, loading: false, error: false };
 
-jest.mock('../../api/persons/addresses', () => ({
-  useMailingAddress: () => mockUseMailingAddress()
-}));
-jest.mock('../../api/persons/persons', () => ({
-  usePerson: () => mockUsePerson()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useAddresses: () => mockUseAddresses(),
+    usePerson: () => mockUsePerson()
+  };
+});
 
 describe('<OSUProfile />', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
     mockUsePerson.mockReturnValue(personsData);
-    mockUseMailingAddress.mockReturnValue(personsMailingAddressData);
+    mockUseAddresses.mockReturnValue(personsMailingAddressData);
   });
 
   it('should render the approriate name: "Testo Last"', async () => {
@@ -75,7 +67,7 @@ describe('<OSUProfile />', () => {
   });
 
   it('should not find the "Mailing Address" when address is null', async () => {
-    mockUseMailingAddress.mockReturnValue(mockNoData);
+    mockUseAddresses.mockReturnValue(mockNoData);
     const { queryByText } = render(<OSUProfile />);
     await wait(() => {
       expect(queryByText('Current Mailing')).not.toBeInTheDocument();
@@ -85,7 +77,7 @@ describe('<OSUProfile />', () => {
   it('should find the the default data missing states when not in the address', async () => {
     mockUsePerson.mockReturnValue(preferredName);
 
-    mockUseMailingAddress.mockReturnValue(personsMinimalAddressData);
+    mockUseAddresses.mockReturnValue(personsMinimalAddressData);
     const { getByText } = render(<OSUProfile />);
     expect(await waitForElement(() => getByText(/No address description/))).toBeInTheDocument();
     expect(await waitForElement(() => getByText(/No city name/))).toBeInTheDocument();

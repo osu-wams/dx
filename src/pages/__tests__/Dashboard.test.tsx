@@ -2,12 +2,17 @@ import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render, mockEmployeeUser } from '../../util/test-utils';
 import Dashboard from '../Dashboard';
-import { resourcesCardData } from '../../api/__mocks__/resources.data';
+import { Resources } from '@osu-wams/hooks';
+
+const { resourcesCardData } = Resources.mockResources;
 
 const mockUseResourcesByQueue = jest.fn();
-jest.mock('../../api/resources', () => ({
-  useResourcesByQueue: () => mockUseResourcesByQueue()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useResourcesByQueue: () => mockUseResourcesByQueue()
+  };
+});
 
 describe('<Dashboard />', () => {
   beforeEach(() => {

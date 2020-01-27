@@ -6,10 +6,11 @@ import Label from '../ui/Label';
 import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { Event } from '../util/gaTracking';
-import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
+import { Masquerade as hooksMasquerade } from '@osu-wams/hooks';
 import * as cache from '../util/cache';
 import { ThemeContext } from '../theme';
 
+const { getMasqueradeUser, postMasqueradeUser } = hooksMasquerade;
 interface MasqueradeProps {
   showMasqueradeDialog: boolean;
   toggleMasqueradeDialog: (event?: any) => void;

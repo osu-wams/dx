@@ -2,45 +2,37 @@ import React from 'react';
 import { waitForElement, wait } from '@testing-library/react';
 import Finances from '../Finances';
 import { render } from '../../util/test-utils';
-import { mockAcademicAnnouncementResult } from '../../api/__mocks__/announcements.data';
-import mockMealPlans from '../../api/persons/__mocks__/mealPlans.data';
-import { resourcesCardData } from '../../api/__mocks__/resources.data';
-import mockFinancialTransactions from '../../api/student/__mocks__/accountTransactions.data';
-import mockAccountBalance from '../../api/student/__mocks__/accountBalance.data';
+import { Announcements, Person, Resources, Student } from '@osu-wams/hooks';
+
+const { resourcesCardData } = Resources.mockResources;
+const { academicAnnouncementResult } = Announcements.mockAnnouncements;
+const mockAccountBalance = Student.AccountBalance.mockAccountBalance;
+const mockAccountTransactions = Student.AccountTransactions.mockAccountTransactions;
+const mockMealPlans = Person.MealPlans.mockMealPlans;
 
 const mockUseAnnouncements = jest.fn();
 const mockUseMealPlans = jest.fn();
 const mockUseResourcesByQueue = jest.fn();
-const mockUseFinancialTransactions = jest.fn();
+const mockUseAccountTransactions = jest.fn();
 const mockUseAccountBalance = jest.fn();
 
-jest.mock('../../api/announcements', () => ({
-  ...jest.requireActual('../../api/announcements'),
-  useAnnouncements: () => mockUseAnnouncements()
-}));
-
-jest.mock('../../api/persons/meal-plans', () => ({
-  useMealPlans: () => mockUseMealPlans()
-}));
-
-jest.mock('../../api/resources', () => ({
-  useResourcesByQueue: () => mockUseResourcesByQueue()
-}));
-
-jest.mock('../../api/student/account-transactions', () => ({
-  useAccountTransactions: () => mockUseFinancialTransactions()
-}));
-
-jest.mock('../../api/student/account-balance', () => ({
-  useAccountBalance: () => mockUseAccountBalance()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useAccountBalance: () => mockUseAccountBalance(),
+    useAccountTransactions: () => mockUseAccountTransactions(),
+    useAnnouncements: () => mockUseAnnouncements(),
+    useMealPlans: () => mockUseMealPlans(),
+    useResourcesByQueue: () => mockUseResourcesByQueue()
+  };
+});
 
 describe('Finances page with standard data', () => {
   beforeEach(() => {
-    mockUseAnnouncements.mockReturnValue(mockAcademicAnnouncementResult);
+    mockUseAnnouncements.mockReturnValue(academicAnnouncementResult);
     mockUseMealPlans.mockReturnValue(mockMealPlans);
     mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
-    mockUseFinancialTransactions.mockReturnValue(mockFinancialTransactions);
+    mockUseAccountTransactions.mockReturnValue(mockAccountTransactions);
     mockUseAccountBalance.mockReturnValue(mockAccountBalance);
   });
 

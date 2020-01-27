@@ -1,20 +1,25 @@
 import React from 'react';
 import { wait } from '@testing-library/react';
 import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
-import { resourcesData, categoriesData, defaultCategory } from '../../api/__mocks__/resources.data';
 import userEvent from '@testing-library/user-event';
 import Resources from '../../pages/Resources';
 import { mockGAEvent } from '../../setupTests';
+import { Resources as hooksResources } from '@osu-wams/hooks';
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
 const mockDefaultCategory = jest.fn();
+const { resourcesData, categoriesData, defaultCategory } = hooksResources.mockResources;
 
-jest.mock('../../api/resources', () => ({
-  useResources: () => mockUseResources(),
-  useCategories: () => mockUseCategories(),
-  defaultCategoryName: () => mockDefaultCategory()
-}));
+const mockUseResourcesByQueue = jest.fn();
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useResources: () => mockUseResources(),
+    useCategories: () => mockUseCategories(),
+    defaultCategoryName: () => mockDefaultCategory()
+  };
+});
 
 /**
  * Render Resources with the most commonly used features
@@ -71,7 +76,7 @@ describe('<Resources />', () => {
   it('Should have a link to skip to results with matching ID in the result container', async () => {
     const { getByText, findByTestId } = render(<Resources />);
     const skipLink = getByText('Skip to results');
-    const anchor = skipLink.getAttribute('href').slice(1);
+    const anchor = skipLink.getAttribute('href')!.slice(1);
     const results = await findByTestId('resourcesResults');
     const resultsId = results.getAttribute('id');
 
@@ -190,7 +195,7 @@ describe('<Resources />', () => {
       userEvent.click(all);
 
       expect(all).toHaveClass('selected');
-      expect(await findByText(/found 4 results/)).toBeInTheDocument();
+      expect(await findByText(/found 5 results/)).toBeInTheDocument();
       expect(await findByText(/Listservs/)).toBeInTheDocument();
       expect(await queryByText(/Student Jobs/)).toBeNull();
     });

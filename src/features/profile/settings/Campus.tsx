@@ -3,16 +3,12 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Fieldset, Legend } from '../../../ui/forms';
-import {
-  CAMPUS_CODES,
-  postSettings,
-  settingIsDefault,
-  usersSettings,
-  defaultCampus
-} from '../../../api/user';
+import { User } from '@osu-wams/hooks';
 import { titleCase } from '../../../util/helpers';
 import { UserContext } from '../../../App';
 import { styled, themeSettings } from '../../../theme';
+
+const { CAMPUS_CODES, postSettings, settingIsDefault, usersSettings, DEFAULT_CAMPUS } = User;
 
 const Label = styled.span`
   font-size: ${themeSettings.fontSize[16]};
@@ -23,10 +19,10 @@ const Label = styled.span`
 
 export const RadioButtonsGroup = () => {
   const userContext = useContext(UserContext);
-  const [value, setValue] = useState(defaultCampus);
+  const [value, setValue] = useState(DEFAULT_CAMPUS);
 
   useEffect(() => {
-    setValue(userContext.data.audienceOverride.campusCode || defaultCampus);
+    setValue(userContext.data.audienceOverride.campusCode || DEFAULT_CAMPUS);
   }, [userContext.data]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +55,7 @@ export const RadioButtonsGroup = () => {
                     userContext.data,
                     'campusCode',
                     CAMPUS_CODES[key],
-                    defaultCampus
+                    DEFAULT_CAMPUS
                   )
                     ? ' (Default) '
                     : ''}

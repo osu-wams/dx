@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import { MainNavStudent } from './MainNavStudent';
 import { MainNavEmployee } from './MainNavEmployee';
 import { UserContext } from '../../App';
-import { hasPrimaryAffiliation, AFFILIATIONS } from '../../api/user';
+import { User } from '@osu-wams/hooks';
+
+const { hasPrimaryAffiliation, AFFILIATIONS } = User;
 
 /**
  * Uses the user context to determine what main navigation the user is getting.

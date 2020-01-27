@@ -1,21 +1,23 @@
 import React from 'react';
-import { fireEvent, waitForElement } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { ITSystemStatus } from '../employee-only/ITSystemStatus';
 import { mockGAEvent } from '../../setupTests';
-import mockStatus from '../../api/__mocks__/status.data';
+import { Status } from '@osu-wams/hooks';
 
 const mockUseStatus = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/status', () => ({
-  ...jest.requireActual('../../api/status'),
-  useStatus: () => mockUseStatus()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useStatus: () => mockUseStatus()
+  };
+});
 
 describe('<ITSystemStatus />', () => {
   beforeEach(() => {
-    mockUseStatus.mockReturnValue(mockStatus);
+    mockUseStatus.mockReturnValue(Status.mockStatus);
   });
 
   it('should have links that are tracked via GA', async () => {
