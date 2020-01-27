@@ -7,11 +7,11 @@ import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { ProfileMenu } from './ProfileMenu';
 import { breakpoints, styled } from '../theme';
-import { User as hooksUser } from '@osu-wams/hooks';
+import { User } from '@osu-wams/hooks';
+import { Types } from '@osu-wams/lib';
 import { UserContext } from '../App';
-import { User } from '@osu-wams/hooks/dist/api/user';
 
-const { usersCampus, CAMPUS_CODES } = hooksUser;
+const { usersCampus, CAMPUS_CODES } = User;
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -52,7 +52,7 @@ const Logo = styled.img`
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
  */
-const campusLogo = (user: User) => {
+const campusLogo = (user: Types.User) => {
   const { campusCode } = usersCampus(user);
   switch (campusCode) {
     case CAMPUS_CODES.ecampus:
