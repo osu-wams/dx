@@ -42,7 +42,7 @@ describe('<Academic Overview />', () => {
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockUseHolds.mockReturnValue(mockHolds);
     const mockUser = authUser;
-    mockUser.data.classification!.attributes!.level = '';
+    mockUser.data.classification!.attributes!.levelCode = '';
     mockUser.data.audienceOverride = {};
 
     const { getByText } = render(<AcademicOverview />, { user: mockUser });
