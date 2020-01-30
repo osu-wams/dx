@@ -7,11 +7,11 @@ import { Event } from '../../util/gaTracking';
 import { singularPlural } from '../../util/helpers';
 import { IconLookup } from './resources-utils';
 import { ThemeContext } from '../../theme';
-import { IResourceResult } from '@osu-wams/hooks/dist/api/resources';
+import { Types } from '@osu-wams/lib';
 
 // Setup a font awesome library to use for searching for icons from the backend.
 library.add(fal, fab);
-const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => {
+const ResourcesList: React.FC<{ resources: Types.Resource[] }> = ({ resources }) => {
   const themeContext = useContext(ThemeContext);
 
   return (
@@ -19,7 +19,7 @@ const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }
       {`found ${resources?.length} ${singularPlural(resources?.length, 'result')}`}
       <List>
         {resources.length > 0 &&
-          resources.map((resource: IResourceResult) => (
+          resources.map((resource: Types.Resource) => (
             <ListItem spaced key={resource.id}>
               <ListItemContentLinkSVG
                 spaced

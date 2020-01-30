@@ -11,9 +11,9 @@ import { useResourcesByQueue } from '@osu-wams/hooks';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
+import { Types } from '@osu-wams/lib';
 import { User } from '@osu-wams/hooks';
 import { IconLookup } from './resources/resources-utils';
-import { IResourceResult } from '@osu-wams/hooks/dist/api/resources';
 
 // Setup a font awesome library to use for searching icons from the backend.
 library.add(fal, fab);
@@ -33,7 +33,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
   const res = useResourcesByQueue(categ);
-  const [resources, setResources] = useState<IResourceResult[]>([]);
+  const [resources, setResources] = useState<Types.Resource[]>([]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {

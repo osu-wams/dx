@@ -6,12 +6,11 @@ import { themeSettings, styled, MainGridWrapper, MainGrid } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import { Resources as hooksResources, useCategories, useResources } from '@osu-wams/hooks';
+import { Types } from '@osu-wams/lib';
+import { Resources as hooksResources, useCategories, useResources, User } from '@osu-wams/hooks';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
-import { User } from '@osu-wams/hooks';
 import VisuallyHidden from '@reach/visually-hidden';
-import { IResourceResult } from '@osu-wams/hooks/dist/api/resources';
 
 const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
@@ -40,9 +39,9 @@ const Resources = () => {
    * Filter a list of resources where it has a category in its list matching the provided name
    * parameter unless the category is 'all'.
    * @param {string} name the category name to filter on
-   * @param {IResourceResult[]} resources a list of resources to inspect for matching category
+   * @param {Resource[]} resources a list of resources to inspect for matching category
    */
-  const filterByCategory = (name: string, resources: IResourceResult[]): IResourceResult[] => {
+  const filterByCategory = (name: string, resources: Types.Resource[]): Types.Resource[] => {
     if (name === 'all') return resources;
 
     return resources.filter(
@@ -73,10 +72,10 @@ const Resources = () => {
 
   /**
    * Leverages checkAffiliation function filter an array of resources for a given user
-   * @param {IResourceResult[]} resources full list of resources
-   * @returns {IResourceResult[]} filtered list of resources by primary affiliation
+   * @param {Resource[]} resources full list of resources
+   * @returns {Resource[]} filtered list of resources by primary affiliation
    */
-  const filterByAffiliation = (resources: IResourceResult[]): IResourceResult[] => {
+  const filterByAffiliation = (resources: Types.Resource[]): Types.Resource[] => {
     return resources.filter(checkAffiliation);
   };
 
