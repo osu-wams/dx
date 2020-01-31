@@ -9,7 +9,7 @@
     "@fortawesome/pro-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
     "@material-ui/core": "^4.6.0",
-    "@osu-wams/hooks": "^1.0.2",
+    "@osu-wams/hooks": "^1.0.3",
     "@osu-wams/lib": "^0.1.2",
     "@reach/dialog": "^0.7.0",
     "@reach/menu-button": "^0.7.0",

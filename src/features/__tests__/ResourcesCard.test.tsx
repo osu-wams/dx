@@ -38,7 +38,7 @@ describe('<ResourcesCard />', () => {
       <ResourcesCard categ="financial" icon={faCube} />
     );
     await waitForElement(() => getByText('Student Jobs'));
-    expect(getByTestId('resource-container').children).toHaveLength(5);
+    expect(getByTestId('resource-container').children).toHaveLength(3);
   });
 
   it('should have a clickable resource that fires GooglaAnalytics', async () => {

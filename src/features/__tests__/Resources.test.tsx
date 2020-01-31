@@ -11,7 +11,6 @@ const mockUseCategories = jest.fn();
 const mockDefaultCategory = jest.fn();
 const { resourcesData, categoriesData, defaultCategory } = hooksResources.mockResources;
 
-const mockUseResourcesByQueue = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
@@ -84,6 +83,7 @@ describe('<Resources />', () => {
   });
 
   it('should have "Featured" selected and clickable All category that gets appripriate results', async () => {
+    mockDefaultCategory.mockReturnValue('All');
     const { findByText, all, featured } = renderResources();
 
     expect(featured).toHaveClass('selected'); // default selected
@@ -191,16 +191,18 @@ describe('<Resources />', () => {
 
   describe('with student and employee affiliations', () => {
     it('finds Listservs as an employee but not Student Jobs, since that is student only', async () => {
+      mockDefaultCategory.mockReturnValue('All');
       const { queryByText, findByText, all } = renderResources(mockEmployeeUser);
       userEvent.click(all);
 
       expect(all).toHaveClass('selected');
-      expect(await findByText(/found 5 results/)).toBeInTheDocument();
+      expect(await findByText(/found 4 results/)).toBeInTheDocument();
       expect(await findByText(/Listservs/)).toBeInTheDocument();
       expect(await queryByText(/Student Jobs/)).toBeNull();
     });
 
     it('finds Listservs as an employee when clicking the Financial category', async () => {
+      mockDefaultCategory.mockReturnValue('Financial');
       const { queryByText, findByText, financial } = renderResources(mockEmployeeUser);
 
       userEvent.click(financial);
