@@ -1477,27 +1477,27 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@osu-wams/hooks@^1.0.2-alpha.1":
-  version "1.0.2-alpha.1"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.2-alpha.1/e17999e82d1e447e4a9c7fa392339eafff6367fb947a54fab910b147dfe6d01a#bd83936ec78c972e231c3b3299522b51de215850"
-  integrity sha512-GEhKUUjodIEyg61aP/icW5JXqStvjKHsX9XScBgbaRTr7bw/CpcfWls1RC9p8VQ2YiNqJbLWN+i06rEIPUCHhg==
+"@osu-wams/hooks@^1.0.2":
+  version "1.0.2"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.2/b24bd43fac67165d9c1feaec61ff059cc99cf4ba4519198406c0afe5c02ce34b#809975137d29c4d4988b94088cf5394a243a3434"
+  integrity sha512-5qUHU84gTUHdrMwG6dQQt4eG/nkPlx6XtOFNLTQUIcyOYxM8/EHfDS84z/etNXt9dd06MldeH253wSSoSH8DSg==
   dependencies:
-    "@osu-wams/lib" "^0.1.2-alpha.0"
-    "@osu-wams/utils" "^0.0.2-alpha.43"
+    "@osu-wams/lib" "^0.1.2"
+    "@osu-wams/utils" "^0.0.2"
     axios "^0.19.1"
     react "^16.12.0"
     react-dom "^16.12.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@^0.1.2-alpha.0":
-  version "0.1.2-alpha.0"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.2-alpha.0/8a3f2163a8d47133eb80a1f8c8315581d4e36dfa3ed7632c1c2fd27c4560b3ff#6b6bdd451655fe0e12931dc5d134c70ea2f9acd6"
-  integrity sha512-p5HdpsBHyynt0WC1T3PibEMvyFrip3uX+MF18ielV7/0zOPWNa/9xnSDVTZbOXhj1AQfCbcwundc1tRNi3Sn4Q==
+"@osu-wams/lib@^0.1.2":
+  version "0.1.2"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.2/be7cf6be9937ae823606452014fe38754032780d50f57316da3eef6bda94acf5#8c654750d24b40f29be4189fa969b85e9ad93a2e"
+  integrity sha512-hDaYc/9GBwkCQsmKfb2gV+GP6c1aMJL/SvhZt7lL56cZm+YoGB5Rb2XkmScTl8EMa8WjWZ9pmitBtTmOv0QfuA==
 
-"@osu-wams/utils@^0.0.2-alpha.43":
-  version "0.0.2-alpha.43"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.2-alpha.43/d151c3cab0e7cd997aa20108a0bd8aad68cb20499a7dc378b612fd98debb3439#11877d08f7e502ab5ac35f1ce890e524ea8b92de"
-  integrity sha512-ILWA9mVqTO0i4CrcPbXdLX9y/8ZRqqpNRdxjr7FGy5Cv+JzRkcALiv3vVF0/VwwoZft33NV5+DnkJX2plzp1ew==
+"@osu-wams/utils@^0.0.2":
+  version "0.0.2"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.2/15253cb387a7a5c09fa4b8961754c52c48b789734d5ae90639c48163bf1f06c5#2722952bd3039bac979e7c68c38076e47a27b554"
+  integrity sha512-72uvSZWlCERfOV1uGymeIYNcJWvsPBEYqGvBcH9fEWE6sxJJlmqg0SwJvtp84J89chMVXIg8C8KGh1rZze3VFw==
 
 "@popmotion/easing@^1.0.1":
   version "1.0.2"
