@@ -52,8 +52,7 @@ describe('<EventCardContainer />', () => {
       }
     );
     const events = await waitForElement(() => getAllByTestId('eventcard'));
-    expect(events).toHaveLength(8);
-    expect(getByText(/Bend Employee Announcement/i)).toBeInTheDocument();
+    expect(events).toHaveLength(7);
     expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
     expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
   });
@@ -154,7 +153,6 @@ describe('<EventCardContainer />', () => {
         }
       );
       await waitForElement(() => getAllByTestId('eventcard'));
-      expect(getByText(/Bend Employee Announcement/i)).toBeInTheDocument();
       expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
       expect(getByText(/Announcement link title/i)).toBeInTheDocument();
       expect(queryByText(/Localist test title 1/i)).not.toBeInTheDocument();

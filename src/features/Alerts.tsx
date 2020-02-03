@@ -8,9 +8,9 @@ import {
 import { Card, CardHeader, CardContent, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
 import { format } from '../util/helpers';
+import { Types } from '@osu-wams/lib';
 import { useDxAlerts, useRaveAlerts } from '@osu-wams/hooks';
 import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
-import { Alert } from '@osu-wams/hooks/dist/api/alerts';
 
 const AlertWrapper = styled.div`
   width: 100%;
@@ -71,7 +71,7 @@ const Alerts = () => {
   const dxAlerts = useDxAlerts();
   const themeContext = useContext(ThemeContext);
 
-  const cardBody = (alert: Alert, iconProps: IconProps): JSX.Element => (
+  const cardBody = (alert: Types.Alert, iconProps: IconProps): JSX.Element => (
     <AlertCardWrapper>
       <AlertHeader
         title={alert.title}
@@ -89,7 +89,7 @@ const Alerts = () => {
     </AlertCardWrapper>
   );
 
-  const alertCard = (alert: Alert): JSX.Element => {
+  const alertCard = (alert: Types.Alert): JSX.Element => {
     switch (alert.type) {
       case 'rave':
         return (

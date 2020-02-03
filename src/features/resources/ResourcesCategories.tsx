@@ -2,7 +2,7 @@ import React from 'react';
 import { themeSettings, styled } from '../../theme';
 import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';
-import { ICategory } from '@osu-wams/hooks/dist/api/resources';
+import { Types } from '@osu-wams/lib';
 
 const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelectedCategory }) => {
   return (
@@ -20,7 +20,7 @@ const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelecte
             }}
             selected={selectedCategory?.toLowerCase() === 'all' ? true : false}
           />
-          {categories.map((category: ICategory) => (
+          {categories.map((category: Types.Category) => (
             <CustomBtn
               icon={category.icon}
               text={category.name}
