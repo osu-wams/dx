@@ -54,7 +54,6 @@ const PageTitle: FC<Props> = ({ title, badge }) => {
 };
 
 const Title = styled.h1`
-  font-family: Stratum2, sans-serif;
   font-size: ${themeSettings.fontSize[24]};
   color: ${({ theme }) => theme.ui.pageTitle.color};
   font-weight: normal;
@@ -62,7 +61,6 @@ const Title = styled.h1`
   margin: 0 auto;
   max-width: 1024px;
   @media (min-width: ${breakpoints[768]}) {
-    font-size: ${themeSettings.fontSize[36]};
     margin-bottom: 1rem;
   }
 `;
