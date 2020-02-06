@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import '@reach/dialog/styles.css';
 import { Event } from '../util/gaTracking';
 import Button from './Button';
-import { themeSettings, styled, ThemeContext } from '../theme';
+import { themeSettings, styled, ThemeContext, breakpoints } from '../theme';
 import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
 import { isNullOrUndefined } from 'util';
@@ -34,7 +34,7 @@ const FooterWrapper = styled.div`
       text-decoration: none;
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: ${breakpoints.small}) {
     position: relative;
     & > button {
       position: absolute;

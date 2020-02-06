@@ -19,16 +19,14 @@ const UserButton = styled(MenuButton)`
 `;
 
 const ProfileMenuWrapper = styled.div`
-  @media (min-width: ${breakpoints[768]}) {
-    width: 100px;
-    order: 2;
-    button {
-      float: right;
-    }
+  @media (min-width: ${breakpoints.small}) {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
-  @media (min-width: ${breakpoints[1024]}) {
+  @media (min-width: ${breakpoints.large}) {
     /* matches width of osu logo so it center aligns the menu */
-    width: 250px;
+    /* width: 250px; */
   }
 `;
 

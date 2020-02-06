@@ -37,7 +37,7 @@ const StatusItemRow = styled(CardContentRow)`
   > li:nth-child(odd) {
     border-right: 1px solid ${({ theme }) => theme.ui.card.contentCell.borderLeft};
   }
-  @media (max-width: ${breakpoints[1024]}) {
+  @media (max-width: ${breakpoints.large}) {
     flex-direction: column;
     flex-wrap: unset;
     > li {

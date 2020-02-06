@@ -17,7 +17,7 @@ const CardBase = styled.div`
   background-color: ${({ theme }) => theme.ui.card.background};
   overflow: hidden;
   margin-bottom: ${themeSettings.spacing.mobile};
-  @media (min-width: ${breakpoints[768]}) {
+  @media (min-width: ${breakpoints.small}) {
     margin-bottom: ${themeSettings.spacing.desktop};
   }
 `;

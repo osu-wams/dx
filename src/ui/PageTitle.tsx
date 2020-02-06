@@ -59,8 +59,8 @@ const Title = styled.h1`
   font-weight: normal;
   line-height: 43px;
   margin: 0 auto;
-  max-width: 1024px;
-  @media (min-width: ${breakpoints[768]}) {
+  max-width: ${breakpoints.large};
+  @media (min-width: ${breakpoints.small}) {
     margin-bottom: 1rem;
   }
 `;

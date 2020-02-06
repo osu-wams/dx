@@ -47,7 +47,7 @@ const Popover = styled(PO)`
   width: 94%;
   top: 5rem !important;
   z-index: 2;
-  @media (min-width: ${breakpoints[768]}) {
+  @media (min-width: ${breakpoints.small}) {
     max-width: 600px;
   }
 `;

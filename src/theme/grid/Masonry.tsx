@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import { themeSettings, breakpoints, styled } from '../../theme';
 
 const MasonryDiv = styled.div`
-  @media (min-width: ${breakpoints[768]}) {
+  @media (min-width: ${breakpoints.small}) {
     display: grid;
     grid-auto-flow: column;
-    max-width: ${breakpoints[1024]};
+    max-width: ${breakpoints.large};
     margin: 0 auto;
     grid-gap: ${themeSettings.spacing.desktop};
     grid-template-columns: 1fr 1fr;

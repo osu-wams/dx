@@ -96,7 +96,7 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   & ${EventCardTitle} {
     color: ${({ theme }) => theme.ui.eventCard.title.color};
   }
-  @media (min-width: ${breakpoints[768]}) {
+  @media (min-width: ${breakpoints.small}) {
     margin-bottom: 0;
   }
   ${props => {

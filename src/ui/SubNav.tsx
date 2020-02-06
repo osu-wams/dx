@@ -6,8 +6,8 @@ const SubNav = styled.nav`
   flex-direction: row;
   justify-content: flex-start;
   margin: 0 0 1.6rem 0;
-  @media (min-width: ${breakpoints[768]}) {
-    max-width: ${breakpoints[1024]};
+  @media (min-width: ${breakpoints.small}) {
+    max-width: ${breakpoints.large};
     margin: -4rem auto 2rem;
     justify-content: flex-end;
   }
