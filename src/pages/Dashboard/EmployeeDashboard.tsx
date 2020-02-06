@@ -10,15 +10,7 @@ const EmployeeDashboard = () => {
   return (
     <>
       <MainGridWrapper data-testid="employee-dashboard-page">
-        <PageTitle
-          title="Employee Dashboard"
-          badge={{
-            title: 'Beta',
-            href: '/beta',
-            eventCategory: 'beta',
-            eventAction: 'Employee Dashboard Beta link clicked'
-          }}
-        />
+        <PageTitle title="Employee Dashboard" />
         <Masonry>
           <EmployeeTools />
           <ResourcesCard categ="employee_featured" icon={faStars} />

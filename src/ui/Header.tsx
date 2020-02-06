@@ -11,7 +11,15 @@ import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { UserContext } from '../App';
+import { Event, IComponents } from '../util/gaTracking';
 
+interface Badge {
+  title: string;
+  href?: string;
+  eventCategory?: IComponents;
+  eventAction?: string;
+  eventLabel?: string;
+}
 const { usersCampus, CAMPUS_CODES } = User;
 
 const HeaderWrapper = styled.div`
@@ -46,12 +54,19 @@ const Navigation = styled.div`
 `;
 
 const SiteTitle = styled.header`
-  font-size: ${themeSettings.fontSize[26]};
-  font-weight: 300;
-  margin: 0 auto;
-  text-align: center;
-  max-width: ${breakpoints.large};
-  margin-top: 20px;
+  display: none;
+  @media (min-width: ${breakpoints.small}) {
+    display: block;
+    font-size: ${themeSettings.fontSize[20]};
+    font-weight: 300;
+    margin: 0 auto;
+    text-align: center;
+    max-width: ${breakpoints.large};
+    margin-top: 20px;
+  }
+  @media (min-width: ${breakpoints.medium}) {
+    font-size: ${themeSettings.fontSize[26]};
+  }
   @media (min-width: 1750px) {
     text-align: left;
   }
@@ -66,6 +81,20 @@ const Logo = styled.img`
     top: 10px;
     left: 10px;
   }
+`;
+
+const Badge = styled.a`
+  background-color: ${({ theme }) => theme.ui.siteTitle.badge.background};
+  color: ${({ theme }) => theme.ui.siteTitle.badge.color};
+  font-size: ${themeSettings.fontSize[12]};
+  line-height: ${themeSettings.fontSize[26]};
+  vertical-align: top;
+  padding: 1px 6px;
+  border-radius: 8px;
+  margin-left: 1px;
+  position: relative;
+  top: -6px;
+  text-decoration: none;
 `;
 
 /**
@@ -89,9 +118,6 @@ const mainTitle = user => {
   if (UserUtil.getAffiliation(user) === User.AFFILIATIONS.employee) {
     title = 'Employee';
   }
-  {
-    console.log(user);
-  }
   return title + ' Dashboard';
 };
 
@@ -106,7 +132,15 @@ const Header = () => {
           src={campusLogo(user.data)}
           alt="Oregon State University"
         />
-        <SiteTitle>{mainTitle(user.data)}</SiteTitle>
+        <SiteTitle>
+          {mainTitle(user.data)}
+          <Badge
+            href="/beta"
+            onClick={() => Event('beta', `${mainTitle(user.data)} beta badge clicked`)}
+          >
+            beta
+          </Badge>
+        </SiteTitle>
         <ProfileMenu />
       </HeaderWrapper>
       <Navigation>

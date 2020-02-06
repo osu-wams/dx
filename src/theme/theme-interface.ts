@@ -513,12 +513,15 @@ export interface ThemeConfiguration {
         color: string;
       };
     };
-    pageTitle: {
+    siteTitle: {
       color: string;
       badge: {
         background: string;
         color: string;
       };
+    };
+    pageTitle: {
+      color: string;
     };
     plainCard: {
       header: {

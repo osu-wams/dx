@@ -543,12 +543,15 @@ export const light: ThemeConfiguration = {
         color: neutral600
       }
     },
-    pageTitle: {
+    siteTitle: {
       color: neutral600,
       badge: {
-        background: info,
-        color: buttonPrimary
+        background: Color['stratosphere-200'],
+        color: Color['stratosphere-500']
       }
+    },
+    pageTitle: {
+      color: neutral600
     },
     plainCard: {
       header: {

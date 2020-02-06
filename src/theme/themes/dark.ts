@@ -543,12 +543,15 @@ export const dark: ThemeConfiguration = {
         color: neutral600
       }
     },
-    pageTitle: {
+    siteTitle: {
       color: neutral600,
       badge: {
         background: info,
         color: buttonPrimary
       }
+    },
+    pageTitle: {
+      color: neutral600
     },
     plainCard: {
       header: {
