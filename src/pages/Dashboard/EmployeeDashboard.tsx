@@ -10,7 +10,7 @@ const EmployeeDashboard = () => {
   return (
     <>
       <MainGridWrapper data-testid="employee-dashboard-page">
-        <PageTitle title="Employee Dashboard" />
+        <PageTitle title="Overview" />
         <Masonry>
           <EmployeeTools />
           <ResourcesCard categ="employee_featured" icon={faStars} />

@@ -20,10 +20,10 @@ const PageTitle: FC<Props> = ({ title }) => {
 };
 
 const Title = styled.h1`
-  font-size: ${themeSettings.fontSize[24]};
+  font-size: ${themeSettings.fontSize[20]};
   color: ${({ theme }) => theme.ui.pageTitle.color};
   font-weight: normal;
-  line-height: 43px;
+  line-height: 30px;
   margin: 0 auto;
   max-width: ${breakpoints.large};
   @media (min-width: ${breakpoints.small}) {

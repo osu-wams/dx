@@ -13,13 +13,6 @@ import { Types } from '@osu-wams/lib';
 import { UserContext } from '../App';
 import { Event, IComponents } from '../util/gaTracking';
 
-interface Badge {
-  title: string;
-  href?: string;
-  eventCategory?: IComponents;
-  eventAction?: string;
-  eventLabel?: string;
-}
 const { usersCampus, CAMPUS_CODES } = User;
 
 const HeaderWrapper = styled.div`
