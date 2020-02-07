@@ -11,7 +11,7 @@ import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { UserContext } from '../App';
-import { Event, IComponents } from '../util/gaTracking';
+import { Event } from '../util/gaTracking';
 
 const { usersCampus, CAMPUS_CODES } = User;
 

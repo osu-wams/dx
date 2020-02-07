@@ -1,7 +1,13 @@
 import React from 'react';
 import { waitForElement, wait } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { render, authUserClassification, authUserAudienceOverride } from '../../util/test-utils';
+import {
+  render,
+  authUserClassification,
+  mockEmployeeUser,
+  authUserAudienceOverride,
+  sleep
+} from '../../util/test-utils';
 import Header from '../Header';
 import { mockGAEvent } from '../../setupTests';
 
@@ -15,13 +21,52 @@ global.document.createRange = () => ({
   }
 });
 
-it('has a logout link in the menu', async () => {
-  const { getByText, getByTestId } = render(<Header />);
+const mockPostSettings = jest.fn(async args => Promise.resolve(args));
+jest.mock('@osu-wams/hooks', () => {
+  const original = jest.requireActual('@osu-wams/hooks');
+  return {
+    ...original,
+    User: {
+      ...original.User,
+      postSettings: args => mockPostSettings(args)
+    }
+  };
+});
+
+it('has student dashboard title', async () => {
+  const { findByText } = render(<Header />);
+  const title = await findByText('Student Dashboard');
+  expect(title).toBeInTheDocument();
+});
+
+it('has employee dashboard title', async () => {
+  const { findByText } = render(<Header />, { user: mockEmployeeUser });
+  const title = await findByText('Employee Dashboard');
+  expect(title).toBeInTheDocument();
+});
+
+it('Employees can toggle between Student and Employee dashboards', async () => {
+  mockPostSettings.mockReturnValue(Promise.resolve());
+  const { findByText, getByTestId, debug, rerender } = render(<Header />, {
+    user: mockEmployeeUser
+  });
 
   userEvent.click(getByTestId('user-btn'));
-  const logoutLink = await waitForElement(() => getByText('Logout'));
+  const studentDashboard = await findByText('Student Dashboard');
 
-  await wait(() => expect(logoutLink).toBeInTheDocument());
+  userEvent.click(studentDashboard);
+  expect(mockPostSettings).toHaveBeenCalledTimes(1);
+
+  expect(mockPostSettings).toHaveBeenCalledWith({ primaryAffiliationOverride: 'student' });
+});
+
+it('has a logout link in the menu', async () => {
+  const { findByText, getByTestId } = render(<Header />);
+
+  userEvent.click(getByTestId('user-btn'));
+  const logoutLink = await findByText('Logout');
+
+  expect(logoutLink).toBeInTheDocument();
 });
 
 it('User Button and profile link are in the menu and tracked via GA', async () => {
