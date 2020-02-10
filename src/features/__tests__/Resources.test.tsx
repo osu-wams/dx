@@ -37,14 +37,12 @@ const renderResources = (userType?: any) => {
   const featured = utils.getByLabelText('Featured');
   const all = utils.getByLabelText('All');
   const searchInput = utils.getByPlaceholderText('Find resources') as HTMLInputElement;
-  const academic = utils.getByLabelText('Academic');
   const financial = utils.getByLabelText('Financial');
 
   return {
     ...utils,
     searchInput,
     featured,
-    academic,
     financial,
     all
   };
@@ -106,7 +104,9 @@ describe('<Resources />', () => {
 
   it('should empty input and get results for that category only when clicking category link', async () => {
     mockDefaultCategory.mockReturnValue(defaultCategory);
-    const { searchInput, academic, findByText } = renderResources();
+    const { searchInput, getByLabelText, findByText } = renderResources();
+
+    const academic = getByLabelText('Academic');
 
     // Search input value changed to "noResults"
     await userEvent.type(searchInput, 'noResults');
@@ -133,7 +133,9 @@ describe('<Resources />', () => {
   });
 
   it('should be able to reselect a category and get appropriate data back', async () => {
-    const { queryByText, findByText, academic, all } = renderResources();
+    const { queryByText, findByText, getByLabelText, all } = renderResources();
+
+    const academic = getByLabelText('Academic');
 
     userEvent.click(all);
     userEvent.click(academic);
@@ -196,9 +198,10 @@ describe('<Resources />', () => {
       userEvent.click(all);
 
       expect(all).toHaveClass('selected');
-      expect(await findByText(/found 4 results/)).toBeInTheDocument();
+      expect(await findByText(/found 3 results/)).toBeInTheDocument();
       expect(await findByText(/Listservs/)).toBeInTheDocument();
       expect(await queryByText(/Student Jobs/)).toBeNull();
+      expect(await queryByText(/Academics for Student Athletes/)).toBeNull();
     });
 
     it('finds Listservs as an employee when clicking the Financial category', async () => {
