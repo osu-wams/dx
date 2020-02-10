@@ -24,6 +24,7 @@ const Resources = () => {
   const categories = useCategories();
   const res = useResources();
   const [filteredResources, setFilteredResources] = useState<any>([]);
+  const [filteredCategories, setFilteredCategories] = useState<any>([]);
 
   /**
    * A delegate method for children components to call and set the selected category. This
@@ -52,37 +53,49 @@ const Resources = () => {
   };
 
   /**
-   * Checks the affiliation data coming from user object and determines if a resource should
-   * or should not appear for the given user.
-   * @param resource object with the details of the resource
+   * Checks the affiliation data coming from user and determines if an object with affiliation data
+   * should or should not appear for the given user.
+   * @param o object having an affiliation string array
    * @returns {boolean} true or false depending if the item is associated with the current affiliation
    */
-  const checkAffiliation = resource => {
-    if (
-      resource.affiliation?.length === 0 ||
-      resource.affiliation?.findIndex(s =>
-        s.toLowerCase().includes(getAffiliation(user.data).toLowerCase())
-      ) > -1
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+  const checkAffiliation = (user: any, o: { affiliation: string[] }): boolean => {
+    const userAffiliation = getAffiliation(user).toLowerCase();
+    return (
+      o.affiliation?.length === 0 ||
+      o.affiliation?.map(a => a.toLowerCase()).filter(a => a === userAffiliation).length > 0
+    );
   };
 
   /**
-   * Leverages checkAffiliation function filter an array of resources for a given user
-   * @param {Resource[]} resources full list of resources
-   * @returns {Resource[]} filtered list of resources by primary affiliation
+   * Checks a resource to see if it is related to a category in the provided filtered categories array
+   * @param resource the resource to evaluate
+   * @param filteredCategories a filtered list of categories to display
    */
-  const filterByAffiliation = (resources: Types.Resource[]): Types.Resource[] => {
-    return resources.filter(checkAffiliation);
+  const hasCategory = (resource: Types.Resource, filteredCategories: Types.Category[]): boolean => {
+    return (
+      resource.categories?.length === 0 ||
+      resource.categories
+        ?.map(c => c.toLowerCase())
+        .some(c => filteredCategories.find(fc => fc.name.toLowerCase() === c))
+    );
   };
+
+  /**
+   * Filter the categories to include any that have an affilation related to the type of user
+   * (student vs employee)
+   */
+  useEffect(() => {
+    if (categories.data && user.data) {
+      setFilteredCategories(categories.data.filter(c => checkAffiliation(user.data, c)));
+    }
+  }, [categories.data, user.data]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (res.data && user.data) {
-      let filtered = filterByAffiliation(res.data);
+    if (res.data && user.data && filteredCategories.length > 0) {
+      let filtered = res.data.filter(
+        r => checkAffiliation(user.data, r) && hasCategory(r, filteredCategories)
+      );
 
       // When clicking a category we filter all results based on selected category
       if (!debouncedQuery) {
@@ -104,7 +117,7 @@ const Resources = () => {
       }
       setFilteredResources(filtered);
     }
-  }, [activeCategory, debouncedQuery, res.data, user.data]);
+  }, [activeCategory, filteredCategories, debouncedQuery, res.data, user.data]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
@@ -167,7 +180,7 @@ const Resources = () => {
               )}
               {categories.loading && <Skeleton />}
               <ResourcesCategories
-                categories={categories.data}
+                categories={filteredCategories}
                 selectedCategory={activeCategory}
                 setQuery={setQuery}
                 setSelectedCategory={setSelectedCategory}
