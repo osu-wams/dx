@@ -11,7 +11,7 @@ export interface ThemeConfiguration {
       background: string;
       color: string;
     };
-    profileMenuList: {
+    headerNavList: {
       background: string;
       color: string;
       svg: {
@@ -21,6 +21,7 @@ export interface ThemeConfiguration {
         borderTop: string;
       };
       menuItemSelected: {
+        color: string;
         background: string;
       };
     };

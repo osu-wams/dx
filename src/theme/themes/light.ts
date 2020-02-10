@@ -41,16 +41,17 @@ export const light: ThemeConfiguration = {
       background: Color.transparent,
       color: neutral550
     },
-    profileMenuList: {
-      background: neutral800,
-      color: linkForeground,
+    headerNavList: {
+      background: componentBackground,
+      color: bodyText,
       svg: {
-        color: primary
+        color: bodyText
       },
       menuItem: {
-        borderTop: neutral500
+        borderTop: Color.transparent
       },
       menuItemSelected: {
+        color: primary,
         background: Color.transparent
       }
     },

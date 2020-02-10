@@ -5,8 +5,7 @@ import {
   render,
   authUserClassification,
   mockEmployeeUser,
-  authUserAudienceOverride,
-  sleep
+  authUserAudienceOverride
 } from '../../util/test-utils';
 import Header from '../Header';
 import { mockGAEvent } from '../../setupTests';
@@ -47,7 +46,7 @@ it('has employee dashboard title', async () => {
 
 it('Employees can toggle between Student and Employee dashboards', async () => {
   mockPostSettings.mockReturnValue(Promise.resolve());
-  const { findByText, getByTestId, debug, rerender } = render(<Header />, {
+  const { findByText, getByTestId } = render(<Header />, {
     user: mockEmployeeUser
   });
 

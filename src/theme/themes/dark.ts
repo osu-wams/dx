@@ -41,7 +41,7 @@ export const dark: ThemeConfiguration = {
       background: Color.transparent,
       color: neutral550
     },
-    profileMenuList: {
+    headerNavList: {
       background: neutral800,
       color: linkForeground,
       svg: {
@@ -51,6 +51,7 @@ export const dark: ThemeConfiguration = {
         borderTop: neutral500
       },
       menuItemSelected: {
+        color: bodyText,
         background: Color.transparent
       }
     },

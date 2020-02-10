@@ -5,7 +5,7 @@ import ecampusLogo from '../assets/osu-ecampus.svg';
 import cascadesLogo from '../assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
-import { ProfileMenu } from './ProfileMenu';
+import { HeaderNav } from './HeaderNav';
 import { breakpoints, styled, themeSettings } from '../theme';
 import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
@@ -134,7 +134,7 @@ const Header = () => {
             beta
           </Badge>
         </SiteTitle>
-        <ProfileMenu />
+        <HeaderNav />
       </HeaderWrapper>
       <Navigation>
         <MainNav />
