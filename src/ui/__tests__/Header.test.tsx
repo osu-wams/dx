@@ -64,8 +64,9 @@ it('has a logout link in the menu', async () => {
 
   userEvent.click(getByTestId('user-btn'));
   const logoutLink = await findByText('Logout');
+  userEvent.click(logoutLink);
 
-  expect(logoutLink).toBeInTheDocument();
+  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
 });
 
 it('User Button and profile link are in the menu and tracked via GA', async () => {
@@ -74,8 +75,24 @@ it('User Button and profile link are in the menu and tracked via GA', async () =
   const userLink = getByTestId('user-btn');
   userEvent.click(userLink);
 
-  const profileLink = await waitForElement(() => getByText('Profile'));
+  const profileLink = await waitForElement(() => getByText('Profile', { selector: 'a' }));
   userEvent.click(profileLink);
+
+  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+});
+
+it('Help button and help link are in the menu and tracked via GA', async () => {
+  const { findByText, getByTestId } = render(<Header />);
+
+  const userLink = getByTestId('help-btn');
+  userEvent.click(userLink);
+
+  const helpLink = await findByText('Get Help', { selector: 'a' });
+  const feedbackLink = await findByText('Give feedback', { selector: 'a' });
+
+  expect(feedbackLink).toBeInTheDocument();
+
+  userEvent.click(helpLink);
 
   await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
 });
