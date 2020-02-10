@@ -1,12 +1,17 @@
 import { Link } from '@reach/router';
-import { styled } from '../../theme';
+import { styled, themeSettings } from '../../theme';
 
 const Nav = styled.nav`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background: ${({ theme }) => theme.header.mainNavList.background};
+  box-shadow: rgba(66, 62, 60, 0.1) 0 -10px 16px, rgba(105, 99, 97, 0.05) 0 -3px 16px;
+  /* border-top: 1px solid #eee; */
   display: flex;
   flex-direction: row;
-  @media (min-width: 541px) {
-    justify-content: center;
-  }
+  justify-content: center;
 `;
 
 const NavLink = styled(Link)`
@@ -14,8 +19,9 @@ const NavLink = styled(Link)`
   flex-direction: column;
   align-items: center;
   margin: 0 8px;
-  padding: 0 4px;
-  line-height: 30px;
+  padding: 10px 4px 5px;
+  line-height: 22px;
+  font-size: ${themeSettings.fontSize[12]};
   text-decoration: none;
   background-color: ${({ theme }) => theme.header.mainNavList.background};
   color: ${({ theme }) => theme.header.mainNavList.color};
@@ -31,7 +37,7 @@ const NavLink = styled(Link)`
     color: ${({ theme }) => theme.header.mainNavList.hoverColor};
   }
   & > svg {
-    font-size: 24px;
+    font-size: 20px;
   }
   &:last-child {
     /* prevents last anchor link from being under the gradient */

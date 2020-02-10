@@ -20,14 +20,15 @@ const PopoverDisclosure = styled(PD)`
   align-items: center;
   margin: 0 12px;
   padding: 0 4px;
-  line-height: 30px;
+  line-height: 22px;
   text-decoration: none;
   border: none;
   background-color: ${({ theme }) => theme.header.mainNavList.background};
   cursor: pointer;
   color: ${({ theme }) => theme.header.mainNavList.color};
+  font-size: ${themeSettings.fontSize['12']};
   & > svg {
-    font-size: 24px;
+    font-size: 20px;
   }
   &:active,
   &:focus,
@@ -60,7 +61,7 @@ const NavLink = styled(Link)`
   color: ${({ theme }) => theme.header.mainNavList.popOver.primaryNav.link.color};
   width: 50%;
   & > svg {
-    font-size: 24px;
+    font-size: 20px;
     margin-right: 1.2rem;
     color: ${({ theme }) => theme.header.mainNavList.popOver.primaryNav.link.svg.color};
   }
@@ -109,7 +110,7 @@ const MoreNav = () => {
         {...popover}
         onClick={() => Event('student-navigation-main', 'More link clicked')}
       >
-        <Icon icon={faPlusCircle} /> More
+        <Icon icon={faPlusCircle} fontSize="sm" /> Menu
       </PopoverDisclosure>
       <Popover {...popover} aria-label="Other menus">
         <PrimaryNav>

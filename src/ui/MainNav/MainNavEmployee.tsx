@@ -7,9 +7,9 @@ import { Nav, NavLink } from './MainNavStyles';
 const MainNavEmployee = (...props) => {
   return (
     <Nav {...props}>
-      <NavLink to="/" onClick={() => Event('employee-navigation-main', 'Home link clicked')}>
+      <NavLink to="/" onClick={() => Event('employee-navigation-main', 'Overview link clicked')}>
         <Icon icon={faHome} />
-        Home
+        Overview
       </NavLink>
       <NavLink
         to="resources"
