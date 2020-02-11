@@ -1,16 +1,16 @@
-import React from 'react';
-import { faHome, faGraduationCap, faHandsUsd } from '@fortawesome/pro-light-svg-icons';
+import React, { useState } from 'react';
+import { faHome, faGraduationCap, faHandsUsd, faBars } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Event } from '../../util/gaTracking';
-import { MoreNav } from './MoreNav';
+import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
 
 const MainNavStudent = (...props) => {
   return (
     <Nav {...props}>
-      <NavLink to="/" onClick={() => Event('student-navigation-main', 'Home link clicked')}>
+      <NavLink to="/" onClick={() => Event('student-navigation-main', 'Overview link clicked')}>
         <Icon icon={faHome} />
-        Home
+        Overview
       </NavLink>
       <NavLink
         to="academics"
@@ -26,7 +26,7 @@ const MainNavStudent = (...props) => {
         <Icon icon={faHandsUsd} />
         Finances
       </NavLink>
-      <MoreNav />
+      <FullMobileMenu />
     </Nav>
   );
 };
