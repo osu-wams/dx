@@ -75,9 +75,9 @@ const ITSystemStatus = () => {
               </NoItems>
             )}
             {!allOperational(status.data) &&
-              sortedByStatus(status.data).map(c => (
-                <ITSystemItem key={`item-${c.id}`} component={c} />
-              ))}
+              sortedByStatus(status.data)
+                .filter(c => c.status > 1)
+                .map(c => <ITSystemItem key={`item-${c.id}`} component={c} />)}
           </StatusItemRow>
         </CardContentTable>
       )}
