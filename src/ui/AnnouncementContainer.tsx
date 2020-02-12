@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useAnnouncements } from '../api/announcements';
-import { SecondGridWrapper } from '../ui/PageGrid';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
-import { breakpoints, styled } from '../theme';
 import { UserContext } from '../App';
-import { hasAudience } from '../api/user';
+import { User } from '@osu-wams/hooks';
+import { styled, themeSettings, breakpoints, SecondGridWrapper } from '../theme';
+import { Announcements, useAnnouncements } from '@osu-wams/hooks';
+
+const { hasAudience, getAffiliation } = User;
 
 const AnnouncementContainerWrapper = styled.div`
   max-width: ${breakpoints[1024]};
@@ -13,10 +14,10 @@ const AnnouncementContainerWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: 16px;
-  @media screen and (min-width: 768px) {
+  grid-row-gap: ${themeSettings.spacing.mobile};
+  @media screen and (min-width: ${breakpoints[768]}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 16px;
+    grid-gap: ${themeSettings.spacing.desktop};
   }
 `;
 
@@ -24,6 +25,7 @@ const AnnouncementContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const user = useContext<any>(UserContext);
   const announcements = useAnnouncements(page);
+  const { hasAffiliation } = Announcements;
 
   /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
@@ -31,8 +33,10 @@ const AnnouncementContainer = ({ page, ...props }) => {
     let announcementsToUse: any[] = [];
 
     if (!user.loading && !announcements.loading) {
-      announcementsToUse = announcements.data.filter(announcement =>
-        hasAudience(user.data, announcement)
+      announcementsToUse = announcements.data.filter(
+        announcement =>
+          hasAudience(user.data, announcement) &&
+          hasAffiliation(getAffiliation(user.data), announcement)
       );
     }
     setEvents(announcementsToUse);

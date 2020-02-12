@@ -42,6 +42,17 @@ const GlobalStyle = createGlobalStyle`
   strong {
     font-weight: 600;
   }
+  /* Router helper */
+  .router-styles {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+  @media screen and (max-width: 767px) {
+    [data-reach-dialog-overlay] {
+      background: ${({ theme }) => theme.ui.myDialog.background} !important;
+    }
+  }
 `;
 
 export default GlobalStyle;

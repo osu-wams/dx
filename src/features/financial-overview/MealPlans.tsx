@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { useMealPlans } from '../../api/persons/meal-plans';
+import { useMealPlans } from '@osu-wams/hooks';
 import { formatDollars } from '../../util/helpers';
 import {
   Highlight,
@@ -12,20 +12,9 @@ import { ExternalLink } from '../../ui/Link';
 import { Event } from '../../util/gaTracking';
 import { ThemeContext } from '../../theme';
 
-export const MealPlans = props => {
+export const MealPlans = () => {
   const themeContext = useContext(ThemeContext);
-  const { setHasMealPlan } = props;
-
-  const mealPlans = useMealPlans({
-    callback: data => {
-      if (data.length) {
-        setHasMealPlan(data[0].attributes.balance > 0);
-      } else {
-        setHasMealPlan(false);
-      }
-      return data;
-    }
-  });
+  const mealPlans = useMealPlans();
 
   return (
     <Highlight textAlignLeft>
@@ -34,16 +23,16 @@ export const MealPlans = props => {
           <Skeleton count={4} />
         </HighlightTitle>
       )}
-      {mealPlans && mealPlans.data && mealPlans.data.length ? (
+      {mealPlans?.data?.length ? (
         <>
           <HighlightEmphasis
             color={
-              mealPlans.data[0].attributes.balance > 0
+              mealPlans.data[0].attributes?.balance && mealPlans.data[0].attributes?.balance > 0
                 ? themeContext.features.finances.mealPlans.emphasisBalance.color
                 : themeContext.features.finances.mealPlans.emphasisNoBalance.color
             }
           >
-            {formatDollars(mealPlans.data[0].attributes.balance)}
+            {formatDollars(mealPlans.data[0].attributes?.balance)}
           </HighlightEmphasis>
           <HighlightTitle marginTop={0}>Meal Plan Balance</HighlightTitle>
           <HighlightDescription>

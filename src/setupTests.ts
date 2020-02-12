@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
-import { Event } from '../src/util/gaTracking';
+import * as cache from './util/cache';
 
 ReactGA.initialize('UA-48705802-13', {
   testMode: true
@@ -16,6 +16,35 @@ jest.mock('../src/util/gaTracking', () => ({
 }));
 
 mockGAEvent.mockResolvedValue(Promise.resolve(true));
+
+beforeEach(() => {
+  mockGAEvent.mockClear();
+});
+
+afterEach(() => {
+  // don't output debug statements to console
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+
+  jest.clearAllMocks();
+});
+
+// required because of the overlay from Reakit
+if (global.document) {
+  global.document.createRange = () => ({
+    setStart: () => {},
+    setEnd: () => {},
+    commonAncestorContainer: {
+      nodeName: 'BODY',
+      ownerDocument: document
+    }
+  });
+}
+
+// Supress missing CSS warnings in tests from @reach ui components
+jest.mock('@reach/utils', () => ({
+  ...jest.requireActual('@reach/utils'),
+  checkStyles: jest.fn()
+}));
 
 // Mock matchMedia for test env
 const matchMedia = () => ({
@@ -34,4 +63,5 @@ beforeEach(() => {
   Storage.prototype.getItem = jest.fn();
   Storage.prototype.setItem = jest.fn();
   Storage.prototype.removeItem = jest.fn();
+  cache.clear();
 });

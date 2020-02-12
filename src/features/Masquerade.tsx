@@ -6,10 +6,11 @@ import Label from '../ui/Label';
 import { toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { Event } from '../util/gaTracking';
-import { getMasqueradeUser, postMasqueradeUser } from '../api/masquerade';
+import { Masquerade as hooksMasquerade } from '@osu-wams/hooks';
 import * as cache from '../util/cache';
 import { ThemeContext } from '../theme';
 
+const { getMasqueradeUser, postMasqueradeUser } = hooksMasquerade;
 interface MasqueradeProps {
   showMasqueradeDialog: boolean;
   toggleMasqueradeDialog: (event?: any) => void;
@@ -24,7 +25,6 @@ export const Masquerade = (props: MasqueradeProps) => {
   useEffect(() => {
     getMasqueradeUser()
       .then(data => {
-        console.log(data);
         if (data && data.masqueradeId !== '') {
           cache.clear();
           setMasqueradeId(data.masqueradeId);
@@ -95,7 +95,6 @@ export const Masquerade = (props: MasqueradeProps) => {
    * usage as themselves.
    */
   const masqueradeText = () => {
-    console.log(masqueradeId);
     if (masqueradeId === '') {
       return 'Remove Masquerade';
     } else {
@@ -106,6 +105,7 @@ export const Masquerade = (props: MasqueradeProps) => {
   return (
     <MyDialog
       isOpen={showMasqueradeDialog}
+      onDismiss={() => toggleMasqueradeDialog()}
       data-testid="masquerade-dialog"
       aria-labelledby="maskDialog-title"
     >

@@ -5,26 +5,23 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { List, ListItem, ListItemContentLink } from '../ui/List';
-import { styled, ThemeContext, themeSettings } from '../theme';
-import { useResourcesByQueue } from '../api/resources';
+import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
+import { styled, ThemeContext } from '../theme';
+import { useResourcesByQueue } from '@osu-wams/hooks';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
-import { hasAudience } from '../api/user';
+import { Types } from '@osu-wams/lib';
+import { User } from '@osu-wams/hooks';
 import { IconLookup } from './resources/resources-utils';
 
 // Setup a font awesome library to use for searching icons from the backend.
 library.add(fal, fab);
 
+const { hasAudience } = User;
+
 const ResourcesContainer = styled(CardContent)`
   padding-bottom: 0;
-`;
-
-const ResourceName = styled.div`
-  font-size: ${themeSettings.fontSize[18]};
-  color: ${({ theme }) => theme.features.resources.name.color};
-  padding-left: ${themeSettings.spacing.unit * 2}px;
 `;
 
 /**
@@ -36,46 +33,50 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
   const res = useResourcesByQueue(categ);
-  const [resources, setResources] = useState<any>([]);
+  const [resources, setResources] = useState<Types.Resource[]>([]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!user.loading && !res.loading) {
-      const resourcesToUse = res.data.filter(resource => hasAudience(user.data, resource));
+      const resourcesToUse = res.data?.items?.filter(r => hasAudience(user.data, r));
       setResources(resourcesToUse);
     }
   }, [res.data, res.loading, user.data, user.loading]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  const cardTitle = categ.charAt(0).toUpperCase() + categ.slice(1) + ' Resources';
+  const cardTitle = res.data.entityQueueTitle + ' Resources';
+
+  // For employee_featured, we don't want the employee part...
+  if (categ.split('_')[1]) {
+    categ = categ.split('_')[1];
+  }
 
   return (
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
         {res.loading && <Skeleton count={5} />}
-        {!res.loading && resources.length > 0 && (
+        {!res.loading && resources?.length > 0 && (
           <List data-testid="resource-container">
             {resources.map(resource => (
               <ListItem key={resource.id}>
-                <ListItemContentLink
+                <ListItemContentLinkSVG
                   href={resource.link}
                   target="_blank"
                   onClick={() => Event('resources-card', categ, resource.title)}
                 >
                   {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
-                  <ResourceName>{resource.title}</ResourceName>
-                </ListItemContentLink>
+                  <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
+                </ListItemContentLinkSVG>
               </ListItem>
             ))}
           </List>
         )}
-
-        {!res.loading && !res.error && resources.length === 0 && <EmptyState />}
+        {!res.loading && !res.error && resources?.length === 0 && <EmptyState />}
 
         {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
       </ResourcesContainer>
-      {resources.length > 0 && (
+      {resources?.length > 0 && (
         <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink
             to={`/resources?category=${categ.toLowerCase()}`}

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { faFileAlt } from '@fortawesome/pro-light-svg-icons';
-import { format } from 'date-fns';
 import {
   CardSection,
   SectionHeader,
@@ -24,16 +23,25 @@ import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
 import { Event } from '../../util/gaTracking';
 import { courseCodeOrIcon } from '../Courses';
 import { ThemeContext } from '../../theme';
+import { format } from '../../util/helpers';
 
 const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
   const themeContext = useContext(ThemeContext);
   const user = useContext<any>(UserContext);
 
+  const noAssignmentsDue = () => (
+    <NoItems as="li">
+      <NoItemsImage src={assignment} alt="" />
+      <NoItemsText>No Canvas assignments due</NoItemsText>
+    </NoItems>
+  );
+
   return (
     <CardSection>
       <SectionHeader>Assignments</SectionHeader>
       <List>
-        {user.isCanvasOptIn !== undefined && !user.isCanvasOptIn && <AuthorizeCanvasCompact />}
+        {!user.isCanvasOptIn && <AuthorizeCanvasCompact />}
+        {user.isCanvasOptIn && selectedPlannerItems.length === 0 && noAssignmentsDue()}
         {user.isCanvasOptIn &&
           selectedPlannerItems.length > 0 &&
           selectedPlannerItems.map(
@@ -47,9 +55,9 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
             }) => (
               <ListItem key={plannable_id}>
                 <ListItemContentLink
-                  href={Url.canvas.main + html_url}
+                  href={Url.canvas.main + html_url ?? ''}
                   onClick={() =>
-                    Event('schedule-card', 'canvas-link', `${Url.canvas.main + html_url}`)
+                    Event('schedule-card', 'canvas-link', `${Url.canvas.main + html_url ?? title}`)
                   }
                 >
                   {courseCodeOrIcon(
@@ -63,21 +71,16 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
                   <ListItemText>
                     <ListItemHeader>{title} </ListItemHeader>
                     <ListItemDescription>
-                      {plannable_type !== 'announcement'
-                        ? `Due ${format(plannable_date, 'MMM Do [at] h:mma')}`
-                        : ''}
+                      {plannable_type &&
+                        plannable_date &&
+                        plannable_type !== 'announcement' &&
+                        `Due ${format(plannable_date, 'dueAt')}`}
                     </ListItemDescription>
                   </ListItemText>
                 </ListItemContentLink>
               </ListItem>
             )
           )}
-        {user.isCanvasOptIn && selectedPlannerItems.length === 0 && (
-          <NoItems as="li">
-            <NoItemsImage src={assignment} alt="" />
-            <NoItemsText>No Canvas assignments due</NoItemsText>
-          </NoItems>
-        )}
       </List>
     </CardSection>
   );

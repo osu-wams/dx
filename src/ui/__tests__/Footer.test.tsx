@@ -1,6 +1,7 @@
 import React from 'react';
-import { fireEvent, waitForElement } from '@testing-library/react';
-import { render, renderWithUserContext, renderWithAllContexts } from '../../util/test-utils';
+import { waitForElement, wait } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { renderWithUserContext, renderWithAllContexts } from '../../util/test-utils';
 import Footer from '../Footer';
 import { mockGAEvent } from '../../setupTests';
 import { authUser } from '../../util/test-utils';
@@ -8,10 +9,15 @@ import { authUser } from '../../util/test-utils';
 const mockGetMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
 
-jest.mock('../../api/masquerade', () => ({
-  getMasqueradeUser: () => mockGetMasqueradeUser(),
-  postMasqueradeUser: () => mockPostMasqueradeUser()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    Masquerade: {
+      getMasqueradeUser: () => mockGetMasqueradeUser(),
+      postMasqueradeUser: () => mockPostMasqueradeUser()
+    }
+  };
+});
 
 beforeEach(() => {
   Storage.prototype.clear = jest.fn();
@@ -19,40 +25,42 @@ beforeEach(() => {
   mockPostMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo Post' });
 });
 
-it('renders', () => {
-  render(<Footer />);
-});
-
 it('Masquerade link is present for administrators and they can open and close the modal', async () => {
-  const { getByText, getByTestId, queryByTestId } = renderWithAllContexts(<Footer />);
+  const { findByText, findByTestId, queryByTestId } = renderWithAllContexts(<Footer />);
 
   //Profile icon click - this text is visually hidden
-  const maskLink = await waitForElement(() => getByText('Masquerade'));
-  fireEvent.click(maskLink);
-  const maskOverlay = await waitForElement(() => getByTestId('masquerade-dialog'));
+  const maskLink = await findByText('Masquerade');
+  userEvent.click(maskLink);
+  const maskOverlay = await findByTestId('masquerade-dialog');
+
   // Masquerade overlay shows up
-  expect(maskOverlay).toBeInTheDocument();
+  await wait(() => expect(maskOverlay).toBeInTheDocument());
+
   // Make sure we can close to overlay too
-  const cancelBtn = getByText('Cancel');
-  fireEvent.click(cancelBtn);
-  expect(queryByTestId('masquerade-dialog')).toBeNull();
+  const cancelBtn = await findByText('Cancel');
+  userEvent.click(cancelBtn);
+
+  await wait(() => expect(queryByTestId('masquerade-dialog')).toBeNull());
 });
 
 it('As an administrator, I can click "masquerade" and trigger the api calls', async () => {
   const { getByText, getByTestId } = renderWithUserContext(<Footer />);
   //Profile icon click - this text is visually hidden
   const maskLink = await waitForElement(() => getByText('Masquerade'));
-  fireEvent.click(maskLink);
+  userEvent.click(maskLink);
+
   const maskOverlay = await waitForElement(() => getByTestId('masquerade-dialog'));
   // Masquerade overlay shows up
   expect(maskOverlay).toBeInTheDocument();
+
   // Make sure we can close to overlay too
   const masqueradeSubmit = document.querySelector(`button[type='submit']`) as HTMLElement;
   const idInput = document.getElementById('osu-id') as HTMLInputElement;
-  idInput.value = '111';
-  fireEvent.click(masqueradeSubmit);
-  expect(Storage.prototype.clear).toHaveBeenCalled();
-  expect(mockPostMasqueradeUser).toHaveBeenCalled();
+  await userEvent.type(idInput, '111');
+  userEvent.click(masqueradeSubmit);
+
+  expect(Storage.prototype.clear).toHaveBeenCalledTimes(1);
+  await wait(() => expect(mockPostMasqueradeUser).toHaveBeenCalledTimes(1));
 });
 
 it('Links to be present and tracked in Google Analytics', async () => {
@@ -64,33 +72,36 @@ it('Links to be present and tracked in Google Analytics', async () => {
   const disclaimerLink = getByText('Disclaimer');
   const maskLink = getByText('Masquerade');
   const accessibilityLink = getByText(/Accessibility Information/);
-  fireEvent.click(supportLink);
-  fireEvent.click(feedbackLink);
-  fireEvent.click(copyrightLink);
-  fireEvent.click(disclaimerLink);
-  fireEvent.click(accessibilityLink);
-  fireEvent.click(maskLink);
-  expect(mockGAEvent).toHaveBeenCalledTimes(9);
+
+  userEvent.click(supportLink);
+  userEvent.click(feedbackLink);
+  userEvent.click(copyrightLink);
+  userEvent.click(disclaimerLink);
+  userEvent.click(accessibilityLink);
+  userEvent.click(maskLink);
+
+  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(6));
 });
 
 it('Application deployed versions', async () => {
   const { getByText } = renderWithAllContexts(<Footer />);
+
   const appText = await waitForElement(() => getByText('server-test-123'));
   const serverText = await waitForElement(() => getByText('client-test-123'));
   expect(appText).toBeInTheDocument();
   expect(serverText).toBeInTheDocument();
 });
 
-describe('as a user who is not an admin', () => {
+describe('as a user who does not belong to masquerade group', () => {
   let regularUser;
   beforeEach(() => {
     regularUser = authUser;
-    regularUser.data.isAdmin = false;
+    regularUser.data.groups = [];
   });
 
   it('Masquerade link should not be present if user is not an admin', async () => {
     const { queryByText } = renderWithUserContext(<Footer />, { user: regularUser });
-    //Profile icon click - this text is visually hidden
+
     const maskLink = queryByText('Masquerade');
     expect(maskLink).not.toBeInTheDocument();
   });

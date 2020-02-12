@@ -7,8 +7,9 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, Badge } from '../ui/Card';
 import Icon from '../ui/Icon';
-import { formatDate } from '../util/helpers';
-import { useDxAlerts, useRaveAlerts, Alert } from '../api/alerts';
+import { format } from '../util/helpers';
+import { Types } from '@osu-wams/lib';
+import { useDxAlerts, useRaveAlerts } from '@osu-wams/hooks';
 import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
 
 const AlertWrapper = styled.div`
@@ -70,7 +71,7 @@ const Alerts = () => {
   const dxAlerts = useDxAlerts();
   const themeContext = useContext(ThemeContext);
 
-  const cardBody = (alert: Alert, iconProps: IconProps): JSX.Element => (
+  const cardBody = (alert: Types.Alert, iconProps: IconProps): JSX.Element => (
     <AlertCardWrapper>
       <AlertHeader
         title={alert.title}
@@ -82,13 +83,13 @@ const Alerts = () => {
       />
       <AlertContent>
         <p>
-          {formatDate(alert.date)}: {alert.content}
+          {format(alert.date)}: {alert.content ?? ''}
         </p>
       </AlertContent>
     </AlertCardWrapper>
   );
 
-  const alertCard = (alert: Alert): JSX.Element => {
+  const alertCard = (alert: Types.Alert): JSX.Element => {
     switch (alert.type) {
       case 'rave':
         return (

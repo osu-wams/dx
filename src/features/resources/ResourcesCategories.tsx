@@ -1,8 +1,8 @@
 import React from 'react';
 import { themeSettings, styled } from '../../theme';
-import { ICategory } from '../../api/resources';
 import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';
+import { Types } from '@osu-wams/lib';
 
 const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelectedCategory }) => {
   return (
@@ -18,9 +18,9 @@ const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelecte
               setSelectedCategory('all');
               Event('resource-category', 'all');
             }}
-            selected={selectedCategory && selectedCategory.toLowerCase() === 'all' ? true : false}
+            selected={selectedCategory?.toLowerCase() === 'all' ? true : false}
           />
-          {categories.map((category: ICategory) => (
+          {categories.map((category: Types.Category) => (
             <CustomBtn
               icon={category.icon}
               text={category.name}
@@ -34,9 +34,7 @@ const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelecte
               }}
               name="categories"
               selected={
-                selectedCategory && selectedCategory.toLowerCase() === category.name.toLowerCase()
-                  ? true
-                  : false
+                selectedCategory?.toLowerCase() === category.name.toLowerCase() ? true : false
               }
             />
           ))}{' '}

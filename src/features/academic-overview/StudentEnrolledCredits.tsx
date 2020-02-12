@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import {
   Highlight,
@@ -6,25 +6,27 @@ import {
   HighlightEmphasis,
   HighlightDescription
 } from '../../ui/Highlights';
-import { ICourseSchedule, useCourseSchedule } from '../../api/student/course-schedule';
+import { useCourseSchedule } from '@osu-wams/hooks';
+import { CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 export const StudentEnrolledCredits: React.FC = () => {
-  const enrolledCredits = useCourseSchedule({
-    callback: data => {
-      if (data.length) {
-        return data
-          .map((c: ICourseSchedule) => c.attributes.creditHours)
-          .reduce((a: number, v: number) => a + v);
-      }
-    }
-  });
+  const [enrolledCredits, setEnrolledCredits] = useState(0);
+  const courseSchedule = useCourseSchedule();
+
+  useEffect(() => {
+    setEnrolledCredits(
+      courseSchedule.data
+        .map((c: CourseSchedule) => c.attributes.creditHours)
+        .reduce((a: number, v: number) => a + v, 0)
+    );
+  }, [courseSchedule.data]);
 
   return (
     <Highlight textAlignLeft>
-      {enrolledCredits.loading && <Skeleton count={5} />}
-      {!enrolledCredits.loading && (
+      {courseSchedule.loading && <Skeleton count={5} />}
+      {!courseSchedule.loading && (
         <>
-          <HighlightEmphasis>{enrolledCredits.data}</HighlightEmphasis>
+          <HighlightEmphasis>{enrolledCredits}</HighlightEmphasis>
           <HighlightTitle marginTop={0}>Credits</HighlightTitle>
           <HighlightDescription>Enrolled credits for current term.</HighlightDescription>
         </>

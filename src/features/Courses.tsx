@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
-import VisuallyHidden from '@reach/visually-hidden';
-import { faMapMarkerAlt, faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
-import { useCourseSchedule } from '../api/student';
+import { faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
+import { useCourseSchedule } from '@osu-wams/hooks';
 import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
-import { ICourseScheduleAttributes } from '../api/student/course-schedule';
-import { sortedByCourseName } from './schedule/schedule-utils';
+import { sortedGroupedByCourseName, ICoursesMap } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
 import {
   List,
   ListItem,
@@ -13,16 +11,16 @@ import {
   ListItemLeadText,
   ListItemDescription
 } from '../ui/List';
+import coursesImg from '../assets/courses.svg';
 import Course from '../features/Course';
-import Icon from '../ui/Icon';
 import { titleCase, singularPlural } from '../util/helpers';
 import { themeSettings, ThemeContext } from '../theme';
-import { ExternalLink } from '../ui/Link';
+import { ExternalLink, InternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
-import { ICourseSchedule, IMeetingTime } from '../api/student/course-schedule';
 import { Event } from '../util/gaTracking';
-import { courseOnCorvallisCampus } from './schedule/schedule-utils';
 import { matchedCourseContext } from './course-utils';
+import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
+import { CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 /**
  * Get the course item lead text or the icon
@@ -31,7 +29,7 @@ import { matchedCourseContext } from './course-utils';
  */
 export const courseCodeOrIcon = (
   contextName: string,
-  courseList: ICourseSchedule[],
+  courseList: CourseSchedule[],
   iconElement: JSX.Element
 ): JSX.Element => {
   const course = matchedCourseContext(contextName, courseList);
@@ -53,91 +51,89 @@ export const courseItemLeadText = (subject: string, number: string): JSX.Element
   </ListItemLeadText>
 );
 
-const meetingTimeCampusMap = (course: ICourseSchedule, meetingTime: IMeetingTime): JSX.Element => (
-  <a
-    href={Url.campusMap.building + meetingTime.building}
-    target="_blank"
-    rel="noopener noreferrer"
-    onClick={() =>
-      Event(
-        'schedule-card',
-        'course location clicked',
-        `${Url.campusMap.building + meetingTime.building}`
-      )
-    }
-  >
-    <VisuallyHidden>
-      View {course.attributes.courseSubject} {course.attributes.courseNumber} location on map
-    </VisuallyHidden>
-    <Icon icon={faMapMarkerAlt} />
-  </a>
-);
-
 const Courses = () => {
   const themeContext = useContext(ThemeContext);
   const courses = useCourseSchedule();
   const [isOpen, setOpen] = useState(false);
-  const [courseAttributes, setCourseAttributes] = useState<ICourseScheduleAttributes | null>(null);
+  const [showCoursesMap, setShowCoursesMap] = useState<ICoursesMap | null>(null);
 
   // Hides or shows course details
-  const toggleCourse = courseAttributes => {
+  const toggleCourse = (coursesMap: ICoursesMap | null) => {
     setOpen(!isOpen);
-    setCourseAttributes(courseAttributes);
+    if (coursesMap !== null) {
+      setShowCoursesMap(coursesMap);
+    }
   };
 
-  if (!courses.data.length) {
-    return null;
-  }
+  const CourseList = () => (
+    <List>
+      {Array.from(sortedGroupedByCourseName(courses.data).entries(), ([key, coursesMap]) => (
+        <ListItem key={key}>
+          <ListItemContentButton
+            onClick={() => {
+              toggleCourse(coursesMap);
+              Event('courses', 'course clicked', key);
+            }}
+          >
+            {courseItemLeadText(coursesMap.subject, coursesMap.number)}
+            <ListItemText>
+              <ListItemDescription
+                fontSize={themeSettings.fontSize[16]}
+                color={themeContext.features.academics.courses.list.title.color}
+              >
+                {titleCase(coursesMap.title)}
+              </ListItemDescription>
+              <ListItemDescription>
+                {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
+              </ListItemDescription>
+            </ListItemText>
+          </ListItemContentButton>
+        </ListItem>
+      ))}
+    </List>
+  );
+
+  const FooterLink = () => (
+    <ExternalLink href={Url.canvas.main} onClick={() => Event('courses', 'Link to Canvas clicked')}>
+      View more in Canvas
+    </ExternalLink>
+  );
+
+  const NoCourses = () => (
+    <EmptyState>
+      <EmptyStateImage src={coursesImg} alt="" />
+      <EmptyStateText>You do not have any courses scheduled for this term.</EmptyStateText>
+    </EmptyState>
+  );
+
+  const NoCoursesFooterLink = () => (
+    <InternalLink
+      to="past-courses"
+      onClick={() => Event('courses', 'Empty state card footer link to Past Courses clicked')}
+    >
+      See past courses and grades
+    </InternalLink>
+  );
 
   return (
     <Card>
       <CardHeader
         title="Current Courses"
-        badge={<CardIcon icon={faChalkboardTeacher} count={courses.data.length} />}
+        badge={
+          <CardIcon
+            icon={faChalkboardTeacher}
+            count={courses && courses.data ? sortedGroupedByCourseName(courses.data).size : 0}
+          />
+        }
       />
       <CardContent>
-        <List>
-          {sortedByCourseName(courses.data).map(course => (
-            <ListItem key={course.id}>
-              <ListItemContentButton
-                onClick={() => {
-                  toggleCourse(course.attributes);
-                  Event('courses', 'course clicked', course.attributes.courseTitle);
-                }}
-              >
-                {courseItemLeadText(
-                  course.attributes.courseSubject,
-                  course.attributes.courseNumber
-                )}
-                <ListItemText>
-                  <ListItemDescription
-                    fontSize={themeSettings.fontSize[16]}
-                    color={themeContext.features.academics.courses.list.title.color}
-                  >
-                    {titleCase(course.attributes.courseTitle)}
-                  </ListItemDescription>
-                  <ListItemDescription>
-                    {course.attributes.scheduleDescription} &middot; {course.attributes.creditHours}{' '}
-                    {singularPlural(course.attributes.creditHours, 'Credit')}
-                  </ListItemDescription>
-                </ListItemText>
-                {courseOnCorvallisCampus(course) &&
-                  meetingTimeCampusMap(course, course.attributes.meetingTimes[0])}
-              </ListItemContentButton>
-            </ListItem>
-          ))}
-        </List>
-        {isOpen && courseAttributes && (
-          <Course attributes={courseAttributes} toggleCourse={toggleCourse} isOpen />
+        {courses && courses.data.length ? <CourseList /> : <NoCourses />}
+        {isOpen && showCoursesMap && showCoursesMap.courses.length > 0 && (
+          <Course coursesMap={showCoursesMap} toggleCourse={toggleCourse} isOpen />
         )}
       </CardContent>
       <CardFooter infoButtonId="current-courses">
-        <ExternalLink
-          href={Url.canvas.main}
-          onClick={() => Event('courses', 'Link to Canvas clicked')}
-        >
-          View more in Canvas
-        </ExternalLink>
+        {courses && courses.data.length ? <FooterLink /> : <NoCoursesFooterLink />}
       </CardFooter>
     </Card>
   );

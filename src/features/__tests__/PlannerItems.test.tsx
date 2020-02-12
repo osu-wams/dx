@@ -1,89 +1,101 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
+import { waitForElement } from '@testing-library/react';
+import user from '@testing-library/user-event';
 import { render, mockAppContext, authUser } from '../../util/test-utils';
-import mockPlannerItems from '../../api/student/__mocks__/plannerItems.data';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from '../../setupTests';
+import { Student } from '@osu-wams/hooks';
 
+const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockUsePlannerItems = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/student/planner-items', () => ({
-  usePlannerItems: () => mockUsePlannerItems()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    usePlannerItems: () => mockUsePlannerItems()
+  };
+});
 
 describe('<PlannerItems />', () => {
-  // Set mock function result before running any tests
-  beforeAll(() => {
-    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
-  });
-
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
-    const { getByText } = render(<PlannerItems />);
-    await waitForElement(() => getByText('Week 5 Lab Discussion'));
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
+    const { findByText } = render(<PlannerItems />);
+    await findByText('Week 5 Lab Discussion');
   });
 
   it('should track analytics when footer link and assignment is clicked', async () => {
-    const { getByText } = render(<PlannerItems />);
+    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
+    const { getByText, findByText } = render(<PlannerItems />);
 
     // Planner Item
-    const PlannerItem = await waitForElement(() => getByText('Week 5 Lab Discussion'));
-    fireEvent.click(PlannerItem);
+    await waitForElement(() => findByText('Week 5 Lab Discussion'));
+
+    const PlannerItem = getByText('Week 5 Lab Discussion');
+    user.click(PlannerItem);
     expect(mockGAEvent).toHaveBeenCalled();
 
     // Footer link
-    const CanvasLink = await waitForElement(() => getByText('View more in Canvas'));
-    fireEvent.click(CanvasLink);
+    const CanvasLink = await findByText('View more in Canvas');
+    user.click(CanvasLink);
     expect(mockGAEvent).toHaveBeenCalled();
   });
 
   it('should find empty state if our promise returns empty', async () => {
     mockUsePlannerItems.mockReturnValue(mockNoData);
-    const { getByText } = render(<PlannerItems />);
-    const element = await waitForElement(() =>
-      getByText('You have no upcoming Canvas assignments')
-    );
-    expect(element).toBeInTheDocument();
+    const { findByText } = render(<PlannerItems />);
+    const noAssignments = await findByText(/You have no upcoming Canvas assignments/);
+    expect(noAssignments).toBeInTheDocument();
   });
 });
 
 describe('with an InfoButton in the CardFooter', () => {
+  // Set mock function result before running any tests
+  beforeEach(() => {
+    mockUsePlannerItems.mockReturnValueOnce(mockPlannerItems);
+  });
+
   const validIinfoButtonId = 'canvas';
 
-  test('does not display the button when the infoButtonData is missing it', async () => {
+  it('does not display the button when the infoButtonData is missing it', async () => {
     const testAppContext = {
       ...mockAppContext,
       infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
     };
-    const { queryByTestId } = render(<PlannerItems />, { appContext: testAppContext });
+    const { queryByTestId, findByText } = render(<PlannerItems />, {
+      appContext: testAppContext
+    });
+    const noAssignments = await findByText(/You have no upcoming Canvas assignments/);
+    expect(noAssignments).toBeInTheDocument();
 
     const element = queryByTestId(validIinfoButtonId);
     expect(element).not.toBeInTheDocument();
   });
 
-  test('displays the button when the infoButtonData is included', async () => {
+  it('displays the button when the infoButtonData is included', async () => {
     const testAppContext = {
       ...mockAppContext,
       infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
     };
-    const { getByTestId } = render(<PlannerItems />, { appContext: testAppContext });
+    const { findByTestId } = render(<PlannerItems />, { appContext: testAppContext });
 
-    const element = await waitForElement(() => getByTestId(validIinfoButtonId));
+    const element = await findByTestId(validIinfoButtonId);
     expect(element).toBeInTheDocument();
   });
 });
 
 describe('with a user who has not opted-in Canvas', () => {
-  test('hides the badge count and shows the authorization call to action', async () => {
+  it('hides the badge count and shows the authorization call to action', async () => {
+    mockUsePlannerItems.mockReturnValueOnce(mockPlannerItems);
     const mockUser = authUser;
     mockUser.data.isCanvasOptIn = false;
     mockUser.isCanvasOptIn = false;
 
-    const { queryByTestId, getAllByText } = render(<PlannerItems />, { user: mockUser });
+    const { queryByTestId, findAllByText } = render(<PlannerItems />, { user: mockUser });
 
     const element = queryByTestId('icon-counter');
     expect(element).not.toBeInTheDocument();
-    const authorizeElements = await waitForElement(() => getAllByText(/Authorize Canvas/));
+    const authorizeElements = await findAllByText(/Authorize Canvas/i);
     expect(authorizeElements.length).toBe(2);
   });
 });

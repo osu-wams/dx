@@ -85,11 +85,11 @@ export interface ThemeConfiguration {
   };
   mainGrid: {
     background: string;
-    borderBottom: string;
     borderTop: string;
   };
   secondGrid: {
     background: string;
+    borderTop: string;
   };
   footer: {
     background: string;
@@ -168,6 +168,17 @@ export interface ThemeConfiguration {
             };
           };
           faculty: {
+            link: {
+              color: string;
+            };
+            icon: {
+              color: string;
+            };
+          };
+          map: {
+            link: {
+              color: string;
+            };
             icon: {
               color: string;
             };
@@ -259,6 +270,44 @@ export interface ThemeConfiguration {
         };
       };
     };
+    itStatus: {
+      item: {
+        emptyText: {
+          color: string;
+        };
+        name: {
+          color: string;
+        };
+        status: {
+          color: string;
+        };
+        icon: {
+          unknown: string;
+          operational: string;
+          performanceIssues: string;
+          partialOutage: string;
+          majorOutage: string;
+        };
+      };
+      sticky: {
+        message: {
+          color: string;
+        };
+        title: {
+          color: string;
+        };
+        date: {
+          color: string;
+        };
+        icon: {
+          color: string;
+        };
+        badge: {
+          background: string;
+          color: string;
+        };
+      };
+    };
     masquerade: {
       buttonAlt: {
         color: string;
@@ -274,6 +323,11 @@ export interface ThemeConfiguration {
       };
       icon: {
         color: string;
+      };
+      settings: {
+        emphasis: {
+          color: string;
+        };
       };
     };
     resources: {
@@ -439,16 +493,21 @@ export interface ThemeConfiguration {
         };
         link: {
           color: string;
+          hoverColor: string;
           boxShadow: string;
         };
       };
     };
     myDialog: {
+      background: string;
       h2: {
         color: string;
       };
       h3: {
         color: string;
+      };
+      header: {
+        border: string;
       };
       details: {
         color: string;

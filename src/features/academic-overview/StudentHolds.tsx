@@ -7,7 +7,7 @@ import {
   HighlightDescription
 } from '../../ui/Highlights';
 import { themeSettings, styled } from '../../theme';
-import { useAccountHolds } from '../../api/student';
+import { useHolds } from '@osu-wams/hooks';
 
 const HoldsList = styled.ul`
   margin: 0;
@@ -18,7 +18,7 @@ const HoldsList = styled.ul`
 `;
 
 export const StudentHolds: React.FC = () => {
-  const { data, loading } = useAccountHolds();
+  const { data, loading } = useHolds();
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Holds</HighlightTitle>
@@ -30,9 +30,7 @@ export const StudentHolds: React.FC = () => {
           <span>{data.length !== 1 ? 'holds' : 'hold'} on your student account.</span>
           {data.length > 0 && (
             <HoldsList>
-              {data.map((h, i) => (
-                <li key={i}>{h.description}</li>
-              ))}
+              {data.map((h, i) => h.description && <li key={i}>{h.description}</li>)}
             </HoldsList>
           )}
         </HighlightDescription>

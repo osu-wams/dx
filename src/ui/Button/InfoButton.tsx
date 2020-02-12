@@ -5,10 +5,10 @@ import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from './index';
 import { AppContext } from '../../App';
-import { InfoButtonState } from '../../api/info-buttons';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Button from './Button';
 import { Event } from '../../util/gaTracking';
+import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 
 const DialogHeader = styled.div`
   display: flex;
@@ -55,7 +55,11 @@ const InfoButton = props => {
         <Icon icon={faInfoCircle} size="lg" color={themeContext.ui.button.info.icon.color} />
         <VisuallyHidden>Information about {currentButton.title}</VisuallyHidden>
       </Button>
-      <MyDialog isOpen={dialogVisible} aria-labelledby="infobtn-title">
+      <MyDialog
+        isOpen={dialogVisible}
+        onDismiss={() => toggleDialog(false)}
+        aria-labelledby="infobtn-title"
+      >
         <DialogHeader>
           <DialogTitle id="infobtn-title">{currentButton.title}</DialogTitle>
           <DialogClose onClick={(e: React.MouseEvent<HTMLElement>) => toggleDialog(false)} />

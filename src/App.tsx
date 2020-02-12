@@ -13,11 +13,12 @@ import BetaDashboard from './pages/BetaDashboard';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useInfoButtons, InfoButtonState } from './api/info-buttons';
-import { useUser } from './api/user';
-import { useAppVersions, AppVersions } from './api/app-versions';
+import { useUser } from '@osu-wams/hooks';
+import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { styled, GlobalStyles } from './theme';
+import { Versions } from '@osu-wams/hooks/dist/api/appVersions';
+import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -28,7 +29,13 @@ const ContentWrapper = styled.div`
   flex-grow: 1;
 `;
 
-const RouteContainer = posed.div({
+// Child of the ContentWrapper
+const PageGridWrapper = styled.div`
+  background-color: ${({ theme }) => theme.mainGrid.background};
+  width: 100%;
+`;
+
+const RouteContainer = posed(PageGridWrapper)({
   enter: { opacity: 1, delay: 100, beforeChildren: true },
   exit: { opacity: 0 }
 });
@@ -44,17 +51,13 @@ const initialAppContext: IAppContext = {
   setTheme: (theme: string) => {}
 };
 
-interface User {
-  email: String;
-}
-
 interface AppProps {
   containerElement: HTMLElement;
 }
 
 export interface IAppContext {
   infoButtonData: InfoButtonState[];
-  appVersions: AppVersions;
+  appVersions: Versions;
   themes: string[];
   selectedTheme: string;
   setTheme: Function;
@@ -79,12 +82,12 @@ const App = (props: AppProps) => {
       ...previous,
       infoButtonData: infoButtons.data,
       appVersions: appVersions.data,
-      selectedTheme: theme
+      selectedTheme: user.data?.theme ?? theme
     }));
 
-    if (user.error) {
-      window.location.href = '/login';
-    } else if (!user.loading) {
+    setTheme(user.data?.theme ?? theme);
+
+    if (!user.loading) {
       containerElementRef.current.style.opacity = '1';
     }
 
@@ -109,7 +112,7 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme]);
+  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data]);
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>
@@ -123,8 +126,8 @@ const App = (props: AppProps) => {
               {({ location }) => (
                 <PoseGroup>
                   {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                  <RouteContainer key={location.key} style={{ width: '100%' }}>
-                    <Router location={location} style={{ height: '100%' }}>
+                  <RouteContainer key={location.key}>
+                    <Router location={location} className="router-styles">
                       <RouterPage path="/" pageComponent={<Dashboard />} />
                       <RouterPage path="profile" pageComponent={<Profile />} />
                       <RouterPage path="academics/*" pageComponent={<Academics />} />

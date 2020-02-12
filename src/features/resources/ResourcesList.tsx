@@ -2,46 +2,39 @@ import React, { useContext } from 'react';
 import { fal } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { List, ListItem, ListItemContentLink } from '../../ui/List';
-import { themeSettings } from '../../theme';
-import { IResourceResult } from '../../api/resources';
+import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
 import { singularPlural } from '../../util/helpers';
 import { IconLookup } from './resources-utils';
-import { styled, ThemeContext } from '../../theme';
+import { ThemeContext } from '../../theme';
+import { Types } from '@osu-wams/lib';
 
 // Setup a font awesome library to use for searching for icons from the backend.
 library.add(fal, fab);
-const ResourcesList: React.FC<{ resources: IResourceResult[] }> = ({ resources }) => {
+const ResourcesList: React.FC<{ resources: Types.Resource[] }> = ({ resources }) => {
   const themeContext = useContext(ThemeContext);
 
   return (
     <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">
-      {resources && `found ${resources.length} ${singularPlural(resources.length, 'result')}`}
+      {`found ${resources?.length} ${singularPlural(resources?.length, 'result')}`}
       <List>
         {resources.length > 0 &&
-          resources.map((resource: IResourceResult) => (
+          resources.map((resource: Types.Resource) => (
             <ListItem spaced key={resource.id}>
-              <ListItemContentLink
+              <ListItemContentLinkSVG
                 spaced
                 href={resource.link}
                 onClick={() => Event('resource', resource.title)}
                 target="_blank"
               >
                 {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
-                <ResourceName>{resource.title}</ResourceName>
-              </ListItemContentLink>
+                <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
+              </ListItemContentLinkSVG>
             </ListItem>
           ))}
       </List>
     </div>
   );
 };
-
-const ResourceName = styled.div`
-  font-size: ${themeSettings.fontSize[18]};
-  color: ${({ theme }) => theme.features.resources.name.color};
-  padding-left: ${themeSettings.spacing.unit * 2}px;
-`;
 
 export default ResourcesList;

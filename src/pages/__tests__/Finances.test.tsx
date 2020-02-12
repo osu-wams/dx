@@ -1,41 +1,59 @@
 import React from 'react';
 import { waitForElement, wait } from '@testing-library/react';
 import Finances from '../Finances';
-import { renderWithUserContext, render } from '../../util/test-utils';
-import {mockAcademicAnnouncementResult} from '../../api/__mocks__/announcements.data'
+import { render } from '../../util/test-utils';
+import { Announcements, Person, Resources, Student } from '@osu-wams/hooks';
 
-const mockUseAnnouncements = jest.fn()
+const { resourcesCardData } = Resources.mockResources;
+const { academicAnnouncementResult } = Announcements.mockAnnouncements;
+const mockAccountBalance = Student.AccountBalance.mockAccountBalance;
+const mockAccountTransactions = Student.AccountTransactions.mockAccountTransactions;
+const mockMealPlans = Person.MealPlans.mockMealPlans;
 
-jest.mock('../../api/announcements', () => ({
-  useAnnouncements: () => mockUseAnnouncements()
-}))
+const mockUseAnnouncements = jest.fn();
+const mockUseMealPlans = jest.fn();
+const mockUseResourcesByQueue = jest.fn();
+const mockUseAccountTransactions = jest.fn();
+const mockUseAccountBalance = jest.fn();
 
-describe('<Finances />', () => {
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useAccountBalance: () => mockUseAccountBalance(),
+    useAccountTransactions: () => mockUseAccountTransactions(),
+    useAnnouncements: () => mockUseAnnouncements(),
+    useMealPlans: () => mockUseMealPlans(),
+    useResourcesByQueue: () => mockUseResourcesByQueue()
+  };
+});
 
+describe('Finances page with standard data', () => {
   beforeEach(() => {
-    mockUseAnnouncements.mockReturnValue(mockAcademicAnnouncementResult)
-  })
-
-  it('should render the finances page', async () => {
-    const { getByTestId } = render(<Finances />);
-    getByTestId('finances-page')
+    mockUseAnnouncements.mockReturnValue(academicAnnouncementResult);
+    mockUseMealPlans.mockReturnValue(mockMealPlans);
+    mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
+    mockUseAccountTransactions.mockReturnValue(mockAccountTransactions);
+    mockUseAccountBalance.mockReturnValue(mockAccountBalance);
   });
 
-  it('should display the title Finances', async () => {
-    const { getByText } = render(<Finances />);
-    await waitForElement(() => getByText('Finances'));
+  it('should render the finances page', async () => {
+    const { getByTestId, findByText } = render(<Finances />);
+    await findByText('Finances');
+    const page = await waitForElement(() => getByTestId('finances-page'));
+    expect(page).toBeInTheDocument();
+  });
+
+  it('should render Announcements and event cards when at least one event is present', async () => {
+    const { getAllByTestId, getByTestId, findByText } = render(<Finances />);
+    await findByText('Finances');
+    await waitForElement(() => getByTestId('finances-announcements')); //will throw if no results
+    await waitForElement(() => getAllByTestId('eventcard')); //will throw if no results
   });
 
   it('should not render Announcements with no events', async () => {
-    mockUseAnnouncements.mockReturnValue({data: [], loading: false, error: false});
-    const { getByTestId } = render(<Finances />)
-    expect(() => getByTestId('finances-announcements')).toThrow() //will throw if announcements is being displayed
-  })
-
-  it('should render Announcements and event cards when at least one event is present', async () => {
-    const { getAllByTestId, getByTestId } = render(<Finances />)
-    await waitForElement(() => getByTestId('finances-announcements')) //will throw if no results
-    await waitForElement(() => getAllByTestId('eventcard')) //will throw if no results
-  }) 
-
+    mockUseAnnouncements.mockReturnValue({ data: [], loading: false, error: false });
+    const { getByTestId, findByText } = render(<Finances />);
+    await findByText('Student Account Balance');
+    expect(() => getByTestId('finances-announcements')).toThrow(); //will throw if announcements is being displayed
+  });
 });

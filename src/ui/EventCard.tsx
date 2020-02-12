@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
-import { format } from 'date-fns';
 import { CardBase } from './Card';
 import Icon from './Icon';
 import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
 import Button from './Button';
 import { Event } from '../util/gaTracking';
+import { format } from '../util/helpers';
 
 const ButtonWithIcon = styled(Button).attrs({
   as: 'a'
@@ -139,7 +139,7 @@ const EventCardContent = ({ item }) => {
           target="_blank"
           onClick={() => Event('calendar-event', item.title, item.action.link)}
         >
-          <EventCardDate month={format(item.date, 'MMM')} day={format(item.date, 'D')} />
+          <EventCardDate month={format(item.date, 'MMM')} day={format(item.date, 'd')} />
           <EventCardLargeTitle>{item.title}</EventCardLargeTitle>
         </EventCardBody>
       )}

@@ -1,14 +1,14 @@
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { format } from 'date-fns';
 import { faCalendar } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../ui/List';
-import { useAcademicCalendarEvents } from '../api/events';
+import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLinkSVG } from '../ui/List';
+import { useAcademicCalendarEvents } from '@osu-wams/hooks';
 import { Date, DateDay, DateMonth } from '../ui/Date';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
+import { format } from '../util/helpers';
 
 /**
  * Academic Calendar Card
@@ -31,23 +31,23 @@ const AcademicCalendar = () => {
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
         {calEvents.loading && <Skeleton count={5} />}
-        {calEvents.data.length ? (
+        {calEvents.data.length > 0 ? (
           <List>
             {calEvents.data.slice(0, 5).map(({ title, link, pubDate }) => (
-              <ListItem key={title}>
-                <ListItemContentLink
-                  href={link}
+              <ListItem key={title + pubDate}>
+                <ListItemContentLinkSVG
+                  href={link ?? Url.events.academicCalendar}
                   onClick={() => Event('academic-calendar', title, link)}
                   target="_blank"
                 >
                   <Date>
-                    <DateDay>{format(pubDate, 'D')}</DateDay>
+                    <DateDay>{format(pubDate, 'd')}</DateDay>
                     <DateMonth>{format(pubDate, 'MMM')}</DateMonth>
                   </Date>
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>
                   </ListItemText>
-                </ListItemContentLink>
+                </ListItemContentLinkSVG>
               </ListItem>
             ))}
           </List>

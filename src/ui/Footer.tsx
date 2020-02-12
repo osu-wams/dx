@@ -12,6 +12,9 @@ import Icon from './Icon';
 import { isNullOrUndefined } from 'util';
 import Url from '../util/externalUrls.data';
 import Masquerade from '../features/Masquerade';
+import { User } from '@osu-wams/hooks';
+
+const { GROUPS } = User;
 
 const FooterWrapper = styled.div`
   width: 100%;
@@ -152,7 +155,7 @@ const Footer = () => {
           >
             Accessibility Information
           </a>
-          {user && user.data && user.data.isAdmin && (
+          {user?.data?.isAdmin && (
             <>
               <FooterDeployedContent>
                 Server Version: {versionLink(appContext.appVersions.serverVersion, 'dx-server')}
@@ -163,7 +166,7 @@ const Footer = () => {
             </>
           )}
         </FooterContent>
-        {user && user.data && user.data.isAdmin && (
+        {user?.data?.groups?.includes(GROUPS.masquerade) && (
           <Button
             onClick={() => {
               toggleMasqueradeDialog();
@@ -177,7 +180,7 @@ const Footer = () => {
         )}
         <ToastContainer />
       </FooterWrapper>
-      {user && user.data && user.data.isAdmin && showMasqueradeDialog && (
+      {user?.data?.groups?.includes(GROUPS.masquerade) && showMasqueradeDialog && (
         <Masquerade
           showMasqueradeDialog={showMasqueradeDialog}
           toggleMasqueradeDialog={toggleMasqueradeDialog}

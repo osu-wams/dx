@@ -2,21 +2,18 @@ import React, { useEffect, useState, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useDebounce } from 'use-debounce';
 import { CardBase } from '../ui/Card';
-import { themeSettings, styled } from '../theme';
+import { themeSettings, styled, MainGridWrapper, MainGrid } from '../theme';
 import ResourcesCategories from '../features/resources/ResourcesCategories';
 import ResourcesSearch from '../features/resources/ResourcesSearch';
 import ResourcesList from '../features/resources/ResourcesList';
-import {
-  defaultCategoryName,
-  useCategories,
-  useResources,
-  IResourceResult
-} from '../api/resources';
-import { MainGridWrapper, MainGrid, MainGridCol } from '../ui/PageGrid';
+import { Types } from '@osu-wams/lib';
+import { Resources as hooksResources, useCategories, useResources, User } from '@osu-wams/hooks';
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
-import { hasAudience } from '../api/user';
 import VisuallyHidden from '@reach/visually-hidden';
+
+const { defaultCategoryName } = hooksResources;
+const { hasAudience, getAffiliation } = User;
 
 //import type here
 const Resources = () => {
@@ -27,6 +24,7 @@ const Resources = () => {
   const categories = useCategories();
   const res = useResources();
   const [filteredResources, setFilteredResources] = useState<any>([]);
+  const [filteredCategories, setFilteredCategories] = useState<any>([]);
 
   /**
    * A delegate method for children components to call and set the selected category. This
@@ -41,27 +39,67 @@ const Resources = () => {
   /**
    * Filter a list of resources where it has a category in its list matching the provided name
    * parameter unless the category is 'all'.
-   * @param name the category name to filter on
-   * @param resources a list of resources to inspect for matching category
+   * @param {string} name the category name to filter on
+   * @param {Resource[]} resources a list of resources to inspect for matching category
    */
-  const filterByCategory = (name: string, resources: IResourceResult[]): IResourceResult[] => {
+  const filterByCategory = (name: string, resources: Types.Resource[]): Types.Resource[] => {
     if (name === 'all') return resources;
 
     return resources.filter(
       resource =>
-        resource.categories.length > 0 &&
+        resource.categories?.length > 0 &&
         resource.categories.findIndex(s => s.toLowerCase().includes(name.toLowerCase())) > -1
     );
   };
 
+  /**
+   * Checks the affiliation data coming from user and determines if an object with affiliation data
+   * should or should not appear for the given user.
+   * @param o object having an affiliation string array
+   * @returns {boolean} true or false depending if the item is associated with the current affiliation
+   */
+  const checkAffiliation = (user: any, o: { affiliation: string[] }): boolean => {
+    const userAffiliation = getAffiliation(user).toLowerCase();
+    return (
+      o.affiliation?.length === 0 ||
+      o.affiliation?.map(a => a.toLowerCase()).filter(a => a === userAffiliation).length > 0
+    );
+  };
+
+  /**
+   * Checks a resource to see if it is related to a category in the provided filtered categories array
+   * @param resource the resource to evaluate
+   * @param filteredCategories a filtered list of categories to display
+   */
+  const hasCategory = (resource: Types.Resource, filteredCategories: Types.Category[]): boolean => {
+    return (
+      resource.categories?.length === 0 ||
+      resource.categories
+        ?.map(c => c.toLowerCase())
+        .some(c => filteredCategories.find(fc => fc.name.toLowerCase() === c))
+    );
+  };
+
+  /**
+   * Filter the categories to include any that have an affilation related to the type of user
+   * (student vs employee)
+   */
+  useEffect(() => {
+    if (categories.data && user.data) {
+      setFilteredCategories(categories.data.filter(c => checkAffiliation(user.data, c)));
+    }
+  }, [categories.data, user.data]);
+
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (res.data && user.data) {
-      let filtered = res.data;
+    if (res.data && user.data && filteredCategories.length > 0) {
+      let filtered = res.data.filter(
+        r => checkAffiliation(user.data, r) && hasCategory(r, filteredCategories)
+      );
 
       // When clicking a category we filter all results based on selected category
       if (!debouncedQuery) {
-        filtered = filterByCategory(activeCategory, res.data);
+        filtered = filterByCategory(activeCategory, filtered);
       } else {
         // When typing we search for synonyms and names to get results
         const queriedResources = filtered.filter(resource => {
@@ -79,7 +117,7 @@ const Resources = () => {
       }
       setFilteredResources(filtered);
     }
-  }, [activeCategory, debouncedQuery, res.data, user.data]);
+  }, [activeCategory, filteredCategories, debouncedQuery, res.data, user.data]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
@@ -109,8 +147,7 @@ const Resources = () => {
      */
     if (history.pushState) {
       if (
-        history.state &&
-        history.state.category !== activeCategory &&
+        history.state?.category !== activeCategory &&
         !window.location.search.includes(activeCategory)
       ) {
         window.history.pushState(
@@ -124,44 +161,42 @@ const Resources = () => {
   /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
 
   return (
-    <MainGridWrapper>
+    <MainGridWrapper data-testid="resources-page">
       <PageTitle title="Resources" />
       <MainGrid>
-        <MainGridCol className="col-span-2">
-          <ResourcesWrapper data-testid="resources-page">
-            {activeCategory !== '' && (
-              <>
-                <ResourcesSearch
-                  query={query}
-                  setQuery={setQuery}
-                  setSelectedCategory={setSelectedCategory}
-                />
-                {!res.loading && res.data.length > 0 && (
-                  // Anchor link matches ResourcesList component main div id
-                  <VisuallyHidden>
-                    <a href="#resourcesResults">Skip to results</a>
-                  </VisuallyHidden>
-                )}
-                {categories.loading && <Skeleton />}
-                <ResourcesCategories
-                  categories={categories.data}
-                  selectedCategory={activeCategory}
-                  setQuery={setQuery}
-                  setSelectedCategory={setSelectedCategory}
-                />
-              </>
-            )}
-            {res.loading && <Skeleton count={5} />}
-            {!res.loading && res.data.length > 0 ? (
-              <ResourcesList resources={filteredResources.filter(r => hasAudience(r, user.data))} />
-            ) : (
-              !res.loading && (
-                /* @TODO need mockup styling to do and messaging for no results */
-                <div>No results</div>
-              )
-            )}
-          </ResourcesWrapper>
-        </MainGridCol>
+        <ResourcesWrapper>
+          {activeCategory !== '' && (
+            <>
+              <ResourcesSearch
+                query={query}
+                setQuery={setQuery}
+                setSelectedCategory={setSelectedCategory}
+              />
+              {!res.loading && res.data.length > 0 && (
+                // Anchor link matches ResourcesList component main div id
+                <VisuallyHidden>
+                  <a href="#resourcesResults">Skip to results</a>
+                </VisuallyHidden>
+              )}
+              {categories.loading && <Skeleton />}
+              <ResourcesCategories
+                categories={filteredCategories}
+                selectedCategory={activeCategory}
+                setQuery={setQuery}
+                setSelectedCategory={setSelectedCategory}
+              />
+            </>
+          )}
+          {res.loading && <Skeleton count={5} />}
+          {!res.loading && res.data.length > 0 ? (
+            <ResourcesList resources={filteredResources.filter(r => hasAudience(user.data, r))} />
+          ) : (
+            !res.loading && (
+              /* @TODO need mockup styling to do and messaging for no results */
+              <div>No results</div>
+            )
+          )}
+        </ResourcesWrapper>
       </MainGrid>
     </MainGridWrapper>
   );

@@ -1,20 +1,24 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import mockFinancialTransactions from '../../api/student/__mocks__/accountTransactions.data';
+import { Student } from '@osu-wams/hooks';
 import FinancialTransactions from '../FinancialTransactions';
 import { mockGAEvent } from '../../setupTests';
 
-const mockUseFinancialTransactions = jest.fn();
+const mockAccountTransactions = Student.AccountTransactions.mockAccountTransactions;
+const mockUseAccountTransactions = jest.fn();
 
-jest.mock('../../api/student/account-transactions', () => ({
-  useAccountTransactions: () => mockUseFinancialTransactions()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useAccountTransactions: () => mockUseAccountTransactions()
+  };
+});
 
 describe('<FinancialTransactions />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
-    mockUseFinancialTransactions.mockReturnValue(mockFinancialTransactions);
+  beforeEach(() => {
+    mockUseAccountTransactions.mockReturnValue(mockAccountTransactions);
   });
 
   it('should have a $3,417.97 charge from our mock data', async () => {
@@ -31,8 +35,8 @@ describe('<FinancialTransactions />', () => {
   });
 
   it('should show an empty state when there are no recent transactions', async () => {
-    mockUseFinancialTransactions.mockReturnValue({
-      data: { attributes: { transactions: [] } },
+    mockUseAccountTransactions.mockReturnValue({
+      data: undefined,
       loading: false,
       error: false
     });

@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, waitForElement } from '@testing-library/react';
-import { render, authUserClassification } from '../../util/test-utils';
+import { waitForElement, wait } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { render, authUserClassification, authUserAudienceOverride } from '../../util/test-utils';
 import Header from '../Header';
-import Dashboard from '../../pages/Dashboard';
 import { mockGAEvent } from '../../setupTests';
 
 // required because of the overlay from Reakit
@@ -15,36 +15,25 @@ global.document.createRange = () => ({
   }
 });
 
-it('renders', () => {
-  render(<Header />);
-});
-
 it('has a logout link in the menu', async () => {
-  const { getByText, getByTestId } = render(<Dashboard />);
-
-  await (async () => {
-    expect(getByTestId('dashboard-page')).toBeInTheDocument();
-
-    fireEvent.click(getByTestId('user-btn'));
-
-    const logoutLink = await waitForElement(() => getByText('Logout'));
-    expect(logoutLink).toBeInTheDocument();
-  });
-});
-
-// !TODO revise this test - passing/failing is inconsistent
-xtest('User Button and profile link are in the menu and tracked via GA', async () => {
   const { getByText, getByTestId } = render(<Header />);
 
-  const userLink = await waitForElement(() => getByTestId('user-btn'));
-  expect(userLink).toBeInTheDocument();
-  fireEvent.click(userLink);
+  userEvent.click(getByTestId('user-btn'));
+  const logoutLink = await waitForElement(() => getByText('Logout'));
 
-  const profileLink = await waitForElement(() => getByText(/Profile/));
-  expect(profileLink).toBeInTheDocument();
-  fireEvent.click(profileLink);
+  await wait(() => expect(logoutLink).toBeInTheDocument());
+});
 
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
+it('User Button and profile link are in the menu and tracked via GA', async () => {
+  const { getByText, getByTestId } = render(<Header />);
+
+  const userLink = getByTestId('user-btn');
+  userEvent.click(userLink);
+
+  const profileLink = await waitForElement(() => getByText('Profile'));
+  userEvent.click(profileLink);
+
+  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
 });
 
 describe('as a logged in user', () => {
@@ -59,6 +48,7 @@ describe('as a logged in user', () => {
 describe('as a Bend user', () => {
   it('renders the appropriate header logo', async () => {
     authUserClassification!.attributes!.campusCode = 'B';
+    authUserAudienceOverride.campusCode = 'B';
     const { getByTestId } = render(<Header />);
     const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
     expect(appHeader).toBeInTheDocument();
@@ -69,6 +59,7 @@ describe('as a Bend user', () => {
 describe('as an Ecampus user', () => {
   it('renders the appropriate header logo', async () => {
     authUserClassification!.attributes!.campusCode = 'DSC';
+    authUserAudienceOverride.campusCode = 'DSC';
     const { getByTestId } = render(<Header />);
     const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
     expect(appHeader).toBeInTheDocument();

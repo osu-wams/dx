@@ -1,20 +1,22 @@
 import React from 'react';
 import { waitForElement, fireEvent } from '@testing-library/react';
-import { render } from '../../util/test-utils';
-import { academicCalendar3, academicCalendar6 } from '../../api/__mocks__/academicCalendar.data';
+import { render, mockAppContext } from '../../util/test-utils';
 import AcademicCalendar from '../AcademicCalendar';
+import { Events } from '@osu-wams/hooks';
 import { mockGAEvent } from '../../setupTests';
 
-const mockUseAcademicCalendar = jest.fn();
+const { academicCalendar6, academicCalendar3 } = Events.mockEvents;
+const mockUseAcademicCalendarEvents = jest.fn();
 
-jest.mock('../../api/events', () => ({
-  useAcademicCalendarEvents: () => mockUseAcademicCalendar()
+jest.mock('@osu-wams/hooks', () => ({
+  ...jest.requireActual('@osu-wams/hooks'),
+  useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents()
 }));
 
 describe('<AcademicCalendar />', () => {
   // Set mock function result before running any tests
-  beforeAll(() => {
-    mockUseAcademicCalendar.mockReturnValue(academicCalendar6);
+  beforeEach(() => {
+    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar6);
   });
 
   it('should find the "Testo Event" as a title', async () => {
@@ -37,13 +39,13 @@ describe('<AcademicCalendar />', () => {
   });
 
   it('should have "3" as a value when only 3 calendar events are present', async () => {
-    mockUseAcademicCalendar.mockReturnValue(academicCalendar3);
+    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     const { getAllByText } = render(<AcademicCalendar />);
     await waitForElement(() => getAllByText('3'));
   });
 
   it('should return "No Calendar Events" when no events are loaded', async () => {
-    mockUseAcademicCalendar.mockReturnValue({ data: [], loading: false, error: false });
+    mockUseAcademicCalendarEvents.mockReturnValue({ data: [], loading: false, error: false });
     const { getByText } = render(<AcademicCalendar />);
     await waitForElement(() => getByText('No Calendar Events'));
   });
@@ -51,10 +53,14 @@ describe('<AcademicCalendar />', () => {
 
 describe('with an InfoButton in the CardFooter', () => {
   const validIinfoButtonId = 'academic-calendar';
+  beforeEach(() => {
+    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar6);
+  });
 
   test('does not display the button when the infoButtonData is missing it', async () => {
     const { queryByTestId } = render(<AcademicCalendar />, {
       appContext: {
+        ...mockAppContext,
         infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
       }
     });
@@ -66,6 +72,7 @@ describe('with an InfoButton in the CardFooter', () => {
   test('displays the button when the infoButtonData is included', async () => {
     const { getByTestId } = render(<AcademicCalendar />, {
       appContext: {
+        ...mockAppContext,
         infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
       }
     });

@@ -5,7 +5,7 @@ import { CardBase } from './StyledCardComponents';
 
 const CardContext = React.createContext<any>(null);
 
-const Card:FC<{collapsing?: boolean}> = ({ children, collapsing = true,...props }) => {
+const Card: FC<{ collapsing?: boolean }> = ({ children, collapsing = true, ...props }) => {
   // Generate a UUID for linking header to controlled content
   const uuid = uuidv4();
   const [collapsed, setCollapsed] = useState(true);
@@ -21,4 +21,4 @@ const Card:FC<{collapsing?: boolean}> = ({ children, collapsing = true,...props 
   );
 };
 
-export {Card, CardContext};
+export { Card, CardContext };

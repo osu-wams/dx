@@ -1,7 +1,10 @@
 import { shadows, gradients, breakpoints, themeSettings } from './theme-settings';
 import { Color } from './theme-colors';
-import { ThemeContext, ThemeConfiguration, styled } from './theme-interface';
+import { ThemeContext, ThemeConfiguration as TC, styled } from './theme-interface';
 import GlobalStyles from './GlobalStyles';
+import { MainGridWrapper, MainGrid, SecondGridWrapper } from './grid/PageGrid';
+import { Masonry } from './grid/Masonry';
+
 export {
   shadows,
   gradients,
@@ -10,7 +13,11 @@ export {
   themeSettings,
   Color,
   ThemeContext,
-  styled
+  styled,
+  MainGridWrapper,
+  MainGrid,
+  SecondGridWrapper,
+  Masonry
 };
 
-export type ThemeConfiguration = ThemeConfiguration;
+export type ThemeConfiguration = TC;

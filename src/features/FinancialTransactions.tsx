@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { formatDate, formatDollars } from '../util/helpers';
+import { format, formatDollars } from '../util/helpers';
 import { themeSettings, styled } from '../theme';
-import { useAccountTransactions } from '../api/student/account-transactions';
+import { useAccountTransactions } from '@osu-wams/hooks';
 import { ExternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
@@ -82,19 +82,12 @@ const FinancialTransactions: FC = () => {
       <CardHeader
         title="Recent Transactions"
         badge={
-          <CardIcon
-            icon={faMoneyBillWave}
-            count={
-              data.attributes && data.attributes.transactions
-                ? data.attributes.transactions.length
-                : 0
-            }
-          />
+          <CardIcon icon={faMoneyBillWave} count={data?.attributes?.transactions?.length ?? 0} />
         }
       />
       <CardContent className="flush">
         {loading && <Skeleton count={5} />}
-        {data.attributes && data.attributes.transactions && data.attributes.transactions.length ? (
+        {data?.attributes.transactions?.length ?? 0 ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
             <TableHeader>
               <TableRow>
@@ -103,7 +96,7 @@ const FinancialTransactions: FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.attributes.transactions.map((transaction, index: number) => (
+              {data?.attributes.transactions.map((transaction, index: number) => (
                 <TableRow key={index}>
                   <TransactionAmount>
                     <TransactionNumber transactionType={transaction.transactionType}>
@@ -113,7 +106,7 @@ const FinancialTransactions: FC = () => {
                   </TransactionAmount>
                   <TransactionDetails>
                     <TransactionName>{transaction.description}</TransactionName>
-                    <TransactionDetail>{formatDate(transaction.entryDate)}</TransactionDetail>
+                    <TransactionDetail>{format(transaction.entryDate)}</TransactionDetail>
                   </TransactionDetails>
                 </TableRow>
               ))}

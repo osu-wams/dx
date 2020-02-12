@@ -1,21 +1,25 @@
 import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
-import { raveAlerts, dxAlerts } from '../../api/__mocks__/alerts.data';
 import Alerts from '../Alerts';
+import { Alerts as alertsHooks } from '@osu-wams/hooks';
 
+const { raveAlerts, dxAlerts } = alertsHooks.mockAlerts;
 const mockUseDxAlerts = jest.fn();
 const mockUseRaveAlerts = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
 
-jest.mock('../../api/alerts', () => ({
-  useDxAlerts: () => mockUseDxAlerts(),
-  useRaveAlerts: () => mockUseRaveAlerts()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useDxAlerts: () => mockUseDxAlerts(),
+    useRaveAlerts: () => mockUseRaveAlerts()
+  };
+});
 
 describe('<Alerts />', () => {
   describe('with a Rave alert and no DX Alert', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(raveAlerts);
       mockUseDxAlerts.mockReturnValue(mockNoData);
     });
@@ -28,7 +32,7 @@ describe('<Alerts />', () => {
     });
   });
   describe('with an info DX alert and no Rave Alert', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(mockNoData);
       mockUseDxAlerts.mockReturnValue(dxAlerts);
     });
@@ -41,7 +45,7 @@ describe('<Alerts />', () => {
     });
   });
   describe('with a warn DX alert and no Rave Alert', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(mockNoData);
       mockUseDxAlerts.mockReturnValue({ data: [dxAlerts.data[1]], loading: false, error: false });
     });
@@ -54,12 +58,12 @@ describe('<Alerts />', () => {
     });
   });
   describe('with a DX alert and a Rave Alert', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(raveAlerts);
       mockUseDxAlerts.mockReturnValue(dxAlerts);
     });
     it('should not find the Rave alert', async () => {
-      const { getByText, queryByText } = render(<Alerts />);
+      const { getByText } = render(<Alerts />);
       const dxTitle = await waitForElement(() => getByText('BobRoss'));
       const raveTitle = getByText('First Rave');
       expect(dxTitle).toBeInTheDocument();
@@ -67,13 +71,12 @@ describe('<Alerts />', () => {
     });
   });
   describe('with no alerts', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       mockUseRaveAlerts.mockReturnValue(mockNoData);
       mockUseDxAlerts.mockReturnValue(mockNoData);
     });
     it('should not find any alerts', async () => {
-      const { getByText, queryByText, debug } = render(<Alerts />);
-      debug();
+      const { queryByText } = render(<Alerts />);
       const dxTitle = queryByText('BobRoss');
       const raveTitle = queryByText('First Rave');
       expect(dxTitle).not.toBeInTheDocument();

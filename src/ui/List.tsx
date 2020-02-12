@@ -50,14 +50,31 @@ const ListItemContent = styled.div<SpacedList>`
 type TLink = React.HTMLProps<HTMLAnchorElement>;
 
 const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
+  color: ${({ theme }) => theme.ui.list.item.link.color};
   &:hover {
-    & > svg,
     & > div {
-      color: ${({ theme }) => theme.ui.list.item.link.color};
+      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
+    }
+    & > div > h4 {
+      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
     }
     box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
     transform: translateY(-4px);
   }
+`;
+
+const ListItemContentLinkSVG = styled(ListItemContentLink)`
+  &:hover {
+    & > svg {
+      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
+    }
+  }
+`;
+
+const ListItemContentLinkName = styled.div`
+  font-size: ${themeSettings.fontSize[18]};
+  color: ${({ theme }) => theme.ui.list.item.link.color};
+  padding-left: ${themeSettings.spacing.unit * 2}px;
 `;
 
 const ListItemContentButton = styled(ListItemContentLink).attrs({ as: 'button' })``;
@@ -98,6 +115,8 @@ export {
   ListItemContent,
   ListItemContentButton,
   ListItemContentLink,
+  ListItemContentLinkName,
+  ListItemContentLinkSVG,
   ListItemText,
   ListItemHeader,
   ListItemDescription,

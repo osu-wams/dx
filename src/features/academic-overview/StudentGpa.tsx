@@ -6,13 +6,14 @@ import {
   HighlightEmphasis,
   HighlightDescription
 } from '../../ui/Highlights';
-import { useGpa } from '../../api/student';
+import { useGpa } from '@osu-wams/hooks';
 
 export const StudentGpa: React.FC = () => {
   const { data, loading } = useGpa();
 
+  // We expect the first item in the array to be the primary one this is sorted in the server
   const primaryGpa = () => {
-    if (data && data.length) {
+    if (data?.length) {
       return data[0];
     } else {
       return { gpa: '', level: '', gpaType: '' };

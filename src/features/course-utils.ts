@@ -24,7 +24,7 @@ import {
   faFileInvoice,
   faLaptop
 } from '@fortawesome/pro-light-svg-icons';
-import { ICourseSchedule } from '../api/student/course-schedule';
+import { CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 // You can get the icon for a course type (Lecture, Lab, Final exam, etc.)
 // You need the scheduleType value from the API.
@@ -79,7 +79,7 @@ export const getIconByScheduleType = (scheduleType: string) => {
  */
 export const matchedCourseContext = (
   contextName: string,
-  courses: ICourseSchedule[]
+  courses: CourseSchedule[]
 ): { courseSubject: string; courseNumber: string } | undefined => {
   // Expecting the context name to include something like "(PSY_240_400_F2019)"
   // and matching groups as subject "PSY" and number "240"

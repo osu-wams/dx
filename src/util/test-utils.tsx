@@ -1,37 +1,30 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
-
 import { UserContext, AppContext, IAppContext } from '../App';
-import { IUserClassification } from '../api/resources'; // eslint-disable-line no-unused-vars
 import { themesLookup, defaultTheme } from '../theme/themes';
+import { User } from '@osu-wams/hooks';
+const { AFFILIATIONS } = User;
 
-export const authUserClassification: IUserClassification = {
-  id: '123',
-  attributes: {
-    level: 'Graduate',
-    campus: '',
-    campusCode: 'C',
-    classification: 'Freshman',
-    isInternational: true
+export const mockUser = User.mockUser.user;
+export const authUserAudienceOverride = User.mockUser.userAudienceOverride;
+export const authUserClassification = User.mockUser.userClassification;
+
+export const mockEmployeeUser = {
+  ...mockUser,
+  data: {
+    ...mockUser.data,
+    email: 'testo@oregonstate.edu',
+    groups: [],
+    isAdmin: false,
+    isCanvasOptIn: false,
+    primaryAffiliation: AFFILIATIONS.employee,
+    classification: {},
+    audienceOverride: {}
   }
 };
 
-export const authUser = {
-  data: {
-    osuId: '123',
-    email: 'testo@oregonstate.edu',
-    firstName: 'Testo',
-    lastName: 'LastTesto',
-    isAdmin: true,
-    isCanvasOptIn: true,
-    classification: authUserClassification
-  },
-  error: false,
-  loading: false,
-  setUser: jest.fn(),
-  isCanvasOptIn: true
-};
+export const authUser = mockUser;
 
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
   const Wrapper = props => {
@@ -84,8 +77,13 @@ const renderWithAllContexts = (
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
 };
 
+// Adds a delay, sometimes necessary when running tests
+const sleep = (ms: number) => {
+  return new Promise(res => setTimeout(res, ms));
+};
+
 const render = renderWithAllContexts;
 // Pass a different user
 // const { getByTestId } = renderWithUserContext(<Dashboard />, { user: authUser });
 
-export { renderWithUserContext, renderWithAppContext, renderWithAllContexts, render };
+export { renderWithUserContext, renderWithAppContext, renderWithAllContexts, sleep, render };

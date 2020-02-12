@@ -18,10 +18,10 @@ const warn = Color['luminance-300'];
 const info = Color['stratosphere-400'];
 const success = Color['pine-400'];
 const mainGridBackground = neutral100;
-const mainGridBorderBottom = neutral300;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
-const componentBackground = neutral200;
+const secondGridBorderTop = neutral300;
+const componentBackground = neutral300;
 const linkForeground = Color.white;
 const iconPrimary = Color.white;
 const iconSecondary = neutral500;
@@ -115,11 +115,11 @@ export const dark: ThemeConfiguration = {
   },
   mainGrid: {
     background: mainGridBackground,
-    borderBottom: mainGridBorderBottom,
     borderTop: mainGridBorderTop
   },
   secondGrid: {
-    background: secondGridBackground
+    background: secondGridBackground,
+    borderTop: secondGridBorderTop
   },
   footer: {
     background: titleSecondary,
@@ -194,12 +194,23 @@ export const dark: ThemeConfiguration = {
         dialog: {
           meetingTime: {
             icon: {
-              color: primary
+              color: neutral600
             }
           },
           faculty: {
+            link: {
+              color: primary
+            },
             icon: {
-              color: neutral600
+              color: primary
+            }
+          },
+          map: {
+            link: {
+              color: primary
+            },
+            icon: {
+              color: primary
             }
           }
         },
@@ -289,6 +300,44 @@ export const dark: ThemeConfiguration = {
         }
       }
     },
+    itStatus: {
+      item: {
+        emptyText: {
+          color: neutral550
+        },
+        name: {
+          color: neutral700
+        },
+        status: {
+          color: neutral550
+        },
+        icon: {
+          unknown: neutral500,
+          operational: Color['pine-300'],
+          performanceIssues: Color['luminance-400'],
+          partialOutage: Color['luminance-400'],
+          majorOutage: Color['lava-400']
+        }
+      },
+      sticky: {
+        message: {
+          color: neutral550
+        },
+        title: {
+          color: neutral600
+        },
+        date: {
+          color: neutral700
+        },
+        icon: {
+          color: alert
+        },
+        badge: {
+          background: neutral550,
+          color: titlePrimary
+        }
+      }
+    },
     masquerade: {
       buttonAlt: {
         color: neutral700,
@@ -304,6 +353,11 @@ export const dark: ThemeConfiguration = {
       },
       icon: {
         color: primary
+      },
+      settings: {
+        emphasis: {
+          color: primary
+        }
       }
     },
     resources: {
@@ -468,17 +522,22 @@ export const dark: ThemeConfiguration = {
           color: neutral550
         },
         link: {
-          color: primary,
-          boxShadow: ''
+          color: neutral700,
+          hoverColor: primary,
+          boxShadow: shadows[1]
         }
       }
     },
     myDialog: {
+      background: componentBackground,
       h2: {
         color: primary
       },
       h3: {
         color: neutral200
+      },
+      header: {
+        border: neutral200
       },
       details: {
         color: neutral600

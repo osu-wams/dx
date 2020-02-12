@@ -35,6 +35,7 @@ export const themeSettings = {
     '18': '1.8rem',
     '20': '2.0rem',
     '24': '2.4rem',
+    '26': '2.6rem',
     '36': '3.6rem',
     '58': '5.8rem'
   }

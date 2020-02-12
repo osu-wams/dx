@@ -2,18 +2,22 @@ import React from 'react';
 import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import StudentGpa from '../academic-overview/StudentGpa';
-import { gpaData, gpaUndergraduateData } from '../../api/student/__mocks__/gpa.data';
-import { gpaInitialState } from '../../api/student/gpa';
+import { Student } from '@osu-wams/hooks';
 
+const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
+const { gpaInitialState } = Student.Gpa;
 const mockUseStudentGpa = jest.fn();
 
-jest.mock('../../api/student/gpa', () => ({
-  useGpa: () => mockUseStudentGpa()
-}));
+jest.mock('@osu-wams/hooks', () => {
+  return {
+    ...jest.requireActual('@osu-wams/hooks'),
+    useGpa: () => mockUseStudentGpa()
+  };
+});
 
 describe('<StudentGpa />', () => {
   it('should render and have the approriate standing for a Graduate', async () => {
-    mockUseStudentGpa.mockReturnValue({ data: gpaData, loading: false, error: false });
+    mockUseStudentGpa.mockReturnValue(gpaHookData);
     const { getByText, queryByText } = render(<StudentGpa />);
     const element = await waitForElement(() => getByText('3.81'));
     expect(element).toBeInTheDocument();
@@ -24,7 +28,7 @@ describe('<StudentGpa />', () => {
   });
 
   it('should render and have the approriate standing for an Undergraduate', async () => {
-    mockUseStudentGpa.mockReturnValue({ data: gpaUndergraduateData, loading: false, error: false });
+    mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: gpaUndergraduateData });
     const { getByText, queryByText } = render(<StudentGpa />);
     const element = await waitForElement(() => getByText('3.1'));
     expect(element).toBeInTheDocument();
@@ -35,7 +39,7 @@ describe('<StudentGpa />', () => {
   });
 
   it('should return appropriate text when data is empty', async () => {
-    mockUseStudentGpa.mockReturnValue({ data: gpaInitialState, loading: false, error: false });
+    mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: gpaInitialState });
     const { getByText } = render(<StudentGpa />);
     const element = await waitForElement(() =>
       getByText('You must first complete a term to have a GPA.')
