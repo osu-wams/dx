@@ -1,5 +1,11 @@
 import React from 'react';
-import { faHome, faGraduationCap, faHandsUsd } from '@fortawesome/pro-light-svg-icons';
+import {
+  faHome,
+  faGraduationCap,
+  faHandsUsd,
+  faList,
+  faFlask
+} from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Event } from '../../util/gaTracking';
 import { FullMobileMenu } from './FullMobileMenu';
@@ -30,8 +36,29 @@ const MainNavStudent = (...props) => {
         <Icon icon={faHandsUsd} />
         Finances
       </NavLink>
+
       {isMobile && <FullMobileMenu />}
+
+      {!isMobile && <DesktopLinks />}
     </Nav>
+  );
+};
+
+const DesktopLinks = () => {
+  return (
+    <>
+      <NavLink
+        to="resources"
+        onClick={() => Event('student-navigation-main', 'Resource link clicked')}
+      >
+        <Icon icon={faList} />
+        Resources
+      </NavLink>
+      <NavLink to="beta" onClick={() => Event('student-navigation-main', 'Beta link clicked')}>
+        <Icon icon={faFlask} />
+        Beta
+      </NavLink>
+    </>
   );
 };
 

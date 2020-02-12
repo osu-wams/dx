@@ -22,7 +22,14 @@ const Nav = styled.nav`
   justify-content: center;
   z-index: 10;
   @media (min-width: ${breakpoints.small}) {
+    justify-content: left;
     position: static;
+    box-shadow: none;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (min-width: ${breakpoints.large}) {
+    padding: 0;
   }
 `;
 
@@ -32,8 +39,12 @@ const NavLink = styled(Link)`
   @media (min-width: ${breakpoints.small}) {
     flex-direction: row;
     font-size: ${themeSettings.fontSize[14]};
+    padding: 10px 4px;
     & > svg {
       padding-right: 6px;
+    }
+    &[aria-current] {
+      border-bottom: 2px solid ${({ theme }) => theme.header.mainNavList.hoverColor};
     }
   }
   border: none;

@@ -44,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
   @media screen and (max-width: 767px) {
     [data-reach-dialog-overlay] {
       background: ${({ theme }) => theme.ui.myDialog.background} !important;
+      z-index: 11;
     }
   }
 `;

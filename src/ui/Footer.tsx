@@ -19,7 +19,7 @@ const { GROUPS } = User;
 const FooterWrapper = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.footer.background};
-  padding: 1.6rem;
+  padding: 1.6rem 1.6rem 6rem;
   color: ${({ theme }) => theme.footer.color};
   display: flex;
   align-items: center;
@@ -35,6 +35,7 @@ const FooterWrapper = styled.div`
     }
   }
   @media (min-width: ${breakpoints.small}) {
+    padding-bottom: 1.6rem;
     position: relative;
     & > button {
       position: absolute;
