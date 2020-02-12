@@ -2,7 +2,7 @@
 
 exports[`LargeInput gets rendered with large font size CSS 1`] = `
 .c1 {
-  color: #D4CFCD;
+  color: #2E2B2A;
   -webkit-text-decoration: none;
   text-decoration: none;
   border-radius: 8px;
@@ -32,7 +32,7 @@ exports[`LargeInput gets rendered with large font size CSS 1`] = `
 
 exports[`NormalInput gets rendered with default font size CSS 1`] = `
 .c1 {
-  color: #D4CFCD;
+  color: #2E2B2A;
   -webkit-text-decoration: none;
   text-decoration: none;
   border-radius: 8px;
@@ -62,7 +62,7 @@ exports[`NormalInput gets rendered with default font size CSS 1`] = `
 
 exports[`SmallInput gets rendered with small font size CSS 1`] = `
 .c1 {
-  color: #D4CFCD;
+  color: #2E2B2A;
   -webkit-text-decoration: none;
   text-decoration: none;
   border-radius: 8px;
