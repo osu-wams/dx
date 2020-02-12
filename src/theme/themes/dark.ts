@@ -10,7 +10,7 @@ const neutral600 = Color['neutral-400'];
 const neutral700 = Color['neutral-300'];
 const neutral800 = Color['neutral-200'];
 
-const bodyText = neutral700;
+const bodyText = neutral800;
 const bodyBackground = neutral200;
 const primary = Color['orange-400'];
 const alert = Color['lava-400'];
@@ -21,10 +21,10 @@ const mainGridBackground = neutral100;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
 const secondGridBorderTop = neutral300;
-const componentBackground = neutral300;
+const componentBackground = neutral200;
 const linkForeground = Color.white;
 const iconPrimary = Color.white;
-const iconSecondary = neutral500;
+const iconSecondary = neutral700;
 const buttonPrimary = Color.white;
 const buttonSecondary = Color.black;
 const titlePrimary = Color.white;
@@ -42,7 +42,7 @@ export const dark: ThemeConfiguration = {
       color: neutral550
     },
     profileMenuList: {
-      background: neutral800,
+      background: bodyBackground,
       color: linkForeground,
       svg: {
         color: primary
@@ -59,7 +59,7 @@ export const dark: ThemeConfiguration = {
       color: neutral550,
       hoverColor: primary,
       popOver: {
-        background: neutral800,
+        background: bodyBackground,
         primaryNav: {
           color: linkForeground,
           link: {
@@ -70,7 +70,7 @@ export const dark: ThemeConfiguration = {
           }
         },
         secondaryNav: {
-          background: neutral700,
+          background: neutral300,
           borderTop: neutral500,
           link: {
             color: linkForeground,
@@ -369,7 +369,7 @@ export const dark: ThemeConfiguration = {
       },
       search: {
         input: {
-          background: componentBackground
+          background: neutral700
         },
         border: neutral200
       }
@@ -384,21 +384,21 @@ export const dark: ThemeConfiguration = {
         color: buttonSecondary
       },
       custom: {
-        background: componentBackground,
-        selectedBackground: neutral550,
+        background: neutral700,
+        selectedBackground: primary,
         border: neutral300,
         color: buttonSecondary,
-        selectedColor: buttonPrimary
+        selectedColor: neutral100
       },
       info: {
         background: Color.transparent,
         icon: {
-          color: neutral600
+          color: neutral800
         }
       }
     },
     card: {
-      boxShadow: '',
+      boxShadow: shadows[5],
       background: componentBackground,
       badge: {
         background: primary,
@@ -406,16 +406,16 @@ export const dark: ThemeConfiguration = {
       },
       contentRow: {
         background: componentBackground,
-        borderBottom: neutral200
+        borderBottom: neutral100
       },
       contentCell: {
-        borderLeft: neutral200
+        borderLeft: neutral100
       },
       header: {
-        borderBottom: neutral200
+        borderBottom: neutral100
       },
       icon: {
-        color: neutral550
+        color: neutral800
       }
     },
     date: {
@@ -425,21 +425,21 @@ export const dark: ThemeConfiguration = {
       border: neutral200
     },
     eventCard: {
-      color: neutral600,
-      background: componentBackground,
+      color: Color.white,
+      background: neutral100,
       title: {
-        color: neutral700
+        color: Color.white
       },
       largeTitle: {
         color: titlePrimary
       },
       date: {
-        background: componentBackground,
+        background: Color.white,
         firstChild: {
-          color: neutral700
+          color: neutral100
         },
         lastChild: {
-          color: neutral700
+          color: neutral100
         }
       },
       image: {
@@ -484,7 +484,7 @@ export const dark: ThemeConfiguration = {
     input: {
       border: neutral300,
       default: {
-        color: neutral700
+        color: neutral200
       },
       large: {
         color: neutral700
@@ -524,7 +524,7 @@ export const dark: ThemeConfiguration = {
         link: {
           color: neutral700,
           hoverColor: primary,
-          boxShadow: shadows[1]
+          boxShadow: shadows[5]
         }
       }
     },
