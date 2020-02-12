@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { faHome, faGraduationCap, faHandsUsd, faBars } from '@fortawesome/pro-light-svg-icons';
+import React from 'react';
+import { faHome, faGraduationCap, faHandsUsd } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Event } from '../../util/gaTracking';
 import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
+import { breakpoints } from 'src/theme';
+import useMediaQuery from 'src/util/useMediaQuery';
 
 const MainNavStudent = (...props) => {
+  const isMobile = !useMediaQuery(`(min-width: ${breakpoints.small})`);
+
   return (
     <Nav {...props}>
       <NavLink to="/" onClick={() => Event('student-navigation-main', 'Overview link clicked')}>
@@ -26,7 +30,7 @@ const MainNavStudent = (...props) => {
         <Icon icon={faHandsUsd} />
         Finances
       </NavLink>
-      <FullMobileMenu />
+      {isMobile && <FullMobileMenu />}
     </Nav>
   );
 };

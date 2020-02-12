@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { usePopoverState, Popover as PO, PopoverDisclosure as PD } from 'reakit/Popover';
 import { Link } from '@reach/router';
 import {
   faToolbox,
@@ -19,6 +18,7 @@ import Button, { CloseButton } from 'src/ui/Button';
 import { Event } from 'src/util/gaTracking';
 import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 import { NavLink } from './MainNavStyles';
+import { MobileMenuStudents } from './MobileMenuStudents';
 
 const DialogHeader = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const DialogClose = styled(CloseButton)`
 
 const DialogTitle = styled.span`
   flex-grow: 2;
-  font-size: ${themeSettings.fontSize['20']};
+  font-size: ${themeSettings.fontSize['24']};
 `;
 
 const DialogContent = styled.div`
@@ -45,7 +45,7 @@ const FullMobileMenu = () => {
   return (
     <>
       <NavLink
-        as="a"
+        as="button"
         onClick={(e: React.MouseEvent<HTMLElement>) => {
           toggleFullMenu(true);
           Event('student-navigation-main', 'Menu link clicked');
@@ -64,7 +64,9 @@ const FullMobileMenu = () => {
           <DialogTitle id="infobtn-title">Student Dashboard</DialogTitle>
           <DialogClose onClick={(e: React.MouseEvent<HTMLElement>) => toggleFullMenu(false)} />
         </DialogHeader>
-        <DialogContent>Hello there</DialogContent>
+        <DialogContent>
+          <MobileMenuStudents toggleFullMenu={() => toggleFullMenu(false)} />
+        </DialogContent>
       </MyDialog>
     </>
   );

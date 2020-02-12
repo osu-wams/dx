@@ -22,6 +22,7 @@ export type IComponents =
   | 'header'
   | 'student-navigation-main'
   | 'employee-navigation-main'
+  | 'student-mobile-nav'
   | 'employee-tools'
   | 'schedule-card'
   | 'resources-card'

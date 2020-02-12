@@ -1,22 +1,42 @@
 import { Link } from '@reach/router';
-import { styled, themeSettings } from '../../theme';
+import { styled, themeSettings, breakpoints } from '../../theme';
 
 const Nav = styled.nav`
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100vw;
+  overflow-x: scroll;
+  /* Hide the scrollbar in most browsers */
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
   background: ${({ theme }) => theme.header.mainNavList.background};
   box-shadow: rgba(66, 62, 60, 0.1) 0 -10px 16px, rgba(105, 99, 97, 0.05) 0 -3px 16px;
   /* border-top: 1px solid #eee; */
   display: flex;
   flex-direction: row;
   justify-content: center;
+  z-index: 10;
+  @media (min-width: ${breakpoints.small}) {
+    position: static;
+  }
 `;
 
 const NavLink = styled(Link)`
   display: flex;
   flex-direction: column;
+  @media (min-width: ${breakpoints.small}) {
+    flex-direction: row;
+    font-size: ${themeSettings.fontSize[14]};
+    & > svg {
+      padding-right: 6px;
+    }
+  }
+  border: none;
   align-items: center;
   margin: 0 8px;
   padding: 10px 4px 5px;
@@ -39,10 +59,22 @@ const NavLink = styled(Link)`
   & > svg {
     font-size: 20px;
   }
-  &:last-child {
-    /* prevents last anchor link from being under the gradient */
-    padding-right: 2rem;
+`;
+
+const MobileMainNav = styled.div`
+  padding-top: 12px;
+  display: block;
+`;
+
+const MobileNavLink = styled(NavLink)`
+  flex-direction: row;
+  font-size: ${themeSettings.fontSize[20]};
+
+  & > svg {
+    padding-right: 10px;
+    min-width: 34px;
+    font-size: 24px;
   }
 `;
 
-export { Nav, NavLink };
+export { Nav, NavLink, MobileNavLink, MobileMainNav };

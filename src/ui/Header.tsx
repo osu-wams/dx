@@ -29,23 +29,6 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const Navigation = styled.div`
-  flex-basis: 100%;
-  margin: 10px auto 0 auto;
-  overflow-x: scroll;
-  /* Hide the scrollbar in most browsers */
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  overflow: -moz-scrollbars-none;
-  -ms-overflow-style: none;
-  @media (min-width: ${breakpoints.small}) {
-    flex-basis: auto;
-    order: 1;
-  }
-`;
-
 const SiteTitle = styled.header`
   display: none;
   @media (min-width: ${breakpoints.small}) {
@@ -136,9 +119,7 @@ const Header = () => {
         </SiteTitle>
         <HeaderNav />
       </HeaderWrapper>
-      <Navigation>
-        <MainNav />
-      </Navigation>
+      <MainNav />
     </>
   );
 };
