@@ -1,12 +1,14 @@
 describe('Masquerade feature', () => {
-  it('Can reach and type into masquerade modal', () => {
+  xit('Can reach and type into masquerade modal', () => {
+    // Have to mock using the application as an administrator so that
+    // the masquerade button is visible
     cy.visit('/')
-      .getByTestId('user-btn')
+      .findByTestId('masquerade')
       .click()
-      .getByText('Masquerade')
-      .click()
-      .getByTestId('masquerade-dialog')
-      .get('input')
-      .type('99999');
+      .findByTestId('masquerade-dialog')
+      .get('input#osu-id')
+      .type('99999')
+      .get('input#masquerade-reason')
+      .type('testing');
   });
 });
