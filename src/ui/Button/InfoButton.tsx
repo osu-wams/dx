@@ -20,7 +20,7 @@ const DialogClose = styled(CloseButton)`
   padding: 0;
 `;
 
-const DialogTitle = styled.span`
+const DialogTitle = styled.h2`
   flex-grow: 2;
   font-size: ${themeSettings.fontSize['20']};
 `;

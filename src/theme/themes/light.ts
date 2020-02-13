@@ -532,10 +532,10 @@ export const light: ThemeConfiguration = {
     myDialog: {
       background: componentBackground,
       h2: {
-        color: primary
+        color: neutral600
       },
       h3: {
-        color: neutral200
+        color: neutral550
       },
       header: {
         border: neutral200

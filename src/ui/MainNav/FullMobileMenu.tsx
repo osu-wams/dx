@@ -20,7 +20,7 @@ const MobileMenuClose = styled(CloseButton)`
   padding: 0;
 `;
 
-const MobileMenuTitle = styled.span`
+const MobileMenuTitle = styled.h2`
   flex-grow: 2;
   font-size: ${themeSettings.fontSize['24']};
 `;
@@ -48,10 +48,10 @@ const FullMobileMenu = () => {
       <MyDialog
         isOpen={showFullMenu}
         onDismiss={() => toggleFullMenu(false)}
-        aria-labelledby="infobtn-title"
+        aria-labelledby="mobile-menu-title"
       >
         <MobileMenuHeader>
-          <MobileMenuTitle id="infobtn-title">
+          <MobileMenuTitle id="mobile-menu-title">
             {title}
             <BetaBadge title={title} />
           </MobileMenuTitle>
