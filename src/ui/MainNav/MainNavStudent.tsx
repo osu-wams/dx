@@ -7,7 +7,7 @@ import {
   faFlask
 } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
-import { Event } from '../../util/gaTracking';
+import { Event } from 'src/util/gaTracking';
 import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
 import { breakpoints } from 'src/theme';

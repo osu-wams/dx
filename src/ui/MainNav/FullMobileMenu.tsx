@@ -8,23 +8,24 @@ import { Event } from 'src/util/gaTracking';
 import { NavLink } from './MainNavStyles';
 import { MobileMenuStudents } from './MobileMenuStudents';
 import { BetaBadge } from '../Badge';
+import { MobileMenuFooter } from './MobileMenuFooter';
 
-const DialogHeader = styled.div`
+const MobileMenuHeader = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-const DialogClose = styled(CloseButton)`
+const MobileMenuClose = styled(CloseButton)`
   float: none;
   padding: 0;
 `;
 
-const DialogTitle = styled.span`
+const MobileMenuTitle = styled.span`
   flex-grow: 2;
   font-size: ${themeSettings.fontSize['24']};
 `;
 
-const DialogContent = styled.div`
+const MobileMenuContent = styled.div`
   font-size: ${themeSettings.fontSize['14']};
 `;
 
@@ -49,16 +50,17 @@ const FullMobileMenu = () => {
         onDismiss={() => toggleFullMenu(false)}
         aria-labelledby="infobtn-title"
       >
-        <DialogHeader>
-          <DialogTitle id="infobtn-title">
+        <MobileMenuHeader>
+          <MobileMenuTitle id="infobtn-title">
             {title}
             <BetaBadge title={title} />
-          </DialogTitle>
-          <DialogClose onClick={(e: React.MouseEvent<HTMLElement>) => toggleFullMenu(false)} />
-        </DialogHeader>
-        <DialogContent>
+          </MobileMenuTitle>
+          <MobileMenuClose onClick={(e: React.MouseEvent<HTMLElement>) => toggleFullMenu(false)} />
+        </MobileMenuHeader>
+        <MobileMenuContent>
           <MobileMenuStudents toggleFullMenu={() => toggleFullMenu(false)} />
-        </DialogContent>
+          <MobileMenuFooter toggleFullMenu={() => toggleFullMenu(false)} />
+        </MobileMenuContent>
       </MyDialog>
     </>
   );

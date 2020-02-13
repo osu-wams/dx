@@ -26,6 +26,7 @@ const Title = styled.h1`
   line-height: 30px;
   margin: 0 auto;
   max-width: ${breakpoints.large};
+  padding-bottom: 1rem;
   @media (min-width: ${breakpoints.small}) {
     margin-bottom: 1rem;
   }

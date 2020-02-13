@@ -80,7 +80,6 @@ const MobileMainNav = styled.div`
 const MobileNavLink = styled(NavLink)`
   flex-direction: row;
   font-size: ${themeSettings.fontSize[20]};
-
   & > svg {
     padding-right: 10px;
     min-width: 34px;
@@ -88,4 +87,25 @@ const MobileNavLink = styled(NavLink)`
   }
 `;
 
-export { Nav, NavLink, MobileNavLink, MobileMainNav };
+const MobileFooter = styled(Nav)`
+  box-shadow: none;
+  padding: 1rem 0 3rem;
+  justify-content: space-around;
+`;
+
+const MobileFooterLink = styled(NavLink)`
+  flex-direction: row;
+  font-size: ${themeSettings.fontSize[16]};
+
+  padding: 10px 4px;
+  & > svg {
+    padding-right: 6px;
+    font-size: 20px;
+    min-width: 24px;
+  }
+  &[aria-current] {
+    border-bottom: 2px solid ${({ theme }) => theme.header.mainNavList.hoverColor};
+  }
+`;
+
+export { Nav, NavLink, MobileNavLink, MobileFooter, MobileMainNav, MobileFooterLink };
