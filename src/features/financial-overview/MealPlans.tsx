@@ -11,6 +11,15 @@ import {
 import { ExternalLink } from '../../ui/Link';
 import { Event } from '../../util/gaTracking';
 import { ThemeContext } from '../../theme';
+import mealPlan from '../../assets/meal-plan.svg';
+import { EmptyState, EmptyStateImage, EmptyStateText } from '../../ui/EmptyStates';
+
+const NoMealPlans = () => (
+  <EmptyState>
+    <EmptyStateImage src={mealPlan} alt="" />
+    <EmptyStateText>You do not have a meal plan.</EmptyStateText>
+  </EmptyState>
+);
 
 export const MealPlans = () => {
   const themeContext = useContext(ThemeContext);
@@ -40,7 +49,7 @@ export const MealPlans = () => {
           </HighlightDescription>
         </>
       ) : (
-        !mealPlans.loading && <>No meal plans</>
+        !mealPlans.loading && <NoMealPlans />
       )}
       <ExternalLink
         style={{ float: 'right', paddingTop: '16px' }}
