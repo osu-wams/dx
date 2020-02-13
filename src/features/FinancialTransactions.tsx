@@ -10,6 +10,7 @@ import Url from '../util/externalUrls.data';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
 import transaction from '../assets/transaction.svg';
 import { Event } from '../util/gaTracking';
+import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 
 type ITransactionAmount = {
   transactionType: string;
@@ -51,23 +52,12 @@ const TransactionDetails = styled(TableCell)`
   padding: 0.8rem !important;
 `;
 
-const NoItems = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  align-items: center;
-  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
-    ${themeSettings.spacing.unit * 8}px;
-`;
-
-const NoItemsImage = styled.img`
-  height: 60px;
-`;
-
-const NoItemsText = styled.p`
-  color: ${({ theme }) => theme.features.finances.transactions.emptyText.color};
-  text-align: center;
-`;
+const NoTransactions = () => (
+  <EmptyState>
+    <EmptyStateImage src={transaction} alt="" />
+    <EmptyStateText>There are no recent transactions for this term.</EmptyStateText>
+  </EmptyState>
+);
 
 /**
  * Financial Transactions Card
@@ -113,12 +103,7 @@ const FinancialTransactions: FC = () => {
             </TableBody>
           </TransactionsTable>
         ) : (
-          !loading && (
-            <NoItems>
-              <NoItemsImage src={transaction} alt="" />
-              <NoItemsText>There are no recent transactions for this term</NoItemsText>
-            </NoItems>
-          )
+          !loading && <NoTransactions />
         )}
       </CardContent>
       <CardFooter infoButtonId="recent-transactions">
