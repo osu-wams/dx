@@ -14,6 +14,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: yarn install, lint, test
+        uses: cypress-io/github-action@v1
+        with:
+          browser: chrome
+          headless: true
         run: |
           yarn install --frozen-lockfile
           yarn run lint
