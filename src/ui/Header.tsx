@@ -11,7 +11,7 @@ import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { UserContext } from '../App';
-import { Event } from '../util/gaTracking';
+import { BetaBadge } from './Badge';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -69,20 +69,6 @@ const Logo = styled.img`
   }
 `;
 
-const Badge = styled.a`
-  background-color: ${({ theme }) => theme.ui.siteTitle.badge.background};
-  color: ${({ theme }) => theme.ui.siteTitle.badge.color};
-  font-size: ${themeSettings.fontSize[12]};
-  line-height: ${themeSettings.fontSize[26]};
-  vertical-align: top;
-  padding: 1px 6px;
-  border-radius: 8px;
-  margin-left: 1px;
-  position: relative;
-  top: -6px;
-  text-decoration: none;
-`;
-
 /**
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
@@ -109,7 +95,7 @@ const mainTitle = user => {
 
 const Header = () => {
   const user = useContext<any>(UserContext);
-
+  const title = mainTitle(user.data);
   return (
     <>
       <HeaderWrapper>
@@ -119,13 +105,8 @@ const Header = () => {
           alt="Oregon State University"
         />
         <SiteTitle>
-          {mainTitle(user.data)}
-          <Badge
-            href="/beta"
-            onClick={() => Event('beta', `${mainTitle(user.data)} beta badge clicked`)}
-          >
-            beta
-          </Badge>
+          {title}
+          <BetaBadge title={title} />
         </SiteTitle>
         <HeaderNav />
       </HeaderWrapper>

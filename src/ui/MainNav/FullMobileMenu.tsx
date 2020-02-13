@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from '@reach/router';
-import {
-  faToolbox,
-  faFlaskPotion,
-  faPlusCircle,
-  faUserHeadset,
-  faCommentAltCheck,
-  faArrowAltSquareLeft,
-  faBars
-} from '@fortawesome/pro-light-svg-icons';
-import VisuallyHidden from '@reach/visually-hidden';
-import { themeSettings, styled, ThemeContext } from '../../theme';
+import { faBars } from '@fortawesome/pro-light-svg-icons';
+import { themeSettings, styled } from '../../theme';
 import Icon from '../Icon';
 import MyDialog from '../MyDialog';
-import { AppContext } from 'src/App';
-import Button, { CloseButton } from 'src/ui/Button';
+import { CloseButton } from 'src/ui/Button';
 import { Event } from 'src/util/gaTracking';
-import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 import { NavLink } from './MainNavStyles';
 import { MobileMenuStudents } from './MobileMenuStudents';
+import { BetaBadge } from '../Badge';
 
 const DialogHeader = styled.div`
   display: flex;
@@ -41,7 +30,7 @@ const DialogContent = styled.div`
 
 const FullMobileMenu = () => {
   const [showFullMenu, toggleFullMenu] = useState(false);
-
+  const title = 'Student Dashboard';
   return (
     <>
       <NavLink
@@ -61,7 +50,10 @@ const FullMobileMenu = () => {
         aria-labelledby="infobtn-title"
       >
         <DialogHeader>
-          <DialogTitle id="infobtn-title">Student Dashboard</DialogTitle>
+          <DialogTitle id="infobtn-title">
+            {title}
+            <BetaBadge title={title} />
+          </DialogTitle>
           <DialogClose onClick={(e: React.MouseEvent<HTMLElement>) => toggleFullMenu(false)} />
         </DialogHeader>
         <DialogContent>
