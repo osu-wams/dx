@@ -168,6 +168,7 @@ const Footer = () => {
         </FooterContent>
         {user?.data?.groups?.includes(GROUPS.masquerade) && (
           <Button
+            data-testid="masquerade"
             onClick={() => {
               toggleMasqueradeDialog();
               Event('footer', 'masquerade', 'click masquerade modal open');

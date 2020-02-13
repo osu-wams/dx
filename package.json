@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-pro": "^5.7.2",
+    "@testing-library/cypress": "^5.3.0",
     "@testing-library/jest-dom": "4.2.4",
     "@testing-library/react": "9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
@@ -68,7 +69,6 @@
     "codecov": "^3.6.1",
     "cross-env": "^5.2.0",
     "cypress": "^3.4.1",
-    "cypress-testing-library": "^4.0.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-react-app": "^4.0.1",
