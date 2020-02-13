@@ -17,6 +17,7 @@ jobs:
         with:
           browser: chrome
           headless: true
+          runTests: false
         env:
           CI: true
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
