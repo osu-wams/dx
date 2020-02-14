@@ -36,8 +36,7 @@ const Url = {
     main: 'https://osu.workforcehosting.com/'
   },
   evals: {
-    // !TODO: update this link when there is standalone Evals
-    main: 'https://myosu.oregonstate.edu/'
+    main: 'https://myosu.oregonstate.edu/web/myosu/employee?gpi=10190'
   },
   itSystemStatus: {
     main: 'https://status.is.oregonstate.edu'
