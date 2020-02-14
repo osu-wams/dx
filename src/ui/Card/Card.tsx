@@ -1,6 +1,6 @@
 import React, { useState, FC } from 'react';
 import uuidv4 from 'uuid/v4';
-import useMediaQuery from '../../util/useMediaQuery';
+import { useMediaQuery } from 'react-responsive';
 import { CardBase } from './StyledCardComponents';
 import { breakpoints } from 'src/theme';
 
@@ -11,7 +11,7 @@ const Card: FC<{ collapsing?: boolean }> = ({ children, collapsing = true, ...pr
   const uuid = uuidv4();
   const [collapsed, setCollapsed] = useState(true);
   const toggleCollapsed = () => setCollapsed(!collapsed);
-  const isMobile = !useMediaQuery(`(min-width: ${breakpoints.small})`);
+  const isMobile = !useMediaQuery({ minWidth: breakpoints.small });
   const collapsible = isMobile && collapsing;
   const value = { collapsed, toggleCollapsed, collapsible, uuid };
 
