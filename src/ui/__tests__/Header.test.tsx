@@ -97,6 +97,105 @@ it('Help button and help link are in the menu and tracked via GA', async () => {
   await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
 });
 
+describe('Student mobile menu interactions', () => {
+  it('Student Dashboard title only visible in when menu is expanded', async () => {
+    const { queryByText, findByText } = render(<Header />);
+
+    const title = 'Student Dashboard';
+    const studentDashboard = queryByText(title);
+    expect(studentDashboard).not.toBeVisible();
+
+    const menu = await findByText('Menu');
+    userEvent.click(menu);
+
+    const studentDashboardMenu = queryByText(title, { selector: 'h2' });
+    expect(studentDashboardMenu).toBeVisible();
+
+    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(1));
+  });
+
+  it('Clicking "menu" opens and clicking the close dismisses the modal', async () => {
+    const { queryByText, findByText } = render(<Header />);
+
+    const menu = await findByText('Menu');
+    userEvent.click(menu);
+
+    const close = await findByText(/close/i);
+    userEvent.click(close);
+
+    const studentDashboard = queryByText('Student Dashboard');
+    expect(studentDashboard).not.toBeVisible();
+
+    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(1));
+  });
+
+  it('Clicking main link inside the modal dismisses the modal', async () => {
+    const { queryByText, findByText } = render(<Header />);
+
+    const menu = await findByText('Menu');
+    userEvent.click(menu);
+
+    const overview = await findByText(/overview/i, { selector: '[role="dialog"] a' });
+    userEvent.click(overview);
+
+    const studentDashboard = queryByText('Student Dashboard');
+    expect(studentDashboard).not.toBeVisible();
+
+    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+  });
+
+  it('Clicking footer link inside the modal dismisses the modal', async () => {
+    const { queryByText, findByText } = render(<Header />);
+
+    const menu = await findByText('Menu');
+    userEvent.click(menu);
+
+    const beta = await findByText(/beta/i, { selector: '[role="dialog"] nav a' });
+    userEvent.click(beta);
+    const studentDashboard = queryByText('Student Dashboard');
+    expect(studentDashboard).not.toBeVisible();
+
+    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+  });
+
+  it('Cannot find mobile menu in desktop version, all links visible immediately', async () => {
+    const { queryByText, findByText } = render(<Header />, { isDesktop: true });
+
+    const menu = queryByText('Menu');
+    expect(menu).toBeNull();
+
+    expect(await findByText(/beta/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await findByText(/overview/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await findByText(/academics/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await findByText(/finances/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await findByText(/resources/i, { selector: 'nav a' })).toBeInTheDocument();
+  });
+
+  it('Help and Profile menu open and close and have their respective menu items', async () => {
+    const { queryByText, findByText } = render(<Header />);
+
+    const helpMenu = await findByText(/help/i);
+
+    userEvent.click(helpMenu);
+    expect(await findByText(/get help/i)).toBeInTheDocument();
+    expect(await findByText(/give feedback/i)).toBeInTheDocument();
+
+    userEvent.click(helpMenu);
+    expect(queryByText(/get help/i)).toBeNull();
+
+    const profileMenu = await findByText(/profile/i);
+
+    userEvent.click(profileMenu);
+    expect(await findByText(/logout/i)).toBeInTheDocument();
+    expect(await findByText(/profile/i, { selector: '[role="menuitem"]' })).toBeInTheDocument();
+
+    userEvent.click(profileMenu);
+    expect(queryByText(/logout/i)).toBeNull();
+
+    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(4));
+  });
+});
+
 describe('as a logged in user', () => {
   it('renders the appropriate header logo', async () => {
     const { getByTestId } = render(<Header />);
