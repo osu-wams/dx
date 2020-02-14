@@ -10,12 +10,9 @@ import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
-import { breakpoints } from 'src/theme';
-import useMediaQuery from 'src/util/useMediaQuery';
+import { Mobile, Desktop } from 'src/util/useMediaQuery';
 
 const MainNavStudent = (...props) => {
-  const isMobile = !useMediaQuery(`(min-width: ${breakpoints.small})`);
-
   return (
     <Nav {...props}>
       <NavLink to="/" onClick={() => Event('student-navigation-main', 'Overview link clicked')}>
@@ -37,9 +34,13 @@ const MainNavStudent = (...props) => {
         Finances
       </NavLink>
 
-      {isMobile && <FullMobileMenu />}
+      <Mobile>
+        <FullMobileMenu />
+      </Mobile>
 
-      {!isMobile && <DesktopLinks />}
+      <Desktop>
+        <DesktopLinks />
+      </Desktop>
     </Nav>
   );
 };

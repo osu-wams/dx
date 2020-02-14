@@ -1,11 +1,13 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
+import { Context as ResponsiveContext } from 'react-responsive';
 import { UserContext, AppContext, IAppContext } from '../App';
 import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/hooks';
-const { AFFILIATIONS } = User;
+import { mobile, desktop } from 'src/util/useMediaQuery';
 
+const { AFFILIATIONS } = User;
 export const mockUser = User.mockUser.user;
 export const authUserAudienceOverride = User.mockUser.userAudienceOverride;
 export const authUserClassification = User.mockUser.userClassification;
@@ -61,15 +63,17 @@ const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = 
 
 const renderWithAllContexts = (
   ui,
-  { appContext = mockAppContext, user = authUser, ...options } = {}
+  { appContext = mockAppContext, user = authUser, isDesktop = false, ...options } = {}
 ) => {
   const Wrapper = props => {
     return (
       <ThemeProvider theme={themesLookup[defaultTheme]}>
         <UserContext.Provider value={user} {...props}>
-          <AppContext.Provider value={appContext} {...props}>
-            {props.children}
-          </AppContext.Provider>
+          <ResponsiveContext.Provider value={{ width: isDesktop ? desktop : mobile }} {...props}>
+            <AppContext.Provider value={appContext} {...props}>
+              {props.children}
+            </AppContext.Provider>
+          </ResponsiveContext.Provider>
         </UserContext.Provider>
       </ThemeProvider>
     );

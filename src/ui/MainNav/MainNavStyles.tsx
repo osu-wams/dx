@@ -72,7 +72,7 @@ const NavLink = styled(Link)`
   }
 `;
 
-const MobileMainNav = styled.div`
+const MobileMainNav = styled.nav`
   padding-top: 12px;
   display: block;
 `;
