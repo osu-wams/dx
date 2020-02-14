@@ -29,19 +29,19 @@ const AllOperational = () => (
 const { withStickyIncidents, sortedByStatus, allOperational } = Status;
 
 const StatusItemRow = styled(CardContentRow)`
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   > li {
-    flex-basis: 50%;
+    flex-basis: 1;
   }
   > li:nth-child(odd) {
     border-right: 1px solid ${({ theme }) => theme.ui.card.contentCell.borderLeft};
   }
-  @media (max-width: ${breakpoints.large}) {
-    flex-direction: column;
-    flex-wrap: unset;
+  @media (min-width: ${breakpoints.large}) {
+    flex-direction: row;
+    flex-wrap: wrap;
     > li {
-      flex-basis: 1;
+      flex-basis: 50%;
     }
   }
 `;
@@ -60,8 +60,8 @@ const ITSystemStatus = () => {
               <ITSystemSticky components={withStickyIncidents(status.data)}></ITSystemSticky>
             </CardContentRow>
           )}
+          {allOperational(status.data) && <AllOperational />}
           <StatusItemRow>
-            {allOperational(status.data) && <AllOperational />}
             {!allOperational(status.data) &&
               sortedByStatus(status.data)
                 .filter(c => c.status > 1)
