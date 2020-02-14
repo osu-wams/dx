@@ -5,13 +5,10 @@ import { faChevronDown, faQuestionCircle, faComment } from '@fortawesome/pro-lig
 import VisuallyHidden from '@reach/visually-hidden';
 import Url from 'src/util/externalUrls.data';
 import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
-import { breakpoints } from 'src/theme';
 import { Event } from 'src/util/gaTracking';
-import useMediaQuery from 'src/util/useMediaQuery';
+import { Mobile, Desktop } from 'src/util/useMediaQuery';
 
 const HelpMenu = () => {
-  const isMobile = !useMediaQuery(`(min-width: ${breakpoints.small})`);
-
   return (
     <Menu>
       <HeaderNavButton
@@ -19,14 +16,13 @@ const HelpMenu = () => {
         onClick={() => Event('header', 'help-button-menu', 'Help button menu expanded')}
       >
         <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
-        {isMobile ? (
+        <Mobile>
           <VisuallyHidden>Help</VisuallyHidden>
-        ) : (
-          <>
-            <HeaderNavText>Help</HeaderNavText>
-            <FontAwesomeIcon icon={faChevronDown} size="sm" />
-          </>
-        )}
+        </Mobile>
+        <Desktop>
+          <HeaderNavText>Help</HeaderNavText>
+          <FontAwesomeIcon icon={faChevronDown} size="sm" />
+        </Desktop>
       </HeaderNavButton>
       <HeaderNavList>
         <MenuLink
