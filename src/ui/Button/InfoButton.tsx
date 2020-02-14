@@ -4,10 +4,10 @@ import { themeSettings, styled, ThemeContext } from '../../theme';
 import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from './index';
-import { AppContext } from '../../App';
+import { AppContext } from 'src/App';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Button from './Button';
-import { Event } from '../../util/gaTracking';
+import { Event } from 'src/util/gaTracking';
 import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 
 const DialogHeader = styled.div`
@@ -20,7 +20,7 @@ const DialogClose = styled(CloseButton)`
   padding: 0;
 `;
 
-const DialogTitle = styled.span`
+const DialogTitle = styled.h2`
   flex-grow: 2;
   font-size: ${themeSettings.fontSize['20']};
 `;

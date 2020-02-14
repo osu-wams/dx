@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import '@reach/dialog/styles.css';
 import { Event } from '../util/gaTracking';
 import Button from './Button';
-import { themeSettings, styled, ThemeContext } from '../theme';
+import { themeSettings, styled, ThemeContext, breakpoints } from '../theme';
 import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
 import { isNullOrUndefined } from 'util';
@@ -19,7 +19,7 @@ const { GROUPS } = User;
 const FooterWrapper = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.footer.background};
-  padding: 1.6rem;
+  padding: 1.6rem 1.6rem 6rem;
   color: ${({ theme }) => theme.footer.color};
   display: flex;
   align-items: center;
@@ -34,7 +34,8 @@ const FooterWrapper = styled.div`
       text-decoration: none;
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: ${breakpoints.small}) {
+    padding-bottom: 1.6rem;
     position: relative;
     & > button {
       position: absolute;

@@ -1,5 +1,5 @@
 import { Dialog } from '@reach/dialog';
-import { themeSettings, styled } from '../theme';
+import { themeSettings, styled, breakpoints } from '../theme';
 
 const MyDialog = styled(Dialog)<{ padding?: string }>`
   background: ${({ theme }) => theme.ui.myDialog.background};
@@ -27,7 +27,7 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
     margin-top: -1rem;
     margin-bottom: 2rem;
   }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: ${breakpoints.small}) {
     hr {
       margin: 0;
     }
@@ -38,10 +38,10 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
       border-radius: 0;
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: ${breakpoints.small}) {
     &[data-reach-dialog-content] {
       width: 60vw;
-      max-width: 768px;
+      max-width: ${breakpoints.small};
     }
   }
 `;
@@ -63,7 +63,7 @@ const MyDialogHeader = styled.div`
     padding-top: 1rem;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: ${breakpoints.small}) {
     padding-top: 0;
   }
 `;

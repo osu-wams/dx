@@ -1,14 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import { themeSettings } from './';
-import Stratum from '../assets/Stratum2WebRegular.woff2';
 
 const GlobalStyle = createGlobalStyle`
-  @font-face {
-    font-family: Stratum2;
-    src: url(${Stratum});
-    font-weight: 400;
-  }
-
   html {
     box-sizing: border-box;
     font-size: 62.5%;
@@ -51,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
   @media screen and (max-width: 767px) {
     [data-reach-dialog-overlay] {
       background: ${({ theme }) => theme.ui.myDialog.background} !important;
+      z-index: 11;
     }
   }
 `;

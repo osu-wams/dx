@@ -41,7 +41,7 @@ export const dark: ThemeConfiguration = {
       background: Color.transparent,
       color: neutral550
     },
-    profileMenuList: {
+    headerNavList: {
       background: neutral800,
       color: linkForeground,
       svg: {
@@ -51,6 +51,7 @@ export const dark: ThemeConfiguration = {
         borderTop: neutral500
       },
       menuItemSelected: {
+        color: bodyText,
         background: Color.transparent
       }
     },
@@ -543,12 +544,15 @@ export const dark: ThemeConfiguration = {
         color: neutral600
       }
     },
-    pageTitle: {
+    siteTitle: {
       color: neutral600,
       badge: {
         background: info,
         color: buttonPrimary
       }
+    },
+    pageTitle: {
+      color: neutral600
     },
     plainCard: {
       header: {

@@ -8,10 +8,10 @@ import { mockGAEvent } from '../../setupTests';
 it('Main Navigation Links for students are to be present and tracked in Google Analytics', async () => {
   const { getByText } = render(<MainNav />);
 
-  const home = getByText('Home');
+  const home = getByText('Overview');
   const academics = getByText('Academics');
   const finances = getByText('Finances');
-  const more = getByText('More');
+  const more = getByText('Menu');
   userEvent.click(home);
   userEvent.click(academics);
   userEvent.click(finances);
@@ -25,7 +25,7 @@ it('Main Navigation for Employee visible and tracked in Google Analytics', async
     user: mockEmployeeUser
   });
 
-  const home = getByText('Home');
+  const home = getByText('Overview');
   const beta = getByText('Beta');
   const resources = getByText('Resources');
 

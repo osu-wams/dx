@@ -196,7 +196,7 @@ const FilterInput = styled(Input)`
 `;
 
 const HistoryGrid = styled.div`
-  max-width: ${breakpoints[1024]};
+  max-width: ${breakpoints.large};
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
@@ -206,7 +206,7 @@ const HistoryGrid = styled.div`
   & > div {
     height: min-content;
   }
-  @media screen and (min-width: ${breakpoints[768]}) {
+  @media screen and (min-width: ${breakpoints.small}) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: ${themeSettings.spacing.desktop};
   }
