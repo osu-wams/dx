@@ -10,11 +10,10 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuLink } from '@reach/menu-button';
-import { breakpoints } from '../../theme';
 import { Event } from '../../util/gaTracking';
 import { UserContext } from '../../App';
 import { User } from '@osu-wams/hooks';
-import useMediaQuery from 'src/util/useMediaQuery';
+import { Mobile, Desktop } from 'src/util/useMediaQuery';
 import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
 
 const { postSettings, usersSettings, AFFILIATIONS } = User;
@@ -22,7 +21,6 @@ const { postSettings, usersSettings, AFFILIATIONS } = User;
 const ProfileMenu = () => {
   const user = useContext(UserContext);
   const [affiliation, setAffiliation] = useState(user.data?.primaryAffiliationOverride ?? '');
-  const isMobile = !useMediaQuery(`(min-width: ${breakpoints.small})`);
 
   useEffect(() => {
     if (user.data.primaryAffiliationOverride) {
@@ -79,14 +77,13 @@ const ProfileMenu = () => {
         onClick={() => Event('header', 'user-button-menu', 'User button menu expanded')}
       >
         <FontAwesomeIcon icon={faUserCircle} size="lg" />
-        {isMobile ? (
+        <Mobile>
           <VisuallyHidden>Profile</VisuallyHidden>
-        ) : (
-          <>
-            <HeaderNavText>Profile</HeaderNavText>
-            <FontAwesomeIcon icon={faChevronDown} size="sm" />
-          </>
-        )}
+        </Mobile>
+        <Desktop>
+          <HeaderNavText>Profile</HeaderNavText>
+          <FontAwesomeIcon icon={faChevronDown} size="sm" />
+        </Desktop>
       </HeaderNavButton>
       <HeaderNavList>
         <MenuLink
