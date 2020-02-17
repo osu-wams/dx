@@ -6,11 +6,12 @@ const Badge = styled.a`
   background-color: ${({ theme }) => theme.ui.siteTitle.badge.background};
   color: ${({ theme }) => theme.ui.siteTitle.badge.color};
   font-size: ${themeSettings.fontSize[12]};
+  font-weight: 600;
   line-height: ${themeSettings.fontSize[26]};
   vertical-align: top;
   padding: 1px 6px;
   border-radius: 8px;
-  margin-left: 1px;
+  margin-left: 3px;
   position: relative;
   top: -6px;
   text-decoration: none;
@@ -19,7 +20,7 @@ const Badge = styled.a`
 const BetaBadge: FC<{ title?: string }> = ({ title, ...props }) => {
   return (
     <Badge href="/beta" onClick={() => Event('beta', `${title} beta badge clicked`)}>
-      beta
+      Beta
     </Badge>
   );
 };
