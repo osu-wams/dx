@@ -11,9 +11,9 @@ const Badge = styled.a`
   vertical-align: top;
   padding: 1px 6px;
   border-radius: 8px;
-  margin-left: 3px;
+  margin-left: 6px;
   position: relative;
-  top: -6px;
+  top: -3px;
   text-decoration: none;
 `;
 
