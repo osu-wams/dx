@@ -18,8 +18,8 @@
     "@types/jest": "^23.3.12",
     "@types/node": "^10.12.21",
     "@types/reach__router": "^1.2.6",
-    "@types/react": "16.9.17",
-    "@types/react-dom": "^16.9.4",
+    "@types/react": "^16.9.20",
+    "@types/react-dom": "^16.9.5",
     "@types/styled-components": "^4.4.2",
     "axios": "^0.19.1",
     "concurrently": "^4.1.1",
@@ -27,9 +27,9 @@
     "date-fns-tz": "^1.0.8",
     "http-proxy-middleware": "^0.20.0",
     "libphonenumber-js": "^1.7.30",
-    "react": "16.12.0",
+    "react": "^0.0.0-experimental-241c4467e",
     "react-app-polyfill": "^1.0.5",
-    "react-dom": "16.12.0",
+    "react-dom": "^0.0.0-experimental-241c4467e",
     "react-ga": "^2.7.0",
     "react-helmet-async": "^1.0.4",
     "react-loading-skeleton": "^1.2.0",
@@ -93,6 +93,10 @@
       "not dead",
       "not op_mini all"
     ]
+  },
+  "resolutions": {
+    "@osu-wams/hooks/react": "^0.0.0-experimental-241c4467e",
+    "@osu-wams/hooks/react-dom": "^0.0.0-experimental-241c4467e"
   },
   "jest": {
     "resetMocks": true,

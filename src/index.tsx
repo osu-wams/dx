@@ -1,5 +1,6 @@
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
+// import {} from 'react-dom/experimental';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga';
@@ -34,12 +35,7 @@ try {
   // user gets fresh data.
   cache.clear();
 
-  ReactDOM.render(
-    <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
-      <App containerElement={applicationRoot} />
-    </ErrorBoundary>,
-    applicationRoot
-  );
+  ReactDOM.createRoot(applicationRoot).render(<App containerElement={applicationRoot} />);
 } catch (e) {
   if (IGNORED_ERRORS.includes(e.toString())) {
     console.warn(`DX Application caught an ignored error "${e.toString()}".`);
