@@ -39,5 +39,7 @@ export enum Color {
   'lava-400' = '#C72127',
   'luminance-300' = '#FFCE57',
   'luminance-400' = '#FFB500',
-  'roguewave-400' = '#00859B'
+  'roguewave-200' = '#B8DDE1',
+  'roguewave-400' = '#00859B',
+  'roguewave-500' = '#007082'
 }

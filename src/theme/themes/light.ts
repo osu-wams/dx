@@ -41,21 +41,22 @@ export const light: ThemeConfiguration = {
       background: Color.transparent,
       color: neutral550
     },
-    profileMenuList: {
-      background: neutral800,
-      color: linkForeground,
+    headerNavList: {
+      background: componentBackground,
+      color: bodyText,
       svg: {
-        color: primary
+        color: bodyText
       },
       menuItem: {
-        borderTop: neutral500
+        borderTop: Color.transparent
       },
       menuItemSelected: {
+        color: primary,
         background: Color.transparent
       }
     },
     mainNavList: {
-      background: Color.transparent,
+      background: Color.white,
       color: neutral550,
       hoverColor: primary,
       popOver: {
@@ -531,10 +532,10 @@ export const light: ThemeConfiguration = {
     myDialog: {
       background: componentBackground,
       h2: {
-        color: primary
+        color: neutral600
       },
       h3: {
-        color: neutral200
+        color: neutral550
       },
       header: {
         border: neutral200
@@ -543,12 +544,15 @@ export const light: ThemeConfiguration = {
         color: neutral600
       }
     },
-    pageTitle: {
+    siteTitle: {
       color: neutral600,
       badge: {
-        background: info,
-        color: buttonPrimary
+        background: Color['roguewave-200'],
+        color: Color['roguewave-500']
       }
+    },
+    pageTitle: {
+      color: neutral600
     },
     plainCard: {
       header: {

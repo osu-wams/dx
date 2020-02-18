@@ -11,8 +11,9 @@ export const gradients = {
 };
 
 export const breakpoints = {
-  '768': '768px',
-  '1024': '1024px'
+  small: '768px',
+  medium: '992px',
+  large: '1200px'
 };
 
 export const themeSettings = {
@@ -20,9 +21,6 @@ export const themeSettings = {
     unit: 8,
     mobile: '1rem', // padding/padding or row/column gaps
     desktop: '3rem'
-  },
-  widths: {
-    contentMax: '1024px'
   },
   borderRadius: {
     '8': '8px',

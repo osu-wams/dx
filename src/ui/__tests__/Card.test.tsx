@@ -71,45 +71,30 @@ describe('<Card />', () => {
   it('should display card content when expanded', () => {
     const { getByTestId } = render(<StandardCard />);
     expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
+
     fireEvent.click(getByTestId('StandardCardHeader'));
     expect(getByTestId(/standardcardcontent/i)).toBeVisible();
+
     fireEvent.click(getByTestId('StandardCardHeader'));
     expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
   });
 
   it('should display card content by default on larger screens', () => {
-    // Mock matchMedia to return true (larger screen).
-    // Todo: This is probably brittle and we should consider modifying the behavior in setupTests.js
-    //       to utilize the screen size set by JSDOM and modify that instead when testing.
-    const matchMedia = window.matchMedia;
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => ({ matches: true, addListener: () => {}, removeListener: () => {} }))
-    });
-
-    const { getByTestId } = render(<StandardCard />);
+    const { getByTestId } = render(<StandardCard />, { isDesktop: true });
     expect(getByTestId(/standardcardcontent/i)).toBeVisible();
-    Object.defineProperty(window, 'matchMedia', matchMedia);
   });
 
   it('should not be collapsible on mobile view when collapsing prop is set to false', () => {
-    const matchMedia = window.matchMedia || {};
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => ({ matches: false, addListener: () => {}, removeListener: () => {} }))
-    });
     const { getByText } = render(<NonCollapsingCard />);
+
     // the svg icon for collapsing cards should not exist
     expect(getByText('Header').nextSibling).toBeNull();
-    Object.defineProperty(window, 'matchMedia', matchMedia);
   });
 
   it('should be collapsible on mobile view when collapsing prop is not defined or set to true', () => {
-    const matchMedia = window.matchMedia || {};
-    Object.defineProperty(window, 'matchMedia', {
-      value: jest.fn(() => ({ matches: false, addListener: () => {}, removeListener: () => {} }))
-    });
     const { getByText } = render(<StandardCard />);
+
     // the svg icon for collapsing cards should exist
     expect(getByText('Header').nextSibling).toBeInstanceOf(SVGSVGElement);
-    Object.defineProperty(window, 'matchMedia', matchMedia);
   });
 });

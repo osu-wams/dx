@@ -22,7 +22,7 @@ const AlertWrapper = styled.div`
 `;
 const AlertCardWrapper = styled(Card)`
   width: 100%;
-  max-width: ${breakpoints[1024]};
+  max-width: ${breakpoints.large};
   background-color: ${({ theme }) => theme.alert.background};
   box-shadow: none;
   margin: 0 auto;

@@ -8,11 +8,13 @@ import ecampusLogoDark from '../assets/osu-ecampus-dark.svg';
 import cascadesLogoDark from '../assets/osu-cascades-dark.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
-import { ProfileMenu } from './ProfileMenu';
-import { breakpoints, styled } from '../theme';
+import { HeaderNav } from './HeaderNav';
+import { breakpoints, styled, themeSettings } from '../theme';
 import { User } from '@osu-wams/hooks';
+import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { UserContext, AppContext, IAppContext } from '../App';
+import { BetaBadge } from './Badge';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -24,30 +26,49 @@ const HeaderWrapper = styled.div`
   flex-flow: row wrap;
   padding: 8px 8px 12px;
   align-items: center;
+  @media (min-width: ${breakpoints.small}) {
+    display: block;
+    height: 100px;
+  }
 `;
 
 const Navigation = styled.div`
-  flex-basis: 100%;
-  margin: 10px auto 0 auto;
-  overflow-x: scroll;
-  /* Hide the scrollbar in most browsers */
-  scrollbar-width: none;
-  ::-webkit-scrollbar {
-    display: none;
+  @media (min-width: ${breakpoints.small}) {
+    padding: 0 ${themeSettings.spacing.desktop};
+    /* match main gride color */
+    border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
+    /* navigation should blend with header background */
+    background-color: ${({ theme }) => theme.header.background};
   }
-  overflow: -moz-scrollbars-none;
-  -ms-overflow-style: none;
-  @media (min-width: ${breakpoints[768]}) {
-    flex-basis: auto;
-    order: 1;
+`;
+
+const SiteTitle = styled.header`
+  display: none;
+  @media (min-width: ${breakpoints.small}) {
+    display: block;
+    font-size: ${themeSettings.fontSize[20]};
+    font-weight: 300;
+    margin: 0 auto;
+    text-align: center;
+    max-width: ${breakpoints.large};
+    margin-top: 20px;
+  }
+  @media (min-width: ${breakpoints.medium}) {
+    font-size: ${themeSettings.fontSize[26]};
+  }
+  @media (min-width: 1750px) {
+    text-align: left;
   }
 `;
 
 const Logo = styled.img`
   order: 0;
   height: 60px;
-  @media (min-width: ${breakpoints[768]}) {
+  @media (min-width: ${breakpoints.small}) {
     height: 80px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
   }
 `;
 
@@ -68,22 +89,37 @@ const campusLogo = (user: Types.User, context: IAppContext) => {
   }
 };
 
+const mainTitle = user => {
+  let title = 'Student';
+  if (UserUtil.getAffiliation(user) === User.AFFILIATIONS.employee) {
+    title = 'Employee';
+  }
+  return title + ' Dashboard';
+};
+
 const Header = () => {
   const user = useContext<any>(UserContext);
   const appContext = useContext(AppContext);
+  const title = mainTitle(user.data);
 
   return (
-    <HeaderWrapper>
-      <Logo
-        data-testid="app-header-logo"
-        src={campusLogo(user.data, appContext)}
-        alt="Oregon State University"
-      />
-      <ProfileMenu />
+    <>
+      <HeaderWrapper>
+        <Logo
+          data-testid="app-header-logo"
+          src={campusLogo(user.data, appContext)}
+          alt="Oregon State University"
+        />
+        <SiteTitle>
+          {title}
+          <BetaBadge title={title} />
+        </SiteTitle>
+        <HeaderNav />
+      </HeaderWrapper>
       <Navigation>
         <MainNav />
       </Navigation>
-    </HeaderWrapper>
+    </>
   );
 };
 

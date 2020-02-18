@@ -11,7 +11,7 @@ export interface ThemeConfiguration {
       background: string;
       color: string;
     };
-    profileMenuList: {
+    headerNavList: {
       background: string;
       color: string;
       svg: {
@@ -21,6 +21,7 @@ export interface ThemeConfiguration {
         borderTop: string;
       };
       menuItemSelected: {
+        color: string;
         background: string;
       };
     };
@@ -513,12 +514,15 @@ export interface ThemeConfiguration {
         color: string;
       };
     };
-    pageTitle: {
+    siteTitle: {
       color: string;
       badge: {
         background: string;
         color: string;
       };
+    };
+    pageTitle: {
+      color: string;
     };
     plainCard: {
       header: {

@@ -15,40 +15,33 @@ import Url from '../../util/externalUrls.data';
 import { ITSystemSticky } from './ITSystemSticky';
 import { Status, useStatus } from '@osu-wams/hooks';
 import { ITSystemItem } from './ITSystemItem';
-import { styled, breakpoints, themeSettings } from '../../theme';
+import { styled, breakpoints } from '../../theme';
 import operationalStatus from '../../assets/systems-status-operational.svg';
+import { EmptyState, EmptyStateImage, EmptyStateText } from '../../ui/EmptyStates';
+
+const AllOperational = () => (
+  <EmptyState>
+    <EmptyStateImage src={operationalStatus} alt="" />
+    <EmptyStateText>All IT systems operating normally.</EmptyStateText>
+  </EmptyState>
+);
 
 const { withStickyIncidents, sortedByStatus, allOperational } = Status;
 
-const NoItems = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  align-items: center;
-  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
-    ${themeSettings.spacing.unit * 8}px;
-  width: 100%;
-`;
-
-const NoItemsText = styled.p`
-  color: ${({ theme }) => theme.features.itStatus.item.emptyText.color};
-  text-align: center;
-`;
-
 const StatusItemRow = styled(CardContentRow)`
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   > li {
-    flex-basis: 50%;
+    flex-basis: 1;
   }
   > li:nth-child(odd) {
     border-right: 1px solid ${({ theme }) => theme.ui.card.contentCell.borderLeft};
   }
-  @media (max-width: ${breakpoints[1024]}) {
-    flex-direction: column;
-    flex-wrap: unset;
+  @media (min-width: ${breakpoints.large}) {
+    flex-direction: row;
+    flex-wrap: wrap;
     > li {
-      flex-basis: 1;
+      flex-basis: 50%;
     }
   }
 `;
@@ -67,17 +60,12 @@ const ITSystemStatus = () => {
               <ITSystemSticky components={withStickyIncidents(status.data)}></ITSystemSticky>
             </CardContentRow>
           )}
+          {allOperational(status.data) && <AllOperational />}
           <StatusItemRow>
-            {allOperational(status.data) && (
-              <NoItems>
-                <img src={operationalStatus} alt="All Systems Operational" />
-                <NoItemsText>All IT systems operating normally.</NoItemsText>
-              </NoItems>
-            )}
             {!allOperational(status.data) &&
-              sortedByStatus(status.data).map(c => (
-                <ITSystemItem key={`item-${c.id}`} component={c} />
-              ))}
+              sortedByStatus(status.data)
+                .filter(c => c.status > 1)
+                .map(c => <ITSystemItem key={`item-${c.id}`} component={c} />)}
           </StatusItemRow>
         </CardContentTable>
       )}

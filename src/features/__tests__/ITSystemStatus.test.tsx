@@ -37,13 +37,13 @@ describe('<ITSystemStatus />', () => {
     expect(getByTestId('sticky-incident-badge')).toBeInTheDocument();
   });
 
-  it('should have some systems not operating normally', async () => {
-    const { getByText, queryByText, getAllByText } = render(<ITSystemStatus />);
+  it('should have some systems not operating normally but hide the operational systems', async () => {
+    const { getByText, queryByText, queryAllByText } = render(<ITSystemStatus />);
     expect(await queryByText(/operating normally/)).not.toBeInTheDocument();
     expect(await queryByText(/View details/)).toBeInTheDocument();
     expect(getByText(/Major Outage/)).toBeInTheDocument();
     expect(getByText(/Performance Issues/)).toBeInTheDocument();
-    expect(getAllByText(/Operational/)).toHaveLength(2);
+    expect(await queryAllByText(/Operational/)).toHaveLength(0);
   });
 
   it('should have an all systems operational state', async () => {

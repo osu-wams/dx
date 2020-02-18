@@ -1,16 +1,23 @@
 import React from 'react';
-import { faHome, faGraduationCap, faHandsUsd } from '@fortawesome/pro-light-svg-icons';
+import {
+  faHome,
+  faGraduationCap,
+  faHandsUsd,
+  faList,
+  faFlask
+} from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
-import { Event } from '../../util/gaTracking';
-import { MoreNav } from './MoreNav';
+import { Event } from 'src/util/gaTracking';
+import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
+import { Mobile, Desktop } from 'src/util/useMediaQuery';
 
 const MainNavStudent = (...props) => {
   return (
     <Nav {...props}>
-      <NavLink to="/" onClick={() => Event('student-navigation-main', 'Home link clicked')}>
+      <NavLink to="/" onClick={() => Event('student-navigation-main', 'Overview link clicked')}>
         <Icon icon={faHome} />
-        Home
+        Overview
       </NavLink>
       <NavLink
         to="academics"
@@ -26,8 +33,33 @@ const MainNavStudent = (...props) => {
         <Icon icon={faHandsUsd} />
         Finances
       </NavLink>
-      <MoreNav />
+
+      <Mobile>
+        <FullMobileMenu />
+      </Mobile>
+
+      <Desktop>
+        <DesktopLinks />
+      </Desktop>
     </Nav>
+  );
+};
+
+const DesktopLinks = () => {
+  return (
+    <>
+      <NavLink
+        to="resources"
+        onClick={() => Event('student-navigation-main', 'Resource link clicked')}
+      >
+        <Icon icon={faList} />
+        Resources
+      </NavLink>
+      <NavLink to="beta" onClick={() => Event('student-navigation-main', 'Beta link clicked')}>
+        <Icon icon={faFlask} />
+        Beta
+      </NavLink>
+    </>
   );
 };
 
