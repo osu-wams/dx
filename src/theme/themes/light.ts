@@ -547,8 +547,8 @@ export const light: ThemeConfiguration = {
     siteTitle: {
       color: neutral600,
       badge: {
-        background: Color['stratosphere-200'],
-        color: Color['stratosphere-500']
+        background: Color['roguewave-200'],
+        color: Color['roguewave-500']
       }
     },
     pageTitle: {

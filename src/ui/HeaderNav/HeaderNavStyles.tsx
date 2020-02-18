@@ -10,6 +10,10 @@ const HeaderNavButton = styled(MenuButton)`
   @media (min-width: ${breakpoints.small}) {
     margin-left: 16px;
   }
+  > svg.fa-lg {
+    vertical-align: -0.2em !important;
+    font-size: 1.25em !important;
+  }
 `;
 
 const HeaderNavWrapper = styled.div`

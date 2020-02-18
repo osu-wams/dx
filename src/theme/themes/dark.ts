@@ -547,8 +547,8 @@ export const dark: ThemeConfiguration = {
     siteTitle: {
       color: neutral600,
       badge: {
-        background: info,
-        color: buttonPrimary
+        background: Color['roguewave-200'],
+        color: Color['roguewave-500']
       }
     },
     pageTitle: {
