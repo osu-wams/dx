@@ -11,6 +11,10 @@ const Badge = styled.a`
   vertical-align: top;
   padding: 1px 6px;
   border-radius: 8px;
+  /* normally not a good practice, but this beta link is not meant to be prominent */
+  &:focus {
+    outline: none;
+  }
   margin-left: 6px;
   position: relative;
   top: -3px;
