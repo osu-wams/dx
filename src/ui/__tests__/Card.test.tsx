@@ -16,7 +16,7 @@ const StandardCard = () => (
       badge={<Badge color={Color['orange-400']}>{4}</Badge>}
     />
     <CardContent data-testid="StandardCardContent">Content</CardContent>
-    <CardFooter infoButtonId="blah">
+    <CardFooter data-testid="StandardCardFooter" infoButtonId="blah">
       <Button>View all</Button>
     </CardFooter>
   </Card>
@@ -71,12 +71,15 @@ describe('<Card />', () => {
   it('should display card content when expanded', () => {
     const { getByTestId } = render(<StandardCard />);
     expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
+    expect(getByTestId(/standardcardfooter/i)).not.toBeVisible();
 
     fireEvent.click(getByTestId('StandardCardHeader'));
     expect(getByTestId(/standardcardcontent/i)).toBeVisible();
+    expect(getByTestId(/standardcardfooter/i)).toBeVisible();
 
     fireEvent.click(getByTestId('StandardCardHeader'));
     expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
+    expect(getByTestId(/standardcardfooter/i)).not.toBeVisible();
   });
 
   it('should display card content by default on larger screens', () => {
@@ -92,7 +95,7 @@ describe('<Card />', () => {
   });
 
   it('should be collapsible on mobile view when collapsing prop is not defined or set to true', () => {
-    const { getByText } = render(<StandardCard />);
+    const { getByText, queryByTestId } = render(<StandardCard />);
 
     // the svg icon for collapsing cards should exist
     expect(getByText('Header').nextSibling).toBeInstanceOf(SVGSVGElement);
