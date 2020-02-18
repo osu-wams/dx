@@ -68,7 +68,7 @@ describe('<Card />', () => {
     expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
   });
 
-  it('should display card content when expanded', async () => {
+  it('should display card content when expanded', () => {
     const { getByTestId } = render(<StandardCard />);
     expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
     expect(getByTestId(/standardcardfooter/i)).not.toBeVisible();
