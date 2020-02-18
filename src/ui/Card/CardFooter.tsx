@@ -8,7 +8,13 @@ const CardFooter = ({ ...props }) => {
   const { collapsed, collapsible } = useContext(CardContext);
 
   return props.children || props.infoButtonId ? (
-    <CardFooterWrapper collapsed={collapsed} collapsible={collapsible} {...props}>
+    <CardFooterWrapper
+      collapsed={collapsed}
+      collapsible={collapsible}
+      // Want to move this back to the CardFooterWrapper at some point, but tests were failing
+      style={{ visibility: collapsible && collapsed ? 'collapse' : 'visible' }}
+      {...props}
+    >
       <InfoButton infoButtonId={props.infoButtonId} />
       {props.children}
     </CardFooterWrapper>
@@ -22,7 +28,6 @@ const CardFooterWrapper = styled.div<ICollapse>`
   ${props =>
     props.collapsible &&
     `
-    visibility: ${props.collapsed ? 'collapse' : 'visible'}
     height: ${props.collapsed ? 0 : 'auto'};
     padding: ${
       props.collapsed ? 0 : `${themeSettings.spacing.unit}px ${themeSettings.spacing.unit * 2}px`
