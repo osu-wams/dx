@@ -7,6 +7,8 @@ import { mockGAEvent } from '../../setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
 import { format } from '../../util/helpers';
 
+// import { inspect } from 'util';
+
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
 const mockSimpleSchedule = Student.CourseSchedule.mockCourseSchedule.simpleSchedule;
@@ -222,8 +224,10 @@ describe('<ScheduleCard /> with a simple schedule', () => {
 
   [1, 2, 3, 4, 5, 6, 7].forEach(async daysAgo => {
     it(`finds meeting times ${daysAgo} days ago`, async () => {
-      const d = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
-      const startDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+      const startDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
+      // Fixing tests timing issue
+      // const d = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
+      // const startDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
       const todayShortCode = getDayShortcode(startDate);
       mockGetStartDate.mockImplementation(() => {
         return startDate.getTime();
@@ -232,10 +236,22 @@ describe('<ScheduleCard /> with a simple schedule', () => {
         mockSimpleSchedule(startDate.toISOString().slice(0, 10))
       );
       const { getByText, debug } = renderWithUserContext(<ScheduleCard />);
-      // debug();
+
       switch (todayShortCode) {
         case 'M':
         case 'F':
+          /*
+          debug();
+          console.log(`startDate: ${startDate.getTime()} = ${startDate}, d = ${d}`);
+          console.log(
+            `mockSimpleSchedule: ${inspect(
+              mockSimpleSchedule(startDate.toISOString().slice(0, 10)),
+              false,
+              null
+            )}`
+          );
+          console.log(`todayShortCode: ${todayShortCode}`);
+          */
           const morningText = await waitForElement(() => getByText(/Morning Building/));
           expect(morningText).toBeInTheDocument();
           const mfAfternoonText = await waitForElement(() => getByText(/Afternoon Building/));
