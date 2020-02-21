@@ -19,7 +19,7 @@ const Nav = styled.nav`
   /* border-top: 1px solid #eee; */
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
   z-index: 10;
   @media (min-width: ${breakpoints.small}) {
     justify-content: left;

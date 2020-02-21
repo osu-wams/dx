@@ -7,12 +7,14 @@ const HeaderNavButton = styled(MenuButton)`
   border: none;
   cursor: pointer;
   margin-left: 6px;
+  > svg.fa-lg {
+    font-size: 2.4rem;
+  }
   @media (min-width: ${breakpoints.small}) {
     margin-left: 16px;
-  }
-  > svg.fa-lg {
-    vertical-align: -0.2em !important;
-    font-size: 1.25em !important;
+    > svg.fa-lg {
+      font-size: 2rem; /* desktop icons are smaller due to text beside them */
+    }
   }
 `;
 
