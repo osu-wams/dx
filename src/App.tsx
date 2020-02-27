@@ -117,6 +117,7 @@ const App = (props: AppProps) => {
   return (
     <ThemeProvider theme={themesLookup[theme]}>
       <UserContext.Provider value={user}>
+        {console.log(user)}
         <AppContext.Provider value={appContext}>
           <GlobalStyles />
           <Header />
