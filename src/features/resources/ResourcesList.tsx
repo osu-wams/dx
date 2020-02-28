@@ -8,10 +8,14 @@ import { singularPlural } from '../../util/helpers';
 import { IconLookup } from './resources-utils';
 import { ThemeContext } from '../../theme';
 import { Types } from '@osu-wams/lib';
+import { TrendingEvent } from './GATrendingResource';
 
 // Setup a font awesome library to use for searching for icons from the backend.
 library.add(fal, fab);
-const ResourcesList: React.FC<{ resources: Types.Resource[] }> = ({ resources }) => {
+const ResourcesList: React.FC<{ resources: Types.Resource[]; user: Types.User }> = ({
+  resources,
+  user
+}) => {
   const themeContext = useContext(ThemeContext);
 
   return (
@@ -24,7 +28,10 @@ const ResourcesList: React.FC<{ resources: Types.Resource[] }> = ({ resources })
               <ListItemContentLinkSVG
                 spaced
                 href={resource.link}
-                onClick={() => Event('resource', resource.title)}
+                onClick={() => {
+                  Event('resource', resource.title);
+                  TrendingEvent(resource, user);
+                }}
                 target="_blank"
               >
                 {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
