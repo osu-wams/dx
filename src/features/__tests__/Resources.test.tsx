@@ -3,7 +3,7 @@ import { wait } from '@testing-library/react';
 import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
 import userEvent from '@testing-library/user-event';
 import Resources from '../../pages/Resources';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent, mockTrendingEvent } from '../../setupTests';
 import { Resources as hooksResources } from '@osu-wams/hooks';
 
 const mockUseResources = jest.fn();
@@ -99,7 +99,8 @@ describe('<Resources />', () => {
     const BillingInformationResource = await getByText(/Billing Information/);
     expect(BillingInformationResource).not.toBeNull();
     userEvent.click(BillingInformationResource);
-    expect(mockGAEvent).toHaveBeenCalled();
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+    expect(mockTrendingEvent).toHaveBeenCalledTimes(1);
   });
 
   it('should empty input and get results for that category only when clicking category link', async () => {

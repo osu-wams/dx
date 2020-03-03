@@ -15,6 +15,7 @@ import { User, Resources, useResourcesByQueue } from '@osu-wams/hooks';
 import { IconLookup } from './resources/resources-utils';
 import Checkbox from '@material-ui/core/Checkbox';
 import Icon from 'src/ui/Icon';
+import { TrendingEvent } from './resources/GATrendingResource';
 
 // Setup a font awesome library to use for searching icons from the backend.
 library.add(fal, fab);
@@ -107,7 +108,10 @@ const ResourceItem = ({ resource, categ }) => {
       <ListItemContentLinkSVG
         href={resource.link}
         target="_blank"
-        onClick={() => Event('resources-card', categ, resource.title)}
+        onClick={() => {
+          Event('resources-card', categ, resource.title);
+          TrendingEvent(resource, user.data);
+        }}
       >
         {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
         <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>

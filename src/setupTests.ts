@@ -8,6 +8,7 @@ ReactGA.initialize('UA-48705802-13', {
 });
 
 export const mockGAEvent = jest.fn();
+export const mockTrendingEvent = jest.fn();
 
 jest.mock('../src/util/gaTracking', () => ({
   Event: () => {
@@ -15,7 +16,14 @@ jest.mock('../src/util/gaTracking', () => ({
   }
 }));
 
+jest.mock('../src/features/resources/GATrendingResource', () => ({
+  TrendingEvent: () => {
+    return mockTrendingEvent();
+  }
+}));
+
 mockGAEvent.mockResolvedValue(Promise.resolve(true));
+mockTrendingEvent.mockResolvedValue(Promise.resolve(true));
 
 beforeEach(() => {
   mockGAEvent.mockClear();
