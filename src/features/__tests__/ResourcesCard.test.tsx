@@ -3,7 +3,7 @@ import { waitForElement, fireEvent } from '@testing-library/react';
 import { render, mockAppContext } from '../../util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent, mockTrendingEvent } from '../../setupTests';
 import { Resources } from '@osu-wams/hooks';
 
 const { resourcesCardData } = Resources.mockResources;
@@ -34,9 +34,7 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should have two items', async () => {
-    const { getByText, debug, getByTestId } = render(
-      <ResourcesCard categ="financial" icon={faCube} />
-    );
+    const { getByText, getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />);
     await waitForElement(() => getByText('Student Jobs'));
     expect(getByTestId('resource-container').children).toHaveLength(3);
   });
@@ -45,7 +43,8 @@ describe('<ResourcesCard />', () => {
     const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
     const StudentJobsResource = await waitForElement(() => getByText('Student Jobs'));
     fireEvent.click(StudentJobsResource);
-    expect(mockGAEvent).toHaveBeenCalled();
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+    expect(mockTrendingEvent).toHaveBeenCalledTimes(1);
   });
 
   it('should have a link to all category resources', async () => {
@@ -60,7 +59,7 @@ describe('<ResourcesCard />', () => {
 
       // Google Analytics is setup and fires
       fireEvent.click(AllAcademicLink);
-      expect(mockGAEvent).toHaveBeenCalled();
+      expect(mockGAEvent).toHaveBeenCalledTimes(1);
     }
   });
 

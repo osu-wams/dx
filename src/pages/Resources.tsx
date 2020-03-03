@@ -189,7 +189,10 @@ const Resources = () => {
           )}
           {res.loading && <Skeleton count={5} />}
           {!res.loading && res.data.length > 0 ? (
-            <ResourcesList resources={filteredResources.filter(r => hasAudience(user.data, r))} />
+            <ResourcesList
+              resources={filteredResources.filter(r => hasAudience(user.data, r))}
+              user={user.data}
+            />
           ) : (
             !res.loading && (
               /* @TODO need mockup styling to do and messaging for no results */
