@@ -27,6 +27,7 @@ export type IComponents =
   | 'employee-tools'
   | 'schedule-card'
   | 'resources-card'
+  | 'favorite-resources-card'
   | 'anouncements'
   | 'events'
   | 'courses'
