@@ -14,7 +14,7 @@ import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { useUser } from '@osu-wams/hooks';
-import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
+import { useAppVersions, useInfoButtons, useFavorites } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { styled, GlobalStyles } from './theme';
 import { Versions } from '@osu-wams/hooks/dist/api/appVersions';
@@ -73,6 +73,7 @@ const App = (props: AppProps) => {
   const user = useUser();
   const infoButtons = useInfoButtons();
   const appVersions = useAppVersions(initialAppContext.appVersions);
+  const favRes = useFavorites();
   const [theme, setTheme] = useState<string>(defaultTheme);
   const [appContext, setAppContext] = useState<IAppContext>({ ...initialAppContext, setTheme });
   const containerElementRef = useRef(props.containerElement);
@@ -112,12 +113,11 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data]);
+  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data, favRes.data]);
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>
       <UserContext.Provider value={user}>
-        {console.log(user)}
         <AppContext.Provider value={appContext}>
           <GlobalStyles />
           <Header />

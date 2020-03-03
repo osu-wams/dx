@@ -23,6 +23,10 @@ const ListItem = styled.li<SpacedList>`
   }
 `;
 
+const ListItemFlex = styled(ListItem)`
+  display: flex;
+`;
+
 const ListItemContent = styled.div<SpacedList>`
   width: 100%;
   background: ${({ theme }) => theme.ui.list.item.background};
@@ -112,6 +116,7 @@ const ListItemLeadText = styled.div`
 export {
   List,
   ListItem,
+  ListItemFlex,
   ListItemContent,
   ListItemContentButton,
   ListItemContentLink,
