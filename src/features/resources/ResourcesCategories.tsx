@@ -4,7 +4,13 @@ import CustomBtn from '../../ui/CustomBtn';
 import { Event } from '../../util/gaTracking';
 import { Types } from '@osu-wams/lib';
 
-const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelectedCategory }) => {
+const ResourceCategories = ({
+  categories,
+  setQuery,
+  selectedCategory,
+  setSelectedCategory,
+  hasFavorite
+}) => {
   return (
     <CategoriesWrapper>
       {categories.length > 0 && (
@@ -20,6 +26,19 @@ const ResourceCategories = ({ categories, setQuery, selectedCategory, setSelecte
             }}
             selected={selectedCategory?.toLowerCase() === 'all' ? true : false}
           />
+          {hasFavorite && (
+            <CustomBtn
+              icon="https://data.dx.oregonstate.edu/sites/default/files/2019-05/heart.svg"
+              text="Favorites"
+              id="favorites"
+              name="categories"
+              clickHandler={() => {
+                setSelectedCategory('favorites');
+                Event('resource-category', 'favorites');
+              }}
+              selected={selectedCategory?.toLowerCase() === 'favorites' ? true : false}
+            />
+          )}
           {categories.map((category: Types.Category) => (
             <CustomBtn
               icon={category.icon}

@@ -11,6 +11,7 @@ import { Resources as hooksResources, useCategories, useResources, User } from '
 import PageTitle from '../ui/PageTitle';
 import { UserContext } from '../App';
 import VisuallyHidden from '@reach/visually-hidden';
+import { activeFavoriteResources } from 'src/features/resources/resources-utils';
 
 const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
@@ -44,6 +45,9 @@ const Resources = () => {
    */
   const filterByCategory = (name: string, resources: Types.Resource[]): Types.Resource[] => {
     if (name === 'all') return resources;
+    if (name === 'favorites') {
+      return activeFavoriteResources(user.data.favoriteResources, resources);
+    }
 
     return resources.filter(
       resource =>
@@ -184,6 +188,7 @@ const Resources = () => {
                 selectedCategory={activeCategory}
                 setQuery={setQuery}
                 setSelectedCategory={setSelectedCategory}
+                hasFavorite={user.data.favoriteResources.some(f => f.active)}
               />
             </>
           )}

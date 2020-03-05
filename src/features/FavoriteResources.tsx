@@ -11,6 +11,7 @@ import FailedState from 'src/ui/FailedState';
 import { InternalLink } from 'src/ui/Link';
 import { EmptyState } from 'src/ui/EmptyStates';
 import { ResourceItem } from './resources/ResourceItem';
+import { activeFavoriteResources } from './resources/resources-utils';
 
 export const FavoriteResources = () => {
   const user = useContext(UserContext);
@@ -19,12 +20,7 @@ export const FavoriteResources = () => {
 
   useEffect(() => {
     if (user.data.favoriteResources && res.data.length > 0) {
-      const hasActiveFavorite = resourceId =>
-        user.data.favoriteResources.some(f => f.active && f.resourceId === resourceId);
-
-      const favorites = res.data.filter(f => f !== undefined && hasActiveFavorite(f.id));
-
-      setFavoriteResources(favorites);
+      setFavoriteResources(activeFavoriteResources(user.data.favoriteResources, res.data));
     }
   }, [res.data, user.data.favoriteResources]);
 
