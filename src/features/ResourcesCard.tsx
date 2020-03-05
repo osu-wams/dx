@@ -132,7 +132,11 @@ export const ResourceItem = ({ resource, event }) => {
         value={resource.id}
         checked={favs}
         onChange={handleChange}
-        // inputProps={{ 'aria-label': 'secondary checkbox' }}
+        inputProps={{
+          'aria-label': favs
+            ? `Remove ${resource.title} link from your favorite resources`
+            : `Add ${resource.title} link to your favorite resources`
+        }}
       />
     </ListItemFlex>
   );
