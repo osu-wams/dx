@@ -51,9 +51,13 @@ const App = (props: AppProps) => {
   const infoButtons = useInfoButtons();
   const appVersions = useAppVersions(InitialAppContext.appVersions);
   const [theme, setTheme] = useState<string>(defaultTheme);
-  const [appContext, setAppContext] = useState<IAppContext>({ ...InitialAppContext, setTheme });
+  const [appContext, setAppContext] = useState<IAppContext>({
+    ...InitialAppContext,
+    setTheme
+  });
   const containerElementRef = useRef(props.containerElement);
 
+  /* eslint-disable react-hooks/exhaustive-deps  */
   useEffect(() => {
     setAppContext(previous => ({
       ...previous,
@@ -91,6 +95,7 @@ const App = (props: AppProps) => {
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
   }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data]);
+  /* eslint-enable react-hooks/exhaustive-deps  */
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>
