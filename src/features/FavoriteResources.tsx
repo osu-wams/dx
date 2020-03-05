@@ -5,8 +5,7 @@ import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card'
 import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
 import { ThemeContext } from 'src/theme';
-
-import { Resources as hooksResources, useFavorites, useResources, User } from '@osu-wams/hooks';
+import { useResources } from '@osu-wams/hooks';
 import { UserContext } from 'src/App';
 import { TrendingEvent } from './resources/GATrendingResource';
 import { Event } from 'src/util/gaTracking';
@@ -14,64 +13,24 @@ import { IconLookup } from './resources/resources-utils';
 import FailedState from 'src/ui/FailedState';
 import { InternalLink } from 'src/ui/Link';
 import { EmptyState } from 'src/ui/EmptyStates';
+import { ResourceItem } from 'src/features/ResourcesCard';
 
 export const FavoriteResources = () => {
   const user = useContext(UserContext);
-  const [query, setQuery] = useState<string>('');
   const res = useResources();
-  const [favoriteResources, setFavoriteResources] = useState<any>([]);
+  const [favoriteResources, setFavoriteResources] = useState<Types.Resource[]>([]);
   const themeContext = useContext(ThemeContext);
-  const favRes = useFavorites();
 
-  /**
-   * Filter a list of resources where it has a category in its list matching the provided name
-   * parameter unless the category is 'all'.
-   * @param {string} name the category name to filter on
-   * @param {Resource[]} resources a list of resources to inspect for matching category
-   */
-  // const filterFavorites = (resId: string, resources: Types.Resource[]): Types.Resource[] => {
-
-  //   return resources.filter(
-  //     resource =>
-  //       resource.categories.findIndex(s => s.toLowerCase().includes(name.toLowerCase())) > -1
-  //   );
-  // };
-
-  // const favoriteResources = res.data;
-
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (favRes && res.data.length > 0) {
-      const favs = Object.values(favRes.data) as Types.FavoriteResource[];
-      const onlyFavIds = [] as string[];
-      // console.log(favs);
-      favs.map(f => {
-        // console.log(f);
-        if (f.active === true) {
-          onlyFavIds.push(f.resourceId);
-        }
-      });
-      // console.log(onlyFavIds);
-      // const fan = [] as any;
-      const favorites = res.data.filter(f => {
-        if (f !== undefined) {
-          return onlyFavIds.includes(f.id) && f;
-          // fan.push(f);
-        }
+    if (user.data.favoriteResources && res.data.length > 0) {
+      const hasActiveFavorite = resourceId =>
+        user.data.favoriteResources.some(f => f.active && f.resourceId === resourceId);
 
-        //   // fan.push(f);
-      });
-      console.log(favorites);
-      // const fav = favs.filter(r => r.active === true);
-      // if (res.data && user.data && user.data.favoriteResources > 0) {
-      //   let filtered = res.data.filter(
-      //     r => filterFavorites(user.data, r)
-      //   );
+      const favorites = res.data.filter(f => f !== undefined && hasActiveFavorite(f.id));
 
       setFavoriteResources(favorites);
     }
-  }, [res.data]);
-  /* eslint-enable react-hooks/exhaustive-deps */
+  }, [res.data, user.data.favoriteResources]);
 
   return (
     <Card>
@@ -83,19 +42,24 @@ export const FavoriteResources = () => {
           <List data-testid="resource-container">
             {console.log(favoriteResources)}
             {favoriteResources.map(resource => (
-              <ListItem key={resource.id}>
-                <ListItemContentLinkSVG
-                  href={resource.link}
-                  target="_blank"
-                  onClick={() => {
-                    Event('favorite-resources-card', resource.title);
-                    TrendingEvent(resource, user.data);
-                  }}
-                >
-                  {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
-                  <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
-                </ListItemContentLinkSVG>
-              </ListItem>
+              <ResourceItem
+                key={resource.id}
+                resource={resource}
+                event={() => Event('favorite-resources-card', resource.title)}
+              />
+              // <ListItem key={resource.id}>
+              //   <ListItemContentLinkSVG
+              //     href={resource.link}
+              //     target="_blank"
+              //     onClick={() => {
+              //       Event('favorite-resources-card', resource.title);
+              //       TrendingEvent(resource, user.data);
+              //     }}
+              //   >
+              //     {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
+              //     <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
+              //   </ListItemContentLinkSVG>
+              // </ListItem>
             ))}
           </List>
         )}

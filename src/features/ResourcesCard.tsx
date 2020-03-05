@@ -61,7 +61,11 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
         {!res.loading && !user.loading && resources?.length > 0 && (
           <List data-testid="resource-container">
             {resources.map(resource => (
-              <ResourceItem key={resource.id} resource={resource} categ={categ} />
+              <ResourceItem
+                key={resource.id}
+                resource={resource}
+                event={() => Event('resources-card', categ, resource.title)}
+              />
             ))}
           </List>
         )}
@@ -84,23 +88,29 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   );
 };
 
-const ResourceItem = ({ resource, categ }) => {
+export const ResourceItem = ({ resource, event }) => {
   const themeContext = useContext(ThemeContext);
   const [favs, setFav] = useState(false);
   const user = useContext<any>(UserContext);
-
   const isFavorite = (resId: string, favs: any) => {
     const res = favs.find(r => r.resourceId === resId);
     return res ? res.active : false;
   };
 
   useEffect(() => {
+    console.log(user.data);
+
     setFav(isFavorite(resource.id, user.data.favoriteResources));
   }, [user.data.favoriteResources, resource.id]);
 
+  const refreshFavorites = async () => {
+    await Resources.postFavorite(resource.id, !favs, 0);
+    await user.refreshFavorites();
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFav(event.target.checked);
-    Resources.postFavorite(resource.id, !favs, 0);
+    refreshFavorites();
   };
 
   return (
@@ -109,7 +119,7 @@ const ResourceItem = ({ resource, categ }) => {
         href={resource.link}
         target="_blank"
         onClick={() => {
-          Event('resources-card', categ, resource.title);
+          event();
           TrendingEvent(resource, user.data);
         }}
       >

@@ -73,7 +73,7 @@ const App = (props: AppProps) => {
   const user = useUser();
   const infoButtons = useInfoButtons();
   const appVersions = useAppVersions(initialAppContext.appVersions);
-  const favRes = useFavorites();
+  const favRes = useFavorites().favorites;
   const [theme, setTheme] = useState<string>(defaultTheme);
   const [appContext, setAppContext] = useState<IAppContext>({ ...initialAppContext, setTheme });
   const containerElementRef = useRef(props.containerElement);
