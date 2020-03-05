@@ -1,21 +1,18 @@
 import React, { FC, useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { fal, faHeart } from '@fortawesome/pro-light-svg-icons';
+import { fal } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { List, ListItemFlex, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
-import { styled, ThemeContext } from '../theme';
+import { List } from '../ui/List';
+import { styled } from '../theme';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
 import { Types } from '@osu-wams/lib';
-import { User, Resources, useResourcesByQueue } from '@osu-wams/hooks';
-import { IconLookup } from './resources/resources-utils';
-import Checkbox from '@material-ui/core/Checkbox';
-import Icon from 'src/ui/Icon';
-import { TrendingEvent } from './resources/GATrendingResource';
+import { User, useResourcesByQueue } from '@osu-wams/hooks';
+import { ResourceItem } from './resources/ResourceItem';
 
 // Setup a font awesome library to use for searching icons from the backend.
 library.add(fal, fab);
@@ -85,60 +82,6 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
         </CardFooter>
       )}
     </Card>
-  );
-};
-
-export const ResourceItem = ({ resource, event }) => {
-  const themeContext = useContext(ThemeContext);
-  const [favs, setFav] = useState(false);
-  const user = useContext<any>(UserContext);
-  const isFavorite = (resId: string, favs: any) => {
-    const res = favs.find(r => r.resourceId === resId);
-    return res ? res.active : false;
-  };
-
-  useEffect(() => {
-    console.log(user.data);
-
-    setFav(isFavorite(resource.id, user.data.favoriteResources));
-  }, [user.data.favoriteResources, resource.id]);
-
-  const refreshFavorites = async () => {
-    await Resources.postFavorite(resource.id, !favs, 0);
-    await user.refreshFavorites();
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFav(event.target.checked);
-    refreshFavorites();
-  };
-
-  return (
-    <ListItemFlex>
-      <ListItemContentLinkSVG
-        href={resource.link}
-        target="_blank"
-        onClick={() => {
-          event();
-          TrendingEvent(resource, user.data);
-        }}
-      >
-        {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
-        <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
-      </ListItemContentLinkSVG>
-      <Checkbox
-        icon={<Icon icon={faHeart} />}
-        checkedIcon={<Icon icon={faHeart} color="#d73f09" />}
-        value={resource.id}
-        checked={favs}
-        onChange={handleChange}
-        inputProps={{
-          'aria-label': favs
-            ? `Remove ${resource.title} link from your favorite resources`
-            : `Add ${resource.title} link to your favorite resources`
-        }}
-      />
-    </ListItemFlex>
   );
 };
 

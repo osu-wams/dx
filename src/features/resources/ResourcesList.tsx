@@ -1,43 +1,24 @@
-import React, { useContext } from 'react';
-import { fal } from '@fortawesome/pro-light-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../../ui/List';
+import React from 'react';
+import { List } from '../../ui/List';
 import { Event } from '../../util/gaTracking';
 import { singularPlural } from '../../util/helpers';
-import { IconLookup } from './resources-utils';
-import { ThemeContext } from '../../theme';
 import { Types } from '@osu-wams/lib';
-import { TrendingEvent } from './GATrendingResource';
+import { ResourceItem } from './ResourceItem';
 
-// Setup a font awesome library to use for searching for icons from the backend.
-library.add(fal, fab);
 const ResourcesList: React.FC<{ resources: Types.Resource[]; user: Types.User }> = ({
-  resources,
-  user
+  resources
 }) => {
-  const themeContext = useContext(ThemeContext);
-
   return (
     <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">
       {`found ${resources?.length} ${singularPlural(resources?.length, 'result')}`}
       <List>
         {resources.length > 0 &&
           resources.map((resource: Types.Resource) => (
-            <ListItem spaced key={resource.id}>
-              <ListItemContentLinkSVG
-                spaced
-                href={resource.link}
-                onClick={() => {
-                  Event('resource', resource.title);
-                  TrendingEvent(resource, user);
-                }}
-                target="_blank"
-              >
-                {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
-                <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
-              </ListItemContentLinkSVG>
-            </ListItem>
+            <ResourceItem
+              key={resource.id}
+              resource={resource}
+              event={() => Event('resource', resource.title)}
+            />
           ))}
       </List>
     </div>
