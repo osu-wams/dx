@@ -7,12 +7,12 @@ import '@reach/dialog/styles.css';
 import { Event } from '../util/gaTracking';
 import Button from './Button';
 import { themeSettings, styled, ThemeContext, breakpoints } from '../theme';
-import { UserContext, IAppContext, AppContext } from '../App';
 import Icon from './Icon';
 import { isNullOrUndefined } from 'util';
 import Url from '../util/externalUrls.data';
 import Masquerade from '../features/Masquerade';
 import { User } from '@osu-wams/hooks';
+import { AppContext } from 'src/contexts/app-context';
 
 const { GROUPS } = User;
 
@@ -75,8 +75,10 @@ const FooterDeployedContent = styled.span`
 
 const Footer = () => {
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
-  const user = useContext<any>(UserContext);
-  const appContext = useContext<IAppContext>(AppContext);
+  const {
+    user,
+    appVersions: { serverVersion, appVersion }
+  } = useContext(AppContext);
   const themeContext = useContext(ThemeContext);
   const toggleMasqueradeDialog = () => setShowMasqueradeDialog(!showMasqueradeDialog);
 
@@ -159,10 +161,10 @@ const Footer = () => {
           {user?.data?.isAdmin && (
             <>
               <FooterDeployedContent>
-                Server Version: {versionLink(appContext.appVersions.serverVersion, 'dx-server')}
+                Server Version: {versionLink(serverVersion, 'dx-server')}
               </FooterDeployedContent>
               <FooterDeployedContent>
-                Client Version: {versionLink(appContext.appVersions.appVersion, 'dx')}
+                Client Version: {versionLink(appVersion, 'dx')}
               </FooterDeployedContent>
             </>
           )}

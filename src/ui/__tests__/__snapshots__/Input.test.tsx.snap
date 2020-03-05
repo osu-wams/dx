@@ -1,6 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LargeInput gets rendered with large font size CSS 1`] = `
+.c0 {
+  color: #423E3C;
+}
+
 .c1 {
   color: #423E3C;
   -webkit-text-decoration: none;
@@ -9,10 +13,6 @@ exports[`LargeInput gets rendered with large font size CSS 1`] = `
   border: 1px solid #D4CFCD;
   padding: 16px 32px;
   font-size: 1.8rem;
-}
-
-.c0 {
-  color: #423E3C;
 }
 
 <div>
@@ -31,6 +31,10 @@ exports[`LargeInput gets rendered with large font size CSS 1`] = `
 `;
 
 exports[`NormalInput gets rendered with default font size CSS 1`] = `
+.c0 {
+  color: #423E3C;
+}
+
 .c1 {
   color: #423E3C;
   -webkit-text-decoration: none;
@@ -39,10 +43,6 @@ exports[`NormalInput gets rendered with default font size CSS 1`] = `
   border: 1px solid #D4CFCD;
   padding: 8px 16px;
   font-size: 1.6rem;
-}
-
-.c0 {
-  color: #423E3C;
 }
 
 <div>
@@ -61,6 +61,10 @@ exports[`NormalInput gets rendered with default font size CSS 1`] = `
 `;
 
 exports[`SmallInput gets rendered with small font size CSS 1`] = `
+.c0 {
+  color: #423E3C;
+}
+
 .c1 {
   color: #423E3C;
   -webkit-text-decoration: none;
@@ -70,10 +74,6 @@ exports[`SmallInput gets rendered with small font size CSS 1`] = `
   padding: 2px 4px;
   font-size: 1.4rem;
   color: #006A8E;
-}
-
-.c0 {
-  color: #423E3C;
 }
 
 <div>

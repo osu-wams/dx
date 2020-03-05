@@ -3,7 +3,6 @@ import Skeleton from 'react-loading-skeleton';
 import { fal } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
 import { styled, ThemeContext } from '../theme';
@@ -15,6 +14,7 @@ import { Types } from '@osu-wams/lib';
 import { User } from '@osu-wams/hooks';
 import { IconLookup } from './resources/resources-utils';
 import { TrendingEvent } from './resources/GATrendingResource';
+import { AppContext } from 'src/contexts/app-context';
 
 // Setup a font awesome library to use for searching icons from the backend.
 library.add(fal, fab);
@@ -32,7 +32,7 @@ const ResourcesContainer = styled(CardContent)`
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
   const themeContext = useContext(ThemeContext);
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<Types.Resource[]>([]);
 

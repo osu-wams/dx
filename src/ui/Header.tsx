@@ -10,8 +10,8 @@ import { breakpoints, styled, themeSettings } from '../theme';
 import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
-import { UserContext } from '../App';
 import { BetaBadge } from './Badge';
+import { AppContext } from 'src/contexts/app-context';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -87,6 +87,7 @@ const campusLogo = (user: Types.User) => {
 
 const mainTitle = user => {
   let title = 'Student';
+  if (!user) return title;
   if (UserUtil.getAffiliation(user) === User.AFFILIATIONS.employee) {
     title = 'Employee';
   }
@@ -94,7 +95,7 @@ const mainTitle = user => {
 };
 
 const Header = () => {
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   const title = mainTitle(user.data);
   return (
     <>
