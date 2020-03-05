@@ -3,7 +3,7 @@ import { faHeart } from '@fortawesome/pro-light-svg-icons';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Resources } from '@osu-wams/hooks';
 import { UserContext } from 'src/App';
-import { ListItemFlex, ListItemContentLinkSVG, ListItemContentLinkName } from 'src/ui/List';
+import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src/ui/List';
 import { ThemeContext } from 'src/theme';
 import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
@@ -35,7 +35,7 @@ const ResourceItem = ({ resource, event }) => {
 
   return (
     <ListItemFlex>
-      <ListItemContentLinkSVG
+      <ListItemResourceLink
         href={resource.link}
         target="_blank"
         onClick={() => {
@@ -45,7 +45,7 @@ const ResourceItem = ({ resource, event }) => {
       >
         {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
         <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
-      </ListItemContentLinkSVG>
+      </ListItemResourceLink>
       <Checkbox
         icon={<Icon icon={faHeart} />}
         checkedIcon={<Icon icon={faHeart} color="#d73f09" />}
