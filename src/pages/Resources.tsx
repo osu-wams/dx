@@ -9,15 +9,15 @@ import ResourcesList from '../features/resources/ResourcesList';
 import { Types } from '@osu-wams/lib';
 import { Resources as hooksResources, useCategories, useResources, User } from '@osu-wams/hooks';
 import PageTitle from '../ui/PageTitle';
-import { UserContext } from '../App';
 import VisuallyHidden from '@reach/visually-hidden';
+import { AppContext } from 'src/contexts/app-context';
 
 const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
 
 //import type here
 const Resources = () => {
-  const user = useContext(UserContext);
+  const { user } = useContext(AppContext);
   const [activeCategory, setActiveCategory] = useState<string>(getInitialCategory());
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 250);

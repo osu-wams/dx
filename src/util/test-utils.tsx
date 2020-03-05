@@ -2,10 +2,10 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
-import { UserContext, AppContext, IAppContext } from '../App';
 import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/hooks';
 import { mobile, desktop } from 'src/util/useMediaQuery';
+import { AppContext, IAppContext } from 'src/contexts/app-context';
 
 const { AFFILIATIONS } = User;
 export const mockUser = User.mockUser.user;
@@ -28,18 +28,8 @@ export const mockEmployeeUser = {
 
 export const authUser = mockUser;
 
-const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
-  const Wrapper = props => {
-    return (
-      <ThemeProvider theme={themesLookup[defaultTheme]}>
-        <UserContext.Provider value={user} {...props} />
-      </ThemeProvider>
-    );
-  };
-  return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
-};
-
 export const mockAppContext: IAppContext = {
+  user: authUser,
   infoButtonData: [{ id: 'info-button-id', content: 'Info button content', title: 'Title' }],
   appVersions: {
     serverVersion: 'server-test-123',
@@ -48,6 +38,18 @@ export const mockAppContext: IAppContext = {
   themes: Object.keys(themesLookup),
   selectedTheme: 'light',
   setTheme: () => {}
+};
+
+const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
+  mockAppContext.user = user;
+  const Wrapper = props => {
+    return (
+      <ThemeProvider theme={themesLookup[defaultTheme]}>
+        <AppContext.Provider value={mockAppContext} {...props} />
+      </ThemeProvider>
+    );
+  };
+  return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
 };
 
 const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = {}) => {
@@ -65,16 +67,17 @@ const renderWithAllContexts = (
   ui,
   { appContext = mockAppContext, user = authUser, isDesktop = false, ...options } = {}
 ) => {
+  appContext.user = user;
   const Wrapper = props => {
     return (
       <ThemeProvider theme={themesLookup[defaultTheme]}>
-        <UserContext.Provider value={user} {...props}>
+        <AppContext.Provider value={appContext} {...props}>
           <ResponsiveContext.Provider value={{ width: isDesktop ? desktop : mobile }} {...props}>
             <AppContext.Provider value={appContext} {...props}>
               {props.children}
             </AppContext.Provider>
           </ResponsiveContext.Provider>
-        </UserContext.Provider>
+        </AppContext.Provider>
       </ThemeProvider>
     );
   };

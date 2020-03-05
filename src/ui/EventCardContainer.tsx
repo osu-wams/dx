@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../App';
 import { Title } from '../ui/PageTitle';
 import {
   User,
@@ -10,6 +9,7 @@ import {
 import EventCard from './EventCard';
 import { themeSettings, breakpoints, styled, SecondGridWrapper } from '../theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
+import { AppContext } from 'src/contexts/app-context';
 
 const {
   hasAudience,
@@ -56,7 +56,7 @@ function shuffleArray(arr: any[]) {
 
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   const studentExperienceEvents = useStudentExperienceEvents();
   const employeeEvents = useEmployeeEvents();
 

@@ -3,7 +3,6 @@ import Skeleton from 'react-loading-skeleton';
 import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useAcademicCalendarEvents, useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
-import { UserContext } from '../App';
 import {
   getNextFiveDays,
   getDayShortcode,
@@ -19,6 +18,7 @@ import {
 import { format } from '../util/helpers';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
+import { AppContext } from 'src/contexts/app-context';
 
 /**
  * Course Schedule Card
@@ -26,7 +26,7 @@ import { Card, CardFooter, CardContent } from '../ui/Card';
  * Displays courses for the next 5 days, filterable by day.
  */
 const ScheduleCard = () => {
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   const plannerItems = usePlannerItems(() => {
     user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
   });

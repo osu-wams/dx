@@ -3,6 +3,7 @@ import { Router, Location, RouteComponentProps } from '@reach/router';
 import { ThemeProvider } from 'styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import ReactGA from 'react-ga';
+import { InitialAppContext, IAppContext, AppContext } from './contexts/app-context';
 import Header from './ui/Header';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
@@ -17,8 +18,6 @@ import { useUser } from '@osu-wams/hooks';
 import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { styled, GlobalStyles } from './theme';
-import { Versions } from '@osu-wams/hooks/dist/api/appVersions';
-import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -40,31 +39,9 @@ const RouteContainer = posed(PageGridWrapper)({
   exit: { opacity: 0 }
 });
 
-const initialAppContext: IAppContext = {
-  infoButtonData: [],
-  appVersions: {
-    serverVersion: '',
-    appVersion: ''
-  },
-  themes: Object.keys(themesLookup),
-  selectedTheme: defaultTheme,
-  setTheme: (theme: string) => {}
-};
-
 interface AppProps {
   containerElement: HTMLElement;
 }
-
-export interface IAppContext {
-  infoButtonData: InfoButtonState[];
-  appVersions: Versions;
-  themes: string[];
-  selectedTheme: string;
-  setTheme: Function;
-}
-
-export const UserContext = React.createContext<any>(null);
-export const AppContext = React.createContext<IAppContext>(initialAppContext);
 
 const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
   props.pageComponent;
@@ -72,14 +49,15 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
 const App = (props: AppProps) => {
   const user = useUser();
   const infoButtons = useInfoButtons();
-  const appVersions = useAppVersions(initialAppContext.appVersions);
+  const appVersions = useAppVersions(InitialAppContext.appVersions);
   const [theme, setTheme] = useState<string>(defaultTheme);
-  const [appContext, setAppContext] = useState<IAppContext>({ ...initialAppContext, setTheme });
+  const [appContext, setAppContext] = useState<IAppContext>({ ...InitialAppContext, setTheme });
   const containerElementRef = useRef(props.containerElement);
 
   useEffect(() => {
     setAppContext(previous => ({
       ...previous,
+      user: user,
       infoButtonData: infoButtons.data,
       appVersions: appVersions.data,
       selectedTheme: user.data?.theme ?? theme
@@ -116,34 +94,32 @@ const App = (props: AppProps) => {
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>
-      <UserContext.Provider value={user}>
-        <AppContext.Provider value={appContext}>
-          <GlobalStyles />
-          <Header />
-          <Alerts />
-          <ContentWrapper>
-            <Location>
-              {({ location }) => (
-                <PoseGroup>
-                  {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                  <RouteContainer key={location.key}>
-                    <Router location={location} className="router-styles">
-                      <RouterPage path="/" pageComponent={<Dashboard />} />
-                      <RouterPage path="profile" pageComponent={<Profile />} />
-                      <RouterPage path="academics/*" pageComponent={<Academics />} />
-                      <RouterPage path="finances" pageComponent={<Finances />} />
-                      <RouterPage path="resources" pageComponent={<Resources />} />
-                      <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                      <RouterPage default pageComponent={<PageNotFound />} />
-                    </Router>
-                  </RouteContainer>
-                </PoseGroup>
-              )}
-            </Location>
-          </ContentWrapper>
-          <Footer />
-        </AppContext.Provider>
-      </UserContext.Provider>
+      <AppContext.Provider value={appContext}>
+        <GlobalStyles />
+        <Header />
+        <Alerts />
+        <ContentWrapper>
+          <Location>
+            {({ location }) => (
+              <PoseGroup>
+                {ReactGA.pageview(location.pathname + location.search + location.hash)}
+                <RouteContainer key={location.key}>
+                  <Router location={location} className="router-styles">
+                    <RouterPage path="/" pageComponent={<Dashboard />} />
+                    <RouterPage path="profile" pageComponent={<Profile />} />
+                    <RouterPage path="academics/*" pageComponent={<Academics />} />
+                    <RouterPage path="finances" pageComponent={<Finances />} />
+                    <RouterPage path="resources" pageComponent={<Resources />} />
+                    <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                    <RouterPage default pageComponent={<PageNotFound />} />
+                  </Router>
+                </RouteContainer>
+              </PoseGroup>
+            )}
+          </Location>
+        </ContentWrapper>
+        <Footer />
+      </AppContext.Provider>
     </ThemeProvider>
   );
 };

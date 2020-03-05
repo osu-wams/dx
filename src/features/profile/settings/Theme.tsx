@@ -5,31 +5,27 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Fieldset, Legend } from '../../../ui/forms';
 import { User } from '@osu-wams/hooks';
 import { titleCase } from '../../../util/helpers';
-import { UserContext, AppContext } from '../../../App';
 import { defaultTheme } from '../../../theme/themes';
+import { AppContext } from 'src/contexts/app-context';
 
 const { postSettings, usersSettings } = User;
 
 export const RadioButtonsGroup = () => {
-  const appContext = useContext(AppContext);
-  const userContext = useContext(UserContext);
+  const { user, setTheme, themes } = useContext(AppContext);
   const [value, setValue] = useState(defaultTheme);
 
   useEffect(() => {
-    setValue(userContext.data.theme || defaultTheme);
-  }, [userContext.data]);
+    setValue(user.data.theme || defaultTheme);
+  }, [user.data]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = (event.target as HTMLInputElement).value;
-    const settings = usersSettings(userContext.data);
+    const settings = usersSettings(user.data);
     settings.theme = selectedValue;
 
     postSettings({ theme: selectedValue }).then(d => {
-      userContext.setUser({
-        ...userContext,
-        data: { ...userContext.data, ...settings }
-      });
-      appContext.setTheme(selectedValue);
+      user.setUser({ ...user, data: { ...user.data, ...settings } });
+      setTheme(selectedValue);
     });
   };
 
@@ -37,7 +33,7 @@ export const RadioButtonsGroup = () => {
     <Fieldset>
       <Legend>Theme</Legend>
       <RadioGroup aria-label="theme" name="theme" value={value} onChange={handleChange}>
-        {appContext.themes.map(t => (
+        {themes.map(t => (
           <FormControlLabel
             key={t}
             value={t}

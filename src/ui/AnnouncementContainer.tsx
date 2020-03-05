@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import EventCard from './EventCard';
 import { Title } from '../ui/PageTitle';
-import { UserContext } from '../App';
 import { User } from '@osu-wams/hooks';
 import { styled, themeSettings, breakpoints, SecondGridWrapper } from '../theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
+import { AppContext } from 'src/contexts/app-context';
 
 const { hasAudience, getAffiliation } = User;
 
@@ -23,7 +23,7 @@ const AnnouncementContainerWrapper = styled.div`
 
 const AnnouncementContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   const announcements = useAnnouncements(page);
   const { hasAffiliation } = Announcements;
 
