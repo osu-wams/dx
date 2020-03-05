@@ -1,8 +1,6 @@
 import React, { FC, useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { fal } from '@fortawesome/pro-light-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { UserContext } from '../App';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from '../ui/List';
@@ -14,9 +12,6 @@ import { Types } from '@osu-wams/lib';
 import { User, useResourcesByQueue } from '@osu-wams/hooks';
 import { ResourceItem } from './resources/ResourceItem';
 
-// Setup a font awesome library to use for searching icons from the backend.
-library.add(fal, fab);
-
 const { hasAudience } = User;
 
 const ResourcesContainer = styled(CardContent)`
@@ -26,7 +21,7 @@ const ResourcesContainer = styled(CardContent)`
 /**
  * Resources Card
  *
- * Displays resources from a given categorY
+ * Displays resources from a given category
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
   const user = useContext<any>(UserContext);

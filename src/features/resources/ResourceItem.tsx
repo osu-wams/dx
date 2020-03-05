@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { faHeart } from '@fortawesome/pro-light-svg-icons';
+import { fal, faHeart } from '@fortawesome/pro-light-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Resources } from '@osu-wams/hooks';
 import { UserContext } from 'src/App';
@@ -8,6 +10,9 @@ import { ThemeContext } from 'src/theme';
 import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
 import { TrendingEvent } from './GATrendingResource';
+
+// Adds all font awesome icons so we can call them by name (coming from Drupal API)
+library.add(fal, fab);
 
 const ResourceItem = ({ resource, event }) => {
   const themeContext = useContext(ThemeContext);
