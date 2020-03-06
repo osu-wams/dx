@@ -4,11 +4,11 @@ import { themeSettings, styled, ThemeContext } from '../../theme';
 import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from './index';
-import { AppContext } from 'src/App';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
 import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
+import { AppContext } from 'src/contexts/app-context';
 
 const DialogHeader = styled.div`
   display: flex;
@@ -31,16 +31,16 @@ const DialogContent = styled.div`
 
 const InfoButton = props => {
   const themeContext = useContext(ThemeContext);
-  const appContext = useContext(AppContext);
+  const { infoButtonData } = useContext(AppContext);
   const [dialogVisible, toggleDialog] = useState(false);
   const [currentButton, setButton] = useState<InfoButtonState | null>(null);
 
   useEffect(() => {
-    const thisButton = appContext.infoButtonData.find(i => i.id === props.infoButtonId);
+    const thisButton = infoButtonData.find(i => i.id === props.infoButtonId);
     if (thisButton) {
       setButton(thisButton);
     }
-  }, [appContext.infoButtonData, props.infoButtonId]);
+  }, [infoButtonData, props.infoButtonId]);
 
   return currentButton ? (
     <>

@@ -16,13 +16,13 @@ import { useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
-import { UserContext } from '../App';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { courseCodeOrIcon } from './Courses';
 import { ThemeContext } from '../theme';
 import { format } from '../util/helpers';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
+import { AppContext } from 'src/contexts/app-context';
 
 /**
  * Some Canvas link include the full path including https://instructure...
@@ -49,7 +49,7 @@ const canvasUrl = url => {
  */
 const PlannerItems = () => {
   const themeContext = useContext(ThemeContext);
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   const { data, loading } = usePlannerItems(() => {
     user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
   });

@@ -11,19 +11,19 @@ import {
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuLink } from '@reach/menu-button';
 import { Event } from '../../util/gaTracking';
-import { UserContext } from '../../App';
 import { User } from '@osu-wams/hooks';
 import { Mobile, Desktop } from 'src/util/useMediaQuery';
 import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
+import { AppContext } from 'src/contexts/app-context';
 
 const { postSettings, usersSettings, AFFILIATIONS } = User;
 
 const ProfileMenu = () => {
-  const user = useContext(UserContext);
+  const { user } = useContext(AppContext);
   const [affiliation, setAffiliation] = useState(user.data?.primaryAffiliationOverride ?? '');
 
   useEffect(() => {
-    if (user.data.primaryAffiliationOverride) {
+    if (user.data?.primaryAffiliationOverride) {
       // const { firstYear, graduate, international } = user.data.audienceOverride;
       setAffiliation(user.data.primaryAffiliationOverride);
     }
@@ -34,10 +34,7 @@ const ProfileMenu = () => {
     settings.primaryAffiliationOverride = affiliationType;
 
     postSettings({ primaryAffiliationOverride: settings.primaryAffiliationOverride }).then(d => {
-      user.setUser({
-        ...user,
-        data: { ...user.data, ...settings }
-      });
+      user.setUser({ ...user, data: { ...user.data, ...settings } });
       navigate('/');
     });
   };
@@ -48,7 +45,7 @@ const ProfileMenu = () => {
     let description = 'Student Dashboard';
 
     // Currently only showing toggle option to Employee
-    if (user.data.primaryAffiliation !== AFFILIATIONS.employee) {
+    if (user.data?.primaryAffiliation !== AFFILIATIONS.employee) {
       return;
     }
 

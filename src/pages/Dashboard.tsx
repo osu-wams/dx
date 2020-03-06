@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../App';
 import { User } from '@osu-wams/hooks';
 import { StudentDashboard } from './Dashboard/StudentDashboard';
 import { EmployeeDashboard } from './Dashboard/EmployeeDashboard';
+import { AppContext } from 'src/contexts/app-context';
 
 const { hasPrimaryAffiliation, AFFILIATIONS } = User;
 /**
@@ -11,7 +11,7 @@ const { hasPrimaryAffiliation, AFFILIATIONS } = User;
  * @returns the MainNav component based on your primary affiliation
  */
 const Dashboard = () => {
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   if (hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee])) {
     return <EmployeeDashboard />;
   } else {

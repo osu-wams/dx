@@ -16,13 +16,13 @@ import { StudentEnrolledCredits } from './academic-overview/StudentEnrolledCredi
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
-import { UserContext } from 'src/App';
+import { AppContext } from 'src/contexts/app-context';
 import { User } from '@osu-wams/hooks';
 
 const { isGraduate } = User;
 
 export const AcademicOverview = () => {
-  const user = useContext(UserContext);
+  const { user } = useContext(AppContext);
 
   return (
     <Card collapsing={false}>

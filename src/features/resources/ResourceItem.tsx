@@ -4,7 +4,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Resources } from '@osu-wams/hooks';
-import { UserContext } from 'src/App';
+import { AppContext } from 'src/contexts/app-context';
 import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src/ui/List';
 import { ThemeContext } from 'src/theme';
 import { IconLookup } from './resources-utils';
@@ -17,7 +17,7 @@ library.add(fal, fab);
 const ResourceItem = ({ resource, event }) => {
   const themeContext = useContext(ThemeContext);
   const [favs, setFav] = useState(false);
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   const isFavorite = (resId: string, favs: any) => {
     const res = favs.find(r => r.resourceId === resId);
     return res ? res.active : false;

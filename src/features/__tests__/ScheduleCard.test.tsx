@@ -222,8 +222,7 @@ describe('<ScheduleCard /> with a simple schedule', () => {
 
   [1, 2, 3, 4, 5, 6, 7].forEach(async daysAgo => {
     it(`finds meeting times ${daysAgo} days ago`, async () => {
-      const d = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
-      const startDate = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+      const startDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
       const todayShortCode = getDayShortcode(startDate);
       mockGetStartDate.mockImplementation(() => {
         return startDate.getTime();

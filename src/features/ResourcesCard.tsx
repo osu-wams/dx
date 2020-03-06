@@ -1,7 +1,7 @@
 import React, { FC, useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { UserContext } from '../App';
+import { AppContext } from 'src/contexts/app-context';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from '../ui/List';
 import { styled } from '../theme';
@@ -24,7 +24,7 @@ const ResourcesContainer = styled(CardContent)`
  * Displays resources from a given category
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<Types.Resource[]>([]);
 

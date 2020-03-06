@@ -5,8 +5,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Fieldset, Legend } from '../../../ui/forms';
 import { User } from '@osu-wams/hooks';
 import { titleCase } from '../../../util/helpers';
-import { UserContext } from '../../../App';
 import { styled, themeSettings } from '../../../theme';
+import { AppContext } from 'src/contexts/app-context';
 
 const { CAMPUS_CODES, postSettings, settingIsDefault, usersSettings, DEFAULT_CAMPUS } = User;
 
@@ -18,22 +18,22 @@ const Label = styled.span`
 `;
 
 export const RadioButtonsGroup = () => {
-  const userContext = useContext(UserContext);
+  const { user } = useContext(AppContext);
   const [value, setValue] = useState(DEFAULT_CAMPUS);
 
   useEffect(() => {
-    setValue(userContext.data.audienceOverride.campusCode || DEFAULT_CAMPUS);
-  }, [userContext.data]);
+    setValue(user.data.audienceOverride.campusCode || DEFAULT_CAMPUS);
+  }, [user.data]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = (event.target as HTMLInputElement).value;
-    const settings = usersSettings(userContext.data);
+    const settings = usersSettings(user.data);
     settings.audienceOverride!.campusCode = selectedValue;
 
     postSettings({ audienceOverride: settings.audienceOverride }).then(d => {
-      userContext.setUser({
-        ...userContext,
-        data: { ...userContext.data, ...settings }
+      user.setUser({
+        ...user,
+        data: { ...user.data, ...settings }
       });
     });
   };
@@ -51,12 +51,7 @@ export const RadioButtonsGroup = () => {
               <Label>
                 {titleCase(key)}
                 <span>
-                  {settingIsDefault(
-                    userContext.data,
-                    'campusCode',
-                    CAMPUS_CODES[key],
-                    DEFAULT_CAMPUS
-                  )
+                  {settingIsDefault(user.data, 'campusCode', CAMPUS_CODES[key], DEFAULT_CAMPUS)
                     ? ' (Default) '
                     : ''}
                 </span>

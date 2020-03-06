@@ -5,7 +5,7 @@ import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card'
 import { List } from 'src/ui/List';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
 import { useResources } from '@osu-wams/hooks';
-import { UserContext } from 'src/App';
+import { AppContext } from 'src/contexts/app-context';
 import { Event } from 'src/util/gaTracking';
 import FailedState from 'src/ui/FailedState';
 import { InternalLink } from 'src/ui/Link';
@@ -14,7 +14,7 @@ import { ResourceItem } from './resources/ResourceItem';
 import { activeFavoriteResources } from './resources/resources-utils';
 
 export const FavoriteResources = () => {
-  const user = useContext(UserContext);
+  const { user } = useContext(AppContext);
   const res = useResources();
   const [favoriteResources, setFavoriteResources] = useState<Types.Resource[]>([]);
 

@@ -7,7 +7,6 @@ import {
   NoItemsImage,
   NoItemsText
 } from './ScheduleCardStyles';
-import { UserContext } from '../../App';
 import Url from '../../util/externalUrls.data';
 import Icon from '../../ui/Icon';
 import assignment from '../../assets/assignment.svg';
@@ -24,10 +23,11 @@ import { Event } from '../../util/gaTracking';
 import { courseCodeOrIcon } from '../Courses';
 import { ThemeContext } from '../../theme';
 import { format } from '../../util/helpers';
+import { AppContext } from 'src/contexts/app-context';
 
 const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
   const themeContext = useContext(ThemeContext);
-  const user = useContext<any>(UserContext);
+  const { user } = useContext(AppContext);
 
   const noAssignmentsDue = () => (
     <NoItems as="li">
