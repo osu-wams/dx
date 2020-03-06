@@ -24,7 +24,9 @@ const ResourceItem = ({ resource, event }) => {
   };
 
   useEffect(() => {
-    setFav(isFavorite(resource.id, user.data.favoriteResources));
+    if (resource.id && user.data.favoriteResources) {
+      setFav(isFavorite(resource.id, user.data.favoriteResources));
+    }
   }, [user.data.favoriteResources, resource.id]);
 
   // Adds or removes a resource from FavoriteResource and refreshes the cache to get new list

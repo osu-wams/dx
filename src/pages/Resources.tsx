@@ -188,7 +188,9 @@ const Resources = () => {
                 selectedCategory={activeCategory}
                 setQuery={setQuery}
                 setSelectedCategory={setSelectedCategory}
-                hasFavorite={user.data.favoriteResources.some(f => f.active)}
+                hasFavorite={
+                  user.data.favoriteResources && user.data.favoriteResources.some(f => f.active)
+                }
               />
             </>
           )}
