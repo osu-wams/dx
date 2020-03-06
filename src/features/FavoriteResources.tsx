@@ -56,16 +56,14 @@ export const FavoriteResources = () => {
 
         {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
       </CardContent>
-      {favoriteResources?.length > 0 && (
-        <CardFooter infoButtonId="favorite-resources">
-          <InternalLink
-            to="/resources"
-            onClick={() => Event('favorite-resources-card', `view all resources link`)}
-          >
-            View all resources
-          </InternalLink>
-        </CardFooter>
-      )}
+      <CardFooter infoButtonId="favorite-resources">
+        <InternalLink
+          to="/resources"
+          onClick={() => Event('favorite-resources-card', `view resources link`)}
+        >
+          View resources
+        </InternalLink>
+      </CardFooter>
     </Card>
   );
 };
