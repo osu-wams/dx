@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Types } from '@osu-wams/lib';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { List } from '../ui/List';
+import { List } from 'src/ui/List';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
 import { useResources } from '@osu-wams/hooks';
 import { UserContext } from 'src/App';
@@ -32,7 +32,6 @@ export const FavoriteResources = () => {
 
         {!res.loading && favoriteResources?.length > 0 && (
           <List data-testid="resource-container">
-            {console.log(favoriteResources)}
             {favoriteResources.map(resource => (
               <ResourceItem
                 key={resource.id}

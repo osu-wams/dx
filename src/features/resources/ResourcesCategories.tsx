@@ -1,7 +1,7 @@
 import React from 'react';
-import { themeSettings, styled } from '../../theme';
-import CustomBtn from '../../ui/CustomBtn';
-import { Event } from '../../util/gaTracking';
+import { themeSettings, styled } from 'src/theme';
+import CustomBtn from 'src/ui/CustomBtn';
+import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
 
 const ResourceCategories = ({
