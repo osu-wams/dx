@@ -9,9 +9,10 @@ import { AppContext } from 'src/contexts/app-context';
 import { Event } from 'src/util/gaTracking';
 import FailedState from 'src/ui/FailedState';
 import { InternalLink } from 'src/ui/Link';
-import { EmptyState } from 'src/ui/EmptyStates';
+import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import { ResourceItem } from './resources/ResourceItem';
 import { activeFavoriteResources } from './resources/resources-utils';
+import favoritesImg from 'src/assets/favorites.svg';
 
 export const FavoriteResources = () => {
   const { user } = useContext(AppContext);
@@ -23,6 +24,16 @@ export const FavoriteResources = () => {
       setFavoriteResources(activeFavoriteResources(user.data.favoriteResources, res.data));
     }
   }, [res.data, user.data.favoriteResources]);
+
+  const NoFavorites = () => (
+    <EmptyState>
+      <EmptyStateImage src={favoritesImg} alt="" />
+      <EmptyStateText>
+        You have not added any favorite resources yet. See all resources and pin your favorites
+        here.
+      </EmptyStateText>
+    </EmptyState>
+  );
 
   return (
     <Card>
@@ -41,7 +52,7 @@ export const FavoriteResources = () => {
             ))}
           </List>
         )}
-        {!res.loading && !res.error && favoriteResources?.length === 0 && <EmptyState />}
+        {!res.loading && !res.error && favoriteResources?.length === 0 && <NoFavorites />}
 
         {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
       </CardContent>
