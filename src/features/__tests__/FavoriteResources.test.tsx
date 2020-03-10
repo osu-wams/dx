@@ -2,7 +2,7 @@ import React from 'react';
 import { render, authUser } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { FavoriteResources } from 'src/features/FavoriteResources';
-import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
 
 const mockUseResources = jest.fn();
@@ -25,7 +25,6 @@ jest.mock('@osu-wams/hooks', () => {
 describe('Favorite Resources Card', () => {
   beforeEach(() => {
     mockUseResources.mockReturnValue(resourcesData);
-    // authUser.refreshFavorites = mockRefreshFavorites;
   });
 
   it('Empty State shows up when user has no Favorites', async () => {
@@ -55,7 +54,6 @@ describe('Favorite Resources Card', () => {
     userEvent.click(el);
     expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
     expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
-
-    // expect(queryByText('Billing Information')).toBeNull();
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 });

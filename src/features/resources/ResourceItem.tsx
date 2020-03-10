@@ -10,6 +10,7 @@ import { ThemeContext } from 'src/theme';
 import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
 import { TrendingEvent } from './GATrendingResource';
+import { Event } from 'src/util/gaTracking';
 
 // Adds all font awesome icons so we can call them by name (coming from Drupal API)
 library.add(fal, fab);
@@ -29,11 +30,17 @@ const ResourceItem = ({ resource, event }) => {
     }
   }, [user.data.favoriteResources, resource.id]);
 
+  const favoriteLabelText = currentFavState => {
+    return currentFavState
+      ? `Remove ${resource.title} link from your favorite resources`
+      : `Add ${resource.title} link to your favorite resources`;
+  };
+
   // Adds or removes a resource from FavoriteResource and refreshes the cache to get new list
   const updateFavorites = async () => {
     await Resources.postFavorite(resource.id, !favs, 0);
     await user.refreshFavorites();
-    console.log(user);
+    Event('favorite-resource', resource.id, favoriteLabelText(favs));
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,9 +68,7 @@ const ResourceItem = ({ resource, event }) => {
         checked={favs}
         onChange={handleChange}
         inputProps={{
-          'aria-label': favs
-            ? `Remove ${resource.title} link from your favorite resources`
-            : `Add ${resource.title} link to your favorite resources`
+          'aria-label': favoriteLabelText(favs)
         }}
       />
     </ListItemFlex>

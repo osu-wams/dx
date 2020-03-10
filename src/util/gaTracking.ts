@@ -28,6 +28,7 @@ export type IComponents =
   | 'schedule-card'
   | 'resources-card'
   | 'favorite-resources-card'
+  | 'favorite-resource'
   | 'anouncements'
   | 'events'
   | 'courses'
