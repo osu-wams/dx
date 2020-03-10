@@ -14,6 +14,9 @@ import { ResourceItem } from './resources/ResourceItem';
 import { activeFavoriteResources } from './resources/resources-utils';
 import favoritesImg from 'src/assets/favorites.svg';
 
+/**
+ * Filters all resources to display a card with individuals FavoriteResources
+ */
 export const FavoriteResources = () => {
   const { user } = useContext(AppContext);
   const res = useResources();

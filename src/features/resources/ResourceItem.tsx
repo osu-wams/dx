@@ -33,6 +33,7 @@ const ResourceItem = ({ resource, event }) => {
   const updateFavorites = async () => {
     await Resources.postFavorite(resource.id, !favs, 0);
     await user.refreshFavorites();
+    console.log(user);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

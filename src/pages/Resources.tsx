@@ -16,7 +16,7 @@ import { AppContext } from 'src/contexts/app-context';
 const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
 
-//import type here
+// Resources Page with components to filter, search and favorite resources
 const Resources = () => {
   const { user } = useContext(AppContext);
   const [activeCategory, setActiveCategory] = useState<string>(getInitialCategory());
@@ -44,7 +44,10 @@ const Resources = () => {
    * @param {Resource[]} resources a list of resources to inspect for matching category
    */
   const filterByCategory = (name: string, resources: Types.Resource[]): Types.Resource[] => {
+    // Skips categories and displays all resources
     if (name === 'all') return resources;
+
+    // Skips categories and filters based on user favorite preferences
     if (name === 'favorites') {
       return activeFavoriteResources(user.data.favoriteResources, resources);
     }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { wait } from '@testing-library/react';
-import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
+import { render, authUser, mockEmployeeUser, mockFavoritesUser } from '../../util/test-utils';
 import userEvent from '@testing-library/user-event';
 import Resources from '../../pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from '../../setupTests';
-import { Resources as hooksResources } from '@osu-wams/hooks';
+import { Resources as hooksResources, User as hooksUser } from '@osu-wams/hooks';
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
@@ -162,6 +162,23 @@ describe('<Resources />', () => {
     expect(await findByText(/Billing Information/)).toBeInTheDocument();
     expect(await findByText(/Student Jobs/)).toBeInTheDocument();
     location.search = '';
+  });
+
+  describe('Favorite Resources tests', () => {
+    it('should have favorites category when user has active favorites resources', async () => {
+      const { findByText } = renderResources(mockFavoritesUser);
+      const favorites = await findByText(/favorites/i);
+      expect(favorites).toBeInTheDocument();
+      userEvent.click(favorites);
+      expect(await findByText(/found 2 results/i)).toBeInTheDocument();
+    });
+
+    it('should not find the favorites category button when user does not have favorites resources', async () => {
+      const noFavUser = { ...authUser, favoriteResources: [] };
+      const { queryByText } = renderResources(noFavUser);
+
+      expect(queryByText(/favorites/i)).toBeNull();
+    });
   });
 
   it('should move to the All category when searching', async () => {

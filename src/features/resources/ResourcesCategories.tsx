@@ -4,6 +4,10 @@ import CustomBtn from 'src/ui/CustomBtn';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
 
+/**
+ * Displays a list of clickable categories for the Resources page
+ * Favorites category button is only rendered if the user has any favorite resources
+ */
 const ResourceCategories = ({
   categories,
   setQuery,

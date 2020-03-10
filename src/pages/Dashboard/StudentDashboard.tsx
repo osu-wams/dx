@@ -5,6 +5,7 @@ import ScheduleCard from '../../features/ScheduleCard';
 import EventCardContainer from '../../ui/EventCardContainer';
 import { MainGridWrapper, Masonry } from '../../theme';
 import ResourcesCard from '../../features/ResourcesCard';
+import { FavoriteResources } from 'src/features/FavoriteResources';
 
 const StudentDashboard = () => {
   return (
@@ -14,6 +15,7 @@ const StudentDashboard = () => {
         <Masonry>
           <ScheduleCard />
           <ResourcesCard categ="featured" icon={faStars} />
+          <FavoriteResources />
         </Masonry>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />
