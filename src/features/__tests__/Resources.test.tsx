@@ -96,8 +96,8 @@ describe('<Resources />', () => {
 
     expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
-    expect(await findByText(/Student Jobs/)).not.toBeNull();
-    expect(await findByText(/Billing Information/)).not.toBeNull();
+    expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+    expect(await findByText(/Billing Information/)).toBeInTheDocument();
   });
 
   it('should have clickable categories that report to GoogleAnalytics', async () => {
@@ -127,12 +127,15 @@ describe('<Resources />', () => {
   });
 
   it('Changes Search term should re-run the search effectively', async () => {
-    const { queryByText, searchInput, findByText } = renderResources();
+    const { queryByText, searchInput, findByText, debug } = renderResources();
 
     await userEvent.type(searchInput, 'billingNotThere');
 
     expect(await findByText(/found 0 results/)).toBeInTheDocument();
-    expect(queryByText(/Billing Information/)).not.toBeInTheDocument();
+    expect(queryByText(/Billing Information/)).toBeNull();
+
+    // We need to clear the input value if not the below interaction sits on top of the previous
+    searchInput.value = '';
 
     await userEvent.type(searchInput, 'billing');
 
