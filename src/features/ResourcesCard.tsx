@@ -1,23 +1,16 @@
 import React, { FC, useContext, useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { fal } from '@fortawesome/pro-light-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { library, IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { AppContext } from 'src/contexts/app-context';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { List, ListItem, ListItemContentLinkSVG, ListItemContentLinkName } from '../ui/List';
-import { styled, ThemeContext } from '../theme';
-import { useResourcesByQueue } from '@osu-wams/hooks';
+import { List } from '../ui/List';
+import { styled } from '../theme';
 import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
 import { Types } from '@osu-wams/lib';
-import { User } from '@osu-wams/hooks';
-import { IconLookup } from './resources/resources-utils';
-import { TrendingEvent } from './resources/GATrendingResource';
-import { AppContext } from 'src/contexts/app-context';
-
-// Setup a font awesome library to use for searching icons from the backend.
-library.add(fal, fab);
+import { User, useResourcesByQueue } from '@osu-wams/hooks';
+import { ResourceItem } from './resources/ResourceItem';
 
 const { hasAudience } = User;
 
@@ -28,10 +21,9 @@ const ResourcesContainer = styled(CardContent)`
 /**
  * Resources Card
  *
- * Displays resources from a given categorY
+ * Displays resources from a given category
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
-  const themeContext = useContext(ThemeContext);
   const { user } = useContext(AppContext);
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<Types.Resource[]>([]);
@@ -57,25 +49,19 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
         {res.loading && <Skeleton count={5} />}
-        {!res.loading && resources?.length > 0 && (
+
+        {!res.loading && !user.loading && resources?.length > 0 && (
           <List data-testid="resource-container">
             {resources.map(resource => (
-              <ListItem key={resource.id}>
-                <ListItemContentLinkSVG
-                  href={resource.link}
-                  target="_blank"
-                  onClick={() => {
-                    Event('resources-card', categ, resource.title);
-                    TrendingEvent(resource, user.data);
-                  }}
-                >
-                  {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
-                  <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
-                </ListItemContentLinkSVG>
-              </ListItem>
+              <ResourceItem
+                key={resource.id}
+                resource={resource}
+                event={() => Event('resources-card', categ, resource.title)}
+              />
             ))}
           </List>
         )}
+
         {!res.loading && !res.error && resources?.length === 0 && <EmptyState />}
 
         {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}

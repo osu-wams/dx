@@ -10,12 +10,13 @@ import { Types } from '@osu-wams/lib';
 import { Resources as hooksResources, useCategories, useResources, User } from '@osu-wams/hooks';
 import PageTitle from '../ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
+import { activeFavoriteResources } from 'src/features/resources/resources-utils';
 import { AppContext } from 'src/contexts/app-context';
 
 const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
 
-//import type here
+// Resources Page with components to filter, search and favorite resources
 const Resources = () => {
   const { user } = useContext(AppContext);
   const [activeCategory, setActiveCategory] = useState<string>(getInitialCategory());
@@ -43,7 +44,13 @@ const Resources = () => {
    * @param {Resource[]} resources a list of resources to inspect for matching category
    */
   const filterByCategory = (name: string, resources: Types.Resource[]): Types.Resource[] => {
+    // Skips categories and displays all resources
     if (name === 'all') return resources;
+
+    // Skips categories and filters based on user favorite preferences
+    if (name === 'favorites') {
+      return activeFavoriteResources(user.data.favoriteResources, resources);
+    }
 
     return resources.filter(
       resource =>
@@ -184,6 +191,9 @@ const Resources = () => {
                 selectedCategory={activeCategory}
                 setQuery={setQuery}
                 setSelectedCategory={setSelectedCategory}
+                hasFavorite={
+                  user.data.favoriteResources && user.data.favoriteResources.some(f => f.active)
+                }
               />
             </>
           )}

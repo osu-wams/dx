@@ -1,13 +1,29 @@
 import React from 'react';
 import { IconDefinition, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fal } from '@fortawesome/pro-light-svg-icons';
-import Icon from '../../ui/Icon';
-import boxSync from '../../assets/logo-box-sync.png';
-import canvasLogo from '../../assets/logo-canvas.png';
-import gDrive from '../../assets/logo-drive.png';
-import gMail from '../../assets/logo-gmail.png';
-import zoom from '../../assets/logo-zoom.png';
-import { styled } from '../../theme';
+import { Types } from '@osu-wams/lib';
+import Icon from 'src/ui/Icon';
+import boxSync from 'src/assets/logo-box-sync.png';
+import canvasLogo from 'src/assets/logo-canvas.png';
+import gDrive from 'src/assets/logo-drive.png';
+import gMail from 'src/assets/logo-gmail.png';
+import zoom from 'src/assets/logo-zoom.png';
+import { styled } from 'src/theme';
+
+/**
+ * Filters Resources to return just the ones a specific user has marked as favorite
+ * @param favoriteResources
+ * @param resourcesList
+ */
+const activeFavoriteResources = (
+  favoriteResources: Types.FavoriteResource[],
+  resourcesList: Types.Resource[]
+) => {
+  const hasActiveFavorite = resourceId =>
+    favoriteResources.some(f => f.active && f.resourceId === resourceId);
+
+  return resourcesList.filter(f => f !== undefined && hasActiveFavorite(f.id));
+};
 
 /**
  * Evaluates icons and displays fontawsome icon or explicit png
@@ -46,4 +62,4 @@ const logoMapping = {
   'logo-zoom': zoom
 };
 
-export { IconLookup };
+export { IconLookup, activeFavoriteResources };

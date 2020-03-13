@@ -15,7 +15,7 @@ import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { useUser } from '@osu-wams/hooks';
-import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
+import { useAppVersions, useInfoButtons, useFavorites } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { styled, GlobalStyles } from './theme';
 
@@ -50,6 +50,7 @@ const App = (props: AppProps) => {
   const user = useUser();
   const infoButtons = useInfoButtons();
   const appVersions = useAppVersions(InitialAppContext.appVersions);
+  const favRes = useFavorites().favorites;
   const [theme, setTheme] = useState<string>(defaultTheme);
   const [appContext, setAppContext] = useState<IAppContext>({
     ...InitialAppContext,
@@ -94,8 +95,7 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data]);
-  /* eslint-enable react-hooks/exhaustive-deps  */
+  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data, favRes.data]);
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>

@@ -2,21 +2,27 @@ import React from 'react';
 import { wait } from '@testing-library/react';
 import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
 import userEvent from '@testing-library/user-event';
-import Resources from '../../pages/Resources';
+import ResourcesComponent from '../../pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from '../../setupTests';
-import { Resources as hooksResources } from '@osu-wams/hooks';
+import { Resources } from '@osu-wams/hooks';
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
 const mockDefaultCategory = jest.fn();
-const { resourcesData, categoriesData, defaultCategory } = hooksResources.mockResources;
+const mockPostFavorite = jest.fn();
+const { resourcesData, categoriesData, defaultCategory } = Resources.mockResources;
 
 jest.mock('@osu-wams/hooks', () => {
+  const original = jest.requireActual('@osu-wams/hooks');
   return {
-    ...jest.requireActual('@osu-wams/hooks'),
+    ...original,
     useResources: () => mockUseResources(),
     useCategories: () => mockUseCategories(),
-    defaultCategoryName: () => mockDefaultCategory()
+    defaultCategoryName: () => mockDefaultCategory(),
+    Resources: {
+      ...original.Resources,
+      postFavorite: () => mockPostFavorite()
+    }
   };
 });
 
@@ -28,9 +34,9 @@ jest.mock('@osu-wams/hooks', () => {
 const renderResources = (userType?: any) => {
   let utils;
   if (!userType) {
-    utils = render(<Resources />);
+    utils = render(<ResourcesComponent />);
   } else {
-    utils = render(<Resources />, {
+    utils = render(<ResourcesComponent />, {
       user: userType
     });
   }
@@ -57,7 +63,7 @@ describe('<Resources />', () => {
   });
 
   it('should display the title Resources', async () => {
-    const { findByText } = render(<Resources />);
+    const { findByText } = renderResources();
     expect(await findByText('Resources', { selector: 'h1' })).toBeInTheDocument();
   });
 
@@ -71,7 +77,7 @@ describe('<Resources />', () => {
   });
 
   it('Should have a link to skip to results with matching ID in the result container', async () => {
-    const { getByText, findByTestId } = render(<Resources />);
+    const { getByText, findByTestId } = renderResources();
     const skipLink = getByText('Skip to results');
     const anchor = skipLink.getAttribute('href')!.slice(1);
     const results = await findByTestId('resourcesResults');
@@ -95,7 +101,7 @@ describe('<Resources />', () => {
   });
 
   it('should have clickable categories that report to GoogleAnalytics', async () => {
-    const { getByText } = render(<Resources />);
+    const { getByText } = renderResources();
     const BillingInformationResource = await getByText(/Billing Information/);
     expect(BillingInformationResource).not.toBeNull();
     userEvent.click(BillingInformationResource);
@@ -164,13 +170,45 @@ describe('<Resources />', () => {
     location.search = '';
   });
 
+  describe('Favorite Resources tests', () => {
+    it('should have favorites category when user has active favorites resources', async () => {
+      const { findByText } = renderResources();
+      const favorites = await findByText(/favorites/i);
+      expect(favorites).toBeInTheDocument();
+      userEvent.click(favorites);
+      expect(await findByText(/found 2 results/i)).toBeInTheDocument();
+    });
+
+    it('Finds Student Jobs resource, clicking on heart input adds it as a favorite', async () => {
+      const { findByText, all } = renderResources();
+      userEvent.click(all);
+
+      expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+      var el = document.querySelector(
+        `input[aria-label="Add Student Jobs link to your favorite resources"]`
+      );
+      expect(el).toBeInTheDocument();
+
+      userEvent.click(el);
+      expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
+      expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
+      expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    });
+
+    it('should not find the favorites category button when user does not have favorites resources', async () => {
+      const noFavUser = { ...authUser, data: { ...authUser.data, favoriteResources: [] } };
+      const { queryByText } = renderResources(noFavUser);
+
+      expect(queryByText(/favorites/i)).toBeNull();
+    });
+  });
+
   it('should move to the All category when searching', async () => {
     const { findByText, queryByText, featured, all, searchInput } = renderResources();
 
     expect(featured).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
     await userEvent.type(searchInput, 'student job');
-    // Need to wait for debounce
     expect(await findByText(/found 1 result/)).toBeInTheDocument();
     expect(await findByText(/Student Jobs/)).toBeInTheDocument();
 
