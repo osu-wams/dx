@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import Alerts from '../Alerts';
 import { Alerts as alertsHooks } from '@osu-wams/hooks';
@@ -25,7 +24,7 @@ describe('<Alerts />', () => {
     });
     it('should not find the DX alert', async () => {
       const { getByText, queryByText } = render(<Alerts />);
-      const raveTitle = await waitForElement(() => getByText('First Rave'));
+      const raveTitle = getByText('First Rave');
       const dxTitle = queryByText('BobRoss');
       expect(raveTitle).toBeInTheDocument();
       expect(dxTitle).not.toBeInTheDocument();
@@ -38,7 +37,7 @@ describe('<Alerts />', () => {
     });
     it('should not find the Rave alert', async () => {
       const { getByText, queryByText } = render(<Alerts />);
-      const dxTitle = await waitForElement(() => getByText('BobRoss'));
+      const dxTitle = getByText('BobRoss');
       const raveTitle = queryByText('First Rave');
       expect(dxTitle).toBeInTheDocument();
       expect(raveTitle).not.toBeInTheDocument();
@@ -51,7 +50,7 @@ describe('<Alerts />', () => {
     });
     it('should not find the Rave alert', async () => {
       const { getByText, queryByText } = render(<Alerts />);
-      const dxTitle = await waitForElement(() => getByText('Old Dx Alert'));
+      const dxTitle = getByText('Old Dx Alert');
       const raveTitle = queryByText('First Rave');
       expect(dxTitle).toBeInTheDocument();
       expect(raveTitle).not.toBeInTheDocument();
@@ -64,7 +63,7 @@ describe('<Alerts />', () => {
     });
     it('should not find the Rave alert', async () => {
       const { getByText } = render(<Alerts />);
-      const dxTitle = await waitForElement(() => getByText('BobRoss'));
+      const dxTitle = getByText('BobRoss');
       const raveTitle = getByText('First Rave');
       expect(dxTitle).toBeInTheDocument();
       expect(raveTitle).toBeInTheDocument();
