@@ -11,6 +11,42 @@ import zoom from 'src/assets/logo-zoom.png';
 import { styled } from 'src/theme';
 
 /**
+ * Filters Resources which exist in the TrendingResources that match the users attributes
+ * @param trendingResources
+ * @param resourcesList
+ */
+const filteredTrendingResources = (
+  trendingResources: Types.TrendingResource[],
+  resourcesList: Types.Resource[],
+  user: any
+): Types.Resource[] => {
+  const campus = user.classification?.attributes?.campus ?? 'corvallis';
+  const usersAffiliation = user.primaryAffiliationOverride || user.primaryAffiliation;
+  const usersTrendingResources = trendingResources
+    .filter(
+      tr =>
+        usersAffiliation.toLowerCase() === tr.affiliation.toLowerCase() &&
+        tr.campus.toLowerCase() === campus
+    )
+    .filter(Boolean);
+  // Get the average number of unique events for a basic dynamic filtering mechanism
+  const averageUniqueEvents =
+    usersTrendingResources.reduce((p, c) => p + c.uniqueEvents, 0) / usersTrendingResources.length;
+  // usersTrendingResources is sorted in descending order of most unique event count, return
+  // a subset of the list filtered to the users properties along with only resources that have above average
+  // number of unique events calculated. This gives a very basic way to focus on resources that are continually
+  // getting clicks.
+  return usersTrendingResources
+    .map(tr =>
+      tr.uniqueEvents > averageUniqueEvents
+        ? resourcesList.find(r => tr.resourceId.toLowerCase() === r.id.toLowerCase())
+        : undefined
+    )
+    .flat()
+    .filter(Boolean);
+};
+
+/**
  * Filters Resources to return just the ones a specific user has marked as favorite
  * @param favoriteResources
  * @param resourcesList
@@ -62,4 +98,4 @@ const logoMapping = {
   'logo-zoom': zoom
 };
 
-export { IconLookup, activeFavoriteResources };
+export { IconLookup, activeFavoriteResources, filteredTrendingResources };
