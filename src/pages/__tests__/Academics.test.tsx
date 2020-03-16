@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { renderWithUserContext } from '../../util/test-utils';
 
@@ -10,7 +9,7 @@ test('renders', () => {
   expect(getByTestId('academics-dashboard')).toBeInTheDocument();
 });
 
-test('should display the title Academics', async () => {
+test('should display the title Academics', () => {
   const { getByText } = render(<Academics />);
-  await waitForElement(() => getByText('Academics'));
+  expect(getByText('Academics')).toBeInTheDocument();
 });
