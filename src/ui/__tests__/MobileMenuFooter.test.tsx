@@ -1,6 +1,5 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { wait } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { MobileMenuFooter } from '../MainNav/MobileMenuFooter';
 import { mockGAEvent } from '../../setupTests';
@@ -19,5 +18,5 @@ test('More menu has links that are tracked via Google Analytics', async () => {
   userEvent.click(support);
   userEvent.click(feedback);
 
-  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(3));
+  expect(mockGAEvent).toHaveBeenCalledTimes(3);
 });

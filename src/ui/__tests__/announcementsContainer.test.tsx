@@ -1,8 +1,8 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import userEvent from '@testing-library/user-event';
+import { render } from 'src/util/test-utils';
 import AnnouncementContainer from '../AnnouncementContainer';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import { Announcements } from '@osu-wams/hooks';
 
 const { academicAnnouncementResult, financialAnnouncementResult } = Announcements.mockAnnouncements;
@@ -23,23 +23,23 @@ describe('<AnnouncementContainer> as Academics', () => {
     jest.clearAllMocks();
   });
   it('Should show Academic announcements and untagged', async () => {
-    const { getByText, queryByText, getAllByTestId } = render(
+    const { getByText, queryByText, findAllByTestId } = render(
       <AnnouncementContainer page="academics" />
     );
-    await waitForElement(() => getAllByTestId('eventcard'));
+    await findAllByTestId('eventcard');
     expect(getByText(/Every Page Announcement Title/)).toBeInTheDocument();
     expect(getByText(/Academics Announcement Title/)).toBeInTheDocument();
-    expect(queryByText(/Finances Announcement Title/)).not.toBeInTheDocument();
-    expect(queryByText(/Employee Announcement Title/i)).not.toBeInTheDocument();
+    expect(queryByText(/Finances Announcement Title/)).toBeNull();
+    expect(queryByText(/Employee Announcement Title/i)).toBeNull();
   });
 
   it('should track clicks to annoucements', async () => {
-    const { getAllByTestId, getByText } = render(<AnnouncementContainer page="finances" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
+    const { findAllByTestId, getByText } = render(<AnnouncementContainer page="finances" />);
+    await findAllByTestId('eventcard');
     const everyPageAnnouncement = getByText('Every Page Announcement Link');
     const academicAnnouncement = getByText('Academics Announcement Link');
-    fireEvent.click(everyPageAnnouncement);
-    fireEvent.click(academicAnnouncement);
+    userEvent.click(everyPageAnnouncement);
+    userEvent.click(academicAnnouncement);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 });
@@ -52,23 +52,23 @@ describe('<AnnouncementContainer> as Finances', () => {
     jest.clearAllMocks();
   });
   it('Should show Finance announcements and untagged', async () => {
-    const { getByText, queryByText, getAllByTestId } = render(
+    const { getByText, queryByText, findAllByTestId } = render(
       <AnnouncementContainer page="finances" />
     );
-    await waitForElement(() => getAllByTestId('eventcard'));
+    await findAllByTestId('eventcard');
     expect(getByText(/Every Page Announcement Title/)).toBeInTheDocument();
     expect(getByText(/Finances Announcement Title/)).toBeInTheDocument();
-    expect(queryByText(/Academics Announcement Title/)).not.toBeInTheDocument();
-    expect(queryByText(/Employee Announcement Title/i)).not.toBeInTheDocument();
+    expect(queryByText(/Academics Announcement Title/)).toBeNull();
+    expect(queryByText(/Employee Announcement Title/i)).toBeNull();
   });
 
   it('should track clicks to annoucements', async () => {
-    const { getAllByTestId, getByText } = render(<AnnouncementContainer page="finances" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
+    const { findAllByTestId, getByText } = render(<AnnouncementContainer page="finances" />);
+    await findAllByTestId('eventcard');
     const everyPageAnnouncement = getByText('Every Page Announcement Link');
     const financeAnnouncement = getByText('Finances Announcement Link');
-    fireEvent.click(everyPageAnnouncement);
-    fireEvent.click(financeAnnouncement);
+    userEvent.click(everyPageAnnouncement);
+    userEvent.click(financeAnnouncement);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 });

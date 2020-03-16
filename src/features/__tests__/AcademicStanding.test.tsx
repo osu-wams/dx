@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import AcademicStanding from '../academic-overview/AcademicStanding';
 import { Student } from '@osu-wams/hooks';
@@ -17,15 +16,15 @@ jest.mock('@osu-wams/hooks', () => {
 describe('<AcademicStanding />', () => {
   it('should render and have the approriate standing', async () => {
     mockUseAcademicStatus.mockReturnValue(mockAcademicStatus);
-    const { getByText } = render(<AcademicStanding />);
-    const element = await waitForElement(() => getByText('Good Standing'));
+    const { findByText } = render(<AcademicStanding />);
+    const element = await findByText('Good Standing');
     expect(element).toBeInTheDocument();
   });
 
   it('should return appropriate text when data is empty', async () => {
     mockUseAcademicStatus.mockReturnValue({ data: {}, loading: false, error: false });
-    const { getByText } = render(<AcademicStanding />);
-    const element = await waitForElement(() => getByText('You have no current academic standing.'));
+    const { findByText } = render(<AcademicStanding />);
+    const element = await findByText('You have no current academic standing.');
     expect(element).toBeInTheDocument();
   });
 });

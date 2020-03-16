@@ -1,6 +1,6 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
-import { render, mockUser, authUser } from '../../util/test-utils';
+import userEvent from '@testing-library/user-event';
+import { render, authUser } from '../../util/test-utils';
 import AcademicOverview from '../AcademicOverview';
 import { mockGAEvent } from '../../setupTests';
 import { Student } from '@osu-wams/hooks';
@@ -45,9 +45,9 @@ describe('<Academic Overview />', () => {
     mockUser.data.classification!.attributes!.levelCode = '';
     mockUser.data.audienceOverride = {};
 
-    const { getByText } = render(<AcademicOverview />, { user: mockUser });
-    const element = await waitForElement(() => getByText('View more in MyDegrees'));
-    fireEvent.click(element);
+    const { findByText } = render(<AcademicOverview />, { user: mockUser });
+    const element = await findByText('View more in MyDegrees');
+    userEvent.click(element);
     expect(mockGAEvent).toHaveBeenCalled();
   });
 });

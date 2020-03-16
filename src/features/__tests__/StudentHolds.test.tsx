@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import StudentHolds from '../academic-overview/StudentHolds';
 import { Student } from '@osu-wams/hooks';
@@ -18,7 +17,7 @@ describe('<StudentHolds />', () => {
   it('should render and have a single hold', async () => {
     mockUseHolds.mockReturnValue(mockHolds);
     const { getByText } = render(<StudentHolds />);
-    const element = await waitForElement(() => getByText('Bill is overdue'));
+    const element = getByText('Bill is overdue');
     expect(element).toBeInTheDocument();
     expect(getByText('1')).toBeInTheDocument();
     expect(getByText('hold on your student account.')).toBeInTheDocument();
@@ -31,7 +30,7 @@ describe('<StudentHolds />', () => {
       error: false
     });
     const { getByText } = render(<StudentHolds />);
-    const element = await waitForElement(() => getByText('blah'));
+    const element = getByText('blah');
     expect(element).toBeInTheDocument();
     expect(getByText('BobRoss')).toBeInTheDocument();
     expect(getByText('2')).toBeInTheDocument();
@@ -41,7 +40,7 @@ describe('<StudentHolds />', () => {
   it('should return appropriate text when data is empty', async () => {
     mockUseHolds.mockReturnValue({ data: [], loading: false, error: false });
     const { getByText } = render(<StudentHolds />);
-    const element = await waitForElement(() => getByText('0'));
+    const element = getByText('0');
     expect(element).toBeInTheDocument();
     expect(getByText('holds on your student account.')).toBeInTheDocument();
   });

@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement, wait } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   render,
@@ -66,19 +65,19 @@ it('has a logout link in the menu', async () => {
   const logoutLink = await findByText('Logout');
   userEvent.click(logoutLink);
 
-  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });
 
 it('User Button and profile link are in the menu and tracked via GA', async () => {
-  const { getByText, getByTestId } = render(<Header />);
+  const { findByText, getByTestId } = render(<Header />);
 
   const userLink = getByTestId('user-btn');
   userEvent.click(userLink);
 
-  const profileLink = await waitForElement(() => getByText('Profile', { selector: 'a' }));
+  const profileLink = await findByText('Profile', { selector: 'a' });
   userEvent.click(profileLink);
 
-  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });
 
 it('Help button and help link are in the menu and tracked via GA', async () => {
@@ -94,7 +93,7 @@ it('Help button and help link are in the menu and tracked via GA', async () => {
 
   userEvent.click(helpLink);
 
-  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });
 
 describe('Student mobile menu interactions', () => {
@@ -111,7 +110,7 @@ describe('Student mobile menu interactions', () => {
     const studentDashboardMenu = queryByText(title, { selector: 'h2' });
     expect(studentDashboardMenu).toBeVisible();
 
-    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(1));
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   it('Clicking "menu" opens and clicking the close dismisses the modal', async () => {
@@ -126,7 +125,7 @@ describe('Student mobile menu interactions', () => {
     const studentDashboard = queryByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
-    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(1));
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   it('Clicking main link inside the modal dismisses the modal', async () => {
@@ -141,7 +140,7 @@ describe('Student mobile menu interactions', () => {
     const studentDashboard = queryByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
-    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('Clicking footer link inside the modal dismisses the modal', async () => {
@@ -155,7 +154,7 @@ describe('Student mobile menu interactions', () => {
     const studentDashboard = queryByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
-    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('Cannot find mobile menu in desktop version, all links visible immediately', async () => {
@@ -192,14 +191,14 @@ describe('Student mobile menu interactions', () => {
     userEvent.click(profileMenu);
     expect(queryByText(/logout/i)).toBeNull();
 
-    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(4));
+    expect(mockGAEvent).toHaveBeenCalledTimes(4);
   });
 });
 
 describe('as a logged in user', () => {
-  it('renders the appropriate header logo', async () => {
+  it('renders the appropriate header logo', () => {
     const { getByTestId } = render(<Header />);
-    const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
+    const appHeader = getByTestId('app-header-logo');
     expect(appHeader).toBeInTheDocument();
     expect(appHeader.getAttribute('src')).toBe('osu-logo.svg');
   });
@@ -210,7 +209,7 @@ describe('as a Bend user', () => {
     authUserClassification!.attributes!.campusCode = 'B';
     authUserAudienceOverride.campusCode = 'B';
     const { getByTestId } = render(<Header />);
-    const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
+    const appHeader = getByTestId('app-header-logo');
     expect(appHeader).toBeInTheDocument();
     expect(appHeader.getAttribute('src')).toBe('osu-cascades.svg');
   });
@@ -221,7 +220,7 @@ describe('as an Ecampus user', () => {
     authUserClassification!.attributes!.campusCode = 'DSC';
     authUserAudienceOverride.campusCode = 'DSC';
     const { getByTestId } = render(<Header />);
-    const appHeader = await waitForElement(() => getByTestId('app-header-logo'));
+    const appHeader = getByTestId('app-header-logo');
     expect(appHeader).toBeInTheDocument();
     expect(appHeader.getAttribute('src')).toBe('osu-ecampus.svg');
   });

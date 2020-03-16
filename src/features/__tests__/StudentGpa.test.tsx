@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import StudentGpa from '../academic-overview/StudentGpa';
 import { Student } from '@osu-wams/hooks';
@@ -19,7 +18,7 @@ describe('<StudentGpa />', () => {
   it('should render and have the approriate standing for a Graduate', async () => {
     mockUseStudentGpa.mockReturnValue(gpaHookData);
     const { getByText, queryByText } = render(<StudentGpa />);
-    const element = await waitForElement(() => getByText('3.81'));
+    const element = getByText('3.81');
     expect(element).toBeInTheDocument();
     const undergraduateText = queryByText('Undergraduate GPA across all past terms.');
     expect(undergraduateText).not.toBeInTheDocument();
@@ -30,7 +29,7 @@ describe('<StudentGpa />', () => {
   it('should render and have the approriate standing for an Undergraduate', async () => {
     mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: gpaUndergraduateData });
     const { getByText, queryByText } = render(<StudentGpa />);
-    const element = await waitForElement(() => getByText('3.1'));
+    const element = getByText('3.1');
     expect(element).toBeInTheDocument();
     const graduateText = queryByText('Graduate GPA across all past terms.');
     expect(graduateText).not.toBeInTheDocument();
@@ -38,12 +37,10 @@ describe('<StudentGpa />', () => {
     expect(getByText('Institutional GPA')).toBeInTheDocument();
   });
 
-  it('should return appropriate text when data is empty', async () => {
+  it('should return appropriate text when data is empty', () => {
     mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: gpaInitialState });
     const { getByText } = render(<StudentGpa />);
-    const element = await waitForElement(() =>
-      getByText('You must first complete a term to have a GPA.')
-    );
+    const element = getByText('You must first complete a term to have a GPA.');
     expect(element).toBeInTheDocument();
   });
 });

@@ -1,6 +1,5 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import StudentEnrolledCredits from '../academic-overview/StudentEnrolledCredits';
 import { Student } from '@osu-wams/hooks';
 
@@ -15,17 +14,17 @@ jest.mock('@osu-wams/hooks', () => {
 });
 
 describe('<StudentEnrolledCredits />', () => {
-  it('should render and have the approriate standing', async () => {
+  it('should render and have the approriate standing', () => {
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     const { getByText } = render(<StudentEnrolledCredits />);
-    const element = await waitForElement(() => getByText('20'));
+    const element = getByText('20');
     expect(element).toBeInTheDocument();
   });
 
-  it('should return appropriate text when data is empty', async () => {
+  it('should return appropriate text when data is empty', () => {
     mockUseCourseSchedule.mockReturnValue({ data: [], loading: false, error: false });
     const { getByText } = render(<StudentEnrolledCredits />);
-    const element = await waitForElement(() => getByText('0'));
+    const element = getByText('0');
     expect(element).toBeInTheDocument();
   });
 });
