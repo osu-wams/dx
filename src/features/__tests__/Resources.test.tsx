@@ -1,5 +1,5 @@
 import React from 'react';
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
 import userEvent from '@testing-library/user-event';
 import ResourcesComponent from '../../pages/Resources';
@@ -70,7 +70,7 @@ describe('<Resources />', () => {
   it('should have the Featured tag selected', async () => {
     const { all, featured, queryByText, findByText } = renderResources();
 
-    await wait(() => expect(featured).toHaveClass('selected'));
+    await waitFor(() => expect(featured).toHaveClass('selected'));
     expect(all).not.toHaveClass('selected');
     expect(findByText(/Billing Information/)).not.toBeNull();
     expect(queryByText(/Webcams/)).toBeNull();

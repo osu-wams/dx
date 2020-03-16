@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, mockAppContext } from '../../util/test-utils';
 import { Student } from '@osu-wams/hooks';
@@ -30,14 +29,14 @@ describe('<Courses />', () => {
   });
 
   it('Finds "7" as the course count in the Badge', async () => {
-    const { getByText } = render(<Courses />);
-    const NumCourses = await waitForElement(() => getByText('7'));
+    const { findByText } = render(<Courses />);
+    const NumCourses = await findByText('7');
     expect(NumCourses).toBeInTheDocument();
   });
 
   it('renders a list of sorted courses for the current user', async () => {
-    const { queryAllByTestId } = render(<Courses />);
-    const courses = await waitForElement(() => queryAllByTestId('course-list-item-header'));
+    const { findAllByTestId } = render(<Courses />);
+    const courses = await findAllByTestId('course-list-item-header');
     expect(courses.map(c => c.textContent)).toStrictEqual([
       'CS261',
       'CS262',
@@ -51,9 +50,9 @@ describe('<Courses />', () => {
 });
 
 it('loads a modal with course details when clicked, close button dismisses it', async () => {
-  const { getByText, findByTestId, queryByTestId } = render(<Courses />);
+  const { findByText, findByTestId, queryByTestId } = render(<Courses />);
 
-  const OpSysBtn = getByText(/data structures/i);
+  const OpSysBtn = await findByText(/data structures/i);
   userEvent.click(OpSysBtn);
 
   // Dialg is present and displays the current course
@@ -62,7 +61,7 @@ it('loads a modal with course details when clicked, close button dismisses it', 
   expect(courseDialog).toHaveTextContent(/data structures/i);
 
   // Close dialog
-  const closeBtn = await waitForElement(() => getByText('Close'));
+  const closeBtn = await findByText('Close');
   userEvent.click(closeBtn);
   expect(queryByTestId('course-dialog')).toBeNull();
 });
