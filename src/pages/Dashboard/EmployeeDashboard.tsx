@@ -6,6 +6,7 @@ import { MainGridWrapper, Masonry } from '../../theme';
 import ResourcesCard from '../../features/ResourcesCard';
 import { EmployeeTools, ITSystemStatus } from '../../features/employee-only';
 import { FavoriteResources } from 'src/features/FavoriteResources';
+import { TrendingResources } from 'src/features/TrendingResources';
 
 const EmployeeDashboard = () => {
   return (
@@ -17,6 +18,7 @@ const EmployeeDashboard = () => {
           <ResourcesCard categ="employee_featured" icon={faStars} />
           <ITSystemStatus />
           <FavoriteResources />
+          <TrendingResources />
         </Masonry>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />
