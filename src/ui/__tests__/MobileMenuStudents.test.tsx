@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import { MobileMenuStudents } from '../MainNav/MobileMenuStudents';
 import { mockGAEvent } from '../../setupTests';
@@ -20,5 +20,5 @@ test('More menu has links that are tracked via Google Analytics', async () => {
   userEvent.click(finances);
   userEvent.click(overview);
 
-  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(4));
+  await waitFor(() => expect(mockGAEvent).toHaveBeenCalledTimes(4));
 });
