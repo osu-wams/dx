@@ -29,6 +29,8 @@ export type IComponents =
   | 'resources-card'
   | 'favorite-resources-card'
   | 'favorite-resource'
+  | 'trending-resources-card'
+  | 'trending-resource'
   | 'anouncements'
   | 'events'
   | 'courses'
