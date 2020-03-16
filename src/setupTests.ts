@@ -2,6 +2,9 @@ import ReactGA from 'react-ga';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
 import * as cache from './util/cache';
+// Remove this when CRA updates to jsdom 16+ (not available as of CRA 3.4)
+import MutationObserver from '@sheerun/mutationobserver-shim';
+window.MutationObserver = MutationObserver;
 
 ReactGA.initialize('UA-48705802-13', {
   testMode: true
