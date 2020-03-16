@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { render, mockAppContext } from '../../util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
@@ -28,37 +28,37 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should have items with icons and text', async () => {
-    const { getByText, container } = render(<ResourcesCard categ="financial" icon={faCube} />);
-    await waitForElement(() => getByText('Student Jobs'));
+    const { findByText, container } = render(<ResourcesCard categ="financial" icon={faCube} />);
+    await findByText('Student Jobs');
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('should have two items', async () => {
-    const { getByText, getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />);
-    await waitForElement(() => getByText('Student Jobs'));
+    const { findByText, getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />);
+    await findByText('Student Jobs');
     expect(getByTestId('resource-container').children).toHaveLength(3);
   });
 
   it('should have a clickable resource that fires GooglaAnalytics', async () => {
-    const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
-    const StudentJobsResource = await waitForElement(() => getByText('Student Jobs'));
-    fireEvent.click(StudentJobsResource);
+    const { findByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
+    const StudentJobsResource = await findByText('Student Jobs');
+    userEvent.click(StudentJobsResource);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
     expect(mockTrendingEvent).toHaveBeenCalledTimes(1);
   });
 
   it('should have a link to all category resources', async () => {
     {
-      const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
-      await waitForElement(() => getByText('View more financial resources'));
+      const { findByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
+      await findByText('View more financial resources');
     }
     {
-      const { getByText } = render(<ResourcesCard categ="academic" icon={faCube} />);
-      const AllAcademicLink = await waitForElement(() => getByText('View more academic resources'));
+      const { findByText } = render(<ResourcesCard categ="academic" icon={faCube} />);
+      const AllAcademicLink = await findByText('View more academic resources');
       expect(AllAcademicLink).toBeInTheDocument();
 
       // Google Analytics is setup and fires
-      fireEvent.click(AllAcademicLink);
+      userEvent.click(AllAcademicLink);
       expect(mockGAEvent).toHaveBeenCalledTimes(1);
     }
   });
@@ -69,8 +69,8 @@ describe('<ResourcesCard />', () => {
       loading: false,
       error: false
     });
-    const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
-    await waitForElement(() => getByText('No resources available.'));
+    const { findByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
+    expect(await findByText('No resources available.')).toBeInTheDocument();
   });
 });
 
@@ -91,7 +91,7 @@ describe('with an InfoButton in the CardFooter', () => {
     expect(element).not.toBeInTheDocument();
   });
 
-  test('displays the button when the infoButtonData is included', async () => {
+  test('displays the button when the infoButtonData is included', () => {
     mockAppContext.infoButtonData = [
       { id: validIinfoButtonId, content: 'content', title: 'title' }
     ];
@@ -99,7 +99,7 @@ describe('with an InfoButton in the CardFooter', () => {
       appContext: mockAppContext
     });
 
-    const element = await waitForElement(() => getByTestId(validIinfoButtonId));
+    const element = getByTestId(validIinfoButtonId);
     expect(element).toBeInTheDocument();
   });
 });

@@ -1,11 +1,20 @@
-// Note: This needs to be a .js file. Using a .ts won't work with CRA.
+// Note: This needs to be a .js file. Using a .ts won't work with CRA (true as of 03/2020)
 
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+const localhostUrl = 'http://localhost:4000/';
+
+const options = {
+  target: localhostUrl,
+  changeOrigin: true
+};
+
+const devProxy = createProxyMiddleware(options);
 
 module.exports = app => {
-  app.use(proxy('/healthcheck', { target: 'http://localhost:4000/' }));
-  app.use(proxy('/api', { target: 'http://localhost:4000/' }));
-  app.use(proxy('/login', { target: 'http://localhost:4000/' }));
-  app.use(proxy('/canvas', { target: 'http://localhost:4000/' }));
-  app.use(proxy('/logout', { target: 'http://localhost:4000/' }));
+  app.use('/healthcheck', devProxy);
+  app.use('/api', devProxy);
+  app.use('/login', devProxy);
+  app.use('/canvas', devProxy);
+  app.use('/logout', devProxy);
 };

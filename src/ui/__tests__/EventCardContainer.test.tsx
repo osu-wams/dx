@@ -1,5 +1,6 @@
 import React from 'react';
-import { waitForElement, fireEvent, cleanup } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import EventCardContainer from '../EventCardContainer';
 import { render, mockEmployeeUser } from '../../util/test-utils';
 import { Announcements, Events } from '@osu-wams/hooks';
@@ -34,51 +35,50 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should show 5 student event cards', async () => {
-    const { getAllByTestId, getByText, queryByText } = render(
+    const { findAllByTestId, getByText, queryByText } = render(
       <EventCardContainer page="dashboard" />
     );
     // Need to wait for data to come in
-    await waitForElement(() => getAllByTestId('eventcard'));
+    const cards = await findAllByTestId('eventcard');
     expect(getByText(/Student Only Announcement/i)).toBeInTheDocument();
     expect(queryByText(/Employee Only Announcement/i)).not.toBeInTheDocument();
-    expect(getAllByTestId('eventcard')).toHaveLength(5);
+    expect(cards).toHaveLength(5);
   });
 
   it('should show 7 employee event cards', async () => {
-    const { getAllByTestId, getByText, queryByText } = render(
+    const { findAllByTestId, getByText, queryByText } = render(
       <EventCardContainer page="dashboard" />,
       {
         user: mockEmployeeUser
       }
     );
-    const events = await waitForElement(() => getAllByTestId('eventcard'));
+    const events = await findAllByTestId('eventcard');
     expect(events).toHaveLength(7);
     expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
     expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
   });
 
   it('should display text', async () => {
-    const { getAllByTestId, getByText } = render(<EventCardContainer page="dashboard" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
+    const { findAllByTestId, getByText } = render(<EventCardContainer page="dashboard" />);
+    await findAllByTestId('eventcard');
     expect(getByText(/Announcement test body text 2/i)).toBeInTheDocument();
     expect(getByText(/Announcement link title/i)).toBeInTheDocument();
     expect(getByText(/Localist test title 1/i)).toBeInTheDocument();
   });
 
   it('should track clicks to events and announcements', async () => {
-    const { getAllByTestId, getByText } = render(<EventCardContainer page="dashboard" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
+    const { findAllByTestId, getByText } = render(<EventCardContainer page="dashboard" />);
+    await findAllByTestId('eventcard');
     const localist = getByText(/Localist test title/i);
     const announcementLink = getByText(/Announcement link title/i);
-    fireEvent.click(localist);
-    fireEvent.click(announcementLink);
+    userEvent.click(localist);
+    userEvent.click(announcementLink);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should alternate types of events', async () => {
-    const { getAllByTestId, getAllByText } = render(<EventCardContainer page="dashboard" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
-    const cards = getAllByTestId('eventcard');
+    const { findAllByTestId, getAllByText } = render(<EventCardContainer page="dashboard" />);
+    const cards = await findAllByTestId('eventcard');
     const bodyText = getAllByText(/body text/i);
     expect(cards[0]).toContainElement(bodyText[0]);
     expect(cards[2]).toContainElement(bodyText[1]);
@@ -88,24 +88,24 @@ describe('<EventCardContainer />', () => {
 
   it('should render only announcements when no localist events loaded', async () => {
     mockUseStudentExperienceEvents.mockReturnValue(mockNoData);
-    const { getAllByTestId } = render(<EventCardContainer page="dashboard" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
-    expect(getAllByTestId('eventcard')).toHaveLength(2);
+    const { findAllByTestId } = render(<EventCardContainer page="dashboard" />);
+    const cards = await findAllByTestId('eventcard');
+    expect(cards).toHaveLength(2);
   });
 
   it('should render only localist events when no announcements loaded', async () => {
     mockUseStudentExperienceEvents.mockReturnValue(studentExperienceEvents);
     mockUseAnnouncements.mockReturnValue(mockNoData);
-    const { getAllByTestId } = render(<EventCardContainer page="dashboard" />);
-    await waitForElement(() => getAllByTestId('eventcard'));
-    expect(getAllByTestId('eventcard')).toHaveLength(3);
+    const { findAllByTestId } = render(<EventCardContainer page="dashboard" />);
+    const cards = await findAllByTestId('eventcard');
+    expect(cards).toHaveLength(3);
   });
 
   it('should only display a max of 12 eventcards', async () => {
     mockUseAnnouncements.mockReturnValue(announcementsData_10);
     mockUseStudentExperienceEvents.mockReturnValue(studentExperienceEvents_10);
-    const { getAllByTestId } = render(<EventCardContainer page="dashboard" />);
-    expect(await waitForElement(() => getAllByTestId('eventcard'))).toHaveLength(12);
+    const { findAllByTestId } = render(<EventCardContainer page="dashboard" />);
+    expect(await findAllByTestId('eventcard')).toHaveLength(12);
   });
 
   it('should not display the announcements in the same order everytime', async () => {
@@ -114,13 +114,13 @@ describe('<EventCardContainer />', () => {
 
     let match = true;
 
-    const { getAllByTestId } = render(<EventCardContainer page="dashboard" />);
-    const test1 = await waitForElement(() => getAllByTestId('eventcard'));
+    const { findAllByTestId } = render(<EventCardContainer page="dashboard" />);
+    const test1 = await findAllByTestId('eventcard');
 
     // rerendering the screen, not using rerender because the randomizer is in a useEffect that isn't getting triggered by rerender
-    cleanup();
+    await cleanup();
     render(<EventCardContainer page="dashboard" />);
-    const test2 = await waitForElement(() => getAllByTestId('eventcard'));
+    const test2 = await findAllByTestId('eventcard');
 
     // make sure they are the same length first
     expect(test1.length).toEqual(test2.length);
@@ -137,22 +137,22 @@ describe('<EventCardContainer />', () => {
 
   describe('Employee vs Student Events', () => {
     it('should see Student Events but not employee ones', async () => {
-      const { getAllByTestId, queryByText, getByText } = render(
+      const { findAllByTestId, queryByText, getByText } = render(
         <EventCardContainer page="dashboard" />
       );
-      await waitForElement(() => getAllByTestId('eventcard'));
+      await findAllByTestId('eventcard');
       expect(getByText(/Localist test title 1/i)).toBeInTheDocument();
       expect(queryByText(/2019 Oregon Employees/i)).not.toBeInTheDocument();
     });
 
     it('should see Employee Events but not student ones', async () => {
-      const { getAllByTestId, queryByText, getByText } = render(
+      const { findAllByTestId, queryByText, getByText } = render(
         <EventCardContainer page="dashboard" />,
         {
           user: mockEmployeeUser
         }
       );
-      await waitForElement(() => getAllByTestId('eventcard'));
+      await findAllByTestId('eventcard');
       expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
       expect(getByText(/Announcement link title/i)).toBeInTheDocument();
       expect(queryByText(/Localist test title 1/i)).not.toBeInTheDocument();

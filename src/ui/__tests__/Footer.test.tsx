@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, wait } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithUserContext, renderWithAllContexts } from '../../util/test-utils';
 import Footer from '../Footer';
@@ -34,22 +34,22 @@ it('Masquerade link is present for administrators and they can open and close th
   const maskOverlay = await findByTestId('masquerade-dialog');
 
   // Masquerade overlay shows up
-  await wait(() => expect(maskOverlay).toBeInTheDocument());
+  await waitFor(() => expect(maskOverlay).toBeInTheDocument());
 
   // Make sure we can close to overlay too
   const cancelBtn = await findByText('Cancel');
   userEvent.click(cancelBtn);
 
-  await wait(() => expect(queryByTestId('masquerade-dialog')).toBeNull());
+  await waitFor(() => expect(queryByTestId('masquerade-dialog')).toBeNull());
 });
 
 it('As an administrator, I can click "masquerade" and trigger the api calls', async () => {
-  const { getByText, getByTestId } = renderWithUserContext(<Footer />);
+  const { findByText, findByTestId } = renderWithUserContext(<Footer />);
   //Profile icon click - this text is visually hidden
-  const maskLink = await waitForElement(() => getByText('Masquerade'));
+  const maskLink = await findByText('Masquerade');
   userEvent.click(maskLink);
 
-  const maskOverlay = await waitForElement(() => getByTestId('masquerade-dialog'));
+  const maskOverlay = await findByTestId('masquerade-dialog');
   // Masquerade overlay shows up
   expect(maskOverlay).toBeInTheDocument();
 
@@ -60,7 +60,7 @@ it('As an administrator, I can click "masquerade" and trigger the api calls', as
   userEvent.click(masqueradeSubmit);
 
   expect(Storage.prototype.clear).toHaveBeenCalledTimes(1);
-  await wait(() => expect(mockPostMasqueradeUser).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(mockPostMasqueradeUser).toHaveBeenCalledTimes(1));
 });
 
 it('Links to be present and tracked in Google Analytics', async () => {
@@ -80,14 +80,14 @@ it('Links to be present and tracked in Google Analytics', async () => {
   userEvent.click(accessibilityLink);
   userEvent.click(maskLink);
 
-  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(6));
+  await waitFor(() => expect(mockGAEvent).toHaveBeenCalledTimes(6));
 });
 
 it('Application deployed versions', async () => {
   const { getByText } = renderWithAllContexts(<Footer />);
 
-  const appText = await waitForElement(() => getByText('server-test-123'));
-  const serverText = await waitForElement(() => getByText('client-test-123'));
+  const appText = getByText('server-test-123');
+  const serverText = getByText('client-test-123');
   expect(appText).toBeInTheDocument();
   expect(serverText).toBeInTheDocument();
 });

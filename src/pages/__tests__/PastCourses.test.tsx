@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitForElement, getByTestId, findAllByText, queryAllByText } from '@testing-library/react';
+import { getByTestId, findAllByText, queryAllByText } from '@testing-library/react';
 import { render } from '../../util/test-utils';
 import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
@@ -32,14 +32,14 @@ describe('<PastCourses />', () => {
   });
 
   it('should find the course: "Test Course Title"', async () => {
-    const { getByText } = render(<PastCourses />);
-    const Algebra = await waitForElement(() => getByText('Test Course Title'));
+    const { findByText } = render(<PastCourses />);
+    const Algebra = await findByText('Test Course Title');
     expect(Algebra).toBeInTheDocument();
   });
 
   it('should find only one instace of a course excluded from GPA', async () => {
-    const { queryAllByText } = render(<PastCourses />);
-    const excludedArray = await waitForElement(() => queryAllByText(/Excluded - GPA\/Credits/));
+    const { findAllByText } = render(<PastCourses />);
+    const excludedArray = await findAllByText(/Excluded - GPA\/Credits/);
     expect(excludedArray[0]).toBeInTheDocument();
     expect(excludedArray).toHaveLength(1);
   });
@@ -57,21 +57,21 @@ describe('<PastCourses />', () => {
   });
 
   it('should not break when adding regex to the search and find the grade', async () => {
-    const { findByText, getByLabelText, getByText } = render(<PastCourses />);
+    const { findByText, getByLabelText } = render(<PastCourses />);
     const searchInput = getByLabelText('Find courses');
-    await waitForElement(() => getByText('Test Course Title'));
-    await userEvent.type(searchInput, 'A=B-');
+    await findByText('Test Course Title');
+    userEvent.type(searchInput, 'A=B-');
     const finalGrade = await findByText('A=B-');
 
     expect(finalGrade).toBeInTheDocument();
   });
 
   it('should find all the mathematics classes', async () => {
-    const { container, getByLabelText, getByText } = render(<PastCourses />);
+    const { container, getByLabelText, findByText } = render(<PastCourses />);
 
     const pastCourseContainer = getByTestId(container, 'past-courses');
     const searchInput = getByLabelText('Find courses');
-    await waitForElement(() => getByText('Test Course Title'));
+    await findByText('Test Course Title');
     await userEvent.type(searchInput, 'Mathematics');
 
     expect(findAllByText(pastCourseContainer, /Mathematics/)).not.toBeNull();
