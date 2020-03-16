@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement, wait } from '@testing-library/react';
 import Finances from '../Finances';
 import { render } from '../../util/test-utils';
 import { Announcements, Person, Resources, Student } from '@osu-wams/hooks';
@@ -37,17 +36,17 @@ describe('Finances page with standard data', () => {
   });
 
   it('should render the finances page', async () => {
-    const { getByTestId, findByText } = render(<Finances />);
+    const { findByTestId, findByText } = render(<Finances />);
     await findByText('Finances');
-    const page = await waitForElement(() => getByTestId('finances-page'));
+    const page = await findByTestId('finances-page');
     expect(page).toBeInTheDocument();
   });
 
   it('should render Announcements and event cards when at least one event is present', async () => {
-    const { getAllByTestId, getByTestId, findByText } = render(<Finances />);
+    const { findAllByTestId, findByTestId, findByText } = render(<Finances />);
     await findByText('Finances');
-    await waitForElement(() => getByTestId('finances-announcements')); //will throw if no results
-    await waitForElement(() => getAllByTestId('eventcard')); //will throw if no results
+    await findByTestId('finances-announcements'); //will throw if no results
+    await findAllByTestId('eventcard'); //will throw if no results
   });
 
   it('should not render Announcements with no events', async () => {
