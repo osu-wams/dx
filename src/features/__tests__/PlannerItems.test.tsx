@@ -1,5 +1,4 @@
 import React from 'react';
-import { waitForElement } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { render, mockAppContext, authUser } from '../../util/test-utils';
 import PlannerItems from '../PlannerItems';
@@ -29,7 +28,7 @@ describe('<PlannerItems />', () => {
     const { getByText, findByText } = render(<PlannerItems />);
 
     // Planner Item
-    await waitForElement(() => findByText('Week 5 Lab Discussion'));
+    await findByText('Week 5 Lab Discussion');
 
     const PlannerItem = getByText('Week 5 Lab Discussion');
     user.click(PlannerItem);

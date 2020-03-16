@@ -1,5 +1,4 @@
 import React from 'react';
-import { wait } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockEmployeeUser, render } from '../../util/test-utils';
 import MainNav from '../MainNav/';
@@ -18,7 +17,7 @@ describe('student main navigation', () => {
     userEvent.click(finances);
     userEvent.click(menu);
 
-    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(4));
+    expect(mockGAEvent).toHaveBeenCalledTimes(4);
   });
 
   it('Main Navigation in desktop has 2 additional links that are tracked in Google Analytics', async () => {
@@ -33,7 +32,7 @@ describe('student main navigation', () => {
     userEvent.click(beta);
     userEvent.click(resources);
 
-    await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(2));
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 });
 
@@ -55,5 +54,5 @@ it('Main Navigation for Employee visible and tracked in Google Analytics', async
   userEvent.click(beta);
   userEvent.click(resources);
 
-  await wait(() => expect(mockGAEvent).toHaveBeenCalledTimes(3));
+  expect(mockGAEvent).toHaveBeenCalledTimes(3);
 });
