@@ -1,6 +1,6 @@
 import React from 'react';
-import { waitForElement, fireEvent } from '@testing-library/react';
 import { render } from '../../util/test-utils';
+import userEvent from '@testing-library/user-event';
 import { Student } from '@osu-wams/hooks';
 import FinancialTransactions from '../FinancialTransactions';
 import { mockGAEvent } from '../../setupTests';
@@ -21,17 +21,17 @@ describe('<FinancialTransactions />', () => {
     mockUseAccountTransactions.mockReturnValue(mockAccountTransactions);
   });
 
-  it('should have a $3,417.97 charge from our mock data', async () => {
+  it('should have a $3,417.97 charge from our mock data', () => {
     const { getByText } = render(<FinancialTransactions />);
 
-    await waitForElement(() => getByText('$3,417.97'));
+    expect(getByText('$3,417.97')).toBeInTheDocument();
   });
 
   it('should find link to view all transactions and it triggers analytics', async () => {
     const { getByText } = render(<FinancialTransactions />);
-    const transactions = await waitForElement(() => getByText(/View more transactions/));
-    fireEvent.click(transactions);
-    expect(mockGAEvent).toHaveBeenCalled();
+    const transactions = getByText(/View more transactions/);
+    userEvent.click(transactions);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   it('should show an empty state when there are no recent transactions', async () => {
@@ -40,10 +40,8 @@ describe('<FinancialTransactions />', () => {
       loading: false,
       error: false
     });
-    const { getByText, debug } = render(<FinancialTransactions />);
-    const empty = await waitForElement(() =>
-      getByText(/There are no recent transactions for this term/)
-    );
+    const { getByText } = render(<FinancialTransactions />);
+    const empty = getByText(/There are no recent transactions for this term/);
 
     expect(empty).toBeInTheDocument();
   });
