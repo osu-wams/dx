@@ -41,7 +41,7 @@ const filteredTrendingResources = (
     .filter(({ uniqueEvents }) => uniqueEvents >= averageUniqueEvents)
     .map(({ resourceId }) => resourceId.toLowerCase());
   // filter the full resources list, the slice() to get a cloned array
-  // to prevent sort() from mutating the resourcesList
+  // to prevent sort() from mutating the resourcesList.. take a max of 10
   return resourcesList
     .filter(({ id }) => trendingResourceIds.includes(id.toLowerCase()))
     .slice()
@@ -49,7 +49,8 @@ const filteredTrendingResources = (
       (a, b) =>
         trendingResourceIds.indexOf(a.id.toLowerCase()) -
         trendingResourceIds.indexOf(b.id.toLowerCase())
-    );
+    )
+    .slice(0, 10);
 };
 
 /**
