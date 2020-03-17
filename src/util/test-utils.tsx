@@ -24,7 +24,8 @@ export const mockEmployeeUser = {
     classification: {},
     audienceOverride: {},
     favoriteResources: []
-  }
+  },
+  refreshFavorites: jest.fn()
 };
 
 export const authUser = {

@@ -6,6 +6,7 @@ import EventCardContainer from '../../ui/EventCardContainer';
 import { MainGridWrapper, Masonry } from '../../theme';
 import ResourcesCard from '../../features/ResourcesCard';
 import { FavoriteResources } from 'src/features/FavoriteResources';
+import { TrendingResources } from 'src/features/TrendingResources';
 
 const StudentDashboard = () => {
   return (
@@ -16,6 +17,7 @@ const StudentDashboard = () => {
           <ScheduleCard />
           <ResourcesCard categ="featured" icon={faStars} />
           <FavoriteResources />
+          <TrendingResources />
         </Masonry>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />
