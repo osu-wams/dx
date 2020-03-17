@@ -13,7 +13,7 @@ import { filteredTrendingResources } from './resources/resources-utils';
 export const TrendingResources = () => {
   const { user } = useContext(AppContext);
   const res = useResources();
-  const trendingRes = useTrendingResources('60daysAgo');
+  const trendingRes = useTrendingResources('7daysAgo');
   const [trendingResources, setTrendingResources] = useState<Types.Resource[]>([]);
 
   useEffect(() => {
