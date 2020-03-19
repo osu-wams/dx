@@ -25,7 +25,7 @@ export const TrendingResources = () => {
   return (
     (trendingResources.length > 0 && (
       <Card>
-        <CardHeader title="Trending Resources" badge={<CardIcon icon={faFireAlt} />} />
+        <CardHeader title="Trending" badge={<CardIcon icon={faFireAlt} />} />
         <CardContent>
           <List data-testid="resource-container">
             {trendingResources.map(resource => (

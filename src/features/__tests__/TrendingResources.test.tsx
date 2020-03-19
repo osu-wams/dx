@@ -25,19 +25,19 @@ describe('Trending Resources Card', () => {
   it('does not render when there are no trending resources', async () => {
     mockUseTrendingResources.mockReturnValue({ ...trendingResourcesData, data: [] });
     const { queryByText } = render(<TrendingResources />);
-    expect(queryByText('Trending Resources')).toBeNull();
+    expect(queryByText('Trending')).toBeNull();
   });
 
   it('Renders Trending Resources Card Title and the 1 active trending resource for the student', async () => {
     const { findByText, queryByText } = render(<TrendingResources />);
-    expect(await findByText('Trending Resources')).toBeInTheDocument();
+    expect(await findByText('Trending')).toBeInTheDocument();
     expect(await findByText('Student Jobs')).toBeInTheDocument();
     expect(queryByText('Employee Only')).toBeNull();
   });
 
   it('Renders Trending Resources Card Title and the 1 active trending resource for the employee', async () => {
     const { findByText, queryByText } = render(<TrendingResources />, { user: mockEmployeeUser });
-    expect(await findByText('Trending Resources')).toBeInTheDocument();
+    expect(await findByText('Trending')).toBeInTheDocument();
     expect(await findByText('Employee Only')).toBeInTheDocument();
     expect(queryByText('Student Jobs')).toBeNull();
   });

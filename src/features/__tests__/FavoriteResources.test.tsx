@@ -36,7 +36,7 @@ describe('Favorite Resources Card', () => {
 
   it('Renders Favorite Resources Card Title and the 2 active favorite resources', async () => {
     const { findByText } = render(<FavoriteResources />);
-    expect(await findByText('Favorite Resources')).toBeInTheDocument();
+    expect(await findByText('Favorites')).toBeInTheDocument();
 
     expect(await findByText('Academics for Student Athletes')).toBeInTheDocument();
 

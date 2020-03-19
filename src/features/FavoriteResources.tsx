@@ -40,7 +40,7 @@ export const FavoriteResources = () => {
 
   return (
     <Card>
-      <CardHeader title="Favorite Resources" badge={<CardIcon icon={faHeart} />} />
+      <CardHeader title="Favorites" badge={<CardIcon icon={faHeart} />} />
       <CardContent>
         {res.loading && <Skeleton count={5} />}
 

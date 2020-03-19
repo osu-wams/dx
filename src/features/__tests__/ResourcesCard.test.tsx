@@ -24,7 +24,7 @@ describe('<ResourcesCard />', () => {
 
   it('should render the appropriate title', async () => {
     const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
-    expect(getByText('Featured Resources')).toBeInTheDocument();
+    expect(getByText('Featured')).toBeInTheDocument();
   });
 
   it('should have items with icons and text', async () => {
