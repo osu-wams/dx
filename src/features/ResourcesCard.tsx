@@ -37,7 +37,8 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   }, [res.data, res.loading, user.data, user.loading]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
-  const cardTitle = res.data.entityQueueTitle + ' Resources';
+  let cardTitle = res.data.entityQueueTitle;
+  cardTitle += cardTitle.toLowerCase() === 'featured' ? '' : ' Resources';
 
   // For employee_featured, we don't want the employee part...
   if (categ.split('_')[1]) {
