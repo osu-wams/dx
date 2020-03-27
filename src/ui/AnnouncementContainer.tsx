@@ -27,7 +27,6 @@ const AnnouncementContainer = ({ page, ...props }) => {
   const announcements = useAnnouncements(page);
   const { hasAffiliation } = Announcements;
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
   useEffect(() => {
     let announcementsToUse: any[] = [];
@@ -40,8 +39,7 @@ const AnnouncementContainer = ({ page, ...props }) => {
       );
     }
     setEvents(announcementsToUse);
-  }, [announcements.data, announcements.loading, user.data, user.loading]);
-  /* eslint-enable react-hooks/exhaustive-deps */
+  }, [announcements.data, hasAffiliation, announcements.loading, user.data, user.loading]);
 
   if (events.length === 0) {
     return null;

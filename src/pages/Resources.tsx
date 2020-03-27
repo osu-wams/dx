@@ -43,21 +43,24 @@ const Resources = () => {
    * @param {string} name the category name to filter on
    * @param {Resource[]} resources a list of resources to inspect for matching category
    */
-  const filterByCategory = (name: string, resources: Types.Resource[]): Types.Resource[] => {
-    // Skips categories and displays all resources
-    if (name === 'all') return resources;
+  const filterByCategory = React.useCallback(
+    (name: string, resources: Types.Resource[]): Types.Resource[] => {
+      // Skips categories and displays all resources
+      if (name === 'all') return resources;
 
-    // Skips categories and filters based on user favorite preferences
-    if (name === 'favorites') {
-      return activeFavoriteResources(user.data.favoriteResources, resources);
-    }
+      // Skips categories and filters based on user favorite preferences
+      if (name === 'favorites') {
+        return activeFavoriteResources(user.data.favoriteResources, resources);
+      }
 
-    return resources.filter(
-      resource =>
-        resource.categories?.length > 0 &&
-        resource.categories.findIndex(s => s.toLowerCase().includes(name.toLowerCase())) > -1
-    );
-  };
+      return resources.filter(
+        resource =>
+          resource.categories?.length > 0 &&
+          resource.categories.findIndex(s => s.toLowerCase().includes(name.toLowerCase())) > -1
+      );
+    },
+    [user.data.favoriteResources]
+  );
 
   /**
    * Checks the affiliation data coming from user and determines if an object with affiliation data
@@ -97,7 +100,6 @@ const Resources = () => {
     }
   }, [categories.data, user.data]);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (res.data && user.data && filteredCategories.length > 0) {
       let filtered = res.data.filter(
@@ -124,10 +126,9 @@ const Resources = () => {
       }
       setFilteredResources(filtered);
     }
-  }, [activeCategory, filteredCategories, debouncedQuery, res.data, user.data]);
-  /* eslint-enable react-hooks/exhaustive-deps */
+  }, [activeCategory, filteredCategories, filterByCategory, debouncedQuery, res.data, user.data]);
 
-  /* eslint-disable no-restricted-globals, react-hooks/exhaustive-deps */
+  /* eslint-disable no-restricted-globals */
   /**
    * Allows for Back/Forward buttons to click and the component to update its state based on which category
    * had been clicked. This provides the ability to have the category in the location bar for bookmarks, link
@@ -165,7 +166,7 @@ const Resources = () => {
       }
     }
   }, [activeCategory]);
-  /* eslint-enable no-restricted-globals, react-hooks/exhaustive-deps */
+  /* eslint-enable no-restricted-globals */
 
   return (
     <MainGridWrapper data-testid="resources-page">
