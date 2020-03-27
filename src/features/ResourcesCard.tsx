@@ -28,14 +28,12 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<Types.Resource[]>([]);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (!user.loading && !res.loading) {
       const resourcesToUse = res.data?.items?.filter(r => hasAudience(user.data, r));
       setResources(resourcesToUse);
     }
   }, [res.data, res.loading, user.data, user.loading]);
-  /* eslint-enable react-hooks/exhaustive-deps */
 
   let cardTitle = res.data.entityQueueTitle;
   cardTitle += cardTitle.toLowerCase() === 'featured' ? '' : ' Resources';

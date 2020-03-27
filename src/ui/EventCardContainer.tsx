@@ -62,9 +62,7 @@ const EventCardContainer = ({ page, ...props }) => {
 
   const bendEvents = useCampusEvents('bend');
   const announcements = useAnnouncements(page);
-  const { hasAffiliation } = Announcements;
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   // Fetch data on load
   useEffect(() => {
     let announcementsToUse: any[] = [];
@@ -96,7 +94,7 @@ const EventCardContainer = ({ page, ...props }) => {
           announcements.data.filter(
             announcement =>
               hasAudience(user.data, announcement) &&
-              hasAffiliation(getAffiliation(user.data), announcement)
+              Announcements.hasAffiliation(getAffiliation(user.data), announcement)
           )
         );
       }
@@ -137,7 +135,6 @@ const EventCardContainer = ({ page, ...props }) => {
     employeeEvents.data,
     employeeEvents.loading
   ]);
-  /* eslint-enable react-hooks/exhaustive-deps */
 
   if (events.length === 0) {
     return null;
