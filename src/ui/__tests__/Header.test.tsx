@@ -4,10 +4,11 @@ import {
   render,
   authUserClassification,
   mockEmployeeUser,
-  authUserAudienceOverride
+  authUserAudienceOverride,
 } from '../../util/test-utils';
 import Header from '../Header';
 import { mockGAEvent } from '../../setupTests';
+import { act } from '@testing-library/react';
 
 // required because of the overlay from Reakit
 global.document.createRange = () => ({
@@ -15,38 +16,38 @@ global.document.createRange = () => ({
   setEnd: () => {},
   commonAncestorContainer: {
     nodeName: 'BODY',
-    ownerDocument: document
-  }
+    ownerDocument: document,
+  },
 });
 
-const mockPostSettings = jest.fn(async args => Promise.resolve(args));
+const mockPostSettings = jest.fn(async (args) => Promise.resolve(args));
 jest.mock('@osu-wams/hooks', () => {
   const original = jest.requireActual('@osu-wams/hooks');
   return {
     ...original,
     User: {
       ...original.User,
-      postSettings: args => mockPostSettings(args)
-    }
+      postSettings: (args) => mockPostSettings(args),
+    },
   };
 });
 
-it('has student dashboard title', async () => {
-  const { findByText } = render(<Header />);
-  const title = await findByText('Student Dashboard');
+it('has student dashboard title', () => {
+  const { getByText } = render(<Header />);
+  const title = getByText('Student Dashboard');
   expect(title).toBeInTheDocument();
 });
 
-it('has employee dashboard title', async () => {
-  const { findByText } = render(<Header />, { user: mockEmployeeUser });
-  const title = await findByText('Employee Dashboard');
+it('has employee dashboard title', () => {
+  const { getByText } = render(<Header />, { user: mockEmployeeUser });
+  const title = getByText('Employee Dashboard');
   expect(title).toBeInTheDocument();
 });
 
 it('Employees can toggle between Student and Employee dashboards', async () => {
   mockPostSettings.mockReturnValue(Promise.resolve());
   const { findByText, getByTestId } = render(<Header />, {
-    user: mockEmployeeUser
+    user: mockEmployeeUser,
   });
 
   userEvent.click(getByTestId('user-btn'));
@@ -63,9 +64,11 @@ it('has a logout link in the menu', async () => {
 
   userEvent.click(getByTestId('user-btn'));
   const logoutLink = await findByText('Logout');
-  userEvent.click(logoutLink);
+  act(() => {
+    userEvent.click(logoutLink);
 
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  });
 });
 
 it('User Button and profile link are in the menu and tracked via GA', async () => {
@@ -75,9 +78,10 @@ it('User Button and profile link are in the menu and tracked via GA', async () =
   userEvent.click(userLink);
 
   const profileLink = await findByText('Profile', { selector: 'a' });
-  userEvent.click(profileLink);
-
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  act(() => {
+    userEvent.click(profileLink);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  });
 });
 
 it('Help button and help link are in the menu and tracked via GA', async () => {
@@ -91,9 +95,11 @@ it('Help button and help link are in the menu and tracked via GA', async () => {
 
   expect(feedbackLink).toBeInTheDocument();
 
-  userEvent.click(helpLink);
+  act(() => {
+    userEvent.click(helpLink);
 
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe('Student mobile menu interactions', () => {
@@ -107,14 +113,14 @@ describe('Student mobile menu interactions', () => {
     const menu = await findByText('Menu');
     userEvent.click(menu);
 
-    const studentDashboardMenu = queryByText(title, { selector: 'h2' });
+    const studentDashboardMenu = await findByText(title, { selector: 'h2' });
     expect(studentDashboardMenu).toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   it('Clicking "menu" opens and clicking the close dismisses the modal', async () => {
-    const { queryByText, findByText } = render(<Header />);
+    const { findByText } = render(<Header />);
 
     const menu = await findByText('Menu');
     userEvent.click(menu);
@@ -122,14 +128,14 @@ describe('Student mobile menu interactions', () => {
     const close = await findByText(/close/i);
     userEvent.click(close);
 
-    const studentDashboard = queryByText('Student Dashboard');
+    const studentDashboard = await findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   it('Clicking main link inside the modal dismisses the modal', async () => {
-    const { queryByText, findByText } = render(<Header />);
+    const { findByText } = render(<Header />);
 
     const menu = await findByText('Menu');
     userEvent.click(menu);
@@ -137,21 +143,21 @@ describe('Student mobile menu interactions', () => {
     const overview = await findByText(/overview/i, { selector: '[role="dialog"] a' });
     userEvent.click(overview);
 
-    const studentDashboard = queryByText('Student Dashboard');
+    const studentDashboard = await findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('Clicking footer link inside the modal dismisses the modal', async () => {
-    const { queryByText, findByText } = render(<Header />);
+    const { findByText } = render(<Header />);
 
     const menu = await findByText('Menu');
     userEvent.click(menu);
 
     const beta = await findByText(/beta/i, { selector: '[role="dialog"] nav a' });
     userEvent.click(beta);
-    const studentDashboard = queryByText('Student Dashboard');
+    const studentDashboard = await findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
@@ -170,28 +176,25 @@ describe('Student mobile menu interactions', () => {
     expect(await findByText(/resources/i, { selector: 'nav a' })).toBeInTheDocument();
   });
 
-  it('Help and Profile menu open and close and have their respective menu items', async () => {
-    const { queryByText, findByText } = render(<Header />);
+  it('Help and Profile menu open and have their respective menu items', async () => {
+    const { findByText, getByText } = render(<Header />);
 
-    const helpMenu = await findByText(/help/i);
+    const helpMenu = getByText('Help');
 
     userEvent.click(helpMenu);
     expect(await findByText(/get help/i)).toBeInTheDocument();
     expect(await findByText(/give feedback/i)).toBeInTheDocument();
 
-    userEvent.click(helpMenu);
-    expect(queryByText(/get help/i)).toBeNull();
+    const profileMenu = getByText(/profile/i, { selector: 'button span' });
 
-    const profileMenu = await findByText(/profile/i);
-
-    userEvent.click(profileMenu);
+    // When clicking to open a modal updates state, you still need the act wrapper or warnings pop up
+    act(() => {
+      userEvent.click(profileMenu);
+    });
     expect(await findByText(/logout/i)).toBeInTheDocument();
     expect(await findByText(/profile/i, { selector: '[role="menuitem"]' })).toBeInTheDocument();
 
-    userEvent.click(profileMenu);
-    expect(queryByText(/logout/i)).toBeNull();
-
-    expect(mockGAEvent).toHaveBeenCalledTimes(4);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 });
 
