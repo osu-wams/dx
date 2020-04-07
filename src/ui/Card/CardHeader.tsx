@@ -2,12 +2,13 @@ import React, { useContext, FC } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { ICollapse } from './ICollapse';
-import { themeSettings, styled } from '../../theme';
+import { themeSettings } from '../../theme';
+import styled from 'styled-components/macro';
 import { CardContext } from './Card';
 
 const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props }) => {
   const { collapsed, toggleCollapsed, collapsible, uuid } = useContext(CardContext);
-  const handleKeyDown = e => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       toggleCollapsed();
     }
@@ -43,7 +44,7 @@ const CardHeaderWrapper = styled.h2<ICollapse>`
   padding: ${themeSettings.spacing.unit * 2}px;
   display: flex;
   align-items: center;
-  cursor: ${props => (props.collapsible ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.collapsible ? 'pointer' : 'default')};
   border: none;
   border-bottom: ${({ collapsed, collapsible, theme }) =>
     collapsed && collapsible ? 'none' : `1px solid ${theme.ui.card.header.borderBottom}`};
