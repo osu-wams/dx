@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Title } from '../ui/PageTitle';
+import styled from 'styled-components/macro';
+import { Title } from 'src/ui/PageTitle';
 import {
   User,
   useStudentExperienceEvents,
   useCampusEvents,
-  useEmployeeEvents
+  useEmployeeEvents,
 } from '@osu-wams/hooks';
 import EventCard from './EventCard';
-import { themeSettings, breakpoints, styled, SecondGridWrapper } from '../theme';
+import { themeSettings, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 import { AppContext } from 'src/contexts/app-context';
 
@@ -17,7 +18,7 @@ const {
   CAMPUS_CODES,
   hasPrimaryAffiliation,
   AFFILIATIONS,
-  getAffiliation
+  getAffiliation,
 } = User;
 
 const EventCardContainerWrapper = styled.div`
@@ -92,7 +93,7 @@ const EventCardContainer = ({ page, ...props }) => {
       if (!announcements.loading) {
         announcementsToUse = shuffleArray(
           announcements.data.filter(
-            announcement =>
+            (announcement) =>
               hasAudience(user.data, announcement) &&
               Announcements.hasAffiliation(getAffiliation(user.data), announcement)
           )
@@ -119,7 +120,7 @@ const EventCardContainer = ({ page, ...props }) => {
         (_, i) => [announcementsToUse[i], eventsToUse[i]]
       )
         .reduce((p, c) => p.concat(c))
-        .filter(e => e !== undefined);
+        .filter((e) => e !== undefined);
 
       setEvents(weavedArrays);
     }
@@ -133,7 +134,7 @@ const EventCardContainer = ({ page, ...props }) => {
     bendEvents.data,
     bendEvents.loading,
     employeeEvents.data,
-    employeeEvents.loading
+    employeeEvents.loading,
   ]);
 
   if (events.length === 0) {
@@ -143,7 +144,7 @@ const EventCardContainer = ({ page, ...props }) => {
     <SecondGridWrapper>
       <Title as="h2">Announcements and Events</Title>
       <EventCardContainerWrapper {...props}>
-        {events.map(item => (
+        {events.map((item) => (
           <EventCard key={item.id} itemContent={item} />
         ))}
       </EventCardContainerWrapper>

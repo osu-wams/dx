@@ -2,7 +2,7 @@ import React, { useContext, FC } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { ICollapse } from './ICollapse';
-import { themeSettings } from '../../theme';
+import { themeSettings } from 'src/theme';
 import styled from 'styled-components/macro';
 import { CardContext } from './Card';
 

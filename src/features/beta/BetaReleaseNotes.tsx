@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
-import { themeSettings, styled } from '../../theme';
+import styled from 'styled-components/macro';
+import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
+import { themeSettings } from 'src/theme';
 import { useReleaseNotes } from '@osu-wams/hooks';
 
 const BetaReleaseNotes: FC = () => {

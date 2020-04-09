@@ -1,12 +1,12 @@
 import React from 'react';
-import { List } from '../../ui/List';
-import { Event } from '../../util/gaTracking';
-import { singularPlural } from '../../util/helpers';
+import { List } from 'src/ui/List';
+import { Event } from 'src/util/gaTracking';
+import { singularPlural } from 'src/util/helpers';
 import { Types } from '@osu-wams/lib';
 import { ResourceItem } from './ResourceItem';
 
 const ResourcesList: React.FC<{ resources: Types.Resource[]; user: Types.User }> = ({
-  resources
+  resources,
 }) => {
   return (
     <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">

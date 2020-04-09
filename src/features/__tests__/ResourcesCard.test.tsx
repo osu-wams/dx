@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, mockAppContext } from '../../util/test-utils';
+import { render, mockAppContext } from 'src/util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
 import { mockGAEvent, mockTrendingEvent } from '../../setupTests';
@@ -12,7 +12,7 @@ const mockUseResourcesByQueue = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useResourcesByQueue: () => mockUseResourcesByQueue()
+    useResourcesByQueue: () => mockUseResourcesByQueue(),
   };
 });
 
@@ -67,7 +67,7 @@ describe('<ResourcesCard />', () => {
     mockUseResourcesByQueue.mockReturnValue({
       data: { entityQueueTitle: 'hi', items: [] },
       loading: false,
-      error: false
+      error: false,
     });
     const { findByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
     expect(await findByText('No resources available.')).toBeInTheDocument();
@@ -84,7 +84,7 @@ describe('with an InfoButton in the CardFooter', () => {
   test('does not display the button when the infoButtonData is missing it', async () => {
     mockAppContext.infoButtonData = [{ id: 'invalid-id', content: 'content', title: 'title' }];
     const { queryByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
-      appContext: mockAppContext
+      appContext: mockAppContext,
     });
 
     const element = queryByTestId(validIinfoButtonId);
@@ -93,10 +93,10 @@ describe('with an InfoButton in the CardFooter', () => {
 
   test('displays the button when the infoButtonData is included', () => {
     mockAppContext.infoButtonData = [
-      { id: validIinfoButtonId, content: 'content', title: 'title' }
+      { id: validIinfoButtonId, content: 'content', title: 'title' },
     ];
     const { getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
-      appContext: mockAppContext
+      appContext: mockAppContext,
     });
 
     const element = getByTestId(validIinfoButtonId);

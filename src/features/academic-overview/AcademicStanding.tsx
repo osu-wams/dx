@@ -4,12 +4,12 @@ import {
   Highlight,
   HighlightTitle,
   HighlightEmphasisInline,
-  HighlightDescription
-} from '../../ui/Highlights';
+  HighlightDescription,
+} from 'src/ui/Highlights';
 import { useAcademicStatus } from '@osu-wams/hooks';
-import Url from '../../util/externalUrls.data';
-import { SimpleExternalLink } from '../../ui/Link';
-import { Event } from '../../util/gaTracking';
+import Url from 'src/util/externalUrls.data';
+import { SimpleExternalLink } from 'src/ui/Link';
+import { Event } from 'src/util/gaTracking';
 
 export const AcademicStanding: React.FC = () => {
   const academicStatus = useAcademicStatus();

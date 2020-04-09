@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useAccountBalance } from '@osu-wams/hooks';
-import { formatDollars } from '../../util/helpers';
+import { formatDollars } from 'src/util/helpers';
 import {
   Highlight,
   HighlightTitle,
   HighlightEmphasis,
-  HighlightDescription
-} from '../../ui/Highlights';
-import { ExternalLink } from '../../ui/Link';
-import Url from '../../util/externalUrls.data';
-import { Event } from '../../util/gaTracking';
-import { ThemeContext } from '../../theme';
+  HighlightDescription,
+} from 'src/ui/Highlights';
+import { ExternalLink } from 'src/ui/Link';
+import Url from 'src/util/externalUrls.data';
+import { Event } from 'src/util/gaTracking';
+import { ThemeContext } from 'src/theme';
 
 /**
  * Sub card for the Financial Overview card.

@@ -1,11 +1,11 @@
 import React from 'react';
 import { faGraduationCap } from '@fortawesome/pro-light-svg-icons';
 import Courses from '../../features/Courses';
-import AnnouncementContainer from '../../ui/AnnouncementContainer';
-import { MainGridWrapper, Masonry } from '../../theme';
+import AnnouncementContainer from 'src/ui/AnnouncementContainer';
+import { MainGridWrapper, Masonry } from 'src/theme';
 import PlannerItems from '../../features/PlannerItems';
 import AcademicCalendar from '../../features/AcademicCalendar';
-import PageTitle from '../../ui/PageTitle';
+import PageTitle from 'src/ui/PageTitle';
 import AcademicOverview from '../../features/AcademicOverview';
 import ResourcesCard from '../../features/ResourcesCard';
 import { AcademicSubNav } from './AcademicsSubNav';

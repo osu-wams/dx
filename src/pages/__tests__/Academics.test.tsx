@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
-import { renderWithUserContext } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
+import { renderWithUserContext } from 'src/util/test-utils';
 
 import Academics from '../Academics';
 

@@ -5,7 +5,7 @@ import {
   authUserClassification,
   mockEmployeeUser,
   authUserAudienceOverride,
-} from '../../util/test-utils';
+} from 'src/util/test-utils';
 import Header from '../Header';
 import { mockGAEvent } from '../../setupTests';
 import { act } from '@testing-library/react';

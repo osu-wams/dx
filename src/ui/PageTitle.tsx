@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { themeSettings, breakpoints, styled } from '../theme';
+import styled from 'styled-components/macro';
+import { themeSettings, breakpoints } from 'src/theme';
 
 type Props = {
   title: string;

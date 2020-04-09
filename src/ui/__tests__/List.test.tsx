@@ -1,16 +1,16 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import {
   List,
   ListItem,
   ListItemContent,
   ListItemDescription,
   ListItemHeader,
-  ListItemText
+  ListItemText,
 } from '../List';
 import { faFileAlt } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
-import { Color } from '../../theme';
+import { Color } from 'src/theme';
 
 const RightIcon = () => (
   <List>

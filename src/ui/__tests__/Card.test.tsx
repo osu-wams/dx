@@ -1,9 +1,9 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import { Card, CardContent, CardHeader, CardFooter, Badge } from '../Card';
 import Button from '../Button';
-import { Color } from '../../theme';
+import { Color } from 'src/theme';
 
 jest.mock('uuid/v4', () => jest.fn(() => 'carduuid'));
 

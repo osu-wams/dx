@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from '@reach/router';
+import styled from 'styled-components/macro';
 import { faLongArrowRight, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { themeSettings, styled, ThemeContext } from '../theme';
+import { themeSettings, ThemeContext } from 'src/theme';
 
 const LinkStyles = styled.a<StyleProps>`
   :hover,
@@ -19,7 +20,7 @@ const LinkStyles = styled.a<StyleProps>`
   }
   background-color: ${({ bg, theme }) => bg || theme.ui.link.background};
   color: ${({ fg, theme }) => fg || theme.ui.link.color};
-  font-weight: ${props => (props.bg ? '300' : '500')};
+  font-weight: ${(props) => (props.bg ? '300' : '500')};
   & > svg {
     margin-left: 1.2rem;
   }
@@ -44,7 +45,7 @@ const LinkStyles2 = styled(Link)<StyleProps>`
   }
   background-color: ${({ bg, theme }) => bg || theme.ui.link.background};
   color: ${({ fg, theme }) => fg || theme.ui.link.color};
-  font-weight: ${props => (props.bg ? '300' : '500')};
+  font-weight: ${(props) => (props.bg ? '300' : '500')};
   & > svg {
     margin-left: 1.2rem;
   }

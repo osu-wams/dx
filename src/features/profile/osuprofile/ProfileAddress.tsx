@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
 import { useAddresses } from '@osu-wams/hooks';
-import Icon from '../../../ui/Icon';
-import { ThemeContext } from '../../../theme';
+import Icon from 'src/ui/Icon';
+import { ThemeContext } from 'src/theme';
 import { MailingAddress } from '@osu-wams/hooks/dist/api/person/addresses';
 
 const ProfileAddress = () => {
@@ -20,7 +20,7 @@ const ProfileAddress = () => {
 
 const renderAddress = (
   {
-    attributes: { addressTypeDescription, addressLine1, city, stateCode, postalCode }
+    attributes: { addressTypeDescription, addressLine1, city, stateCode, postalCode },
   }: MailingAddress,
   color
 ) => (

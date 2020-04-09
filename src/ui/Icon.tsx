@@ -1,6 +1,7 @@
 import React from 'react';
+import styled from 'styled-components/macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { themeSettings, styled } from '../theme';
+import { themeSettings } from '../theme';
 
 type IconProps = {
   bg?: string;
@@ -24,11 +25,11 @@ const IconCounter = styled.div`
 `;
 
 const IconStyle = styled(FontAwesomeIcon)<IconProps>`
-  color: ${props => props.color || props.theme.ui.icon.color};
-  background-color: ${props => props.bg || props.theme.ui.icon.background};
-  padding: ${props => (props.bg ? '.5rem' : '0')};
-  border-radius: ${props => (props.bg ? '50%' : '0')};
-  ${props => (props.fontSize ? `font-size: ${props.fontSize}` : '')}
+  color: ${(props) => props.color || props.theme.ui.icon.color};
+  background-color: ${(props) => props.bg || props.theme.ui.icon.background};
+  padding: ${(props) => (props.bg ? '.5rem' : '0')};
+  border-radius: ${(props) => (props.bg ? '50%' : '0')};
+  ${(props) => (props.fontSize ? `font-size: ${props.fontSize}` : '')}
 `;
 
 const Icon = (props: any) => {

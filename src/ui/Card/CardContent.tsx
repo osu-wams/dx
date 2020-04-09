@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { themeSettings, styled } from '../../theme';
+import styled from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
 import { ICollapse } from './ICollapse';
 import { CardContext } from './Card';
 
@@ -23,7 +24,7 @@ const CardContent = ({ ...props }) => {
 
 const CardContentWrapper = styled.div<ICollapse>`
   padding: ${themeSettings.spacing.unit * 2}px;
-  ${props =>
+  ${(props) =>
     props.collapsible &&
     `
     flex: ${props.collapsed ? 'none' : 1};

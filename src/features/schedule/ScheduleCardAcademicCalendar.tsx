@@ -1,9 +1,9 @@
 import React from 'react';
 import { CardSection, SectionHeader } from './ScheduleCardStyles';
-import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from '../../ui/List';
-import { Event } from '../../util/gaTracking';
-import { Date as D, DateDay, DateMonth } from '../../ui/Date';
-import { format } from '../../util/helpers';
+import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from 'src/ui/List';
+import { Event } from 'src/util/gaTracking';
+import { Date as D, DateDay, DateMonth } from 'src/ui/Date';
+import { format } from 'src/util/helpers';
 
 const ScheduleCardAcademicCalendar = ({ calEvents }) => (
   <>

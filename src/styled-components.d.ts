@@ -1,6 +1,6 @@
 declare module 'styled-components/macro' {
   import { ThemedStyledComponentsModule } from 'styled-components';
-  interface ThemeInterface {
+  export interface ThemeInterface {
     body: {
       color: string;
       background: string;

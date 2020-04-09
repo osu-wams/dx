@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, mockAppContext } from '../../util/test-utils';
+import { render, mockAppContext } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import AcademicCalendar from '../AcademicCalendar';
 import { Events } from '@osu-wams/hooks';
@@ -10,7 +10,7 @@ const mockUseAcademicCalendarEvents = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => ({
   ...jest.requireActual('@osu-wams/hooks'),
-  useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents()
+  useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents(),
 }));
 
 describe('<AcademicCalendar />', () => {
@@ -59,8 +59,8 @@ describe('with an InfoButton in the CardFooter', () => {
     const { queryByTestId } = render(<AcademicCalendar />, {
       appContext: {
         ...mockAppContext,
-        infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
-      }
+        infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }],
+      },
     });
 
     const element = queryByTestId(validIinfoButtonId);
@@ -71,8 +71,8 @@ describe('with an InfoButton in the CardFooter', () => {
     const { getByTestId } = render(<AcademicCalendar />, {
       appContext: {
         ...mockAppContext,
-        infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
-      }
+        infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }],
+      },
     });
 
     const element = getByTestId(validIinfoButtonId);

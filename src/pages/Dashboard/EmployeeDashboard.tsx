@@ -1,8 +1,8 @@
 import React from 'react';
 import { faStars } from '@fortawesome/pro-light-svg-icons';
-import PageTitle from '../../ui/PageTitle';
-import EventCardContainer from '../../ui/EventCardContainer';
-import { MainGridWrapper, Masonry } from '../../theme';
+import PageTitle from 'src/ui/PageTitle';
+import EventCardContainer from 'src/ui/EventCardContainer';
+import { MainGridWrapper, Masonry } from 'src/theme';
 import ResourcesCard from '../../features/ResourcesCard';
 import { EmployeeTools, ITSystemStatus } from '../../features/employee-only';
 import { FavoriteResources } from 'src/features/FavoriteResources';

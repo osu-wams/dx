@@ -4,8 +4,8 @@ import {
   Highlight,
   HighlightTitle,
   HighlightEmphasis,
-  HighlightDescription
-} from '../../ui/Highlights';
+  HighlightDescription,
+} from 'src/ui/Highlights';
 import { useCourseSchedule } from '@osu-wams/hooks';
 import { CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 

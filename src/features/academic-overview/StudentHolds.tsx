@@ -1,12 +1,13 @@
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components/macro';
 import {
   Highlight,
   HighlightTitle,
   HighlightEmphasisInline,
-  HighlightDescription
-} from '../../ui/Highlights';
-import { themeSettings, styled } from '../../theme';
+  HighlightDescription,
+} from 'src/ui/Highlights';
+import { themeSettings } from 'src/theme';
 import { useHolds } from '@osu-wams/hooks';
 
 const HoldsList = styled.ul`

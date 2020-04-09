@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, authUser } from '../../util/test-utils';
+import { render, authUser } from 'src/util/test-utils';
 import AcademicOverview from '../AcademicOverview';
 import { mockGAEvent } from '../../setupTests';
 import { Student } from '@osu-wams/hooks';
@@ -20,7 +20,7 @@ jest.mock('@osu-wams/hooks', () => {
     useAcademicStatus: () => mockUseAcademicStatus(),
     useCourseSchedule: () => mockUseCourseSchedule(),
     useGpa: () => mockUseStudentGpa(),
-    useHolds: () => mockUseHolds()
+    useHolds: () => mockUseHolds(),
   };
 });
 

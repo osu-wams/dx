@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components/macro';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
-import { format, formatDollars } from '../util/helpers';
-import { themeSettings, styled } from '../theme';
+import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
+import { format, formatDollars } from 'src/util/helpers';
+import { themeSettings } from 'src/theme';
 import { useAccountTransactions } from '@osu-wams/hooks';
-import { ExternalLink } from '../ui/Link';
-import Url from '../util/externalUrls.data';
+import { ExternalLink } from 'src/ui/Link';
+import Url from 'src/util/externalUrls.data';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
-import transaction from '../assets/transaction.svg';
-import { Event } from '../util/gaTracking';
-import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
+import transaction from 'src/assets/transaction.svg';
+import { Event } from 'src/util/gaTracking';
+import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 
 type ITransactionAmount = {
   transactionType: string;

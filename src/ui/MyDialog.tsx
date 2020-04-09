@@ -1,5 +1,6 @@
 import { Dialog } from '@reach/dialog';
-import { themeSettings, styled, breakpoints } from '../theme';
+import styled from 'styled-components/macro';
+import { themeSettings, breakpoints } from 'src/theme';
 
 const MyDialog = styled(Dialog)<{ padding?: string }>`
   background: ${({ theme }) => theme.ui.myDialog.background};
@@ -34,7 +35,7 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
     &[data-reach-dialog-content] {
       width: 100%;
       margin: 0;
-      ${props => (props.padding === 'false' ? 'padding: 0;' : '')}
+      ${(props) => (props.padding === 'false' ? 'padding: 0;' : '')}
       border-radius: 0;
     }
   }

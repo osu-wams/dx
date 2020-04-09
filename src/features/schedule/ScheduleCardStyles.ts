@@ -1,5 +1,6 @@
-import { themeSettings, styled } from '../../theme';
-import { CardBase } from '../../ui/Card';
+import styled from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
+import { CardBase } from 'src/ui/Card';
 
 const CardSection = styled.div`
   & + div {

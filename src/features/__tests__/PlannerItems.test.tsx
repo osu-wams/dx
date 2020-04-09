@@ -1,6 +1,6 @@
 import React from 'react';
 import user from '@testing-library/user-event';
-import { render, mockAppContext, authUser } from '../../util/test-utils';
+import { render, mockAppContext, authUser } from 'src/util/test-utils';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from '../../setupTests';
 import { Student } from '@osu-wams/hooks';
@@ -12,7 +12,7 @@ const mockNoData = { data: [], loading: false, error: false };
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    usePlannerItems: () => mockUsePlannerItems()
+    usePlannerItems: () => mockUsePlannerItems(),
   };
 });
 
@@ -59,10 +59,10 @@ describe('with an InfoButton in the CardFooter', () => {
   it('does not display the button when the infoButtonData is missing it', async () => {
     const testAppContext = {
       ...mockAppContext,
-      infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }]
+      infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }],
     };
     const { queryByTestId, findByText } = render(<PlannerItems />, {
-      appContext: testAppContext
+      appContext: testAppContext,
     });
     const noAssignments = await findByText(/You have no upcoming Canvas assignments/);
     expect(noAssignments).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe('with an InfoButton in the CardFooter', () => {
   it('displays the button when the infoButtonData is included', async () => {
     const testAppContext = {
       ...mockAppContext,
-      infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }]
+      infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }],
     };
     const { findByTestId } = render(<PlannerItems />, { appContext: testAppContext });
 

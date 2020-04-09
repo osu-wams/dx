@@ -1,16 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { faMask, faUserHeadset, faCommentAltCheck } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
+import { isNullOrUndefined } from 'util';
+import styled from 'styled-components/macro';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '@reach/dialog/styles.css';
-import { Event } from '../util/gaTracking';
+import { Event } from 'src/util/gaTracking';
 import Button from './Button';
-import { themeSettings, styled, ThemeContext, breakpoints } from '../theme';
+import { themeSettings, ThemeContext, breakpoints } from 'src/theme';
 import Icon from './Icon';
-import { isNullOrUndefined } from 'util';
-import Url from '../util/externalUrls.data';
-import Masquerade from '../features/Masquerade';
+import Url from 'src/util/externalUrls.data';
+import Masquerade from 'src/features/Masquerade';
 import { User } from '@osu-wams/hooks';
 import { AppContext } from 'src/contexts/app-context';
 
@@ -77,7 +78,7 @@ const Footer = () => {
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
   const {
     user,
-    appVersions: { serverVersion, appVersion }
+    appVersions: { serverVersion, appVersion },
   } = useContext(AppContext);
   const themeContext = useContext(ThemeContext);
   const toggleMasqueradeDialog = () => setShowMasqueradeDialog(!showMasqueradeDialog);

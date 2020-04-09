@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import { mockGAEvent } from '../../setupTests';
 import PageNotFound from '../PageNotFound';
 
