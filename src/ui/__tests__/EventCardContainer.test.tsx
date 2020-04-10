@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import EventCardContainer from '../EventCardContainer';
 import { render, mockEmployeeUser } from 'src/util/test-utils';
 import { Announcements, Events } from '@osu-wams/hooks';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 const { employeeEvents, studentExperienceEvents, studentExperienceEvents_10 } = Events.mockEvents;
 const { announcementsData, announcementsData_10 } = Announcements.mockAnnouncements;

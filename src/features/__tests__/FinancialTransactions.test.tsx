@@ -3,7 +3,7 @@ import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { Student } from '@osu-wams/hooks';
 import FinancialTransactions from '../FinancialTransactions';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 const mockAccountTransactions = Student.AccountTransactions.mockAccountTransactions;
 const mockUseAccountTransactions = jest.fn();

@@ -2,7 +2,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, authUser } from 'src/util/test-utils';
 import AcademicOverview from '../AcademicOverview';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import { Student } from '@osu-wams/hooks';
 
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;

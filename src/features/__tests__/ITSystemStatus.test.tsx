@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
 import { ITSystemStatus } from '../employee-only/ITSystemStatus';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import { Status } from '@osu-wams/hooks';
 
 const mockUseStatus = jest.fn();

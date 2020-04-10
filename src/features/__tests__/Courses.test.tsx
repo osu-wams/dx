@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { render, mockAppContext } from 'src/util/test-utils';
 import { Student } from '@osu-wams/hooks';
 import Courses from '../Courses';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
 

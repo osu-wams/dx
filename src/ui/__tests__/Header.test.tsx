@@ -7,7 +7,7 @@ import {
   authUserAudienceOverride,
 } from 'src/util/test-utils';
 import Header from '../Header';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import { act } from '@testing-library/react';
 
 // required because of the overlay from Reakit

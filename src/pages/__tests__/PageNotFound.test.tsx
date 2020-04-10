@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import PageNotFound from '../PageNotFound';
 
 describe('404 page', () => {

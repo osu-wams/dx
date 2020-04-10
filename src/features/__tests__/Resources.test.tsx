@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react';
 import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import ResourcesComponent from '../../pages/Resources';
-import { mockGAEvent, mockTrendingEvent } from '../../setupTests';
+import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
 
 const mockUseResources = jest.fn();

@@ -2,7 +2,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
 import BetaDashboard from '../../pages/BetaDashboard';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import { PageContents, ReleaseNotes } from '@osu-wams/hooks';
 
 const mockPageContent = PageContents.mockPageContents;

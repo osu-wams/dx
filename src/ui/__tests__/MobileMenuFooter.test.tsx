@@ -2,7 +2,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
 import { MobileMenuFooter } from '../MainNav/MobileMenuFooter';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 // To avoid calling the parent prop
 const mockToggle = jest.fn();

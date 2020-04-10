@@ -2,7 +2,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { mockEmployeeUser, render } from 'src/util/test-utils';
 import MainNav from '../MainNav/';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 describe('student main navigation', () => {
   it('Main Navigation Links for students are to be present and tracked in Google Analytics', async () => {

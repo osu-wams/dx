@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { render, mockAppContext } from 'src/util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
-import { mockGAEvent, mockTrendingEvent } from '../../setupTests';
+import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
 
 const { resourcesCardData } = Resources.mockResources;

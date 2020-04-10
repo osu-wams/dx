@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { render, authUserClassification } from '../../../../util/test-utils';
+import { render, authUserClassification } from 'src/util/test-utils';
 import Campus from '../Campus';
 
 const mockPostSettings = jest.fn();
@@ -10,8 +10,8 @@ jest.mock('@osu-wams/hooks', () => {
     ...original,
     User: {
       ...original.User,
-      postSettings: () => mockPostSettings()
-    }
+      postSettings: () => mockPostSettings(),
+    },
   };
 });
 

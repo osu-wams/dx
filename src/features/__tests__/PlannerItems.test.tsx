@@ -2,7 +2,7 @@ import React from 'react';
 import user from '@testing-library/user-event';
 import { render, mockAppContext, authUser } from 'src/util/test-utils';
 import PlannerItems from '../PlannerItems';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 import { Student } from '@osu-wams/hooks';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;

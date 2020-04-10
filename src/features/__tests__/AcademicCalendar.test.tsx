@@ -3,7 +3,7 @@ import { render, mockAppContext } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import AcademicCalendar from '../AcademicCalendar';
 import { Events } from '@osu-wams/hooks';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 const { academicCalendar6, academicCalendar3 } = Events.mockEvents;
 const mockUseAcademicCalendarEvents = jest.fn();

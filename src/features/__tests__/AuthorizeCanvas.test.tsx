@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, waitForElement, getByAltText } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
 import { AuthorizeCanvas } from '../canvas/AuthorizeCanvas';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 describe('<AuthorizeCanvas />', () => {
   it('should have links that are tracked via GA', async () => {
