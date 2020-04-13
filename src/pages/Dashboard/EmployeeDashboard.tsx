@@ -3,8 +3,8 @@ import { faStars } from '@fortawesome/pro-light-svg-icons';
 import PageTitle from 'src/ui/PageTitle';
 import EventCardContainer from 'src/ui/EventCardContainer';
 import { MainGridWrapper, Masonry } from 'src/theme';
-import ResourcesCard from '../../features/ResourcesCard';
-import { EmployeeTools, ITSystemStatus } from '../../features/employee-only';
+import ResourcesCard from 'src/features/ResourcesCard';
+import { EmployeeTools, ITSystemStatus } from 'src/features/employee-only';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { TrendingResources } from 'src/features/TrendingResources';
 

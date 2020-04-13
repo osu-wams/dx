@@ -2,7 +2,7 @@ import React from 'react';
 import { waitFor } from '@testing-library/react';
 import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
-import ResourcesComponent from '../../pages/Resources';
+import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
 
@@ -192,7 +192,8 @@ describe('<Resources />', () => {
       );
       expect(el).toBeInTheDocument();
 
-      userEvent.click(el);
+      // checking for el to avoid element might be null error
+      el ? userEvent.click(el) : null;
       expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
       expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
       expect(mockGAEvent).toHaveBeenCalledTimes(2);

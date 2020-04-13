@@ -12,7 +12,7 @@ import {
 } from './ScheduleCardStyles';
 import Url from 'src/util/externalUrls.data';
 import Icon from 'src/ui/Icon';
-import coursesSvg from '../../assets/courses.svg';
+import coursesSvg from 'src/assets/courses.svg';
 import { formatTime } from 'src/util/helpers';
 import {
   List,
