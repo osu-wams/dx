@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
 import { useAddresses } from '@osu-wams/hooks';
 import Icon from 'src/ui/Icon';
-import { ThemeContext } from 'src/theme';
 import { MailingAddress } from '@osu-wams/hooks/dist/api/person/addresses';
 
 const ProfileAddress = () => {

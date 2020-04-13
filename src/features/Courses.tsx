@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
+import { ThemeContext } from 'styled-components/macro';
 import { useCourseSchedule } from '@osu-wams/hooks';
 import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
 import { sortedGroupedByCourseName, ICoursesMap } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
@@ -9,12 +10,12 @@ import {
   ListItemContentButton,
   ListItemText,
   ListItemLeadText,
-  ListItemDescription
+  ListItemDescription,
 } from '../ui/List';
 import coursesImg from '../assets/courses.svg';
 import Course from '../features/Course';
 import { titleCase, singularPlural } from '../util/helpers';
-import { themeSettings, ThemeContext } from '../theme';
+import { themeSettings } from '../theme';
 import { ExternalLink, InternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';

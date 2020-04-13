@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components/macro';
 import {
   faExclamationTriangle,
   faCommentAltExclamation,
@@ -11,7 +11,7 @@ import Icon from 'src/ui/Icon';
 import { format } from 'src/util/helpers';
 import { Types } from '@osu-wams/lib';
 import { useDxAlerts, useRaveAlerts } from '@osu-wams/hooks';
-import { themeSettings, breakpoints, ThemeContext } from 'src/theme';
+import { themeSettings, breakpoints } from 'src/theme';
 
 const AlertWrapper = styled.div`
   width: 100%;

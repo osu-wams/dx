@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components/macro';
 import ReactGA from 'react-ga';
 import generateId from 'uuid/v4';
 import { faMapMarkerAlt, faEnvelope } from '@fortawesome/pro-light-svg-icons';
@@ -29,7 +29,7 @@ import {
   onlyMeetingTypes,
   examName,
 } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
-import { ThemeContext, themeSettings, ThemeConfiguration } from 'src/theme';
+import { themeSettings, ThemeConfiguration } from 'src/theme';
 import { Faculty, MeetingTime } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 interface ICourse {

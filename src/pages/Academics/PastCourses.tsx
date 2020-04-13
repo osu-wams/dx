@@ -1,17 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
 import Skeleton from 'react-loading-skeleton';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { useGrades } from '@osu-wams/hooks';
-import {
-  themeSettings,
-  breakpoints,
-  styled,
-  ThemeContext,
-  MainGridWrapper,
-  MainGrid,
-} from 'src/theme';
+import { themeSettings, breakpoints, MainGridWrapper, MainGrid } from 'src/theme';
 import Input from 'src/ui/Input';
 import Icon from 'src/ui/Icon';
 import PageTitle from 'src/ui/PageTitle';

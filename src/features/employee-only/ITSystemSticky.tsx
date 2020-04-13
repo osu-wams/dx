@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { faFlag } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components/macro';
 import { CardContentCell } from 'src/ui/Card';
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
 import Url from 'src/util/externalUrls.data';
 import { ListItem } from 'src/ui/List';
-import { themeSettings, ThemeContext } from 'src/theme';
+import { themeSettings } from 'src/theme';
 import { format } from 'src/util/helpers';
 import Icon from 'src/ui/Icon';
 import { ICachetComponent, ICachetIncident } from '@osu-wams/hooks/dist/api/status';

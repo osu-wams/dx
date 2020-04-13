@@ -1,4 +1,5 @@
 import React, { FC, useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import Icon from 'src/ui/Icon';
 import {
   faCogs,
@@ -16,7 +17,6 @@ import {
 } from 'src/ui/List';
 import { Event } from 'src/util/gaTracking';
 import Url from 'src/util/externalUrls.data';
-import { ThemeContext } from 'src/theme';
 
 const BetaResources: FC = () => {
   const themeContext = useContext(ThemeContext);

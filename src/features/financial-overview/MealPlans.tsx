@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import Skeleton from 'react-loading-skeleton';
 import { useMealPlans } from '@osu-wams/hooks';
 import { formatDollars } from 'src/util/helpers';
@@ -10,8 +11,7 @@ import {
 } from 'src/ui/Highlights';
 import { ExternalLink } from 'src/ui/Link';
 import { Event } from 'src/util/gaTracking';
-import { ThemeContext } from 'src/theme';
-import mealPlan from '../../assets/meal-plan.svg';
+import mealPlan from 'src/assets/meal-plan.svg';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 
 const NoMealPlans = () => (

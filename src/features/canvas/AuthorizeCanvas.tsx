@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components/macro';
 import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
 import canvasLogo from 'src/assets/logo-canvas.png';
 import { ListItem, ListItemDescription, ListItemText, ListItemContentLink } from 'src/ui/List';
 import { ButtonLink } from 'src/ui/Button';
 import Icon from 'src/ui/Icon';
 import { Event } from 'src/util/gaTracking';
-import { ThemeContext } from 'src/theme';
 
 const AuthorizeCanvasStyle = styled.div`
   margin: 0 auto 1rem;

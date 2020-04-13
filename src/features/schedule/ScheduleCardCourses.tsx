@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings, ThemeContext, ThemeConfiguration } from 'src/theme';
+import { themeSettings, ThemeConfiguration } from 'src/theme';
 import {
   CardSection,
   SectionHeader,

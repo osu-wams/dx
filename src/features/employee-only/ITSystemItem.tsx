@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components/macro';
 import {
   IconDefinition,
   faCheckCircle,
@@ -7,7 +7,7 @@ import {
   faQuestionCircle,
 } from '@fortawesome/pro-light-svg-icons';
 import { ListItem } from 'src/ui/List';
-import { themeSettings, ThemeContext, ThemeConfiguration } from 'src/theme';
+import { themeSettings, ThemeConfiguration } from 'src/theme';
 import Icon from 'src/ui/Icon';
 import { ICachetComponent } from '@osu-wams/hooks/dist/api/status';
 

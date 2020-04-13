@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import { fal, faHeart } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -6,7 +7,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Resources } from '@osu-wams/hooks';
 import { AppContext } from 'src/contexts/app-context';
 import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src/ui/List';
-import { ThemeContext } from 'src/theme';
 import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
 import { TrendingEvent } from './GATrendingResource';
@@ -20,7 +20,7 @@ const ResourceItem = ({ resource, event }) => {
   const [favs, setFav] = useState(false);
   const { user } = useContext(AppContext);
   const isFavorite = (resId: string, favs: any) => {
-    const res = favs.find(r => r.resourceId === resId);
+    const res = favs.find((r) => r.resourceId === resId);
     return res ? res.active : false;
   };
 
@@ -30,7 +30,7 @@ const ResourceItem = ({ resource, event }) => {
     }
   }, [user.data.favoriteResources, resource.id]);
 
-  const favoriteLabelText = currentFavState => {
+  const favoriteLabelText = (currentFavState) => {
     return currentFavState
       ? `Remove ${resource.title} link from your favorite resources`
       : `Add ${resource.title} link to your favorite resources`;
@@ -68,7 +68,7 @@ const ResourceItem = ({ resource, event }) => {
         checked={favs}
         onChange={handleChange}
         inputProps={{
-          'aria-label': favoriteLabelText(favs)
+          'aria-label': favoriteLabelText(favs),
         }}
       />
     </ListItemFlex>

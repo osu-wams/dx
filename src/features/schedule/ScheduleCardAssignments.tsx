@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import { faFileAlt } from '@fortawesome/pro-light-svg-icons';
 import {
   CardSection,
@@ -9,7 +10,7 @@ import {
 } from './ScheduleCardStyles';
 import Url from 'src/util/externalUrls.data';
 import Icon from 'src/ui/Icon';
-import assignment from '../../assets/assignment.svg';
+import assignment from 'src/assets/assignment.svg';
 import {
   List,
   ListItem,
@@ -21,7 +22,6 @@ import {
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
 import { Event } from 'src/util/gaTracking';
 import { courseCodeOrIcon } from '../Courses';
-import { ThemeContext } from 'src/theme';
 import { format } from 'src/util/helpers';
 import { AppContext } from 'src/contexts/app-context';
 

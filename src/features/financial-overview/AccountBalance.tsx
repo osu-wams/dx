@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import Skeleton from 'react-loading-skeleton';
 import { useAccountBalance } from '@osu-wams/hooks';
 import { formatDollars } from 'src/util/helpers';
@@ -11,7 +12,6 @@ import {
 import { ExternalLink } from 'src/ui/Link';
 import Url from 'src/util/externalUrls.data';
 import { Event } from 'src/util/gaTracking';
-import { ThemeContext } from 'src/theme';
 
 /**
  * Sub card for the Financial Overview card.

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components/macro';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { themeSettings, breakpoints, ThemeContext } from 'src/theme';
+import { themeSettings, breakpoints } from 'src/theme';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
 import { format } from 'src/util/helpers';
