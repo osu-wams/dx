@@ -1,5 +1,6 @@
 import { Link } from '@reach/router';
-import { themeSettings, breakpoints, styled } from '../theme';
+import styled from 'styled-components/macro';
+import { themeSettings, breakpoints } from 'src/theme';
 
 const SubNav = styled.nav`
   display: flex;

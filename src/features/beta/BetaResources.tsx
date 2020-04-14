@@ -1,22 +1,22 @@
 import React, { FC, useContext } from 'react';
-import Icon from '../../ui/Icon';
+import { ThemeContext } from 'styled-components/macro';
+import Icon from 'src/ui/Icon';
 import {
   faCogs,
   faUserHeadset,
   faCommentAltLines,
-  faExternalLink
+  faExternalLink,
 } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
+import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
 import {
   List,
   ListItem,
   ListItemText,
   ListItemContentLinkSVG,
-  ListItemContentLinkName
-} from '../../ui/List';
-import { Event } from '../../util/gaTracking';
-import Url from '../../util/externalUrls.data';
-import { ThemeContext } from '../../theme';
+  ListItemContentLinkName,
+} from 'src/ui/List';
+import { Event } from 'src/util/gaTracking';
+import Url from 'src/util/externalUrls.data';
 
 const BetaResources: FC = () => {
   const themeContext = useContext(ThemeContext);

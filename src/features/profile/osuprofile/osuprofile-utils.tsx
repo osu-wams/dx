@@ -1,8 +1,9 @@
 import React from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
-import { formatPhone } from '../../../util/helpers';
-import Icon from '../../../ui/Icon';
-import { styled, themeSettings } from '../../../theme';
+import styled from 'styled-components/macro';
+import { formatPhone } from 'src/util/helpers';
+import Icon from 'src/ui/Icon';
+import { themeSettings } from 'src/theme';
 
 const renderPhone = (title: string, field: string | null, icon: any, color: string) => {
   if (field && title && icon) {

@@ -6,11 +6,11 @@ import {
   CardContentTable,
   CardContentRow,
   CardContentCell,
-  CardIcon
-} from '../../ui/Card';
-import Url from '../../util/externalUrls.data';
-import { HighlightExternalLink } from '../../ui/Link';
-import { Event } from '../../util/gaTracking';
+  CardIcon,
+} from 'src/ui/Card';
+import Url from 'src/util/externalUrls.data';
+import { HighlightExternalLink } from 'src/ui/Link';
+import { Event } from 'src/util/gaTracking';
 
 const EmployeeTools = () => {
   return (

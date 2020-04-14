@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Fieldset, Legend } from '../../../ui/forms';
+import { Fieldset, Legend } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
-import { titleCase } from '../../../util/helpers';
-import { defaultTheme } from '../../../theme/themes';
+import { titleCase } from 'src/util/helpers';
+import { defaultTheme } from 'src/theme/themes';
 import { AppContext } from 'src/contexts/app-context';
 
 const { postSettings, usersSettings } = User;
@@ -23,7 +23,7 @@ export const RadioButtonsGroup = () => {
     const settings = usersSettings(user.data);
     settings.theme = selectedValue;
 
-    postSettings({ theme: selectedValue }).then(d => {
+    postSettings({ theme: selectedValue }).then((d) => {
       user.setUser({ ...user, data: { ...user.data, ...settings } });
       setTheme(selectedValue);
     });
@@ -33,7 +33,7 @@ export const RadioButtonsGroup = () => {
     <Fieldset>
       <Legend>Theme</Legend>
       <RadioGroup aria-label="theme" name="theme" value={value} onChange={handleChange}>
-        {themes.map(t => (
+        {themes.map((t) => (
           <FormControlLabel
             key={t}
             value={t}

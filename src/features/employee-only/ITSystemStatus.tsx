@@ -1,5 +1,6 @@
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components/macro';
 import { faDesktop } from '@fortawesome/pro-light-svg-icons';
 import {
   Card,
@@ -7,17 +8,17 @@ import {
   CardContentTable,
   CardContentRow,
   CardIcon,
-  CardFooter
-} from '../../ui/Card';
-import { Event } from '../../util/gaTracking';
-import { ExternalLink } from '../../ui/Link';
-import Url from '../../util/externalUrls.data';
+  CardFooter,
+} from 'src/ui/Card';
+import { Event } from 'src/util/gaTracking';
+import { ExternalLink } from 'src/ui/Link';
+import Url from 'src/util/externalUrls.data';
 import { ITSystemSticky } from './ITSystemSticky';
 import { Status, useStatus } from '@osu-wams/hooks';
 import { ITSystemItem } from './ITSystemItem';
-import { styled, breakpoints } from '../../theme';
-import operationalStatus from '../../assets/systems-status-operational.svg';
-import { EmptyState, EmptyStateImage, EmptyStateText } from '../../ui/EmptyStates';
+import { breakpoints } from 'src/theme';
+import operationalStatus from 'src/assets/systems-status-operational.svg';
+import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 
 const AllOperational = () => (
   <EmptyState>
@@ -64,8 +65,8 @@ const ITSystemStatus = () => {
           <StatusItemRow>
             {!allOperational(status.data) &&
               sortedByStatus(status.data)
-                .filter(c => c.status > 1)
-                .map(c => <ITSystemItem key={`item-${c.id}`} component={c} />)}
+                .filter((c) => c.status > 1)
+                .map((c) => <ITSystemItem key={`item-${c.id}`} component={c} />)}
           </StatusItemRow>
         </CardContentTable>
       )}

@@ -7,8 +7,8 @@ import {
   CardContentRow,
   CardContentCell,
   CardFooter,
-  CardIcon
-} from '../../ui/Card';
+  CardIcon,
+} from 'src/ui/Card';
 import AccountBalance from './AccountBalance';
 import MealPlans from './MealPlans';
 

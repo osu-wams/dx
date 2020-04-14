@@ -1,16 +1,17 @@
 import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
 import {
   faExclamationTriangle,
   faCommentAltExclamation,
   faInfoCircle,
-  IconDefinition
+  IconDefinition,
 } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, Badge } from '../ui/Card';
-import Icon from '../ui/Icon';
-import { format } from '../util/helpers';
+import { Card, CardHeader, CardContent, Badge } from 'src/ui/Card';
+import Icon from 'src/ui/Icon';
+import { format } from 'src/util/helpers';
 import { Types } from '@osu-wams/lib';
 import { useDxAlerts, useRaveAlerts } from '@osu-wams/hooks';
-import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
+import { themeSettings, breakpoints } from 'src/theme';
 
 const AlertWrapper = styled.div`
   width: 100%;
@@ -96,7 +97,7 @@ const Alerts = () => {
           <RaveAlertCard>
             {cardBody(alert, {
               icon: faExclamationTriangle,
-              color: themeContext.alert.rave.icon.color
+              color: themeContext.alert.rave.icon.color,
             })}
           </RaveAlertCard>
         );
@@ -111,7 +112,7 @@ const Alerts = () => {
           <DxWarnAlertCard>
             {cardBody(alert, {
               icon: faCommentAltExclamation,
-              color: themeContext.alert.dx.warn.icon.color
+              color: themeContext.alert.dx.warn.icon.color,
             })}
           </DxWarnAlertCard>
         );

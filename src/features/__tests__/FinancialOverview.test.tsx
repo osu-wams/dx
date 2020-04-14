@@ -1,8 +1,8 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import FinancialOverview from '../financial-overview/FinancialOverview';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 it('should find link to view and make payment and clicking it triggers analytics', async () => {
   const { getByText, findByText } = render(<FinancialOverview />);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import MyDialog from '../ui/MyDialog';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
@@ -8,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { Event } from '../util/gaTracking';
 import { Masquerade as hooksMasquerade } from '@osu-wams/hooks';
 import * as cache from '../util/cache';
-import { ThemeContext } from '../theme';
 
 const { getMasqueradeUser, postMasqueradeUser } = hooksMasquerade;
 interface MasqueradeProps {
@@ -24,14 +24,14 @@ export const Masquerade = (props: MasqueradeProps) => {
 
   useEffect(() => {
     getMasqueradeUser()
-      .then(data => {
+      .then((data) => {
         if (data && data.masqueradeId !== '') {
           cache.clear();
           setMasqueradeId(data.masqueradeId);
           setMasqueradeReason(data.masqueradeReason);
         }
       })
-      .catch(err => console.log);
+      .catch((err) => console.log);
   }, []);
 
   const performMasquerade = () => {
@@ -45,7 +45,7 @@ export const Masquerade = (props: MasqueradeProps) => {
             window.location.reload(true);
           }, 2000);
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     } else {
       postMasqueradeUser()
         .then(() => {
@@ -57,11 +57,11 @@ export const Masquerade = (props: MasqueradeProps) => {
             window.location.reload(true);
           }, 2000);
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     if (e.target.id === 'osu-id') {
       setMasqueradeId(e.target.value);
     }
@@ -70,7 +70,7 @@ export const Masquerade = (props: MasqueradeProps) => {
     }
   };
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       performMasquerade();
     }

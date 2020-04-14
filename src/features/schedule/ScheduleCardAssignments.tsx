@@ -1,28 +1,28 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import { faFileAlt } from '@fortawesome/pro-light-svg-icons';
 import {
   CardSection,
   SectionHeader,
   NoItems,
   NoItemsImage,
-  NoItemsText
+  NoItemsText,
 } from './ScheduleCardStyles';
-import Url from '../../util/externalUrls.data';
-import Icon from '../../ui/Icon';
-import assignment from '../../assets/assignment.svg';
+import Url from 'src/util/externalUrls.data';
+import Icon from 'src/ui/Icon';
+import assignment from 'src/assets/assignment.svg';
 import {
   List,
   ListItem,
   ListItemHeader,
   ListItemDescription,
   ListItemText,
-  ListItemContentLink
-} from '../../ui/List';
+  ListItemContentLink,
+} from 'src/ui/List';
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
-import { Event } from '../../util/gaTracking';
+import { Event } from 'src/util/gaTracking';
 import { courseCodeOrIcon } from '../Courses';
-import { ThemeContext } from '../../theme';
-import { format } from '../../util/helpers';
+import { format } from 'src/util/helpers';
 import { AppContext } from 'src/contexts/app-context';
 
 const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
@@ -51,7 +51,7 @@ const ScheduleCardAssignments = ({ selectedPlannerItems, courseList }) => {
               html_url,
               plannable_type,
               plannable_date,
-              plannable: { title }
+              plannable: { title },
             }) => (
               <ListItem key={plannable_id}>
                 <ListItemContentLink

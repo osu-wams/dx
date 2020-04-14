@@ -1,5 +1,6 @@
 import { Link } from '@reach/router';
-import { styled, themeSettings, breakpoints } from '../../theme';
+import styled from 'styled-components/macro';
+import { themeSettings, breakpoints } from 'src/theme';
 
 const Nav = styled.nav`
   position: fixed;

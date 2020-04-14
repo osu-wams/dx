@@ -1,6 +1,6 @@
 import React from 'react';
 import { getByTestId, findAllByText, queryAllByText } from '@testing-library/react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
 import { Student } from '@osu-wams/hooks';
@@ -11,7 +11,7 @@ const mockUseGrades = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useGrades: () => mockUseGrades()
+    useGrades: () => mockUseGrades(),
   };
 });
 

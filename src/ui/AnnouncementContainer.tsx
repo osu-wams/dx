@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
+import styled from 'styled-components/macro';
 import EventCard from './EventCard';
-import { Title } from '../ui/PageTitle';
+import { Title } from 'src/ui/PageTitle';
 import { User } from '@osu-wams/hooks';
-import { styled, themeSettings, breakpoints, SecondGridWrapper } from '../theme';
+import { themeSettings, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 import { AppContext } from 'src/contexts/app-context';
 
@@ -33,7 +34,7 @@ const AnnouncementContainer = ({ page, ...props }) => {
 
     if (!user.loading && !announcements.loading) {
       announcementsToUse = announcements.data.filter(
-        announcement =>
+        (announcement) =>
           hasAudience(user.data, announcement) &&
           hasAffiliation(getAffiliation(user.data), announcement)
       );
@@ -49,7 +50,7 @@ const AnnouncementContainer = ({ page, ...props }) => {
     <SecondGridWrapper>
       <Title as="h2">Announcements</Title>
       <AnnouncementContainerWrapper {...props}>
-        {events.map(item => (
+        {events.map((item) => (
           <EventCard key={item.id} itemContent={item} />
         ))}
       </AnnouncementContainerWrapper>

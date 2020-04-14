@@ -1,4 +1,5 @@
-import { styled, themeSettings } from '../theme';
+import styled from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
 
 const EmptyState = styled.div`
   display: flex;

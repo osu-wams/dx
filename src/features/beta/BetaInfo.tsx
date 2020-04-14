@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings, styled } from '../../theme';
-import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
+import styled from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
+import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
 import { usePageContent } from '@osu-wams/hooks';
 
 const BetaInfo: FC = () => {

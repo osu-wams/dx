@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
 import {
   IconDefinition,
   faCheckCircle,
   faTachometerAlt,
-  faQuestionCircle
+  faQuestionCircle,
 } from '@fortawesome/pro-light-svg-icons';
-import { ListItem } from '../../ui/List';
-import { themeSettings, ThemeContext, styled, ThemeConfiguration } from '../../theme';
-import Icon from '../../ui/Icon';
+import { ListItem } from 'src/ui/List';
+import { themeSettings, ThemeConfiguration } from 'src/theme';
+import Icon from 'src/ui/Icon';
 import { ICachetComponent } from '@osu-wams/hooks/dist/api/status';
 
 const Container = styled.div`
@@ -37,38 +38,38 @@ const getIconProps = (
   themeContext: ThemeConfiguration
 ): { icon: IconDefinition; color: string; fontSize: string } => {
   const props = {
-    fontSize: themeSettings.fontSize[24]
+    fontSize: themeSettings.fontSize[24],
   };
   switch (component.status) {
     case 1:
       return {
         ...props,
         icon: faCheckCircle,
-        color: themeContext.features.itStatus.item.icon.operational
+        color: themeContext.features.itStatus.item.icon.operational,
       };
     case 2:
       return {
         ...props,
         icon: faTachometerAlt,
-        color: themeContext.features.itStatus.item.icon.performanceIssues
+        color: themeContext.features.itStatus.item.icon.performanceIssues,
       };
     case 3:
       return {
         ...props,
         icon: faCheckCircle,
-        color: themeContext.features.itStatus.item.icon.partialOutage
+        color: themeContext.features.itStatus.item.icon.partialOutage,
       };
     case 4:
       return {
         ...props,
         icon: faCheckCircle,
-        color: themeContext.features.itStatus.item.icon.majorOutage
+        color: themeContext.features.itStatus.item.icon.majorOutage,
       };
     default:
       return {
         ...props,
         icon: faQuestionCircle,
-        color: themeContext.features.itStatus.item.icon.unknown
+        color: themeContext.features.itStatus.item.icon.unknown,
       };
   }
 };

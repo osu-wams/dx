@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, mockEmployeeUser } from '../../util/test-utils';
+import { render, mockEmployeeUser } from 'src/util/test-utils';
 import Dashboard from '../Dashboard';
 import { Resources } from '@osu-wams/hooks';
 
@@ -9,7 +9,7 @@ const mockUseResourcesByQueue = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useResourcesByQueue: () => mockUseResourcesByQueue()
+    useResourcesByQueue: () => mockUseResourcesByQueue(),
   };
 });
 

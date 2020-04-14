@@ -1,31 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
 import Skeleton from 'react-loading-skeleton';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { useGrades } from '@osu-wams/hooks';
-import {
-  themeSettings,
-  breakpoints,
-  styled,
-  ThemeContext,
-  MainGridWrapper,
-  MainGrid
-} from '../../theme';
-import Input from '../../ui/Input';
-import Icon from '../../ui/Icon';
-import PageTitle from '../../ui/PageTitle';
-import { Card, CardHeader, CardContent } from '../../ui/Card';
-import {
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableHeader,
-  TableHeaderCell
-} from '../../ui/Table';
-import { singularPlural, titleCase } from '../../util/helpers';
-import { Event } from '../../util/gaTracking';
+import { themeSettings, breakpoints, MainGridWrapper, MainGrid } from 'src/theme';
+import Input from 'src/ui/Input';
+import Icon from 'src/ui/Icon';
+import PageTitle from 'src/ui/PageTitle';
+import { Card, CardHeader, CardContent } from 'src/ui/Card';
+import { Table, TableBody, TableRow, TableCell, TableHeader, TableHeaderCell } from 'src/ui/Table';
+import { singularPlural, titleCase } from 'src/util/helpers';
+import { Event } from 'src/util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { Grades } from '@osu-wams/hooks/dist/api/student/grades';
 
@@ -42,7 +29,7 @@ const PastCourses = () => {
     } else {
       const re = new RegExp(debouncedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
       const matchingGrades = grades.data.filter(
-        e =>
+        (e) =>
           e.attributes.courseTitle.match(re) ||
           `${e.attributes.courseSubject}${e.attributes.courseNumber}`.match(re) ||
           `${e.attributes.courseSubject} ${e.attributes.courseNumber}`.match(re) ||
@@ -88,7 +75,7 @@ const PastCourses = () => {
             placeholder="Find past courses"
             value={query}
             id="course-filter"
-            onChange={e => setQuery(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
           />
         </SearchWrapper>
         {grades.loading && <Skeleton count={5} />}
@@ -114,7 +101,7 @@ const PastCourses = () => {
                             repeatedCourseInd,
                             creditHours,
                             gradeFinal,
-                            courseTitle
+                            courseTitle,
                           },
                           subindex
                         ) => {

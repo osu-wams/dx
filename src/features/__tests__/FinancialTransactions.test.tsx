@@ -1,9 +1,9 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { Student } from '@osu-wams/hooks';
 import FinancialTransactions from '../FinancialTransactions';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 const mockAccountTransactions = Student.AccountTransactions.mockAccountTransactions;
 const mockUseAccountTransactions = jest.fn();
@@ -11,7 +11,7 @@ const mockUseAccountTransactions = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useAccountTransactions: () => mockUseAccountTransactions()
+    useAccountTransactions: () => mockUseAccountTransactions(),
   };
 });
 
@@ -38,7 +38,7 @@ describe('<FinancialTransactions />', () => {
     mockUseAccountTransactions.mockReturnValue({
       data: undefined,
       loading: false,
-      error: false
+      error: false,
     });
     const { getByText } = render(<FinancialTransactions />);
     const empty = getByText(/There are no recent transactions for this term/);

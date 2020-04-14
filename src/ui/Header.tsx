@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
-import logo from '../assets/osu-logo.svg';
-import ecampusLogo from '../assets/osu-ecampus.svg';
-import cascadesLogo from '../assets/osu-cascades.svg';
+import styled from 'styled-components/macro';
+import logo from 'src/assets/osu-logo.svg';
+import ecampusLogo from 'src/assets/osu-ecampus.svg';
+import cascadesLogo from 'src/assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { HeaderNav } from './HeaderNav';
-import { breakpoints, styled, themeSettings } from '../theme';
+import { breakpoints, themeSettings } from 'src/theme';
 import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
@@ -85,7 +86,7 @@ const campusLogo = (user: Types.User) => {
   }
 };
 
-const mainTitle = user => {
+const mainTitle = (user) => {
   let title = 'Student';
   if (!user) return title;
   if (UserUtil.getAffiliation(user) === User.AFFILIATIONS.employee) {

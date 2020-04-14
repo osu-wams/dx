@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import Skeleton from 'react-loading-skeleton';
 import { useMealPlans } from '@osu-wams/hooks';
-import { formatDollars } from '../../util/helpers';
+import { formatDollars } from 'src/util/helpers';
 import {
   Highlight,
   HighlightTitle,
   HighlightEmphasis,
-  HighlightDescription
-} from '../../ui/Highlights';
-import { ExternalLink } from '../../ui/Link';
-import { Event } from '../../util/gaTracking';
-import { ThemeContext } from '../../theme';
-import mealPlan from '../../assets/meal-plan.svg';
-import { EmptyState, EmptyStateImage, EmptyStateText } from '../../ui/EmptyStates';
+  HighlightDescription,
+} from 'src/ui/Highlights';
+import { ExternalLink } from 'src/ui/Link';
+import { Event } from 'src/util/gaTracking';
+import mealPlan from 'src/assets/meal-plan.svg';
+import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 
 const NoMealPlans = () => (
   <EmptyState>

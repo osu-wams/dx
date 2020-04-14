@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconDefinition, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fal } from '@fortawesome/pro-light-svg-icons';
+import styled from 'styled-components/macro';
 import { Types } from '@osu-wams/lib';
 import { User } from '@osu-wams/hooks';
 import Icon from 'src/ui/Icon';
@@ -9,7 +10,6 @@ import canvasLogo from 'src/assets/logo-canvas.png';
 import gDrive from 'src/assets/logo-drive.png';
 import gMail from 'src/assets/logo-gmail.png';
 import zoom from 'src/assets/logo-zoom.png';
-import { styled } from 'src/theme';
 
 const { usersCampus, getAffiliation } = User;
 
@@ -26,7 +26,7 @@ const filteredTrendingResources = (
   const { campusName } = usersCampus(user);
   const usersAffiliation = getAffiliation(user);
   const usersTrendingResources = trendingResources.filter(
-    tr =>
+    (tr) =>
       usersAffiliation.toLowerCase() === tr.affiliation.toLowerCase() &&
       tr.campus.toLowerCase() === campusName
   );
@@ -62,10 +62,10 @@ const activeFavoriteResources = (
   favoriteResources: Types.FavoriteResource[],
   resourcesList: Types.Resource[]
 ) => {
-  const hasActiveFavorite = resourceId =>
-    favoriteResources.some(f => f.active && f.resourceId === resourceId);
+  const hasActiveFavorite = (resourceId) =>
+    favoriteResources.some((f) => f.active && f.resourceId === resourceId);
 
-  return resourcesList.filter(f => f !== undefined && hasActiveFavorite(f.id));
+  return resourcesList.filter((f) => f !== undefined && hasActiveFavorite(f.id));
 };
 
 /**
@@ -78,7 +78,7 @@ const IconLookup = (iconName, color) => {
     if (iconSplit[0] === 'fal' || iconSplit[0] === 'fab') {
       const lookupIconDefinition: IconDefinition = findIconDefinition({
         prefix: iconSplit[0],
-        iconName: iconSplit[1]
+        iconName: iconSplit[1],
       });
       return <Icon icon={lookupIconDefinition} color={color} />;
     } else if (iconSplit[0] === 'osu') {
@@ -102,7 +102,7 @@ const logoMapping = {
   'logo-canvas': canvasLogo,
   'logo-drive': gDrive,
   'logo-gmail': gMail,
-  'logo-zoom': zoom
+  'logo-zoom': zoom,
 };
 
 export { IconLookup, activeFavoriteResources, filteredTrendingResources };

@@ -1,32 +1,33 @@
 import React, { useContext, useState } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings, ThemeContext, ThemeConfiguration } from '../../theme';
+import { themeSettings, ThemeConfiguration } from 'src/theme';
 import {
   CardSection,
   SectionHeader,
   NoItems,
   NoItemsImage,
-  NoItemsText
+  NoItemsText,
 } from './ScheduleCardStyles';
-import Url from '../../util/externalUrls.data';
-import Icon from '../../ui/Icon';
-import coursesSvg from '../../assets/courses.svg';
-import { formatTime } from '../../util/helpers';
+import Url from 'src/util/externalUrls.data';
+import Icon from 'src/ui/Icon';
+import coursesSvg from 'src/assets/courses.svg';
+import { formatTime } from 'src/util/helpers';
 import {
   List,
   ListItem,
   ListItemDescription,
   ListItemText,
-  ListItemContentButton
-} from '../../ui/List';
-import { Event } from '../../util/gaTracking';
+  ListItemContentButton,
+} from 'src/ui/List';
+import { Event } from 'src/util/gaTracking';
 import {
   courseOnCorvallisCampus,
   sortedGroupedByCourseName,
   ICoursesMap,
   exceptMeetingTypes,
-  examName
+  examName,
 } from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
 import Course from '../Course';

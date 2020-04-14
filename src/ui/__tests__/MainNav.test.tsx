@@ -1,8 +1,8 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { mockEmployeeUser, render } from '../../util/test-utils';
+import { mockEmployeeUser, render } from 'src/util/test-utils';
 import MainNav from '../MainNav/';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 describe('student main navigation', () => {
   it('Main Navigation Links for students are to be present and tracked in Google Analytics', async () => {
@@ -38,7 +38,7 @@ describe('student main navigation', () => {
 
 it('Main Navigation for Employee visible and tracked in Google Analytics', async () => {
   const { getByText, queryByText } = render(<MainNav />, {
-    user: mockEmployeeUser
+    user: mockEmployeeUser,
   });
 
   const home = getByText('Overview');

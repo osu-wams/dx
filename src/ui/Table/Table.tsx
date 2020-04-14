@@ -1,5 +1,6 @@
+import styled from 'styled-components/macro';
 import styledMap from 'styled-map';
-import { themeSettings, styled } from '../../theme';
+import { themeSettings } from 'src/theme';
 
 interface ITable {
   striped?: boolean;
@@ -13,24 +14,24 @@ const Table = styled.table<ITable>`
       basic: 'none',
       compact: 'none',
       spacious: 'none',
-      default: `1px solid ${theme.ui.table.border}`
+      default: `1px solid ${theme.ui.table.border}`,
     })};
   border-collapse: separate;
   border-spacing: 0;
   color: ${({ theme }) => theme.ui.table.color};
   font-size: ${styledMap('variant', {
     compact: '1.4rem',
-    default: 'inherit'
+    default: 'inherit',
   })};
   overflow-x: scroll;
   td {
     padding: ${styledMap('variant', {
       compact: '.2rem .4rem',
       default: '0.4rem 0.8rem',
-      spacious: '1rem 2rem'
+      spacious: '1rem 2rem',
     })};
     font-size: ${styledMap('variant', {
-      spacious: `${themeSettings.fontSize[16]}`
+      spacious: `${themeSettings.fontSize[16]}`,
     })};
   }
   th {
@@ -41,7 +42,7 @@ const Table = styled.table<ITable>`
     text-align: left;
     padding: ${styledMap('variant', {
       default: '0.4rem 0.8rem',
-      spacious: '.8rem 1.6rem'
+      spacious: '.8rem 1.6rem',
     })};
   }
   td:not(:first-child),
@@ -50,7 +51,7 @@ const Table = styled.table<ITable>`
       styledMap('variant', {
         basic: `1px solid ${theme.ui.table.cell.notFirstChild.borderLeft}`,
         compact: 'none',
-        default: `1px solid ${theme.ui.table.cell.notFirstChild.borderLeft}`
+        default: `1px solid ${theme.ui.table.cell.notFirstChild.borderLeft}`,
       })};
   }
   tr:not(:first-child) td {

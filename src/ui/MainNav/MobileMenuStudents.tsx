@@ -1,7 +1,7 @@
 import React from 'react';
 import { faHome, faGraduationCap, faHandsUsd, faList } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
-import { Event } from '../../util/gaTracking';
+import { Event } from 'src/util/gaTracking';
 import { MobileMainNav, MobileNavLink } from './MainNavStyles';
 
 const MobileMenuStudents = ({ toggleFullMenu, ...props }) => {

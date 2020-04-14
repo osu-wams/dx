@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
-import { CardBase } from '../ui/Card';
-import { themeSettings, styled, MainGridWrapper, MainGrid } from '../theme';
-import ResourcesCategories from '../features/resources/ResourcesCategories';
-import ResourcesSearch from '../features/resources/ResourcesSearch';
-import ResourcesList from '../features/resources/ResourcesList';
+import { CardBase } from 'src/ui/Card';
+import { themeSettings, MainGridWrapper, MainGrid } from 'src/theme';
+import ResourcesCategories from 'src/features/resources/ResourcesCategories';
+import ResourcesSearch from 'src/features/resources/ResourcesSearch';
+import ResourcesList from 'src/features/resources/ResourcesList';
 import { Types } from '@osu-wams/lib';
 import { Resources as hooksResources, useCategories, useResources, User } from '@osu-wams/hooks';
-import PageTitle from '../ui/PageTitle';
+import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { activeFavoriteResources } from 'src/features/resources/resources-utils';
 import { AppContext } from 'src/contexts/app-context';
@@ -54,9 +55,9 @@ const Resources = () => {
       }
 
       return resources.filter(
-        resource =>
+        (resource) =>
           resource.categories?.length > 0 &&
-          resource.categories.findIndex(s => s.toLowerCase().includes(name.toLowerCase())) > -1
+          resource.categories.findIndex((s) => s.toLowerCase().includes(name.toLowerCase())) > -1
       );
     },
     [user.data.favoriteResources]
@@ -72,7 +73,7 @@ const Resources = () => {
     const userAffiliation = getAffiliation(user).toLowerCase();
     return (
       o.affiliation?.length === 0 ||
-      o.affiliation?.map(a => a.toLowerCase()).filter(a => a === userAffiliation).length > 0
+      o.affiliation?.map((a) => a.toLowerCase()).filter((a) => a === userAffiliation).length > 0
     );
   };
 
@@ -85,8 +86,8 @@ const Resources = () => {
     return (
       resource.categories?.length === 0 ||
       resource.categories
-        ?.map(c => c.toLowerCase())
-        .some(c => filteredCategories.find(fc => fc.name.toLowerCase() === c))
+        ?.map((c) => c.toLowerCase())
+        .some((c) => filteredCategories.find((fc) => fc.name.toLowerCase() === c))
     );
   };
 
@@ -96,14 +97,14 @@ const Resources = () => {
    */
   useEffect(() => {
     if (categories.data && user.data) {
-      setFilteredCategories(categories.data.filter(c => checkAffiliation(user.data, c)));
+      setFilteredCategories(categories.data.filter((c) => checkAffiliation(user.data, c)));
     }
   }, [categories.data, user.data]);
 
   useEffect(() => {
     if (res.data && user.data && filteredCategories.length > 0) {
       let filtered = res.data.filter(
-        r => checkAffiliation(user.data, r) && hasCategory(r, filteredCategories)
+        (r) => checkAffiliation(user.data, r) && hasCategory(r, filteredCategories)
       );
 
       // When clicking a category we filter all results based on selected category
@@ -111,10 +112,10 @@ const Resources = () => {
         filtered = filterByCategory(activeCategory, filtered);
       } else {
         // When typing we search for synonyms and names to get results
-        const queriedResources = filtered.filter(resource => {
+        const queriedResources = filtered.filter((resource) => {
           if (
             resource.synonyms.length > 0 &&
-            resource.synonyms.find(s => s.includes(debouncedQuery.toLowerCase()))
+            resource.synonyms.find((s) => s.includes(debouncedQuery.toLowerCase()))
           ) {
             return true;
           }
@@ -139,7 +140,7 @@ const Resources = () => {
    * * Push the default activeCategory to the history at the start.
    */
   useEffect(() => {
-    window.onpopstate = function(e) {
+    window.onpopstate = function (e) {
       if (e.state) {
         if (e.state.category) setActiveCategory(decodeURI(e.state.category));
       }
@@ -193,7 +194,7 @@ const Resources = () => {
                 setQuery={setQuery}
                 setSelectedCategory={setSelectedCategory}
                 hasFavorite={
-                  user.data.favoriteResources && user.data.favoriteResources.some(f => f.active)
+                  user.data.favoriteResources && user.data.favoriteResources.some((f) => f.active)
                 }
               />
             </>
@@ -201,7 +202,7 @@ const Resources = () => {
           {res.loading && <Skeleton count={5} />}
           {!res.loading && res.data.length > 0 ? (
             <ResourcesList
-              resources={filteredResources.filter(r => hasAudience(user.data, r))}
+              resources={filteredResources.filter((r) => hasAudience(user.data, r))}
               user={user.data}
             />
           ) : (

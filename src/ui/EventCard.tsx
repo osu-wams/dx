@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
+import styled, { ThemeContext } from 'styled-components/macro';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { themeSettings, breakpoints, styled, ThemeContext } from '../theme';
+import { themeSettings, breakpoints } from 'src/theme';
 import Button from './Button';
-import { Event } from '../util/gaTracking';
-import { format } from '../util/helpers';
+import { Event } from 'src/util/gaTracking';
+import { format } from 'src/util/helpers';
 
 const ButtonWithIcon = styled(Button).attrs({
-  as: 'a'
+  as: 'a',
 })`
   :link,
   :visited,
@@ -99,7 +100,7 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
   @media (min-width: ${breakpoints.small}) {
     margin-bottom: 0;
   }
-  ${props => {
+  ${(props) => {
     if (props.imageUrl) {
       return `
         color: ${props.theme.ui.eventCard.image.color};

@@ -1,8 +1,8 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render } from '../../util/test-utils';
-import BetaDashboard from '../../pages/BetaDashboard';
-import { mockGAEvent } from '../../setupTests';
+import { render } from 'src/util/test-utils';
+import BetaDashboard from 'src/pages/BetaDashboard';
+import { mockGAEvent } from 'src/setupTests';
 import { PageContents, ReleaseNotes } from '@osu-wams/hooks';
 
 const mockPageContent = PageContents.mockPageContents;
@@ -15,7 +15,7 @@ jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
     usePageContent: () => mockUsePageContent(),
-    useReleaseNotes: () => mockUseReleaseNotes()
+    useReleaseNotes: () => mockUseReleaseNotes(),
   };
 });
 

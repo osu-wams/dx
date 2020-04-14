@@ -1,10 +1,10 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, mockAppContext } from '../../util/test-utils';
+import { render, mockAppContext } from 'src/util/test-utils';
 import { Student } from '@osu-wams/hooks';
 import Courses from '../Courses';
-import { mockGAEvent } from '../../setupTests';
-import { format } from '../../util/helpers';
+import { mockGAEvent } from 'src/setupTests';
+import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
 
 const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
@@ -13,7 +13,7 @@ const mockUseCourseSchedule = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useCourseSchedule: () => mockUseCourseSchedule()
+    useCourseSchedule: () => mockUseCourseSchedule(),
   };
 });
 
@@ -37,14 +37,14 @@ describe('<Courses />', () => {
   it('renders a list of sorted courses for the current user', async () => {
     const { findAllByTestId } = render(<Courses />);
     const courses = await findAllByTestId('course-list-item-header');
-    expect(courses.map(c => c.textContent)).toStrictEqual([
+    expect(courses.map((c) => c.textContent)).toStrictEqual([
       'CS261',
       'CS262',
       'CS290',
       'ED408',
       'PH212',
       'PH222',
-      'WR214'
+      'WR214',
     ]);
   });
 });
@@ -142,7 +142,7 @@ describe('with an InfoButton in the CardFooter', () => {
 
   it('displays the button when the infoButtonData is included', async () => {
     mockAppContext.infoButtonData = [
-      { id: validIinfoButtonId, content: 'content', title: 'title' }
+      { id: validIinfoButtonId, content: 'content', title: 'title' },
     ];
     const { getByTestId } = render(<Courses />, { appContext: mockAppContext });
     const element = getByTestId(validIinfoButtonId);

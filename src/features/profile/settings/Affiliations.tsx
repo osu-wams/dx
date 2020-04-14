@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { Fieldset, Legend, FormGroup } from '../../../ui/forms';
+import styled from 'styled-components/macro';
+import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
-import { styled, themeSettings } from '../../../theme';
+import { themeSettings } from 'src/theme';
 import { AppContext } from 'src/contexts/app-context';
 
 const { postSettings, usersSettings, settingIsOverridden } = User;
@@ -25,7 +26,7 @@ export const SwitchesGroup = () => {
       setState({
         firstYear: firstYear ?? false,
         graduate: graduate ?? false,
-        international: international ?? false
+        international: international ?? false,
       });
     }
   }, [user.data]);
@@ -35,10 +36,10 @@ export const SwitchesGroup = () => {
     const settings = usersSettings(user.data);
     settings.audienceOverride![name] = checked;
 
-    postSettings({ audienceOverride: settings.audienceOverride }).then(d => {
+    postSettings({ audienceOverride: settings.audienceOverride }).then((d) => {
       user.setUser({
         ...user,
-        data: { ...user.data, ...settings }
+        data: { ...user.data, ...settings },
       });
     });
   };

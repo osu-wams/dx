@@ -4,8 +4,8 @@ import {
   Highlight,
   HighlightTitle,
   HighlightEmphasis,
-  HighlightDescription
-} from '../../ui/Highlights';
+  HighlightDescription,
+} from 'src/ui/Highlights';
 import { useGpa } from '@osu-wams/hooks';
 
 export const StudentGpa: React.FC = () => {

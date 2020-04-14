@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { styled, themeSettings } from 'src/theme';
+import styled from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
 import { Event } from 'src/util/gaTracking';
 
 const Badge = styled.a`

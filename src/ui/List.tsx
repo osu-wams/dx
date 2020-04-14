@@ -1,5 +1,6 @@
 import React from 'react';
-import { themeSettings, styled } from '../theme';
+import styled from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
 
 type SpacedList = {
   spaced?: boolean;
@@ -15,7 +16,7 @@ const List = styled.ul`
 const ListItem = styled.li<SpacedList>`
   list-style-type: none;
   &:last-child {
-    margin-bottom: ${props => (props.spaced ? 0 : themeSettings.spacing.unit * 2)}px;
+    margin-bottom: ${(props) => (props.spaced ? 0 : themeSettings.spacing.unit * 2)}px;
   }
   & > button {
     /* cursor only on buttons, not divs */
@@ -55,8 +56,8 @@ const ListItemContent = styled.div<SpacedList>`
   border: none;
   border-radius: 8px;
   transition: all 150ms ease-in-out 0s;
-  padding: ${props => (props.spaced ? themeSettings.spacing.unit * 2 : 12)}px
-    ${props => (props.spaced ? themeSettings.spacing.unit * 2 : 12)}px;
+  padding: ${(props) => (props.spaced ? themeSettings.spacing.unit * 2 : 12)}px
+    ${(props) => (props.spaced ? themeSettings.spacing.unit * 2 : 12)}px;
   svg,
   img {
     height: 3rem;
@@ -128,7 +129,7 @@ const ListItemHeader = styled.h4`
 
 const ListItemDescription = styled.div<{ fontSize?: string; color?: string }>`
   color: ${({ color, theme }) => (color ? color : theme.ui.list.item.description.color)};
-  font-size: ${props => (props.fontSize ? props.fontSize : themeSettings.fontSize[14])};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : themeSettings.fontSize[14])};
   line-height: 1.6rem;
 `;
 
@@ -157,5 +158,5 @@ export {
   ListItemText,
   ListItemHeader,
   ListItemDescription,
-  ListItemLeadText
+  ListItemLeadText,
 };

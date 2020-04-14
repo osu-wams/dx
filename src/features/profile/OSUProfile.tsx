@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import { faEnvelope, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import Skeleton from 'react-loading-skeleton';
 import { usePerson } from '@osu-wams/hooks';
-import PlainCard from '../../ui/PlainCard';
-import { ThemeContext } from '../../theme';
+import PlainCard from 'src/ui/PlainCard';
 import { ContactInfo, PairData, PersonName, renderPhone } from './osuprofile/osuprofile-utils';
 import { ProfileAddress } from './osuprofile/ProfileAddress';
 import { PersonsAttributes } from '@osu-wams/hooks/dist/api/person/persons';
@@ -37,7 +37,7 @@ const renderProfile = (
     primaryPhone,
     homePhone,
     mobilePhone,
-    email
+    email,
   }: PersonsAttributes,
   iconColor: string
 ) => {

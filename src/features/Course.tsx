@@ -1,10 +1,11 @@
 import React, { FC, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
+import styled, { ThemeContext } from 'styled-components/macro';
 import ReactGA from 'react-ga';
 import generateId from 'uuid/v4';
 import { faMapMarkerAlt, faEnvelope } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../ui/Icon';
-import { CloseButton } from '../ui/Button';
+import { CloseButton } from 'src/ui/Button';
 import {
   List,
   ListItem,
@@ -12,23 +13,23 @@ import {
   ListItemText,
   ListItemHeader,
   ListItemDescription,
-  ListItemLeadText
-} from '../ui/List';
-import MyDialog, { MyDialogFooter, MyDialogHeader } from '../ui/MyDialog';
-import { titleCase, formatTime, format, singularPlural } from '../util/helpers';
+  ListItemLeadText,
+} from 'src/ui/List';
+import MyDialog, { MyDialogFooter, MyDialogHeader } from 'src/ui/MyDialog';
+import { titleCase, formatTime, format, singularPlural } from 'src/util/helpers';
 import { getIconByScheduleType } from './course-utils';
-import Divider from '../ui/Divider';
-import { ExternalLink } from '../ui/Link';
-import Url from '../util/externalUrls.data';
-import { Event } from '../util/gaTracking';
+import Divider from 'src/ui/Divider';
+import { ExternalLink } from 'src/ui/Link';
+import Url from 'src/util/externalUrls.data';
+import { Event } from 'src/util/gaTracking';
 import {
   ICoursesMap,
   exceptMeetingTypes,
   meetingTimeOnCorvallisCampus,
   onlyMeetingTypes,
-  examName
+  examName,
 } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
-import { ThemeContext, themeSettings, ThemeConfiguration, styled } from '../theme';
+import { themeSettings, ThemeConfiguration } from 'src/theme';
 import { Faculty, MeetingTime } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 interface ICourse {
@@ -69,7 +70,7 @@ const MapLink = styled(FacultyLink)`
 const meetingDateTime = (meetingTime: MeetingTime): string => {
   const date =
     meetingTime.beginDate !== meetingTime.endDate
-      ? meetingTime.weeklySchedule.map(day => day)
+      ? meetingTime.weeklySchedule.map((day) => day)
       : format(meetingTime.beginDate, 'MMMM d');
   const time =
     meetingTime.beginTime &&
@@ -193,7 +194,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
         <div key={generateId()} style={{ padding: '0.5rem' }}>
           {index > 0 && <Divider />}
           <List>
-            {exceptMeetingTypes(course.attributes.meetingTimes, ['MID', 'FNL']).map(m =>
+            {exceptMeetingTypes(course.attributes.meetingTimes, ['MID', 'FNL']).map((m) =>
               meetingTimeListItem(m, themeContext)
             )}
           </List>
@@ -215,7 +216,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
                 </ListItemText>
               </ListItemContent>
             </CourseListItem>
-            {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL']).map(m => (
+            {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL']).map((m) => (
               <CourseListItem key={generateId()}>
                 <ListItemContent>
                   <ListItemText>

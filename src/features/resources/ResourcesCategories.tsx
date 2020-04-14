@@ -1,5 +1,6 @@
 import React from 'react';
-import { themeSettings, styled } from 'src/theme';
+import styled from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
 import CustomBtn from 'src/ui/CustomBtn';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
@@ -13,7 +14,7 @@ const ResourceCategories = ({
   setQuery,
   selectedCategory,
   setSelectedCategory,
-  hasFavorite
+  hasFavorite,
 }) => {
   return (
     <CategoriesWrapper>

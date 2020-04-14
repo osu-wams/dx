@@ -1,10 +1,10 @@
 import React from 'react';
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithUserContext, renderWithAllContexts } from '../../util/test-utils';
+import { renderWithUserContext, renderWithAllContexts } from 'src/util/test-utils';
 import Footer from '../Footer';
-import { mockGAEvent } from '../../setupTests';
-import { authUser } from '../../util/test-utils';
+import { mockGAEvent } from 'src/setupTests';
+import { authUser } from 'src/util/test-utils';
 
 const mockGetMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
@@ -14,8 +14,8 @@ jest.mock('@osu-wams/hooks', () => {
     ...jest.requireActual('@osu-wams/hooks'),
     Masquerade: {
       getMasqueradeUser: () => mockGetMasqueradeUser(),
-      postMasqueradeUser: () => mockPostMasqueradeUser()
-    }
+      postMasqueradeUser: () => mockPostMasqueradeUser(),
+    },
   };
 });
 

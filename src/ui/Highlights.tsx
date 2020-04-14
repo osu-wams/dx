@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
-import { themeSettings, styled } from '../theme';
-import { CardBase } from '../ui/Card';
+import styled, { css } from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
+import { CardBase } from 'src/ui/Card';
 
 const HighlightsCard = styled(CardBase)`
   padding: ${themeSettings.spacing.unit * 2}px;
@@ -20,7 +20,7 @@ interface IHighlight {
 }
 
 const Highlight = styled.div<IHighlight>`
-  text-align: ${props => (props.textAlignLeft ? 'left' : 'center')};
+  text-align: ${(props) => (props.textAlignLeft ? 'left' : 'center')};
   & + div {
     margin-top: 1.2rem;
   }
@@ -32,7 +32,7 @@ const HighlightTitle = styled.h2<{ marginTop?: number }>`
   font-weight: 600;
   margin-bottom: 0;
   padding: 0 1.6rem;
-  ${props =>
+  ${(props) =>
     props.marginTop !== undefined &&
     css`
       margin-top: ${props.marginTop as number};
@@ -40,13 +40,13 @@ const HighlightTitle = styled.h2<{ marginTop?: number }>`
 `;
 
 const HighlightEmphasisInline = styled.em<{ color?: string }>`
-  color: ${props => props.color || props.theme.ui.highlights.emphasisInline.color};
+  color: ${(props) => props.color || props.theme.ui.highlights.emphasisInline.color};
   font-style: normal;
   font-weight: bold;
 `;
 
 const HighlightEmphasis = styled.div<{ color?: string }>`
-  color: ${props => props.color || props.theme.ui.highlights.emphasis.color};
+  color: ${(props) => props.color || props.theme.ui.highlights.emphasis.color};
   font-size: ${themeSettings.fontSize[24]};
   padding: 0 1.6rem;
 `;
@@ -63,5 +63,5 @@ export {
   HighlightTitle,
   HighlightEmphasis,
   HighlightEmphasisInline,
-  HighlightDescription
+  HighlightDescription,
 };

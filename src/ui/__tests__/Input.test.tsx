@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import Label from '../Label';
 import Input from '../Input';
 

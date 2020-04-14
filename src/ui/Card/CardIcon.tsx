@@ -1,6 +1,7 @@
 import React, { FC, useContext } from 'react';
 import { IconDefinition } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings, styled, ThemeContext } from '../../theme';
+import styled, { ThemeContext } from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
 import Icon from '../Icon';
 
 const CardIcon: FC<{ icon: IconDefinition; count?: number }> = ({ icon, count }) => {

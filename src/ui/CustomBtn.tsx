@@ -1,5 +1,6 @@
 import React, { FC, InputHTMLAttributes } from 'react';
-import { themeSettings, styled } from '../theme';
+import styled from 'styled-components/macro';
+import { themeSettings } from '../theme';
 
 interface BtnProps {
   text: string;
@@ -13,7 +14,7 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
   id,
   icon,
   clickHandler,
-  selected
+  selected,
 }) => (
   <StyledBtn id={id} onClick={clickHandler} className={selected ? 'selected' : ''}>
     <CustomLabel htmlFor={id} selected={selected}>

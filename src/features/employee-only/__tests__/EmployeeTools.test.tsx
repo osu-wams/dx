@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { render } from '../../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import { EmployeeTools } from '../EmployeeTools';
-import { mockGAEvent } from '../../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 it('Should have Empcenter and Evals links that are tracked via GA', async () => {
   const { getByText } = render(<EmployeeTools />);

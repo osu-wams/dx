@@ -1,4 +1,5 @@
-import { themeSettings, breakpoints, styled, shadows } from '../../theme';
+import styled from 'styled-components/macro';
+import { themeSettings, breakpoints, shadows } from 'src/theme';
 import { MenuList, MenuButton } from '@reach/menu-button';
 
 const HeaderNavButton = styled(MenuButton)`

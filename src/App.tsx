@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Router, Location, RouteComponentProps } from '@reach/router';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components/macro';
 import posed, { PoseGroup } from 'react-pose';
 import ReactGA from 'react-ga';
 import { InitialAppContext, IAppContext, AppContext } from './contexts/app-context';
@@ -17,7 +17,7 @@ import Footer from './ui/Footer';
 import { useUser } from '@osu-wams/hooks';
 import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
-import { styled, GlobalStyles } from './theme';
+import { GlobalStyles } from './theme';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -36,7 +36,7 @@ const PageGridWrapper = styled.div`
 
 const RouteContainer = posed(PageGridWrapper)({
   enter: { opacity: 1, delay: 100, beforeChildren: true },
-  exit: { opacity: 0 }
+  exit: { opacity: 0 },
 });
 
 interface AppProps {
@@ -53,18 +53,18 @@ const App = (props: AppProps) => {
   const [theme, setTheme] = useState<string>(defaultTheme);
   const [appContext, setAppContext] = useState<IAppContext>({
     ...InitialAppContext,
-    setTheme
+    setTheme,
   });
   const containerElementRef = useRef(props.containerElement);
 
   /* eslint-disable react-hooks/exhaustive-deps  */
   useEffect(() => {
-    setAppContext(previous => ({
+    setAppContext((previous) => ({
       ...previous,
       user: user,
       infoButtonData: infoButtons.data,
       appVersions: appVersions.data,
-      selectedTheme: user.data?.theme ?? theme
+      selectedTheme: user.data?.theme ?? theme,
     }));
 
     setTheme(user.data?.theme ?? theme);
@@ -76,7 +76,7 @@ const App = (props: AppProps) => {
     // Manage focus styles on keyboard navigable elements.
     //   - Add focus styles if tab used to navigate.
     //   - Start listening for clicks to remove focus styles.
-    const handleTabOnce = e => {
+    const handleTabOnce = (e) => {
       if (e.key === 'Tab') {
         document.body.classList.add('user-is-tabbing');
         window.removeEventListener('keydown', handleTabOnce);

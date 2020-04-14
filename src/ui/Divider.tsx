@@ -1,4 +1,4 @@
-import { styled } from '../theme';
+import styled from 'styled-components/macro';
 
 const Divider = styled.hr`
   border: none;

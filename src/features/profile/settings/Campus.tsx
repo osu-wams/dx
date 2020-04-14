@@ -2,10 +2,11 @@ import React, { useContext, useState, useEffect } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Fieldset, Legend } from '../../../ui/forms';
+import styled from 'styled-components/macro';
+import { Fieldset, Legend } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
-import { titleCase } from '../../../util/helpers';
-import { styled, themeSettings } from '../../../theme';
+import { titleCase } from 'src/util/helpers';
+import { themeSettings } from 'src/theme';
 import { AppContext } from 'src/contexts/app-context';
 
 const { CAMPUS_CODES, postSettings, settingIsDefault, usersSettings, DEFAULT_CAMPUS } = User;
@@ -30,10 +31,10 @@ export const RadioButtonsGroup = () => {
     const settings = usersSettings(user.data);
     settings.audienceOverride!.campusCode = selectedValue;
 
-    postSettings({ audienceOverride: settings.audienceOverride }).then(d => {
+    postSettings({ audienceOverride: settings.audienceOverride }).then((d) => {
       user.setUser({
         ...user,
-        data: { ...user.data, ...settings }
+        data: { ...user.data, ...settings },
       });
     });
   };
@@ -42,7 +43,7 @@ export const RadioButtonsGroup = () => {
     <Fieldset>
       <Legend>Campus</Legend>
       <RadioGroup aria-label="campus" name="campus" value={value} onChange={handleChange}>
-        {Object.keys(CAMPUS_CODES).map(key => (
+        {Object.keys(CAMPUS_CODES).map((key) => (
           <FormControlLabel
             key={key}
             value={CAMPUS_CODES[key]}

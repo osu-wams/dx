@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import ErrorBoundary from '../ErrorBoundary';
 
 const ComponentWithError = () => {
@@ -15,8 +15,8 @@ const mockedErrorCallback = jest.fn();
 jest.mock('@osu-wams/hooks', () => ({
   ...jest.requireActual('@osu-wams/hooks'),
   Errors: {
-    postError: () => mockedPostError()
-  }
+    postError: () => mockedPostError(),
+  },
 }));
 
 beforeEach(() => {

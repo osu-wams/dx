@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { InfoButton } from '../Button';
-import { themeSettings, styled } from '../../theme';
+import styled from 'styled-components/macro';
+import { InfoButton } from 'src/ui/Button';
+import { themeSettings } from 'src/theme';
 import { ICollapse } from './ICollapse';
 import { CardContext } from './Card';
 
@@ -25,7 +26,7 @@ const CardFooter = ({ ...props }) => {
 
 const CardFooterWrapper = styled.div<ICollapse>`
   padding: ${themeSettings.spacing.unit * 2}px;
-  ${props =>
+  ${(props) =>
     props.collapsible &&
     `
     height: ${props.collapsed ? 0 : 'auto'};

@@ -1,10 +1,10 @@
 import React from 'react';
 import { faStars } from '@fortawesome/pro-light-svg-icons';
-import PageTitle from '../../ui/PageTitle';
-import ScheduleCard from '../../features/ScheduleCard';
-import EventCardContainer from '../../ui/EventCardContainer';
-import { MainGridWrapper, Masonry } from '../../theme';
-import ResourcesCard from '../../features/ResourcesCard';
+import PageTitle from 'src/ui/PageTitle';
+import ScheduleCard from 'src/features/ScheduleCard';
+import EventCardContainer from 'src/ui/EventCardContainer';
+import { MainGridWrapper, Masonry } from 'src/theme';
+import ResourcesCard from 'src/features/ResourcesCard';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { TrendingResources } from 'src/features/TrendingResources';
 

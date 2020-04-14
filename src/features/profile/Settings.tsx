@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { faUserCog } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon, CardFooter } from '../../ui/Card';
+import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
 import Affiliations from './settings/Affiliations';
 import Theme from './settings/Theme';
 import Campus from './settings/Campus';
 import { ThemeProvider } from '@material-ui/core/styles';
-import MUITheme from '../../ui/MUITheme';
+import MUITheme from 'src/ui/MUITheme';
 
 const Settings: FC = () => {
   return (

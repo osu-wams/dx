@@ -1,7 +1,7 @@
 import React from 'react';
 import { faHome, faToolbox, faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
-import { Event } from '../../util/gaTracking';
+import { Event } from 'src/util/gaTracking';
 import { Nav, NavLink } from './MainNavStyles';
 
 const MainNavEmployee = (...props) => {

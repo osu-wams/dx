@@ -1,6 +1,6 @@
 import { addDays, eachDayOfInterval } from 'date-fns';
 import { isNullOrUndefined } from 'util';
-import { format } from '../../util/helpers';
+import { format } from 'src/util/helpers';
 import { MeetingTime, CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 export interface ICoursesMap {
@@ -44,9 +44,9 @@ export const getDayShortcode = (date: Date) => {
  * @returns ICourseSchedule[] - an array of courses
  */
 export const currentCourses = (courses: CourseSchedule[]): CourseSchedule[] => {
-  return courses.filter(c =>
+  return courses.filter((c) =>
     c.attributes.meetingTimes.filter(
-      m => m.beginDate && Date.parse(m.beginDate.toString()) <= startDate()
+      (m) => m.beginDate && Date.parse(m.beginDate.toString()) <= startDate()
     )
   );
 };
@@ -62,9 +62,9 @@ export const coursesOnDay = (courses: CourseSchedule[], dayShortCode: string): C
   const dayCourses = currentCourses(
     sortedByBeginTime(
       courses.filter(
-        c =>
+        (c) =>
           c.attributes.meetingTimes.length > 0 &&
-          c.attributes.meetingTimes.find(m => {
+          c.attributes.meetingTimes.find((m) => {
             if ((m.room && m.room === 'MID') || (m.scheduleType && m.scheduleType === 'MID')) {
               // exclude midterms
               return false;
@@ -89,8 +89,8 @@ export const coursesOnDay = (courses: CourseSchedule[], dayShortCode: string): C
  */
 const sortedByBeginTime = (courses: CourseSchedule[]): CourseSchedule[] => {
   return courses.sort((a, b) => {
-    const aTimes = a.attributes.meetingTimes.map(m => m.beginTime).reduce((p, c) => p + c);
-    const bTimes = b.attributes.meetingTimes.map(m => m.beginTime).reduce((p, c) => p + c);
+    const aTimes = a.attributes.meetingTimes.map((m) => m.beginTime).reduce((p, c) => p + c);
+    const bTimes = b.attributes.meetingTimes.map((m) => m.beginTime).reduce((p, c) => p + c);
     return aTimes > bTimes ? 1 : aTimes < bTimes ? -1 : 0;
   });
 };
@@ -106,8 +106,9 @@ export const sortedGroupedByCourseName = (courses: CourseSchedule[]): Map<string
   // Reduce the courses list by accumulating an array of courses which have matching subject/number,
   // * example object returned might be { 'PSY400': [course,course,course], 'PSY410': [course] }
   const grouped: { [key: string]: CourseSchedule[] } = courses.reduce((groups, course) => {
-    const subjectNumber = `${course.attributes.courseSubject ?? ''}${course.attributes
-      .courseNumber ?? ''}`;
+    const subjectNumber = `${course.attributes.courseSubject ?? ''}${
+      course.attributes.courseNumber ?? ''
+    }`;
     groups[subjectNumber] = groups[subjectNumber] || [];
     groups[subjectNumber].push(course);
     return groups;
@@ -118,7 +119,7 @@ export const sortedGroupedByCourseName = (courses: CourseSchedule[]): Map<string
   const sorted: Map<string, ICoursesMap> = new Map();
   Object.keys(grouped)
     .sort()
-    .forEach(key =>
+    .forEach((key) =>
       sorted.set(key, {
         subject: grouped[key][0].attributes?.courseSubject ?? '',
         number: grouped[key][0].attributes?.courseNumber ?? '',
@@ -128,7 +129,7 @@ export const sortedGroupedByCourseName = (courses: CourseSchedule[]): Map<string
           (p, v) => p.concat(v.attributes.meetingTimes ?? ''),
           new Array<MeetingTime>()
         ),
-        creditHours: grouped[key].reduce((p, v) => (p += v.attributes.creditHours), 0)
+        creditHours: grouped[key].reduce((p, v) => (p += v.attributes.creditHours), 0),
       })
     );
   return sorted;
@@ -150,7 +151,7 @@ export const courseOnCorvallisCampus = (o: CourseSchedule | MeetingTime[]): bool
   }
   return !isNullOrUndefined(
     meetingTimes
-      .filter(m => !isNullOrUndefined(m))
+      .filter((m) => !isNullOrUndefined(m))
       .find((m: MeetingTime) => {
         return meetingTimeOnCorvallisCampus(m);
       })
@@ -168,7 +169,7 @@ export const meetingTimeOnCorvallisCampus = (m: MeetingTime): boolean => {
  * @param types scheduleType or meeting room to filter out
  */
 export const exceptMeetingTypes = (meetings: MeetingTime[], types: string[]): MeetingTime[] => {
-  return meetings.filter(meeting => {
+  return meetings.filter((meeting) => {
     if (types.includes(meeting.scheduleType) || types.includes(meeting.room)) {
       return false;
     }
@@ -183,7 +184,7 @@ export const exceptMeetingTypes = (meetings: MeetingTime[], types: string[]): Me
  * @param types scheduleType or meeting room to filter out
  */
 export const onlyMeetingTypes = (meetings: MeetingTime[], types: string[]): MeetingTime[] => {
-  return meetings.filter(meeting => {
+  return meetings.filter((meeting) => {
     if (types.includes(meeting.scheduleType) || types.includes(meeting.room)) {
       return true;
     }

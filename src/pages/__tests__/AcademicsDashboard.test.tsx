@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import AcademicsDashboard from '../Academics/AcademicsDashboard';
 import { waitForElement } from '@testing-library/dom';
 import { Announcements, Events, Resources, Student } from '@osu-wams/hooks';
@@ -27,7 +27,7 @@ jest.mock('@osu-wams/hooks', () => {
     useCourseSchedule: () => mockUseCourseSchedule(),
     useResourcesByQueue: () => mockUseResourcesByQueue(),
     useGpa: () => mockUseStudentGpa(),
-    useHolds: () => mockUseHolds()
+    useHolds: () => mockUseHolds(),
   };
 });
 

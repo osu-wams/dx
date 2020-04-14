@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
-import { themeSettings, styled, ThemeContext } from '../../theme';
-import Icon from '../Icon';
-import MyDialog from '../MyDialog';
+import styled, { ThemeContext } from 'styled-components/macro';
+import { themeSettings } from 'src/theme';
+import Icon from 'src/ui/Icon';
+import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from './index';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Button from './Button';
@@ -29,14 +30,14 @@ const DialogContent = styled.div`
   font-size: ${themeSettings.fontSize['14']};
 `;
 
-const InfoButton = props => {
+const InfoButton = (props) => {
   const themeContext = useContext(ThemeContext);
   const { infoButtonData } = useContext(AppContext);
   const [dialogVisible, toggleDialog] = useState(false);
   const [currentButton, setButton] = useState<InfoButtonState | null>(null);
 
   useEffect(() => {
-    const thisButton = infoButtonData.find(i => i.id === props.infoButtonId);
+    const thisButton = infoButtonData.find((i) => i.id === props.infoButtonId);
     if (thisButton) {
       setButton(thisButton);
     }

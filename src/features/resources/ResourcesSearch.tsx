@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
-import Icon from '../../ui/Icon';
-import { themeSettings, styled } from '../../theme';
-import { Event } from '../../util/gaTracking';
+import styled from 'styled-components/macro';
+import Icon from 'src/ui/Icon';
+import { themeSettings } from 'src/theme';
+import { Event } from 'src/util/gaTracking';
 
 const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }) => {
   useEffect(() => {
@@ -11,7 +12,7 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
     }
   }, [query]);
 
-  const handleChange = value => {
+  const handleChange = (value) => {
     setQuery(value);
     setSelectedCategory('all');
   };
@@ -24,7 +25,7 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
         placeholder="Find resources"
         value={query}
         id="resourcesSearch"
-        onChange={e => handleChange(e.target.value)}
+        onChange={(e) => handleChange(e.target.value)}
       />
     </SearchWrapper>
   );

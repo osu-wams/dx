@@ -1,6 +1,6 @@
 import React from 'react';
 import Finances from '../Finances';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import { Announcements, Person, Resources, Student } from '@osu-wams/hooks';
 
 const { resourcesCardData } = Resources.mockResources;
@@ -22,7 +22,7 @@ jest.mock('@osu-wams/hooks', () => {
     useAccountTransactions: () => mockUseAccountTransactions(),
     useAnnouncements: () => mockUseAnnouncements(),
     useMealPlans: () => mockUseMealPlans(),
-    useResourcesByQueue: () => mockUseResourcesByQueue()
+    useResourcesByQueue: () => mockUseResourcesByQueue(),
   };
 });
 

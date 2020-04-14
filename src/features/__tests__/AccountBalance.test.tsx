@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import AccountBalance from '../financial-overview/AccountBalance';
 import { Student } from '@osu-wams/hooks';
 
@@ -9,7 +9,7 @@ const mockUseAccountBalance = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useAccountBalance: () => mockUseAccountBalance()
+    useAccountBalance: () => mockUseAccountBalance(),
   };
 });
 

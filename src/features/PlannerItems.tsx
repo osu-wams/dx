@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components/macro';
 import Skeleton from 'react-loading-skeleton';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
@@ -10,7 +11,7 @@ import {
   ListItemContent,
   ListItemDescription,
   ListItemHeader,
-  ListItemText
+  ListItemText,
 } from '../ui/List';
 import { useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
@@ -19,7 +20,6 @@ import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { courseCodeOrIcon } from './Courses';
-import { ThemeContext } from '../theme';
 import { format } from '../util/helpers';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { AppContext } from 'src/contexts/app-context';
@@ -31,7 +31,7 @@ import { AppContext } from 'src/contexts/app-context';
  * If that's not there we add that ourselves. (Most links don't have it)
  *
  */
-const canvasUrl = url => {
+const canvasUrl = (url) => {
   if (!url) {
     return Url.canvas.main;
   }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { waitFor } from '@testing-library/react';
-import { render, authUser, mockEmployeeUser } from '../../util/test-utils';
+import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
-import ResourcesComponent from '../../pages/Resources';
-import { mockGAEvent, mockTrendingEvent } from '../../setupTests';
+import ResourcesComponent from 'src/pages/Resources';
+import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
 
 const mockUseResources = jest.fn();
@@ -21,8 +21,8 @@ jest.mock('@osu-wams/hooks', () => {
     defaultCategoryName: () => mockDefaultCategory(),
     Resources: {
       ...original.Resources,
-      postFavorite: () => mockPostFavorite()
-    }
+      postFavorite: () => mockPostFavorite(),
+    },
   };
 });
 
@@ -37,7 +37,7 @@ const renderResources = (userType?: any) => {
     utils = render(<ResourcesComponent />);
   } else {
     utils = render(<ResourcesComponent />, {
-      user: userType
+      user: userType,
     });
   }
   const featured = utils.getByLabelText('Featured');
@@ -50,7 +50,7 @@ const renderResources = (userType?: any) => {
     searchInput,
     featured,
     financial,
-    all
+    all,
   };
 };
 
@@ -158,11 +158,11 @@ describe('<Resources />', () => {
   it('should load a different category based on the URL parameter', async () => {
     let location = {
       ...window.location,
-      search: '?category=all'
+      search: '?category=all',
     };
     Object.defineProperty(window, 'location', {
       writable: true,
-      value: location
+      value: location,
     });
     const { findByText, featured, all } = renderResources();
 
@@ -192,7 +192,8 @@ describe('<Resources />', () => {
       );
       expect(el).toBeInTheDocument();
 
-      userEvent.click(el);
+      // checking for el to avoid element might be null error
+      el ? userEvent.click(el) : null;
       expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
       expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
       expect(mockGAEvent).toHaveBeenCalledTimes(2);

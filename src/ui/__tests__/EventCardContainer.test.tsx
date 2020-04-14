@@ -2,9 +2,9 @@ import React from 'react';
 import { cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EventCardContainer from '../EventCardContainer';
-import { render, mockEmployeeUser } from '../../util/test-utils';
+import { render, mockEmployeeUser } from 'src/util/test-utils';
 import { Announcements, Events } from '@osu-wams/hooks';
-import { mockGAEvent } from '../../setupTests';
+import { mockGAEvent } from 'src/setupTests';
 
 const { employeeEvents, studentExperienceEvents, studentExperienceEvents_10 } = Events.mockEvents;
 const { announcementsData, announcementsData_10 } = Announcements.mockAnnouncements;
@@ -21,7 +21,7 @@ jest.mock('@osu-wams/hooks', () => {
     useAnnouncements: () => mockUseAnnouncements(),
     useStudentExperienceEvents: () => mockUseStudentExperienceEvents(),
     useCampusEvents: () => mockUseCampusEvents(),
-    useEmployeeEvents: () => mockUseEmployeeEvents()
+    useEmployeeEvents: () => mockUseEmployeeEvents(),
   };
 });
 
@@ -49,7 +49,7 @@ describe('<EventCardContainer />', () => {
     const { findAllByTestId, getByText, queryByText } = render(
       <EventCardContainer page="dashboard" />,
       {
-        user: mockEmployeeUser
+        user: mockEmployeeUser,
       }
     );
     const events = await findAllByTestId('eventcard');
@@ -149,7 +149,7 @@ describe('<EventCardContainer />', () => {
       const { findAllByTestId, queryByText, getByText } = render(
         <EventCardContainer page="dashboard" />,
         {
-          user: mockEmployeeUser
+          user: mockEmployeeUser,
         }
       );
       await findAllByTestId('eventcard');

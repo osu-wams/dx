@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../../util/test-utils';
+import { render } from 'src/util/test-utils';
 import Alerts from '../Alerts';
 import { Alerts as alertsHooks } from '@osu-wams/hooks';
 
@@ -12,7 +12,7 @@ jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
     useDxAlerts: () => mockUseDxAlerts(),
-    useRaveAlerts: () => mockUseRaveAlerts()
+    useRaveAlerts: () => mockUseRaveAlerts(),
   };
 });
 

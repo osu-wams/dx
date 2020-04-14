@@ -1,7 +1,7 @@
 import React from 'react';
 import { faThLarge, faClock } from '@fortawesome/pro-light-svg-icons';
-import { SubNav, SubNavLink } from '../../ui/SubNav';
-import Icon from '../../ui/Icon';
+import { SubNav, SubNavLink } from 'src/ui/SubNav';
+import Icon from 'src/ui/Icon';
 
 const AcademicSubNav = () => {
   return (
