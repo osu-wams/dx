@@ -24,13 +24,21 @@ const IconCounter = styled.div`
   border-radius: ${(12 * (3 / 4)) / 10}rem;
 `;
 
-const IconStyle = styled(FontAwesomeIcon)<IconProps>`
-  color: ${(props) => props.color || props.theme.ui.icon.color};
-  background-color: ${(props) => props.bg || props.theme.ui.icon.background};
-  padding: ${(props) => (props.bg ? '.5rem' : '0')};
-  border-radius: ${(props) => (props.bg ? '50%' : '0')};
-  ${(props) => (props.fontSize ? `font-size: ${props.fontSize}` : '')}
-`;
+const IconStyle = styled(FontAwesomeIcon)<IconProps>(
+  ({ theme, color, bg }) => ({
+    color: color || theme.ui.icon.color,
+    backgroundColor: bg || theme.ui.icon.background,
+  }),
+  ({ bg }) =>
+    bg && {
+      padding: '.5rem',
+      borderRadius: '50%',
+    },
+  ({ fontSize }) =>
+    fontSize && {
+      fontSize: fontSize,
+    }
+);
 
 const Icon = (props: any) => {
   if (props.count !== undefined) {

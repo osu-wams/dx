@@ -4,8 +4,6 @@ exports[`Background color is orange-400 1`] = `
 .c1 {
   color: #D73F09;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 .c0 {
@@ -65,8 +63,6 @@ exports[`Background is orange-400, and text is white 1`] = `
 .c1 {
   color: #ffffff;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 .c0 {
@@ -126,8 +122,6 @@ exports[`Default options 1`] = `
 .c1 {
   color: #D73F09;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 .c0 {
@@ -187,8 +181,6 @@ exports[`Text color is pine-400 1`] = `
 .c1 {
   color: #D73F09;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 .c0 {

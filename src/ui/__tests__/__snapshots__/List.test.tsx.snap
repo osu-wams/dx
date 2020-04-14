@@ -83,8 +83,6 @@ exports[`An icon on the right 1`] = `
 .c6 {
   color: #F79572;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul
@@ -214,8 +212,6 @@ exports[`Default style with icon on left 1`] = `
 .c3 {
   color: #B7B1AF;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul
@@ -344,8 +340,6 @@ exports[`Icon on both left and right 1`] = `
 .c3 {
   color: #B7B1AF;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul

@@ -133,8 +133,6 @@ exports[`Renders default CloseButton with the SVG close icon 1`] = `
 .c2 {
   color: #B7B1AF;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 .c1 {
