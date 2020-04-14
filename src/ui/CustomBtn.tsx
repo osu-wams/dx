@@ -35,20 +35,25 @@ const Icon = styled.img`
   margin-right: 6px;
 `;
 
-const CustomLabel = styled('label')<{ selected: boolean }>`
-  background: ${({ theme, selected }) =>
-    selected ? theme.ui.button.custom.selectedBackground : theme.ui.button.custom.background};
-  color: ${({ theme, selected }) =>
-    selected ? theme.ui.button.custom.selectedColor : theme.ui.button.custom.color};
-  border: 1px solid ${({ theme }) => theme.ui.button.custom.border};
-  border-radius: 2rem;
-  display: flex;
-  align-items: center;
-  font-size: ${themeSettings.fontSize[12]};
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-  white-space: nowrap;
-  margin-bottom: 0.6rem;
-`;
+const CustomLabel = styled.label<{ selected: boolean }>(
+  ({ theme }) => ({
+    border: `1px solid ${theme.ui.button.custom.border}`,
+    borderRadius: '2rem',
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: themeSettings.fontSize[12],
+    padding: '0.4rem 0.8rem',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+    marginBottom: '0.6rem',
+    background: theme.ui.button.custom.background,
+    color: theme.ui.button.custom.color,
+  }),
+  ({ theme, selected }) =>
+    selected && {
+      background: theme.ui.button.custom.selectedBackground,
+      color: theme.ui.button.custom.selectedColor,
+    }
+);
 
 export default CustomBtn;

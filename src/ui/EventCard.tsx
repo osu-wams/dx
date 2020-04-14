@@ -3,7 +3,7 @@ import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { themeSettings, breakpoints } from 'src/theme';
+import { themeSettings, mq } from 'src/theme';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
 import { format } from 'src/util/helpers';
@@ -83,36 +83,35 @@ const EventCardText = styled.div`
   flex-grow: 2;
 `;
 
-const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>`
-  color: ${({ theme }) => theme.ui.eventCard.color};
-  background-color: ${({ theme }) => theme.ui.eventCard.background};
-  padding: ${themeSettings.spacing.unit * 2}px;
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  & ${EventCardTitle} {
-    color: ${({ theme }) => theme.ui.eventCard.title.color};
-  }
-  @media (min-width: ${breakpoints.small}) {
-    margin-bottom: 0;
-  }
-  ${(props) => {
-    if (props.imageUrl) {
-      return `
-        color: ${props.theme.ui.eventCard.image.color};
-        background: ${props.theme.ui.eventCard.image.background}, url(${props.imageUrl}) no-repeat center;
-        background-size: cover;
-        & ${EventCardTitle} {
-          color: ${props.theme.ui.eventCard.image.title.color};
-        }
-      `;
+const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>(
+  ({ theme }) => ({
+    color: theme.ui.eventCard.color,
+    backgroundColor: theme.ui.eventCard.background,
+    padding: `${themeSettings.spacing.unit * 2}px`,
+    minHeight: '220px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    margin: '0',
+    [EventCardTitle]: {
+      color: theme.ui.eventCard.title.color,
+    },
+    [mq.small]: {
+      marginBottom: '0',
+    },
+  }),
+  ({ theme, imageUrl }) =>
+    imageUrl && {
+      color: theme.ui.eventCard.image.color,
+      backgroundSize: 'cover',
+      background: `${theme.ui.eventCard.image.background}, url(${imageUrl})  no-repeat center`,
+      [EventCardTitle]: {
+        color: theme.ui.eventCard.image.title.color,
+      },
     }
-  }}
-`;
+);
 
 const EventCardBody = styled.a`
   :link,
