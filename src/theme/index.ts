@@ -1,4 +1,4 @@
-import { shadows, gradients, breakpoints, themeSettings } from './theme-settings';
+import { shadows, gradients, breakpoints, themeSettings, mq } from './theme-settings';
 import { Color } from './theme-colors';
 import type { ThemeConfiguration } from './theme-interface';
 import GlobalStyles from './GlobalStyles';
@@ -9,6 +9,7 @@ export {
   shadows,
   gradients,
   breakpoints,
+  mq,
   GlobalStyles,
   themeSettings,
   Color,
