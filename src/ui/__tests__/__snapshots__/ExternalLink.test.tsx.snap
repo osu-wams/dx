@@ -9,12 +9,13 @@ exports[`Background color is orange-400 1`] = `
 .c0 {
   -webkit-text-decoration: none;
   text-decoration: none;
+  color: #D73F09;
+  background-color: transparent;
   display: inline-block;
   padding: 0.4rem 0.8rem;
-  border-radius: 8px;
   background-color: #D73F09;
-  color: #D73F09;
-  font-weight: 300;
+  font-weight: 500;
+  border-radius: 8px;
 }
 
 .c0:hover,
@@ -22,10 +23,6 @@ exports[`Background color is orange-400 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
-}
-
-.c0.simple {
-  padding: 0;
 }
 
 .c0 > svg {
@@ -68,12 +65,13 @@ exports[`Background is orange-400, and text is white 1`] = `
 .c0 {
   -webkit-text-decoration: none;
   text-decoration: none;
+  color: #ffffff;
+  background-color: transparent;
   display: inline-block;
   padding: 0.4rem 0.8rem;
-  border-radius: 8px;
   background-color: #D73F09;
-  color: #ffffff;
-  font-weight: 300;
+  font-weight: 500;
+  border-radius: 8px;
 }
 
 .c0:hover,
@@ -81,10 +79,6 @@ exports[`Background is orange-400, and text is white 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
-}
-
-.c0.simple {
-  padding: 0;
 }
 
 .c0 > svg {
@@ -127,12 +121,10 @@ exports[`Default options 1`] = `
 .c0 {
   -webkit-text-decoration: none;
   text-decoration: none;
+  color: #D73F09;
+  background-color: transparent;
   display: inline-block;
   padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  background-color: transparent;
-  color: #D73F09;
-  font-weight: 500;
 }
 
 .c0:hover,
@@ -140,10 +132,6 @@ exports[`Default options 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
-}
-
-.c0.simple {
-  padding: 0;
 }
 
 .c0 > svg {
@@ -186,12 +174,13 @@ exports[`Text color is pine-400 1`] = `
 .c0 {
   -webkit-text-decoration: none;
   text-decoration: none;
+  color: #D73F09;
+  background-color: transparent;
   display: inline-block;
   padding: 0.4rem 0.8rem;
-  border-radius: 8px;
   background-color: #4A773C;
-  color: #D73F09;
-  font-weight: 300;
+  font-weight: 500;
+  border-radius: 8px;
 }
 
 .c0:hover,
@@ -199,10 +188,6 @@ exports[`Text color is pine-400 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
-}
-
-.c0.simple {
-  padding: 0;
 }
 
 .c0 > svg {
