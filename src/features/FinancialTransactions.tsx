@@ -76,7 +76,7 @@ const FinancialTransactions: FC = () => {
           <CardIcon icon={faMoneyBillWave} count={data?.attributes?.transactions?.length ?? 0} />
         }
       />
-      <CardContent className="flush">
+      <CardContent flush>
         {loading && <Skeleton count={5} />}
         {data?.attributes.transactions?.length ?? 0 ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">

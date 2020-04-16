@@ -84,7 +84,7 @@ const PastCourses = () => {
             {Object.keys(gradesByTerm).map((key, index) => (
               <HistoryCard key={index} collapsing={CardCollapse(index, query)}>
                 <CardHeader title={key} />
-                <CardContent className="flush">
+                <CardContent flush>
                   <Table variant="spacious" stretch>
                     <TableHeader>
                       <TableRow>

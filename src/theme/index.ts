@@ -1,4 +1,4 @@
-import { shadows, gradients, breakpoints, themeSettings, mq } from './theme-settings';
+import { shadows, gradients, breakpoints, spacing, themeSettings, mq } from './theme-settings';
 import { Color } from './theme-colors';
 import type { ThemeConfiguration } from './theme-interface';
 import GlobalStyles from './GlobalStyles';
@@ -7,6 +7,7 @@ import { Masonry } from './grid/Masonry';
 
 export {
   shadows,
+  spacing,
   gradients,
   breakpoints,
   mq,

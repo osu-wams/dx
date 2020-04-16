@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { spacing } from 'src/theme';
 import { ICollapse } from './ICollapse';
 import { CardContext } from './Card';
 
@@ -15,27 +15,23 @@ const CardContent = ({ ...props }) => {
       aria-labelledby={collapsed ? undefined : `${uuid}header`}
       aria-live={collapsed ? 'polite' : undefined}
       aria-atomic={collapsed ? true : undefined}
-      // Want to move this back to the CardContentWrapper at some point, but tests were failing
-      style={{ visibility: collapsible && collapsed ? 'collapse' : 'visible' }}
       {...props}
     />
   );
 };
 
-const CardContentWrapper = styled.div<ICollapse>`
-  padding: ${themeSettings.spacing.unit * 2}px;
-  ${(props) =>
-    props.collapsible &&
-    `
-    flex: ${props.collapsed ? 'none' : 1};
-    height: ${props.collapsed ? 0 : 'auto'};
-    padding: ${props.collapsed ? 0 : themeSettings.spacing.unit * 2}px;
-  `}
-  overflow: hidden;
-  /* Use this when you don't want margin or padding inside cards */
-  &.flush {
-    padding: 0;
-  }
-`;
+const CardContentWrapper = styled.div<ICollapse>(
+  ({ flush }) => ({
+    padding: flush ? 0 : spacing.default,
+    overflow: 'hidden',
+  }),
+  ({ collapsed, collapsible }) =>
+    collapsible && {
+      flex: collapsed ? 'none' : 1,
+      height: collapsed ? 0 : 'auto',
+      padding: collapsed ? 0 : spacing.default,
+      visibility: collapsed ? 'collapse' : 'visible',
+    }
+);
 
 export default CardContent;

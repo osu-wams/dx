@@ -95,7 +95,7 @@ describe('<Card />', () => {
   });
 
   it('should be collapsible on mobile view when collapsing prop is not defined or set to true', () => {
-    const { getByText, queryByTestId } = render(<StandardCard />);
+    const { getByText } = render(<StandardCard />);
 
     // the svg icon for collapsing cards should exist
     expect(getByText('Header').nextSibling).toBeInstanceOf(SVGSVGElement);
