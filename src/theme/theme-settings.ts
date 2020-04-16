@@ -27,9 +27,25 @@ export const mq = {
   large: `@media(min-width: ${breakpoints.large})`,
 };
 
+// All theme spacing changes based on this
+const unit = 8;
+
+export const spacing = {
+  xs: unit / 4 + 'px',
+  small: unit / 2 + 'px',
+  medium: unit + 'px',
+  default: unit * 2 + 'px',
+  large: unit * 3 + 'px',
+  xl: unit * 4 + 'px',
+  // Convenience methods for identical to default and XL
+  mobile: unit * 2 + 'px',
+  desktop: unit * 4 + 'px',
+};
+
 export const themeSettings = {
   spacing: {
     unit: 8,
+
     mobile: '1rem', // padding/padding or row/column gaps
     desktop: '3rem',
   },
