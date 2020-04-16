@@ -61,7 +61,7 @@ const HighlightExternalLink = ({ children, ...props }) => {
 };
 
 const SimpleExternalLink = ({ children, ...props }) => (
-  <LinkStyles {...props} target="_blank" style={{ padding: 0 }}>
+  <LinkStyles {...props} target="_blank" css={{ padding: 0 }}>
     {children}
   </LinkStyles>
 );
