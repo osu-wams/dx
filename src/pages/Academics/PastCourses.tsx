@@ -5,7 +5,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { useGrades } from '@osu-wams/hooks';
-import { themeSettings, breakpoints, MainGridWrapper, MainGrid } from 'src/theme';
+import { fontSize, spacing, breakpoints, MainGridWrapper, MainGrid } from 'src/theme';
 import Input from 'src/ui/Input';
 import Icon from 'src/ui/Icon';
 import PageTitle from 'src/ui/PageTitle';

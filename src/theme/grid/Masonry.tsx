@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints } from 'src/theme';
+import { spacing, breakpoints } from 'src/theme';
 
 const MasonryDiv = styled.div`
   @media (min-width: ${breakpoints.small}) {

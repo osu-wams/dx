@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints } from 'src/theme';
+import { spacing, breakpoints } from 'src/theme';
 
 /* Page Grid
  * Single column for mobile. 2 column for Desktop

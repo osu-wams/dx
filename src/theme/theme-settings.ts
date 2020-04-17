@@ -1,9 +1,3 @@
-/**
- * In order to use the css prop with typescript we need the line below somewhere in our code base
- * Allows for adding inline styles to html/css that get compiled to styled components
- */
-import * as types from 'styled-components/cssprop';
-
 export const shadows = {
   1: 'rgba(66, 62, 60, 0.1) 0px 10px 16px, rgba(105, 99, 97, 0.05) 0px 3px 16px',
   2: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)',
@@ -31,9 +25,11 @@ export const mq = {
 const unit = 8;
 
 export const spacing = {
+  unit, // keep unit for the rare math need
   xs: unit / 4 + 'px',
   small: unit / 2 + 'px',
   medium: unit + 'px',
+  xm: unit * 1.5 + 'px',
   default: unit * 2 + 'px',
   large: unit * 3 + 'px',
   xl: unit * 4 + 'px',
@@ -59,31 +55,4 @@ export const fontSize = {
   '26': '2.6rem',
   '36': '3.6rem',
   '58': '5.8rem',
-};
-
-// TODO: remove when done moving all out
-export const themeSettings = {
-  spacing: {
-    unit: 8,
-
-    mobile: '1rem', // padding/padding or row/column gaps
-    desktop: '3rem',
-  },
-  borderRadius: {
-    '4': '4px',
-    '8': '8px',
-    '16': '16px',
-  },
-  fontSize: {
-    '12': '1.2rem',
-    '14': '1.4rem',
-    '15': '1.5rem',
-    '16': '1.6rem',
-    '18': '1.8rem',
-    '20': '2.0rem',
-    '24': '2.4rem',
-    '26': '2.6rem',
-    '36': '3.6rem',
-    '58': '5.8rem',
-  },
 };
