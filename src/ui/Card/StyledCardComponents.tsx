@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints } from 'src/theme';
+import { borderRadius, spacing, breakpoints } from 'src/theme';
 
 interface IBadge {
   fg?: string;
@@ -61,7 +61,7 @@ const CardContentRow = styled.div<ICardContentRow>`
  * A cell intended to be used inside of a CardContentRow UI.
  */
 const CardContentCell = styled.div`
-  padding: ${spacing.unit * 2}px;
+  padding: ${spacing.default};
   flex-grow: 1;
   flex-basis: 0;
   & + div {

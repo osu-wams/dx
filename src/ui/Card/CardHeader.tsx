@@ -2,7 +2,7 @@ import React, { useContext, FC } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { ICollapse } from './ICollapse';
-import { themeSettings } from 'src/theme';
+import { spacing, fontSize } from 'src/theme';
 import styled from 'styled-components/macro';
 import { CardContext } from './Card';
 
@@ -29,7 +29,7 @@ const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props
       {badge}
       <span>{title}</span>
       {collapsible && (
-        <Icon icon={collapsed ? faChevronDown : faChevronUp} style={{ marginLeft: 'auto' }} />
+        <Icon icon={collapsed ? faChevronDown : faChevronUp} css={{ marginLeft: 'auto' }} />
       )}
     </CardHeaderWrapper>
   );
@@ -41,7 +41,7 @@ const CardHeaderWrapper = styled.h2<ICollapse>`
   font-size: ${fontSize[16]};
   height: 64px;
   width: 100%;
-  padding: ${spacing.unit * 2}px;
+  padding: ${spacing.default};
   display: flex;
   align-items: center;
   cursor: ${(props) => (props.collapsible ? 'pointer' : 'default')};
