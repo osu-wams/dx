@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import EventCard from './EventCard';
 import { Title } from 'src/ui/PageTitle';
 import { User } from '@osu-wams/hooks';
-import { themeSettings, breakpoints, SecondGridWrapper } from 'src/theme';
+import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 import { AppContext } from 'src/contexts/app-context';
 

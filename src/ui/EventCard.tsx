@@ -3,7 +3,7 @@ import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { themeSettings, mq } from 'src/theme';
+import { spacing, fontSize, mq } from 'src/theme';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
 import { format } from 'src/util/helpers';
@@ -18,14 +18,14 @@ const ButtonWithIcon = styled(Button).attrs({
     text-decoration: none;
   }
   & > svg {
-    margin-left: ${spacing.unit * 2}px;
+    margin-left: ${spacing.default};
   }
   align-self: flex-start;
 `;
 
 const EventCardTitle = styled.div`
   & > svg {
-    margin-left: ${spacing.unit * 2}px;
+    margin-left: ${spacing.default};
   }
   color: ${({ theme }) => theme.ui.eventCard.title.color};
   font-size: ${fontSize['18']};
@@ -79,7 +79,7 @@ const EventCardDate = ({ month, day }) => {
 
 const EventCardText = styled.div`
   font-size: ${fontSize['16']};
-  margin-bottom: ${spacing.unit * 2}px;
+  margin-bottom: ${spacing.default};
   flex-grow: 2;
 `;
 
@@ -87,7 +87,7 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>(
   ({ theme }) => ({
     color: theme.ui.eventCard.color,
     backgroundColor: theme.ui.eventCard.background,
-    padding: `${spacing.unit * 2}px`,
+    padding: spacing.default,
     minHeight: '220px',
     display: 'flex',
     flexDirection: 'column',

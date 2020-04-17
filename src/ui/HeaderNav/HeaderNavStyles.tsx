@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints, shadows } from 'src/theme';
+import { fontSize, spacing, borderRadius, breakpoints, shadows } from 'src/theme';
 import { MenuList, MenuButton } from '@reach/menu-button';
 
 const HeaderNavButton = styled(MenuButton)`
@@ -9,7 +9,7 @@ const HeaderNavButton = styled(MenuButton)`
   cursor: pointer;
   margin-left: 6px;
   > svg.fa-lg {
-    font-size: 2.4rem;
+    font-size: ${fontSize[24]};
   }
   @media (min-width: ${breakpoints.small}) {
     margin-left: 16px;
@@ -33,7 +33,7 @@ const HeaderNavList = styled(MenuList)`
     border-radius: ${borderRadius[8]};
     color: ${({ theme }) => theme.header.headerNavList.color};
     min-width: 15rem;
-    padding: 8px 0;
+    padding: ${spacing.medium} 0;
     border: none;
     box-shadow: ${shadows[1]};
     [data-reach-menu-item] {
@@ -67,7 +67,7 @@ const HeaderNavList = styled(MenuList)`
 `;
 
 const HeaderNavText = styled.span`
-  padding: 0 8px;
+  padding: 0 ${spacing.medium};
 `;
 
 export { HeaderNavText, HeaderNavList, HeaderNavButton, HeaderNavWrapper };

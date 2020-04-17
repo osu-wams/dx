@@ -1,6 +1,6 @@
 import { Link } from '@reach/router';
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints } from 'src/theme';
+import { fontSize, breakpoints, spacing } from 'src/theme';
 
 const Nav = styled.nav`
   position: fixed;
@@ -74,7 +74,7 @@ const NavLink = styled(Link)`
 `;
 
 const MobileMainNav = styled.nav`
-  padding-top: 12px;
+  padding-top: ${spacing.xm};
   display: block;
 `;
 
@@ -84,7 +84,7 @@ const MobileNavLink = styled(NavLink)`
   & > svg {
     padding-right: 10px;
     min-width: 34px;
-    font-size: 24px;
+    font-size: ${fontSize[24]};
   }
 `;
 
@@ -101,7 +101,7 @@ const MobileFooterLink = styled(NavLink)`
   padding: 10px 4px;
   & > svg {
     padding-right: 6px;
-    font-size: 20px;
+    font-size: ${fontSize[20]};
     min-width: 24px;
   }
   &[aria-current] {

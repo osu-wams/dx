@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { borderRadius, fontSize, spacing } from 'src/theme';
 
 const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>(
   ({ theme, fg, bg }) => ({
@@ -10,7 +10,7 @@ const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>(
     borderRadius: borderRadius[4],
     cursor: 'pointer',
     '& + &': {
-      marginLeft: spacing.unit + 'px',
+      marginLeft: spacing.medium,
     },
   }),
   ({ btnSize = 'normal' }) => btnVariants[btnSize]

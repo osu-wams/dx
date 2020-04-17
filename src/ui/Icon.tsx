@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { themeSettings } from '../theme';
+import { fontSize } from '../theme';
 
 type IconProps = {
   bg?: string;

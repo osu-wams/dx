@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import styled, { ThemeContext } from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
 import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from './index';

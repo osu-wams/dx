@@ -3,7 +3,7 @@ import { Link } from '@reach/router';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { faLongArrowRight, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { themeSettings } from 'src/theme';
+import { borderRadius, spacing, fontSize } from 'src/theme';
 
 const LinkStyles = styled.a<StyleProps>(
   ({ theme, fg }) => ({
@@ -17,7 +17,7 @@ const LinkStyles = styled.a<StyleProps>(
       marginLeft: '1.2rem',
     },
     display: 'inline-block',
-    padding: '0.4rem 0.8rem',
+    padding: spacing.small + ' ' + spacing.medium,
   }),
   ({ bg }) =>
     bg && {

@@ -1,6 +1,6 @@
 import React, { FC, InputHTMLAttributes } from 'react';
 import styled from 'styled-components/macro';
-import { themeSettings } from '../theme';
+import { fontSize } from '../theme';
 
 interface BtnProps {
   text: string;

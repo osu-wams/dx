@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import '@reach/dialog/styles.css';
 import { Event } from 'src/util/gaTracking';
 import Button from './Button';
-import { themeSettings, breakpoints } from 'src/theme';
+import { fontSize, borderRadius, breakpoints } from 'src/theme';
 import Icon from './Icon';
 import Url from 'src/util/externalUrls.data';
 import Masquerade from 'src/features/Masquerade';

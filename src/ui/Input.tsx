@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { spacing, fontSize, borderRadius } from 'src/theme';
 
 interface IInput
   extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
@@ -9,19 +9,19 @@ interface IInput
 function inputSize(color: string, size?: string) {
   if (size === 'small') {
     return `
-      padding: ${spacing.unit / 4}px ${spacing.unit / 2}px;
+      padding: ${spacing.xs} ${spacing.small};
       font-size: ${fontSize[14]};
       color: ${color}
     `;
   }
   if (size === 'large') {
     return `
-      padding: ${spacing.unit * 2}px ${spacing.unit * 4}px;
+      padding: ${spacing.default} ${spacing.xl};
       font-size: ${fontSize[18]};
     `;
   }
   return `
-      padding: ${spacing.unit}px ${spacing.unit * 2}px;
+      padding: ${spacing.medium} ${spacing.default};
       font-size: ${fontSize[16]};
     `;
 }

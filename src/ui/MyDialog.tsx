@@ -1,6 +1,6 @@
 import { Dialog } from '@reach/dialog';
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints } from 'src/theme';
+import { borderRadius, fontSize, spacing, breakpoints } from 'src/theme';
 
 const MyDialog = styled(Dialog)<{ padding?: string }>`
   background: ${({ theme }) => theme.ui.myDialog.background};
@@ -15,12 +15,12 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
     font-size: ${fontSize[24]};
     font-weight: 500;
     margin-bottom: 0;
-    margin-top: 0.5rem;
+    margin-top: ${spacing.small};
   }
   h3 {
     font-size: ${fontSize[16]};
     color: ${({ theme }) => theme.ui.myDialog.h3.color};
-    margin-bottom: 0.5rem;
+    margin-bottom: ${spacing.small};
   }
   .details {
     color: ${({ theme }) => theme.ui.myDialog.details.color};

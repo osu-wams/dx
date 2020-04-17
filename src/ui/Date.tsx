@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { themeSettings } from '../theme';
+import { fontSize } from '../theme';
 
 const Date = styled.div`
   margin: 0 auto;

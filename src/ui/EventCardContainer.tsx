@@ -8,7 +8,7 @@ import {
   useEmployeeEvents,
 } from '@osu-wams/hooks';
 import EventCard from './EventCard';
-import { themeSettings, breakpoints, SecondGridWrapper } from 'src/theme';
+import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 import { AppContext } from 'src/contexts/app-context';
 

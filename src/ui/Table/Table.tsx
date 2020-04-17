@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import styledMap from 'styled-map';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 
 interface ITable {
   striped?: boolean;

@@ -7,7 +7,7 @@ import cascadesLogo from 'src/assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { HeaderNav } from './HeaderNav';
-import { breakpoints, themeSettings } from 'src/theme';
+import { breakpoints, fontSize, spacing } from 'src/theme';
 import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
@@ -22,7 +22,7 @@ const HeaderWrapper = styled.div`
   background-color: ${({ theme }) => theme.header.background};
   justify-content: space-between;
   flex-flow: row wrap;
-  padding: 8px 8px 12px;
+  padding: ${spacing.medium} ${spacing.medium} ${spacing.unit * 1.5}px;
   align-items: center;
   @media (min-width: ${breakpoints.small}) {
     display: block;

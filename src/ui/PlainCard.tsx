@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/macro';
 import { Card, CardContent, CardFooter } from 'src/ui/Card';
-import { themeSettings } from 'src/theme';
+import { fontSize, spacing } from 'src/theme';
 
 const Header = styled.h2`
   color: ${({ theme }) => theme.ui.plainCard.header.color};
   font-weight: normal;
   font-size: ${fontSize[18]};
-  margin: 0 0 ${spacing.unit * 2}px 0;
+  margin: 0 0 ${spacing.default} 0;
 `;
 
 const PlainCard: FC<{ title?: string }> = ({ title, children, ...props }) => {
