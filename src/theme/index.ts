@@ -1,4 +1,12 @@
-import { shadows, gradients, breakpoints, spacing, themeSettings, mq } from './theme-settings';
+import {
+  shadows,
+  gradients,
+  breakpoints,
+  spacing,
+  fontSize,
+  borderRadius,
+  mq,
+} from './theme-settings';
 import { Color } from './theme-colors';
 import type { ThemeConfiguration } from './theme-interface';
 import GlobalStyles from './GlobalStyles';
@@ -12,7 +20,8 @@ export {
   breakpoints,
   mq,
   GlobalStyles,
-  themeSettings,
+  fontSize,
+  borderRadius,
   Color,
   MainGridWrapper,
   MainGrid,

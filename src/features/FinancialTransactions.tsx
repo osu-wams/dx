@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
 import { format, formatDollars } from 'src/util/helpers';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import { useAccountTransactions } from '@osu-wams/hooks';
 import { ExternalLink } from 'src/ui/Link';
 import Url from 'src/util/externalUrls.data';
@@ -26,12 +26,12 @@ const TransactionAmountHeader = styled(TableHeaderCell)`
 `;
 
 const TransactionName = styled.div`
-  font-size: ${themeSettings.fontSize[14]};
+  font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.features.finances.transactions.name.color};
 `;
 
 const TransactionDetail = styled.div`
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   color: ${({ theme }) => theme.features.finances.transactions.detail.color};
   text-transform: capitalize;
 `;
@@ -42,7 +42,7 @@ const TransactionAmount = styled(TableCell)`
 `;
 
 const TransactionNumber = styled.div<ITransactionAmount>`
-  font-size: ${themeSettings.fontSize[14]};
+  font-size: ${fontSize[14]};
   color: ${({ theme, transactionType }) =>
     transactionType === 'charge'
       ? theme.features.finances.transactions.amountCharge.color

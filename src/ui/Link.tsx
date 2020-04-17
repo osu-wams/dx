@@ -23,14 +23,14 @@ const LinkStyles = styled.a<StyleProps>(
     bg && {
       backgroundColor: bg,
       fontWeight: 500,
-      borderRadius: themeSettings.borderRadius[8],
+      borderRadius: borderRadius[8],
     }
 );
 
 const HighlightExternalLinkStyles = styled(LinkStyles)<StyleProps>(() => ({
   padding: 0,
   fontWeight: 600,
-  fontSize: themeSettings.fontSize[24],
+  fontSize: fontSize[24],
 }));
 
 type StyleProps = {

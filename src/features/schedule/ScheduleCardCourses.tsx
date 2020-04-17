@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ThemeContext } from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings, ThemeConfiguration } from 'src/theme';
+import { fontSize, ThemeConfiguration } from 'src/theme';
 import {
   CardSection,
   SectionHeader,
@@ -101,7 +101,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
           {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
           <ListItemText>
             <ListItemDescription
-              fontSize={themeSettings.fontSize[16]}
+              fontSize={fontSize[16]}
               color={themeContext.features.academics.courses.list.title.color}
             >
               {course.attributes.scheduleDescription} &bull; {meetingTimeDescription(meetingTime)}

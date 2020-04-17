@@ -13,11 +13,11 @@ const Date = styled.div`
 `;
 
 const DateDay = styled.div`
-  font-size: ${themeSettings.fontSize[24]};
+  font-size: ${fontSize[24]};
 `;
 
 const DateMonth = styled.div`
-  font-size: ${themeSettings.fontSize[14]};
+  font-size: ${fontSize[14]};
   text-transform: uppercase;
 `;
 

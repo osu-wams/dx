@@ -7,7 +7,7 @@ import {
   faQuestionCircle,
 } from '@fortawesome/pro-light-svg-icons';
 import { ListItem } from 'src/ui/List';
-import { themeSettings, ThemeConfiguration } from 'src/theme';
+import { fontSize, spacing, ThemeConfiguration } from 'src/theme';
 import Icon from 'src/ui/Icon';
 import { ICachetComponent } from '@osu-wams/hooks/dist/api/status';
 
@@ -29,16 +29,16 @@ const Status = styled.div`
 const FlexListItem = styled(ListItem)`
   display: flex;
   align-items: center;
-  padding: ${themeSettings.spacing.unit}px ${themeSettings.spacing.unit * 2}px;
+  padding: ${spacing.medium} ${spacing.default};
 `;
 
 const getIconProps = (
   component: ICachetComponent,
-  themeSettings,
+  fontSize,
   themeContext: ThemeConfiguration
 ): { icon: IconDefinition; color: string; fontSize: string } => {
   const props = {
-    fontSize: themeSettings.fontSize[24],
+    fontSize: fontSize[24],
   };
   switch (component.status) {
     case 1:
@@ -79,7 +79,7 @@ const ITSystemItem: React.FC<{ component: ICachetComponent }> = ({ component }) 
 
   return (
     <FlexListItem spaced>
-      <Icon {...getIconProps(component, themeSettings, themeContext)} />
+      <Icon {...getIconProps(component, fontSize, themeContext)} />
       <Container>
         <Name>{component.name}</Name>
         <Status>{component.statusText}</Status>

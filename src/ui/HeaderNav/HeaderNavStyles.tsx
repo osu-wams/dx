@@ -30,7 +30,7 @@ const HeaderNavWrapper = styled.div`
 const HeaderNavList = styled(MenuList)`
   &[data-reach-menu-list] {
     background-color: ${({ theme }) => theme.header.headerNavList.background};
-    border-radius: ${themeSettings.borderRadius[8]};
+    border-radius: ${borderRadius[8]};
     color: ${({ theme }) => theme.header.headerNavList.color};
     min-width: 15rem;
     padding: 8px 0;
@@ -40,7 +40,7 @@ const HeaderNavList = styled(MenuList)`
       background-color: ${({ theme }) => theme.header.headerNavList.background};
 
       padding: 1rem 2rem;
-      font-size: ${themeSettings.fontSize[16]};
+      font-size: ${fontSize[16]};
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -48,7 +48,7 @@ const HeaderNavList = styled(MenuList)`
     svg {
       color: ${({ theme }) => theme.header.headerNavList.svg.color};
       margin-right: 1.2rem;
-      font-size: ${themeSettings.fontSize[24]};
+      font-size: ${fontSize[24]};
     }
     div + div {
       [data-reach-menu-item] {

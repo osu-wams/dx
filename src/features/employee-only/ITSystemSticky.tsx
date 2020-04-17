@@ -6,7 +6,7 @@ import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
 import Url from 'src/util/externalUrls.data';
 import { ListItem } from 'src/ui/List';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import { format } from 'src/util/helpers';
 import Icon from 'src/ui/Icon';
 import { ICachetComponent, ICachetIncident } from '@osu-wams/hooks/dist/api/status';
@@ -18,7 +18,7 @@ const Header = styled.div`
 const Badge = styled.span`
   background-color: ${({ theme }) => theme.features.itStatus.sticky.badge.background};
   color: ${({ theme }) => theme.features.itStatus.sticky.badge.color};
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   vertical-align: middle;
   padding: 3px 6px;
   border-radius: 4px;
@@ -55,7 +55,7 @@ const ITSystemSticky: React.FC<{ components: ICachetComponent[] }> = ({ componen
           <ListItem spaced key={i.id}>
             <Header>
               <Icon
-                fontSize={themeSettings.fontSize[24]}
+                fontSize={fontSize[24]}
                 icon={faFlag}
                 color={themeContext.features.itStatus.sticky.icon.color}
               />

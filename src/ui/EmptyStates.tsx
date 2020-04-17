@@ -6,8 +6,7 @@ const EmptyState = styled.div`
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  padding: ${themeSettings.spacing.unit * 4}px ${themeSettings.spacing.unit * 8}px 0px
-    ${themeSettings.spacing.unit * 8}px;
+  padding: ${spacing.unit * 4}px ${spacing.unit * 8}px 0px ${spacing.unit * 8}px;
 `;
 
 const EmptyStateImage = styled.img`

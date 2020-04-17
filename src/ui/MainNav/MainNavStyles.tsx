@@ -39,7 +39,7 @@ const NavLink = styled(Link)`
   flex-direction: column;
   @media (min-width: ${breakpoints.small}) {
     flex-direction: row;
-    font-size: ${themeSettings.fontSize[14]};
+    font-size: ${fontSize[14]};
     padding: 10px 4px;
     & > svg {
       padding-right: 6px;
@@ -53,7 +53,7 @@ const NavLink = styled(Link)`
   margin: 0 8px;
   padding: 10px 4px 5px;
   line-height: 22px;
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   text-decoration: none;
   background-color: ${({ theme }) => theme.header.mainNavList.background};
   color: ${({ theme }) => theme.header.mainNavList.color};
@@ -80,7 +80,7 @@ const MobileMainNav = styled.nav`
 
 const MobileNavLink = styled(NavLink)`
   flex-direction: row;
-  font-size: ${themeSettings.fontSize[20]};
+  font-size: ${fontSize[20]};
   & > svg {
     padding-right: 10px;
     min-width: 34px;
@@ -96,7 +96,7 @@ const MobileFooter = styled(Nav)`
 
 const MobileFooterLink = styled(NavLink)`
   flex-direction: row;
-  font-size: ${themeSettings.fontSize[16]};
+  font-size: ${fontSize[16]};
 
   padding: 10px 4px;
   & > svg {

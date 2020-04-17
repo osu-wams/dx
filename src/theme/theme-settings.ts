@@ -42,6 +42,26 @@ export const spacing = {
   desktop: unit * 4 + 'px',
 };
 
+export const borderRadius = {
+  '4': '4px',
+  '8': '8px',
+  '16': '16px',
+};
+
+export const fontSize = {
+  '12': '1.2rem',
+  '14': '1.4rem',
+  '15': '1.5rem',
+  '16': '1.6rem',
+  '18': '1.8rem',
+  '20': '2.0rem',
+  '24': '2.4rem',
+  '26': '2.6rem',
+  '36': '3.6rem',
+  '58': '5.8rem',
+};
+
+// TODO: remove when done moving all out
 export const themeSettings = {
   spacing: {
     unit: 8,

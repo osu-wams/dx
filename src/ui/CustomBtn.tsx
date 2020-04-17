@@ -41,7 +41,7 @@ const CustomLabel = styled.label<{ selected: boolean }>(
     borderRadius: '2rem',
     display: 'flex',
     alignItems: 'center',
-    fontSize: themeSettings.fontSize[12],
+    fontSize: fontSize[12],
     padding: '0.4rem 0.8rem',
     cursor: 'pointer',
     whiteSpace: 'nowrap',

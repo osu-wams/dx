@@ -29,7 +29,7 @@ import {
   onlyMeetingTypes,
   examName,
 } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
-import { themeSettings, ThemeConfiguration } from 'src/theme';
+import { fontSize, spacing, ThemeConfiguration } from 'src/theme';
 import { Faculty, MeetingTime } from '@osu-wams/hooks/dist/api/student/courseSchedule';
 
 interface ICourse {
@@ -45,15 +45,15 @@ const CourseListItem = styled(ListItem)`
 `;
 
 const FacultyLink = styled.a`
-  font-size: ${themeSettings.fontSize[14]};
+  font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.features.academics.courses.dialog.faculty.link.color};
   text-decoration: none;
   svg {
-    margin-right: ${themeSettings.spacing.unit / 2}px;
+    margin-right: ${spacing.default};
     vertical-align: bottom;
-    width: ${themeSettings.fontSize[20]} !important;
-    height: ${themeSettings.fontSize[20]} !important;
-    font-size: ${themeSettings.fontSize[14]} !important;
+    width: ${fontSize[20]} !important;
+    height: ${fontSize[20]} !important;
+    font-size: ${fontSize[14]} !important;
   }
 `;
 
@@ -61,9 +61,9 @@ const MapLink = styled(FacultyLink)`
   color: ${({ theme }) => theme.features.academics.courses.dialog.map.link.color};
   svg {
     margin-right: 0;
-    font-size: ${themeSettings.fontSize[26]} !important;
-    width: ${themeSettings.fontSize[26]} !important;
-    height: ${themeSettings.fontSize[26]} !important;
+    font-size: ${fontSize[26]} !important;
+    width: ${fontSize[26]} !important;
+    height: ${fontSize[26]} !important;
   }
 `;
 
@@ -179,7 +179,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
           </ListItemLeadText>
           <ListItemText>
             <ListItemDescription
-              fontSize={themeSettings.fontSize[16]}
+              fontSize={fontSize[16]}
               color={themeContext.features.academics.courses.list.title.color}
             >
               {titleCase(coursesMap.title)}

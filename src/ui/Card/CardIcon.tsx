@@ -19,7 +19,7 @@ const CardIconWrapper = styled.div`
 `;
 
 const CardIconBase = styled(Icon)`
-  font-size: ${themeSettings.fontSize[24]};
+  font-size: ${fontSize[24]};
 `;
 
 export default CardIcon;

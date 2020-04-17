@@ -15,7 +15,7 @@ import {
 import coursesImg from '../assets/courses.svg';
 import Course from '../features/Course';
 import { titleCase, singularPlural } from '../util/helpers';
-import { themeSettings } from '../theme';
+import { fontSize } from '../theme';
 import { ExternalLink, InternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
@@ -79,7 +79,7 @@ const Courses = () => {
             {courseItemLeadText(coursesMap.subject, coursesMap.number)}
             <ListItemText>
               <ListItemDescription
-                fontSize={themeSettings.fontSize[16]}
+                fontSize={fontSize[16]}
                 color={themeContext.features.academics.courses.list.title.color}
               >
                 {titleCase(coursesMap.title)}

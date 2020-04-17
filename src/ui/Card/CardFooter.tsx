@@ -25,14 +25,12 @@ const CardFooter = ({ ...props }) => {
 };
 
 const CardFooterWrapper = styled.div<ICollapse>`
-  padding: ${themeSettings.spacing.unit * 2}px;
+  padding: ${spacing.unit * 2}px;
   ${(props) =>
     props.collapsible &&
     `
     height: ${props.collapsed ? 0 : 'auto'};
-    padding: ${
-      props.collapsed ? 0 : `${themeSettings.spacing.unit}px ${themeSettings.spacing.unit * 2}px`
-    };
+    padding: ${props.collapsed ? 0 : `${spacing.unit}px ${spacing.unit * 2}px`};
   `}
   overflow: hidden;
   display: flex;

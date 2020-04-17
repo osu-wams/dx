@@ -9,9 +9,9 @@ import { themeSettings, breakpoints } from 'src/theme';
 const MainGridWrapper = styled.div`
   border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
   background-color: ${({ theme }) => theme.mainGrid.background};
-  padding: 1rem ${themeSettings.spacing.mobile} 2rem;
+  padding: 1rem ${spacing.mobile} 2rem;
   @media (min-width: ${breakpoints.small}) {
-    padding: ${themeSettings.spacing.desktop};
+    padding: ${spacing.desktop};
   }
 `;
 const MainGrid = styled.div`
@@ -23,10 +23,10 @@ const MainGrid = styled.div`
 const SecondGridWrapper = styled.div`
   background-color: ${({ theme }) => theme.secondGrid.background};
   border-top: 1px solid ${({ theme }) => theme.secondGrid.borderTop};
-  padding: 2rem ${themeSettings.spacing.mobile};
+  padding: 2rem ${spacing.mobile};
   flex: 1; /* Fill all available vertical space */
   @media (min-width: ${breakpoints.small}) {
-    padding: 4rem ${themeSettings.spacing.desktop};
+    padding: 4rem ${spacing.desktop};
   }
 `;
 

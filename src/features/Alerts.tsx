@@ -11,11 +11,11 @@ import Icon from 'src/ui/Icon';
 import { format } from 'src/util/helpers';
 import { Types } from '@osu-wams/lib';
 import { useDxAlerts, useRaveAlerts } from '@osu-wams/hooks';
-import { themeSettings, breakpoints } from 'src/theme';
+import { fontSize, breakpoints } from 'src/theme';
 
 const AlertWrapper = styled.div`
   width: 100%;
-  font-size: ${themeSettings.fontSize[14]};
+  font-size: ${fontSize[14]};
   padding: 0;
   > div {
     margin-bottom: 0 !important;
@@ -47,7 +47,7 @@ const AlertHeader = styled(CardHeader)`
   padding: 0;
   height: auto;
   span {
-    font-size: ${themeSettings.fontSize[24]};
+    font-size: ${fontSize[24]};
   }
 `;
 const AlertContent = styled(CardContent)`

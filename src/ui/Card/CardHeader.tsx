@@ -38,10 +38,10 @@ const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props
 const CardHeaderWrapper = styled.h2<ICollapse>`
   margin: unset;
   font-weight: normal;
-  font-size: ${themeSettings.fontSize[16]};
+  font-size: ${fontSize[16]};
   height: 64px;
   width: 100%;
-  padding: ${themeSettings.spacing.unit * 2}px;
+  padding: ${spacing.unit * 2}px;
   display: flex;
   align-items: center;
   cursor: ${(props) => (props.collapsible ? 'pointer' : 'default')};

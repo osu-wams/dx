@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { fontSize, spacing } from 'src/theme';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
 import { usePageContent } from '@osu-wams/hooks';
 
@@ -24,7 +24,7 @@ const BetaInfo: FC = () => {
 
 const BetaTitle = styled.h3`
   color: ${({ theme }) => theme.features.beta.title.color};
-  font-size: ${themeSettings.fontSize['18']};
+  font-size: ${fontSize['18']};
   font-weight: normal;
   margin: 0px;
 `;
@@ -32,12 +32,12 @@ const BetaTitle = styled.h3`
 const DashboardBetaContent = styled.div`
   ul,
   ol {
-    margin: ${themeSettings.spacing.unit}px 0 0 0;
+    margin: ${spacing.default} 0 0 0;
     padding: 0 0 0 2.8rem;
-    font-size: ${themeSettings.fontSize[14]};
+    font-size: ${fontSize[14]};
   }
   li {
-    margin-bottom: ${themeSettings.spacing.unit}px;
+    margin-bottom: ${spacing.medium};
   }
   a {
     color: ${({ theme }) => theme.features.beta.title.color};

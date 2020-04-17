@@ -23,11 +23,11 @@ const DialogClose = styled(CloseButton)`
 
 const DialogTitle = styled.h2`
   flex-grow: 2;
-  font-size: ${themeSettings.fontSize['20']};
+  font-size: ${fontSize['20']};
 `;
 
 const DialogContent = styled.div`
-  font-size: ${themeSettings.fontSize['14']};
+  font-size: ${fontSize['14']};
 `;
 
 const InfoButton = (props) => {

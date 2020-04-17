@@ -228,7 +228,7 @@ const getInitialCategory = () => {
 };
 
 const ResourcesWrapper = styled(CardBase)`
-  padding: ${themeSettings.spacing.unit * 2}px;
+  padding: ${spacing.unit * 2}px;
 `;
 
 export default Resources;

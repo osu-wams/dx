@@ -7,10 +7,10 @@ const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>(
     backgroundColor: bg ?? theme.ui.button.background,
     color: fg ?? theme.ui.button.color,
     border: 'none',
-    borderRadius: themeSettings.borderRadius[4],
+    borderRadius: borderRadius[4],
     cursor: 'pointer',
     '& + &': {
-      marginLeft: themeSettings.spacing.unit + 'px',
+      marginLeft: spacing.unit + 'px',
     },
   }),
   ({ btnSize = 'normal' }) => btnVariants[btnSize]
@@ -30,11 +30,11 @@ const btnVariants = {
   },
   small: {
     padding: '.2rem .3rem',
-    fontSize: themeSettings.fontSize[14],
+    fontSize: fontSize[14],
   },
   large: {
     padding: '1rem 1.8rem',
-    fontSize: themeSettings.fontSize[18],
+    fontSize: fontSize[18],
   },
 };
 

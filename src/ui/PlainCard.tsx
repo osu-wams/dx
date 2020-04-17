@@ -6,8 +6,8 @@ import { themeSettings } from 'src/theme';
 const Header = styled.h2`
   color: ${({ theme }) => theme.ui.plainCard.header.color};
   font-weight: normal;
-  font-size: ${themeSettings.fontSize[18]};
-  margin: 0 0 ${themeSettings.spacing.unit * 2}px 0;
+  font-size: ${fontSize[18]};
+  margin: 0 0 ${spacing.unit * 2}px 0;
 `;
 
 const PlainCard: FC<{ title?: string }> = ({ title, children, ...props }) => {

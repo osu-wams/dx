@@ -18,23 +18,23 @@ const ButtonWithIcon = styled(Button).attrs({
     text-decoration: none;
   }
   & > svg {
-    margin-left: ${themeSettings.spacing.unit * 2}px;
+    margin-left: ${spacing.unit * 2}px;
   }
   align-self: flex-start;
 `;
 
 const EventCardTitle = styled.div`
   & > svg {
-    margin-left: ${themeSettings.spacing.unit * 2}px;
+    margin-left: ${spacing.unit * 2}px;
   }
   color: ${({ theme }) => theme.ui.eventCard.title.color};
-  font-size: ${themeSettings.fontSize['18']};
+  font-size: ${fontSize['18']};
   font-weight: 600;
 `;
 
 const EventCardLargeTitle = styled.div`
   color: ${({ theme }) => theme.ui.eventCard.largeTitle.color};
-  font-size: ${themeSettings.fontSize['24']};
+  font-size: ${fontSize['24']};
   font-weight: 300;
   text-align: center;
 `;
@@ -56,15 +56,15 @@ const EventCardDateStyling = styled.div`
   & > span:first-child {
     color: ${({ theme }) => theme.ui.eventCard.date.firstChild.color};
     font-weight: bold;
-    font-size: ${themeSettings.fontSize[12]};
+    font-size: ${fontSize[12]};
     text-transform: uppercase;
-    margin-bottom: ${themeSettings.spacing.unit * 0.5}px;
+    margin-bottom: ${spacing.unit * 0.5}px;
   }
 
   & > span:last-child {
     color: ${({ theme }) => theme.ui.eventCard.date.lastChild.color};
     line-height: 20px;
-    font-size: ${themeSettings.fontSize[24]};
+    font-size: ${fontSize[24]};
   }
 `;
 
@@ -78,8 +78,8 @@ const EventCardDate = ({ month, day }) => {
 };
 
 const EventCardText = styled.div`
-  font-size: ${themeSettings.fontSize['16']};
-  margin-bottom: ${themeSettings.spacing.unit * 2}px;
+  font-size: ${fontSize['16']};
+  margin-bottom: ${spacing.unit * 2}px;
   flex-grow: 2;
 `;
 
@@ -87,7 +87,7 @@ const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>(
   ({ theme }) => ({
     color: theme.ui.eventCard.color,
     backgroundColor: theme.ui.eventCard.background,
-    padding: `${themeSettings.spacing.unit * 2}px`,
+    padding: `${spacing.unit * 2}px`,
     minHeight: '220px',
     display: 'flex',
     flexDirection: 'column',

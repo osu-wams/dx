@@ -32,7 +32,7 @@ const HeaderWrapper = styled.div`
 
 const Navigation = styled.div`
   @media (min-width: ${breakpoints.small}) {
-    padding: 0 ${themeSettings.spacing.desktop};
+    padding: 0 ${spacing.desktop};
     /* match main gride color */
     border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
     /* navigation should blend with header background */
@@ -44,7 +44,7 @@ const SiteTitle = styled.header`
   display: none;
   @media (min-width: ${breakpoints.small}) {
     display: block;
-    font-size: ${themeSettings.fontSize[20]};
+    font-size: ${fontSize[20]};
     font-weight: 300;
     margin: 0 auto;
     text-align: center;
@@ -52,7 +52,7 @@ const SiteTitle = styled.header`
     margin-top: 20px;
   }
   @media (min-width: ${breakpoints.medium}) {
-    font-size: ${themeSettings.fontSize[26]};
+    font-size: ${fontSize[26]};
   }
   @media (min-width: 1750px) {
     text-align: left;

@@ -14,7 +14,7 @@ const IconWrapper = styled.div`
 `;
 
 const IconCounter = styled.div`
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   position: absolute;
   bottom: -${12 / 2 / 10}rem;
   right: -${12 / 2 / 10}rem;

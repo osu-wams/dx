@@ -147,13 +147,13 @@ const HistoryCard = styled(Card)`
 `;
 
 const ExcludedFromGPA = styled.div`
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   margin: 0 auto;
   text-align: center;
 `;
 
 const Grade = styled.span`
-  font-size: ${themeSettings.fontSize[24]};
+  font-size: ${fontSize[24]};
   color: ${({ theme }) => theme.features.academics.pastCourses.grade.color};
   display: block;
   text-align: center;
@@ -163,7 +163,7 @@ const CourseTitle = styled.span`
   color: ${({ theme }) => theme.features.academics.pastCourses.title.color};
 `;
 const CourseData = styled.div`
-  font-size: ${themeSettings.fontSize[14]};
+  font-size: ${fontSize[14]};
 `;
 
 const SearchWrapper = styled.div`
@@ -172,14 +172,14 @@ const SearchWrapper = styled.div`
     position: absolute;
     top: 2rem;
     right: 1.6rem;
-    font-size: ${themeSettings.fontSize[24]};
+    font-size: ${fontSize[24]};
   }
   margin-bottom: 2rem;
 `;
 const FilterInput = styled(Input)`
   width: 100%;
   padding: 1.6rem;
-  font-size: ${themeSettings.fontSize[24]};
+  font-size: ${fontSize[24]};
 `;
 
 const HistoryGrid = styled.div`
@@ -188,13 +188,13 @@ const HistoryGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: ${themeSettings.spacing.mobile};
+  grid-row-gap: ${spacing.mobile};
   grid-auto-rows: minmax(min-content, max-content);
   & > div {
     height: min-content;
   }
   @media screen and (min-width: ${breakpoints.small}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: ${themeSettings.spacing.desktop};
+    grid-gap: ${spacing.desktop};
   }
 `;

@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components/macro';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import { useReleaseNotes } from '@osu-wams/hooks';
 
 const BetaReleaseNotes: FC = () => {
@@ -23,7 +23,7 @@ const BetaReleaseNotes: FC = () => {
 
 const ReleaseTitle = styled.h3`
   color: ${({ theme }) => theme.features.beta.releaseNotes.title.color};
-  font-size: ${themeSettings.fontSize['18']};
+  font-size: ${fontSize['18']};
   font-weight: normal;
   margin: 0px;
 `;
@@ -31,7 +31,7 @@ const ReleaseTitle = styled.h3`
 const ReleaseSubtitle = styled.h4`
   margin: 0px;
   color: ${({ theme }) => theme.features.beta.releaseNotes.subTitle.color};
-  font-size: ${themeSettings.fontSize['14']};
+  font-size: ${fontSize['14']};
   font-weight: 600;
   line-height: 19px;
 `;

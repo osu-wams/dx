@@ -31,13 +31,13 @@ const Table = styled.table<ITable>`
       spacious: '1rem 2rem',
     })};
     font-size: ${styledMap('variant', {
-      spacious: `${themeSettings.fontSize[16]}`,
+      spacious: `${fontSize[16]}`,
     })};
   }
   th {
     color: ${({ theme }) => theme.ui.table.cell.color};
     font-weight: 600;
-    font-size: ${themeSettings.fontSize['14']};
+    font-size: ${fontSize['14']};
     border-bottom: 1px solid ${({ theme }) => theme.ui.table.cell.borderBottom};
     text-align: left;
     padding: ${styledMap('variant', {

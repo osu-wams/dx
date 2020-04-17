@@ -46,7 +46,7 @@ const FooterWrapper = styled.div`
 `;
 
 const FooterContent = styled.div`
-  font-size: ${themeSettings.fontSize[14]};
+  font-size: ${fontSize[14]};
 `;
 
 const FooterButtonWrapper = styled.div`
@@ -57,9 +57,9 @@ const FooterIconLink = styled.a`
   border: 1px solid ${({ theme }) => theme.footer.iconLink.border};
   display: inline-block;
   color: ${({ theme }) => theme.footer.iconLink.color};
-  border-radius: ${themeSettings.borderRadius[8]};
+  border-radius: ${borderRadius[8]};
   padding: 1.2rem;
-  font-size: ${themeSettings.fontSize[16]};
+  font-size: ${fontSize[16]};
   text-decoration: none;
   svg {
     margin-bottom: 1rem;

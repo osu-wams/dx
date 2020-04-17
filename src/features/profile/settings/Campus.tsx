@@ -6,13 +6,13 @@ import styled from 'styled-components/macro';
 import { Fieldset, Legend } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { titleCase } from 'src/util/helpers';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import { AppContext } from 'src/contexts/app-context';
 
 const { CAMPUS_CODES, postSettings, settingIsDefault, usersSettings, DEFAULT_CAMPUS } = User;
 
 const Label = styled.span`
-  font-size: ${themeSettings.fontSize[16]};
+  font-size: ${fontSize[16]};
   > span {
     color: ${({ theme }) => theme.ui.highlights.emphasis.color};
   }
