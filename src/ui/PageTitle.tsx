@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints } from 'src/theme';
+import { fontSize, breakpoints } from 'src/theme';
 
 type Props = {
   title: string;
@@ -21,7 +21,7 @@ const PageTitle: FC<Props> = ({ title }) => {
 };
 
 const Title = styled.h1`
-  font-size: ${themeSettings.fontSize[20]};
+  font-size: ${fontSize[20]};
   color: ${({ theme }) => theme.ui.pageTitle.color};
   font-weight: normal;
   line-height: 30px;

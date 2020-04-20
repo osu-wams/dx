@@ -7,14 +7,14 @@ import {
   HighlightEmphasisInline,
   HighlightDescription,
 } from 'src/ui/Highlights';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import { useHolds } from '@osu-wams/hooks';
 
 const HoldsList = styled.ul`
   margin: 0;
   padding: 0 0 0 20px;
   > li {
-    font-size: ${themeSettings.fontSize[12]};
+    font-size: ${fontSize[12]};
   }
 `;
 

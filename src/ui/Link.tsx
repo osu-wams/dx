@@ -3,44 +3,35 @@ import { Link } from '@reach/router';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { faLongArrowRight, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { themeSettings } from 'src/theme';
+import { borderRadius, spacing, fontSize } from 'src/theme';
 
-const LinkStyles = styled.a<StyleProps>`
-  :hover,
-  :active,
-  :focus {
-    text-decoration: underline;
-  }
-  text-decoration: none;
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  border-radius: ${themeSettings.borderRadius[8]};
-  &.simple {
-    padding: 0;
-  }
-  background-color: ${({ bg, theme }) => bg || theme.ui.link.background};
-  color: ${({ fg, theme }) => fg || theme.ui.link.color};
-  font-weight: ${(props) => (props.bg ? '300' : '500')};
-  & > svg {
-    margin-left: 1.2rem;
-  }
-`;
+const LinkStyles = styled.a<StyleProps>(
+  ({ theme, fg }) => ({
+    ':hover, :active, :focus': {
+      textDecoration: 'underline',
+    },
+    textDecoration: 'none',
+    color: fg ?? theme.ui.link.color,
+    backgroundColor: theme.ui.link.background,
+    '> svg': {
+      marginLeft: '1.2rem',
+    },
+    display: 'inline-block',
+    padding: spacing.small + ' ' + spacing.medium,
+  }),
+  ({ bg }) =>
+    bg && {
+      backgroundColor: bg,
+      fontWeight: 500,
+      borderRadius: borderRadius[8],
+    }
+);
 
-const HighlightExternalLinkStyles = styled.a<StyleProps>`
-  &:hover,
-  &:active,
-  &:focus {
-    text-decoration: underline;
-  }
-  text-decoration: none;
-  color: ${({ fg, theme }) => fg || theme.ui.link.color};
-  background-color: ${({ bg, theme }) => bg || theme.ui.link.background};
-  font-weight: 600;
-  & > svg {
-    margin-left: 1.2rem;
-  }
-  font-size: ${themeSettings.fontSize[24]};
-`;
+const HighlightExternalLinkStyles = styled(LinkStyles)<StyleProps>(() => ({
+  padding: 0,
+  fontWeight: 600,
+  fontSize: fontSize[24],
+}));
 
 type StyleProps = {
   fg?: string;
@@ -70,7 +61,7 @@ const HighlightExternalLink = ({ children, ...props }) => {
 };
 
 const SimpleExternalLink = ({ children, ...props }) => (
-  <LinkStyles {...props} target="_blank" className="simple">
+  <LinkStyles {...props} target="_blank" css={{ padding: 0 }}>
     {children}
   </LinkStyles>
 );

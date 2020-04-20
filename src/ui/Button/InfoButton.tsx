@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import styled, { ThemeContext } from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
 import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from './index';
@@ -23,11 +23,11 @@ const DialogClose = styled(CloseButton)`
 
 const DialogTitle = styled.h2`
   flex-grow: 2;
-  font-size: ${themeSettings.fontSize['20']};
+  font-size: ${fontSize['20']};
 `;
 
 const DialogContent = styled.div`
-  font-size: ${themeSettings.fontSize['14']};
+  font-size: ${fontSize['14']};
 `;
 
 const InfoButton = (props) => {

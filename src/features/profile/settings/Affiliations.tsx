@@ -4,13 +4,13 @@ import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components/macro';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import { AppContext } from 'src/contexts/app-context';
 
 const { postSettings, usersSettings, settingIsOverridden } = User;
 
 const Label = styled.span`
-  font-size: ${themeSettings.fontSize[16]};
+  font-size: ${fontSize[16]};
   > span {
     color: ${({ theme }) => theme.features.profile.settings.emphasis.color};
   }

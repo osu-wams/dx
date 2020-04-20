@@ -43,7 +43,7 @@ exports[`An icon on the right 1`] = `
   border-radius: 8px;
   -webkit-transition: all 150ms ease-in-out 0s;
   transition: all 150ms ease-in-out 0s;
-  padding: 12px 12px;
+  padding: 12px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -61,7 +61,7 @@ exports[`An icon on the right 1`] = `
 }
 
 .c3 {
-  padding-right: 1.5rem;
+  padding-right: 16px;
   -webkit-flex: 2;
   -ms-flex: 2;
   flex: 2;
@@ -83,8 +83,6 @@ exports[`An icon on the right 1`] = `
 .c6 {
   color: #F79572;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul
@@ -174,7 +172,7 @@ exports[`Default style with icon on left 1`] = `
   border-radius: 8px;
   -webkit-transition: all 150ms ease-in-out 0s;
   transition: all 150ms ease-in-out 0s;
-  padding: 12px 12px;
+  padding: 12px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -192,7 +190,7 @@ exports[`Default style with icon on left 1`] = `
 }
 
 .c4 {
-  padding-right: 1.5rem;
+  padding-right: 16px;
   -webkit-flex: 2;
   -ms-flex: 2;
   flex: 2;
@@ -214,8 +212,6 @@ exports[`Default style with icon on left 1`] = `
 .c3 {
   color: #B7B1AF;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul
@@ -304,7 +300,7 @@ exports[`Icon on both left and right 1`] = `
   border-radius: 8px;
   -webkit-transition: all 150ms ease-in-out 0s;
   transition: all 150ms ease-in-out 0s;
-  padding: 12px 12px;
+  padding: 12px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
@@ -322,7 +318,7 @@ exports[`Icon on both left and right 1`] = `
 }
 
 .c4 {
-  padding-right: 1.5rem;
+  padding-right: 16px;
   -webkit-flex: 2;
   -ms-flex: 2;
   flex: 2;
@@ -344,8 +340,6 @@ exports[`Icon on both left and right 1`] = `
 .c3 {
   color: #B7B1AF;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 <ul

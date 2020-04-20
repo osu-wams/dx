@@ -3,7 +3,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import styled from 'styled-components/macro';
 import { formatPhone } from 'src/util/helpers';
 import Icon from 'src/ui/Icon';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 
 const renderPhone = (title: string, field: string | null, icon: any, color: string) => {
   if (field && title && icon) {
@@ -22,7 +22,7 @@ const PersonName = styled.h3`
   color: ${({ theme }) => theme.features.profile.name.color};
   margin: 0;
   font-weight: 500;
-  font-size: ${themeSettings.fontSize[24]};
+  font-size: ${fontSize[24]};
 `;
 
 const PairData = styled.dl`
@@ -32,7 +32,7 @@ const PairData = styled.dl`
     margin-right: 4rem;
   }
   dt {
-    font-size: ${themeSettings.fontSize[12]};
+    font-size: ${fontSize[12]};
     font-weight: 600;
     color: ${({ theme }) => theme.features.profile.detail.color};
   }
@@ -48,7 +48,7 @@ const ContactInfo = styled.dl`
     vertical-align: top;
     padding-bottom: 1.8rem;
     svg {
-      font-size: ${themeSettings.fontSize[24]};
+      font-size: ${fontSize[24]};
     }
   }
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { fontSize, spacing } from 'src/theme';
 import { CardBase } from 'src/ui/Card';
 
 const CardSection = styled.div`
@@ -9,13 +9,13 @@ const CardSection = styled.div`
 `;
 
 const Card = styled(CardBase)`
-  padding: ${themeSettings.spacing.unit * 2}px;
+  padding: ${spacing.default};
 `;
 
 const Header = styled.div`
   color: ${({ theme }) => theme.features.academics.courses.header.color};
-  font-size: ${themeSettings.fontSize[18]};
-  margin-bottom: ${themeSettings.spacing.unit * 2}px;
+  font-size: ${fontSize[18]};
+  margin-bottom: ${spacing.default};
 `;
 
 const NoItems = styled.div`
@@ -45,8 +45,8 @@ const NoItemsText = styled.p`
 const SectionHeader = styled.h3`
   color: ${({ theme }) => theme.features.academics.courses.sectionHeader.color};
   font-weight: 600;
-  font-size: ${themeSettings.fontSize[16]};
-  margin-bottom: ${themeSettings.spacing.unit}px;
+  font-size: ${fontSize[16]};
+  margin-bottom: ${spacing.medium};
   margin-top: 0;
 `;
 

@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { spacing, fontSize } from 'src/theme';
 import { CardBase } from 'src/ui/Card';
 
 const HighlightsCard = styled(CardBase)`
-  padding: ${themeSettings.spacing.unit * 2}px;
+  padding: ${spacing.default};
   flex-direction: row;
   padding: 0;
   > div {
@@ -22,16 +22,16 @@ interface IHighlight {
 const Highlight = styled.div<IHighlight>`
   text-align: ${(props) => (props.textAlignLeft ? 'left' : 'center')};
   & + div {
-    margin-top: 1.2rem;
+    margin-top: ${spacing.xm};
   }
 `;
 
 const HighlightTitle = styled.h2<{ marginTop?: number }>`
-  font-size: ${themeSettings.fontSize[14]};
+  font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.ui.highlights.title.color};
   font-weight: 600;
   margin-bottom: 0;
-  padding: 0 1.6rem;
+  padding: 0 ${spacing.default};
   ${(props) =>
     props.marginTop !== undefined &&
     css`
@@ -47,14 +47,14 @@ const HighlightEmphasisInline = styled.em<{ color?: string }>`
 
 const HighlightEmphasis = styled.div<{ color?: string }>`
   color: ${(props) => props.color || props.theme.ui.highlights.emphasis.color};
-  font-size: ${themeSettings.fontSize[24]};
-  padding: 0 1.6rem;
+  font-size: ${fontSize[24]};
+  padding: 0 ${spacing.default};
 `;
 
 const HighlightDescription = styled.div`
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   color: ${({ theme }) => theme.ui.highlights.description.color};
-  padding: 0 1.6rem;
+  padding: 0 ${spacing.default};
 `;
 
 export {

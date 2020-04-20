@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { faBars } from '@fortawesome/pro-light-svg-icons';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from 'src/ui/Button';
@@ -23,11 +23,11 @@ const MobileMenuClose = styled(CloseButton)`
 
 const MobileMenuTitle = styled.h2`
   flex-grow: 2;
-  font-size: ${themeSettings.fontSize['24']};
+  font-size: ${fontSize['24']};
 `;
 
 const MobileMenuContent = styled.div`
-  font-size: ${themeSettings.fontSize['14']};
+  font-size: ${fontSize['14']};
 `;
 
 const FullMobileMenu = () => {

@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import { Event } from 'src/util/gaTracking';
 
 const Badge = styled.a`
   background-color: ${({ theme }) => theme.ui.siteTitle.badge.background};
   color: ${({ theme }) => theme.ui.siteTitle.badge.color};
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   font-weight: 600;
-  line-height: ${themeSettings.fontSize[26]};
+  line-height: ${fontSize[26]};
   vertical-align: top;
   padding: 1px 6px;
   border-radius: 8px;

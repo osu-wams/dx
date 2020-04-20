@@ -5,7 +5,7 @@ exports[`Renders a button with Pine background and default size and foreground 1
   background-color: #4A773C;
   color: #ffffff;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   cursor: pointer;
   padding: .6rem 1.4rem;
 }
@@ -26,7 +26,7 @@ exports[`Renders a button with Pine foreground and default size and background 1
   background-color: #D73F09;
   color: #4A773C;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   cursor: pointer;
   padding: .6rem 1.4rem;
 }
@@ -47,7 +47,7 @@ exports[`Renders a default button with orange background and white foreground 1`
   background-color: #D73F09;
   color: #ffffff;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   cursor: pointer;
   padding: .6rem 1.4rem;
 }
@@ -68,10 +68,10 @@ exports[`Renders a large button with default colors 1`] = `
   background-color: #D73F09;
   color: #ffffff;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1.8rem;
   padding: 1rem 1.8rem;
+  font-size: 1.8rem;
 }
 
 .c1 + .c0 {
@@ -90,10 +90,10 @@ exports[`Renders a small button with default colors 1`] = `
   background-color: #D73F09;
   color: #ffffff;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1.4rem;
   padding: .2rem .3rem;
+  font-size: 1.4rem;
 }
 
 .c1 + .c0 {
@@ -112,10 +112,10 @@ exports[`Renders a super button with all the props changed: bg, fg, size 1`] = `
   background-color: #006A8E;
   color: #E9E5E4;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1.8rem;
   padding: 1rem 1.8rem;
+  font-size: 1.8rem;
 }
 
 .c1 + .c0 {
@@ -133,28 +133,23 @@ exports[`Renders default CloseButton with the SVG close icon 1`] = `
 .c2 {
   color: #B7B1AF;
   background-color: transparent;
-  padding: 0;
-  border-radius: 0;
 }
 
 .c1 {
   background-color: #D73F09;
   color: #ffffff;
   border: none;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   cursor: pointer;
   padding: .6rem 1.4rem;
-}
-
-.c1 + .c0 {
-  margin-left: 8px;
-}
-
-.c1 {
   color: #000000;
   background: transparent;
   padding: 1rem 2rem;
   font-size: 2.4rem;
+}
+
+.c1 + .c0 {
+  margin-left: 8px;
 }
 
 <button

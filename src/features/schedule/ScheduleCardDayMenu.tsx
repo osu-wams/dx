@@ -2,7 +2,7 @@ import React from 'react';
 import { isSameDay } from 'date-fns';
 import styled from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
-import { themeSettings } from 'src/theme';
+import { fontSize } from 'src/theme';
 import { Event } from 'src/util/gaTracking';
 import { format } from 'src/util/helpers';
 
@@ -66,7 +66,7 @@ const DaySelector = styled.button<{ selected: selectedBtn }>`
 const DayIndicator = styled.span`
   color: ${({ theme }) => theme.features.academics.courses.dayList.dayIndicator.color};
   font-weight: bold;
-  font-size: ${themeSettings.fontSize[20]};
+  font-size: ${fontSize[20]};
   line-height: 18px;
 `;
 
@@ -76,7 +76,7 @@ const DayOfWeek = styled.span<{ selected: selectedBtn }>`
       ? theme.features.academics.courses.dayList.dayOfWeekSelected.color
       : theme.features.academics.courses.dayList.dayOfWeek.color};
   font-weight: bold;
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   text-transform: uppercase;
   margin-bottom: 0.2rem;
 `;
@@ -87,7 +87,7 @@ const DayOfMonth = styled.span<{ selected: selectedBtn }>`
       ? theme.features.academics.courses.dayList.dayOfMonthSelected.color
       : theme.features.academics.courses.dayList.dayOfMonth.color};
   line-height: 0.4rem;
-  font-size: ${themeSettings.fontSize[24]};
+  font-size: ${fontSize[24]};
   padding: 1.2rem 1.2rem 2rem;
   border-bottom: 3px solid
     ${({ theme, selected }) =>

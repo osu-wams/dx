@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints, shadows } from 'src/theme';
+import { fontSize, spacing, borderRadius, breakpoints, shadows } from 'src/theme';
 import { MenuList, MenuButton } from '@reach/menu-button';
 
 const HeaderNavButton = styled(MenuButton)`
@@ -9,7 +9,7 @@ const HeaderNavButton = styled(MenuButton)`
   cursor: pointer;
   margin-left: 6px;
   > svg.fa-lg {
-    font-size: 2.4rem;
+    font-size: ${fontSize[24]};
   }
   @media (min-width: ${breakpoints.small}) {
     margin-left: 16px;
@@ -30,17 +30,17 @@ const HeaderNavWrapper = styled.div`
 const HeaderNavList = styled(MenuList)`
   &[data-reach-menu-list] {
     background-color: ${({ theme }) => theme.header.headerNavList.background};
-    border-radius: ${themeSettings.borderRadius[8]};
+    border-radius: ${borderRadius[8]};
     color: ${({ theme }) => theme.header.headerNavList.color};
     min-width: 15rem;
-    padding: 8px 0;
+    padding: ${spacing.medium} 0;
     border: none;
     box-shadow: ${shadows[1]};
     [data-reach-menu-item] {
       background-color: ${({ theme }) => theme.header.headerNavList.background};
 
       padding: 1rem 2rem;
-      font-size: ${themeSettings.fontSize[16]};
+      font-size: ${fontSize[16]};
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -48,7 +48,7 @@ const HeaderNavList = styled(MenuList)`
     svg {
       color: ${({ theme }) => theme.header.headerNavList.svg.color};
       margin-right: 1.2rem;
-      font-size: ${themeSettings.fontSize[24]};
+      font-size: ${fontSize[24]};
     }
     div + div {
       [data-reach-menu-item] {
@@ -67,7 +67,7 @@ const HeaderNavList = styled(MenuList)`
 `;
 
 const HeaderNavText = styled.span`
-  padding: 0 8px;
+  padding: 0 ${spacing.medium};
 `;
 
 export { HeaderNavText, HeaderNavList, HeaderNavButton, HeaderNavWrapper };

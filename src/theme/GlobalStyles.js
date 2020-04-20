@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { themeSettings } from './';
+import { fontSize } from './';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
-    font-size: ${themeSettings.fontSize[16]};
+    font-size: ${fontSize[16]};
     line-height: 1.5;
     color: ${({ theme }) => theme.body.color};
   }

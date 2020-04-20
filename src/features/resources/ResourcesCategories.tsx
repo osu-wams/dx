@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { spacing } from 'src/theme';
 import CustomBtn from 'src/ui/CustomBtn';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
@@ -69,7 +69,7 @@ const ResourceCategories = ({
 };
 
 const CategoriesWrapper = styled.div`
-  margin-bottom: ${themeSettings.spacing.unit}px;
+  margin-bottom: ${spacing.medium};
 `;
 
 export default ResourceCategories;

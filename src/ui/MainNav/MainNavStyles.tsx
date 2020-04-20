@@ -1,6 +1,6 @@
 import { Link } from '@reach/router';
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints } from 'src/theme';
+import { fontSize, breakpoints, spacing } from 'src/theme';
 
 const Nav = styled.nav`
   position: fixed;
@@ -39,7 +39,7 @@ const NavLink = styled(Link)`
   flex-direction: column;
   @media (min-width: ${breakpoints.small}) {
     flex-direction: row;
-    font-size: ${themeSettings.fontSize[14]};
+    font-size: ${fontSize[14]};
     padding: 10px 4px;
     & > svg {
       padding-right: 6px;
@@ -53,7 +53,7 @@ const NavLink = styled(Link)`
   margin: 0 8px;
   padding: 10px 4px 5px;
   line-height: 22px;
-  font-size: ${themeSettings.fontSize[12]};
+  font-size: ${fontSize[12]};
   text-decoration: none;
   background-color: ${({ theme }) => theme.header.mainNavList.background};
   color: ${({ theme }) => theme.header.mainNavList.color};
@@ -74,17 +74,17 @@ const NavLink = styled(Link)`
 `;
 
 const MobileMainNav = styled.nav`
-  padding-top: 12px;
+  padding-top: ${spacing.xm};
   display: block;
 `;
 
 const MobileNavLink = styled(NavLink)`
   flex-direction: row;
-  font-size: ${themeSettings.fontSize[20]};
+  font-size: ${fontSize[20]};
   & > svg {
     padding-right: 10px;
     min-width: 34px;
-    font-size: 24px;
+    font-size: ${fontSize[24]};
   }
 `;
 
@@ -96,12 +96,12 @@ const MobileFooter = styled(Nav)`
 
 const MobileFooterLink = styled(NavLink)`
   flex-direction: row;
-  font-size: ${themeSettings.fontSize[16]};
+  font-size: ${fontSize[16]};
 
   padding: 10px 4px;
   & > svg {
     padding-right: 6px;
-    font-size: 20px;
+    font-size: ${fontSize[20]};
     min-width: 24px;
   }
   &[aria-current] {

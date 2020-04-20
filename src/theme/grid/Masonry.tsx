@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components/macro';
-import { themeSettings, breakpoints } from 'src/theme';
+import { spacing, breakpoints } from 'src/theme';
 
 const MasonryDiv = styled.div`
   @media (min-width: ${breakpoints.small}) {
@@ -8,7 +8,7 @@ const MasonryDiv = styled.div`
     grid-auto-flow: column;
     max-width: ${breakpoints.large};
     margin: 0 auto;
-    grid-gap: ${themeSettings.spacing.desktop};
+    grid-gap: ${spacing.desktop};
     grid-template-columns: 1fr 1fr;
   }
 `;

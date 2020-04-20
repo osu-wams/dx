@@ -7,7 +7,7 @@ import cascadesLogo from 'src/assets/osu-cascades.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { HeaderNav } from './HeaderNav';
-import { breakpoints, themeSettings } from 'src/theme';
+import { breakpoints, fontSize, spacing } from 'src/theme';
 import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
@@ -22,7 +22,7 @@ const HeaderWrapper = styled.div`
   background-color: ${({ theme }) => theme.header.background};
   justify-content: space-between;
   flex-flow: row wrap;
-  padding: 8px 8px 12px;
+  padding: ${spacing.medium} ${spacing.medium} ${spacing.unit * 1.5}px;
   align-items: center;
   @media (min-width: ${breakpoints.small}) {
     display: block;
@@ -32,7 +32,7 @@ const HeaderWrapper = styled.div`
 
 const Navigation = styled.div`
   @media (min-width: ${breakpoints.small}) {
-    padding: 0 ${themeSettings.spacing.desktop};
+    padding: 0 ${spacing.desktop};
     /* match main gride color */
     border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
     /* navigation should blend with header background */
@@ -44,7 +44,7 @@ const SiteTitle = styled.header`
   display: none;
   @media (min-width: ${breakpoints.small}) {
     display: block;
-    font-size: ${themeSettings.fontSize[20]};
+    font-size: ${fontSize[20]};
     font-weight: 300;
     margin: 0 auto;
     text-align: center;
@@ -52,7 +52,7 @@ const SiteTitle = styled.header`
     margin-top: 20px;
   }
   @media (min-width: ${breakpoints.medium}) {
-    font-size: ${themeSettings.fontSize[26]};
+    font-size: ${fontSize[26]};
   }
   @media (min-width: 1750px) {
     text-align: left;

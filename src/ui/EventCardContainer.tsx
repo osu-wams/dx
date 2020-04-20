@@ -8,7 +8,7 @@ import {
   useEmployeeEvents,
 } from '@osu-wams/hooks';
 import EventCard from './EventCard';
-import { themeSettings, breakpoints, SecondGridWrapper } from 'src/theme';
+import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 import { AppContext } from 'src/contexts/app-context';
 
@@ -27,10 +27,10 @@ const EventCardContainerWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-row-gap: ${themeSettings.spacing.mobile};
+  grid-row-gap: ${spacing.mobile};
   @media screen and (min-width: ${breakpoints.small}) {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: ${themeSettings.spacing.desktop};
+    grid-gap: ${spacing.desktop};
   }
 `;
 

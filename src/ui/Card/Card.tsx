@@ -16,7 +16,7 @@ const Card: FC<{ collapsing?: boolean }> = ({ children, collapsing = true, ...pr
   const value = { collapsed, toggleCollapsed, collapsible, uuid };
 
   return (
-    <CardBase style={{ padding: 0 }} {...props}>
+    <CardBase css={{ padding: 0 }} {...props}>
       <CardContext.Provider value={value}>{children}</CardContext.Provider>
     </CardBase>
   );

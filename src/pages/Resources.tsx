@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
 import { CardBase } from 'src/ui/Card';
-import { themeSettings, MainGridWrapper, MainGrid } from 'src/theme';
+import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
 import ResourcesCategories from 'src/features/resources/ResourcesCategories';
 import ResourcesSearch from 'src/features/resources/ResourcesSearch';
 import ResourcesList from 'src/features/resources/ResourcesList';
@@ -228,7 +228,7 @@ const getInitialCategory = () => {
 };
 
 const ResourcesWrapper = styled(CardBase)`
-  padding: ${themeSettings.spacing.unit * 2}px;
+  padding: ${spacing.default};
 `;
 
 export default Resources;

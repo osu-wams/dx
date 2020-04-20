@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { themeSettings } from 'src/theme';
+import { spacing, fontSize, borderRadius } from 'src/theme';
 
 type SpacedList = {
   spaced?: boolean;
@@ -16,7 +16,7 @@ const List = styled.ul`
 const ListItem = styled.li<SpacedList>`
   list-style-type: none;
   &:last-child {
-    margin-bottom: ${(props) => (props.spaced ? 0 : themeSettings.spacing.unit * 2)}px;
+    margin-bottom: ${(props) => (props.spaced ? 0 : spacing.default)};
   }
   & > button {
     /* cursor only on buttons, not divs */
@@ -32,7 +32,7 @@ const ListItemFlex = styled(ListItem)`
   .MuiCheckbox-root {
     width: 48px;
     height: 48px;
-    font-size: 18px;
+    font-size: ${fontSize[18]};
   }
   &:hover {
     & > div {
@@ -54,10 +54,9 @@ const ListItemContent = styled.div<SpacedList>`
   flex-wrap: nowrap;
   align-items: center;
   border: none;
-  border-radius: 8px;
+  border-radius: ${borderRadius[8]};
   transition: all 150ms ease-in-out 0s;
-  padding: ${(props) => (props.spaced ? themeSettings.spacing.unit * 2 : 12)}px
-    ${(props) => (props.spaced ? themeSettings.spacing.unit * 2 : 12)}px;
+  padding: ${(props) => (props.spaced ? spacing.default : spacing.xm)};
   svg,
   img {
     height: 3rem;
@@ -108,15 +107,15 @@ const ListItemContentLinkSVG = styled(ListItemContentLink)`
 `;
 
 const ListItemContentLinkName = styled.div`
-  font-size: ${themeSettings.fontSize[18]};
+  font-size: ${fontSize[18]};
   color: ${({ theme }) => theme.ui.list.item.link.color};
-  padding-left: ${themeSettings.spacing.unit * 2}px;
+  padding-left: ${spacing.default};
 `;
 
 const ListItemContentButton = styled(ListItemContentLink).attrs({ as: 'button' })``;
 
 const ListItemText = styled.div`
-  padding-right: 1.5rem;
+  padding-right: ${spacing.default};
   flex: 2;
   text-align: left;
 `;
@@ -129,19 +128,19 @@ const ListItemHeader = styled.h4`
 
 const ListItemDescription = styled.div<{ fontSize?: string; color?: string }>`
   color: ${({ color, theme }) => (color ? color : theme.ui.list.item.description.color)};
-  font-size: ${(props) => (props.fontSize ? props.fontSize : themeSettings.fontSize[14])};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : fontSize[14])};
   line-height: 1.6rem;
 `;
 
 const ListItemLeadText = styled.div`
-  line-height: ${themeSettings.fontSize[14]};
+  line-height: ${fontSize[14]};
   text-align: center;
-  padding: 0 ${themeSettings.spacing.unit * 2}px 0 0;
+  padding: 0 ${spacing.default} 0 0;
   color: ${({ theme }) => theme.ui.list.item.leadText.color};
-  width: ${themeSettings.fontSize[58]};
+  width: ${fontSize[58]};
   strong {
-    line-height: ${themeSettings.fontSize[20]};
-    font-size: ${themeSettings.fontSize[20]};
+    line-height: ${fontSize[20]};
+    font-size: ${fontSize[20]};
   }
 `;
 
