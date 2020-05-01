@@ -1,46 +1,47 @@
 const Url = {
   myDegrees: {
-    main: 'https://mydegrees.oregonstate.edu/DashboardServlet'
+    main: 'https://mydegrees.oregonstate.edu/DashboardServlet',
   },
   canvas: {
     main: 'https://oregonstate.instructure.com',
-    test: 'https://oregonstate.test.instructure.com'
+    test: 'https://oregonstate.test.instructure.com',
   },
   campusMap: {
     main: 'https://map.oregonstate.edu/',
-    building: 'https://map.oregonstate.edu/?building='
+    building: 'https://map.oregonstate.edu/?building=',
   },
   events: {
-    academicCalendar: 'https://registrar.oregonstate.edu/osu-academic-calendar'
+    academicCalendar: 'https://registrar.oregonstate.edu/osu-academic-calendar',
   },
   banner: {
     financialTransactions:
-      'https://xe.ucsadm.oregonstate.edu:9990/ssomanager/c/SSB?pkg=OSU_ARWEB.P_ViewBillDate'
+      'https://xe.ucsadm.oregonstate.edu:9990/ssomanager/c/SSB?pkg=OSU_ARWEB.P_ViewBillDate',
+    studentProfile: 'https://xe.ucsadm.oregonstate.edu:8890/StudentSelfService/ssb/studentProfile',
   },
   myosu: {
-    main: 'https://myosu.oregonstate.edu/'
+    main: 'https://myosu.oregonstate.edu/',
   },
   bill: {
-    main: 'http://mybill.oregonstate.edu'
+    main: 'http://mybill.oregonstate.edu',
   },
   support: {
-    main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=support'
+    main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=support',
   },
   feedback: {
-    main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=feedback'
+    main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=feedback',
   },
   registrar: {
-    academicStanding: 'https://registrar.oregonstate.edu/grades-honor-roll-academic-standing'
+    academicStanding: 'https://registrar.oregonstate.edu/grades-honor-roll-academic-standing',
   },
   empcenter: {
-    main: 'https://osu.workforcehosting.com/'
+    main: 'https://osu.workforcehosting.com/',
   },
   evals: {
-    main: 'https://myosu.oregonstate.edu/web/myosu/employee?gpi=10190'
+    main: 'https://myosu.oregonstate.edu/web/myosu/employee?gpi=10190',
   },
   itSystemStatus: {
-    main: 'https://status.is.oregonstate.edu'
-  }
+    main: 'https://status.is.oregonstate.edu',
+  },
 };
 
 export default Url;

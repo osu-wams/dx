@@ -10,7 +10,7 @@ export const Event = (category: IComponents, action: string, label?: string) => 
   ReactGA.event({
     category,
     action,
-    label
+    label,
   });
 };
 
@@ -40,6 +40,7 @@ export type IComponents =
   | 'dx-event'
   | 'calendar-event'
   | 'academic-calendar'
+  | 'program-of-study'
   | 'financial-transactions'
   | 'academic-overview'
   | 'account-balance'
