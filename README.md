@@ -26,6 +26,27 @@ $ yarn start
 
 # Testing and Development Notes
 
+## Working with dx-monorepo
+
+**dx-monorepo instructions in it's own README however tldr:**
+
+- After making the changes run `yarn build` in the git root (not the individual package)
+
+You need to modify package.json to work with the dx-monorepo locally:
+
+**In DX package.json**:
+
+- Use local copy of dx-monorepo
+
+```bash
+"@osu-wams/hooks": "file:../dx-monorepo/packages/hooks",
+"@osu-wams/lib": "file:../dx-monorepo/packages/lib",
+```
+
+- You might need to do `rm -rf node_modules` to get it to work nicely with the local version
+- Run `yarn install`
+- If there is a problem confirm your `yarn.lock` file calls your local version instead of the npm package
+
 ## AppContext
 
 The application is designed to set an application-wide context with data that will be used deep in the component tree. This data is queried once per session and is maintained throughout the lifecycle of the users experience. As such, in order to test components in isolation, the AppContext needs to be set during any `render` calls. This functionality has been baked into a testing utility and overrides `react-testing-library` render method. The override can be found at `src/util/test-utils.tsx`.

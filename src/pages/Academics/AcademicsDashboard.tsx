@@ -9,6 +9,7 @@ import PageTitle from 'src/ui/PageTitle';
 import AcademicOverview from 'src/features/AcademicOverview';
 import ResourcesCard from 'src/features/ResourcesCard';
 import { AcademicSubNav } from './AcademicsSubNav';
+import { ProgramOfStudy } from 'src/features/ProgramOfStudy';
 
 const AcademicsDashboard = () => {
   return (
@@ -19,6 +20,7 @@ const AcademicsDashboard = () => {
         <Masonry>
           <AcademicOverview />
           <ResourcesCard categ="academic" icon={faGraduationCap} />
+          <ProgramOfStudy />
           <PlannerItems />
           <Courses />
           <AcademicCalendar />
