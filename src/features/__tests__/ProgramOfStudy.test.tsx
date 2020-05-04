@@ -64,7 +64,7 @@ describe('<ProgramOfStudy /> | Degree', () => {
   });
 
   it('Expects "No Information", not "Bachelor of Science" when no data returns', () => {
-    mockUseDegrees.mockReturnValue([]);
+    mockUseDegrees.mockReturnValue({ data: [] });
     const { getByText, queryByText } = render(<ProgramOfStudy />);
 
     expect(queryByText(/Bachelor of Science/i)).toBeNull();

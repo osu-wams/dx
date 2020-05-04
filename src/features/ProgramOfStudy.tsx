@@ -87,7 +87,7 @@ const ProgramOfStudy = () => {
       <CardHeader title="Program of Study" badge={<CardIcon icon={faUserGraduate} />} />
       <CardContent>
         {loading && <Skeleton />}
-        {!loading && !data && 'No information'}
+        {!loading && data.length === 0 && 'No information'}
         {!loading &&
           data &&
           data.map((d: Types.Degree) => (
