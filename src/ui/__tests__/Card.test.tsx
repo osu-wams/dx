@@ -60,7 +60,7 @@ describe('<Card />', () => {
 
   it('should not display a badge if no badge supplied', () => {
     const { getByTestId } = render(<CardNoBadge />);
-    expect(getByTestId(/cardnobadgeheader/i).textContent).toEqual('Header');
+    expect(getByTestId(/cardnobadgeheader/i)).toHaveTextContent('Header');
   });
 
   it('should not display card content when collapsed', () => {
