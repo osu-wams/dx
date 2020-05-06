@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
 import Theme from '../Theme';
 
@@ -20,27 +21,29 @@ describe('<Theme />', () => {
     mockPostSettings.mockResolvedValue(Promise.resolve({}));
   });
   it('renders with the themes listed', async () => {
-    const { container } = render(<Theme />);
-    const buttons = container.querySelectorAll("input[type='radio']");
+    render(<Theme />);
+    const buttons = screen.getAllByRole('radio');
     expect(buttons).toHaveLength(2);
   });
 
   it('renders with default test data settings having the default theme checked', async () => {
-    const { container } = render(<Theme />);
-    const lightThemeButton = container.querySelector("input[value='light']") as HTMLInputElement;
+    render(<Theme />);
+    const lightThemeButton = screen.getByLabelText(/light/i);
     expect(lightThemeButton).toBeInTheDocument();
-    const darkThemeButton = container.querySelector("input[value='dark']") as HTMLInputElement;
+
+    const darkThemeButton = screen.getByLabelText(/dark/i);
     expect(darkThemeButton).toBeInTheDocument();
-    expect(lightThemeButton.checked).toEqual(true);
-    expect(darkThemeButton.checked).toEqual(false);
+
+    expect(lightThemeButton).toBeChecked();
+    expect(darkThemeButton).not.toBeChecked();
   });
 
   it('submits updates when a change is fired', async () => {
-    const { getByTestId } = render(<Theme />);
-    const lightButton = getByTestId('light');
-    fireEvent.click(lightButton.children[0].children[0]);
-    const darkButton = getByTestId('dark');
-    fireEvent.click(darkButton.children[0].children[0]);
+    render(<Theme />);
+    const lightButton = screen.getByLabelText('Light');
+    userEvent.click(lightButton);
+    const darkButton = screen.getByLabelText('Dark');
+    userEvent.click(darkButton);
     // Clicking a radio button that is already checked is no-op, this should
     // only register a click on each of the other buttons
     expect(mockPostSettings).toHaveBeenCalledTimes(1);

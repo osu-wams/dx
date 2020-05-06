@@ -1,5 +1,5 @@
 import React from 'react';
-import { getByTestId, findAllByText, queryAllByText, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
