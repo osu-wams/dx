@@ -7,7 +7,7 @@ xdescribe('<Resources> main page', () => {
   it('finds "Resources" and renders with test id', async () => {
     const { findByText, getByTestId } = render(<Resources />);
     await findByText('Resources');
-    const testId = await getByTestId('resources-page');
+    const testId = getByTestId('resources-page');
     expect(testId).toBeInTheDocument();
   });
 });

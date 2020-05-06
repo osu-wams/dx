@@ -76,13 +76,14 @@ const Logo = styled.img`
  */
 const campusLogo = (user: Types.User) => {
   const { campusCode } = usersCampus(user);
+  const osu = 'Oregon State University';
   switch (campusCode) {
     case CAMPUS_CODES.ecampus:
-      return ecampusLogo;
+      return { image: ecampusLogo, alt: `${osu} Ecampus` };
     case CAMPUS_CODES.bend:
-      return cascadesLogo;
+      return { image: cascadesLogo, alt: `${osu} Cascades` };
     default:
-      return logo;
+      return { image: logo, alt: osu };
   }
 };
 
@@ -98,14 +99,11 @@ const mainTitle = (user) => {
 const Header = () => {
   const { user } = useContext(AppContext);
   const title = mainTitle(user.data);
+  const { image, alt } = campusLogo(user.data);
   return (
     <>
       <HeaderWrapper>
-        <Logo
-          data-testid="app-header-logo"
-          src={campusLogo(user.data)}
-          alt="Oregon State University"
-        />
+        <Logo data-testid="app-header-logo" src={image} alt={alt} />
         <SiteTitle>
           {title}
           <BetaBadge title={title} />

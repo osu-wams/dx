@@ -8,17 +8,7 @@ import {
 } from 'src/util/test-utils';
 import Header from '../Header';
 import { mockGAEvent } from 'src/setupTests';
-import { act } from '@testing-library/react';
-
-// required because of the overlay from Reakit
-global.document.createRange = () => ({
-  setStart: () => {},
-  setEnd: () => {},
-  commonAncestorContainer: {
-    nodeName: 'BODY',
-    ownerDocument: document,
-  },
-});
+import { act, screen } from '@testing-library/react';
 
 const mockPostSettings = jest.fn(async (args) => Promise.resolve(args));
 jest.mock('@osu-wams/hooks', () => {
@@ -33,25 +23,25 @@ jest.mock('@osu-wams/hooks', () => {
 });
 
 it('has student dashboard title', () => {
-  const { getByText } = render(<Header />);
-  const title = getByText('Student Dashboard');
+  render(<Header />);
+  const title = screen.getByText('Student Dashboard');
   expect(title).toBeInTheDocument();
 });
 
 it('has employee dashboard title', () => {
-  const { getByText } = render(<Header />, { user: mockEmployeeUser });
-  const title = getByText('Employee Dashboard');
+  render(<Header />, { user: mockEmployeeUser });
+  const title = screen.getByText('Employee Dashboard');
   expect(title).toBeInTheDocument();
 });
 
 it('Employees can toggle between Student and Employee dashboards', async () => {
   mockPostSettings.mockReturnValue(Promise.resolve());
-  const { findByText, getByTestId } = render(<Header />, {
+  render(<Header />, {
     user: mockEmployeeUser,
   });
 
-  userEvent.click(getByTestId('user-btn'));
-  const studentDashboard = await findByText('Student Dashboard');
+  userEvent.click(screen.getByTestId('user-btn'));
+  const studentDashboard = await screen.findByText('Student Dashboard');
 
   userEvent.click(studentDashboard);
   expect(mockPostSettings).toHaveBeenCalledTimes(1);
@@ -60,10 +50,10 @@ it('Employees can toggle between Student and Employee dashboards', async () => {
 });
 
 it('has a logout link in the menu', async () => {
-  const { findByText, getByTestId } = render(<Header />);
+  render(<Header />);
 
-  userEvent.click(getByTestId('user-btn'));
-  const logoutLink = await findByText('Logout');
+  userEvent.click(screen.getByTestId('user-btn'));
+  const logoutLink = await screen.findByText('Logout');
   act(() => {
     userEvent.click(logoutLink);
 
@@ -72,12 +62,12 @@ it('has a logout link in the menu', async () => {
 });
 
 it('User Button and profile link are in the menu and tracked via GA', async () => {
-  const { findByText, getByTestId } = render(<Header />);
+  render(<Header />);
 
-  const userLink = getByTestId('user-btn');
+  const userLink = screen.getByTestId('user-btn');
   userEvent.click(userLink);
 
-  const profileLink = await findByText('Profile', { selector: 'a' });
+  const profileLink = await screen.findByText('Profile', { selector: 'a' });
   act(() => {
     userEvent.click(profileLink);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
@@ -85,13 +75,13 @@ it('User Button and profile link are in the menu and tracked via GA', async () =
 });
 
 it('Help button and help link are in the menu and tracked via GA', async () => {
-  const { findByText, getByTestId } = render(<Header />);
+  render(<Header />);
 
-  const userLink = getByTestId('help-btn');
+  const userLink = screen.getByTestId('help-btn');
   userEvent.click(userLink);
 
-  const helpLink = await findByText('Get Help', { selector: 'a' });
-  const feedbackLink = await findByText('Give feedback', { selector: 'a' });
+  const helpLink = await screen.findByText('Get Help', { selector: 'a' });
+  const feedbackLink = await screen.findByText('Give feedback', { selector: 'a' });
 
   expect(feedbackLink).toBeInTheDocument();
 
@@ -200,10 +190,13 @@ describe('Student mobile menu interactions', () => {
 
 describe('as a logged in user', () => {
   it('renders the appropriate header logo', () => {
-    const { getByTestId } = render(<Header />);
-    const appHeader = getByTestId('app-header-logo');
+    render(<Header />);
+    const appHeader = screen.getByTestId('app-header-logo');
     expect(appHeader).toBeInTheDocument();
-    expect(appHeader.getAttribute('src')).toBe('osu-logo.svg');
+
+    const src = appHeader.getAttribute('src');
+    expect(src).toEqual('osu-logo.svg');
+    expect(screen.getByRole('img', { name: 'Oregon State University' }));
   });
 });
 
@@ -211,10 +204,12 @@ describe('as a Bend user', () => {
   it('renders the appropriate header logo', async () => {
     authUserClassification!.attributes!.campusCode = 'B';
     authUserAudienceOverride.campusCode = 'B';
-    const { getByTestId } = render(<Header />);
-    const appHeader = getByTestId('app-header-logo');
+    render(<Header />);
+    const appHeader = screen.getByTestId('app-header-logo');
     expect(appHeader).toBeInTheDocument();
-    expect(appHeader.getAttribute('src')).toBe('osu-cascades.svg');
+    const src = appHeader.getAttribute('src');
+    expect(src).toEqual('osu-cascades.svg');
+    expect(screen.getByRole('img', { name: 'Oregon State University Cascades' }));
   });
 });
 
@@ -222,9 +217,12 @@ describe('as an Ecampus user', () => {
   it('renders the appropriate header logo', async () => {
     authUserClassification!.attributes!.campusCode = 'DSC';
     authUserAudienceOverride.campusCode = 'DSC';
-    const { getByTestId } = render(<Header />);
-    const appHeader = getByTestId('app-header-logo');
+    render(<Header />);
+    const appHeader = screen.getByTestId('app-header-logo');
     expect(appHeader).toBeInTheDocument();
-    expect(appHeader.getAttribute('src')).toBe('osu-ecampus.svg');
+
+    const src = appHeader.getAttribute('src');
+    expect(src).toEqual('osu-ecampus.svg');
+    expect(screen.getByRole('img', { name: 'Oregon State University Ecampus' }));
   });
 });
