@@ -68,7 +68,7 @@ const PastCourses = () => {
             color={themeContext.features.academics.pastCourses.search.icon.color}
           />
           <VisuallyHidden>
-            <label htmlFor="course-filter">Find courses</label>
+            <label htmlFor="course-filter">Find past courses</label>
           </VisuallyHidden>
           <FilterInput
             type="text"

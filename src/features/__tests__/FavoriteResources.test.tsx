@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, authUser } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { render, authUser } from 'src/util/test-utils';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { mockGAEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
@@ -17,8 +18,8 @@ jest.mock('@osu-wams/hooks', () => {
     useResources: () => mockUseResources(),
     Resources: {
       ...original.Resources,
-      postFavorite: () => mockPostFavorite()
-    }
+      postFavorite: () => mockPostFavorite(),
+    },
   };
 });
 
@@ -29,9 +30,9 @@ describe('Favorite Resources Card', () => {
 
   it('Empty State shows up when user has no Favorites', async () => {
     const noFavUser = { ...authUser, data: { ...authUser.data, favoriteResources: [] } };
-    const { findByText, queryByText } = render(<FavoriteResources />, { user: noFavUser });
-    expect(await findByText(/You have not added any favorite/i)).toBeInTheDocument();
-    expect(queryByText('Academics for Student Athletes')).toBeNull();
+    render(<FavoriteResources />, { user: noFavUser });
+    expect(await screen.findByText(/You have not added any favorite/i)).toBeInTheDocument();
+    expect(screen.queryByText('Academics for Student Athletes')).toBeNull();
   });
 
   it('Renders Favorite Resources Card Title and the 2 active favorite resources', async () => {
@@ -44,14 +45,14 @@ describe('Favorite Resources Card', () => {
   });
 
   it('User can click to remove item from favorites card', async () => {
-    const { findByText } = render(<FavoriteResources />);
+    render(<FavoriteResources />);
 
     // Billing Information is found...
-    expect(await findByText('Billing Information')).toBeInTheDocument();
-    var el = document.querySelector(
-      `input[aria-label="Remove Billing Information link from your favorite resources"]`
+    expect(await screen.findByText('Billing Information')).toBeInTheDocument();
+    const removeBilling = screen.getByLabelText(
+      'Remove Billing Information link from your favorite resources'
     );
-    userEvent.click(el);
+    userEvent.click(removeBilling);
     expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
     expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);

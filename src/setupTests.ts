@@ -7,7 +7,7 @@ import MutationObserver from '@sheerun/mutationobserver-shim';
 window.MutationObserver = MutationObserver;
 
 ReactGA.initialize('UA-48705802-13', {
-  testMode: true
+  testMode: true,
 });
 
 export const mockGAEvent = jest.fn();
@@ -16,13 +16,13 @@ export const mockTrendingEvent = jest.fn();
 jest.mock('../src/util/gaTracking', () => ({
   Event: () => {
     return mockGAEvent();
-  }
+  },
 }));
 
 jest.mock('../src/features/resources/GATrendingResource', () => ({
   TrendingEvent: () => {
     return mockTrendingEvent();
-  }
+  },
 }));
 
 mockGAEvent.mockResolvedValue(Promise.resolve(true));
@@ -39,29 +39,17 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-// required because of the overlay from Reakit
-if (global.document) {
-  global.document.createRange = () => ({
-    setStart: () => {},
-    setEnd: () => {},
-    commonAncestorContainer: {
-      nodeName: 'BODY',
-      ownerDocument: document
-    }
-  });
-}
-
 // Supress missing CSS warnings in tests from @reach ui components
 jest.mock('@reach/utils', () => ({
   ...jest.requireActual('@reach/utils'),
-  checkStyles: jest.fn()
+  checkStyles: jest.fn(),
 }));
 
 // Mock matchMedia for test env
 const matchMedia = () => ({
   matches: false,
   addListener: () => {},
-  removeListener: () => {}
+  removeListener: () => {},
 });
 window.matchMedia = window.matchMedia || matchMedia;
 
