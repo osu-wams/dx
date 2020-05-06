@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
 import { ITSystemStatus } from '../employee-only/ITSystemStatus';
 import { mockGAEvent } from 'src/setupTests';
@@ -21,37 +22,36 @@ describe('<ITSystemStatus />', () => {
   });
 
   it('should have links that are tracked via GA', async () => {
-    const { getByText } = render(<ITSystemStatus />);
-    const portalLink = getByText(/more at status portal/, { selector: 'a' });
-    const stickyIncidentLink = getByText(/View details/, { selector: 'a' });
-    fireEvent.click(portalLink);
-    fireEvent.click(stickyIncidentLink);
+    render(<ITSystemStatus />);
+    const portalLink = screen.getByRole('link', { name: /more at status portal/ });
+    const stickyIncidentLink = screen.getByRole('link', { name: /View details/ });
+    userEvent.click(portalLink);
+    userEvent.click(stickyIncidentLink);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should have a sticky incident notification', async () => {
-    const { getByTestId, queryByText, getAllByText } = render(<ITSystemStatus />);
-    expect(await queryByText(/operating normally/)).not.toBeInTheDocument();
-    expect(await queryByText(/View details/)).toBeInTheDocument();
-    expect(getAllByText(/G Suite/)).toHaveLength(4);
-    expect(getByTestId('sticky-incident-badge')).toBeInTheDocument();
+    render(<ITSystemStatus />);
+    expect(screen.queryByText(/operating normally/)).toBeNull();
+    expect(screen.getByText(/View details/)).toBeInTheDocument();
+    expect(screen.getAllByText(/G Suite/)).toHaveLength(4);
+    expect(screen.getByTestId('sticky-incident-badge')).toBeInTheDocument();
   });
 
   it('should have some systems not operating normally but hide the operational systems', async () => {
-    const { getByText, queryByText, queryAllByText } = render(<ITSystemStatus />);
-    expect(await queryByText(/operating normally/)).not.toBeInTheDocument();
-    expect(await queryByText(/View details/)).toBeInTheDocument();
-    expect(getByText(/Major Outage/)).toBeInTheDocument();
-    expect(getByText(/Performance Issues/)).toBeInTheDocument();
-    expect(await queryAllByText(/Operational/)).toHaveLength(0);
+    render(<ITSystemStatus />);
+    expect(screen.queryByText(/operating normally/)).toBeNull();
+    expect(screen.getByText(/View details/)).toBeInTheDocument();
+    expect(screen.getByText(/Major Outage/)).toBeInTheDocument();
+    expect(screen.getByText(/Performance Issues/)).toBeInTheDocument();
+    expect(screen.queryAllByText(/Operational/)).toHaveLength(0);
   });
 
   it('should have an all systems operational state', async () => {
     mockUseStatus.mockReturnValue(mockNoData);
-    const { getByText, queryByText } = render(<ITSystemStatus />);
-    expect(getByText(/operating normally/)).toBeInTheDocument();
-    expect(getByText(/more at status portal/)).toBeInTheDocument();
-    const stickyIncidentLink = await queryByText(/View details/);
-    expect(stickyIncidentLink).not.toBeInTheDocument();
+    render(<ITSystemStatus />);
+    expect(screen.getByText(/operating normally/)).toBeInTheDocument();
+    expect(screen.getByText(/more at status portal/)).toBeInTheDocument();
+    expect(screen.queryByText(/View details/)).toBeNull();
   });
 });
