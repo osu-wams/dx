@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import ErrorBoundary from '../ErrorBoundary';
 
 const ComponentWithError = () => {
@@ -30,27 +31,27 @@ afterEach(() => {
 
 describe('<ErrorBoundary />', () => {
   it('should render inner component without an error', async () => {
-    const { getByText, queryByText } = render(
+    render(
       <ErrorBoundary errorComponent={() => <span>Error</span>}>
         <span>Success</span>
       </ErrorBoundary>
     );
-    expect(getByText('Success')).toBeInTheDocument();
-    expect(await queryByText('Error')).not.toBeInTheDocument();
+    expect(screen.getByText('Success')).toBeInTheDocument();
+    expect(screen.queryByText('Error')).toBeNull();
   });
   it('should render an error when one happens', async () => {
-    const { getByText, queryByText } = render(
+    render(
       <ErrorBoundary errorComponent={() => <span>Error</span>}>
         <ComponentWithError />
       </ErrorBoundary>
     );
-    expect(getByText('Error')).toBeInTheDocument();
-    expect(await queryByText('Success')).not.toBeInTheDocument();
+    expect(screen.getByText('Error')).toBeInTheDocument();
+    expect(screen.queryByText('Success')).toBeNull();
     expect(mockedPostError).toBeCalledTimes(1);
     expect(console.error).toHaveBeenCalledTimes(2);
   });
   it('should call the ErrorHandlerCallback when an error happens', async () => {
-    const { getByText, queryByText } = render(
+    render(
       <ErrorBoundary
         errorComponent={() => <span>Error</span>}
         errorHandlerCallback={mockedErrorCallback}
@@ -58,8 +59,8 @@ describe('<ErrorBoundary />', () => {
         <ComponentWithError />
       </ErrorBoundary>
     );
-    expect(getByText('Error')).toBeInTheDocument();
-    expect(await queryByText('Success')).not.toBeInTheDocument();
+    expect(screen.getByText('Error')).toBeInTheDocument();
+    expect(screen.queryByText('Success')).toBeNull();
     expect(mockedPostError).toBeCalledTimes(1);
     expect(mockedErrorCallback).toBeCalledTimes(1);
     expect(console.error).toHaveBeenCalledTimes(2);
