@@ -19,6 +19,8 @@ import { ExternalLink } from 'src/ui/Link';
 import Url from 'src/util/externalUrls.data';
 import { Event } from 'src/util/gaTracking';
 import { titleCase } from 'src/util/helpers';
+import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
+import degreeImg from 'src/assets/program-of-study.svg';
 
 const { usersCampus } = User;
 
@@ -55,6 +57,16 @@ const ProgramOfStudy = () => {
     icon: any;
   }
 
+  const NoDegreeData = () => (
+    <EmptyState>
+      <EmptyStateImage src={degreeImg} alt="" />
+      <EmptyStateText>
+        You do not currently have a program of study. If you have recently enrolled or changed your
+        program, it may take a little while to appear.
+      </EmptyStateText>
+    </EmptyState>
+  );
+
   /**
    * Renders or skips individual items from the program of study
    * @param fields
@@ -87,7 +99,7 @@ const ProgramOfStudy = () => {
       <CardHeader title="Program of Study" badge={<CardIcon icon={faUserGraduate} />} />
       <CardContent>
         {loading && <Skeleton />}
-        {!loading && data.length === 0 && 'No information'}
+        {!loading && data.length === 0 && <NoDegreeData />}
         {!loading &&
           data &&
           data.map((d: Types.Degree) => (
