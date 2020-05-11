@@ -68,6 +68,6 @@ describe('<ProgramOfStudy /> | Degree', () => {
     const { getByText, queryByText } = render(<ProgramOfStudy />);
 
     expect(queryByText(/Bachelor of Science/i)).toBeNull();
-    expect(getByText(/No information/i)).toBeInTheDocument();
+    expect(getByText(/you do not currently have a program of study/i)).toBeInTheDocument();
   });
 });
