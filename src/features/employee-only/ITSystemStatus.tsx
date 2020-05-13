@@ -64,6 +64,7 @@ const ITSystemStatus = () => {
           {allOperational(status.data) && <AllOperational />}
           <StatusItemRow>
             {!allOperational(status.data) &&
+              status.data.length &&
               sortedByStatus(status.data)
                 .filter((c) => c.status > 1)
                 .map((c) => <ITSystemItem key={`item-${c.id}`} component={c} />)}
