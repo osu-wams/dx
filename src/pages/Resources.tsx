@@ -160,7 +160,7 @@ const Resources = () => {
      * AND the active category exists in the window location bar then this is the first time the user has visited
      * the Resources page so we don't push a state (because the browser handles the first state by default.)
      */
-    if (history.pushState) {
+    if (typeof history.pushState === 'function') {
       if (
         history.state?.category !== activeCategory &&
         !window.location.search.includes(activeCategory)
