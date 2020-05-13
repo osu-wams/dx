@@ -128,11 +128,13 @@ describe('<Resources />', () => {
 
   it('Changes Search term should re-run the search effectively', async () => {
     const { searchInput } = renderResources();
+    const badQuery = 'billingNotThere';
 
-    await userEvent.type(searchInput, 'billingNotThere');
+    await userEvent.type(searchInput, badQuery);
 
     expect(await screen.findByText(/found 0 results/)).toBeInTheDocument();
     expect(screen.queryByText(/Billing Information/)).toBeNull();
+    expect(mockGAEvent).toHaveBeenCalledTimes(badQuery.length + 1);
 
     // We need to clear the input value if not the below interaction sits on top of the previous
     searchInput.value = '';
@@ -171,6 +173,21 @@ describe('<Resources />', () => {
     expect(await findByText(/Billing Information/)).toBeInTheDocument();
     expect(await findByText(/Student Jobs/)).toBeInTheDocument();
     location.search = '';
+  });
+
+  it('should change categories when the back button is clicked', async () => {
+    const { featured, all } = renderResources();
+
+    expect(all).toBeInTheDocument();
+    expect(featured).toHaveClass('selected');
+    expect(all).not.toHaveClass('selected');
+    userEvent.click(all);
+    expect(featured).not.toHaveClass('selected');
+    expect(all).toHaveClass('selected');
+    // Back button causes window.onpopstate to fire and it would have the previously clicked category
+    window.onpopstate!(new PopStateEvent('state', { state: { category: 'featured' } }));
+    expect(featured).toHaveClass('selected');
+    expect(all).not.toHaveClass('selected');
   });
 
   describe('Favorite Resources tests', () => {
