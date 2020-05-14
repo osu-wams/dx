@@ -47,6 +47,7 @@ export type IComponents =
   | 'resource'
   | '404'
   | 'resource-search'
+  | 'resource-search-failed'
   | 'resource-category'
   | 'past-courses-search'
   | 'info-button'

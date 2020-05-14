@@ -13,6 +13,7 @@ import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { activeFavoriteResources } from 'src/features/resources/resources-utils';
 import { AppContext } from 'src/contexts/app-context';
+import { Event } from 'src/util/gaTracking';
 
 const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
@@ -122,6 +123,11 @@ const Resources = () => {
           return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
         });
 
+        // If a query has no results, emit a GA Event to track for improving
+        // resources and synonyms
+        if (queriedResources.length === 0) {
+          Event('resource-search-failed', debouncedQuery);
+        }
         // Filter by category when searching in
         filtered = filterByCategory(activeCategory, queriedResources);
       }
