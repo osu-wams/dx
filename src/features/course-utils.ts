@@ -22,9 +22,9 @@ import {
   faTh,
   faCalendarDay,
   faFileInvoice,
-  faLaptop
+  faLaptop,
 } from '@fortawesome/pro-light-svg-icons';
-import { CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
+import { Types } from '@osu-wams/lib';
 
 // You can get the icon for a course type (Lecture, Lab, Final exam, etc.)
 // You need the scheduleType value from the API.
@@ -58,7 +58,7 @@ export const CourseIcons = {
   X: faCalendarDay,
   MID: faFileInvoice,
   FNL: faFileInvoice,
-  HYB: faLaptop
+  HYB: faLaptop,
 };
 
 export const getIconByScheduleType = (scheduleType: string) => {
@@ -79,7 +79,7 @@ export const getIconByScheduleType = (scheduleType: string) => {
  */
 export const matchedCourseContext = (
   contextName: string,
-  courses: CourseSchedule[]
+  courses: Types.CourseSchedule[]
 ): { courseSubject: string; courseNumber: string } | undefined => {
   // Expecting the context name to include something like "(PSY_240_400_F2019)"
   // and matching groups as subject "PSY" and number "240"
@@ -87,7 +87,7 @@ export const matchedCourseContext = (
   if (matches && matches.groups) {
     const { courseSubject, courseNumber } = matches.groups;
     const course = courses.find(
-      c =>
+      (c) =>
         c.attributes.courseSubject.toLowerCase() === courseSubject.toLowerCase() &&
         c.attributes.courseNumber.toLowerCase() === courseNumber.toLowerCase()
     );
