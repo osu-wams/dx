@@ -31,14 +31,17 @@ import {
 } from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
 import Course from '../Course';
-import { CourseSchedule, MeetingTime } from '@osu-wams/hooks/dist/api/student/courseSchedule';
+import { Types } from '@osu-wams/lib';
 
 interface ScheduleCardCoursesProps {
-  selectedCourses: CourseSchedule[];
-  courses: CourseSchedule[];
+  selectedCourses: Types.CourseSchedule[];
+  courses: Types.CourseSchedule[];
 }
 
-const meetingTimeCampusMap = (course: CourseSchedule, meetingTime: MeetingTime): JSX.Element => (
+const meetingTimeCampusMap = (
+  course: Types.CourseSchedule,
+  meetingTime: Types.CourseScheduleMeetingTime
+): JSX.Element => (
   <a
     href={Url.campusMap.building + meetingTime.building}
     target="_blank"
@@ -73,7 +76,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
     }
   };
 
-  const meetingTimeDescription = (meetingTime: MeetingTime) => {
+  const meetingTimeDescription = (meetingTime: Types.CourseScheduleMeetingTime) => {
     const finalExam = examName(meetingTime);
     if (finalExam !== undefined) return finalExam;
     return `${meetingTime.room} ${meetingTime.buildingDescription}`;
@@ -81,47 +84,51 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
 
   const meetingTimeListItems = (
     coursesMap: Map<string, ICoursesMap>,
-    course: CourseSchedule,
+    course: Types.CourseSchedule,
     themeContext: ThemeConfiguration
   ): JSX.Element[] =>
-    exceptMeetingTypes(course.attributes.meetingTimes, ['MID']).map((meetingTime: MeetingTime) => (
-      <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
-        <ListItemContentButton
-          onClick={() => {
-            toggleCourse(
-              coursesMap.get(`${course.attributes.courseSubject}${course.attributes.courseNumber}`)
-            );
-            Event(
-              'schedule-card',
-              'course clicked',
-              `${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`
-            );
-          }}
-        >
-          {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
-          <ListItemText>
-            <ListItemDescription
-              fontSize={fontSize[16]}
-              color={themeContext.features.academics.courses.list.title.color}
-            >
-              {course.attributes.scheduleDescription} &bull; {meetingTimeDescription(meetingTime)}
-            </ListItemDescription>
-            <ListItemDescription>
-              {meetingTime.beginTime && formatTime(meetingTime.beginTime) + ' - '}
-              {meetingTime.endTime && formatTime(meetingTime.endTime)}
-            </ListItemDescription>
-          </ListItemText>
-          {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
-        </ListItemContentButton>
-      </ListItem>
-    ));
+    exceptMeetingTypes(course.attributes.meetingTimes, ['MID']).map(
+      (meetingTime: Types.CourseScheduleMeetingTime) => (
+        <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
+          <ListItemContentButton
+            onClick={() => {
+              toggleCourse(
+                coursesMap.get(
+                  `${course.attributes.courseSubject}${course.attributes.courseNumber}`
+                )
+              );
+              Event(
+                'schedule-card',
+                'course clicked',
+                `${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`
+              );
+            }}
+          >
+            {courseItemLeadText(course.attributes.courseSubject, course.attributes.courseNumber)}
+            <ListItemText>
+              <ListItemDescription
+                fontSize={fontSize[16]}
+                color={themeContext.features.academics.courses.list.title.color}
+              >
+                {course.attributes.scheduleDescription} &bull; {meetingTimeDescription(meetingTime)}
+              </ListItemDescription>
+              <ListItemDescription>
+                {meetingTime.beginTime && formatTime(meetingTime.beginTime) + ' - '}
+                {meetingTime.endTime && formatTime(meetingTime.endTime)}
+              </ListItemDescription>
+            </ListItemText>
+            {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}
+          </ListItemContentButton>
+        </ListItem>
+      )
+    );
 
   return (
     <CardSection>
       <SectionHeader>Courses</SectionHeader>
       <List>
         {selectedCourses.length > 0 &&
-          selectedCourses.map((c: CourseSchedule) =>
+          selectedCourses.map((c: Types.CourseSchedule) =>
             meetingTimeListItems(coursesMap, c, themeContext)
           )}
         {selectedCourses.length === 0 && (

@@ -21,7 +21,7 @@ import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
 import { matchedCourseContext } from './course-utils';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
-import { CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule';
+import { Types } from '@osu-wams/lib';
 
 /**
  * Get the course item lead text or the icon
@@ -30,7 +30,7 @@ import { CourseSchedule } from '@osu-wams/hooks/dist/api/student/courseSchedule'
  */
 export const courseCodeOrIcon = (
   contextName: string,
-  courseList: CourseSchedule[],
+  courseList: Types.CourseSchedule[],
   iconElement: JSX.Element
 ): JSX.Element => {
   const course = matchedCourseContext(contextName, courseList);

@@ -30,7 +30,7 @@ import {
   examName,
 } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
 import { fontSize, spacing, ThemeConfiguration } from 'src/theme';
-import { Faculty, MeetingTime } from '@osu-wams/hooks/dist/api/student/courseSchedule';
+import { Types } from '@osu-wams/lib';
 
 interface ICourse {
   coursesMap: ICoursesMap;
@@ -67,7 +67,7 @@ const MapLink = styled(FacultyLink)`
   }
 `;
 
-const meetingDateTime = (meetingTime: MeetingTime): string => {
+const meetingDateTime = (meetingTime: Types.CourseScheduleMeetingTime): string => {
   const date =
     meetingTime.beginDate !== meetingTime.endDate
       ? meetingTime.weeklySchedule.map((day) => day)
@@ -79,7 +79,7 @@ const meetingDateTime = (meetingTime: MeetingTime): string => {
 };
 
 const meetingTimeListItem = (
-  meetingTime: MeetingTime,
+  meetingTime: Types.CourseScheduleMeetingTime,
   themeContext: ThemeConfiguration
 ): JSX.Element => (
   <CourseListItem key={generateId()}>
@@ -112,7 +112,7 @@ const meetingTimeListItem = (
 );
 
 const facultyListItem = (
-  faculty: Faculty,
+  faculty: Types.CourseScheduleFaculty,
   index: number,
   themeContext: ThemeConfiguration
 ): JSX.Element => (
@@ -199,7 +199,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
             )}
           </List>
           <List>
-            {course.attributes.faculty.map((fac: Faculty, index: number) =>
+            {course.attributes.faculty.map((fac: Types.CourseScheduleFaculty, index: number) =>
               facultyListItem(fac, index, themeContext)
             )}
           </List>
