@@ -5,6 +5,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Resources } from '@osu-wams/hooks';
+import { Types } from '@osu-wams/lib';
 import { AppContext } from 'src/contexts/app-context';
 import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src/ui/List';
 import { IconLookup } from './resources-utils';
@@ -15,13 +16,16 @@ import { Event } from 'src/util/gaTracking';
 // Adds all font awesome icons so we can call them by name (coming from Drupal API)
 library.add(fal, fab);
 
-const ResourceItem = ({ resource, event }) => {
+const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: any }) => {
   const themeContext = useContext(ThemeContext);
-  const [favs, setFav] = useState(false);
   const { user } = useContext(AppContext);
-  const isFavorite = (resId: string, favs: any) => {
-    const res = favs.find((r) => r.resourceId === resId);
-    return res ? res.active : false;
+  const [favs, setFav] = useState(false);
+
+  const isFavorite = (resId: string, favs: Types.FavoriteResource[]) => {
+    const res: Types.FavoriteResource | undefined = favs.find(
+      (r: Types.FavoriteResource) => r.resourceId === resId
+    );
+    return res?.active || false;
   };
 
   useEffect(() => {
@@ -30,7 +34,7 @@ const ResourceItem = ({ resource, event }) => {
     }
   }, [user.data.favoriteResources, resource.id]);
 
-  const favoriteLabelText = (currentFavState) => {
+  const favoriteLabelText = (currentFavState: boolean) => {
     return currentFavState
       ? `Remove ${resource.title} link from your favorite resources`
       : `Add ${resource.title} link to your favorite resources`;
@@ -55,7 +59,9 @@ const ResourceItem = ({ resource, event }) => {
         target="_blank"
         onClick={() => {
           event();
-          TrendingEvent(resource, user.data);
+          if (!resource.excludeTrending) {
+            TrendingEvent(resource, user.data);
+          }
         }}
       >
         {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
