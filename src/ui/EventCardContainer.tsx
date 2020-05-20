@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components/macro';
 import { Title } from 'src/ui/PageTitle';
+import { Types } from '@osu-wams/lib';
 import {
   User,
   useStudentExperienceEvents,
@@ -55,6 +56,24 @@ function shuffleArray(arr: any[]) {
   return shuffled;
 }
 
+const filterEmployeeEvents = (
+  inBend: boolean,
+  inCorvallis: boolean,
+  events: Types.LocalistEvent[]
+) => {
+  if (inBend) {
+    return events.filter((e) => !e.campus_code || e.campus_code === CAMPUS_CODES.bend);
+  } else if (inCorvallis) {
+    return events.filter((e) => !e.campus_code || e.campus_code === CAMPUS_CODES.corvallis);
+  } else {
+    return events.filter(
+      (e) =>
+        !e.campus_code ||
+        (e.campus_code !== CAMPUS_CODES.corvallis && e.campus_code !== CAMPUS_CODES.bend)
+    );
+  }
+};
+
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
   const { user } = useContext(AppContext);
@@ -67,7 +86,7 @@ const EventCardContainer = ({ page, ...props }) => {
   // Fetch data on load
   useEffect(() => {
     let announcementsToUse: any[] = [];
-    let eventsToUse: any[] = [];
+    let eventsToUse: Types.LocalistEvent[] = [];
 
     if (!announcements.loading) {
       announcementsToUse = announcements.data;
@@ -78,14 +97,16 @@ const EventCardContainer = ({ page, ...props }) => {
        * Checks to see if you are an employee or a student at Bend or Corvallis
        * Returns the appropriate events based on that
        */
+      const inBend = atCampus(user.data, CAMPUS_CODES.bend);
+      const inCorvallis = atCampus(user.data, CAMPUS_CODES.corvallis);
+
       if (hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee]) && !employeeEvents.loading) {
-        eventsToUse = employeeEvents.data;
+        eventsToUse = filterEmployeeEvents(inBend, inCorvallis, employeeEvents.data);
       } else {
-        const atBend = atCampus(user.data, CAMPUS_CODES.bend);
-        if (!studentExperienceEvents.loading && !atBend) {
+        if (!studentExperienceEvents.loading && !inBend) {
           eventsToUse = studentExperienceEvents.data;
         }
-        if (!bendEvents.loading && atBend) {
+        if (!bendEvents.loading && inBend) {
           eventsToUse = bendEvents.data;
         }
       }

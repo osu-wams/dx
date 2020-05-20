@@ -45,7 +45,7 @@ describe('<EventCardContainer />', () => {
     expect(cards).toHaveLength(5);
   });
 
-  it('should show 7 employee event cards', async () => {
+  it('should show 6 employee event cards for an employee in corvallis', async () => {
     const { findAllByTestId, getByText, queryByText } = render(
       <EventCardContainer page="dashboard" />,
       {
@@ -53,9 +53,33 @@ describe('<EventCardContainer />', () => {
       }
     );
     const events = await findAllByTestId('eventcard');
-    expect(events).toHaveLength(7);
+    expect(events).toHaveLength(6);
     expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
     expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
+    expect(queryByText(/Transfer Tuesdays at COCC/i)).not.toBeInTheDocument();
+    expect(
+      queryByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
+    ).toBeInTheDocument();
+  });
+
+  it('should show 5 employee event cards for an employee in bend', async () => {
+    const { findAllByTestId, getByText, queryByText } = render(
+      <EventCardContainer page="dashboard" />,
+      {
+        user: {
+          ...mockEmployeeUser,
+          data: { ...mockEmployeeUser.data, audienceOverride: { campusCode: 'B' } },
+        },
+      }
+    );
+    const events = await findAllByTestId('eventcard');
+    expect(events).toHaveLength(5);
+    expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
+    expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
+    expect(queryByText(/Transfer Tuesdays at COCC/i)).toBeInTheDocument();
+    expect(
+      queryByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
+    ).not.toBeInTheDocument();
   });
 
   it('should display text', async () => {
