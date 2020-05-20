@@ -86,7 +86,7 @@ describe('<Resources />', () => {
     expect(anchor).toEqual(resultsId);
   });
 
-  it('should have "Featured" selected and clickable All category that gets appripriate results', async () => {
+  it('should have "Featured" selected and clickable All category that gets appropriate results', async () => {
     mockDefaultCategory.mockReturnValue('All');
     const { findByText, all, featured } = renderResources();
 
@@ -107,6 +107,20 @@ describe('<Resources />', () => {
     userEvent.click(BillingInformationResource);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
     expect(mockTrendingEvent).toHaveBeenCalledTimes(1);
+  });
+
+  it('should have clickable categories that will not report as a trending resource', async () => {
+    mockDefaultCategory.mockReturnValue('All');
+    mockUseResources.mockReturnValue({
+      ...resourcesData,
+      data: [{ ...resourcesData.data[0], excludeTrending: true, locations: ['Corvallis', 'Bend'] }],
+    });
+    renderResources();
+    const nonTrendingResource = screen.getByText(/Testo/);
+    expect(nonTrendingResource).not.toBeNull();
+    userEvent.click(nonTrendingResource);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+    expect(mockTrendingEvent).not.toHaveBeenCalledTimes(1);
   });
 
   it('should empty input and get results for that category only when clicking category link', async () => {
