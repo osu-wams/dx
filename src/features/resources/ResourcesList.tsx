@@ -13,7 +13,7 @@ const ResourcesList: React.FC<{ user: Types.User }> = () => {
     <div id="resourcesResults" data-testid="resourcesResults" aria-live="polite" aria-atomic="true">
       {`found ${resources?.length} ${singularPlural(resources?.length, 'result')}`}
       <List>
-        {resources.length > 0 &&
+        {(resources?.length ?? 0) > 0 &&
           resources.map((resource: Types.Resource) => (
             <ResourceItem
               key={resource.id}
