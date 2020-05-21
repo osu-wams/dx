@@ -14,30 +14,28 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { activeFavoriteResources } from 'src/features/resources/resources-utils';
 import { AppContext } from 'src/contexts/app-context';
 import { Event } from 'src/util/gaTracking';
-
-const { defaultCategoryName } = hooksResources;
+import { atom, useRecoilState, useRecoilValue, selectorFamily, selector } from 'recoil';
+import {
+  searchTermState,
+  categoriesState,
+  resourcesState,
+  activeCategoryState,
+} from 'src/features/resources/resources-recoil';
+// const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
 
 // Resources Page with components to filter, search and favorite resources
 const Resources = () => {
   const { user } = useContext(AppContext);
-  const [activeCategory, setActiveCategory] = useState<string>(getInitialCategory());
-  const [query, setQuery] = useState<string>('');
-  const [debouncedQuery] = useDebounce(query, 250);
   const categories = useCategories();
   const res = useResources();
-  const [filteredResources, setFilteredResources] = useState<any>([]);
-  const [filteredCategories, setFilteredCategories] = useState<any>([]);
 
-  /**
-   * A delegate method for children components to call and set the selected category. This
-   * pushes the category name to the window history and updates the location bar, when the
-   * Back/Forward buttons are pressed the category name is available.
-   * @param name the category name
-   */
-  const setSelectedCategory = (name: string) => {
-    setActiveCategory(decodeURI(name));
-  };
+  // Recoil
+  const [filteredResources, setFilteredResources] = useRecoilState(resourcesState);
+  const [filteredCategories, setFilteredCategories] = useRecoilState(categoriesState);
+  const activeCategory = useRecoilValue(activeCategoryState);
+  const [query] = useRecoilValue(searchTermState);
+  const [debouncedQuery] = useDebounce(query, 250);
 
   /**
    * Filter a list of resources where it has a category in its list matching the provided name
@@ -92,6 +90,18 @@ const Resources = () => {
     );
   };
 
+  const filterRes = React.useCallback(
+    (resources: Types.Resource[]): Types.Resource[] => {
+      return resources.filter(
+        (r) =>
+          checkAffiliation(user.data, r) &&
+          hasCategory(r, filteredCategories) &&
+          hasAudience(user.data, r)
+      );
+    },
+    [res.data, user.data, filteredCategories]
+  );
+
   /**
    * Filter the categories to include any that have an affilation related to the type of user
    * (student vs employee)
@@ -104,10 +114,7 @@ const Resources = () => {
 
   useEffect(() => {
     if (res.data && user.data && filteredCategories.length > 0) {
-      let filtered = res.data.filter(
-        (r) => checkAffiliation(user.data, r) && hasCategory(r, filteredCategories)
-      );
-
+      let filtered = filterRes(res.data);
       // When clicking a category we filter all results based on selected category
       if (!debouncedQuery) {
         filtered = filterByCategory(activeCategory, filtered);
@@ -135,46 +142,6 @@ const Resources = () => {
     }
   }, [activeCategory, filteredCategories, filterByCategory, debouncedQuery, res.data, user.data]);
 
-  /* eslint-disable no-restricted-globals */
-  /**
-   * Allows for Back/Forward buttons to click and the component to update its state based on which category
-   * had been clicked. This provides the ability to have the category in the location bar for bookmarks, link
-   * sharing.
-   *
-   * * When the component mounts, bind onpopstate to handle history events (Back/Forward buttons clicked)
-   * * to detect if the history state includes the category name, in which case set the active category to match.
-   * * Push the default activeCategory to the history at the start.
-   */
-  useEffect(() => {
-    window.onpopstate = function (e) {
-      if (e.state) {
-        if (e.state.category) setActiveCategory(decodeURI(e.state.category));
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    /**
-     * Push to the history state if the currently active category doesn't match the previously set
-     * history (the page that was last visited). In the case that the history and active category don't match
-     * AND the active category exists in the window location bar then this is the first time the user has visited
-     * the Resources page so we don't push a state (because the browser handles the first state by default.)
-     */
-    if (typeof history.pushState === 'function') {
-      if (
-        history.state?.category !== activeCategory &&
-        !window.location.search.includes(activeCategory)
-      ) {
-        window.history.pushState(
-          { category: activeCategory },
-          activeCategory,
-          `?category=${activeCategory}`
-        );
-      }
-    }
-  }, [activeCategory]);
-  /* eslint-enable no-restricted-globals */
-
   return (
     <MainGridWrapper data-testid="resources-page">
       <PageTitle title="Resources" />
@@ -182,11 +149,7 @@ const Resources = () => {
         <ResourcesWrapper>
           {activeCategory !== '' && (
             <>
-              <ResourcesSearch
-                query={query}
-                setQuery={setQuery}
-                setSelectedCategory={setSelectedCategory}
-              />
+              <ResourcesSearch />
               {!res.loading && res.data.length > 0 && (
                 // Anchor link matches ResourcesList component main div id
                 <VisuallyHidden>
@@ -195,10 +158,6 @@ const Resources = () => {
               )}
               {categories.loading && <Skeleton />}
               <ResourcesCategories
-                categories={filteredCategories}
-                selectedCategory={activeCategory}
-                setQuery={setQuery}
-                setSelectedCategory={setSelectedCategory}
                 hasFavorite={
                   user.data.favoriteResources && user.data.favoriteResources.some((f) => f.active)
                 }
@@ -207,10 +166,7 @@ const Resources = () => {
           )}
           {res.loading && <Skeleton count={5} />}
           {!res.loading && res.data.length > 0 ? (
-            <ResourcesList
-              resources={filteredResources.filter((r) => hasAudience(user.data, r))}
-              user={user.data}
-            />
+            <ResourcesList user={user.data} />
           ) : (
             !res.loading && (
               /* @TODO need mockup styling to do and messaging for no results */
@@ -223,15 +179,15 @@ const Resources = () => {
   );
 };
 
-const getInitialCategory = () => {
-  if (window.location.search.startsWith('?category=')) {
-    const terms = window.location.search.split('=');
-    if (terms.length === 2) {
-      return decodeURI(terms[1]);
-    }
-  }
-  return decodeURI(defaultCategoryName());
-};
+// const getInitialCategory = () => {
+//   if (window.location.search.startsWith('?category=')) {
+//     const terms = window.location.search.split('=');
+//     if (terms.length === 2) {
+//       return decodeURI(terms[1]);
+//     }
+//   }
+//   return decodeURI(defaultCategoryName());
+// };
 
 const ResourcesWrapper = styled(CardBase)`
   padding: ${spacing.default};

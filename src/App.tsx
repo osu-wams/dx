@@ -18,6 +18,7 @@ import { useUser } from '@osu-wams/hooks';
 import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { GlobalStyles } from './theme';
+import { RecoilRoot } from 'recoil';
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -98,32 +99,34 @@ const App = (props: AppProps) => {
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>
-      <AppContext.Provider value={appContext}>
-        <GlobalStyles />
-        <Header />
-        <Alerts />
-        <ContentWrapper>
-          <Location>
-            {({ location }) => (
-              <PoseGroup>
-                {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                <RouteContainer key={location.key}>
-                  <Router location={location} className="router-styles">
-                    <RouterPage path="/" pageComponent={<Dashboard />} />
-                    <RouterPage path="profile" pageComponent={<Profile />} />
-                    <RouterPage path="academics/*" pageComponent={<Academics />} />
-                    <RouterPage path="finances" pageComponent={<Finances />} />
-                    <RouterPage path="resources" pageComponent={<Resources />} />
-                    <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                    <RouterPage default pageComponent={<PageNotFound />} />
-                  </Router>
-                </RouteContainer>
-              </PoseGroup>
-            )}
-          </Location>
-        </ContentWrapper>
-        <Footer />
-      </AppContext.Provider>
+      <RecoilRoot>
+        <AppContext.Provider value={appContext}>
+          <GlobalStyles />
+          <Header />
+          <Alerts />
+          <ContentWrapper>
+            <Location>
+              {({ location }) => (
+                <PoseGroup>
+                  {ReactGA.pageview(location.pathname + location.search + location.hash)}
+                  <RouteContainer key={location.key}>
+                    <Router location={location} className="router-styles">
+                      <RouterPage path="/" pageComponent={<Dashboard />} />
+                      <RouterPage path="profile" pageComponent={<Profile />} />
+                      <RouterPage path="academics/*" pageComponent={<Academics />} />
+                      <RouterPage path="finances" pageComponent={<Finances />} />
+                      <RouterPage path="resources" pageComponent={<Resources />} />
+                      <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                      <RouterPage default pageComponent={<PageNotFound />} />
+                    </Router>
+                  </RouteContainer>
+                </PoseGroup>
+              )}
+            </Location>
+          </ContentWrapper>
+          <Footer />
+        </AppContext.Provider>
+      </RecoilRoot>
     </ThemeProvider>
   );
 };
