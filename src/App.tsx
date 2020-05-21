@@ -115,7 +115,14 @@ const App = (props: AppProps) => {
                       <RouterPage path="profile" pageComponent={<Profile />} />
                       <RouterPage path="academics/*" pageComponent={<Academics />} />
                       <RouterPage path="finances" pageComponent={<Finances />} />
-                      <RouterPage path="resources" pageComponent={<Resources />} />
+                      <RouterPage
+                        path="resources"
+                        pageComponent={
+                          <React.Suspense fallback={<div>Loading...</div>}>
+                            <Resources />
+                          </React.Suspense>
+                        }
+                      />
                       <RouterPage path="beta" pageComponent={<BetaDashboard />} />
                       <RouterPage default pageComponent={<PageNotFound />} />
                     </Router>

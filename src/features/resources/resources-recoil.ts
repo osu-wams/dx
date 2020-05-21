@@ -1,4 +1,5 @@
 import { atom, useRecoilState, useRecoilValue, selectorFamily, selector } from 'recoil';
+import { Resources } from '@osu-wams/hooks';
 
 export const searchTermState = atom({
   key: 'searchTermState',
@@ -20,13 +21,21 @@ export const activeCategoryState = atom({
   default: 'all',
 });
 
-// export const resources = selector({
-//   key: 'resources',
-//   get: async ({ get }) => {
-//     const res = await useResources();
-//     return res;
-//   },
-// });
+export const fetchCategories = selector({
+  key: 'fetchCategories',
+  get: async ({ get }) => {
+    const res = await Resources.getCategories();
+    return { data: res, loading: false, error: false };
+  },
+});
+
+export const fetchResources = selector({
+  key: 'fetchResources',
+  get: async ({ get }) => {
+    const res = await Resources.getResources();
+    return { data: res, loading: false, error: false };
+  },
+});
 
 export const resourceSearch = selector({
   key: 'resourceSearch',
@@ -34,13 +43,13 @@ export const resourceSearch = selector({
     const resources = get(resourcesState);
     const text = get(searchTermState);
     if (text.length > 0) {
-      resources.filter((resource) => {
-        // if (
-        //   resource.synonyms.length > 0 &&
-        //   resource.synonyms.find((s) => s.includes(text.toLowerCase()))
-        // ) {
-        //   return true;
-        // }
+      return resources.filter((resource) => {
+        if (
+          resource.synonyms.length > 0 &&
+          resource.synonyms.find((s) => s.includes(text.toLowerCase()))
+        ) {
+          return true;
+        }
         return resource.title.toLowerCase().includes(text.toLowerCase());
       });
     } else {

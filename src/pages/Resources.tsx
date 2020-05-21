@@ -20,6 +20,8 @@ import {
   categoriesState,
   resourcesState,
   activeCategoryState,
+  fetchResources,
+  fetchCategories,
 } from 'src/features/resources/resources-recoil';
 // const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
@@ -27,14 +29,14 @@ const { hasAudience, getAffiliation } = User;
 // Resources Page with components to filter, search and favorite resources
 const Resources = () => {
   const { user } = useContext(AppContext);
-  const categories = useCategories();
-  const res = useResources();
+  const categories = useRecoilValue(fetchCategories);
+  const res = useRecoilValue(fetchResources);
 
   // Recoil
   const [filteredResources, setFilteredResources] = useRecoilState(resourcesState);
   const [filteredCategories, setFilteredCategories] = useRecoilState(categoriesState);
   const activeCategory = useRecoilValue(activeCategoryState);
-  const [query] = useRecoilValue(searchTermState);
+  const query = useRecoilValue(searchTermState);
   const [debouncedQuery] = useDebounce(query, 250);
 
   /**
@@ -150,7 +152,7 @@ const Resources = () => {
           {activeCategory !== '' && (
             <>
               <ResourcesSearch />
-              {!res.loading && res.data.length > 0 && (
+              {!res.loading && (res.data?.length ?? 0) > 0 && (
                 // Anchor link matches ResourcesList component main div id
                 <VisuallyHidden>
                   <a href="#resourcesResults">Skip to results</a>
@@ -165,7 +167,7 @@ const Resources = () => {
             </>
           )}
           {res.loading && <Skeleton count={5} />}
-          {!res.loading && res.data.length > 0 ? (
+          {!res.loading && (res.data?.length ?? 0) > 0 ? (
             <ResourcesList user={user.data} />
           ) : (
             !res.loading && (
