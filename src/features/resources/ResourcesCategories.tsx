@@ -4,18 +4,18 @@ import { spacing } from 'src/theme';
 import CustomBtn from 'src/ui/CustomBtn';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
+import { categoriesState, searchTermState, activeCategoryState } from './resources-recoil';
+import { RecoilRoot, atom, useRecoilState, useRecoilValue, selectorFamily } from 'recoil';
 
 /**
  * Displays a list of clickable categories for the Resources page
  * Favorites category button is only rendered if the user has any favorite resources
  */
-const ResourceCategories = ({
-  categories,
-  setQuery,
-  selectedCategory,
-  setSelectedCategory,
-  hasFavorite,
-}) => {
+const ResourceCategories = ({ hasFavorite }) => {
+  const [query, setQuery] = useRecoilState(searchTermState);
+  const [categories] = useRecoilState(categoriesState);
+  const [selectedCategory, setSelectedCategory] = useRecoilState(activeCategoryState);
+
   return (
     <CategoriesWrapper>
       {categories.length > 0 && (
@@ -53,7 +53,7 @@ const ResourceCategories = ({
               clickHandler={() => {
                 setSelectedCategory(category.name);
                 // Clear search bar, since we are showing all results for the category
-                setQuery('');
+                query && setQuery('');
                 Event('resource-category', category.name);
               }}
               name="categories"

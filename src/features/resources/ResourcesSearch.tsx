@@ -4,16 +4,21 @@ import styled from 'styled-components/macro';
 import Icon from 'src/ui/Icon';
 import { spacing, borderRadius } from 'src/theme';
 import { Event } from 'src/util/gaTracking';
+import { atom, useRecoilState, selectorFamily } from 'recoil';
+import { searchTermState, activeCategoryState } from './resources-recoil';
 
-const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }) => {
+const ResourcesSearch: React.FC<any> = () => {
+  const [text, setText] = useRecoilState(searchTermState);
+  const [selectedCategory, setSelectedCategory] = useRecoilState(activeCategoryState);
+
   useEffect(() => {
-    if (query !== '') {
-      Event('resource-search', query);
+    if (text !== '') {
+      Event('resource-search', text);
     }
-  }, [query]);
+  }, [text]);
 
   const handleChange = (value) => {
-    setQuery(value);
+    setText(value);
     setSelectedCategory('all');
   };
   return (
@@ -23,7 +28,7 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
       </InputLabel>
       <Input
         placeholder="Find resources"
-        value={query}
+        value={text}
         id="resourcesSearch"
         onChange={(e) => handleChange(e.target.value)}
       />
