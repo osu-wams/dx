@@ -5,7 +5,6 @@ import {
   faUserCircle,
   faUser,
   faSignOut,
-  faMask,
   faChevronDown,
   faGraduationCap,
   faBriefcase,
