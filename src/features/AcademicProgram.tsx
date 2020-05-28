@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   faUserGraduate,
   faDiploma,
@@ -21,10 +21,12 @@ import { Event } from 'src/util/gaTracking';
 import { titleCase } from 'src/util/helpers';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import degreeImg from 'src/assets/program-of-study.svg';
+import { ThemeContext } from 'styled-components/macro';
 
 const { usersCampus } = User;
 
 const AcademicProgram = () => {
+  const themeContext = useContext(ThemeContext);
   const { data, loading }: { data: Types.Degree[]; loading: boolean } = useDegrees();
   const { user } = React.useContext(AppContext);
   const { campusName } = usersCampus(user);
@@ -94,16 +96,27 @@ const AcademicProgram = () => {
     );
   };
 
+  const paddingBottom = themeContext.features.academics.academicProgram.first.paddingBottom;
+  const borderTop = themeContext.features.academics.academicProgram.rest.borderTop;
+
   return (
     <Card>
       <CardHeader title="My Academic Program" badge={<CardIcon icon={faUserGraduate} />} />
-      <CardContent>
-        {loading && <Skeleton />}
-        {!loading && data.length === 0 && <NoDegreeData />}
-        {!loading &&
-          data &&
-          data.map((d: Types.Degree) => (
-            <List key={d?.majors?.first?.major ?? 'undeclared'}>
+      {loading && <Skeleton />}
+      {!loading && data.length === 0 && (
+        <CardContent>
+          <NoDegreeData />
+        </CardContent>
+      )}
+      {!loading &&
+        data &&
+        data.map((d: Types.Degree, i: number) => (
+          <CardContent
+            style={i === 0 ? { paddingBottom } : { borderTop }}
+            className={`degree-card degree-card-${i}`}
+            key={d?.majors?.first?.major ?? 'undeclared'}
+          >
+            <List>
               {d?.majors?.first?.major &&
                 renderItem([d.majors.first.major, d.majors.first.department], degreeData.major)}
               {d.majors.second &&
@@ -124,8 +137,8 @@ const AcademicProgram = () => {
 
               {campusName && renderItem(titleCase(campusName), degreeData.campus)}
             </List>
-          ))}
-      </CardContent>
+          </CardContent>
+        ))}
       <CardFooter>
         <ExternalLink
           href={Url.banner.studentProfile}

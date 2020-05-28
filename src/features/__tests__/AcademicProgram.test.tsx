@@ -11,6 +11,7 @@ const mockUseDegrees = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread operator on an Object complaint
     ...jest.requireActual('@osu-wams/hooks'),
     useDegrees: () => mockUseDegrees(),
   };
@@ -53,6 +54,18 @@ describe('<ProgramOfStudy /> | Degree', () => {
 
     expect(screen.getByText(/Spanish/i)).toBeInTheDocument();
     expect(screen.getByText(/Education/i)).toBeInTheDocument();
+  });
+
+  it('Expects a student with dual degrees to have two sets of degree UI rendered', () => {
+    mockUseDegrees.mockReturnValue({
+      ...mockDegrees,
+      data: [...mockDegrees.data, ...mockDegrees.data],
+    });
+    render(<AcademicProgram />);
+
+    expect(screen.getAllByText(/Mechanical Engineering/i)).toHaveLength(2);
+    expect(screen.getAllByText(/Manufacturing Engineering/i)).toHaveLength(2);
+    expect(screen.getAllByText(/School of Mech, Ind, Manf Engr/i)).toHaveLength(4);
   });
 
   it('Expects Student Profile Link tracked by Analytics', () => {
