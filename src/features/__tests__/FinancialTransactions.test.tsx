@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Student } from '@osu-wams/hooks';
 import FinancialTransactions from '../FinancialTransactions';
@@ -21,15 +22,21 @@ describe('<FinancialTransactions />', () => {
     mockUseAccountTransactions.mockReturnValue(mockAccountTransactions);
   });
 
-  it('should have a $3,417.97 charge from our mock data', () => {
-    const { getByText } = render(<FinancialTransactions />);
+  it('should have title: "Transactions this Term"', () => {
+    render(<FinancialTransactions />);
 
-    expect(getByText('$3,417.97')).toBeInTheDocument();
+    expect(screen.getByText(/transactions this term/i)).toBeInTheDocument();
+  });
+
+  it('should have a $3,417.97 charge from our mock data', () => {
+    render(<FinancialTransactions />);
+
+    expect(screen.getByText('$3,417.97')).toBeInTheDocument();
   });
 
   it('should find link to view all transactions and it triggers analytics', async () => {
-    const { getByText } = render(<FinancialTransactions />);
-    const transactions = getByText(/View more transactions/);
+    render(<FinancialTransactions />);
+    const transactions = screen.getByText(/View more transactions/);
     userEvent.click(transactions);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
@@ -40,8 +47,8 @@ describe('<FinancialTransactions />', () => {
       loading: false,
       error: false,
     });
-    const { getByText } = render(<FinancialTransactions />);
-    const empty = getByText(/There are no recent transactions for this term/);
+    render(<FinancialTransactions />);
+    const empty = screen.getByText(/There are no recent transactions for this term/);
 
     expect(empty).toBeInTheDocument();
   });

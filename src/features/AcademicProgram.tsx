@@ -24,7 +24,7 @@ import degreeImg from 'src/assets/program-of-study.svg';
 
 const { usersCampus } = User;
 
-const ProgramOfStudy = () => {
+const AcademicProgram = () => {
   const { data, loading }: { data: Types.Degree[]; loading: boolean } = useDegrees();
   const { user } = React.useContext(AppContext);
   const { campusName } = usersCampus(user);
@@ -96,7 +96,7 @@ const ProgramOfStudy = () => {
 
   return (
     <Card>
-      <CardHeader title="Program of Study" badge={<CardIcon icon={faUserGraduate} />} />
+      <CardHeader title="My Academic Program" badge={<CardIcon icon={faUserGraduate} />} />
       <CardContent>
         {loading && <Skeleton />}
         {!loading && data.length === 0 && <NoDegreeData />}
@@ -140,4 +140,4 @@ const ProgramOfStudy = () => {
   );
 };
 
-export { ProgramOfStudy };
+export { AcademicProgram };

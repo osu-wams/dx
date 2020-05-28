@@ -1,14 +1,15 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
 import { EmployeeTools } from '../EmployeeTools';
 import { mockGAEvent } from 'src/setupTests';
 
 it('Should have Empcenter and Evals links that are tracked via GA', async () => {
-  const { getByText } = render(<EmployeeTools />);
-  const empcenter = getByText(/Empcenter/);
-  const evals = getByText(/Evals/);
-  fireEvent.click(empcenter);
-  fireEvent.click(evals);
+  render(<EmployeeTools />);
+  const empcenter = screen.getByText(/Empcenter/);
+  const evals = screen.getByText(/Evals/);
+  userEvent.click(empcenter);
+  userEvent.click(evals);
   expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });

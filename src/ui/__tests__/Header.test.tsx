@@ -34,18 +34,20 @@ it('has employee dashboard title', () => {
   expect(title).toBeInTheDocument();
 });
 
+// This test adds a lot of ACT warnings
 it('Employees can toggle between Student and Employee dashboards', async () => {
-  mockPostSettings.mockReturnValue(Promise.resolve());
-  render(<Header />, {
-    user: mockEmployeeUser,
+  act(() => {
+    mockPostSettings.mockReturnValue(Promise.resolve());
+    render(<Header />, {
+      user: mockEmployeeUser,
+    });
   });
-
-  userEvent.click(screen.getByTestId('user-btn'));
+  await act(async () => {
+    userEvent.click(screen.getByTestId('user-btn'));
+  });
   const studentDashboard = await screen.findByText('Student Dashboard');
-
   userEvent.click(studentDashboard);
   expect(mockPostSettings).toHaveBeenCalledTimes(1);
-
   expect(mockPostSettings).toHaveBeenCalledWith({ primaryAffiliationOverride: 'student' });
 });
 
@@ -56,16 +58,17 @@ it('has a logout link in the menu', async () => {
   const logoutLink = await screen.findByText('Logout');
   act(() => {
     userEvent.click(logoutLink);
-
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });
 
 it('User Button and profile link are in the menu and tracked via GA', async () => {
   render(<Header />);
 
   const userLink = screen.getByTestId('user-btn');
-  userEvent.click(userLink);
+  act(() => {
+    userEvent.click(userLink);
+  });
 
   const profileLink = await screen.findByText('Profile', { selector: 'a' });
   act(() => {
@@ -74,115 +77,135 @@ it('User Button and profile link are in the menu and tracked via GA', async () =
   });
 });
 
+// This test adds act warnings in conjunction with other tests
 it('Help button and help link are in the menu and tracked via GA', async () => {
   render(<Header />);
 
   const userLink = screen.getByTestId('help-btn');
-  userEvent.click(userLink);
+  await act(async () => {
+    userEvent.click(userLink);
+  });
 
   const helpLink = await screen.findByText('Get Help', { selector: 'a' });
   const feedbackLink = await screen.findByText('Give feedback', { selector: 'a' });
 
   expect(feedbackLink).toBeInTheDocument();
 
-  act(() => {
+  await act(async () => {
     userEvent.click(helpLink);
-
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });
 
 describe('Student mobile menu interactions', () => {
   it('Student Dashboard title only visible in when menu is expanded', async () => {
-    const { queryByText, findByText } = render(<Header />);
+    render(<Header />);
 
     const title = 'Student Dashboard';
-    const studentDashboard = queryByText(title);
+    const studentDashboard = screen.queryByText(title);
     expect(studentDashboard).not.toBeVisible();
 
-    const menu = await findByText('Menu');
-    userEvent.click(menu);
+    const menu = screen.getByRole('button', { name: /menu/i });
 
-    const studentDashboardMenu = await findByText(title, { selector: 'h2' });
+    act(() => {
+      userEvent.click(menu);
+    });
+
+    const studentDashboardMenu = await screen.findByText(title, { selector: 'h2' });
     expect(studentDashboardMenu).toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   it('Clicking "menu" opens and clicking the close dismisses the modal', async () => {
-    const { findByText } = render(<Header />);
+    render(<Header />);
 
-    const menu = await findByText('Menu');
-    userEvent.click(menu);
+    const menu = screen.getByText('Menu');
+    act(() => {
+      userEvent.click(menu);
+    });
 
-    const close = await findByText(/close/i);
-    userEvent.click(close);
+    const close = await screen.findByText(/close/i);
+    act(() => {
+      userEvent.click(close);
+    });
 
-    const studentDashboard = await findByText('Student Dashboard');
+    const studentDashboard = await screen.findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   it('Clicking main link inside the modal dismisses the modal', async () => {
-    const { findByText } = render(<Header />);
+    render(<Header />);
 
-    const menu = await findByText('Menu');
-    userEvent.click(menu);
+    const menu = screen.getByText('Menu');
+    act(() => {
+      userEvent.click(menu);
+    });
 
-    const overview = await findByText(/overview/i, { selector: '[role="dialog"] a' });
-    userEvent.click(overview);
+    const overview = await screen.findByText(/overview/i, { selector: '[role="dialog"] a' });
+    act(() => {
+      userEvent.click(overview);
+    });
 
-    const studentDashboard = await findByText('Student Dashboard');
+    const studentDashboard = await screen.findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('Clicking footer link inside the modal dismisses the modal', async () => {
-    const { findByText } = render(<Header />);
+    render(<Header />);
 
-    const menu = await findByText('Menu');
-    userEvent.click(menu);
+    const menu = screen.getByText('Menu');
+    act(() => {
+      userEvent.click(menu);
+    });
 
-    const beta = await findByText(/beta/i, { selector: '[role="dialog"] nav a' });
-    userEvent.click(beta);
-    const studentDashboard = await findByText('Student Dashboard');
+    const beta = await screen.findByText(/beta/i, { selector: '[role="dialog"] nav a' });
+    act(() => {
+      userEvent.click(beta);
+    });
+    const studentDashboard = await screen.findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('Cannot find mobile menu in desktop version, all links visible immediately', async () => {
-    const { queryByText, findByText } = render(<Header />, { isDesktop: true });
+    act(() => {
+      render(<Header />, { isDesktop: true });
+    });
 
-    const menu = queryByText('Menu');
+    const menu = screen.queryByText('Menu');
     expect(menu).toBeNull();
 
-    expect(await findByText(/beta/i, { selector: 'nav a' })).toBeInTheDocument();
-    expect(await findByText(/overview/i, { selector: 'nav a' })).toBeInTheDocument();
-    expect(await findByText(/academics/i, { selector: 'nav a' })).toBeInTheDocument();
-    expect(await findByText(/finances/i, { selector: 'nav a' })).toBeInTheDocument();
-    expect(await findByText(/resources/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await screen.findByText(/beta/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await screen.findByText(/overview/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await screen.findByText(/academics/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await screen.findByText(/finances/i, { selector: 'nav a' })).toBeInTheDocument();
+    expect(await screen.findByText(/resources/i, { selector: 'nav a' })).toBeInTheDocument();
   });
 
   it('Help and Profile menu open and have their respective menu items', async () => {
-    const { findByText, getByText } = render(<Header />);
+    render(<Header />);
 
-    const helpMenu = getByText('Help');
+    const helpMenu = screen.getByText('Help');
+    act(() => {
+      userEvent.click(helpMenu);
+    });
+    expect(await screen.findByText(/get help/i)).toBeInTheDocument();
+    expect(await screen.findByText(/give feedback/i)).toBeInTheDocument();
 
-    userEvent.click(helpMenu);
-    expect(await findByText(/get help/i)).toBeInTheDocument();
-    expect(await findByText(/give feedback/i)).toBeInTheDocument();
-
-    const profileMenu = getByText(/profile/i, { selector: 'button span' });
+    const profileMenu = screen.getByRole('button', { name: /profile/i });
 
     // When clicking to open a modal updates state, you still need the act wrapper or warnings pop up
     act(() => {
       userEvent.click(profileMenu);
     });
-    expect(await findByText(/logout/i)).toBeInTheDocument();
-    expect(await findByText(/profile/i, { selector: '[role="menuitem"]' })).toBeInTheDocument();
+    expect(await screen.findByRole('menuitem', { name: /logout/i })).toBeInTheDocument();
+    expect(await screen.findByRole('menuitem', { name: /profile/i })).toBeInTheDocument();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
@@ -190,39 +213,47 @@ describe('Student mobile menu interactions', () => {
 
 describe('as a logged in user', () => {
   it('renders the appropriate header logo', () => {
-    render(<Header />);
-    const appHeader = screen.getByTestId('app-header-logo');
-    expect(appHeader).toBeInTheDocument();
+    act(() => {
+      render(<Header />);
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
 
-    const src = appHeader.getAttribute('src');
-    expect(src).toEqual('osu-logo.svg');
-    expect(screen.getByRole('img', { name: 'Oregon State University' }));
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-logo.svg');
+      expect(screen.getByRole('img', { name: 'Oregon State University' }));
+    });
   });
 });
 
 describe('as a Bend user', () => {
   it('renders the appropriate header logo', async () => {
-    authUserClassification!.attributes!.campusCode = 'B';
-    authUserAudienceOverride.campusCode = 'B';
-    render(<Header />);
-    const appHeader = screen.getByTestId('app-header-logo');
-    expect(appHeader).toBeInTheDocument();
-    const src = appHeader.getAttribute('src');
-    expect(src).toEqual('osu-cascades.svg');
-    expect(screen.getByRole('img', { name: 'Oregon State University Cascades' }));
+    act(() => {
+      authUserClassification!.attributes!.campusCode = 'B';
+      authUserAudienceOverride.campusCode = 'B';
+      render(<Header />);
+
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-cascades.svg');
+      expect(screen.getByRole('img', { name: 'Oregon State University Cascades' }));
+    });
   });
 });
 
 describe('as an Ecampus user', () => {
   it('renders the appropriate header logo', async () => {
-    authUserClassification!.attributes!.campusCode = 'DSC';
-    authUserAudienceOverride.campusCode = 'DSC';
-    render(<Header />);
-    const appHeader = screen.getByTestId('app-header-logo');
-    expect(appHeader).toBeInTheDocument();
+    act(() => {
+      authUserClassification!.attributes!.campusCode = 'DSC';
+      authUserAudienceOverride.campusCode = 'DSC';
+      render(<Header />);
 
-    const src = appHeader.getAttribute('src');
-    expect(src).toEqual('osu-ecampus.svg');
-    expect(screen.getByRole('img', { name: 'Oregon State University Ecampus' }));
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
+
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-ecampus.svg');
+      expect(screen.getByRole('img', { name: 'Oregon State University Ecampus' }));
+    });
   });
 });

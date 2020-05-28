@@ -25,7 +25,7 @@ const EmployeeTools = () => {
             >
               Empcenter
             </HighlightExternalLink>
-            <div>Online time and attendance system.</div>
+            <div>Time sheets and time off</div>
           </CardContentCell>
           <CardContentCell>
             <HighlightExternalLink
@@ -34,7 +34,7 @@ const EmployeeTools = () => {
             >
               Evals
             </HighlightExternalLink>
-            <div>Electronic performance evaluation system.</div>
+            <div>Electronic performance evaluation system</div>
           </CardContentCell>
         </CardContentRow>
       </CardContentTable>
