@@ -71,7 +71,7 @@ const FinancialTransactions: FC = () => {
   return (
     <Card>
       <CardHeader
-        title="Recent Transactions"
+        title="Transactions this Term"
         badge={
           <CardIcon icon={faMoneyBillWave} count={data?.attributes?.transactions?.length ?? 0} />
         }
