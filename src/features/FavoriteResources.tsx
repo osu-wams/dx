@@ -46,7 +46,7 @@ export const FavoriteResources = () => {
 
         {!res.loading && favoriteResources?.length > 0 && (
           <List data-testid="resource-container">
-            {favoriteResources.map(resource => (
+            {favoriteResources.map((resource) => (
               <ResourceItem
                 key={resource.id}
                 resource={resource}
@@ -61,10 +61,10 @@ export const FavoriteResources = () => {
       </CardContent>
       <CardFooter infoButtonId="favorite-resources">
         <InternalLink
-          to="/resources"
-          onClick={() => Event('favorite-resources-card', `view resources link`)}
+          to="/resources?category=all"
+          onClick={() => Event('favorite-resources-card', `view all resources link`)}
         >
-          View resources
+          View all resources
         </InternalLink>
       </CardFooter>
     </Card>
