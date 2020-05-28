@@ -7,6 +7,8 @@ import {
   faSignOut,
   faMask,
   faChevronDown,
+  faGraduationCap,
+  faBriefcase,
 } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuLink } from '@reach/menu-button';
@@ -40,18 +42,36 @@ const ProfileMenu = () => {
   };
 
   // Creates an additional menu item if you are an employee
+  // !TODO: student employees should get this too
   const ToggleAffiliationLink = () => {
-    let affiliationOverride = AFFILIATIONS.student;
-    let description = 'Student Dashboard';
+    const Student = {
+      description: 'Student Dashboard',
+      icon: faGraduationCap,
+      affiliation: AFFILIATIONS.student,
+      employee: false, // !TODO add logic here for student employee to true/false depending
+    };
+    const Employee = {
+      description: 'Employee Dashboard',
+      icon: faBriefcase,
+      affiliation: AFFILIATIONS.employee,
+    };
+
+    // Defaults link data to switch to student since most people seeing this are employees
+    let affiliationOverride = Student.affiliation;
+    let description = Student.description;
+    let toggleIcon = Student.icon;
 
     // Currently only showing toggle option to Employee
-    if (user.data?.primaryAffiliation !== AFFILIATIONS.employee) {
+    // !TODO && student is not employee
+    if (user.data?.primaryAffiliation !== Employee.affiliation) {
       return;
     }
 
+    // !TODO: OR || affiliation is student-employee
     if (affiliation === AFFILIATIONS.student) {
-      affiliationOverride = AFFILIATIONS.employee;
-      description = 'Employee Dashboard';
+      affiliationOverride = Employee.affiliation;
+      description = Employee.description;
+      toggleIcon = Employee.icon;
     }
 
     return (
@@ -62,7 +82,7 @@ const ProfileMenu = () => {
           changeAffiliation(affiliationOverride);
         }}
       >
-        <FontAwesomeIcon icon={faMask} /> {description}
+        <FontAwesomeIcon icon={toggleIcon} /> {description}
       </MenuLink>
     );
   };
