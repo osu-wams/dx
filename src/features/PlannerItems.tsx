@@ -22,7 +22,9 @@ import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
 const PlannerItems = () => {
   const { user } = useContext(AppContext);
   const { data, loading } = usePlannerItems(() => {
-    user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
+    if (user.setUser) {
+      user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
+    }
   });
   const courses = useCourseSchedule();
 

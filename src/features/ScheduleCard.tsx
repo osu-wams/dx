@@ -7,13 +7,13 @@ import {
   getNextFiveDays,
   getDayShortcode,
   coursesOnDay,
-  startDate
+  startDate,
 } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
   ScheduleCardCourses,
   ScheduleCardAssignments,
-  ScheduleCardAcademicCalendar
+  ScheduleCardAcademicCalendar,
 } from './schedule';
 import { format } from '../util/helpers';
 import { Header } from './schedule/ScheduleCardStyles';
@@ -28,7 +28,9 @@ import { AppContext } from 'src/contexts/app-context';
 const ScheduleCard = () => {
   const { user } = useContext(AppContext);
   const plannerItems = usePlannerItems(() => {
-    user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
+    if (user.setUser) {
+      user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
+    }
   });
   const courses = useCourseSchedule();
   const nextFiveDays = getNextFiveDays(startDate());
@@ -37,11 +39,11 @@ const ScheduleCard = () => {
 
   const getCoursesOnSelectedDay = () => {
     const selectedDayShortcode = getDayShortcode(selectedDay);
-    return coursesOnDay(courses.data, selectedDayShortcode).filter(course => {
-      course.attributes.meetingTimes = course.attributes.meetingTimes.filter(meeting => {
+    return coursesOnDay(courses.data, selectedDayShortcode).filter((course) => {
+      course.attributes.meetingTimes = course.attributes.meetingTimes.filter((meeting) => {
         return isWithinInterval(selectedDay, {
           start: parseISO(meeting.beginDate),
-          end: parseISO(meeting.endDate)
+          end: parseISO(meeting.endDate),
         });
       });
       return course.attributes.meetingTimes.length;
@@ -51,12 +53,12 @@ const ScheduleCard = () => {
   let selectedPlannerItems: any[] = [];
 
   if (user.isCanvasOptIn && Array.isArray(plannerItems.data)) {
-    selectedPlannerItems = plannerItems.data.filter(item =>
+    selectedPlannerItems = plannerItems.data.filter((item) =>
       item.plannable_date ? isSameDay(Date.parse(item.plannable_date), selectedDay) : false
     );
   }
 
-  const selectedCalEvents = calEvents.data.filter(event => {
+  const selectedCalEvents = calEvents.data.filter((event) => {
     return event.pubDate ? isSameDay(Date.parse(event.pubDate), selectedDay) : '';
   });
 
@@ -65,16 +67,16 @@ const ScheduleCard = () => {
   // which days have events at a quick glance.
   const daysWithEvents = useMemo(
     () =>
-      nextFiveDays.filter(day => {
+      nextFiveDays.filter((day) => {
         const dayShortcode = getDayShortcode(day);
         const hasCourses = coursesOnDay(courses.data, dayShortcode).length > 0;
-        const calendarEventsOnDay = calEvents.data.filter(event => {
+        const calendarEventsOnDay = calEvents.data.filter((event) => {
           return event.pubDate ? isSameDay(Date.parse(event.pubDate), day) : '';
         });
 
         let plannerItemsOnDay: any[] = [];
         if (user.isCanvasOptIn && Array.isArray(plannerItems.data)) {
-          plannerItemsOnDay = plannerItems.data.filter(item => {
+          plannerItemsOnDay = plannerItems.data.filter((item) => {
             return item.plannable_date ? isSameDay(Date.parse(item.plannable_date), day) : false;
           });
         }
