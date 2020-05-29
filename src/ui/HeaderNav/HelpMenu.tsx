@@ -1,7 +1,12 @@
 import React from 'react';
 import { Menu, MenuLink } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faQuestionCircle, faComment } from '@fortawesome/pro-light-svg-icons';
+import {
+  faChevronDown,
+  faQuestionCircle,
+  faComment,
+  faBookOpen,
+} from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import Url from 'src/util/externalUrls.data';
 import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
@@ -27,9 +32,20 @@ const HelpMenu = () => {
       <HeaderNavList>
         <MenuLink
           as="a"
+          href={Url.gettingStarted.main}
+          target="_blank"
+          onClick={() => Event('header', 'help-button-menu', 'Getting started link clicked')}
+        >
+          <FontAwesomeIcon icon={faBookOpen} />
+          Getting Started
+        </MenuLink>
+
+        <MenuLink
+          as="a"
           href={Url.support.main}
+          target="_blank"
           data-testid="profile-link"
-          onClick={() => Event('header', 'help-button-menu', 'Profile link clicked')}
+          onClick={() => Event('header', 'help-button-menu', 'Get help link clicked')}
         >
           <FontAwesomeIcon icon={faQuestionCircle} />
           Get Help
@@ -38,6 +54,7 @@ const HelpMenu = () => {
         <MenuLink
           as="a"
           href={Url.feedback.main}
+          target="_blank"
           onClick={() => Event('header', 'help-button-menu', 'Give feedback link clicked')}
         >
           <FontAwesomeIcon icon={faComment} />

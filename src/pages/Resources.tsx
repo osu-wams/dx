@@ -64,6 +64,10 @@ const Resources = () => {
     [user.data.favoriteResources]
   );
 
+  const filteredByAudience = (resources: Types.Resource[], user: Types.User): Types.Resource[] => {
+    return resources.filter((r) => hasAudience(user, r));
+  };
+
   /**
    * Checks the affiliation data coming from user and determines if an object with affiliation data
    * should or should not appear for the given user.
@@ -208,7 +212,7 @@ const Resources = () => {
           {res.loading && <Skeleton count={5} />}
           {!res.loading && res.data.length > 0 ? (
             <ResourcesList
-              resources={filteredResources.filter((r) => hasAudience(user.data, r))}
+              resources={filteredByAudience(filteredResources, user.data)}
               user={user.data}
             />
           ) : (
