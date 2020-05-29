@@ -214,6 +214,14 @@ declare module 'styled-components/macro' {
             };
           };
         };
+        academicProgram: {
+          first: {
+            paddingBottom: string;
+          };
+          rest: {
+            borderTop: string;
+          };
+        };
       };
       beta: {
         title: {

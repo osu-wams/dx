@@ -33,27 +33,27 @@ const titleSecondary = Color.black;
 export const dark: ThemeConfiguration = {
   body: {
     color: bodyText,
-    background: bodyBackground
+    background: bodyBackground,
   },
   header: {
     background: componentBackground,
     userButton: {
       background: Color.transparent,
-      color: neutral550
+      color: neutral550,
     },
     headerNavList: {
       background: neutral800,
       color: linkForeground,
       svg: {
-        color: primary
+        color: primary,
       },
       menuItem: {
-        borderTop: neutral500
+        borderTop: neutral500,
       },
       menuItemSelected: {
         color: bodyText,
-        background: Color.transparent
-      }
+        background: Color.transparent,
+      },
     },
     mainNavList: {
       background: Color.transparent,
@@ -66,9 +66,9 @@ export const dark: ThemeConfiguration = {
           link: {
             color: linkForeground,
             svg: {
-              color: primary
-            }
-          }
+              color: primary,
+            },
+          },
         },
         secondaryNav: {
           background: neutral700,
@@ -76,305 +76,313 @@ export const dark: ThemeConfiguration = {
           link: {
             color: linkForeground,
             svg: {
-              color: iconPrimary
-            }
-          }
-        }
-      }
-    }
+              color: iconPrimary,
+            },
+          },
+        },
+      },
+    },
   },
   alert: {
     background: Color.transparent,
     header: {
       badge: {
-        background: Color.transparent
-      }
+        background: Color.transparent,
+      },
     },
     rave: {
       background: alert,
       color: linkForeground,
       icon: {
-        color: iconPrimary
-      }
+        color: iconPrimary,
+      },
     },
     dx: {
       info: {
         background: info,
         color: linkForeground,
         icon: {
-          color: iconPrimary
-        }
+          color: iconPrimary,
+        },
       },
       warn: {
         background: warn,
         color: titleSecondary,
         icon: {
-          color: titleSecondary
-        }
-      }
-    }
+          color: titleSecondary,
+        },
+      },
+    },
   },
   mainGrid: {
     background: mainGridBackground,
-    borderTop: mainGridBorderTop
+    borderTop: mainGridBorderTop,
   },
   secondGrid: {
     background: secondGridBackground,
-    borderTop: secondGridBorderTop
+    borderTop: secondGridBorderTop,
   },
   footer: {
     background: titleSecondary,
     color: linkForeground,
     link: {
-      color: linkForeground
+      color: linkForeground,
     },
     iconLink: {
       border: neutral400,
       color: linkForeground,
       icon: {
-        color: primary
-      }
+        color: primary,
+      },
     },
     adminText: {
-      color: neutral500
+      color: neutral500,
     },
     masquerade: {
       background: Color.transparent,
-      color: iconPrimary
-    }
+      color: iconPrimary,
+    },
   },
   pageNotFound: {
     link: {
       background: primary,
-      color: linkForeground
-    }
+      color: linkForeground,
+    },
   },
   features: {
     academics: {
       courses: {
         header: {
-          color: neutral600
+          color: neutral600,
         },
         sectionHeader: {
-          color: neutral550
+          color: neutral550,
         },
         emptyList: {
           text: {
-            color: neutral550
+            color: neutral550,
           },
           link: {
-            color: primary
-          }
+            color: primary,
+          },
         },
         dayList: {
           borderBottom: neutral200,
           dayInFocus: {
-            borderBottom: neutral300
+            borderBottom: neutral300,
           },
           daySelected: {
-            borderBottom: primary
+            borderBottom: primary,
           },
           dayIndicator: {
-            color: primary
+            color: primary,
           },
           dayOfWeek: {
-            color: neutral550
+            color: neutral550,
           },
           dayOfWeekSelected: {
-            color: primary
+            color: primary,
           },
           dayOfMonth: {
             color: neutral700,
-            borderBottom: Color.transparent
+            borderBottom: Color.transparent,
           },
           dayOfMonthSelected: {
             color: primary,
-            borderBottom: primary
-          }
+            borderBottom: primary,
+          },
         },
         dialog: {
           meetingTime: {
             icon: {
-              color: neutral600
-            }
+              color: neutral600,
+            },
           },
           faculty: {
             link: {
-              color: primary
+              color: primary,
             },
             icon: {
-              color: primary
-            }
+              color: primary,
+            },
           },
           map: {
             link: {
-              color: primary
+              color: primary,
             },
             icon: {
-              color: primary
-            }
-          }
+              color: primary,
+            },
+          },
         },
         list: {
           title: {
-            color: neutral700
-          }
+            color: neutral700,
+          },
         },
         plannerItems: {
           list: {
             icon: {
-              color: primary
-            }
+              color: primary,
+            },
           },
           emptyText: {
-            color: neutral550
-          }
-        }
+            color: neutral550,
+          },
+        },
       },
       pastCourses: {
         title: {
-          color: neutral700
+          color: neutral700,
         },
         grade: {
-          color: primary
+          color: primary,
         },
         search: {
           icon: {
-            color: neutral600
-          }
-        }
-      }
+            color: neutral600,
+          },
+        },
+      },
+      academicProgram: {
+        first: {
+          paddingBottom: '0px',
+        },
+        rest: {
+          borderTop: `solid 1px ${neutral200}`,
+        },
+      },
     },
     beta: {
       title: {
-        color: primary
+        color: primary,
       },
       releaseNotes: {
         title: {
-          color: primary
+          color: primary,
         },
         subTitle: {
-          color: neutral550
-        }
+          color: neutral550,
+        },
       },
       resources: {
         icon: {
-          color: primary
-        }
-      }
+          color: primary,
+        },
+      },
     },
     canvas: {
       authorizeButton: {
         background: info,
-        color: iconPrimary
-      }
+        color: iconPrimary,
+      },
     },
     finances: {
       accountBalance: {
         emphasis: {
-          color: neutral550
-        }
+          color: neutral550,
+        },
       },
       mealPlans: {
         emphasisBalance: {
-          color: success
+          color: success,
         },
         emphasisNoBalance: {
-          color: alert
-        }
+          color: alert,
+        },
       },
       transactions: {
         amount: {
-          color: success
+          color: success,
         },
         amountCharge: {
-          color: alert
+          color: alert,
         },
         name: {
-          color: neutral700
+          color: neutral700,
         },
         detail: {
-          color: neutral550
+          color: neutral550,
         },
         emptyText: {
-          color: neutral550
-        }
-      }
+          color: neutral550,
+        },
+      },
     },
     itStatus: {
       item: {
         emptyText: {
-          color: neutral550
+          color: neutral550,
         },
         name: {
-          color: neutral700
+          color: neutral700,
         },
         status: {
-          color: neutral550
+          color: neutral550,
         },
         icon: {
           unknown: neutral500,
           operational: Color['pine-300'],
           performanceIssues: Color['luminance-400'],
           partialOutage: Color['luminance-400'],
-          majorOutage: Color['lava-400']
-        }
+          majorOutage: Color['lava-400'],
+        },
       },
       sticky: {
         message: {
-          color: neutral550
+          color: neutral550,
         },
         title: {
-          color: neutral600
+          color: neutral600,
         },
         date: {
-          color: neutral700
+          color: neutral700,
         },
         icon: {
-          color: alert
+          color: alert,
         },
         badge: {
           background: neutral550,
-          color: titlePrimary
-        }
-      }
+          color: titlePrimary,
+        },
+      },
     },
     masquerade: {
       buttonAlt: {
         color: neutral700,
-        background: neutral200
-      }
+        background: neutral200,
+      },
     },
     profile: {
       name: {
-        color: primary
+        color: primary,
       },
       detail: {
-        color: neutral550
+        color: neutral550,
       },
       icon: {
-        color: primary
+        color: primary,
       },
       settings: {
         emphasis: {
-          color: primary
-        }
-      }
+          color: primary,
+        },
+      },
     },
     resources: {
       name: {
-        color: neutral700
+        color: neutral700,
       },
       icon: {
-        color: iconSecondary
+        color: iconSecondary,
       },
       search: {
         input: {
-          background: componentBackground
+          background: componentBackground,
         },
-        border: neutral200
-      }
-    }
+        border: neutral200,
+      },
+    },
   },
   ui: {
     button: {
@@ -382,194 +390,194 @@ export const dark: ThemeConfiguration = {
       color: buttonPrimary,
       close: {
         background: Color.transparent,
-        color: buttonSecondary
+        color: buttonSecondary,
       },
       custom: {
         background: componentBackground,
         selectedBackground: neutral550,
         border: neutral300,
         color: buttonSecondary,
-        selectedColor: buttonPrimary
+        selectedColor: buttonPrimary,
       },
       info: {
         background: Color.transparent,
         icon: {
-          color: neutral600
-        }
-      }
+          color: neutral600,
+        },
+      },
     },
     card: {
       boxShadow: shadows[1],
       background: componentBackground,
       badge: {
         background: primary,
-        color: buttonPrimary
+        color: buttonPrimary,
       },
       contentRow: {
         background: componentBackground,
-        borderBottom: neutral200
+        borderBottom: neutral200,
       },
       contentCell: {
-        borderLeft: neutral200
+        borderLeft: neutral200,
       },
       header: {
-        borderBottom: neutral200
+        borderBottom: neutral200,
       },
       icon: {
-        color: neutral550
-      }
+        color: neutral550,
+      },
     },
     date: {
-      color: primary
+      color: primary,
     },
     divider: {
-      border: neutral200
+      border: neutral200,
     },
     eventCard: {
       color: neutral600,
       background: componentBackground,
       title: {
-        color: neutral700
+        color: neutral700,
       },
       largeTitle: {
-        color: titlePrimary
+        color: titlePrimary,
       },
       date: {
         background: componentBackground,
         firstChild: {
-          color: neutral700
+          color: neutral700,
         },
         lastChild: {
-          color: neutral700
-        }
+          color: neutral700,
+        },
       },
       image: {
         background: gradients[1],
         color: linkForeground,
         title: {
-          color: titlePrimary
-        }
+          color: titlePrimary,
+        },
       },
       button: {
         color: buttonPrimary,
         icon: {
-          color: iconPrimary
-        }
-      }
+          color: iconPrimary,
+        },
+      },
     },
     highlights: {
       card: {
-        border: neutral200
+        border: neutral200,
       },
       description: {
-        color: neutral550
+        color: neutral550,
       },
       emphasis: {
-        color: primary
+        color: primary,
       },
       emphasisInline: {
-        color: primary
+        color: primary,
       },
       title: {
-        color: neutral550
-      }
+        color: neutral550,
+      },
     },
     icon: {
       background: Color.transparent,
       color: neutral400,
       counter: {
         background: primary,
-        color: titlePrimary
-      }
+        color: titlePrimary,
+      },
     },
     input: {
       border: neutral300,
       default: {
-        color: neutral700
+        color: neutral700,
       },
       large: {
-        color: neutral700
+        color: neutral700,
       },
       small: {
-        color: info
-      }
+        color: info,
+      },
     },
     label: {
-      color: neutral700
+      color: neutral700,
     },
     link: {
       background: Color.transparent,
       color: primary,
       icon: {
         external: {
-          color: primary
+          color: primary,
         },
         internal: {
-          color: primary
-        }
-      }
+          color: primary,
+        },
+      },
     },
     list: {
       color: neutral700,
       item: {
         background: Color.transparent,
         header: {
-          color: neutral700
+          color: neutral700,
         },
         leadText: {
-          color: primary
+          color: primary,
         },
         description: {
-          color: neutral550
+          color: neutral550,
         },
         link: {
           color: neutral700,
           hoverColor: primary,
-          boxShadow: shadows[1]
-        }
-      }
+          boxShadow: shadows[1],
+        },
+      },
     },
     myDialog: {
       background: componentBackground,
       h2: {
-        color: primary
+        color: primary,
       },
       h3: {
-        color: neutral200
+        color: neutral200,
       },
       header: {
-        border: neutral200
+        border: neutral200,
       },
       details: {
-        color: neutral600
-      }
+        color: neutral600,
+      },
     },
     siteTitle: {
       color: neutral600,
       badge: {
         background: Color['roguewave-200'],
-        color: Color['roguewave-500']
-      }
+        color: Color['roguewave-500'],
+      },
     },
     pageTitle: {
-      color: neutral600
+      color: neutral600,
     },
     plainCard: {
       header: {
-        color: neutral550
-      }
+        color: neutral550,
+      },
     },
     subNav: {
       link: {
         borderBottom: Color.transparent,
         color: neutral600,
         svg: {
-          color: neutral600
+          color: neutral600,
         },
         currentSvg: {
-          borderBottom: primary
-        }
-      }
+          borderBottom: primary,
+        },
+      },
     },
     table: {
       border: 'rgba(34, 36, 38, 0.15)',
@@ -578,17 +586,17 @@ export const dark: ThemeConfiguration = {
         color: neutral550,
         borderBottom: 'rgba(34, 36, 38, 0.15)',
         notFirstChild: {
-          borderLeft: 'rgba(34, 36, 38, 0.15)'
-        }
+          borderLeft: 'rgba(34, 36, 38, 0.15)',
+        },
       },
       row: {
         borderTop: 'rgba(34, 36, 38, 0.15)',
         stripedEvenChildren: {
-          background: '#f9fafb'
-        }
-      }
-    }
-  }
+          background: '#f9fafb',
+        },
+      },
+    },
+  },
 };
 
 export default dark;
