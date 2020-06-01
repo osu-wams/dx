@@ -17,7 +17,6 @@ const HelpMenu = () => {
   return (
     <Menu>
       <HeaderNavButton
-        data-testid="help-btn"
         onClick={() => Event('header', 'help-button-menu', 'Help button menu expanded')}
       >
         <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
@@ -44,7 +43,6 @@ const HelpMenu = () => {
           as="a"
           href={Url.support.main}
           target="_blank"
-          data-testid="profile-link"
           onClick={() => Event('header', 'help-button-menu', 'Get help link clicked')}
         >
           <FontAwesomeIcon icon={faQuestionCircle} />

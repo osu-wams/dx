@@ -43,10 +43,12 @@ it('Employees can toggle between Student and Employee dashboards', async () => {
     });
   });
   await act(async () => {
-    userEvent.click(screen.getByTestId('user-btn'));
+    userEvent.click(screen.getByRole('button', { name: /profile/i }));
   });
   const studentDashboard = await screen.findByText('Student Dashboard');
-  userEvent.click(studentDashboard);
+  await act(async () => {
+    userEvent.click(studentDashboard);
+  });
   expect(mockPostSettings).toHaveBeenCalledTimes(1);
   expect(mockPostSettings).toHaveBeenCalledWith({ primaryAffiliationOverride: 'student' });
 });
@@ -54,7 +56,7 @@ it('Employees can toggle between Student and Employee dashboards', async () => {
 it('has a logout link in the menu', async () => {
   render(<Header />);
 
-  userEvent.click(screen.getByTestId('user-btn'));
+  userEvent.click(screen.getByRole('button', { name: /profile/i }));
   const logoutLink = await screen.findByText('Logout');
   act(() => {
     userEvent.click(logoutLink);
@@ -65,9 +67,8 @@ it('has a logout link in the menu', async () => {
 it('User Button and profile link are in the menu and tracked via GA', async () => {
   render(<Header />);
 
-  const userLink = screen.getByTestId('user-btn');
   act(() => {
-    userEvent.click(userLink);
+    userEvent.click(screen.getByRole('button', { name: /profile/i }));
   });
 
   const profileLink = await screen.findByText('Profile', { selector: 'a' });
@@ -78,23 +79,57 @@ it('User Button and profile link are in the menu and tracked via GA', async () =
 });
 
 // This test adds act warnings in conjunction with other tests
-it('Help button and help link are in the menu and tracked via GA', async () => {
-  render(<Header />);
+describe('Help Menu', () => {
+  it('Help button and Get Help link are in the menu and tracked via GA', async () => {
+    render(<Header />);
 
-  const userLink = screen.getByTestId('help-btn');
-  await act(async () => {
-    userEvent.click(userLink);
+    await act(async () => {
+      userEvent.click(screen.getByRole('button', { name: /help/i }));
+    });
+
+    const helpLink = await screen.findByText('Get Help', { selector: 'a' });
+
+    expect(helpLink).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(helpLink);
+    });
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
-  const helpLink = await screen.findByText('Get Help', { selector: 'a' });
-  const feedbackLink = await screen.findByText('Give feedback', { selector: 'a' });
+  it('Feedback link tracked via GA', async () => {
+    render(<Header />);
 
-  expect(feedbackLink).toBeInTheDocument();
+    await act(async () => {
+      userEvent.click(screen.getByRole('button', { name: /help/i }));
+    });
 
-  await act(async () => {
-    userEvent.click(helpLink);
+    const feedbackLink = await screen.findByText('Give feedback', { selector: 'a' });
+
+    expect(feedbackLink).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(feedbackLink);
+    });
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
+
+  it('Getting Started link tracked via GA', async () => {
+    render(<Header />);
+
+    await act(async () => {
+      userEvent.click(screen.getByRole('button', { name: /help/i }));
+    });
+
+    const gettingStartedLink = await screen.findByText('Getting Started', { selector: 'a' });
+
+    expect(gettingStartedLink).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(gettingStartedLink);
+    });
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe('Student mobile menu interactions', () => {
@@ -197,6 +232,7 @@ describe('Student mobile menu interactions', () => {
     });
     expect(await screen.findByText(/get help/i)).toBeInTheDocument();
     expect(await screen.findByText(/give feedback/i)).toBeInTheDocument();
+    expect(await screen.findByText(/getting started/i)).toBeInTheDocument();
 
     const profileMenu = screen.getByRole('button', { name: /profile/i });
 
