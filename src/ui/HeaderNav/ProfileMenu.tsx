@@ -89,7 +89,6 @@ const ProfileMenu = () => {
   return (
     <Menu>
       <HeaderNavButton
-        data-testid="user-btn"
         onClick={() => Event('header', 'user-button-menu', 'User button menu expanded')}
       >
         <FontAwesomeIcon icon={faUserCircle} size="lg" />

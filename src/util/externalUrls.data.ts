@@ -25,7 +25,8 @@ const Url = {
     main: 'http://mybill.oregonstate.edu',
   },
   support: {
-    main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=support',
+    main:
+      'https://oregonstate.teamdynamix.com/TDClient/1935/Portal/Requests/TicketRequests/NewForm?ID=ZpgUdtILMxQ_',
   },
   feedback: {
     main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=feedback',
@@ -41,6 +42,9 @@ const Url = {
   },
   itSystemStatus: {
     main: 'https://status.is.oregonstate.edu',
+  },
+  gettingStarted: {
+    main: 'https://oregonstate.teamdynamix.com/TDClient/1935/Portal/KB/ArticleDet?ID=108882',
   },
 };
 
