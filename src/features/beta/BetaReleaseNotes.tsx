@@ -9,15 +9,22 @@ const BetaReleaseNotes: FC = () => {
   const releaseNotes = useReleaseNotes();
 
   return (
-    <Card>
-      <CardHeader title="Release Notes" badge={<CardIcon icon={faClipboardListCheck} />} />
-      <CardContent>
-        <ReleaseTitle>{releaseNotes.data[0]?.title}</ReleaseTitle>
-        <ReleaseSubtitle>{releaseNotes.data[0]?.date}</ReleaseSubtitle>
-        <div dangerouslySetInnerHTML={{ __html: releaseNotes.data[0]?.content }}></div>
-      </CardContent>
-      <CardFooter></CardFooter>
-    </Card>
+    <>
+      {releaseNotes.data.length &&
+        releaseNotes.data.map((releaseNote, i) => (
+          <Card key={`release-notes-${i}`}>
+            <CardHeader
+              title={`Release : ${releaseNote?.date}`}
+              badge={<CardIcon icon={faClipboardListCheck} />}
+            />
+            <CardContent>
+              <ReleaseTitle>{releaseNote?.title}</ReleaseTitle>
+              <div dangerouslySetInnerHTML={{ __html: releaseNote?.content }}></div>
+            </CardContent>
+            <CardFooter></CardFooter>
+          </Card>
+        ))}
+    </>
   );
 };
 
