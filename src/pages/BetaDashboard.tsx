@@ -11,8 +11,8 @@ const BetaDashboard = () => {
       <PageTitle title="Beta" />
       <Masonry>
         <BetaInfo />
-        <BetaResources />
         <BetaReleaseNotes />
+        <BetaResources />
       </Masonry>
     </MainGridWrapper>
   );

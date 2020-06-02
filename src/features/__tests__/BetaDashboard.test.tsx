@@ -13,6 +13,7 @@ const mockUseReleaseNotes = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spreading warning
     ...jest.requireActual('@osu-wams/hooks'),
     usePageContent: () => mockUsePageContent(),
     useReleaseNotes: () => mockUseReleaseNotes(),
@@ -42,10 +43,10 @@ describe('<BetaDashboard />', () => {
     expect(await findByText('beta list item', { selector: 'li' })).toBeInTheDocument();
   });
 
-  it('should find the release notes card with appripriate content', async () => {
+  it('should find the release notes card with appropriate content', async () => {
     const { findByText } = render(<BetaDashboard />);
+    expect(await findByText('Release : Winter test 2019')).toBeInTheDocument();
     expect(await findByText('Test Release Note')).toBeInTheDocument();
-    expect(await findByText('Winter test 2019')).toBeInTheDocument();
     expect(await findByText(/test release note body content/i)).toBeInTheDocument();
   });
 
