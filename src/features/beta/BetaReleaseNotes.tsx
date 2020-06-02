@@ -35,12 +35,4 @@ const ReleaseTitle = styled.h3`
   margin: 0px;
 `;
 
-const ReleaseSubtitle = styled.h4`
-  margin: 0px;
-  color: ${({ theme }) => theme.features.beta.releaseNotes.subTitle.color};
-  font-size: ${fontSize['14']};
-  font-weight: 600;
-  line-height: 19px;
-`;
-
 export default BetaReleaseNotes;
