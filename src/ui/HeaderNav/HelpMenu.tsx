@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, MenuLink } from '@reach/menu-button';
+import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronDown,
@@ -28,37 +28,39 @@ const HelpMenu = () => {
           <FontAwesomeIcon icon={faChevronDown} size="sm" />
         </Desktop>
       </HeaderNavButton>
-      <HeaderNavList>
-        <MenuLink
-          as="a"
-          href={Url.gettingStarted.main}
-          target="_blank"
-          onClick={() => Event('header', 'help-button-menu', 'Getting started link clicked')}
-        >
-          <FontAwesomeIcon icon={faBookOpen} />
-          Getting Started
-        </MenuLink>
+      <MenuPopover>
+        <HeaderNavList>
+          <MenuLink
+            as="a"
+            href={Url.gettingStarted.main}
+            target="_blank"
+            onClick={() => Event('header', 'help-button-menu', 'Getting started link clicked')}
+          >
+            <FontAwesomeIcon icon={faBookOpen} />
+            Getting Started
+          </MenuLink>
 
-        <MenuLink
-          as="a"
-          href={Url.support.main}
-          target="_blank"
-          onClick={() => Event('header', 'help-button-menu', 'Get help link clicked')}
-        >
-          <FontAwesomeIcon icon={faQuestionCircle} />
-          Get Help
-        </MenuLink>
+          <MenuLink
+            as="a"
+            href={Url.support.main}
+            target="_blank"
+            onClick={() => Event('header', 'help-button-menu', 'Get help link clicked')}
+          >
+            <FontAwesomeIcon icon={faQuestionCircle} />
+            Get Help
+          </MenuLink>
 
-        <MenuLink
-          as="a"
-          href={Url.feedback.main}
-          target="_blank"
-          onClick={() => Event('header', 'help-button-menu', 'Give feedback link clicked')}
-        >
-          <FontAwesomeIcon icon={faComment} />
-          Give feedback
-        </MenuLink>
-      </HeaderNavList>
+          <MenuLink
+            as="a"
+            href={Url.feedback.main}
+            target="_blank"
+            onClick={() => Event('header', 'help-button-menu', 'Give feedback link clicked')}
+          >
+            <FontAwesomeIcon icon={faComment} />
+            Give feedback
+          </MenuLink>
+        </HeaderNavList>
+      </MenuPopover>
     </Menu>
   );
 };

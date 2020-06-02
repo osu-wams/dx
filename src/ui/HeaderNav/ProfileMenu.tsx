@@ -10,7 +10,7 @@ import {
   faBriefcase,
 } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
-import { Menu, MenuLink } from '@reach/menu-button';
+import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { Event } from 'src/util/gaTracking';
 import { User } from '@osu-wams/hooks';
 import { Mobile, Desktop } from 'src/util/useMediaQuery';
@@ -100,28 +100,30 @@ const ProfileMenu = () => {
           <FontAwesomeIcon icon={faChevronDown} size="sm" />
         </Desktop>
       </HeaderNavButton>
-      <HeaderNavList>
-        <MenuLink
-          as={Link}
-          to="profile"
-          data-testid="profile-link"
-          onClick={() =>
-            Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
-          }
-        >
-          <FontAwesomeIcon icon={faUser} />
-          Profile
-        </MenuLink>
-        {ToggleAffiliationLink()}
+      <MenuPopover>
+        <HeaderNavList>
+          <MenuLink
+            as={Link}
+            to="profile"
+            data-testid="profile-link"
+            onClick={() =>
+              Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
+            }
+          >
+            <FontAwesomeIcon icon={faUser} />
+            Profile
+          </MenuLink>
+          {ToggleAffiliationLink()}
 
-        <MenuLink
-          as="a"
-          href="/logout"
-          onClick={() => Event('header', 'user-button-menu', 'Logout link clicked')}
-        >
-          <FontAwesomeIcon icon={faSignOut} /> Logout
-        </MenuLink>
-      </HeaderNavList>
+          <MenuLink
+            as="a"
+            href="/logout"
+            onClick={() => Event('header', 'user-button-menu', 'Logout link clicked')}
+          >
+            <FontAwesomeIcon icon={faSignOut} /> Logout
+          </MenuLink>
+        </HeaderNavList>
+      </MenuPopover>
     </Menu>
   );
 };
