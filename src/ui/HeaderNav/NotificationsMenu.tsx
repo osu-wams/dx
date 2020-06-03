@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
+import { Menu, MenuLink, MenuPopover, MenuItem } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentAlt, faChevronDown } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -8,6 +8,8 @@ import { Event } from 'src/util/gaTracking';
 import { Mobile, Desktop } from 'src/util/useMediaQuery';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import emptyNotificationsImg from 'src/assets/empty-notifications.svg';
+import MyDialog, { MyDialogFooter, MyDialogHeader } from 'src/ui/MyDialog';
+import { CloseButton } from 'src/ui/Button';
 
 const tempMock = [
   {
@@ -25,7 +27,7 @@ const tempMock = [
     content: 'This is another mocked message for you to see, this is the long content here.',
     contentShort: 'This 2nd mock message',
     deliveredAt: '2020-04-20',
-    messageId: 'message-b0b-r0ss-id',
+    messageId: 'message-b00b-r00ss-id',
     osuId: '111111111',
     sendAt: '2020-04-20',
     status: 'SENT',
@@ -33,7 +35,10 @@ const tempMock = [
 ];
 
 const NotificationsMenu = () => {
-  const [notifications, setNotifications] = React.useState([]);
+  const [notifications, setNotifications] = React.useState(tempMock);
+  const [showDialog, setShowDialog] = React.useState(false);
+  const open = () => setShowDialog(true);
+  const close = () => setShowDialog(false);
 
   const EmptyNotifications = () => (
     <EmptyState>
@@ -58,7 +63,30 @@ const NotificationsMenu = () => {
           <FontAwesomeIcon icon={faChevronDown} size="sm" />
         </Desktop>
       </HeaderNavButton>
-      <MenuPopover>{notifications?.length === 0 && <EmptyNotifications />}</MenuPopover>
+      <MenuPopover>
+        {notifications?.length === 0 && <EmptyNotifications />}
+        {notifications?.length > 0 && (
+          <HeaderNavList>
+            {notifications.map((n) => (
+              <>
+                <MenuItem
+                  key={n.messageId}
+                  onClick={(event) => {
+                    event.preventDefault();
+                  }}
+                  onSelect={open}
+                >
+                  {n.contentShort}
+                </MenuItem>
+                <MyDialog isOpen={showDialog} onDismiss={close}>
+                  <CloseButton onClick={close} />
+                  <p>{n.content}</p>
+                </MyDialog>
+              </>
+            ))}
+          </HeaderNavList>
+        )}
+      </MenuPopover>
     </Menu>
   );
 };
