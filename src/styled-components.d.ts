@@ -231,9 +231,6 @@ declare module 'styled-components/macro' {
           title: {
             color: string;
           };
-          subTitle: {
-            color: string;
-          };
         };
         resources: {
           icon: {

@@ -261,9 +261,6 @@ export const dark: ThemeConfiguration = {
         title: {
           color: primary,
         },
-        subTitle: {
-          color: neutral550,
-        },
       },
       resources: {
         icon: {
