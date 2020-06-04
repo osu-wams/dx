@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { Menu, MenuPopover, MenuItem } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,29 +11,8 @@ import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates'
 import emptyNotificationsImg from 'src/assets/empty-notifications.svg';
 import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from 'src/ui/Button';
-
-const tempMock = [
-  {
-    channelId: 'dashboard',
-    content: 'This is a mocked message for you to see.',
-    contentShort: 'This is a mocked message for you to see with a long title to break things',
-    deliveredAt: '2020-04-20',
-    messageId: 'message-b0b-r0ss-id',
-    osuId: '111111111',
-    sendAt: '2020-04-20',
-    status: 'SENT',
-  },
-  {
-    channelId: 'dashboard',
-    content: 'This is another mocked message for you to see, this is the long content here.',
-    contentShort: 'This 2nd mock message',
-    deliveredAt: '2020-04-20',
-    messageId: 'message-b00b-r00ss-id',
-    osuId: '111111111',
-    sendAt: '2020-04-20',
-    status: 'SENT',
-  },
-];
+import { useMessages, User } from '@osu-wams/hooks';
+import { Types } from '@osu-wams/lib';
 
 const Badge = styled.div`
   position: absolute;
@@ -61,10 +40,19 @@ const NotificationShort = styled.div`
 `;
 
 const NotificationsMenu = () => {
-  const [notifications, setNotifications] = React.useState(tempMock);
+  const notifications = useMessages();
+  const [filteredNotifications, setFilteredNotifications] = React.useState<Types.UserMessage[]>([]);
   const [showDialog, setShowDialog] = React.useState(false);
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
+
+  useEffect(() => {
+    if (notifications.data.items.length > 0) {
+      setFilteredNotifications(
+        notifications.data.items.filter((m: Types.UserMessage) => m.status.toLowerCase() !== 'read')
+      );
+    }
+  }, [notifications.data]);
 
   const EmptyNotifications = () => (
     <EmptyState>
@@ -75,6 +63,14 @@ const NotificationsMenu = () => {
     </EmptyState>
   );
 
+  const dismissNotification = (m: Types.UserMessage) => {
+    const status = 'read';
+    const updated = User.updateUserMessage({ messageId: m.messageId, status });
+    if (updated) {
+      setFilteredNotifications(filteredNotifications.filter((n) => n.messageId !== m.messageId));
+    }
+  };
+
   return (
     <Menu>
       <HeaderNavButton
@@ -82,7 +78,7 @@ const NotificationsMenu = () => {
       >
         <span style={{ position: 'relative' }}>
           <FontAwesomeIcon icon={faCommentAlt} size="lg" />
-          {notifications?.length > 0 && <Badge />}
+          {filteredNotifications.length > 0 && <Badge />}
         </span>
         <Mobile>
           <VisuallyHidden>Notifications</VisuallyHidden>
@@ -93,24 +89,31 @@ const NotificationsMenu = () => {
         </Desktop>
       </HeaderNavButton>
       <MenuPopover>
-        {notifications?.length === 0 && <EmptyNotifications />}
-        {notifications?.length > 0 && (
+        {filteredNotifications.length === 0 && <EmptyNotifications />}
+        {filteredNotifications.length > 0 && (
           <HeaderNavList>
-            {notifications.map((n) => (
+            {filteredNotifications.map((m: Types.UserMessage) => (
               <MenuItem
-                key={n.messageId}
+                key={m.messageId}
                 onClick={(event) => {
                   event.preventDefault();
+                  open();
                 }}
-                onSelect={open}
+                onSelect={() => {}}
               >
-                <NotificationShort>{n.contentShort}</NotificationShort>
-                <Dismiss>
-                  Dismiss <VisuallyHidden>{n.contentShort}</VisuallyHidden>
+                <NotificationShort>{m.title}</NotificationShort>
+                <Dismiss
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    dismissNotification(m);
+                  }}
+                >
+                  Dismiss <VisuallyHidden>{m.contentShort}</VisuallyHidden>
                 </Dismiss>
-                <MyDialog isOpen={showDialog} onDismiss={close} aria-label={n.contentShort}>
+                <MyDialog isOpen={showDialog} onDismiss={close} aria-label={m.title}>
                   <CloseButton onClick={close} />
-                  <p>{n.content}</p>
+                  <p>{m.content}</p>
                 </MyDialog>
               </MenuItem>
             ))}

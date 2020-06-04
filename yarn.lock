@@ -1600,20 +1600,20 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@osu-wams/hooks@^1.0.26":
-  version "1.0.26"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.26/7b460603818e24877c588ceb3315f0800f5a731900c50d641dfac33a86cb7d55#7615e11e941e555d3688a6e0f457f1ba280bc022"
-  integrity sha512-NKcW6FeLPrqPK2Y7sl7fArChj+aDKXjG7Grg7k4DRua6WczcRgu7L5ZlAhEmKFXz+llk2rtoypmu72MuQHz2gg==
+"@osu-wams/hooks@^1.0.27":
+  version "1.0.27"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.27/ae77878eae0afdcbec86e2acc6e4caed67af9d16bb9489933af6e83d4f134402#5a6da03d9d34f0e920baeba87eab369877be82d4"
+  integrity sha512-3kfB75zZ3MZnHRiXCUGBFnOmT7a7kVoXA7oLtsjCtNASdP80d8331xZ1gzV/F8FLAjSMYZL31+SomAkRHprEKQ==
   dependencies:
-    "@osu-wams/lib" "^0.1.21"
+    "@osu-wams/lib" "^0.1.22"
     "@osu-wams/utils" "^0.0.6"
     axios "^0.19.1"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@^0.1.21":
-  version "0.1.21"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.21/30e0ab5b615a9d06d197d47a205d0ca5294e5d38dce0038145157728f61961e4#96f7eb3d6fbf12a3ca55b7bf74f22078c901479a"
-  integrity sha512-4+VI2KUJZq7iM06mgXr0DKtBn5kQE5kp0P160qvrAeoxHVGCfncpVwK5tHnI5w7Uk7ip6/ez0aC6HYmv+DkB/g==
+"@osu-wams/lib@^0.1.22":
+  version "0.1.22"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.22/7ed7e881a47d72f8d7c5553171048cdd46ba8726c07c974bf4653d594c504095#d2d2b2fbe63f8db586ccc97fc1d7123fdc62816f"
+  integrity sha512-e/yKUROBCNx0fI3LOb/ZRUkHFYO9aH3UKn9Redk+J3MW2AWNTA9TJ2TKOjVTNABFpmBwjzF5MJeOg9g9G2cwtg==
 
 "@osu-wams/utils@^0.0.6":
   version "0.0.6"
