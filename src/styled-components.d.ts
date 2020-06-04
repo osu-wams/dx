@@ -24,6 +24,10 @@ declare module 'styled-components/macro' {
           color: string;
           background: string;
         };
+        notifications: {
+          indicator: string;
+          dismiss: string;
+        };
       };
       mainNavList: {
         background: string;

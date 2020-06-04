@@ -54,6 +54,10 @@ export const light: ThemeConfiguration = {
         color: primary,
         background: Color.transparent,
       },
+      notifications: {
+        indicator: primary,
+        dismiss: neutral550,
+      },
     },
     mainNavList: {
       background: Color.white,

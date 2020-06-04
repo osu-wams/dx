@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, MenuLink, MenuPopover, MenuItem } from '@reach/menu-button';
+import styled from 'styled-components/macro';
+import { Menu, MenuPopover, MenuItem } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentAlt, faChevronDown } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -8,7 +9,7 @@ import { Event } from 'src/util/gaTracking';
 import { Mobile, Desktop } from 'src/util/useMediaQuery';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import emptyNotificationsImg from 'src/assets/empty-notifications.svg';
-import MyDialog, { MyDialogFooter, MyDialogHeader } from 'src/ui/MyDialog';
+import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from 'src/ui/Button';
 
 const tempMock = [
@@ -34,6 +35,31 @@ const tempMock = [
   },
 ];
 
+const Badge = styled.div`
+  position: absolute;
+  top: 8px;
+  right: -3px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.header.headerNavList.notifications.indicator};
+`;
+
+const Dismiss = styled.button`
+  border: none;
+  background-color: transparent;
+  padding-left: 10px;
+  margin-left: 10px;
+  color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
+`;
+
+const NotificationShort = styled.div`
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 const NotificationsMenu = () => {
   const [notifications, setNotifications] = React.useState(tempMock);
   const [showDialog, setShowDialog] = React.useState(false);
@@ -54,7 +80,10 @@ const NotificationsMenu = () => {
       <HeaderNavButton
         onClick={() => Event('header', 'notifications-button-menu', 'Notifications menu expanded')}
       >
-        <FontAwesomeIcon icon={faCommentAlt} size="lg" />
+        <span style={{ position: 'relative' }}>
+          <FontAwesomeIcon icon={faCommentAlt} size="lg" />
+          {notifications?.length > 0 && <Badge />}
+        </span>
         <Mobile>
           <VisuallyHidden>Notifications</VisuallyHidden>
         </Mobile>
@@ -68,21 +97,22 @@ const NotificationsMenu = () => {
         {notifications?.length > 0 && (
           <HeaderNavList>
             {notifications.map((n) => (
-              <>
-                <MenuItem
-                  key={n.messageId}
-                  onClick={(event) => {
-                    event.preventDefault();
-                  }}
-                  onSelect={open}
-                >
-                  {n.contentShort}
-                </MenuItem>
-                <MyDialog isOpen={showDialog} onDismiss={close}>
+              <MenuItem
+                key={n.messageId}
+                onClick={(event) => {
+                  event.preventDefault();
+                }}
+                onSelect={open}
+              >
+                <NotificationShort>{n.contentShort}</NotificationShort>
+                <Dismiss>
+                  Dismiss <VisuallyHidden>{n.contentShort}</VisuallyHidden>
+                </Dismiss>
+                <MyDialog isOpen={showDialog} onDismiss={close} aria-label={n.contentShort}>
                   <CloseButton onClick={close} />
                   <p>{n.content}</p>
                 </MyDialog>
-              </>
+              </MenuItem>
             ))}
           </HeaderNavList>
         )}

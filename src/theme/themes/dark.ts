@@ -54,6 +54,10 @@ export const dark: ThemeConfiguration = {
         color: bodyText,
         background: Color.transparent,
       },
+      notifications: {
+        indicator: primary,
+        dismiss: neutral550,
+      },
     },
     mainNavList: {
       background: Color.transparent,
