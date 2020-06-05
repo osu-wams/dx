@@ -32,7 +32,7 @@ const Dismiss = styled.button`
   color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
 `;
 
-const NotificationShort = styled.div`
+const NotificationTitle = styled.div`
   width: 250px;
   white-space: nowrap;
   overflow: hidden;
@@ -101,7 +101,7 @@ const NotificationsMenu = () => {
                 }}
                 onSelect={() => {}}
               >
-                <NotificationShort>{m.title}</NotificationShort>
+                <NotificationTitle>{m.title}</NotificationTitle>
                 <Dismiss
                   onClick={(event) => {
                     event.preventDefault();
@@ -109,10 +109,11 @@ const NotificationsMenu = () => {
                     dismissNotification(m);
                   }}
                 >
-                  Dismiss <VisuallyHidden>{m.contentShort}</VisuallyHidden>
+                  Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
                 </Dismiss>
-                <MyDialog isOpen={showDialog} onDismiss={close} aria-label={m.title}>
+                <MyDialog isOpen={showDialog} onDismiss={close} aria-labelled-by="message-title">
                   <CloseButton onClick={close} />
+                  <h2 id="message-title">{m.title}</h2>
                   <p>{m.content}</p>
                 </MyDialog>
               </MenuItem>
