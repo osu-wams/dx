@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components/macro';
 import { Menu, MenuPopover, MenuItem } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentAlt, faChevronDown } from '@fortawesome/pro-light-svg-icons';
@@ -13,6 +13,8 @@ import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from 'src/ui/Button';
 import { useMessages, User } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
+import { InternalLink } from 'src/ui/Link';
+import { spacing, MainGridWrapper, MainGrid, breakpoints, fontSize, borderRadius } from 'src/theme';
 
 const Badge = styled.div`
   position: absolute;
@@ -27,16 +29,27 @@ const Badge = styled.div`
 const Dismiss = styled.button`
   border: none;
   background-color: transparent;
-  padding-left: 10px;
-  margin-left: 10px;
+  padding-left: ${spacing.medium};
+  margin: 0 0 0 ${spacing.medium};
+  font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
 `;
 
 const NotificationTitle = styled.div`
-  width: 250px;
+  width: 180px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  @media (min-width: ${breakpoints.small}) {
+    width: 300px;
+  }
+`;
+
+const NotificationAll = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: ${fontSize[16]};
+  padding-right: ${spacing.default};
 `;
 
 const NotificationsMenu = () => {
@@ -45,6 +58,7 @@ const NotificationsMenu = () => {
   const [showDialog, setShowDialog] = React.useState(false);
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
+  const themeContext = React.useContext(ThemeContext);
 
   useEffect(() => {
     if (notifications.data.items.length > 0) {
@@ -54,11 +68,26 @@ const NotificationsMenu = () => {
     }
   }, [notifications.data]);
 
+  const NotificationsLink = () => (
+    <NotificationAll>
+      <InternalLink
+        to={'/notifications'}
+        onClick={() =>
+          Event('header', 'notifications-button-menu', `See all notifications page link`)
+        }
+        fg={themeContext.ui.link.icon.internal.color}
+      >
+        See all notifications
+      </InternalLink>
+    </NotificationAll>
+  );
+
   const EmptyNotifications = () => (
     <EmptyState>
       <HeaderNavList style={{ minWidth: '300px', textAlign: 'center' }}>
         <EmptyStateImage src={emptyNotificationsImg} alt="" />
         <EmptyStateText>You have no new notifications.</EmptyStateText>
+        <NotificationsLink />
       </HeaderNavList>
     </EmptyState>
   );
@@ -111,13 +140,15 @@ const NotificationsMenu = () => {
                 >
                   Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
                 </Dismiss>
-                <MyDialog isOpen={showDialog} onDismiss={close} aria-labelled-by="message-title">
+                <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
                   <CloseButton onClick={close} />
                   <h2 id="message-title">{m.title}</h2>
                   <p>{m.content}</p>
+                  <NotificationsLink />
                 </MyDialog>
               </MenuItem>
             ))}
+            <NotificationsLink />
           </HeaderNavList>
         )}
       </MenuPopover>
