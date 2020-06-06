@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
-import { Menu, MenuPopover, MenuItem } from '@reach/menu-button';
+import { Link } from '@reach/router';
+import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentAlt, faChevronDown } from '@fortawesome/pro-light-svg-icons';
+import { faCommentAlt, faChevronDown, faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
@@ -14,7 +15,8 @@ import { CloseButton } from 'src/ui/Button';
 import { useMessages, User } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { InternalLink } from 'src/ui/Link';
-import { spacing, MainGridWrapper, MainGrid, breakpoints, fontSize, borderRadius } from 'src/theme';
+import { spacing, breakpoints, fontSize } from 'src/theme';
+import Icon from 'src/ui/Icon';
 
 const Badge = styled.div`
   position: absolute;
@@ -72,9 +74,10 @@ const NotificationsMenu = () => {
     <NotificationAll>
       <InternalLink
         to={'/notifications'}
-        onClick={() =>
-          Event('header', 'notifications-button-menu', `See all notifications page link`)
-        }
+        onClick={() => {
+          Event('header', 'notifications-button-menu', `See all notifications page link`);
+          close(); // !TODO: this is not working
+        }}
         fg={themeContext.ui.link.icon.internal.color}
       >
         See all notifications
@@ -142,13 +145,25 @@ const NotificationsMenu = () => {
                 </Dismiss>
                 <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
                   <CloseButton onClick={close} />
-                  <h2 id="message-title">{m.title}</h2>
+                  <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
+                    {m.title}
+                  </h2>
                   <p>{m.content}</p>
                   <NotificationsLink />
                 </MyDialog>
               </MenuItem>
             ))}
-            <NotificationsLink />
+            <MenuLink
+              as={Link}
+              to="notifications"
+              onClick={() =>
+                Event('header', 'notifications-button-menu', `See all notifications page link`)
+              }
+              style={{ color: themeContext.ui.link.icon.internal.color }}
+            >
+              See all notifications
+              <Icon icon={faLongArrowRight} color={themeContext.ui.link.icon.internal.color} />
+            </MenuLink>
           </HeaderNavList>
         )}
       </MenuPopover>

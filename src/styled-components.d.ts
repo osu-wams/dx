@@ -88,6 +88,14 @@ declare module 'styled-components/macro' {
         };
       };
     };
+    notification: {
+      title: string;
+      date: string;
+      indicator: {
+        unread: string;
+        read: string;
+      };
+    };
     mainGrid: {
       background: string;
       borderTop: string;

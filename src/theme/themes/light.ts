@@ -118,6 +118,14 @@ export const light: ThemeConfiguration = {
       },
     },
   },
+  notification: {
+    title: bodyText,
+    date: neutral550,
+    indicator: {
+      unread: primary,
+      read: neutral550,
+    },
+  },
   mainGrid: {
     background: mainGridBackground,
     borderTop: mainGridBorderTop,

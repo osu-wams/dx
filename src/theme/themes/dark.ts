@@ -118,6 +118,14 @@ export const dark: ThemeConfiguration = {
       },
     },
   },
+  notification: {
+    title: bodyText,
+    date: neutral550,
+    indicator: {
+      unread: neutral550,
+      read: primary,
+    },
+  },
   mainGrid: {
     background: mainGridBackground,
     borderTop: mainGridBorderTop,
