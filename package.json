@@ -33,7 +33,7 @@
     "react-swipeable": "^5.5.1",
     "react-toastify": "5.5.0",
     "recoil": "^0.0.8",
-    "styled-components": "^5.1.0",
+    "styled-components": "^5.1.1",
     "styled-map": "^3.3",
     "typescript": "^3.9.3",
     "use-debounce": "^3.4.2"
