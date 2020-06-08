@@ -73,7 +73,7 @@ const NotificationsMenu = () => {
   const NotificationsLink = (onClick) => (
     <NotificationAll>
       <InternalLink
-        to={'/notifications'}
+        to={'notifications'}
         onClick={() => {
           Event('header', 'notifications-button-menu', `See all notifications page link`);
           onClick();
@@ -162,7 +162,12 @@ const NotificationsMenu = () => {
               style={{ color: themeContext.ui.link.icon.internal.color }}
             >
               See all notifications
-              <Icon icon={faLongArrowRight} color={themeContext.ui.link.icon.internal.color} />
+              <Icon
+                icon={faLongArrowRight}
+                color={`${themeContext.ui.link.icon.internal.color} !important`}
+                fontSize="inherit !important"
+                style={{ marginLeft: '1.2rem' }}
+              />
             </MenuLink>
           </HeaderNavList>
         )}
