@@ -70,13 +70,13 @@ const NotificationsMenu = () => {
     }
   }, [notifications.data]);
 
-  const NotificationsLink = () => (
+  const NotificationsLink = (onClick) => (
     <NotificationAll>
       <InternalLink
         to={'/notifications'}
         onClick={() => {
           Event('header', 'notifications-button-menu', `See all notifications page link`);
-          close(); // !TODO: this is not working
+          onClick();
         }}
         fg={themeContext.ui.link.icon.internal.color}
       >
@@ -149,7 +149,7 @@ const NotificationsMenu = () => {
                     {m.title}
                   </h2>
                   <p>{m.content}</p>
-                  <NotificationsLink />
+                  <NotificationsLink onClick={close} />
                 </MyDialog>
               </MenuItem>
             ))}
