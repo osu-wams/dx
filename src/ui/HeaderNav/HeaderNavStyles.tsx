@@ -38,18 +38,18 @@ const HeaderNavList = styled(MenuList)`
     box-shadow: ${shadows[1]};
     [data-reach-menu-item] {
       background-color: ${({ theme }) => theme.header.headerNavList.background};
-
-      padding: 1rem 2rem;
+      padding: ${spacing.medium} ${spacing.default};
       font-size: ${fontSize[16]};
       display: flex;
       flex-direction: row;
       align-items: center;
+      svg {
+        color: ${({ theme }) => theme.header.headerNavList.svg.color};
+        margin-right: 1.2rem;
+        font-size: ${fontSize[24]};
+      }
     }
-    svg {
-      color: ${({ theme }) => theme.header.headerNavList.svg.color};
-      margin-right: 1.2rem;
-      font-size: ${fontSize[24]};
-    }
+
     div + div {
       [data-reach-menu-item] {
         border: none;

@@ -24,26 +24,22 @@ const ListItem = styled.li<SpacedList>`
   }
 `;
 
-const ListItemFlex = styled(ListItem)`
-  display: flex;
-  align-items: center;
-  padding-right: 5px;
-  /* Material UI checkbox style update */
-  .MuiCheckbox-root {
-    width: 48px;
-    height: 48px;
-    font-size: ${fontSize[18]};
-  }
-  &:hover {
-    & > div {
-      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
-    }
-    & > div > h4 {
-      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
-    }
-    box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
-    transform: translateY(-4px);
-  }
+const ListItemText = styled.div`
+  padding-right: ${spacing.default};
+  flex: 2;
+  text-align: left;
+`;
+
+const ListItemHeader = styled.h4`
+  color: ${({ theme }) => theme.ui.list.item.header.color};
+  margin: 0;
+  font-weight: normal;
+`;
+
+const ListItemContentLinkName = styled.div`
+  font-size: ${fontSize[18]};
+  color: ${({ theme }) => theme.ui.list.item.link.color};
+  padding-left: ${spacing.default};
 `;
 
 const ListItemContent = styled.div<SpacedList>`
@@ -62,35 +58,18 @@ const ListItemContent = styled.div<SpacedList>`
     height: 3rem;
     font-size: 2.4rem;
     width: 3rem !important; /* overwrite fontawsome class to have equal spacing of icons */
-    & + div {
+    & + ${ListItemText} {
       padding-left: 1.5rem;
     }
   }
   text-decoration: none;
 `;
 
-type TLink = React.HTMLProps<HTMLAnchorElement>;
-
-const ListItemResourceLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
-  &:hover,
-  &:active,
-  &:focus {
-    & > div {
-      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
-    }
-    & > svg {
-      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
-    }
-  }
-`;
-
 const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
   color: ${({ theme }) => theme.ui.list.item.link.color};
   &:hover {
-    & > div {
-      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
-    }
-    & > div > h4 {
+    ${ListItemHeader},
+    ${ListItemContentLinkName} {
       color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
     }
     box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
@@ -106,25 +85,40 @@ const ListItemContentLinkSVG = styled(ListItemContentLink)`
   }
 `;
 
-const ListItemContentLinkName = styled.div`
-  font-size: ${fontSize[18]};
-  color: ${({ theme }) => theme.ui.list.item.link.color};
-  padding-left: ${spacing.default};
+const ListItemFlex = styled(ListItem)`
+  display: flex;
+  align-items: center;
+  padding-right: 5px;
+  /* Material UI checkbox style update */
+  .MuiCheckbox-root {
+    width: 48px;
+    height: 48px;
+    font-size: ${fontSize[18]};
+  }
+  &:hover {
+    ${ListItemHeader},
+    ${ListItemContent} {
+      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
+    }
+    box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
+    transform: translateY(-4px);
+  }
+`;
+
+type TLink = React.HTMLProps<HTMLAnchorElement>;
+
+const ListItemResourceLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
+  &:hover,
+  &:active,
+  &:focus {
+    ${ListItemContentLinkName},
+    & > svg {
+      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
+    }
+  }
 `;
 
 const ListItemContentButton = styled(ListItemContentLink).attrs({ as: 'button' })``;
-
-const ListItemText = styled.div`
-  padding-right: ${spacing.default};
-  flex: 2;
-  text-align: left;
-`;
-
-const ListItemHeader = styled.h4`
-  color: ${({ theme }) => theme.ui.list.item.header.color};
-  margin: 0;
-  font-weight: normal;
-`;
 
 const ListItemDescription = styled.div<{ fontSize?: string; color?: string }>`
   color: ${({ color, theme }) => (color ? color : theme.ui.list.item.description.color)};

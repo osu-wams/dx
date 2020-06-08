@@ -54,6 +54,10 @@ export const light: ThemeConfiguration = {
         color: primary,
         background: Color.transparent,
       },
+      notifications: {
+        indicator: primary,
+        dismiss: neutral550,
+      },
     },
     mainNavList: {
       background: Color.white,
@@ -112,6 +116,14 @@ export const light: ThemeConfiguration = {
           color: titleSecondary,
         },
       },
+    },
+  },
+  notification: {
+    title: bodyText,
+    date: neutral550,
+    indicator: {
+      unread: primary,
+      read: neutral550,
     },
   },
   mainGrid: {

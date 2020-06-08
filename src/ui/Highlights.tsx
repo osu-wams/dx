@@ -1,19 +1,5 @@
 import styled, { css } from 'styled-components/macro';
 import { spacing, fontSize } from 'src/theme';
-import { CardBase } from 'src/ui/Card';
-
-const HighlightsCard = styled(CardBase)`
-  padding: ${spacing.default};
-  flex-direction: row;
-  padding: 0;
-  > div {
-    flex-grow: 1;
-    flex-basis: 0;
-    & + div {
-      border-left: 1px solid ${({ theme }) => theme.ui.highlights.card.border};
-    }
-  }
-`;
 
 interface IHighlight {
   textAlignLeft?: boolean;
@@ -58,7 +44,6 @@ const HighlightDescription = styled.div`
 `;
 
 export {
-  HighlightsCard,
   Highlight,
   HighlightTitle,
   HighlightEmphasis,

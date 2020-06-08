@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, mockAppContext } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AcademicCalendar from '../AcademicCalendar';
 import { Events } from '@osu-wams/hooks';
@@ -20,32 +21,32 @@ describe('<AcademicCalendar />', () => {
   });
 
   it('should find the "Testo Event" as a title', async () => {
-    const { getByText } = render(<AcademicCalendar />);
-    const eventTitle = getByText('Testo Event');
+    render(<AcademicCalendar />);
+    const eventTitle = screen.getByText('Testo Event');
     expect(eventTitle).toBeInTheDocument();
   });
 
   it('can click on footer and event to send data to analytics', async () => {
-    const { findByText } = render(<AcademicCalendar />);
-    const eventTitle = await findByText('Testo Event');
+    render(<AcademicCalendar />);
+    const eventTitle = await screen.findByText('Testo Event');
     userEvent.click(eventTitle);
-    expect(mockGAEvent).toHaveBeenCalled();
 
-    const viewCalendar = await findByText('View more in the academic calendar');
+    const viewCalendar = await screen.findByText('View more in the academic calendar');
     userEvent.click(viewCalendar);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should have "3" as a value when only 3 calendar events are present', async () => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
-    const { findByText } = render(<AcademicCalendar />);
-    expect(await findByText('3')).toBeInTheDocument();
+    render(<AcademicCalendar />);
+    const eventCounter = await screen.findByTestId('icon-counter');
+    expect(eventCounter).toHaveTextContent('3');
   });
 
   it('should return "No Calendar Events" when no events are loaded', async () => {
     mockUseAcademicCalendarEvents.mockReturnValue({ data: [], loading: false, error: false });
-    const { getByText } = render(<AcademicCalendar />);
-    expect(getByText('No Calendar Events')).toBeInTheDocument();
+    render(<AcademicCalendar />);
+    expect(screen.getByText('No Calendar Events')).toBeInTheDocument();
   });
 });
 
@@ -56,26 +57,26 @@ describe('with an InfoButton in the CardFooter', () => {
   });
 
   test('does not display the button when the infoButtonData is missing it', async () => {
-    const { queryByTestId } = render(<AcademicCalendar />, {
+    render(<AcademicCalendar />, {
       appContext: {
         ...mockAppContext,
         infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }],
       },
     });
 
-    const element = queryByTestId(validIinfoButtonId);
+    const element = screen.queryByTestId(validIinfoButtonId);
     expect(element).not.toBeInTheDocument();
   });
 
   test('displays the button when the infoButtonData is included', async () => {
-    const { getByTestId } = render(<AcademicCalendar />, {
+    render(<AcademicCalendar />, {
       appContext: {
         ...mockAppContext,
         infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }],
       },
     });
 
-    const element = getByTestId(validIinfoButtonId);
+    const element = screen.getByTestId(validIinfoButtonId);
     expect(element).toBeInTheDocument();
   });
 });

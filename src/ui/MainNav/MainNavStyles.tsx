@@ -1,6 +1,7 @@
 import { Link } from '@reach/router';
 import styled from 'styled-components/macro';
 import { fontSize, breakpoints, spacing } from 'src/theme';
+import { IconStyle } from '../Icon';
 
 const Nav = styled.nav`
   position: fixed;
@@ -41,7 +42,7 @@ const NavLink = styled(Link)`
     flex-direction: row;
     font-size: ${fontSize[14]};
     padding: 10px 4px;
-    & > svg {
+    ${IconStyle} {
       padding-right: 6px;
     }
     &[aria-current] {
@@ -57,6 +58,9 @@ const NavLink = styled(Link)`
   text-decoration: none;
   background-color: ${({ theme }) => theme.header.mainNavList.background};
   color: ${({ theme }) => theme.header.mainNavList.color};
+  ${IconStyle} {
+    font-size: 20px;
+  }
   /* select and hover styles */
   &[aria-current],
   &[aria-current] > svg,
@@ -68,9 +72,6 @@ const NavLink = styled(Link)`
   &:hover > svg {
     color: ${({ theme }) => theme.header.mainNavList.hoverColor};
   }
-  & > svg {
-    font-size: 20px;
-  }
 `;
 
 const MobileMainNav = styled.nav`
@@ -81,7 +82,7 @@ const MobileMainNav = styled.nav`
 const MobileNavLink = styled(NavLink)`
   flex-direction: row;
   font-size: ${fontSize[20]};
-  & > svg {
+  ${IconStyle} {
     padding-right: 10px;
     min-width: 34px;
     font-size: ${fontSize[24]};
@@ -97,15 +98,14 @@ const MobileFooter = styled(Nav)`
 const MobileFooterLink = styled(NavLink)`
   flex-direction: row;
   font-size: ${fontSize[16]};
-
   padding: 10px 4px;
-  & > svg {
+  &[aria-current] {
+    border-bottom: 2px solid ${({ theme }) => theme.header.mainNavList.hoverColor};
+  }
+  ${IconStyle} {
     padding-right: 6px;
     font-size: ${fontSize[20]};
     min-width: 24px;
-  }
-  &[aria-current] {
-    border-bottom: 2px solid ${({ theme }) => theme.header.mainNavList.hoverColor};
   }
 `;
 
