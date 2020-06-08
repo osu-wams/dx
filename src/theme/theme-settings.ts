@@ -33,7 +33,7 @@ export const spacing = {
   default: unit * 2 + 'px',
   large: unit * 3 + 'px',
   xl: unit * 4 + 'px',
-  // Convenience methods for identical to default and XL
+  // Convenience methods for phone and desktop. Identical to 'default' and 'xl'
   mobile: unit * 2 + 'px',
   desktop: unit * 4 + 'px',
 };

@@ -24,6 +24,10 @@ declare module 'styled-components/macro' {
           color: string;
           background: string;
         };
+        notifications: {
+          indicator: string;
+          dismiss: string;
+        };
       };
       mainNavList: {
         background: string;
@@ -82,6 +86,14 @@ declare module 'styled-components/macro' {
             color: string;
           };
         };
+      };
+    };
+    notification: {
+      title: string;
+      date: string;
+      indicator: {
+        unread: string;
+        read: string;
       };
     };
     mainGrid: {

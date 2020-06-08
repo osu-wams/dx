@@ -21,6 +21,20 @@ exports[`An icon on the right 1`] = `
   cursor: pointer;
 }
 
+.c4 {
+  padding-right: 16px;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  text-align: left;
+}
+
+.c5 {
+  color: #423E3C;
+  margin: 0;
+  font-weight: normal;
+}
+
 .c2 {
   width: 100%;
   background: transparent;
@@ -55,32 +69,18 @@ exports[`An icon on the right 1`] = `
   width: 3rem !important;
 }
 
-.c2 svg + div,
-.c2 img + div {
+.c2 svg + .c3,
+.c2 img + .c3 {
   padding-left: 1.5rem;
 }
 
-.c3 {
-  padding-right: 16px;
-  -webkit-flex: 2;
-  -ms-flex: 2;
-  flex: 2;
-  text-align: left;
-}
-
-.c4 {
-  color: #423E3C;
-  margin: 0;
-  font-weight: normal;
-}
-
-.c5 {
+.c6 {
   color: #7B746F;
   font-size: 1.4rem;
   line-height: 1.6rem;
 }
 
-.c6 {
+.c7 {
   color: #F79572;
   background-color: transparent;
 }
@@ -95,22 +95,22 @@ exports[`An icon on the right 1`] = `
       class="c2"
     >
       <div
-        class="c3"
+        class="c3 c4"
       >
         <h4
-          class="c4"
+          class="c5"
         >
           What is this
         </h4>
         <div
-          class="c5"
+          class="c6"
         >
           Deiscription
         </div>
       </div>
       <svg
         aria-hidden="true"
-        class="svg-inline--fa fa-file-alt fa-w-12 fa-lg c6"
+        class="svg-inline--fa fa-file-alt fa-w-12 fa-lg c7"
         color="#F79572"
         data-icon="file-alt"
         data-prefix="fal"
@@ -150,6 +150,20 @@ exports[`Default style with icon on left 1`] = `
   cursor: pointer;
 }
 
+.c5 {
+  padding-right: 16px;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  text-align: left;
+}
+
+.c6 {
+  color: #423E3C;
+  margin: 0;
+  font-weight: normal;
+}
+
 .c2 {
   width: 100%;
   background: transparent;
@@ -184,26 +198,12 @@ exports[`Default style with icon on left 1`] = `
   width: 3rem !important;
 }
 
-.c2 svg + div,
-.c2 img + div {
+.c2 svg + .c4,
+.c2 img + .c4 {
   padding-left: 1.5rem;
 }
 
-.c4 {
-  padding-right: 16px;
-  -webkit-flex: 2;
-  -ms-flex: 2;
-  flex: 2;
-  text-align: left;
-}
-
-.c5 {
-  color: #423E3C;
-  margin: 0;
-  font-weight: normal;
-}
-
-.c6 {
+.c7 {
   color: #7B746F;
   font-size: 1.4rem;
   line-height: 1.6rem;
@@ -239,15 +239,15 @@ exports[`Default style with icon on left 1`] = `
         />
       </svg>
       <div
-        class="c4"
+        class="c4 c5"
       >
         <h4
-          class="c5"
+          class="c6"
         >
           What is this
         </h4>
         <div
-          class="c6"
+          class="c7"
         >
           Deiscription
         </div>
@@ -276,6 +276,20 @@ exports[`Icon on both left and right 1`] = `
 
 .c1 > button {
   cursor: pointer;
+}
+
+.c5 {
+  padding-right: 16px;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  text-align: left;
+}
+
+.c6 {
+  color: #423E3C;
+  margin: 0;
+  font-weight: normal;
 }
 
 .c2 {
@@ -312,26 +326,12 @@ exports[`Icon on both left and right 1`] = `
   width: 3rem !important;
 }
 
-.c2 svg + div,
-.c2 img + div {
+.c2 svg + .c4,
+.c2 img + .c4 {
   padding-left: 1.5rem;
 }
 
-.c4 {
-  padding-right: 16px;
-  -webkit-flex: 2;
-  -ms-flex: 2;
-  flex: 2;
-  text-align: left;
-}
-
-.c5 {
-  color: #423E3C;
-  margin: 0;
-  font-weight: normal;
-}
-
-.c6 {
+.c7 {
   color: #7B746F;
   font-size: 1.4rem;
   line-height: 1.6rem;
@@ -367,15 +367,15 @@ exports[`Icon on both left and right 1`] = `
         />
       </svg>
       <div
-        class="c4"
+        class="c4 c5"
       >
         <h4
-          class="c5"
+          class="c6"
         >
           Turn inj the assignment
         </h4>
         <div
-          class="c6"
+          class="c7"
         >
           CAS171 - Due Feb 15 at 11:59pm
           <br />

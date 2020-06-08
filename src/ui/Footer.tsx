@@ -64,7 +64,7 @@ const FooterIconLink = styled.a`
   svg {
     margin-bottom: 1rem;
   }
-  & + a {
+  & + & {
     margin-left: 2rem;
   }
 `;

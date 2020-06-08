@@ -11,6 +11,7 @@ import Academics from './pages/Academics';
 import Finances from './pages/Finances';
 import Resources from './pages/Resources';
 import BetaDashboard from './pages/BetaDashboard';
+import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
@@ -124,6 +125,9 @@ const App = (props: AppProps) => {
                         }
                       />
                       <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                      {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                        <RouterPage path="notifications" pageComponent={<Notifications />} />
+                      )}
                       <RouterPage default pageComponent={<PageNotFound />} />
                     </Router>
                   </RouteContainer>

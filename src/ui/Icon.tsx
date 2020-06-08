@@ -24,7 +24,7 @@ const IconCounter = styled.div`
   border-radius: ${(12 * (3 / 4)) / 10}rem;
 `;
 
-const IconStyle = styled(FontAwesomeIcon)<IconProps>(
+export const IconStyle = styled(FontAwesomeIcon)<IconProps>(
   ({ theme, color, bg }) => ({
     color: color || theme.ui.icon.color,
     backgroundColor: bg || theme.ui.icon.background,
