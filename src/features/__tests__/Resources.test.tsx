@@ -1,6 +1,7 @@
 import React from 'react';
 import { waitFor, screen } from '@testing-library/react';
-import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
+import { render, authUser, mockEmployeeUser, renderWithUserContext } from 'src/util/test-utils';
+import { Context as ResponsiveContext } from 'react-responsive';
 import userEvent from '@testing-library/user-event';
 import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
@@ -60,6 +61,21 @@ describe('<Resources />', () => {
     mockUseResources.mockReturnValue(resourcesData);
     mockUseCategories.mockReturnValue(categoriesData);
     mockDefaultCategory.mockReturnValue(defaultCategory);
+  });
+
+  it('should not autoFocus the search input on mobile', () => {
+    const { searchInput } = renderResources();
+    expect(searchInput).not.toHaveFocus();
+  });
+
+  it('should autoFocus on desktop', () => {
+    renderWithUserContext(
+      <ResponsiveContext.Provider value={{ width: '768' }}>
+        <ResourcesComponent />
+      </ResponsiveContext.Provider>
+    );
+    const searchInput = screen.getByPlaceholderText('Find resources') as HTMLInputElement;
+    expect(searchInput).toHaveFocus();
   });
 
   it('should display the title Resources', () => {

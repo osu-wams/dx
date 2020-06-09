@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import styled from 'styled-components/macro';
+import { useMediaQuery } from 'react-responsive';
 import Icon from 'src/ui/Icon';
-import { spacing, borderRadius } from 'src/theme';
+import { spacing, borderRadius, breakpoints } from 'src/theme';
 import { Event } from 'src/util/gaTracking';
 
 const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }) => {
@@ -16,6 +17,9 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
     setQuery(value);
     setSelectedCategory('all');
   };
+
+  const isDesktop = useMediaQuery({ query: `(min-width: ${breakpoints.small})` });
+
   return (
     <SearchWrapper>
       <InputLabel htmlFor="resourcesSearch" aria-label="Find resources">
@@ -26,6 +30,7 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
         value={query}
         id="resourcesSearch"
         onChange={(e) => handleChange(e.target.value)}
+        autoFocus={isDesktop ? true : false}
       />
     </SearchWrapper>
   );
