@@ -62,6 +62,11 @@ describe('<Resources />', () => {
     mockDefaultCategory.mockReturnValue(defaultCategory);
   });
 
+  it('should autoFocus the search input', () => {
+    const { searchInput } = renderResources();
+    expect(searchInput).toHaveFocus();
+  });
+
   it('should display the title Resources', () => {
     renderResources();
     expect(screen.getByText('Resources', { selector: 'h1' })).toBeInTheDocument();

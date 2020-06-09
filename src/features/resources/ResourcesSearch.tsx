@@ -26,6 +26,7 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
         value={query}
         id="resourcesSearch"
         onChange={(e) => handleChange(e.target.value)}
+        autoFocus={true}
       />
     </SearchWrapper>
   );
