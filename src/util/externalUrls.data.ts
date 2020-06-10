@@ -3,7 +3,7 @@ const Url = {
     main: 'https://mydegrees.oregonstate.edu/DashboardServlet',
   },
   canvas: {
-    main: 'https://oregonstate.instructure.com',
+    main: 'https://canvas.oregonstate.edu',
     test: 'https://oregonstate.test.instructure.com',
   },
   campusMap: {
