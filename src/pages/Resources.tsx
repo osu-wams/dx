@@ -173,7 +173,7 @@ const Resources = () => {
           {res.loading && <Skeleton count={5} />}
           {!res.loading && res.data.length > 0 ? (
             <ResourcesList
-              resources={filteredByAudience(filteredResources, user.data)}
+              // resources={filteredByAudience(filteredResources, user.data)} !TODO this breaks stuff we'll need to verify later
               user={user.data}
             />
           ) : (
