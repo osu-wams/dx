@@ -4,7 +4,8 @@ import {
   format,
   formatDollars,
   singularPlural,
-  formatPhone
+  formatPhone,
+  arrayIncludes,
 } from '../helpers';
 
 describe('titleCase', () => {
@@ -99,4 +100,15 @@ describe('formatPhone', () => {
       expect(formatPhone(input)).toBe(expected);
     }
   );
+});
+
+describe('arrayIncludes', () => {
+  test.each`
+    input                           | expected
+    ${{ array: ['a'], value: 'A' }} | ${true}
+    ${{ array: ['a'], value: 'b' }} | ${false}
+    ${{ array: ['A'], value: 'a' }} | ${true}
+  `('finds case-insensitive array inclusion', ({ input, expected }) => {
+    expect(arrayIncludes(input.array, input.value)).toBe(expected);
+  });
 });

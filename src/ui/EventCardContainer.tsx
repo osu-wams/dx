@@ -12,6 +12,7 @@ import EventCard from './EventCard';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 import { AppContext } from 'src/contexts/app-context';
+import { arrayIncludes } from 'src/util/helpers';
 
 const {
   hasAudience,
@@ -61,15 +62,14 @@ const filterEmployeeEvents = (
   inCorvallis: boolean,
   events: Types.LocalistEvent[]
 ) => {
+  const { bend, corvallis } = CAMPUS_CODES;
   if (inBend) {
-    return events.filter((e) => !e.campus_code || e.campus_code === CAMPUS_CODES.bend);
+    return events.filter((e) => !e.campus_code || arrayIncludes(bend, e.campus_code));
   } else if (inCorvallis) {
-    return events.filter((e) => !e.campus_code || e.campus_code === CAMPUS_CODES.corvallis);
+    return events.filter((e) => !e.campus_code || arrayIncludes(corvallis, e.campus_code));
   } else {
     return events.filter(
-      (e) =>
-        !e.campus_code ||
-        (e.campus_code !== CAMPUS_CODES.corvallis && e.campus_code !== CAMPUS_CODES.bend)
+      (e) => !e.campus_code || !arrayIncludes([...bend, ...corvallis], e.campus_code)
     );
   }
 };
@@ -97,8 +97,8 @@ const EventCardContainer = ({ page, ...props }) => {
        * Checks to see if you are an employee or a student at Bend or Corvallis
        * Returns the appropriate events based on that
        */
-      const inBend = atCampus(user.data, CAMPUS_CODES.bend);
-      const inCorvallis = atCampus(user.data, CAMPUS_CODES.corvallis);
+      const inBend = CAMPUS_CODES.bend.some((c) => atCampus(user.data, c));
+      const inCorvallis = CAMPUS_CODES.corvallis.some((c) => atCampus(user.data, c));
 
       if (hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee]) && !employeeEvents.loading) {
         eventsToUse = filterEmployeeEvents(inBend, inCorvallis, employeeEvents.data);
