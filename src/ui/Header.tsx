@@ -13,6 +13,7 @@ import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { BetaBadge } from './Badge';
 import { AppContext } from 'src/contexts/app-context';
+import { arrayIncludes } from 'src/util/helpers';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -77,14 +78,13 @@ const Logo = styled.img`
 const campusLogo = (user: Types.User) => {
   const { campusCode } = usersCampus(user);
   const osu = 'Oregon State University';
-  switch (campusCode) {
-    case CAMPUS_CODES.ecampus:
-      return { image: ecampusLogo, alt: `${osu} Ecampus` };
-    case CAMPUS_CODES.bend:
-      return { image: cascadesLogo, alt: `${osu} Cascades` };
-    default:
-      return { image: logo, alt: osu };
+  if (arrayIncludes(CAMPUS_CODES.ecampus, campusCode)) {
+    return { image: ecampusLogo, alt: `${osu} Ecampus` };
   }
+  if (arrayIncludes(CAMPUS_CODES.bend, campusCode)) {
+    return { image: cascadesLogo, alt: `${osu} Cascades` };
+  }
+  return { image: logo, alt: osu };
 };
 
 const mainTitle = (user) => {

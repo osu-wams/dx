@@ -247,13 +247,27 @@ describe('Student mobile menu interactions', () => {
   });
 });
 
-describe('as a logged in user', () => {
+describe('as a Corvallis user', () => {
   it('renders the appropriate header logo', () => {
     act(() => {
       render(<Header />);
       const appHeader = screen.getByTestId('app-header-logo');
       expect(appHeader).toBeInTheDocument();
 
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-logo.svg');
+      expect(screen.getByRole('img', { name: 'Oregon State University' }));
+    });
+  });
+
+  it('renders the appropriate header logo with another campus code', async () => {
+    act(() => {
+      authUserClassification!.attributes!.campusCode = 'J';
+      authUserAudienceOverride.campusCode = 'J';
+      render(<Header />);
+
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
       const src = appHeader.getAttribute('src');
       expect(src).toEqual('osu-logo.svg');
       expect(screen.getByRole('img', { name: 'Oregon State University' }));
