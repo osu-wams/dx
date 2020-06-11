@@ -4,7 +4,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 // Format any WORDS SENTENCE/word sentence/wOrD sEnTenCe to Title Case: Word Sentence
 export const titleCase = (phrase: string) => {
-  return phrase.toLowerCase().replace(/(\b[a-z](?!\s))/g, match => match.toUpperCase());
+  return phrase.toLowerCase().replace(/(\b[a-z](?!\s))/g, (match) => match.toUpperCase());
 };
 
 // Format API time values to human friendly 12 hour am/pm format
@@ -53,7 +53,7 @@ export const format = (date: Date | string | number, type: string = 'MMMM d, yyy
 const formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
-  maximumFractionDigits: 2
+  maximumFractionDigits: 2,
 });
 
 export function formatDollars(amount: number | undefined) {
@@ -91,4 +91,9 @@ export const formatPhone = (phone: string | null) => {
       return phone;
     }
   }
+};
+
+// Case insensitive string array includes
+export const arrayIncludes = (array: string[], value: string) => {
+  return array.map((a) => a.toLowerCase()).includes(value.toLowerCase());
 };
