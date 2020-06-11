@@ -17,6 +17,7 @@ const mockNoData = { data: [], loading: false, error: false };
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread error on object only
     ...jest.requireActual('@osu-wams/hooks'),
     useAnnouncements: () => mockUseAnnouncements(),
     useStudentExperienceEvents: () => mockUseStudentExperienceEvents(),
@@ -50,6 +51,26 @@ describe('<EventCardContainer />', () => {
       <EventCardContainer page="dashboard" />,
       {
         user: mockEmployeeUser,
+      }
+    );
+    const events = await findAllByTestId('eventcard');
+    expect(events).toHaveLength(6);
+    expect(getByText(/Employee Only Announcement/i)).toBeInTheDocument();
+    expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
+    expect(queryByText(/Transfer Tuesdays at COCC/i)).not.toBeInTheDocument();
+    expect(
+      queryByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
+    ).toBeInTheDocument();
+  });
+
+  it('should show 6 employee event cards for an employee in corvallis with a non-standard campus code', async () => {
+    const { findAllByTestId, getByText, queryByText } = render(
+      <EventCardContainer page="dashboard" />,
+      {
+        user: {
+          ...mockEmployeeUser,
+          data: { ...mockEmployeeUser.data, audienceOverride: { campusCode: 'J' } },
+        },
       }
     );
     const events = await findAllByTestId('eventcard');
