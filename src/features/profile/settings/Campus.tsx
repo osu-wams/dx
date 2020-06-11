@@ -46,13 +46,15 @@ export const RadioButtonsGroup = () => {
         {Object.keys(CAMPUS_CODES).map((key) => (
           <FormControlLabel
             key={key}
-            value={CAMPUS_CODES[key]}
+            value={CAMPUS_CODES[key][0]}
             control={<Radio data-testid={key} />}
             label={
               <Label>
                 {titleCase(key)}
                 <span>
-                  {settingIsDefault(user.data, 'campusCode', CAMPUS_CODES[key], DEFAULT_CAMPUS)
+                  {CAMPUS_CODES[key].some((c) =>
+                    settingIsDefault(user.data, 'campusCode', c, DEFAULT_CAMPUS)
+                  )
                     ? ' (Default) '
                     : ''}
                 </span>

@@ -36,6 +36,15 @@ describe('<Campus />', () => {
     expect(queryAllByText('(Default)')).toHaveLength(1);
   });
 
+  it('renders with default test data in the context of a corvallis student with an non standard campus code', async () => {
+    authUserClassification.attributes!.campusCode = 'J';
+    const { getByText, queryAllByText } = render(<Campus />);
+    const defaultCampus = getByText('(Default)');
+    const campusLabel = defaultCampus!.parentElement;
+    expect(campusLabel).toHaveTextContent('Corvallis');
+    expect(queryAllByText('(Default)')).toHaveLength(1);
+  });
+
   it('renders with test data as a non-student user having no classification attributes', async () => {
     authUserClassification.attributes = undefined;
     const { getByText } = render(<Campus />);
