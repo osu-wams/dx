@@ -3,12 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useAcademicCalendarEvents, useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
-import {
-  getNextFiveDays,
-  getDayShortcode,
-  coursesOnDay,
-  startDate,
-} from './schedule/schedule-utils';
+import { getNextFiveDays, coursesOnDay, startDate } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
   ScheduleCardCourses,
@@ -38,8 +33,7 @@ const ScheduleCard = () => {
   const calEvents = useAcademicCalendarEvents();
 
   const getCoursesOnSelectedDay = () => {
-    const selectedDayShortcode = getDayShortcode(selectedDay);
-    return coursesOnDay(courses.data, selectedDayShortcode).filter((course) => {
+    return coursesOnDay(courses.data, selectedDay).filter((course) => {
       course.attributes.meetingTimes = course.attributes.meetingTimes.filter((meeting) => {
         return isWithinInterval(selectedDay, {
           start: parseISO(meeting.beginDate),
@@ -68,8 +62,7 @@ const ScheduleCard = () => {
   const daysWithEvents = useMemo(
     () =>
       nextFiveDays.filter((day) => {
-        const dayShortcode = getDayShortcode(day);
-        const hasCourses = coursesOnDay(courses.data, dayShortcode).length > 0;
+        const hasCourses = coursesOnDay(courses.data, day).length > 0;
         const calendarEventsOnDay = calEvents.data.filter((event) => {
           return event.pubDate ? isSameDay(Date.parse(event.pubDate), day) : '';
         });
