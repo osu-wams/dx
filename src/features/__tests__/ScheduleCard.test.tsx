@@ -23,6 +23,7 @@ const mockNoData = { data: [], loading: false, error: false };
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread error on object only
     ...jest.requireActual('@osu-wams/hooks'),
     useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents(),
     useCourseSchedule: () => mockUseCourseSchedule(),
@@ -31,6 +32,7 @@ jest.mock('@osu-wams/hooks', () => {
 });
 
 jest.mock('../schedule/schedule-utils', () => ({
+  // @ts-ignore spread error on object only
   ...jest.requireActual('../schedule/schedule-utils'),
   startDate: () => mockGetStartDate(),
 }));

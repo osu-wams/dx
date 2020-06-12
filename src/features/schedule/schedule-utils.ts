@@ -1,4 +1,4 @@
-import { addDays, eachDayOfInterval } from 'date-fns';
+import { addDays, eachDayOfInterval, isAfter } from 'date-fns';
 import { isNullOrUndefined } from 'util';
 import { format } from 'src/util/helpers';
 import { Types } from '@osu-wams/lib';
@@ -60,7 +60,7 @@ export const currentCourses = (courses: Types.CourseSchedule[]): Types.CourseSch
  */
 export const coursesOnDay = (
   courses: Types.CourseSchedule[],
-  dayShortCode: string
+  date: Date
 ): Types.CourseSchedule[] => {
   const dayCourses = currentCourses(
     sortedByBeginTime(
@@ -68,11 +68,16 @@ export const coursesOnDay = (
         (c) =>
           c.attributes.meetingTimes.length > 0 &&
           c.attributes.meetingTimes.find((m) => {
-            if ((m.room && m.room === 'MID') || (m.scheduleType && m.scheduleType === 'MID')) {
-              // exclude midterms
+            // Excludes midterms
+            // Excludes courses from a day when a class is after the term end date
+            if (
+              (m.room && m.room === 'MID') ||
+              (m.scheduleType && m.scheduleType === 'MID') ||
+              isAfter(date, new Date(m.endDate))
+            ) {
               return false;
             } else {
-              return m.weeklySchedule.includes(dayShortCode);
+              return m.weeklySchedule.includes(getDayShortcode(date));
             }
           })
       )
