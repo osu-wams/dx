@@ -40,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "TZ=UTC react-scripts test --env=jsdom",
     "test:coverage": "react-scripts test --env=jsdom --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx,.js 'src/**/*'",
