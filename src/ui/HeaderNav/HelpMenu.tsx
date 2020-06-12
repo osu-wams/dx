@@ -52,7 +52,7 @@ const HelpMenu = () => {
 
           <MenuLink
             as="a"
-            href={Url.feedback.main}
+            href={Url.support.main}
             target="_blank"
             onClick={() => Event('header', 'help-button-menu', 'Give feedback link clicked')}
           >
