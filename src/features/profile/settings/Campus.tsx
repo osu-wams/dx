@@ -23,7 +23,7 @@ export const RadioButtonsGroup = () => {
   const [value, setValue] = useState(DEFAULT_CAMPUS);
 
   useEffect(() => {
-    setValue(user.data.audienceOverride.campusCode || DEFAULT_CAMPUS);
+    setValue(user.data.audienceOverride?.campusCode || DEFAULT_CAMPUS);
   }, [user.data]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
