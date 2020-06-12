@@ -28,8 +28,12 @@ const Url = {
     main:
       'https://oregonstate.teamdynamix.com/TDClient/1935/Portal/Requests/TicketRequests/NewForm?ID=ZpgUdtILMxQ_',
   },
+  // Used to be qualtrix, we might need to remove this at some point
+  // Now it's a copy of support.main above
   feedback: {
-    main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=feedback',
+    main:
+      'https://oregonstate.teamdynamix.com/TDClient/1935/Portal/Requests/TicketRequests/NewForm?ID=ZpgUdtILMxQ_',
+    // main: 'https://oregonstate.qualtrics.com/jfe/form/SV_73vMvyQZBQx8aaN?type=feedback',
   },
   registrar: {
     academicStanding: 'https://registrar.oregonstate.edu/grades-honor-roll-academic-standing',
