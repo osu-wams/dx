@@ -2,34 +2,37 @@
 <html>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
   <style>
-    body {
+     body {
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      max-width: 640px;
-      width: 50%;
-      margin: auto;
+      max-width: 768px;
+      width: 90%;
+      margin: 10px auto 20px;
       font-family: 'Open Sans', sans-serif;
-    }
-    .flex-text {
-      display: flex;
-      flex-direction: column;
-    }
-    .h6 {
-      color: #595959;
-      font-weight: 200;
-      font-size: 4.5em;
       text-align: center;
-      padding: 30px;
-      font-family: 'Open Sans', sans-serif;
     }
-    .p {
-      font-family: 'Open Sans', sans-serif;
+    img {
+      max-width: 500px;
+    }
+    
+    h1 {
+      color: #595959;
+      font-weight: bold;
+      font-size: 4.5rem;
+      line-height: 3.5rem;
+      text-align: center;
+      padding: 14px;
+    }
+    h1 span {
+      font-size: 3rem;
+      font-weight: 300;
+    }
+    p {
       font-weight: 300;
       font-size: 1.5em;
       text-align: center;
-      padding: 20px;
       line-height: 1.5em;
     }
   </style>
@@ -39,14 +42,15 @@
       width="100%"
       height="auto"
     />
-    <div class="flex-text">
-      <span class="h6">
-        Uh oh! Something went wrong.
-      </span>
-      <span class="p">
-        We are working to fix this issue, and will have things up and running again in no time.
-        Until then, go to <a href="https://myosu.oregonstate.edu">myosu.oregonstate.edu.</a>
-      </span>
-    </div>
+    <h1>
+      Uh oh! <br />
+      <span>Something went wrong.</span>
+    </h1>
+    <p>
+      We're sorry, something went wrong with <a href="https://my.oregonstate.edu">MyOregonState</a>. 
+      The issue has been logged and our team will work to resolve it as quickly as possible.<br />
+      <a href="https://my.oregonstate.edu">Click here to try again</a> or go back to <a href="https://myosu.oregonstate.edu">MyOSU</a> if the issue persists.
+    </p>
+    </p>
   </body>
 </html>
