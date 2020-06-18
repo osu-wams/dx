@@ -101,7 +101,7 @@ const Resources = () => {
    * (student vs employee)
    */
   useEffect(() => {
-    if (categories.data && user.data) {
+    if (categories.data && user.data && Array.isArray(categories.data)) {
       setFilteredCategories(categories.data.filter((c) => checkAffiliation(user.data, c)));
     }
   }, [categories.data, user.data]);
