@@ -118,19 +118,21 @@ const facultyListItem = (
 ): JSX.Element => (
   <CourseListItem key={`${faculty.email}-${index}`}>
     <ListItemContent style={{ paddingBottom: 0 }}>
-      <FacultyLink
-        href={`mailto:${faculty.email}`}
-        onClick={() => Event('course', 'email professor icon clicked', faculty.name)}
-      >
-        <VisuallyHidden>E-mail {faculty.name}</VisuallyHidden>
-        <ListItemText>
-          <Icon
-            icon={faEnvelope}
-            color={themeContext.features.academics.courses.dialog.faculty.icon.color}
-          />{' '}
-          {faculty.name}
-        </ListItemText>
-      </FacultyLink>
+      {faculty.email && faculty.name && (
+        <FacultyLink
+          href={`mailto:${faculty.email}`}
+          onClick={() => Event('course', 'email professor icon clicked', faculty.name)}
+        >
+          <VisuallyHidden>E-mail {faculty.name}</VisuallyHidden>
+          <ListItemText>
+            <Icon
+              icon={faEnvelope}
+              color={themeContext.features.academics.courses.dialog.faculty.icon.color}
+            />{' '}
+            {faculty.name}
+          </ListItemText>
+        </FacultyLink>
+      )}
     </ListItemContent>
   </CourseListItem>
 );
