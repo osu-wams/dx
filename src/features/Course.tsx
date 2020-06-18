@@ -16,7 +16,7 @@ import {
   ListItemLeadText,
 } from 'src/ui/List';
 import MyDialog, { MyDialogFooter, MyDialogHeader } from 'src/ui/MyDialog';
-import { titleCase, formatTime, format, singularPlural } from 'src/util/helpers';
+import { formatTime, format, singularPlural } from 'src/util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import Divider from 'src/ui/Divider';
 import { ExternalLink } from 'src/ui/Link';
@@ -118,19 +118,21 @@ const facultyListItem = (
 ): JSX.Element => (
   <CourseListItem key={`${faculty.email}-${index}`}>
     <ListItemContent style={{ paddingBottom: 0 }}>
-      <FacultyLink
-        href={`mailto:${faculty.email}`}
-        onClick={() => Event('course', 'email professor icon clicked', faculty.name)}
-      >
-        <VisuallyHidden>E-mail {faculty.name}</VisuallyHidden>
-        <ListItemText>
-          <Icon
-            icon={faEnvelope}
-            color={themeContext.features.academics.courses.dialog.faculty.icon.color}
-          />{' '}
-          {faculty.name}
-        </ListItemText>
-      </FacultyLink>
+      {faculty.email && faculty.name && (
+        <FacultyLink
+          href={`mailto:${faculty.email}`}
+          onClick={() => Event('course', 'email professor icon clicked', faculty.name)}
+        >
+          <VisuallyHidden>E-mail {faculty.name}</VisuallyHidden>
+          <ListItemText>
+            <Icon
+              icon={faEnvelope}
+              color={themeContext.features.academics.courses.dialog.faculty.icon.color}
+            />{' '}
+            {faculty.name}
+          </ListItemText>
+        </FacultyLink>
+      )}
     </ListItemContent>
   </CourseListItem>
 );
@@ -182,7 +184,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
               fontSize={fontSize[16]}
               color={themeContext.features.academics.courses.list.title.color}
             >
-              {titleCase(coursesMap.title)}
+              {coursesMap.title}
             </ListItemDescription>
             <ListItemDescription>
               {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}

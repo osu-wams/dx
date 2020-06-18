@@ -32,7 +32,7 @@ const AnnouncementContainer = ({ page, ...props }) => {
   useEffect(() => {
     let announcementsToUse: any[] = [];
 
-    if (!user.loading && !announcements.loading) {
+    if (!user.loading && !announcements.loading && Array.isArray(announcements.data)) {
       announcementsToUse = announcements.data.filter(
         (announcement) =>
           hasAudience(user.data, announcement) &&
