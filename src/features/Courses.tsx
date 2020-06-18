@@ -14,7 +14,7 @@ import {
 } from '../ui/List';
 import coursesImg from '../assets/courses.svg';
 import Course from '../features/Course';
-import { titleCase, singularPlural } from '../util/helpers';
+import { singularPlural } from '../util/helpers';
 import { fontSize } from '../theme';
 import { ExternalLink, InternalLink } from '../ui/Link';
 import Url from '../util/externalUrls.data';
@@ -82,7 +82,7 @@ const Courses = () => {
                 fontSize={fontSize[16]}
                 color={themeContext.features.academics.courses.list.title.color}
               >
-                {titleCase(coursesMap.title)}
+                {coursesMap.title}
               </ListItemDescription>
               <ListItemDescription>
                 {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}

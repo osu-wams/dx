@@ -16,7 +16,7 @@ import {
   ListItemLeadText,
 } from 'src/ui/List';
 import MyDialog, { MyDialogFooter, MyDialogHeader } from 'src/ui/MyDialog';
-import { titleCase, formatTime, format, singularPlural } from 'src/util/helpers';
+import { formatTime, format, singularPlural } from 'src/util/helpers';
 import { getIconByScheduleType } from './course-utils';
 import Divider from 'src/ui/Divider';
 import { ExternalLink } from 'src/ui/Link';
@@ -182,7 +182,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
               fontSize={fontSize[16]}
               color={themeContext.features.academics.courses.list.title.color}
             >
-              {titleCase(coursesMap.title)}
+              {coursesMap.title}
             </ListItemDescription>
             <ListItemDescription>
               {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
