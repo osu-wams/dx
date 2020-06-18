@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styled from 'styled-components/macro';
+import { Link } from '@reach/router';
+import { Event } from 'src/util/gaTracking';
 import logo from 'src/assets/osu-logo.svg';
 import ecampusLogo from 'src/assets/osu-ecampus.svg';
 import cascadesLogo from 'src/assets/osu-cascades.svg';
@@ -103,7 +105,9 @@ const Header = () => {
   return (
     <>
       <HeaderWrapper>
-        <Logo data-testid="app-header-logo" src={image} alt={alt} />
+        <Link to="/" onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
+          <Logo data-testid="app-header-logo" src={image} alt={alt} />
+        </Link>
         <SiteTitle>
           {title}
           <BetaBadge title={title} />
