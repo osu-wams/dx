@@ -37,9 +37,11 @@ const InfoButton = (props) => {
   const [currentButton, setButton] = useState<InfoButtonState | null>(null);
 
   useEffect(() => {
-    const thisButton = infoButtonData.find((i) => i.id === props.infoButtonId);
-    if (thisButton) {
-      setButton(thisButton);
+    if (Array.isArray(infoButtonData)) {
+      const thisButton = infoButtonData.find((i) => i.id === props.infoButtonId);
+      if (thisButton) {
+        setButton(thisButton);
+      }
     }
   }, [infoButtonData, props.infoButtonId]);
 
