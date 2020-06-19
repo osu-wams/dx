@@ -67,15 +67,24 @@ const MapLink = styled(FacultyLink)`
   }
 `;
 
+/**
+ * @param meetingTime
+ * Some courses do not have any data for meetingTime
+ */
 const meetingDateTime = (meetingTime: Types.CourseScheduleMeetingTime): string => {
-  const date =
-    meetingTime.beginDate !== meetingTime.endDate
-      ? meetingTime.weeklySchedule.map((day) => day)
-      : format(meetingTime.beginDate, 'MMMM d');
-  const time =
-    meetingTime.beginTime &&
-    `\u00B7 ${formatTime(meetingTime.beginTime)} - ${formatTime(meetingTime.endTime)}`;
-  return `${date || ''} ${time || ''}`;
+  let returnData = '';
+  if (meetingTime.beginDate) {
+    const date =
+      meetingTime.beginDate !== meetingTime.endDate
+        ? meetingTime.weeklySchedule.map((day) => day)
+        : format(meetingTime.beginDate, 'MMMM d');
+    returnData += date || '';
+  }
+  if (meetingTime.beginTime && meetingTime.endTime) {
+    const time = `\u00B7 ${formatTime(meetingTime.beginTime)} - ${formatTime(meetingTime.endTime)}`;
+    returnData += time || '';
+  }
+  return returnData ? returnData : 'There are no dates and times associated with this course.';
 };
 
 const meetingTimeListItem = (

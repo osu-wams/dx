@@ -1,4 +1,4 @@
-import { addDays, eachDayOfInterval, isAfter } from 'date-fns';
+import { addDays, eachDayOfInterval, isAfter, isBefore } from 'date-fns';
 import { isNullOrUndefined } from 'util';
 import { format } from 'src/util/helpers';
 import { Types } from '@osu-wams/lib';
@@ -73,7 +73,8 @@ export const coursesOnDay = (
             if (
               (m.room && m.room === 'MID') ||
               (m.scheduleType && m.scheduleType === 'MID') ||
-              isAfter(date, new Date(m.endDate))
+              isAfter(date, new Date(m.endDate)) ||
+              isBefore(date, new Date(m.beginDate))
             ) {
               return false;
             } else {
@@ -171,7 +172,11 @@ export const courseOnCorvallisCampus = (
 };
 
 export const meetingTimeOnCorvallisCampus = (m: Types.CourseScheduleMeetingTime): boolean => {
-  return m.campus.toLowerCase().includes('corvallis');
+  if (m.campus) {
+    return m.campus.toLowerCase().includes('corvallis');
+  } else {
+    return false;
+  }
 };
 
 /**
