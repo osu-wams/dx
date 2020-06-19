@@ -27,16 +27,18 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const { user } = useContext(AppContext);
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<Types.Resource[]>([]);
+  const [cardTitle, setCardTitle] = useState('');
 
   useEffect(() => {
     if (!user.loading && !res.loading) {
       const resourcesToUse = res.data?.items?.filter((r) => hasAudience(user.data, r));
       setResources(resourcesToUse);
     }
+    if (res.data.entityQueueTitle) {
+      const cardSuffix = res.data.entityQueueTitle.toLowerCase() === 'featured' ? '' : ' Resources';
+      setCardTitle(res.data.entityQueueTitle + cardSuffix);
+    }
   }, [res.data, res.loading, user.data, user.loading]);
-
-  let cardTitle = res.data.entityQueueTitle;
-  cardTitle += cardTitle.toLowerCase() === 'featured' ? '' : ' Resources';
 
   // For employee_featured, we don't want the employee part...
   if (categ.split('_')[1]) {
