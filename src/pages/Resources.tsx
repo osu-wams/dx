@@ -33,8 +33,12 @@ const Resources = () => {
   const res = useRecoilValue(fetchResources);
 
   // Recoil
-  const [filteredResources, setFilteredResources] = useRecoilState(resourcesState);
-  const [filteredCategories, setFilteredCategories] = useRecoilState(categoriesState);
+  const [filteredResources, setFilteredResources] = useRecoilState<Types.Resource[]>(
+    resourcesState
+  );
+  const [filteredCategories, setFilteredCategories] = useRecoilState<Types.Category[]>(
+    categoriesState
+  );
   const activeCategory = useRecoilValue(activeCategoryState);
   const query = useRecoilValue(searchTermState);
   const [debouncedQuery] = useDebounce(query, 250);

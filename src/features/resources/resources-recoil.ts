@@ -1,22 +1,23 @@
 import { atom, useRecoilState, useRecoilValue, selectorFamily, selector } from 'recoil';
 import { Resources } from '@osu-wams/hooks';
+import { Types } from '@osu-wams/lib';
 
-export const searchTermState = atom({
+export const searchTermState = atom<string>({
   key: 'searchTermState',
   default: '',
 });
 
-export const categoriesState = atom({
+export const categoriesState = atom<Types.Category[]>({
   key: 'categoriesState',
   default: [],
 });
 
-export const resourcesState = atom({
+export const resourcesState = atom<Types.Resource[]>({
   key: 'resourcesState',
   default: [],
 });
 
-export const activeCategoryState = atom({
+export const activeCategoryState = atom<string>({
   key: 'activeCategoryState',
   default: 'all',
 });
@@ -40,7 +41,7 @@ export const fetchResources = selector({
 export const resourceSearch = selector({
   key: 'resourceSearch',
   get: ({ get }) => {
-    const resources = get(resourcesState);
+    const resources: Types.Resource[] = get(resourcesState);
     const text = get(searchTermState);
     if (text.length > 0) {
       return resources.filter((resource) => {
