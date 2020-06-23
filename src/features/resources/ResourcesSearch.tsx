@@ -30,7 +30,8 @@ const ResourcesSearch: React.FC<any> = ({ query, setQuery, setSelectedCategory }
         value={query}
         id="resourcesSearch"
         onChange={(e) => handleChange(e.target.value)}
-        autoFocus={isDesktop ? true : false}
+        /* Generally autofocus not recommended for accessibility reasons */
+        autoFocus={isDesktop ? true : false} // eslint-disable-line
       />
     </SearchWrapper>
   );
