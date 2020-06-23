@@ -21,13 +21,15 @@ const { postSettings, usersSettings, AFFILIATIONS } = User;
 
 const ProfileMenu = () => {
   const { user } = useContext(AppContext);
-  const [affiliation, setAffiliation] = useState(user.data?.primaryAffiliationOverride ?? '');
+  const [toggledAffiliation, setToggledAffiliation] = useState(
+    user.data?.primaryAffiliationOverride ?? ''
+  );
   const [studentEmployee, setStudentEmployee] = useState(false);
 
   useEffect(() => {
     if (user.data?.primaryAffiliationOverride) {
       // const { firstYear, graduate, international } = user.data.audienceOverride;
-      setAffiliation(user.data.primaryAffiliationOverride);
+      setToggledAffiliation(user.data.primaryAffiliationOverride);
     }
     // Checks for any employee affiliation (finds Student Employees too)
     if (
@@ -72,12 +74,12 @@ const ProfileMenu = () => {
     }
 
     // If someone has Toggled To Student Dashboard, or if they are a Student Employee that hasn't toggled to Employee Dashboard
-    if (affiliation === AFFILIATIONS.student || (!affiliation && studentEmployee)) {
+    if (toggledAffiliation === AFFILIATIONS.student || (!toggledAffiliation && studentEmployee)) {
       affiliationOverride = Employee.affiliation;
       description = Employee.description;
       toggleIcon = Employee.icon;
     }
-    if (affiliation === AFFILIATIONS.employee) {
+    if (toggledAffiliation === AFFILIATIONS.employee) {
       affiliationOverride = Student.affiliation;
       description = Student.description;
       toggleIcon = Student.icon;

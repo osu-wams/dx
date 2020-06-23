@@ -34,50 +34,6 @@ it('has employee dashboard title', () => {
   expect(title).toBeInTheDocument();
 });
 
-// This test adds a lot of ACT warnings
-it('Employees can toggle between Student and Employee dashboards', async () => {
-  act(() => {
-    mockPostSettings.mockReturnValue(Promise.resolve());
-    render(<Header />, {
-      user: mockEmployeeUser,
-    });
-  });
-  await act(async () => {
-    userEvent.click(screen.getByRole('button', { name: /profile/i }));
-  });
-  const studentDashboard = await screen.findByText('Student Dashboard');
-  await act(async () => {
-    userEvent.click(studentDashboard);
-  });
-  expect(mockPostSettings).toHaveBeenCalledTimes(1);
-  expect(mockPostSettings).toHaveBeenCalledWith({ primaryAffiliationOverride: 'student' });
-});
-
-it('has a logout link in the menu', async () => {
-  render(<Header />);
-
-  userEvent.click(screen.getByRole('button', { name: /profile/i }));
-  const logoutLink = await screen.findByText('Logout');
-  act(() => {
-    userEvent.click(logoutLink);
-  });
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
-});
-
-it('User Button and profile link are in the menu and tracked via GA', async () => {
-  render(<Header />);
-
-  act(() => {
-    userEvent.click(screen.getByRole('button', { name: /profile/i }));
-  });
-
-  const profileLink = await screen.findByText('Profile', { selector: 'a' });
-  act(() => {
-    userEvent.click(profileLink);
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
-  });
-});
-
 // This test adds act warnings in conjunction with other tests
 describe('Help Menu', () => {
   it('Help button and Get Help link are in the menu and tracked via GA', async () => {
