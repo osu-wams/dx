@@ -100,7 +100,11 @@ const EventCardContainer = ({ page, ...props }) => {
       const inBend = CAMPUS_CODES.bend.some((c) => atCampus(user.data, c));
       const inCorvallis = CAMPUS_CODES.corvallis.some((c) => atCampus(user.data, c));
 
-      if (hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee]) && !employeeEvents.loading) {
+      if (
+        hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee]) &&
+        !employeeEvents.loading &&
+        Array.isArray(employeeEvents.data)
+      ) {
         eventsToUse = filterEmployeeEvents(inBend, inCorvallis, employeeEvents.data);
       } else {
         if (!studentExperienceEvents.loading && !inBend) {
@@ -111,7 +115,7 @@ const EventCardContainer = ({ page, ...props }) => {
         }
       }
 
-      if (!announcements.loading) {
+      if (!announcements.loading && Array.isArray(announcements.data)) {
         announcementsToUse = shuffleArray(
           announcements.data.filter(
             (announcement) =>

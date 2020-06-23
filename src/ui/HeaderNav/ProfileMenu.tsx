@@ -21,12 +21,22 @@ const { postSettings, usersSettings, AFFILIATIONS } = User;
 
 const ProfileMenu = () => {
   const { user } = useContext(AppContext);
-  const [affiliation, setAffiliation] = useState(user.data?.primaryAffiliationOverride ?? '');
+  const [toggledAffiliation, setToggledAffiliation] = useState(
+    user.data?.primaryAffiliationOverride ?? ''
+  );
+  const [studentEmployee, setStudentEmployee] = useState(false);
 
   useEffect(() => {
     if (user.data?.primaryAffiliationOverride) {
       // const { firstYear, graduate, international } = user.data.audienceOverride;
-      setAffiliation(user.data.primaryAffiliationOverride);
+      setToggledAffiliation(user.data.primaryAffiliationOverride);
+    }
+    // Checks for any employee affiliation (finds Student Employees too)
+    if (
+      user.data?.primaryAffiliation === AFFILIATIONS.student &&
+      user.data?.affiliations?.includes(AFFILIATIONS.employee)
+    ) {
+      setStudentEmployee(true);
     }
   }, [user.data]);
 
@@ -40,14 +50,12 @@ const ProfileMenu = () => {
     });
   };
 
-  // Creates an additional menu item if you are an employee
-  // !TODO: student employees should get this too
+  // Creates an additional menu item if you are an employee or student employee
   const ToggleAffiliationLink = () => {
     const Student = {
       description: 'Student Dashboard',
       icon: faGraduationCap,
       affiliation: AFFILIATIONS.student,
-      employee: false, // !TODO add logic here for student employee to true/false depending
     };
     const Employee = {
       description: 'Employee Dashboard',
@@ -60,17 +68,21 @@ const ProfileMenu = () => {
     let description = Student.description;
     let toggleIcon = Student.icon;
 
-    // Currently only showing toggle option to Employee
-    // !TODO && student is not employee
-    if (user.data?.primaryAffiliation !== Employee.affiliation) {
+    // Do not show Dashboard Toggle to Students who are NOT also employees
+    if (user.data?.primaryAffiliation === Student.affiliation && !studentEmployee) {
       return;
     }
 
-    // !TODO: OR || affiliation is student-employee
-    if (affiliation === AFFILIATIONS.student) {
+    // If someone has Toggled To Student Dashboard, or if they are a Student Employee that hasn't toggled to Employee Dashboard
+    if (toggledAffiliation === AFFILIATIONS.student || (!toggledAffiliation && studentEmployee)) {
       affiliationOverride = Employee.affiliation;
       description = Employee.description;
       toggleIcon = Employee.icon;
+    }
+    if (toggledAffiliation === AFFILIATIONS.employee) {
+      affiliationOverride = Student.affiliation;
+      description = Student.description;
+      toggleIcon = Student.icon;
     }
 
     return (

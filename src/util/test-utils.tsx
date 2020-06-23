@@ -17,20 +17,30 @@ export const mockEmployeeUser = {
   data: {
     ...mockUser.data,
     email: 'testo@oregonstate.edu',
+    affiliations: [AFFILIATIONS.employee, 'member'],
     groups: [],
     isAdmin: false,
     isCanvasOptIn: false,
     primaryAffiliation: AFFILIATIONS.employee,
     classification: {},
     audienceOverride: {},
-    favoriteResources: []
+    favoriteResources: [],
   },
-  refreshFavorites: jest.fn()
+  refreshFavorites: jest.fn(),
+};
+
+export const mockStudentEmployeeUser = {
+  ...mockUser,
+  data: {
+    ...mockUser.data,
+    affiliations: [AFFILIATIONS.employee, 'member'],
+  },
+  refreshFavorites: jest.fn(),
 };
 
 export const authUser = {
   ...mockUser,
-  refreshFavorites: jest.fn()
+  refreshFavorites: jest.fn(),
 };
 
 export const mockAppContext: IAppContext = {
@@ -38,16 +48,16 @@ export const mockAppContext: IAppContext = {
   infoButtonData: [{ id: 'info-button-id', content: 'Info button content', title: 'Title' }],
   appVersions: {
     serverVersion: 'server-test-123',
-    appVersion: 'client-test-123'
+    appVersion: 'client-test-123',
   },
   themes: Object.keys(themesLookup),
   selectedTheme: 'light',
-  setTheme: () => {}
+  setTheme: () => {},
 };
 
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
   mockAppContext.user = user;
-  const Wrapper = props => {
+  const Wrapper = (props) => {
     return (
       <ThemeProvider theme={themesLookup[defaultTheme]}>
         <AppContext.Provider value={mockAppContext} {...props} />
@@ -58,7 +68,7 @@ const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
 };
 
 const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = {}) => {
-  const Wrapper = props => {
+  const Wrapper = (props) => {
     return (
       <ThemeProvider theme={themesLookup[defaultTheme]}>
         <AppContext.Provider value={appContext} {...props} />
@@ -74,7 +84,7 @@ const renderWithAllContexts = (
 ) => {
   appContext.user = user;
   // console.log(user);
-  const Wrapper = props => {
+  const Wrapper = (props) => {
     return (
       <ThemeProvider theme={themesLookup[defaultTheme]}>
         <AppContext.Provider value={appContext} {...props}>

@@ -10,130 +10,25 @@ import Header from '../Header';
 import { mockGAEvent } from 'src/setupTests';
 import { act, screen } from '@testing-library/react';
 
-const mockPostSettings = jest.fn(async (args) => Promise.resolve(args));
-jest.mock('@osu-wams/hooks', () => {
-  const original = jest.requireActual('@osu-wams/hooks');
-  return {
-    ...original,
-    User: {
-      ...original.User,
-      postSettings: (args) => mockPostSettings(args),
-    },
-  };
-});
-
-it('has student dashboard title', () => {
-  render(<Header />);
-  const title = screen.getByText('Student Dashboard');
-  expect(title).toBeInTheDocument();
-});
-
-it('has employee dashboard title', () => {
-  render(<Header />, { user: mockEmployeeUser });
-  const title = screen.getByText('Employee Dashboard');
-  expect(title).toBeInTheDocument();
-});
-
-// This test adds a lot of ACT warnings
-it('Employees can toggle between Student and Employee dashboards', async () => {
-  act(() => {
-    mockPostSettings.mockReturnValue(Promise.resolve());
-    render(<Header />, {
-      user: mockEmployeeUser,
-    });
-  });
-  await act(async () => {
-    userEvent.click(screen.getByRole('button', { name: /profile/i }));
-  });
-  const studentDashboard = await screen.findByText('Student Dashboard');
-  await act(async () => {
-    userEvent.click(studentDashboard);
-  });
-  expect(mockPostSettings).toHaveBeenCalledTimes(1);
-  expect(mockPostSettings).toHaveBeenCalledWith({ primaryAffiliationOverride: 'student' });
-});
-
-it('has a logout link in the menu', async () => {
-  render(<Header />);
-
-  userEvent.click(screen.getByRole('button', { name: /profile/i }));
-  const logoutLink = await screen.findByText('Logout');
-  act(() => {
-    userEvent.click(logoutLink);
-  });
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
-});
-
-it('User Button and profile link are in the menu and tracked via GA', async () => {
-  render(<Header />);
-
-  act(() => {
-    userEvent.click(screen.getByRole('button', { name: /profile/i }));
-  });
-
-  const profileLink = await screen.findByText('Profile', { selector: 'a' });
-  act(() => {
-    userEvent.click(profileLink);
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
-  });
-});
-
-// This test adds act warnings in conjunction with other tests
-describe('Help Menu', () => {
-  it('Help button and Get Help link are in the menu and tracked via GA', async () => {
+describe('Dashboard Headers', () => {
+  it('Student has "Student Dashboard" title', async () => {
     render(<Header />);
+    // !todo change to this line in the near future
+    // const title = screen.getByRole('banner', { name: /Student Dashboard/i });
+    const title = await screen.findByText('Student Dashboard');
 
-    await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: /help/i }));
-    });
-
-    const helpLink = await screen.findByText('Get Help', { selector: 'a' });
-
-    expect(helpLink).toBeInTheDocument();
-
-    await act(async () => {
-      userEvent.click(helpLink);
-    });
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(title).toBeInTheDocument();
   });
 
-  it('Feedback link tracked via GA', async () => {
-    render(<Header />);
-
-    await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: /help/i }));
-    });
-
-    const feedbackLink = await screen.findByText('Give feedback', { selector: 'a' });
-
-    expect(feedbackLink).toBeInTheDocument();
-
-    await act(async () => {
-      userEvent.click(feedbackLink);
-    });
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
-  });
-
-  it('Getting Started link tracked via GA', async () => {
-    render(<Header />);
-
-    await act(async () => {
-      userEvent.click(screen.getByRole('button', { name: /help/i }));
-    });
-
-    const gettingStartedLink = await screen.findByText('Getting Started', { selector: 'a' });
-
-    expect(gettingStartedLink).toBeInTheDocument();
-
-    await act(async () => {
-      userEvent.click(gettingStartedLink);
-    });
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  it('Employee has "Employee Dashboard" title', async () => {
+    render(<Header />, { user: mockEmployeeUser });
+    const title = await screen.findByText('Employee Dashboard');
+    expect(title).toBeInTheDocument();
   });
 });
 
 describe('Student mobile menu interactions', () => {
-  it('Student Dashboard title only visible in when menu is expanded', async () => {
+  it('Student Dashboard title only visible when menu is expanded', async () => {
     render(<Header />);
 
     const title = 'Student Dashboard';
