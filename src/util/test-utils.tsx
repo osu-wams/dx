@@ -29,6 +29,15 @@ export const mockEmployeeUser = {
   refreshFavorites: jest.fn(),
 };
 
+export const mockStudentEmployeeUser = {
+  ...mockUser,
+  data: {
+    ...mockUser.data,
+    affiliations: [AFFILIATIONS.employee, 'member'],
+  },
+  refreshFavorites: jest.fn(),
+};
+
 export const authUser = {
   ...mockUser,
   refreshFavorites: jest.fn(),
