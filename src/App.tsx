@@ -20,7 +20,7 @@ import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup, defaultTheme } from './theme/themes';
 import { GlobalStyles } from './theme';
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled.main`
   display: flex;
   flex-direction: row;
   align-items: stretch;

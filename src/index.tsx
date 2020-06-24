@@ -30,6 +30,8 @@ if (isDevelopment) {
       },
     ],
   };
+  // debounce param not working
+  // We get a lot of false positives on contrast when clicking around do to our animations
   axe(React, ReactDOM, 3000, axeConfig);
 }
 try {
