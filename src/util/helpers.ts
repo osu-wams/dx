@@ -33,7 +33,7 @@ export function formatTime(hours: string) {
  */
 export const format = (date: Date | string | number, type: string = 'MMMM d, yyyy') => {
   if (type === 'dueAt') {
-    type = "MMM do 'at' h:mm";
+    type = "MMM do 'at' h:mm a";
   }
 
   if (typeof date === 'string') {
