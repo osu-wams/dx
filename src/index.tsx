@@ -18,6 +18,20 @@ const isGADebug = process.env.REACT_APP_GA_DEBUG === 'true';
 const applicationRoot = document.getElementById('root') as HTMLElement;
 const redirectToError = () => window.location.assign('./error.html');
 
+// Add Accessibility reporting in development via Chrome console through React-axe
+if (isDevelopment) {
+  var axe = require('react-axe');
+  // const wcagRules = axe.getRules(['wcag21aa', 'wcag21a']);
+  const axeConfig = {
+    rules: [
+      {
+        id: 'region',
+        enabled: false,
+      },
+    ],
+  };
+  axe(React, ReactDOM, 3000, axeConfig);
+}
 try {
   // When running tests, intialize in ./setupTests.js instead
   if (!isTest) {
@@ -25,8 +39,8 @@ try {
       // Uncomment line below to get details in the console when developing
       debug: isDevelopment && isGADebug,
       gaOptions: {
-        siteSpeedSampleRate: 100
-      }
+        siteSpeedSampleRate: 100,
+      },
     });
   }
 
@@ -44,6 +58,6 @@ try {
   if (IGNORED_ERRORS.includes(e.toString())) {
     console.warn(`DX Application caught an ignored error "${e.toString()}".`);
   } else {
-    postError(e).then(v => redirectToError());
+    postError(e).then((v) => redirectToError());
   }
 }
