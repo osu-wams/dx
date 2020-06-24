@@ -565,7 +565,7 @@ export const light: ThemeConfiguration = {
       color: neutral600,
       badge: {
         background: Color['roguewave-200'],
-        color: Color['roguewave-500'],
+        color: Color['roguewave-600'],
       },
     },
     pageTitle: {

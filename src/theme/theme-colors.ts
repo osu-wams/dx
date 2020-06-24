@@ -41,5 +41,6 @@ export enum Color {
   'luminance-400' = '#FFB500',
   'roguewave-200' = '#B8DDE1',
   'roguewave-400' = '#00859B',
-  'roguewave-500' = '#007082'
+  'roguewave-500' = '#007082',
+  'roguewave-600' = '#0D5257',
 }
