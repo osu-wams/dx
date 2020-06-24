@@ -45,7 +45,7 @@ const ProfileMenu = () => {
     settings.primaryAffiliationOverride = affiliationType;
 
     postSettings({ primaryAffiliationOverride: settings.primaryAffiliationOverride }).then((d) => {
-      user.setUser({ ...user, data: { ...user.data, ...settings } });
+      user.setUser((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
       navigate('/');
     });
   };

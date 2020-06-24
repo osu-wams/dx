@@ -23,7 +23,10 @@ const PlannerItems = () => {
   const { user } = useContext(AppContext);
   const { data, loading } = usePlannerItems(() => {
     if (user.setUser) {
-      user.setUser({ ...user, data: { ...user.data, isCanvasOptIn: false } });
+      user.setUser((prevUser) => ({
+        ...prevUser,
+        data: { ...prevUser.data, isCanvasOptIn: false },
+      }));
     }
   });
   const courses = useCourseSchedule();
