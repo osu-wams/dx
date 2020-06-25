@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { faClipboardListCheck } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components/macro';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
-import { fontSize } from 'src/theme';
 import { useReleaseNotes } from '@osu-wams/hooks';
+import { RichTextContent, RichTextTitle } from 'src/ui/RichText';
 
 const BetaReleaseNotes: FC = () => {
   const releaseNotes = useReleaseNotes();
@@ -18,8 +17,10 @@ const BetaReleaseNotes: FC = () => {
               badge={<CardIcon icon={faClipboardListCheck} />}
             />
             <CardContent>
-              <ReleaseTitle>{releaseNote?.title}</ReleaseTitle>
-              <div dangerouslySetInnerHTML={{ __html: releaseNote?.content }}></div>
+              <RichTextTitle>{releaseNote?.title}</RichTextTitle>
+              <RichTextContent
+                dangerouslySetInnerHTML={{ __html: releaseNote?.content }}
+              ></RichTextContent>
             </CardContent>
             <CardFooter></CardFooter>
           </Card>
@@ -27,12 +28,5 @@ const BetaReleaseNotes: FC = () => {
     </>
   );
 };
-
-const ReleaseTitle = styled.h3`
-  color: ${({ theme }) => theme.features.beta.releaseNotes.title.color};
-  font-size: ${fontSize['18']};
-  font-weight: normal;
-  margin: 0px;
-`;
 
 export default BetaReleaseNotes;

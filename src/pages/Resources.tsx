@@ -97,7 +97,7 @@ const Resources = () => {
       let filtered = res.data.filter((r) => checkAffiliation(user.data, r));
 
       // When clicking a category we filter all results based on selected category
-      if (!debouncedQuery) {
+      if (!debouncedQuery && activeCategory && Array.isArray(filtered)) {
         filtered = filterByCategory(activeCategory, filtered);
       } else {
         // When typing we search for synonyms and names to get results

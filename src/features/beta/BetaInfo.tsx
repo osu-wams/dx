@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components/macro';
-import { fontSize, spacing } from 'src/theme';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
 import { usePageContent } from '@osu-wams/hooks';
+import { RichTextContent, RichTextTitle } from 'src/ui/RichText';
 
 const BetaInfo: FC = () => {
   const pageContent = usePageContent('beta');
@@ -12,41 +11,14 @@ const BetaInfo: FC = () => {
     <Card collapsing={false}>
       <CardHeader title="Dashboard Beta" badge={<CardIcon icon={faFlaskPotion} />} />
       <CardContent>
-        <BetaTitle>{pageContent.data[0]?.title}</BetaTitle>
-        <DashboardBetaContent
+        <RichTextTitle>{pageContent.data[0]?.title}</RichTextTitle>
+        <RichTextContent
           dangerouslySetInnerHTML={{ __html: pageContent.data[0]?.content }}
-        ></DashboardBetaContent>
+        ></RichTextContent>
       </CardContent>
       <CardFooter></CardFooter>
     </Card>
   );
 };
-
-const BetaTitle = styled.h3`
-  color: ${({ theme }) => theme.features.beta.title.color};
-  font-size: ${fontSize['18']};
-  font-weight: normal;
-  margin: 0px;
-`;
-
-const DashboardBetaContent = styled.div`
-  ul,
-  ol {
-    margin: ${spacing.default} 0 0 0;
-    padding: 0 0 0 2.8rem;
-    font-size: ${fontSize[14]};
-  }
-  li {
-    margin-bottom: ${spacing.medium};
-  }
-  a {
-    color: ${({ theme }) => theme.features.beta.title.color};
-    &:active,
-    &:focus,
-    &:hover {
-      text-decoration: none;
-    }
-  }
-`;
 
 export default BetaInfo;
