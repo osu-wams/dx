@@ -265,21 +265,6 @@ export const dark: ThemeConfiguration = {
         },
       },
     },
-    beta: {
-      title: {
-        color: primary,
-      },
-      releaseNotes: {
-        title: {
-          color: primary,
-        },
-      },
-      resources: {
-        icon: {
-          color: primary,
-        },
-      },
-    },
     canvas: {
       authorizeButton: {
         background: info,
@@ -574,6 +559,14 @@ export const dark: ThemeConfiguration = {
     plainCard: {
       header: {
         color: neutral550,
+      },
+    },
+    richText: {
+      title: {
+        color: primary,
+      },
+      link: {
+        color: primary,
       },
     },
     subNav: {

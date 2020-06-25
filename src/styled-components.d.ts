@@ -235,21 +235,6 @@ declare module 'styled-components/macro' {
           };
         };
       };
-      beta: {
-        title: {
-          color: string;
-        };
-        releaseNotes: {
-          title: {
-            color: string;
-          };
-        };
-        resources: {
-          icon: {
-            color: string;
-          };
-        };
-      };
       canvas: {
         authorizeButton: {
           background: string;
@@ -543,6 +528,14 @@ declare module 'styled-components/macro' {
       };
       plainCard: {
         header: {
+          color: string;
+        };
+      };
+      richText: {
+        title: {
+          color: string;
+        };
+        link: {
           color: string;
         };
       };

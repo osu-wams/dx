@@ -15,7 +15,7 @@ export const RichTextContent = styled.div`
     margin-bottom: ${spacing.medium};
   }
   a {
-    color: ${({ theme }) => theme.features.beta.link.color};
+    color: ${({ theme }) => theme.ui.richText.link.color};
     &:active,
     &:focus,
     &:hover {
@@ -25,7 +25,7 @@ export const RichTextContent = styled.div`
 `;
 
 export const RichTextTitle = styled.h3`
-  color: ${({ theme }) => theme.features.beta.title.color};
+  color: ${({ theme }) => theme.ui.richText.title.color};
   font-size: ${fontSize['18']};
   font-weight: normal;
   margin: 0px;
