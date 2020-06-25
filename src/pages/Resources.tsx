@@ -83,20 +83,6 @@ const Resources = () => {
   };
 
   /**
-   * Checks a resource to see if it is related to a category in the provided filtered categories array
-   * @param resource the resource to evaluate
-   * @param filteredCategories a filtered list of categories to display
-   */
-  const hasCategory = (resource: Types.Resource, filteredCategories: Types.Category[]): boolean => {
-    return (
-      resource.categories?.length === 0 ||
-      resource.categories
-        ?.map((c) => c.toLowerCase())
-        .some((c) => filteredCategories.find((fc) => fc.name.toLowerCase() === c))
-    );
-  };
-
-  /**
    * Filter the categories to include any that have an affilation related to the type of user
    * (student vs employee)
    */
@@ -108,9 +94,7 @@ const Resources = () => {
 
   useEffect(() => {
     if (res.data && user.data && filteredCategories.length > 0) {
-      let filtered = res.data.filter(
-        (r) => checkAffiliation(user.data, r) && hasCategory(r, filteredCategories)
-      );
+      let filtered = res.data.filter((r) => checkAffiliation(user.data, r));
 
       // When clicking a category we filter all results based on selected category
       if (!debouncedQuery) {
@@ -132,8 +116,8 @@ const Resources = () => {
         if (queriedResources.length === 0) {
           Event('resource-search-failed', debouncedQuery);
         }
-        // Filter by category when searching in
-        filtered = filterByCategory(activeCategory, queriedResources);
+
+        filtered = queriedResources;
       }
       setFilteredResources(filtered);
     }
