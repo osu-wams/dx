@@ -24,7 +24,7 @@ export const RadioButtonsGroup = () => {
     settings.theme = selectedValue;
 
     postSettings({ theme: selectedValue }).then((d) => {
-      user.setUser({ ...user, data: { ...user.data, ...settings } });
+      user.setUser((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
       setTheme(selectedValue);
     });
   };
