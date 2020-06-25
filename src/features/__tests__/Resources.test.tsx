@@ -288,10 +288,19 @@ describe('<Resources />', () => {
       userEvent.click(all);
 
       expect(all).toHaveClass('selected');
-      expect(await screen.findByText(/found 3 results/)).toBeInTheDocument();
-      expect(await screen.findByText(/Listservs/)).toBeInTheDocument();
+      expect(await screen.findByText(/found 4 results/)).toBeInTheDocument();
+      // employee and student tagged events
+      expect(screen.getByText(/Academics for Student Athletes/)).toBeInTheDocument();
+      expect(screen.getByText(/Billing Information/)).toBeInTheDocument();
+
+      // employee only events
+      expect(screen.getByText(/Listservs/)).toBeInTheDocument();
+      expect(screen.getByText(/Employee Only/)).toBeInTheDocument();
+
+      // student only event cannot be found
       expect(screen.queryByText(/Student Jobs/)).toBeNull();
-      expect(screen.queryByText(/Academics for Student Athletes/)).toBeNull();
+      // Bend only event not present for Corvallis Employee
+      expect(screen.queryByText(/Bend Testo Success Center/)).toBeNull();
     });
 
     it('finds Listservs as an employee when clicking the Financial category', async () => {
