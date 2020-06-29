@@ -1,7 +1,12 @@
 let timerId = -1;
-const TIMEOUT_MS = 60 * 60 * 1000;
+const TIMEOUT_MS = 4 * 60 * 60 * 1000; // 4:00
 const LOGIN_PATH = '/login';
 
+/**
+ * After <TIMEOUT_MS> of inactivity, the browser is redirected through the login process, if the
+ * SAML session remains active then the user returns to where they were at. If the SAML session has expired
+ * before this timer triggers, the user will be left at the login screen.
+ */
 const idleTimer = () => {
   // Redirect browser to login settings a returnTo to cause the user to come back
   // to the page that they were viewing when the timer lapsed.
