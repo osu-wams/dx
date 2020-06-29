@@ -13,6 +13,7 @@ import Resources from './pages/Resources';
 import BetaDashboard from './pages/BetaDashboard';
 import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
+import Training from './pages/Training';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { useUser } from '@osu-wams/hooks';
@@ -116,6 +117,7 @@ const App = (props: AppProps) => {
                     <RouterPage path="finances" pageComponent={<Finances />} />
                     <RouterPage path="resources" pageComponent={<Resources />} />
                     <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                    <RouterPage path="training" pageComponent={<Training />} />
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
                       <RouterPage path="notifications" pageComponent={<Notifications />} />
                     )}
