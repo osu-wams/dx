@@ -7,6 +7,7 @@ import App from './App';
 import ErrorBoundary from './features/ErrorBoundary';
 import * as cache from './util/cache';
 import { Errors } from '@osu-wams/hooks';
+import idleTimer from './util/idleTimer';
 
 const { postError, IGNORED_ERRORS } = Errors;
 
@@ -46,9 +47,12 @@ try {
     });
   }
 
-  // On first endering of the application, clear the session cache to ensure the
+  // On first entering of the application, clear the session cache to ensure the
   // user gets fresh data.
   cache.clear();
+
+  // Set an idle timer to redirect the browser to a path after a period of inactivity,
+  idleTimer();
 
   ReactDOM.render(
     <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
