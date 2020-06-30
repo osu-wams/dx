@@ -75,7 +75,6 @@ jobs:
           COMMIT_MESSAGE=$(git log --format=%B -n 1 $GITHUB_SHA | cat -)
           POST_DATA="{\"username\": \"GitHub\", \"text\": \"FrontEnd: production\nStatus: DEPLOYMENT_STARTED\nMessage: $COMMIT_MESSAGE\n$COMMIT_LINK\"}"
           curl -d "${POST_DATA}" -H "Content-Type: application/json" -X POST ${{ secrets.SLACK_WAMS_CICD_HOOK_URL }}
-          s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-development
           s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-production
           aws s3 sync build ${s3_bucket_url}
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_PRODUCTION }} --paths /index.html
