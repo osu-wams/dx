@@ -71,9 +71,15 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
       - name: Copy client to S3 and flush Cloudfront cache for PRODUCTION
         run: |
+          COMMIT_LINK=https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA
+          COMMIT_MESSAGE=$(git log --format=%B -n 1 $GITHUB_SHA | cat -)
+          POST_DATA="{\"username\": \"GitHub\", \"text\": \"FrontEnd: production\nStatus: DEPLOYMENT_STARTED\nMessage: $COMMIT_MESSAGE\n$COMMIT_LINK\"}"
+          curl -d "${POST_DATA}" -H "Content-Type: application/json" -X POST ${{ secrets.SLACK_WAMS_CICD_HOOK_URL }}
           s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-production
           aws s3 sync build ${s3_bucket_url}
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_PRODUCTION }} --paths /index.html
+          POST_DATA="{\"username\": \"GitHub\", \"text\": \"FrontEnd: production\nStatus: DEPLOYMENT_COMPLETE\nMessage: $COMMIT_MESSAGE\n$COMMIT_LINK\"}"
+          curl -d "${POST_DATA}" -H "Content-Type: application/json" -X POST ${{ secrets.SLACK_WAMS_CICD_HOOK_URL }}
         env:
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
           GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
