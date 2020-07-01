@@ -17,28 +17,24 @@ const SearchWrapper = styled.div`
   margin-bottom: 2rem;
 `;
 const FilterInput = styled(Input)`
+  color: ${({ theme }) => theme.ui.search.input.color};
+  background-color: ${({ theme }) => theme.ui.search.input.background};
   width: 100%;
   padding: 1.6rem;
   font-size: ${fontSize[24]};
+  border-color: ${({ theme }) => theme.ui.search.input.border.color};
 `;
 
 const SearchBar = ({ id, labelText, inputValue, ...props }) => {
   const themeContext = useContext(ThemeContext);
-  // !TODO: Modify theme to include search icon color
 
   return (
     <SearchWrapper>
-      <Icon icon={faSearch} color={themeContext.features.academics.pastCourses.search.icon.color} />
+      <Icon icon={faSearch} color={themeContext.ui.search.icon.color} />
       <VisuallyHidden>
         <label htmlFor={id}>{labelText}</label>
       </VisuallyHidden>
-      <FilterInput
-        type="text"
-        placeholder="Find past courses"
-        value={inputValue}
-        id="course-filter"
-        {...props}
-      />
+      <FilterInput type="text" placeholder={labelText} value={inputValue} id={id} {...props} />
     </SearchWrapper>
   );
 };
