@@ -23,7 +23,7 @@ import { AppContext } from 'src/contexts/app-context';
 const ScheduleCard = () => {
   const { user } = useContext(AppContext);
   const plannerItems = usePlannerItems(() => {
-    if (user.setUser) {
+    if (user.setUser && user.isCanvasOptIn) {
       user.setUser((prevUser) => ({
         ...prevUser,
         data: { ...prevUser.data, isCanvasOptIn: false },
