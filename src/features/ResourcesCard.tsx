@@ -30,7 +30,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const [cardTitle, setCardTitle] = useState('');
 
   useEffect(() => {
-    if (!user.loading && !res.loading) {
+    if (Object.keys(user.data).length && res.data?.items?.length) {
       const resourcesToUse = res.data?.items?.filter((r) => hasAudience(user.data, r));
       setResources(resourcesToUse);
     }
