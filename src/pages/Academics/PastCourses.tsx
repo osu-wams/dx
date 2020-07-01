@@ -1,13 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components/macro';
 import Skeleton from 'react-loading-skeleton';
-import VisuallyHidden from '@reach/visually-hidden';
 import { useDebounce } from 'use-debounce';
-import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import { useGrades } from '@osu-wams/hooks';
 import { fontSize, spacing, breakpoints, MainGridWrapper, MainGrid } from 'src/theme';
-import Input from 'src/ui/Input';
-import Icon from 'src/ui/Icon';
 import PageTitle from 'src/ui/PageTitle';
 import { Card, CardHeader, CardContent } from 'src/ui/Card';
 import { Table, TableBody, TableRow, TableCell, TableHeader, TableHeaderCell } from 'src/ui/Table';
@@ -15,9 +11,9 @@ import { singularPlural, titleCase } from 'src/util/helpers';
 import { Event } from 'src/util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { Grades } from '@osu-wams/hooks/dist/api/student/grades';
+import { SearchBar } from 'src/ui/SearchBar';
 
 const PastCourses = () => {
-  const themeContext = useContext(ThemeContext);
   const grades = useGrades();
   const [query, setQuery] = useState('');
   const [debouncedQuery] = useDebounce(query, 300);
@@ -62,22 +58,12 @@ const PastCourses = () => {
       <PageTitle title="Past Courses" />
       <AcademicSubNav />
       <MainGrid>
-        <SearchWrapper>
-          <Icon
-            icon={faSearch}
-            color={themeContext.features.academics.pastCourses.search.icon.color}
-          />
-          <VisuallyHidden>
-            <label htmlFor="course-filter">Find past courses</label>
-          </VisuallyHidden>
-          <FilterInput
-            type="text"
-            placeholder="Find past courses"
-            value={query}
-            id="course-filter"
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </SearchWrapper>
+        <SearchBar
+          id="course-filter"
+          labelText="Find past courses"
+          inputValue={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
         {grades.loading && <Skeleton count={5} />}
         {grades.data.length > 0 ? (
           <HistoryGrid aria-live="polite" aria-atomic="true">
@@ -164,22 +150,6 @@ const CourseTitle = styled.span`
 `;
 const CourseData = styled.div`
   font-size: ${fontSize[14]};
-`;
-
-const SearchWrapper = styled.div`
-  position: relative;
-  svg {
-    position: absolute;
-    top: 2rem;
-    right: 1.6rem;
-    font-size: ${fontSize[24]};
-  }
-  margin-bottom: 2rem;
-`;
-const FilterInput = styled(Input)`
-  width: 100%;
-  padding: 1.6rem;
-  font-size: ${fontSize[24]};
 `;
 
 const HistoryGrid = styled.div`

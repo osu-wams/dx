@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components/macro';
 import { CardBase } from 'src/ui/Card';
 import { spacing, mq, fontSize } from 'src/theme';
