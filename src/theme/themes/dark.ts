@@ -250,11 +250,6 @@ export const dark: ThemeConfiguration = {
         grade: {
           color: primary,
         },
-        search: {
-          icon: {
-            color: neutral600,
-          },
-        },
       },
       academicProgram: {
         first: {
@@ -369,12 +364,6 @@ export const dark: ThemeConfiguration = {
       },
       icon: {
         color: iconSecondary,
-      },
-      search: {
-        input: {
-          background: componentBackground,
-        },
-        border: neutral200,
       },
     },
   },
@@ -567,6 +556,18 @@ export const dark: ThemeConfiguration = {
       },
       link: {
         color: primary,
+      },
+    },
+    search: {
+      input: {
+        color: neutral200,
+        background: componentBackground,
+        border: {
+          color: neutral200,
+        },
+      },
+      icon: {
+        color: neutral200,
       },
     },
     subNav: {

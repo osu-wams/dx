@@ -220,11 +220,6 @@ declare module 'styled-components/macro' {
           grade: {
             color: string;
           };
-          search: {
-            icon: {
-              color: string;
-            };
-          };
         };
         academicProgram: {
           first: {
@@ -339,12 +334,6 @@ declare module 'styled-components/macro' {
         };
         icon: {
           color: string;
-        };
-        search: {
-          input: {
-            background: string;
-          };
-          border: string;
         };
       };
     };
@@ -536,6 +525,18 @@ declare module 'styled-components/macro' {
           color: string;
         };
         link: {
+          color: string;
+        };
+      };
+      search: {
+        input: {
+          color: string;
+          background: string;
+          border: {
+            color: string;
+          };
+        };
+        icon: {
           color: string;
         };
       };
