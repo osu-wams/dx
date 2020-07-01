@@ -22,7 +22,7 @@ import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
 const PlannerItems = () => {
   const { user } = useContext(AppContext);
   const { data, loading } = usePlannerItems(() => {
-    if (user.setUser) {
+    if (user.setUser && user.isCanvasOptIn) {
       user.setUser((prevUser) => ({
         ...prevUser,
         data: { ...prevUser.data, isCanvasOptIn: false },
