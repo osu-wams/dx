@@ -2,16 +2,11 @@ import React, { useEffect, useState, useContext } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
-import { CardBase } from 'src/ui/Card';
 import { spacing, MainGridWrapper, breakpoints, fontSize, MainGrid } from 'src/theme';
-import ResourcesCategories from 'src/features/resources/ResourcesCategories';
-import ResourcesSearch from 'src/features/resources/ResourcesSearch';
-import ResourcesList from 'src/features/resources/ResourcesList';
 import { Types } from '@osu-wams/lib';
-import { Resources as hooksResources, useCategories, useResources, User } from '@osu-wams/hooks';
+import { useTrainings } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
-import { activeFavoriteResources } from 'src/features/resources/resources-utils';
 import { AppContext } from 'src/contexts/app-context';
 import { Event } from 'src/util/gaTracking';
 import {
@@ -20,15 +15,16 @@ import {
   FeatureCardHeader,
   FeatureCardContent,
 } from 'src/ui/Card/variants/FeatureCard';
-
-const { hasAudience, getAffiliation } = User;
+import { SearchBar } from 'src/ui/SearchBar';
+import CustomBtn from 'src/ui/CustomBtn';
 
 const tempResult = {
-  loading: false,
+  isLoading: false,
+  isSuccess: true,
   data: [
     {
       audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
+      id: '71560c56-dabb-48e1-a663-64da7a7bb6e18',
       title: 'Play nice with others',
       image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
       contact: 'noreply@oregonstate.edu',
@@ -48,7 +44,7 @@ const tempResult = {
     },
     {
       audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
+      id: '71560c56-dabb-48e1-a663-64da7a7bb6111e8',
       title: 'Play nice with others',
       image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
       contact: 'noreply@oregonstate.edu',
@@ -68,7 +64,7 @@ const tempResult = {
     },
     {
       audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
+      id: '71560c56-dabb-48e1-a663-64da7a7b1111111b6e8',
       title: 'Play nice with others',
       image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
       contact: 'noreply@oregonstate.edu',
@@ -86,86 +82,7 @@ const tempResult = {
       websiteUri: 'https://oregonstate.edu',
       websiteTitle: '',
     },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
-      title: 'Play nice with others',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this basic course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
-      title: 'Play nice with others',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this basic course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
-      title: 'Play nice with others',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this basic course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
-      title: 'Play nice with others',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this basic course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
+
     {
       audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
       id: '71560c56-dabb-48e1-a663-64da7a7bb6e81',
@@ -188,7 +105,7 @@ const tempResult = {
     },
     {
       audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e81',
+      id: '71560c56-dabb-48e1-a663-64da7a7222bb6e81',
       title: 'Wat Wat Job',
       image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
       contact: 'noreply@oregonstate.edu',
@@ -208,7 +125,7 @@ const tempResult = {
     },
     {
       audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e81',
+      id: '71560c56-dabb-48e1-a663-22264da7a7bb6e81',
       title: 'Wat Wat Job',
       image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
       contact: 'noreply@oregonstate.edu',
@@ -228,7 +145,7 @@ const tempResult = {
     },
     {
       audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e81',
+      id: '71560c56-dabb-482222e1-a663-64da7a7bb6e81',
       title: 'Wat Wat Job',
       image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
       contact: 'noreply@oregonstate.edu',
@@ -250,59 +167,74 @@ const tempResult = {
 };
 // Resources Page with components to filter, search and favorite resources
 const Training = () => {
-  const { user } = useContext(AppContext);
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 250);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [selectedTrainingType, setSelectedTrainingType] = useState(activeCategory);
+
   // const categories = useCategories();
-  // const res = useResources();
-  const categories = { loading: false, data: ['All', 'Diversity', 'Leadership', 'Management'] };
+  const trainingTypes = {
+    isLoading: false,
+    data: [{ name: 'All' }, { name: 'Diversity' }, { name: 'Leadership' }, { name: 'Management' }],
+  };
+
+  // const trainings = useTrainings();
   const trainings = tempResult;
-  const [filteredResources, setFilteredResources] = useState<any>([]);
 
   return (
     <MainGridWrapper>
       <PageTitle title="Training and Professional Development" />
       <MainGrid>
         <TrainingWrapper>
+          <SearchBar
+            id="training"
+            labelText="Search"
+            inputValue={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
           {activeCategory !== '' && (
             <>
-              {/* <ResourcesSearch
-                query={query}
-                setQuery={setQuery}
-                setSelectedCategory={setActiveCategory}
-              /> */}
-              {!trainings.loading && trainings.data.length > 0 && (
-                // Anchor link matches ResourcesList component main div id
+              {trainingTypes?.data?.length && (
+                <div style={{ marginBottom: spacing.default }}>
+                  {trainingTypes.data.map((type) => (
+                    <CustomBtn
+                      key={type.name}
+                      text={type.name}
+                      id={type.name}
+                      selected={
+                        selectedTrainingType?.toLowerCase() === type.name.toLowerCase()
+                          ? true
+                          : false
+                      }
+                      clickHandler={() => {
+                        setSelectedTrainingType(type.name);
+                        setQuery(''); // clears search input since we want to show all trainings with that type
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+              {!trainings.isLoading && trainings.isSuccess && trainings.data?.length > 0 && (
                 <VisuallyHidden>
-                  <a href="#resourcesResults">Skip to results</a>
+                  <a href="#trainingResults">Skip to results</a>
                 </VisuallyHidden>
               )}
-              {categories.loading && <Skeleton />}
-              {/* <ResourcesCategories
-                categories={categories.data}
-                selectedCategory={activeCategory}
-                setQuery={setQuery}
-                setSelectedCategory={setActiveCategory}
-                hasFavorite={
-                  user.data.favoriteResources && user.data.favoriteResources.some((f) => f.active)
-                }
-              /> */}
+              {trainingTypes.isLoading && <Skeleton />}
             </>
           )}
-          {trainings.loading && <Skeleton count={5} />}
-          {!trainings.loading && trainings.data.length > 0 ? (
-            <FeatureCardGrid>
+          {trainings.isLoading && <Skeleton count={5} />}
+          {trainings.isSuccess && trainings.data.length > 0 ? (
+            <FeatureCardGrid id="trainingResults">
               {trainings.data.map((t) => (
                 <FeatureCard key={t.id} featured={t.featured}>
-                  {t.featured && <img src={t.image} alt="" />}
+                  {t.featured && t.image && <img src={t.image} alt="" />}
                   <FeatureCardHeader>{t.title}</FeatureCardHeader>
-                  <FeatureCardContent dangerouslySetInnerHTML={{ __html: t.body }} />
+                  {t.body && <FeatureCardContent dangerouslySetInnerHTML={{ __html: t.body }} />}
                 </FeatureCard>
               ))}
             </FeatureCardGrid>
           ) : (
-            !trainings.loading && (
+            !trainings.isLoading && (
               /* @TODO need mockup styling to do and messaging for no results */
               <div>No results</div>
             )
