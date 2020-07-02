@@ -4,7 +4,7 @@ import { fontSize } from '../theme';
 
 interface BtnProps {
   text: string;
-  icon: any;
+  icon?: any;
   id: string;
   selected: boolean;
   clickHandler: () => void;
@@ -18,7 +18,8 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
 }) => (
   <StyledBtn id={id} onClick={clickHandler} className={selected ? 'selected' : ''}>
     <CustomLabel htmlFor={id} selected={selected}>
-      <Icon src={icon} alt="" /> {text}
+      {icon && <Icon src={icon} alt="" />}
+      {text}
     </CustomLabel>
   </StyledBtn>
 );
