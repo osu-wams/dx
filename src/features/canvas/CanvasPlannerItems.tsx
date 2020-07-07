@@ -25,7 +25,17 @@ export const canvasUrl = (url) => {
   if (!url) {
     return Url.canvas.main;
   }
-  if (url.startsWith(Url.canvas.main) || url.startsWith(Url.canvas.test)) {
+  // Old canvas url is replaced with the new format
+  if (url.startsWith(Url.canvas.mainOld)) {
+    const newUrl = url.replace(Url.canvas.mainOld, Url.canvas.main);
+    return newUrl;
+  }
+  // Canvas url is correctly formed or legacy url for dev.dx
+  if (
+    url.startsWith(Url.canvas.main) ||
+    url.startsWith(Url.canvas.betaOld) ||
+    url.startsWith(Url.canvas.testOld)
+  ) {
     return url;
   } else {
     return Url.canvas.main + url;
