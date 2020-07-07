@@ -4,7 +4,9 @@ const Url = {
   },
   canvas: {
     main: 'https://canvas.oregonstate.edu',
-    test: 'https://oregonstate.test.instructure.com',
+    mainOld: 'https://oregonstate.instructure.com',
+    betaOld: 'https://oregonstate.beta.instructure.com',
+    testOld: 'https://oregonstate.test.instructure.com',
   },
   campusMap: {
     main: 'https://map.oregonstate.edu/',
