@@ -1600,20 +1600,21 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@osu-wams/hooks@^1.0.34":
-  version "1.0.34"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.34/e803707b3e14db44c40b97a563280384ade47d60a776be71aa3873200f3ae6b4#4fb183ff29ef040e0617d048ab18fa48c827b64b"
-  integrity sha512-rerHbz0306ZA9io33NDsPnskwrAg8Xqxk3mDw3/Ro5FRMKBfykLF1biLQU8EQeKdmehCPA/cekySHfxuM378Zw==
+"@osu-wams/hooks@^1.0.39":
+  version "1.0.39"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.39/9aeba48c2e7f5a9f2d43740c1e7f54fc97e92b6384214406de4efbb121725ec6#22406b326d1fdab90e826dd3ad32b4cdebca5ac0"
+  integrity sha512-QvkMSaqtuKoLW4antXyPUwiCTDXulTjP0L7bkz8BKCDAK7x/UTy/1HfP/mjok2cjMr9y+NbMHvoJcCZjdx6j7g==
   dependencies:
-    "@osu-wams/lib" "^0.1.29"
+    "@osu-wams/lib" "^0.1.31"
     "@osu-wams/utils" "^0.0.7"
     axios "^0.19.1"
+    react-query "^2.4.7"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@^0.1.29":
-  version "0.1.29"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.29/2cfb12ea2efbe4113afcb525b6322cd17b319b74f023d85857a7e811b38ad20b#906ddcda7367997094577dde4f91fff0cee161c2"
-  integrity sha512-Fd6zmUYzDspl4uIeU5VkK4KJyyTjJfI7pc1upv4Aektlx4vO45OmIWqEJVjzlWMs+tE9eZ6GDyE/zwmbIah+tA==
+"@osu-wams/lib@^0.1.31":
+  version "0.1.31"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.31/f9d106c5d043227b130a3ad485560026be6e2917138a248ac6cf81579a0a50ab#7dcf7f840346a5d27baf5737135ce77b499b36fa"
+  integrity sha512-2GDcJWOW4WhM1K7wBPttpbc7k+6hgyEQLV+1DGInHHhJ41wLP5iwUW6a8L/BJKYlFLzBMgeL780d5/Qt854tSg==
 
 "@osu-wams/utils@^0.0.7":
   version "0.0.7"
@@ -10888,6 +10889,13 @@ react-pose@^4.0.10:
     popmotion-pose "^3.4.10"
     tslib "^1.10.0"
 
+react-query@^2.4.7:
+  version "2.4.13"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.4.13.tgz#478f4f32a8c6b56de0e7bb6eb3cd2baa812e1ebb"
+  integrity sha512-PFUmChSy3kph+r0c+oz7HgBiKi98bb1D8FeeBZ1qiuuGXUJYhWCvOST+lOgwtLiBbT1wdoNjObFC35jpHbSvUQ==
+  dependencies:
+    ts-toolbelt "^6.9.4"
+
 react-remove-scroll-bar@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.1.0.tgz#edafe9b42a42c0dad9bdd10712772a1f9a39d7b9"
@@ -12901,6 +12909,11 @@ ts-pnp@^1.1.6:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
+
+ts-toolbelt@^6.9.4:
+  version "6.9.9"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.9.9.tgz#e6cfd8ec7d425d2a06bda3b4fe9577ceaf2abda8"
+  integrity sha512-5a8k6qfbrL54N4Dw+i7M6kldrbjgDWb5Vit8DnT+gwThhvqMg8KtxLE5Vmnft+geIgaSOfNJyAcnmmlflS+Vdg==
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"
