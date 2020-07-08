@@ -4,7 +4,8 @@ import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
 import { spacing, MainGridWrapper, breakpoints, fontSize, MainGrid } from 'src/theme';
 import { Types } from '@osu-wams/lib';
-import { useTrainings } from '@osu-wams/hooks';
+import { useTrainings, useTrainingTags } from '@osu-wams/hooks';
+import ReactGA from 'react-ga';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { AppContext } from 'src/contexts/app-context';
@@ -17,6 +18,7 @@ import {
 } from 'src/ui/Card/variants/FeatureCard';
 import { SearchBar } from 'src/ui/SearchBar';
 import CustomBtn from 'src/ui/CustomBtn';
+import { TrainingDetails } from 'src/features/training/TrainingDetails';
 
 const tempResult = {
   isLoading: false,
@@ -165,21 +167,57 @@ const tempResult = {
     },
   ],
 };
+
+// !TODO: Filter by Body / Title ? Tag
+
 // Resources Page with components to filter, search and favorite resources
 const Training = () => {
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 250);
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedTrainingType, setSelectedTrainingType] = useState(activeCategory);
+  // const [activeTag, setActiveTag] = useState('All');
+  const [selectedTrainingTag, setSelectedTrainingTag] = useState('All');
+  const [isOpen, setOpen] = useState(false);
+  const [selectedTraining, setSelectedTraining] = useState(null);
+  const [filteredTrainings, setFilteredTrainings] = useState<Types.Training[]>([]);
 
-  // const categories = useCategories();
-  const trainingTypes = {
-    isLoading: false,
-    data: [{ name: 'All' }, { name: 'Diversity' }, { name: 'Leadership' }, { name: 'Management' }],
+  const trainingTypes = useTrainingTags();
+
+  const trainings = useTrainings();
+
+  const filterByTag = React.useCallback(
+    (name: string, trainings: Types.Training[]): Types.Training[] => {
+      // Skips categories and displays all resources
+      if (name === 'all') return trainings;
+
+      return trainings.filter(
+        (training) =>
+          training.tags?.length > 0 &&
+          training.tags.findIndex((s) => s.toLowerCase().includes(name.toLowerCase())) > -1
+      );
+    },
+    []
+  );
+
+  // Hides or shows course details
+  const toggleTraining = (t?) => {
+    setOpen(!isOpen);
+    if (t) {
+      setSelectedTraining(t);
+    }
   };
 
-  // const trainings = useTrainings();
-  const trainings = tempResult;
+  useEffect(() => {
+    if (trainings.isSuccess && trainings.data.length > 0) {
+      let filtered = trainings.data;
+      if (!debouncedQuery && selectedTrainingTag) {
+        filtered = filterByTag(selectedTrainingTag, filtered);
+      }
+
+      setFilteredTrainings(filtered);
+    }
+  }, [debouncedQuery, selectedTraining, selectedTrainingTag, trainings, filterByTag]);
+
+  // const trainings = tempResult;
 
   return (
     <MainGridWrapper>
@@ -192,22 +230,32 @@ const Training = () => {
             inputValue={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          {activeCategory !== '' && (
+          {selectedTrainingTag !== '' && (
             <>
               {trainingTypes?.data?.length && (
                 <div style={{ marginBottom: spacing.default }}>
+                  <CustomBtn
+                    key="all"
+                    text="All"
+                    id="all"
+                    selected={selectedTrainingTag?.toLowerCase() === 'all' ? true : false}
+                    clickHandler={() => {
+                      setSelectedTrainingTag('all');
+                      setQuery(''); // clears search input since we want to show all trainings with that type
+                    }}
+                  />
                   {trainingTypes.data.map((type) => (
                     <CustomBtn
-                      key={type.name}
+                      key={type.id}
                       text={type.name}
                       id={type.name}
                       selected={
-                        selectedTrainingType?.toLowerCase() === type.name.toLowerCase()
+                        selectedTrainingTag?.toLowerCase() === type.name.toLowerCase()
                           ? true
                           : false
                       }
                       clickHandler={() => {
-                        setSelectedTrainingType(type.name);
+                        setSelectedTrainingTag(type.name);
                         setQuery(''); // clears search input since we want to show all trainings with that type
                       }}
                     />
@@ -223,15 +271,29 @@ const Training = () => {
             </>
           )}
           {trainings.isLoading && <Skeleton count={5} />}
-          {trainings.isSuccess && trainings.data.length > 0 ? (
+          {trainings.isSuccess && filteredTrainings.length > 0 ? (
             <FeatureCardGrid id="trainingResults">
-              {trainings.data.map((t) => (
-                <FeatureCard key={t.id} featured={t.featured}>
+              {filteredTrainings.map((t) => (
+                <FeatureCard
+                  as="button"
+                  key={t.id}
+                  featured={t.featured}
+                  onClick={() => {
+                    toggleTraining(t);
+                  }}
+                >
                   {t.featured && t.image && <img src={t.image} alt="" />}
                   <FeatureCardHeader>{t.title}</FeatureCardHeader>
                   {t.body && <FeatureCardContent dangerouslySetInnerHTML={{ __html: t.body }} />}
                 </FeatureCard>
               ))}
+              {isOpen && selectedTraining && (
+                <TrainingDetails
+                  training={selectedTraining}
+                  isOpen
+                  toggleTraining={toggleTraining}
+                />
+              )}
             </FeatureCardGrid>
           ) : (
             !trainings.isLoading && (
