@@ -569,6 +569,14 @@ declare module 'styled-components/macro' {
           };
         };
       };
+      text: {
+        lead: {
+          color: {
+            primary: string;
+            secondary: string;
+          };
+        };
+      };
     };
   }
 
