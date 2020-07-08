@@ -174,6 +174,21 @@ describe('<Resources />', () => {
     expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
   });
 
+  it('searches for case-insensitive synonyms', async () => {
+    const badQuery = 'billingNotThere';
+    const { searchInput } = renderResources();
+    await userEvent.type(searchInput, 'BOO');
+    expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
+    // We need to clear the input value if not the below interaction sits on top of the previous
+    searchInput.value = '';
+    await userEvent.type(searchInput, badQuery);
+    expect(await screen.findByText(/found 0 results/)).toBeInTheDocument();
+    // We need to clear the input value if not the below interaction sits on top of the previous
+    searchInput.value = '';
+    await userEvent.type(searchInput, 'boo');
+    expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
+  });
+
   it('should be able to reselect a category and get appropriate data back', async () => {
     const { all } = renderResources();
 
