@@ -28,6 +28,9 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
     margin-top: -1rem;
     margin-bottom: 2rem;
   }
+  &[data-reach-dialog-content] {
+    ${(props) => (props.padding === 'false' ? 'padding: 0;' : '')}
+  }
   @media screen and (max-width: ${breakpoints.small}) {
     hr {
       margin: 0;
@@ -55,6 +58,19 @@ const MyDialogFooter = styled.div`
   }
 `;
 
+const MyDialogImage = styled.img`
+  max-width: 100%;
+  @media (min-width: ${breakpoints.small}) {
+    border-radius: ${borderRadius[16]} ${borderRadius[16]} 0 0;
+  }
+`;
+
+const MyDialogContent = styled.main`
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+`;
+
 const MyDialogHeader = styled.div`
   padding: 1rem 1.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.ui.myDialog.header.border};
@@ -69,5 +85,5 @@ const MyDialogHeader = styled.div`
   }
 `;
 
-export { MyDialogHeader, MyDialogFooter };
+export { MyDialogHeader, MyDialogContent, MyDialogFooter, MyDialogImage };
 export default MyDialog;

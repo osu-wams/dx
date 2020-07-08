@@ -7,6 +7,9 @@ type Featured = {
 };
 const FeatureCard = styled(CardBase)<Featured>(
   () => ({
+    border: 'none',
+    padding: '0',
+    textAlign: 'left',
     flexBasis: '100%',
     img: {
       width: '100%',
