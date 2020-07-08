@@ -599,6 +599,14 @@ export const light: ThemeConfiguration = {
         },
       },
     },
+    text: {
+      lead: {
+        color: {
+          primary: primary,
+          secondary: neutral550,
+        },
+      },
+    },
   },
 };
 
