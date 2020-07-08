@@ -7,8 +7,10 @@ import { spacing } from 'src/theme';
  */
 const TwoCol = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax to prevent opposite columns from shrinking too much with urls or long words */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-gap: ${spacing.default};
+  word-break: break-word;
 `;
 
 export { TwoCol };
