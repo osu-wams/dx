@@ -67,6 +67,9 @@ const PastCourses = () => {
         {grades.loading && <Skeleton count={5} />}
         {grades.data.length > 0 ? (
           <HistoryGrid aria-live="polite" aria-atomic="true">
+            <span style={{ gridColumn: '1/4' }}>
+              Found {filteredGrades.length} {singularPlural(filteredGrades.length, 'course')}
+            </span>
             {Object.keys(gradesByTerm).map((key, index) => (
               <HistoryCard key={index} collapsing={CardCollapse(index, query)}>
                 <CardHeader title={key} />
