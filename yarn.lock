@@ -1600,10 +1600,10 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@osu-wams/hooks@^1.0.39":
-  version "1.0.39"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.39/9aeba48c2e7f5a9f2d43740c1e7f54fc97e92b6384214406de4efbb121725ec6#22406b326d1fdab90e826dd3ad32b4cdebca5ac0"
-  integrity sha512-QvkMSaqtuKoLW4antXyPUwiCTDXulTjP0L7bkz8BKCDAK7x/UTy/1HfP/mjok2cjMr9y+NbMHvoJcCZjdx6j7g==
+"@osu-wams/hooks@^1.0.42":
+  version "1.0.42"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.42/d200b4d8ff6c9b858fcd118cc1aa9f73cf31cbf4034683fa872840ba360ce632#bec48e836a208460bb63948f0b7dd11505aa59f9"
+  integrity sha512-pDY+V+F72q8dlHD/VLHqFBC7IOSlD5X1jJWY1BiBREkFZttg2teoZxiuYycKhNrCgSfMZc9qqA0zyjaEtzATgg==
   dependencies:
     "@osu-wams/lib" "^0.1.31"
     "@osu-wams/utils" "^0.0.7"
