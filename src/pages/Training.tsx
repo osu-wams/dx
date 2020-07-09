@@ -5,10 +5,8 @@ import { useDebounce } from 'use-debounce';
 import { spacing, MainGridWrapper, breakpoints, fontSize, MainGrid } from 'src/theme';
 import { Types } from '@osu-wams/lib';
 import { useTrainings, useTrainingTags } from '@osu-wams/hooks';
-import ReactGA from 'react-ga';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
-import { AppContext } from 'src/contexts/app-context';
 import { Event } from 'src/util/gaTracking';
 import {
   FeatureCard,
@@ -19,174 +17,24 @@ import {
 import { SearchBar } from 'src/ui/SearchBar';
 import CustomBtn from 'src/ui/CustomBtn';
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
+import { singularPlural } from 'src/util/helpers';
+import placeholderImage from 'src/assets/training-placeholder.png';
 
-const tempResult = {
-  isLoading: false,
-  isSuccess: true,
-  data: [
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e18',
-      title: 'Play nice with others',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this basic course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6111e8',
-      title: 'Play nice with others',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this basic course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7b1111111b6e8',
-      title: 'Play nice with others',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this basic course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e81',
-      title: 'Super Job',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this super course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'WAMS',
-      duration: '1hr',
-      featured: false,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7222bb6e81',
-      title: 'Wat Wat Job',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this super course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p><p>In this super course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'WAMS',
-      duration: '1hr',
-      featured: false,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-22264da7a7bb6e81',
-      title: 'Wat Wat Job',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this super course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p><p>In this super course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'WAMS',
-      duration: '1hr',
-      featured: false,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-482222e1-a663-64da7a7bb6e81',
-      title: 'Wat Wat Job',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this super course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p><p>In this super course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'WAMS',
-      duration: '1hr',
-      featured: false,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['growth'],
-      types: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-  ],
-};
-
-// !TODO: Filter by Body / Title ? Tag
-
-// Resources Page with components to filter, search and favorite resources
 const Training = () => {
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 250);
-  // const [activeTag, setActiveTag] = useState('All');
-  const [selectedTrainingTag, setSelectedTrainingTag] = useState('All');
+  const [selectedTrainingTag, setSelectedTrainingTag] = useState('all');
   const [isOpen, setOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState(null);
   const [filteredTrainings, setFilteredTrainings] = useState<Types.Training[]>([]);
 
-  const trainingTypes = useTrainingTags();
+  const trainingTags = useTrainingTags();
 
   const trainings = useTrainings();
 
   const filterByTag = React.useCallback(
     (name: string, trainings: Types.Training[]): Types.Training[] => {
-      // Skips categories and displays all resources
+      // Do not filter, give me all trainings
       if (name === 'all') return trainings;
 
       return trainings.filter(
@@ -211,13 +59,19 @@ const Training = () => {
       let filtered = trainings.data;
       if (!debouncedQuery && selectedTrainingTag) {
         filtered = filterByTag(selectedTrainingTag, filtered);
+      } else {
+        const re = new RegExp(debouncedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+        filtered = filtered.filter((t) => t.title.match(re) || t.body?.match(re));
+        setSelectedTrainingTag('all');
+        // If a query has no results, emit a GA Event to track for improving
+        if (filtered.length === 0) {
+          Event('training-search-failed', 'User typed: ' + debouncedQuery);
+        }
       }
 
       setFilteredTrainings(filtered);
     }
-  }, [debouncedQuery, selectedTraining, selectedTrainingTag, trainings, filterByTag]);
-
-  // const trainings = tempResult;
+  }, [debouncedQuery, selectedTraining, selectedTrainingTag, trainings.data, trainings.isSuccess]);
 
   return (
     <MainGridWrapper>
@@ -232,7 +86,7 @@ const Training = () => {
           />
           {selectedTrainingTag !== '' && (
             <>
-              {trainingTypes?.data?.length && (
+              {trainingTags?.data?.length && (
                 <div style={{ marginBottom: spacing.default }}>
                   <CustomBtn
                     key="all"
@@ -244,7 +98,7 @@ const Training = () => {
                       setQuery(''); // clears search input since we want to show all trainings with that type
                     }}
                   />
-                  {trainingTypes.data.map((type) => (
+                  {trainingTags?.data?.map((type) => (
                     <CustomBtn
                       key={type.id}
                       text={type.name}
@@ -267,12 +121,16 @@ const Training = () => {
                   <a href="#trainingResults">Skip to results</a>
                 </VisuallyHidden>
               )}
-              {trainingTypes.isLoading && <Skeleton />}
+              {console.log(trainingTags)}
+              {trainingTags.isLoading && <Skeleton />}
             </>
           )}
           {trainings.isLoading && <Skeleton count={5} />}
+          <p style={{ marginTop: '0' }}>
+            found {filteredTrainings.length} {singularPlural(filteredTrainings.length, 'result')}
+          </p>
           {trainings.isSuccess && filteredTrainings.length > 0 ? (
-            <FeatureCardGrid id="trainingResults">
+            <FeatureCardGrid id="trainingResults" aria-live="polite" aria-atomic="true">
               {filteredTrainings.map((t) => (
                 <FeatureCard
                   as="button"
@@ -280,9 +138,11 @@ const Training = () => {
                   featured={t.featured}
                   onClick={() => {
                     toggleTraining(t);
+                    Event('training', 'training opened', t.title);
                   }}
                 >
                   {t.featured && t.image && <img src={t.image} alt="" />}
+                  {t.featured && !t.image && <img src={placeholderImage} alt="" />}
                   <FeatureCardHeader>{t.title}</FeatureCardHeader>
                   {t.body && <FeatureCardContent dangerouslySetInnerHTML={{ __html: t.body }} />}
                 </FeatureCard>
@@ -298,7 +158,7 @@ const Training = () => {
           ) : (
             !trainings.isLoading && (
               /* @TODO need mockup styling to do and messaging for no results */
-              <div>No results</div>
+              <div>Try another search term</div>
             )
           )}
         </TrainingWrapper>
