@@ -104,7 +104,7 @@ const Resources = () => {
         const queriedResources = filtered.filter((resource) => {
           if (
             resource.synonyms.length > 0 &&
-            resource.synonyms.find((s) => s.includes(debouncedQuery.toLowerCase()))
+            resource.synonyms.find((s) => s.toLowerCase().includes(debouncedQuery.toLowerCase()))
           ) {
             return true;
           }
