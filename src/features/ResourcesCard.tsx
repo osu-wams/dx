@@ -30,15 +30,15 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const [cardTitle, setCardTitle] = useState('');
 
   useEffect(() => {
-    if (Object.keys(user.data).length && res.data?.items?.length) {
-      const resourcesToUse = res.data?.items?.filter((r) => hasAudience(user.data, r));
+    if (Object.keys(user.data).length && res.data && res.data.items.length) {
+      const resourcesToUse = res.data.items.filter((r) => hasAudience(user.data, r));
       setResources(resourcesToUse);
     }
-    if (res.data.entityQueueTitle) {
+    if (res.data && res.data.entityQueueTitle) {
       const cardSuffix = res.data.entityQueueTitle.toLowerCase() === 'featured' ? '' : ' Resources';
       setCardTitle(res.data.entityQueueTitle + cardSuffix);
     }
-  }, [res.data, res.loading, user.data, user.loading]);
+  }, [res.data, res.isSuccess, user.data, user.loading]);
 
   // For employee_featured, we don't want the employee part...
   if (categ.split('_')[1]) {
@@ -49,9 +49,9 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
-        {res.loading && <Skeleton count={5} />}
+        {res.isLoading && <Skeleton count={5} />}
 
-        {!res.loading && !user.loading && resources?.length > 0 && (
+        {!res.isLoading && !user.loading && resources?.length > 0 && (
           <List data-testid="resource-container">
             {resources.map((resource) => (
               <ResourceItem
@@ -63,9 +63,9 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
           </List>
         )}
 
-        {!res.loading && !res.error && resources?.length === 0 && <EmptyState />}
+        {!res.isLoading && !res.error && resources?.length === 0 && <EmptyState />}
 
-        {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
+        {!res.isLoading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
       </ResourcesContainer>
       {resources?.length > 0 && (
         <CardFooter infoButtonId={`${categ}-resources`}>
