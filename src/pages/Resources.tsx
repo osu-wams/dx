@@ -175,13 +175,13 @@ const Resources = () => {
                 setQuery={setQuery}
                 setSelectedCategory={setSelectedCategory}
               />
-              {!res.loading && res.data.length > 0 && (
+              {!res.isLoading && res.data && res.data.length > 0 && (
                 // Anchor link matches ResourcesList component main div id
                 <VisuallyHidden>
                   <a href="#resourcesResults">Skip to results</a>
                 </VisuallyHidden>
               )}
-              {categories.loading && <Skeleton />}
+              {categories.isLoading && <Skeleton />}
               <ResourcesCategories
                 categories={filteredCategories}
                 selectedCategory={activeCategory}
@@ -193,14 +193,14 @@ const Resources = () => {
               />
             </>
           )}
-          {res.loading && <Skeleton count={5} />}
-          {!res.loading && res.data.length > 0 ? (
+          {res.isLoading && <Skeleton count={5} />}
+          {!res.isLoading && res.data && res.data.length > 0 ? (
             <ResourcesList
               resources={filteredByAudience(filteredResources, user.data)}
               user={user.data}
             />
           ) : (
-            !res.loading && (
+            !res.isLoading && (
               /* @TODO need mockup styling to do and messaging for no results */
               <div>No results</div>
             )

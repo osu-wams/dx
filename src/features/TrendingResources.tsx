@@ -17,7 +17,13 @@ export const TrendingResources = () => {
   const [trendingResources, setTrendingResources] = useState<Types.Resource[]>([]);
 
   useEffect(() => {
-    if (user.data && res.data.length > 0 && trendingRes.data.length > 0) {
+    if (
+      user.data &&
+      res.data &&
+      res.data.length > 0 &&
+      trendingRes.data &&
+      trendingRes.data.length > 0
+    ) {
       setTrendingResources(filteredTrendingResources(trendingRes.data, res.data, user.data));
     }
   }, [res.data, trendingRes.data, user.data]);
@@ -28,7 +34,7 @@ export const TrendingResources = () => {
         <CardHeader title="Trending" badge={<CardIcon icon={faFireAlt} />} />
         <CardContent>
           <List data-testid="resource-container">
-            {trendingResources.map(resource => (
+            {trendingResources.map((resource) => (
               <ResourceItem
                 key={resource.id}
                 resource={resource}
