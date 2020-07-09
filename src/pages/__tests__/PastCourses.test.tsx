@@ -43,41 +43,56 @@ describe('<PastCourses />', () => {
     expect(excludedFromGPA).toBeInTheDocument();
   });
 
-  it('should find "MTH 451" when typing and fire a google analytics event', async () => {
-    render(<PastCourses />);
-    const searchInput = screen.getByLabelText('Find past courses');
-    await userEvent.type(searchInput, 'Math 451');
-    const FinalGrade = screen.getByText(/MTH 451/i);
-
-    expect(FinalGrade).toBeInTheDocument();
-  });
-
-  it('should not break when adding regex to the search and find the grade', async () => {
-    render(<PastCourses />);
-    const searchInput = screen.getByLabelText('Find past courses');
-    screen.getByText('Test Course Title');
-    userEvent.type(searchInput, 'A=B-');
-    const finalGrade = await screen.findByText('A=B-');
-
-    expect(finalGrade).toBeInTheDocument();
-  });
-
-  it('should find all 7 of the mathematics (MTH) classes', async () => {
-    render(<PastCourses />);
-
-    const searchInput = screen.getByLabelText('Find past courses');
-    await userEvent.type(searchInput, 'Mathematics');
-
-    // Most "Mathematics" classes have the "MTH" abbreviation instead of "Mathematics"
-    const coursesFound = await screen.findAllByText(/MTH/);
-    expect(coursesFound).toHaveLength(7);
-  });
-
   it('should find the message: "No course history yet" if grades is an empty array', async () => {
     mockUseGrades.mockReturnValue({ data: [], loading: false, error: false });
     render(<PastCourses />);
 
     const NoGrades = await screen.findByText('No course history yet');
     expect(NoGrades).toBeInTheDocument();
+  });
+
+  describe('User searches', () => {
+    it('should find "MTH 451" when typing and fire a google analytics event', async () => {
+      render(<PastCourses />);
+      const searchInput = screen.getByLabelText('Find past courses');
+      await userEvent.type(searchInput, 'Math 451');
+      const FinalGrade = screen.getByText(/MTH 451/i);
+
+      expect(FinalGrade).toBeInTheDocument();
+    });
+
+    it('should not break when adding regex to the search and find the grade', async () => {
+      render(<PastCourses />);
+      const searchInput = screen.getByLabelText('Find past courses');
+      screen.getByText('Test Course Title');
+      userEvent.type(searchInput, 'A=B-');
+      const finalGrade = await screen.findByText('A=B-');
+
+      expect(finalGrade).toBeInTheDocument();
+    });
+
+    it('should find all 7 of the mathematics (MTH) classes', async () => {
+      render(<PastCourses />);
+
+      const searchInput = screen.getByLabelText('Find past courses');
+      await userEvent.type(searchInput, 'Mathematics');
+
+      expect(await screen.findByText(/Found 7 courses/i)).toBeInTheDocument();
+
+      // Most "Mathematics" classes have the "MTH" abbreviation instead of "Mathematics"
+      const coursesFound = await screen.findAllByText(/MTH/);
+      expect(coursesFound).toHaveLength(7);
+    });
+
+    it('should not find any courses after searching something bogus', async () => {
+      render(<PastCourses />);
+
+      const searchInput = screen.getByLabelText('Find past courses');
+      await userEvent.type(searchInput, 'bogusBogus');
+
+      // Most "Mathematics" classes have the "MTH" abbreviation instead of "Mathematics"
+      const coursesNotFound = await screen.findByText(/Found 0 courses/i);
+      expect(coursesNotFound).toBeInTheDocument();
+    });
   });
 });
