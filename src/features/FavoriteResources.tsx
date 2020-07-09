@@ -23,7 +23,7 @@ export const FavoriteResources = () => {
   const [favoriteResources, setFavoriteResources] = useState<Types.Resource[]>([]);
 
   useEffect(() => {
-    if (user.data.favoriteResources && res.data.length > 0) {
+    if (user.data.favoriteResources && res.data && res.data.length > 0) {
       setFavoriteResources(activeFavoriteResources(user.data.favoriteResources, res.data));
     }
   }, [res.data, user.data.favoriteResources]);
@@ -42,9 +42,9 @@ export const FavoriteResources = () => {
     <Card>
       <CardHeader title="Favorites" badge={<CardIcon icon={faHeart} />} />
       <CardContent>
-        {res.loading && <Skeleton count={5} />}
+        {res.isLoading && <Skeleton count={5} />}
 
-        {!res.loading && favoriteResources?.length > 0 && (
+        {!res.isLoading && favoriteResources?.length > 0 && (
           <List data-testid="resource-container">
             {favoriteResources.map((resource) => (
               <ResourceItem
@@ -55,9 +55,9 @@ export const FavoriteResources = () => {
             ))}
           </List>
         )}
-        {!res.loading && !res.error && favoriteResources?.length === 0 && <NoFavorites />}
+        {!res.isLoading && !res.error && favoriteResources?.length === 0 && <NoFavorites />}
 
-        {!res.loading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
+        {!res.isLoading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
       </CardContent>
       <CardFooter infoButtonId="favorite-resources">
         <InternalLink
