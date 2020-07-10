@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
-import { spacing, MainGridWrapper, breakpoints, fontSize, MainGrid } from 'src/theme';
+import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
 import { Types } from '@osu-wams/lib';
 import { useTrainings, useTrainingTags } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
@@ -27,9 +27,7 @@ const Training = () => {
   const [isOpen, setOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState(null);
   const [filteredTrainings, setFilteredTrainings] = useState<Types.Training[]>([]);
-
   const trainingTags = useTrainingTags();
-
   const trainings = useTrainings();
 
   const filterByTag = React.useCallback(
@@ -57,12 +55,12 @@ const Training = () => {
   useEffect(() => {
     if (trainings.isSuccess && trainings.data.length > 0) {
       let filtered = trainings.data;
-      if (!debouncedQuery && selectedTrainingTag) {
+      // Nobody has searched, so it's page load or tag click
+      if (!debouncedQuery && selectedTrainingTag && Array.isArray(filtered)) {
         filtered = filterByTag(selectedTrainingTag, filtered);
       } else {
         const re = new RegExp(debouncedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
         filtered = filtered.filter((t) => t.title.match(re) || t.body?.match(re));
-        setSelectedTrainingTag('all');
         // If a query has no results, emit a GA Event to track for improving
         if (filtered.length === 0) {
           Event('training-search-failed', 'User typed: ' + debouncedQuery);
@@ -71,7 +69,14 @@ const Training = () => {
 
       setFilteredTrainings(filtered);
     }
-  }, [debouncedQuery, selectedTraining, selectedTrainingTag, trainings.data, trainings.isSuccess]);
+  }, [
+    debouncedQuery,
+    selectedTraining,
+    filterByTag,
+    selectedTrainingTag,
+    trainings.data,
+    trainings.isSuccess,
+  ]);
 
   return (
     <MainGridWrapper>
@@ -82,7 +87,10 @@ const Training = () => {
             id="training"
             labelText="Search"
             inputValue={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              selectedTrainingTag !== 'all' && setSelectedTrainingTag('all');
+            }}
           />
           {selectedTrainingTag !== '' && (
             <>
@@ -121,7 +129,6 @@ const Training = () => {
                   <a href="#trainingResults">Skip to results</a>
                 </VisuallyHidden>
               )}
-              {console.log(trainingTags)}
               {trainingTags.isLoading && <Skeleton />}
             </>
           )}
