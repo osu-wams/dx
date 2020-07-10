@@ -2,6 +2,7 @@ import styled from 'styled-components/macro';
 import { CardBase } from 'src/ui/Card';
 import { spacing, mq, fontSize } from 'src/theme';
 
+// !TODO: Colors neutral 700 for title, neutral 550 for text
 type Featured = {
   featured?: boolean;
 };
@@ -17,6 +18,15 @@ const FeatureCard = styled(CardBase)<Featured>(
   }),
   ({ featured }) =>
     featured && {
+      // iPad mini 2 columns
+      [mq.xs]: {
+        flexBasis: '48%',
+        marginLeft: '2%',
+        '&:nth-child(2n+1)': {
+          marginLeft: '0',
+        },
+      },
+      // regular iPad desktop 3 columns
       [mq.small]: {
         flexBasis: '32%',
         marginLeft: '2%',
@@ -36,6 +46,7 @@ const FeatureCardGrid = styled.div`
 `;
 
 const FeatureCardHeader = styled.h2`
+  color: ${({ theme }) => theme.ui.featuredCard.title.color};
   margin: 0;
   font-size: ${fontSize[18]};
   font-weight: normal;
@@ -43,6 +54,7 @@ const FeatureCardHeader = styled.h2`
 `;
 
 const FeatureCardContent = styled.div`
+  color: ${({ theme }) => theme.ui.featuredCard.content.color};
   padding: 0 ${spacing.default} ${spacing.default};
   font-size: ${fontSize[14]};
 `;

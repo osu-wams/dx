@@ -418,6 +418,14 @@ declare module 'styled-components/macro' {
           };
         };
       };
+      featuredCard: {
+        title: {
+          color: string;
+        };
+        content: {
+          color: string;
+        };
+      };
       highlights: {
         card: {
           border: string;

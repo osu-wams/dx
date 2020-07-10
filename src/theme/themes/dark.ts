@@ -391,7 +391,7 @@ export const dark: ThemeConfiguration = {
     },
     card: {
       boxShadow: shadows[1],
-      background: componentBackground,
+      background: Color.black,
       badge: {
         background: primary,
         color: buttonPrimary,
@@ -446,6 +446,14 @@ export const dark: ThemeConfiguration = {
         icon: {
           color: iconPrimary,
         },
+      },
+    },
+    featuredCard: {
+      title: {
+        color: neutral700,
+      },
+      content: {
+        color: neutral550,
       },
     },
     highlights: {
