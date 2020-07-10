@@ -1,8 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React from 'react';
 import ReactGA from 'react-ga';
-import styled from 'styled-components/macro';
-import { useDebounce } from 'use-debounce';
-import { spacing, MainGridWrapper, breakpoints, fontSize, MainGrid } from 'src/theme';
 import { CloseButton } from 'src/ui/Button';
 import { LeadText, Description } from 'src/ui/Text';
 import MyDialog, {
@@ -11,12 +8,17 @@ import MyDialog, {
   MyDialogHeader,
   MyDialogImage,
 } from 'src/ui/MyDialog';
-import { formatTime, format, singularPlural } from 'src/util/helpers';
-import Divider from 'src/ui/Divider';
+import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
 import { TwoCol } from 'src/ui/Grids';
 
 const TrainingDetails: React.FC<any> = ({ training, isOpen, toggleTraining }) => {
+  const empty = 'Not available';
+
+  // Images are flush with the top of the DialogHeader
+  // Adds the padding when there is no image the <h2> has appropriate space
+  const margin = !training.image ? { paddingTop: '1.5rem' } : {};
+
   return (
     <MyDialog
       padding="false"
@@ -25,33 +27,48 @@ const TrainingDetails: React.FC<any> = ({ training, isOpen, toggleTraining }) =>
       aria-labelledby="training-title"
     >
       {ReactGA.modalview('/training/training-details')}
-      {training.image && <MyDialogImage src={training.image} alt="" />}
-      <MyDialogHeader>
-        <CloseButton onClick={toggleTraining} />
-
+      {training.image && (
+        <div style={{ position: 'relative' }}>
+          <MyDialogImage src={training.image} alt="" />
+          <CloseButton
+            onClick={toggleTraining}
+            style={{
+              position: 'absolute',
+              margin: '0',
+              top: '6px',
+              right: '6px',
+              background: 'rgba(0,0,0,.7)',
+              borderRadius: '50%',
+              padding: '4px 12px',
+            }}
+          />
+        </div>
+      )}
+      <MyDialogHeader style={margin}>
+        {!training.image && <CloseButton onClick={toggleTraining} />}
         <h2>{training.title}</h2>
-        <div dangerouslySetInnerHTML={{ __html: training.body }} />
       </MyDialogHeader>
-      <MyDialogContent>
+      <MyDialogContent style={{ display: 'block' }}>
+        <div dangerouslySetInnerHTML={{ __html: training.body }} />
         <TwoCol>
           <div>
             <LeadText>Level of Learning</LeadText>
 
-            <Description>{training.title}</Description>
+            <Description>{training.title ?? empty}</Description>
 
             <LeadText>Department</LeadText>
-            <Description>{training.department}</Description>
+            <Description>{training.department ?? empty}</Description>
 
             <LeadText>Course Type</LeadText>
-            <Description>{training.type}</Description>
+            <Description>{training.type ?? empty}</Description>
 
             <LeadText>Course Design</LeadText>
-            <Description>{training.courseDesign}</Description>
+            <Description>{training.courseDesign ?? empty}</Description>
           </div>
 
           <div>
             <LeadText>Prerequisites</LeadText>
-            <Description>{training.prerequisites}</Description>
+            <Description>{training.prerequisites ?? empty}</Description>
 
             <LeadText>Audience</LeadText>
             <Description>
@@ -69,12 +86,21 @@ const TrainingDetails: React.FC<any> = ({ training, isOpen, toggleTraining }) =>
         {training.websiteUri ? (
           <ExternalLink
             href={training.websiteUri}
-            // onClick={() => Event('training', 'view courses clicked')}
+            onClick={() => Event('training', `website link: ${training.websiteUri}`)}
           >
             Learn more and register
           </ExternalLink>
         ) : (
-          training.contact
+          <>
+            {training.contact && (
+              <ExternalLink
+                href={`mailto:${training.contact}`}
+                onClick={() => Event('training', `contact mailto link: ${training.contact}`)}
+              >
+                Contact: {training.contact}
+              </ExternalLink>
+            )}
+          </>
         )}
       </MyDialogFooter>
     </MyDialog>
