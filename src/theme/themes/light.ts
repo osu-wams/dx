@@ -448,6 +448,14 @@ export const light: ThemeConfiguration = {
         },
       },
     },
+    featuredCard: {
+      title: {
+        color: neutral700,
+      },
+      content: {
+        color: neutral550,
+      },
+    },
     highlights: {
       card: {
         border: neutral200,
