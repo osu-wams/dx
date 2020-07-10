@@ -55,4 +55,5 @@ export type IComponents =
   | 'badge'
   | 'it-system-status'
   | 'it-system-status-sticky'
-  | 'training';
+  | 'training'
+  | 'training-search-failed';
