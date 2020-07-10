@@ -29,7 +29,7 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
     margin-bottom: 2rem;
   }
   &[data-reach-dialog-content] {
-    ${(props) => (props.padding === 'false' ? 'padding: 0;' : '')}
+    ${(props) => (props.padding === 'false' ? 'padding: 0 0 1.5rem 0;' : '')}
   }
   @media screen and (max-width: ${breakpoints.small}) {
     hr {
@@ -38,7 +38,7 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
     &[data-reach-dialog-content] {
       width: 100%;
       margin: 0;
-      ${(props) => (props.padding === 'false' ? 'padding: 0;' : '')}
+      ${(props) => (props.padding === 'false' ? 'padding: 0 0 1.5rem 0;' : '')}
       border-radius: 0;
     }
   }
