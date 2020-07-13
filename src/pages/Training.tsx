@@ -52,6 +52,13 @@ const Training = () => {
     }
   };
 
+  // Actions to perform on tagClick
+  const tagClick = (name: string) => {
+    setSelectedTrainingTag(name);
+    Event('training-tags', name);
+    query && setQuery(''); // clears search input to show all trainings with that tag
+  };
+
   useEffect(() => {
     if (trainings.isSuccess && trainings.data.length > 0) {
       let filtered = trainings.data;
@@ -92,46 +99,36 @@ const Training = () => {
               selectedTrainingTag !== 'all' && setSelectedTrainingTag('all');
             }}
           />
-          {selectedTrainingTag !== '' && (
-            <>
-              {trainingTags?.data?.length && (
-                <div style={{ marginBottom: spacing.default }}>
+          {selectedTrainingTag && (
+            <div style={{ marginBottom: spacing.default }}>
+              <CustomBtn
+                key="all"
+                text="All"
+                id="all"
+                selected={selectedTrainingTag?.toLowerCase() === 'all' ? true : false}
+                clickHandler={() => tagClick('all')}
+              />
+              {trainingTags?.data?.length &&
+                trainingTags?.data?.map((type) => (
                   <CustomBtn
-                    key="all"
-                    text="All"
-                    id="all"
-                    selected={selectedTrainingTag?.toLowerCase() === 'all' ? true : false}
-                    clickHandler={() => {
-                      setSelectedTrainingTag('all');
-                      setQuery(''); // clears search input since we want to show all trainings with that type
-                    }}
+                    key={type.id}
+                    text={type.name}
+                    id={type.name}
+                    selected={
+                      selectedTrainingTag?.toLowerCase() === type.name.toLowerCase() ? true : false
+                    }
+                    clickHandler={() => tagClick(type.name)}
                   />
-                  {trainingTags?.data?.map((type) => (
-                    <CustomBtn
-                      key={type.id}
-                      text={type.name}
-                      id={type.name}
-                      selected={
-                        selectedTrainingTag?.toLowerCase() === type.name.toLowerCase()
-                          ? true
-                          : false
-                      }
-                      clickHandler={() => {
-                        setSelectedTrainingTag(type.name);
-                        setQuery(''); // clears search input since we want to show all trainings with that type
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-              {!trainings.isLoading && trainings.isSuccess && trainings.data?.length > 0 && (
-                <VisuallyHidden>
-                  <a href="#trainingResults">Skip to results</a>
-                </VisuallyHidden>
-              )}
-              {trainingTags.isLoading && <Skeleton />}
-            </>
+                ))}
+            </div>
           )}
+          {!trainings.isLoading && trainings.isSuccess && trainings.data?.length > 0 && (
+            <VisuallyHidden>
+              <a href="#trainingResults">Skip to results</a>
+            </VisuallyHidden>
+          )}
+          {trainingTags.isLoading && <Skeleton />}
+
           {trainings.isLoading && <Skeleton count={5} />}
           <p style={{ marginTop: '0' }}>
             found {filteredTrainings.length} {singularPlural(filteredTrainings.length, 'result')}
