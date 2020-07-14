@@ -117,6 +117,11 @@ const Resources = () => {
           Event('resource-search-failed', debouncedQuery);
         }
 
+        // Avoids sending single characters to Google Analytics
+        if (debouncedQuery.length >= 2) {
+          Event('resource-search', debouncedQuery);
+        }
+
         filtered = queriedResources;
       }
       setFilteredResources(filtered);
