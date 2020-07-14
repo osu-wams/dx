@@ -274,11 +274,3 @@ describe('<Training />', () => {
     });
   });
 });
-
-/**
- * TODO: modals
- * can open and close
- * data is present
- * with contact entered and NO website
- * with website and contact entered
- */
