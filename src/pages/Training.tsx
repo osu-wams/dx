@@ -68,9 +68,14 @@ const Training = () => {
       } else {
         const re = new RegExp(debouncedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
         filtered = filtered.filter((t) => t.title.match(re) || t.body?.match(re));
+
+        if (debouncedQuery.length >= 2 && filtered.length > 0) {
+          Event('training-search', debouncedQuery);
+        }
+
         // If a query has no results, emit a GA Event to track for improving
         if (filtered.length === 0) {
-          Event('training-search-failed', 'User typed: ' + debouncedQuery);
+          Event('training-search-failed', debouncedQuery);
         }
       }
 

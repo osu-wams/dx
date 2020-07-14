@@ -57,4 +57,5 @@ export type IComponents =
   | 'it-system-status-sticky'
   | 'training'
   | 'training-tags'
+  | 'training-search'
   | 'training-search-failed';
