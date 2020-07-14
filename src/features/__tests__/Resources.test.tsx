@@ -183,7 +183,7 @@ describe('<Resources />', () => {
 
     expect(await screen.findByText(/found 0 results/)).toBeInTheDocument();
     expect(screen.queryByText(/Billing Information/)).toBeNull();
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
 
     // We need to clear the input value if not the below interaction sits on top of the previous
     searchInput.value = '';
@@ -191,6 +191,7 @@ describe('<Resources />', () => {
     await userEvent.type(searchInput, 'billing');
 
     expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('searches for case-insensitive synonyms', async () => {
