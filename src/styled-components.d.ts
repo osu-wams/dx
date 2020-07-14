@@ -220,11 +220,6 @@ declare module 'styled-components/macro' {
           grade: {
             color: string;
           };
-          search: {
-            icon: {
-              color: string;
-            };
-          };
         };
         academicProgram: {
           first: {
@@ -340,12 +335,6 @@ declare module 'styled-components/macro' {
         icon: {
           color: string;
         };
-        search: {
-          input: {
-            background: string;
-          };
-          border: string;
-        };
       };
     };
     ui: {
@@ -427,6 +416,14 @@ declare module 'styled-components/macro' {
           icon: {
             color: string;
           };
+        };
+      };
+      featuredCard: {
+        title: {
+          color: string;
+        };
+        content: {
+          color: string;
         };
       };
       highlights: {
@@ -539,6 +536,18 @@ declare module 'styled-components/macro' {
           color: string;
         };
       };
+      search: {
+        input: {
+          color: string;
+          background: string;
+          border: {
+            color: string;
+          };
+        };
+        icon: {
+          color: string;
+        };
+      };
       subNav: {
         link: {
           borderBottom: string;
@@ -565,6 +574,14 @@ declare module 'styled-components/macro' {
           borderTop: string;
           stripedEvenChildren: {
             background: string;
+          };
+        };
+      };
+      text: {
+        lead: {
+          color: {
+            primary: string;
+            secondary: string;
           };
         };
       };

@@ -250,11 +250,6 @@ export const light: ThemeConfiguration = {
         grade: {
           color: primary,
         },
-        search: {
-          icon: {
-            color: neutral600,
-          },
-        },
       },
       academicProgram: {
         first: {
@@ -370,12 +365,6 @@ export const light: ThemeConfiguration = {
       icon: {
         color: iconSecondary,
       },
-      search: {
-        input: {
-          background: componentBackground,
-        },
-        border: neutral200,
-      },
     },
   },
   ui: {
@@ -457,6 +446,14 @@ export const light: ThemeConfiguration = {
         icon: {
           color: iconPrimary,
         },
+      },
+    },
+    featuredCard: {
+      title: {
+        color: neutral700,
+      },
+      content: {
+        color: neutral550,
       },
     },
     highlights: {
@@ -569,6 +566,18 @@ export const light: ThemeConfiguration = {
         color: primary,
       },
     },
+    search: {
+      input: {
+        color: neutral550,
+        background: componentBackground,
+        border: {
+          color: neutral400,
+        },
+      },
+      icon: {
+        color: neutral550,
+      },
+    },
     subNav: {
       link: {
         borderBottom: Color.transparent,
@@ -595,6 +604,14 @@ export const light: ThemeConfiguration = {
         borderTop: 'rgba(34, 36, 38, 0.15)',
         stripedEvenChildren: {
           background: '#f9fafb',
+        },
+      },
+    },
+    text: {
+      lead: {
+        color: {
+          primary: primary,
+          secondary: neutral550,
         },
       },
     },

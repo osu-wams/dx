@@ -10,12 +10,14 @@ export const gradients = {
 };
 
 export const breakpoints = {
+  xs: '500px', //larger than portrait phone
   small: '768px',
   medium: '992px',
   large: '1200px',
 };
 
 export const mq = {
+  xs: `@media (min-width: ${breakpoints.xs}) and (max-width: 767px)`, //iPad mini
   small: `@media(min-width: ${breakpoints.small})`,
   medium: `@media(min-width: ${breakpoints.medium})`,
   large: `@media(min-width: ${breakpoints.large})`,
