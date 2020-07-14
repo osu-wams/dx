@@ -70,6 +70,9 @@ it('Renders all the data', () => {
   // Design
   expect(screen.getByText('Blended')).toBeInTheDocument();
 
+  //Prerequisites
+  expect(screen.getByText('None')).toBeInTheDocument();
+
   // Cost
   expect(screen.getByText('Yes')).toBeInTheDocument();
 

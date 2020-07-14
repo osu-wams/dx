@@ -2,6 +2,7 @@ import React from 'react';
 import ReactGA from 'react-ga';
 import { CloseButton } from 'src/ui/Button';
 import { LeadText, Description } from 'src/ui/Text';
+import { Types } from '@osu-wams/lib';
 import MyDialog, {
   MyDialogFooter,
   MyDialogContent,
@@ -13,7 +14,15 @@ import { ExternalLink } from 'src/ui/Link';
 import { TwoCol } from 'src/ui/Grids';
 import { commaList } from 'src/util/helpers';
 
-const TrainingDetails: React.FC<any> = ({ training, isOpen, toggleTraining }) => {
+const TrainingDetails: React.FC<any> = ({
+  training,
+  isOpen,
+  toggleTraining,
+}: {
+  training: Types.Training;
+  isOpen: boolean;
+  toggleTraining: any;
+}) => {
   const empty = 'Not available';
 
   // Images are flush with the top of the DialogHeader
@@ -50,7 +59,7 @@ const TrainingDetails: React.FC<any> = ({ training, isOpen, toggleTraining }) =>
         <h2>{training.title}</h2>
       </MyDialogHeader>
       <MyDialogContent style={{ display: 'block' }}>
-        <div dangerouslySetInnerHTML={{ __html: training.body }} />
+        <div dangerouslySetInnerHTML={{ __html: training.body! }} />
         <TwoCol>
           <div>
             <LeadText>Course Type</LeadText>
@@ -65,7 +74,7 @@ const TrainingDetails: React.FC<any> = ({ training, isOpen, toggleTraining }) =>
 
           <div>
             <LeadText>Prerequisites</LeadText>
-            <Description>{training.prerequisites ? training.prequisites : empty}</Description>
+            <Description>{training.prerequisites ? training.prerequisites : empty}</Description>
 
             <LeadText>Audience</LeadText>
             <Description>{commaList(training.audiences, empty)}</Description>
