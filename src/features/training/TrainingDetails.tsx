@@ -11,6 +11,7 @@ import MyDialog, {
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
 import { TwoCol } from 'src/ui/Grids';
+import { commaList } from 'src/util/helpers';
 
 const TrainingDetails: React.FC<any> = ({ training, isOpen, toggleTraining }) => {
   const empty = 'Not available';
@@ -52,30 +53,22 @@ const TrainingDetails: React.FC<any> = ({ training, isOpen, toggleTraining }) =>
         <div dangerouslySetInnerHTML={{ __html: training.body }} />
         <TwoCol>
           <div>
-            <LeadText>Level of Learning</LeadText>
-
-            <Description>{training.title ?? empty}</Description>
-
-            <LeadText>Department</LeadText>
-            <Description>{training.department ?? empty}</Description>
-
             <LeadText>Course Type</LeadText>
-            <Description>{training.type ?? empty}</Description>
+            <Description>{training.type ? training.type : empty}</Description>
 
             <LeadText>Course Design</LeadText>
-            <Description>{training.courseDesign ?? empty}</Description>
+            <Description>{training.courseDesign ? training.courseDesign : empty}</Description>
+
+            <LeadText>Department</LeadText>
+            <Description>{training.department ? training.department : empty}</Description>
           </div>
 
           <div>
             <LeadText>Prerequisites</LeadText>
-            <Description>{training.prerequisites ?? empty}</Description>
+            <Description>{training.prerequisites ? training.prequisites : empty}</Description>
 
             <LeadText>Audience</LeadText>
-            <Description>
-              {training.audiences.map((a, index) => (
-                <span key={index}>{(index ? ', ' : '') + a}</span>
-              ))}
-            </Description>
+            <Description>{commaList(training.audiences, empty)}</Description>
 
             <LeadText>Cost</LeadText>
             <Description>{training.cost ? 'Yes' : 'No cost'}</Description>
