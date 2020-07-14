@@ -118,7 +118,7 @@ const Resources = () => {
         }
 
         // Avoids sending single characters to Google Analytics
-        if (debouncedQuery.length >= 2) {
+        if (debouncedQuery.length >= 2 && queriedResources.length > 0) {
           Event('resource-search', debouncedQuery);
         }
 
