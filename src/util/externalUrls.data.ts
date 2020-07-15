@@ -50,7 +50,7 @@ const Url = {
     main: 'https://status.is.oregonstate.edu',
   },
   gettingStarted: {
-    main: 'https://oregonstate.teamdynamix.com/TDClient/1935/Portal/KB/ArticleDet?ID=108882',
+    main: 'https://oregonstate.teamdynamix.com/TDClient/1935/Portal/KB/?CategoryID=18200',
   },
 };
 
