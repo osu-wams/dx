@@ -3,6 +3,7 @@ import ReactGA from 'react-ga';
 import { CloseButton } from 'src/ui/Button';
 import { LeadText, Description } from 'src/ui/Text';
 import { Types } from '@osu-wams/lib';
+
 import MyDialog, {
   MyDialogFooter,
   MyDialogContent,
@@ -23,6 +24,7 @@ const TrainingDetails: React.FC<any> = ({
   isOpen: boolean;
   toggleTraining: any;
 }) => {
+
   const empty = 'Not available';
 
   // Images are flush with the top of the DialogHeader
@@ -75,7 +77,6 @@ const TrainingDetails: React.FC<any> = ({
           <div>
             <LeadText>Prerequisites</LeadText>
             <Description>{training.prerequisites ? training.prerequisites : empty}</Description>
-
             <LeadText>Audience</LeadText>
             <Description>{commaList(training.audiences, empty)}</Description>
 
