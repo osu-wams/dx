@@ -17,11 +17,13 @@ const alert = Color['lava-400'];
 const warn = Color['luminance-300'];
 const info = Color['stratosphere-400'];
 const success = Color['pine-400'];
+const dropdownDetail = Color['neutral-800'];
 const mainGridBackground = neutral100;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
 const secondGridBorderTop = neutral300;
-const componentBackground = neutral300;
+const componentBackground = Color.black;
+const dropdownBackground = Color.black;
 const linkForeground = Color.white;
 const iconPrimary = Color.white;
 const iconSecondary = Color.black;
@@ -42,7 +44,10 @@ export const dark: ThemeConfiguration = {
       color: neutral550,
     },
     headerNavList: {
-      background: neutral800,
+      border: {
+        color: dropdownDetail,
+      },
+      background: dropdownBackground,
       color: linkForeground,
       svg: {
         color: primary,
@@ -391,7 +396,7 @@ export const dark: ThemeConfiguration = {
     },
     card: {
       boxShadow: shadows[1],
-      background: Color.black,
+      background: componentBackground,
       badge: {
         background: primary,
         color: buttonPrimary,

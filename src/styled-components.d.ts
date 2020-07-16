@@ -12,6 +12,9 @@ declare module 'styled-components/macro' {
         color: string;
       };
       headerNavList: {
+        border: {
+          color: string;
+        };
         background: string;
         color: string;
         svg: {
