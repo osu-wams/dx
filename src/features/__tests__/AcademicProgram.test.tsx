@@ -82,6 +82,6 @@ describe('<ProgramOfStudy /> | Degree', () => {
     render(<AcademicProgram />);
 
     expect(screen.queryByText(/Bachelor of Science/i)).toBeNull();
-    expect(screen.getByText(/you do not currently have a program of study/i)).toBeInTheDocument();
+    expect(screen.getByText(/You do not currently have an academic program/i)).toBeInTheDocument();
   });
 });

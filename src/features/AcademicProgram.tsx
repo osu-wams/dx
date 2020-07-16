@@ -63,7 +63,7 @@ const AcademicProgram = () => {
     <EmptyState>
       <EmptyStateImage src={degreeImg} alt="" />
       <EmptyStateText>
-        You do not currently have a program of study. If you have recently enrolled or changed your
+        You do not currently have an academic program. If you have recently enrolled or changed your
         program, it may take a little while to appear.
       </EmptyStateText>
     </EmptyState>
@@ -114,7 +114,7 @@ const AcademicProgram = () => {
           <CardContent
             style={i === 0 ? { paddingBottom } : { borderTop }}
             className={`degree-card degree-card-${i}`}
-            key={d?.majors?.first?.major ?? 'undeclared'}
+            key={i}
           >
             <List>
               {d?.majors?.first?.major &&
