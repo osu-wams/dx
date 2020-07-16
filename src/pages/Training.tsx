@@ -135,14 +135,18 @@ const Training = () => {
           {trainingTags.isLoading && <Skeleton />}
 
           {trainings.isLoading && <Skeleton count={5} />}
-          <p style={{ marginTop: '0' }}>
-            found {filteredTrainings.length} {singularPlural(filteredTrainings.length, 'result')}
-          </p>
+
+          {trainings.isSuccess && (
+            <p style={{ marginTop: '0' }}>
+              found {filteredTrainings.length} {singularPlural(filteredTrainings.length, 'result')}
+            </p>
+          )}
           {trainings.isSuccess && filteredTrainings.length > 0 ? (
             <FeatureCardGrid id="trainingResults" aria-live="polite" aria-atomic="true">
               {filteredTrainings.map((t) => (
                 <FeatureCard
                   as="button"
+                  style={{ cursor: 'pointer' }}
                   key={t.id}
                   featured={t.featured}
                   onClick={() => {
