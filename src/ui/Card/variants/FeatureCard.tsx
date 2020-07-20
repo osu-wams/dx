@@ -1,12 +1,12 @@
 import styled from 'styled-components/macro';
-import { CardBase } from 'src/ui/Card';
+import { CardButtonBase } from 'src/ui/Card';
 import { spacing, mq, fontSize } from 'src/theme';
 
 type Featured = {
   featured?: boolean;
 };
 
-const FeatureCard = styled(CardBase)<Featured>(
+const FeatureCard = styled(CardButtonBase)<Featured>(
   () => ({
     border: 'none',
     padding: '0',

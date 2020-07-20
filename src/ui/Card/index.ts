@@ -5,10 +5,11 @@ import CardContent from './CardContent';
 import CardHeader from './CardHeader';
 import {
   CardBase,
+  CardButtonBase,
   Badge,
   CardContentCell,
   CardContentRow,
-  CardContentTable
+  CardContentTable,
 } from './StyledCardComponents';
 
 export {
@@ -22,5 +23,6 @@ export {
   CardContentTable,
   CardContentRow,
   CardContentCell,
-  CardContext
+  CardContext,
+  CardButtonBase,
 };

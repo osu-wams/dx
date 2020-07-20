@@ -145,14 +145,14 @@ const Training = () => {
             <FeatureCardGrid id="trainingResults" aria-live="polite" aria-atomic="true">
               {filteredTrainings.map((t) => (
                 <FeatureCard
-                  as="button"
-                  style={{ cursor: 'pointer' }}
                   key={t.id}
                   featured={t.featured}
                   onClick={() => {
                     toggleTraining(t);
                     Event('training', 'training opened', t.title);
                   }}
+                  whileHover={{ y: -4 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   {t.featured && t.image && <img src={t.image} alt="" />}
                   {t.featured && !t.image && <img src={placeholderImage} alt="" />}
