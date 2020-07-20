@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Router, Location, RouteComponentProps } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components/macro';
-import posed, { PoseGroup } from 'react-pose';
+import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
 import { InitialAppContext, IAppContext, AppContext } from './contexts/app-context';
 import Header from './ui/Header';
@@ -35,11 +35,6 @@ const PageGridWrapper = styled.div`
   background-color: ${({ theme }) => theme.mainGrid.background};
   width: 100%;
 `;
-
-const RouteContainer = posed(PageGridWrapper)({
-  enter: { opacity: 1, delay: 100, beforeChildren: true },
-  exit: { opacity: 0 },
-});
 
 interface AppProps {
   containerElement: HTMLElement;
@@ -107,10 +102,11 @@ const App = (props: AppProps) => {
         <ContentWrapper>
           <Location>
             {({ location }) => (
-              <PoseGroup>
+              <PageGridWrapper key={location.key}>
                 {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                <RouteContainer key={location.key}>
-                  <Router location={location} className="router-styles">
+
+                <AnimatePresence exitBeforeEnter>
+                  <Router location={location} key={location.key} className="router-styles">
                     <RouterPage path="/" pageComponent={<Dashboard />} />
                     <RouterPage path="profile" pageComponent={<Profile />} />
                     <RouterPage path="academics/*" pageComponent={<Academics />} />
@@ -123,8 +119,8 @@ const App = (props: AppProps) => {
                     )}
                     <RouterPage default pageComponent={<PageNotFound />} />
                   </Router>
-                </RouteContainer>
-              </PoseGroup>
+                </AnimatePresence>
+              </PageGridWrapper>
             )}
           </Location>
         </ContentWrapper>
