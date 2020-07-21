@@ -485,6 +485,7 @@ declare module 'styled-components/macro' {
         color: string;
         item: {
           background: string;
+          border: string;
           header: {
             color: string;
           };

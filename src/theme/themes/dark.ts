@@ -18,6 +18,7 @@ const warn = Color['luminance-300'];
 const info = Color['stratosphere-300'];
 const success = Color['pine-400'];
 const dropdownDetail = Color['neutral-800'];
+const listItemDetail = Color['neutral-800'];
 const mainGridBackground = neutral100;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
@@ -517,6 +518,7 @@ export const dark: ThemeConfiguration = {
       color: neutral700,
       item: {
         background: Color.transparent,
+        border: listItemDetail,
         header: {
           color: neutral700,
         },
