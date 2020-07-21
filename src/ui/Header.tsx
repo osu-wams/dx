@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styled from 'styled-components/macro';
 import { Link } from '@reach/router';
@@ -14,8 +14,9 @@ import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { BetaBadge } from './Badge';
-import { AppContext } from 'src/contexts/app-context';
 import { arrayIncludes } from 'src/util/helpers';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -78,8 +79,10 @@ const Logo = styled.img`
  * @param user the currently logged in user
  */
 const campusLogo = (user: Types.User) => {
-  const { campusCode } = usersCampus(user);
   const osu = 'Oregon State University';
+  if (!user) return { image: logo, alt: osu };
+
+  const { campusCode } = usersCampus(user);
   if (arrayIncludes(CAMPUS_CODES.ecampus, campusCode)) {
     return { image: ecampusLogo, alt: `${osu} Ecampus` };
   }
@@ -89,7 +92,7 @@ const campusLogo = (user: Types.User) => {
   return { image: logo, alt: osu };
 };
 
-const mainTitle = (user) => {
+const mainTitle = (user: Types.User) => {
   let title = 'Student';
   if (!user) return title;
   if (UserUtil.getAffiliation(user) === User.AFFILIATIONS.employee) {
@@ -99,7 +102,7 @@ const mainTitle = (user) => {
 };
 
 const Header = () => {
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const title = mainTitle(user.data);
   const { image, alt } = campusLogo(user.data);
   return (

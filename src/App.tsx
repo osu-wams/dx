@@ -17,9 +17,12 @@ import Training from './pages/Training';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { useUser } from '@osu-wams/hooks';
-import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
-import { themesLookup, defaultTheme } from './theme/themes';
+import { useInfoButtons } from '@osu-wams/hooks';
+import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
+import { userState, themeState } from './state/application';
+import { useRecoilState } from 'recoil';
+import { Types } from '@osu-wams/lib';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -44,32 +47,35 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
   props.pageComponent;
 
 const App = (props: AppProps) => {
-  const user = useUser();
+  const [user, setUser] = useRecoilState<Types.UserState>(userState);
+  const [theme, setTheme] = useRecoilState<string>(themeState);
+  const userHook = useUser();
   const infoButtons = useInfoButtons();
-  const appVersions = useAppVersions(InitialAppContext.appVersions);
-  const [theme, setTheme] = useState<string>(defaultTheme);
   const [appContext, setAppContext] = useState<IAppContext>({
     ...InitialAppContext,
-    setTheme,
   });
   const containerElementRef = useRef(props.containerElement);
+
+  useEffect(() => {
+    if (!userHook.loading && userHook.data !== user.data) {
+      setUser(userHook);
+      setTheme(user.data?.theme ?? theme);
+    }
+    if (!userHook.loading && !userHook.error) {
+      containerElementRef.current.style.opacity = '1';
+    }
+  }, [userHook.data, userHook.loading, userHook.error, theme]);
 
   /* eslint-disable react-hooks/exhaustive-deps  */
   useEffect(() => {
     setAppContext((previous) => ({
       ...previous,
-      user: user,
+      user,
       infoButtonData: infoButtons.data,
-      appVersions: appVersions.data,
-      selectedTheme: user.data?.theme ?? theme,
     }));
+  }, [user.data, infoButtons.data]);
 
-    setTheme(user.data?.theme ?? theme);
-
-    if (!user.loading && !user.error) {
-      containerElementRef.current.style.opacity = '1';
-    }
-
+  useEffect(() => {
     // Manage focus styles on keyboard navigable elements.
     //   - Add focus styles if tab used to navigate.
     //   - Start listening for clicks to remove focus styles.
@@ -91,7 +97,7 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data]);
+  }, []);
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>

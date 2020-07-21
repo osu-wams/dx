@@ -12,8 +12,10 @@ import { fontSize, borderRadius, breakpoints } from 'src/theme';
 import Icon from './Icon';
 import Url from 'src/util/externalUrls.data';
 import Masquerade from 'src/features/Masquerade';
-import { User } from '@osu-wams/hooks';
-import { AppContext } from 'src/contexts/app-context';
+import { User, useAppVersions } from '@osu-wams/hooks';
+import { InitialAppContext } from 'src/contexts/app-context';
+import { useRecoilValue } from 'recoil';
+import { userState } from 'src/state/application';
 
 const { GROUPS } = User;
 
@@ -75,11 +77,11 @@ const FooterDeployedContent = styled.span`
 `;
 
 const Footer = () => {
-  const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
+  const user = useRecoilValue(userState);
   const {
-    user,
-    appVersions: { serverVersion, appVersion },
-  } = useContext(AppContext);
+    data: { serverVersion, appVersion },
+  } = useAppVersions(InitialAppContext.appVersions);
+  const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
   const themeContext = useContext(ThemeContext);
   const toggleMasqueradeDialog = () => setShowMasqueradeDialog(!showMasqueradeDialog);
 
@@ -141,7 +143,7 @@ const Footer = () => {
           >
             Copyright
           </a>
-          &copy; 2019 Oregon State University <br />
+          &copy; {new Date().getFullYear()} Oregon State University <br />
           <a
             href="https://oregonstate.edu/official-web-disclaimer"
             onClick={() => Event('footer', 'Disclaimer link')}
