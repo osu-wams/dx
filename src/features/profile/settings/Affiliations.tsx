@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components/macro';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { fontSize } from 'src/theme';
-import { AppContext } from 'src/contexts/app-context';
+import { userState } from 'src/state/application';
+import { useRecoilState } from 'recoil';
 
 const { postSettings, usersSettings, settingIsOverridden } = User;
 
@@ -17,7 +18,7 @@ const Label = styled.span`
 `;
 
 export const SwitchesGroup = () => {
-  const { user } = useContext(AppContext);
+  const [user, setUser] = useRecoilState(userState);
   const [state, setState] = useState<{
     firstYear: boolean;
     graduate: boolean;
@@ -29,9 +30,9 @@ export const SwitchesGroup = () => {
       if (user.data.audienceOverride && Object.keys(user.data.audienceOverride).length) {
         const { firstYear, graduate, international } = user.data.audienceOverride;
         setState({
-          firstYear,
-          graduate,
-          international,
+          firstYear: firstYear ?? false,
+          graduate: graduate ?? false,
+          international: international ?? false,
         });
       } else {
         setState({
@@ -49,7 +50,7 @@ export const SwitchesGroup = () => {
     settings.audienceOverride![name] = checked;
 
     postSettings({ audienceOverride: settings.audienceOverride }).then((d) => {
-      user.setUser({
+      setUser({
         ...user,
         data: { ...user.data, ...settings },
       });

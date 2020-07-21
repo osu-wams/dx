@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
@@ -9,10 +9,10 @@ import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
-
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
-import { AppContext } from 'src/contexts/app-context';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
+import { userState } from 'src/state/application';
+import { useRecoilState } from 'recoil';
 
 /**
  * Upcoming Assignments Card
@@ -20,7 +20,7 @@ import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
-  const { user } = useContext(AppContext);
+  const [user, setUser] = useRecoilState(userState);
   const { data, isLoading } = usePlannerItems({
     enabled: user.isCanvasOptIn,
     retry: false,
@@ -32,14 +32,12 @@ const PlannerItems = () => {
       const {
         response: { status },
       } = err as any;
-      if (status === 403) {
-        if (user.setUser && user.isCanvasOptIn) {
-          user.setUser((prevUser) => ({
-            ...prevUser,
-            isCanvasOptIn: false,
-            data: { ...prevUser.data, isCanvasOptIn: false },
-          }));
-        }
+      if (status === 403 && user.isCanvasOptIn) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          isCanvasOptIn: false,
+          data: { ...prevUser.data, isCanvasOptIn: false },
+        }));
       }
     },
   });

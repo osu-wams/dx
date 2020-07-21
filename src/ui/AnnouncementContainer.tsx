@@ -1,11 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import EventCard from './EventCard';
 import { Title } from 'src/ui/PageTitle';
 import { User } from '@osu-wams/hooks';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
-import { AppContext } from 'src/contexts/app-context';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const { hasAudience, getAffiliation } = User;
 
@@ -24,7 +25,7 @@ const AnnouncementContainerWrapper = styled.div`
 
 const AnnouncementContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const announcements = useAnnouncements(page);
   const { hasAffiliation } = Announcements;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
@@ -12,15 +12,16 @@ import { Resources as hooksResources, useCategories, useResources, User } from '
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { activeFavoriteResources } from 'src/features/resources/resources-utils';
-import { AppContext } from 'src/contexts/app-context';
 import { Event } from 'src/util/gaTracking';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const { defaultCategoryName } = hooksResources;
 const { hasAudience, getAffiliation } = User;
 
 // Resources Page with components to filter, search and favorite resources
 const Resources = () => {
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const [activeCategory, setActiveCategory] = useState<string>(getInitialCategory());
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 250);
@@ -51,7 +52,7 @@ const Resources = () => {
       if (name === 'all') return resources;
 
       // Skips categories and filters based on user favorite preferences
-      if (name === 'favorites') {
+      if (name === 'favorites' && user.data.favoriteResources) {
         return activeFavoriteResources(user.data.favoriteResources, resources);
       }
 

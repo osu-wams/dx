@@ -52,9 +52,13 @@ const App = (props: AppProps) => {
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
   const userHook = useUser();
   const infoButtons = useInfoButtons();
+
+  /* eslint-disable */
+  // @ts-ignore TODO strip this out and replace
   const [appContext, setAppContext] = useState<IAppContext>({
     ...InitialAppContext,
   });
+  /* eslint-enable */
   const containerElementRef = useRef(props.containerElement);
 
   /* eslint-disable react-hooks/exhaustive-deps  */
@@ -73,13 +77,6 @@ const App = (props: AppProps) => {
       containerElementRef.current.style.opacity = '1';
     }
   }, [userHook.data, userHook.loading, userHook.error, theme]);
-
-  useEffect(() => {
-    setAppContext((previous) => ({
-      ...previous,
-      user,
-    }));
-  }, [user.data]);
 
   useEffect(() => {
     // Manage focus styles on keyboard navigable elements.

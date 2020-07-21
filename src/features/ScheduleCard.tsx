@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -13,7 +13,8 @@ import {
 import { format } from '../util/helpers';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
-import { AppContext } from 'src/contexts/app-context';
+import { userState } from 'src/state/application';
+import { useRecoilState } from 'recoil';
 
 /**
  * Course Schedule Card
@@ -21,7 +22,7 @@ import { AppContext } from 'src/contexts/app-context';
  * Displays courses for the next 5 days, filterable by day.
  */
 const ScheduleCard = () => {
-  const { user } = useContext(AppContext);
+  const [user, setUser] = useRecoilState(userState);
   const plannerItems = usePlannerItems({
     enabled: user.isCanvasOptIn,
     retry: false,
@@ -33,14 +34,12 @@ const ScheduleCard = () => {
       const {
         response: { status },
       } = err as any;
-      if (status === 403) {
-        if (user.setUser && user.isCanvasOptIn) {
-          user.setUser((prevUser) => ({
-            ...prevUser,
-            isCanvasOptIn: false,
-            data: { ...prevUser.data, isCanvasOptIn: false },
-          }));
-        }
+      if (user.isCanvasOptIn && status === 403) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          isCanvasOptIn: false,
+          data: { ...prevUser.data, isCanvasOptIn: false },
+        }));
       }
     },
   });
