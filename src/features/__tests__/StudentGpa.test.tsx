@@ -4,11 +4,11 @@ import StudentGpa from '../academic-overview/StudentGpa';
 import { Student } from '@osu-wams/hooks';
 
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
-const { gpaInitialState } = Student.Gpa;
 const mockUseStudentGpa = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread on object
     ...jest.requireActual('@osu-wams/hooks'),
     useGpa: () => mockUseStudentGpa(),
   };
@@ -38,7 +38,7 @@ describe('<StudentGpa />', () => {
   });
 
   it('should return appropriate text when data is empty', () => {
-    mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: gpaInitialState });
+    mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: [] });
     const { getByText } = render(<StudentGpa />);
     const element = getByText('You must first complete a term to have a GPA.');
     expect(element).toBeInTheDocument();

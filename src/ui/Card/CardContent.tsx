@@ -22,7 +22,7 @@ const CardContent = ({ ...props }) => {
 
 const CardContentWrapper = styled.div<ICollapse>(
   ({ flush }) => ({
-    padding: flush ? 0 : spacing.default,
+    padding: flush ? 0 : `${spacing.default} ${spacing.default} 0 ${spacing.default}`,
     overflow: 'hidden',
   }),
   ({ collapsed, collapsible }) =>

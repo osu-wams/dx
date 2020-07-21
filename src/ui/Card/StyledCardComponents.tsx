@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
-import { borderRadius, spacing, breakpoints } from 'src/theme';
+import { motion } from 'framer-motion';
+import { borderRadius, spacing, mq } from 'src/theme';
 
 interface IBadge {
   fg?: string;
@@ -10,18 +11,33 @@ interface ICardContentRow {
   borderless?: boolean;
 }
 
-const CardBase = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: ${borderRadius[16]};
-  box-shadow: ${({ theme }) => theme.ui.card.boxShadow};
-  background-color: ${({ theme }) => theme.ui.card.background};
-  overflow: hidden;
-  margin-bottom: ${spacing.mobile};
-  @media (min-width: ${breakpoints.small}) {
-    margin-bottom: ${spacing.desktop};
-  }
-`;
+const CardBase = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  borderRadius: borderRadius[16],
+  overflow: 'hidden',
+  marginBottom: spacing.mobile,
+  boxShadow: theme.ui.card.boxShadow,
+  backgroundColor: theme.ui.card.background,
+  [mq.small]: {
+    marginBottom: spacing.desktop,
+  },
+}));
+
+// Duplicates CardBase with motion to add animations
+const CardButtonBase = styled(motion.button)(({ theme }) => ({
+  cursor: 'pointer',
+  display: 'flex',
+  flexDirection: 'column',
+  borderRadius: borderRadius[16],
+  overflow: 'hidden',
+  marginBottom: spacing.mobile,
+  boxShadow: theme.ui.card.boxShadow,
+  backgroundColor: theme.ui.card.background,
+  [mq.small]: {
+    marginBottom: spacing.desktop,
+  },
+}));
 
 const Badge = styled.div<IBadge>`
   height: 32px;
@@ -68,4 +84,4 @@ const CardContentCell = styled.div`
     border-left: 1px solid ${({ theme }) => theme.ui.card.contentCell.borderLeft};
   }
 `;
-export { CardBase, Badge, CardContentCell, CardContentRow, CardContentTable };
+export { CardBase, CardButtonBase, Badge, CardContentCell, CardContentRow, CardContentTable };
