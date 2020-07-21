@@ -59,7 +59,6 @@ const App = (props: AppProps) => {
 
   /* eslint-disable react-hooks/exhaustive-deps  */
   useEffect(() => {
-    console.log(infoButtons.data);
     if (infoButtons.data !== infoButtonData) {
       setInfoButtonData(infoButtons.data);
     }
