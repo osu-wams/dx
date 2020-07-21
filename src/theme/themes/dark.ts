@@ -383,10 +383,10 @@ export const dark: ThemeConfiguration = {
       },
       custom: {
         background: componentBackground,
-        selectedBackground: neutral550,
-        border: neutral300,
-        color: buttonSecondary,
-        selectedColor: buttonPrimary,
+        selectedBackground: primary,
+        border: primary,
+        color: primary,
+        selectedColor: Color.white,
       },
       info: {
         background: Color.transparent,
@@ -575,14 +575,14 @@ export const dark: ThemeConfiguration = {
     },
     search: {
       input: {
-        color: neutral200,
+        color: neutral550,
         background: componentBackground,
         border: {
           color: neutral200,
         },
       },
       icon: {
-        color: neutral200,
+        color: neutral400,
       },
     },
     subNav: {
