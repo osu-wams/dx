@@ -15,7 +15,7 @@ const bodyBackground = neutral200;
 const primary = Color['orange-400'];
 const alert = Color['lava-400'];
 const warn = Color['luminance-300'];
-const info = Color['stratosphere-400'];
+const info = Color['stratosphere-300'];
 const success = Color['pine-400'];
 const dropdownDetail = Color['neutral-800'];
 const mainGridBackground = neutral100;
@@ -368,7 +368,7 @@ export const dark: ThemeConfiguration = {
         color: neutral700,
       },
       icon: {
-        color: iconSecondary,
+        color: iconPrimary,
       },
     },
   },
