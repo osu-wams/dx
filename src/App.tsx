@@ -20,7 +20,7 @@ import { useUser } from '@osu-wams/hooks';
 import { useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
-import { userState, themeState } from './state/application';
+import { userState, themeState, infoButtonState } from './state/application';
 import { useRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 
@@ -49,12 +49,21 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
 const App = (props: AppProps) => {
   const [user, setUser] = useRecoilState<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
+  const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
   const userHook = useUser();
   const infoButtons = useInfoButtons();
   const [appContext, setAppContext] = useState<IAppContext>({
     ...InitialAppContext,
   });
   const containerElementRef = useRef(props.containerElement);
+
+  /* eslint-disable react-hooks/exhaustive-deps  */
+  useEffect(() => {
+    console.log(infoButtons.data);
+    if (infoButtons.data !== infoButtonData) {
+      setInfoButtonData(infoButtons.data);
+    }
+  }, [infoButtons.data]);
 
   useEffect(() => {
     if (!userHook.loading && userHook.data !== user.data) {
@@ -66,14 +75,12 @@ const App = (props: AppProps) => {
     }
   }, [userHook.data, userHook.loading, userHook.error, theme]);
 
-  /* eslint-disable react-hooks/exhaustive-deps  */
   useEffect(() => {
     setAppContext((previous) => ({
       ...previous,
       user,
-      infoButtonData: infoButtons.data,
     }));
-  }, [user.data, infoButtons.data]);
+  }, [user.data]);
 
   useEffect(() => {
     // Manage focus styles on keyboard navigable elements.

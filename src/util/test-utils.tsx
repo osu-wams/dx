@@ -43,11 +43,6 @@ export const mockAdminUser = {
 
 export const mockAppContext: IAppContext = {
   user: authUser,
-  infoButtonData: [{ id: 'info-button-id', content: 'Info button content', title: 'Title' }],
-  appVersions: {
-    serverVersion: 'server-test-123',
-    appVersion: 'client-test-123',
-  },
 };
 
 const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {

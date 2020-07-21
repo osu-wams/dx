@@ -13,7 +13,7 @@ const { postSettings, usersSettings } = User;
 
 export const RadioButtonsGroup = () => {
   const themes = Object.keys(themesLookup);
-  const [_, setTheme] = useRecoilState(themeState);
+  const [_, setTheme] = useRecoilState(themeState); // eslint-disable-line
   const [user, setUser] = useRecoilState(userState);
   const [value, setValue] = useState(defaultTheme);
 

@@ -12,3 +12,8 @@ export const themeState = atom<string>({
   key: 'themeState',
   default: defaultTheme,
 });
+
+export const infoButtonState = atom<{ content: string; id: string; title: string }[]>({
+  key: 'infoButtonState',
+  default: [],
+});

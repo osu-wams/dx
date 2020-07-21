@@ -13,7 +13,6 @@ import Icon from './Icon';
 import Url from 'src/util/externalUrls.data';
 import Masquerade from 'src/features/Masquerade';
 import { User, useAppVersions } from '@osu-wams/hooks';
-import { InitialAppContext } from 'src/contexts/app-context';
 import { useRecoilValue } from 'recoil';
 import { userState } from 'src/state/application';
 
@@ -80,7 +79,7 @@ const Footer = () => {
   const user = useRecoilValue(userState);
   const {
     data: { serverVersion, appVersion },
-  } = useAppVersions(InitialAppContext.appVersions);
+  } = useAppVersions({ serverVersion: '', appVersion: '' });
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
   const themeContext = useContext(ThemeContext);
   const toggleMasqueradeDialog = () => setShowMasqueradeDialog(!showMasqueradeDialog);
