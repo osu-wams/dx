@@ -34,9 +34,8 @@ const ProfileMenu = () => {
     }
     // Checks for any employee affiliation (finds Student Employees too)
     if (
-      user.data?.primaryAffiliation === AFFILIATIONS.student
-      // TODO: add updated @osu-wams/lib with affiliations included
-      // && user.data?.affiliations?.includes(AFFILIATIONS.employee)
+      user.data?.primaryAffiliation === AFFILIATIONS.student &&
+      user.data?.affiliations.includes(AFFILIATIONS.employee)
     ) {
       setStudentEmployee(true);
     }
