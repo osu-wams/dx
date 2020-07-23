@@ -24,6 +24,9 @@ const PlannerItems = () => {
   const { data, isLoading } = usePlannerItems({
     enabled: user.isCanvasOptIn,
     retry: false,
+    // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,
+    // a 403 is returned to the frontend, the user isCanvasOptIn should be changed to false and the hook disabled, causing the
+    // component to render the "Authorize Canvas" button giving the user the ability to opt-in again.
     // @ts-error never read
     onError: (err) => {
       const {
