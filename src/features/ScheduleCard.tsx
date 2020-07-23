@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { useAcademicCalendarEvents, useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
+import { useAcademicCalendarEvents, useCourseSchedule } from '@osu-wams/hooks';
 import { getNextFiveDays, coursesOnDay, startDate } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
@@ -13,8 +13,8 @@ import {
 import { format } from '../util/helpers';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
-import { userState } from 'src/state/application';
-import { useRecoilState } from 'recoil';
+import { userState, plannerItemState } from 'src/state/application';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 /**
  * Course Schedule Card
@@ -23,26 +23,7 @@ import { useRecoilState } from 'recoil';
  */
 const ScheduleCard = () => {
   const [user, setUser] = useRecoilState(userState);
-  const plannerItems = usePlannerItems({
-    enabled: user.isCanvasOptIn,
-    retry: false,
-    // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,
-    // a 403 is returned to the frontend, the user isCanvasOptIn should be changed to false and the hook disabled, causing the
-    // component to render the "Authorize Canvas" button giving the user the ability to opt-in again.
-    // @ts-ignore never read
-    onError: (err) => {
-      const {
-        response: { status },
-      } = err as any;
-      if (user.isCanvasOptIn && status === 403) {
-        setUser((prevUser) => ({
-          ...prevUser,
-          isCanvasOptIn: false,
-          data: { ...prevUser.data, isCanvasOptIn: false },
-        }));
-      }
-    },
-  });
+  const plannerItems = useRecoilValue(plannerItemState);
   const courses = useCourseSchedule();
   const nextFiveDays = getNextFiveDays(startDate());
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);

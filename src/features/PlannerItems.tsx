@@ -11,8 +11,8 @@ import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
-import { userState } from 'src/state/application';
-import { useRecoilState } from 'recoil';
+import { userState, plannerItemState } from 'src/state/application';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 /**
  * Upcoming Assignments Card
@@ -21,26 +21,7 @@ import { useRecoilState } from 'recoil';
  */
 const PlannerItems = () => {
   const [user, setUser] = useRecoilState(userState);
-  const { data, isLoading } = usePlannerItems({
-    enabled: user.isCanvasOptIn,
-    retry: false,
-    // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,
-    // a 403 is returned to the frontend, the user isCanvasOptIn should be changed to false and the hook disabled, causing the
-    // component to render the "Authorize Canvas" button giving the user the ability to opt-in again.
-    // @ts-error never read
-    onError: (err) => {
-      const {
-        response: { status },
-      } = err as any;
-      if (status === 403 && user.isCanvasOptIn) {
-        setUser((prevUser) => ({
-          ...prevUser,
-          isCanvasOptIn: false,
-          data: { ...prevUser.data, isCanvasOptIn: false },
-        }));
-      }
-    },
-  });
+  const { data, isLoading } = useRecoilValue(plannerItemState);
   const courses = useCourseSchedule();
 
   const listOrEmpty = () => {

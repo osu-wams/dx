@@ -16,11 +16,11 @@ import PageNotFound from './pages/PageNotFound';
 import Training from './pages/Training';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useUser } from '@osu-wams/hooks';
+import { useUser, usePlannerItems } from '@osu-wams/hooks';
 import { useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
-import { userState, themeState, infoButtonState } from './state/application';
+import { userState, themeState, infoButtonState, plannerItemState } from './state/application';
 import { useRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 
@@ -50,8 +50,29 @@ const App = (props: AppProps) => {
   const [user, setUser] = useRecoilState<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
+  const [plannerItemData, setPlannerItemData] = useRecoilState(plannerItemState);
   const userHook = useUser();
   const infoButtons = useInfoButtons();
+  const plannerItems = usePlannerItems({
+    enabled: user.isCanvasOptIn,
+    retry: false,
+    // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,
+    // a 403 is returned to the frontend, the user isCanvasOptIn should be changed to false and the hook disabled, causing the
+    // component to render the "Authorize Canvas" button giving the user the ability to opt-in again.
+    // @ts-ignore never read
+    onError: (err) => {
+      const {
+        response: { status },
+      } = err as any;
+      if (user.isCanvasOptIn && status === 403) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          isCanvasOptIn: false,
+          data: { ...prevUser.data, isCanvasOptIn: false },
+        }));
+      }
+    },
+  });
 
   /* eslint-disable */
   // @ts-ignore TODO strip this out and replace
@@ -62,6 +83,16 @@ const App = (props: AppProps) => {
   const containerElementRef = useRef(props.containerElement);
 
   /* eslint-disable react-hooks/exhaustive-deps  */
+  useEffect(() => {
+    if (plannerItems.data && plannerItems.data !== plannerItemData.data) {
+      setPlannerItemData({
+        data: plannerItems.data,
+        isLoading: plannerItems.isLoading,
+        error: plannerItems.error,
+      });
+    }
+  }, [plannerItems.data]);
+
   useEffect(() => {
     if (infoButtons.data !== infoButtonData) {
       setInfoButtonData(infoButtons.data);
