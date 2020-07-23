@@ -22,13 +22,24 @@ import { AppContext } from 'src/contexts/app-context';
  */
 const ScheduleCard = () => {
   const { user } = useContext(AppContext);
-  const plannerItems = usePlannerItems(() => {
-    if (user.setUser && user.isCanvasOptIn) {
-      user.setUser((prevUser) => ({
-        ...prevUser,
-        data: { ...prevUser.data, isCanvasOptIn: false },
-      }));
-    }
+  const plannerItems = usePlannerItems({
+    enabled: user.isCanvasOptIn,
+    retry: false,
+    // @ts-ignore never read
+    onError: (err) => {
+      const {
+        response: { status },
+      } = err as any;
+      if (status === 403) {
+        if (user.setUser && user.isCanvasOptIn) {
+          user.setUser((prevUser) => ({
+            ...prevUser,
+            isCanvasOptIn: false,
+            data: { ...prevUser.data, isCanvasOptIn: false },
+          }));
+        }
+      }
+    },
   });
   const courses = useCourseSchedule();
   const nextFiveDays = getNextFiveDays(startDate());
@@ -94,9 +105,9 @@ const ScheduleCard = () => {
           setSelectedDay={setSelectedDay}
           daysWithEvents={daysWithEvents}
         />
-        {plannerItems.loading && <Skeleton count={4} />}
+        {plannerItems.isLoading && <Skeleton count={4} />}
         <div aria-live="assertive" aria-atomic="true">
-          {!courses.loading && !plannerItems.loading && (
+          {!courses.loading && !plannerItems.isLoading && (
             <ScheduleCardAssignments
               courseList={courses.data}
               selectedPlannerItems={selectedPlannerItems}
