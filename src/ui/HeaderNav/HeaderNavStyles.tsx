@@ -34,7 +34,6 @@ const HeaderNavList = styled(MenuList)`
     color: ${({ theme }) => theme.header.headerNavList.color};
     min-width: 15rem;
     padding: ${spacing.medium} 0;
-    border: none;
     border: 1px solid ${({theme}) => theme.header.headerNavList.border.color};
     box-shadow: ${shadows[1]};
     [data-reach-menu-item] {
