@@ -54,7 +54,6 @@ describe('Favorite Resources Card', () => {
     );
     userEvent.click(removeBilling);
     expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
-    expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 });
