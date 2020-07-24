@@ -1,14 +1,16 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, mockAppContext } from 'src/util/test-utils';
+import { render } from 'src/util/test-utils';
 import { Student } from '@osu-wams/hooks';
 import Courses from '../Courses';
 import { mockGAEvent } from 'src/setupTests';
 import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
+import { infoButtonState } from 'src/state/application';
 
 const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
 const mockUseCourseSchedule = jest.fn();
+const mockInitialState = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
@@ -129,6 +131,34 @@ test('Footer has a Link that when clicked and Google Analytics Event fired', asy
   userEvent.click(CanvasLink);
 
   expect(mockGAEvent).toHaveBeenCalledTimes(1);
+});
+
+describe('with an InfoButton in the CardFooter', () => {
+  it('does not display the button when the infoButtonData is missing it', async () => {
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [{ content: '...', id: 'some-other-id', title: '...' }],
+      },
+    ]);
+    const { queryByTestId } = render(<Courses />, { initialStates: mockInitialState() });
+    const element = queryByTestId('current-courses');
+    expect(element).toBeNull();
+  });
+
+  it('displays the button when the infoButtonData is included', async () => {
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [
+          { content: 'Info Button Content', id: 'current-courses', title: 'Info Button Title' },
+        ],
+      },
+    ]);
+    const { getByTestId } = render(<Courses />, { initialStates: mockInitialState() });
+    const element = getByTestId('current-courses');
+    expect(element).toBeInTheDocument();
+  });
 });
 
 describe('without courses present', () => {

@@ -1,16 +1,19 @@
 import React from 'react';
 import user from '@testing-library/user-event';
-import { render, mockAppContext, authUser } from 'src/util/test-utils';
+import { render, authUser } from 'src/util/test-utils';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from 'src/setupTests';
 import { Student } from '@osu-wams/hooks';
+import { infoButtonState } from 'src/state/application';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockUsePlannerItems = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
+const mockInitialState = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
     usePlannerItems: () => mockUsePlannerItems(),
   };
@@ -54,31 +57,33 @@ describe('with an InfoButton in the CardFooter', () => {
     mockUsePlannerItems.mockReturnValueOnce(mockPlannerItems);
   });
 
-  const validIinfoButtonId = 'canvas';
-
   it('does not display the button when the infoButtonData is missing it', async () => {
-    const testAppContext = {
-      ...mockAppContext,
-      infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }],
-    };
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [{ content: '...', id: 'some-other-id', title: '...' }],
+      },
+    ]);
     const { queryByTestId, findByText } = render(<PlannerItems />, {
-      appContext: testAppContext,
+      initialStates: mockInitialState(),
     });
     const noAssignments = await findByText(/You have no upcoming Canvas assignments/);
     expect(noAssignments).toBeInTheDocument();
 
-    const element = queryByTestId(validIinfoButtonId);
+    const element = queryByTestId('canvas');
     expect(element).not.toBeInTheDocument();
   });
 
   it('displays the button when the infoButtonData is included', async () => {
-    const testAppContext = {
-      ...mockAppContext,
-      infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }],
-    };
-    const { findByTestId } = render(<PlannerItems />, { appContext: testAppContext });
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [{ content: 'Info Button Content', id: 'canvas', title: 'Info Button Title' }],
+      },
+    ]);
+    const { findByTestId } = render(<PlannerItems />, { initialStates: mockInitialState() });
 
-    const element = await findByTestId(validIinfoButtonId);
+    const element = await findByTestId('canvas');
     expect(element).toBeInTheDocument();
   });
 });
