@@ -45,11 +45,19 @@ export const mockAppContext: IAppContext = {
   user: authUser,
 };
 
-const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
+const renderWithUserContext = (
+  ui,
+  { user = authUser, initialStates = new Array(), ...options } = {}
+) => {
   mockAppContext.user = user;
   const Wrapper = (props) => {
     return (
-      <RecoilRoot initializeState={(snap) => snap.set(userState, user)}>
+      <RecoilRoot
+        initializeState={(snap) => {
+          snap.set(userState, user);
+          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+        }}
+      >
         <ThemeProvider theme={themesLookup[defaultTheme]}>
           <AppContext.Provider value={mockAppContext} {...props} />
         </ThemeProvider>
@@ -59,10 +67,18 @@ const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
 };
 
-const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = {}) => {
+const renderWithAppContext = (
+  ui,
+  { appContext = mockAppContext, initialStates = new Array(), ...options } = {}
+) => {
   const Wrapper = (props) => {
     return (
-      <RecoilRoot initializeState={(snap) => snap.set(userState, authUser)}>
+      <RecoilRoot
+        initializeState={(snap) => {
+          snap.set(userState, authUser);
+          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+        }}
+      >
         <ThemeProvider theme={themesLookup[defaultTheme]}>
           <AppContext.Provider value={appContext} {...props} />
         </ThemeProvider>
@@ -74,13 +90,24 @@ const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = 
 
 const renderWithAllContexts = (
   ui,
-  { appContext = mockAppContext, user = authUser, isDesktop = false, ...options } = {}
+  {
+    appContext = mockAppContext,
+    user = authUser,
+    isDesktop = false,
+    initialStates = new Array(),
+    ...options
+  } = {}
 ) => {
   appContext.user = user;
 
   const Wrapper = (props) => {
     return (
-      <RecoilRoot initializeState={(snap) => snap.set(userState, user)}>
+      <RecoilRoot
+        initializeState={(snap) => {
+          snap.set(userState, user);
+          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+        }}
+      >
         <ThemeProvider theme={themesLookup[defaultTheme]}>
           <AppContext.Provider value={appContext} {...props}>
             <ResponsiveContext.Provider value={{ width: isDesktop ? desktop : mobile }} {...props}>
