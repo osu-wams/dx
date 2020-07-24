@@ -286,7 +286,8 @@ describe('<Resources />', () => {
       // checking for el to avoid element might be null error
       el ? userEvent.click(el) : null;
       expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
-      expect(mockGAEvent).toHaveBeenCalledTimes(2);
+      expect(authUser.refreshFavorites).toHaveBeenCalledTimes(1);
+      expect(mockGAEvent).toHaveBeenCalledTimes(1);
     });
 
     it('should not find the favorites category button when user does not have favorites resources', async () => {
