@@ -286,7 +286,6 @@ describe('<Resources />', () => {
       // checking for el to avoid element might be null error
       el ? userEvent.click(el) : null;
       expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
-      expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
       expect(mockGAEvent).toHaveBeenCalledTimes(2);
     });
 
