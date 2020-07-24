@@ -15,6 +15,7 @@ import {
 const mockGetMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
 const mockUseAppVersions = jest.fn();
+const mockUser = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
@@ -32,6 +33,13 @@ beforeEach(() => {
   Storage.prototype.clear = jest.fn();
   mockGetMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo' });
   mockPostMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo Post' });
+  mockUser.mockReturnValue(authUser);
+  mockUseAppVersions.mockReturnValue({
+    data: {
+      serverVersion: 'server-test-123',
+      appVersion: 'client-test-123',
+    },
+  });
 });
 
 it('Masquerade link is present for administrators and they can open and close the modal', async () => {
@@ -73,8 +81,8 @@ it('As an administrator, I can click "masquerade" and trigger the api calls', as
 });
 
 it('Links to be present and tracked in Google Analytics', async () => {
-  const { getByText } = renderWithUserContext(<Footer />);
-
+  const { getByText } = renderWithUserContext(<Footer />, { user: mockUser() });
+  //Profile icon click - this text is visually hidden
   const supportLink = getByText('Get Support');
   const feedbackLink = getByText('Give Feedback');
   const copyrightLink = getByText('Copyright');
