@@ -22,7 +22,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
  * Displays courses for the next 5 days, filterable by day.
  */
 const ScheduleCard = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const [user] = useRecoilState(userState);
   const plannerItems = useRecoilValue(plannerItemState);
   const courses = useCourseSchedule();
   const nextFiveDays = getNextFiveDays(startDate());

@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from '../ui/List';
-import { useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
+import { useCourseSchedule } from '@osu-wams/hooks';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
@@ -20,7 +20,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const [user] = useRecoilState(userState);
   const { data, isLoading } = useRecoilValue(plannerItemState);
   const courses = useCourseSchedule();
 
