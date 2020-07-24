@@ -14,10 +14,13 @@ import {
 
 const mockGetMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
+const mockUseAppVersions = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
+    useAppVersions: () => mockUseAppVersions(),
     Masquerade: {
       getMasqueradeUser: () => mockGetMasqueradeUser(),
       postMasqueradeUser: () => mockPostMasqueradeUser(),
@@ -87,7 +90,13 @@ it('Links to be present and tracked in Google Analytics', async () => {
   await waitFor(() => expect(mockGAEvent).toHaveBeenCalledTimes(5));
 });
 
-it('Admin can see the Application deployed versions', async () => {
+it('Application deployed versions', async () => {
+  mockUseAppVersions.mockReturnValue({
+    data: {
+      serverVersion: 'server-test-123',
+      appVersion: 'client-test-123',
+    },
+  });
   const { getByText } = renderWithAllContexts(<Footer />, { user: mockAdminUser });
 
   const appText = getByText('server-test-123');
