@@ -100,10 +100,10 @@ const ListItemFlex = styled(ListItem)`
     ${ListItemHeader},
     ${ListItemContent} {
       color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
-      border: 1px solid ${({ theme }) => theme.ui.list.item.border};
     }
     box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
     transform: translateY(-4px);
+    border: 1px solid ${({ theme }) => theme.ui.list.item.border};
   }
 `;
 
