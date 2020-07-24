@@ -4,31 +4,35 @@ import { render, authUser } from 'src/util/test-utils';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from 'src/setupTests';
 import { Student } from '@osu-wams/hooks';
-import { infoButtonState } from 'src/state/application';
+import { infoButtonState, plannerItemState } from 'src/state/application';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
-const mockUsePlannerItems = jest.fn();
-const mockNoData = { data: [], loading: false, error: false };
 const mockInitialState = jest.fn();
-
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    // @ts-ignore spread object
-    ...jest.requireActual('@osu-wams/hooks'),
-    usePlannerItems: () => mockUsePlannerItems(),
-  };
-});
+const mockUser = jest.fn();
 
 describe('<PlannerItems />', () => {
+  // Set mock function result before running any tests
+  beforeEach(() => {
+    mockInitialState.mockReturnValue([
+      {
+        state: plannerItemState,
+        value: {
+          data: mockPlannerItems.data,
+          isLoading: false,
+          error: null,
+        },
+      },
+    ]);
+  });
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
-    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
-    const { findByText } = render(<PlannerItems />);
+    const { findByText } = render(<PlannerItems />, { initialStates: mockInitialState() });
     await findByText('Week 5 Lab Discussion');
   });
 
   it('should track analytics when footer link and assignment is clicked', async () => {
-    mockUsePlannerItems.mockReturnValue(mockPlannerItems);
-    const { getByText, findByText } = render(<PlannerItems />);
+    const { getByText, findByText } = render(<PlannerItems />, {
+      initialStates: mockInitialState(),
+    });
 
     // Planner Item
     await findByText('Week 5 Lab Discussion');
@@ -44,21 +48,36 @@ describe('<PlannerItems />', () => {
   });
 
   it('should find empty state if our promise returns empty', async () => {
-    mockUsePlannerItems.mockReturnValue(mockNoData);
-    const { findByText } = render(<PlannerItems />);
+    mockInitialState.mockReturnValue([
+      {
+        state: plannerItemState,
+        value: {
+          data: [],
+          isLoading: false,
+          error: null,
+        },
+      },
+    ]);
+
+    const { findByText } = render(<PlannerItems />, {
+      initialStates: mockInitialState(),
+    });
     const noAssignments = await findByText(/You have no upcoming Canvas assignments/);
     expect(noAssignments).toBeInTheDocument();
   });
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  // Set mock function result before running any tests
-  beforeEach(() => {
-    mockUsePlannerItems.mockReturnValueOnce(mockPlannerItems);
-  });
-
   it('does not display the button when the infoButtonData is missing it', async () => {
     mockInitialState.mockReturnValue([
+      {
+        state: plannerItemState,
+        value: {
+          data: [],
+          isLoading: false,
+          error: null,
+        },
+      },
       {
         state: infoButtonState,
         value: [{ content: '...', id: 'some-other-id', title: '...' }],
@@ -77,6 +96,14 @@ describe('with an InfoButton in the CardFooter', () => {
   it('displays the button when the infoButtonData is included', async () => {
     mockInitialState.mockReturnValue([
       {
+        state: plannerItemState,
+        value: {
+          data: mockPlannerItems.data,
+          isLoading: false,
+          error: null,
+        },
+      },
+      {
         state: infoButtonState,
         value: [{ content: 'Info Button Content', id: 'canvas', title: 'Info Button Title' }],
       },
@@ -90,12 +117,29 @@ describe('with an InfoButton in the CardFooter', () => {
 
 describe('with a user who has not opted-in Canvas', () => {
   it('hides the badge count and shows the authorization call to action', async () => {
-    mockUsePlannerItems.mockReturnValueOnce(mockPlannerItems);
-    const mockUser = authUser;
-    mockUser.data.isCanvasOptIn = false;
-    mockUser.isCanvasOptIn = false;
+    mockInitialState.mockReturnValue([
+      {
+        state: plannerItemState,
+        value: {
+          data: mockPlannerItems.data,
+          isLoading: false,
+          error: null,
+        },
+      },
+    ]);
+    mockUser.mockReturnValue({
+      ...authUser,
+      data: {
+        ...authUser.data,
+        isCanvasOptIn: false,
+      },
+      isCanvasOptIn: false,
+    });
 
-    const { queryByTestId, findAllByText } = render(<PlannerItems />, { user: mockUser });
+    const { queryByTestId, findAllByText } = render(<PlannerItems />, {
+      user: mockUser(),
+      initialStates: mockInitialState(),
+    });
 
     const element = queryByTestId('icon-counter');
     expect(element).not.toBeInTheDocument();
