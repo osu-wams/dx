@@ -26,8 +26,8 @@ const secondGridBorderTop = neutral300;
 const componentBackground = Color.black;
 const dropdownBackground = Color.black;
 const linkForeground = Color.white;
-const iconPrimary = Color.white;
-const iconSecondary = Color.black;
+const iconPrimary = Color["neutral-400"];
+const iconSecondary = Color.white;
 const buttonPrimary = Color.white;
 const buttonSecondary = Color.black;
 const titlePrimary = Color.white;
@@ -269,7 +269,7 @@ export const dark: ThemeConfiguration = {
     canvas: {
       authorizeButton: {
         background: info,
-        color: iconPrimary,
+        color: iconSecondary,
       },
     },
     finances: {
@@ -481,7 +481,7 @@ export const dark: ThemeConfiguration = {
     },
     icon: {
       background: Color.transparent,
-      color: neutral400,
+      color: iconPrimary,
       counter: {
         background: primary,
         color: titlePrimary,
