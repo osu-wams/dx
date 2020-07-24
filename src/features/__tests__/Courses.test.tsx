@@ -12,6 +12,7 @@ const mockUseCourseSchedule = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
     useCourseSchedule: () => mockUseCourseSchedule(),
   };
@@ -128,26 +129,6 @@ test('Footer has a Link that when clicked and Google Analytics Event fired', asy
   userEvent.click(CanvasLink);
 
   expect(mockGAEvent).toHaveBeenCalledTimes(1);
-});
-
-describe('with an InfoButton in the CardFooter', () => {
-  const validIinfoButtonId = 'current-courses';
-
-  it('does not display the button when the infoButtonData is missing it', async () => {
-    mockAppContext.infoButtonData = [{ id: 'invalid-id', content: 'content', title: 'title' }];
-    const { queryByTestId } = render(<Courses />, { appContext: mockAppContext });
-    const element = queryByTestId(validIinfoButtonId);
-    expect(element).toBeNull();
-  });
-
-  it('displays the button when the infoButtonData is included', async () => {
-    mockAppContext.infoButtonData = [
-      { id: validIinfoButtonId, content: 'content', title: 'title' },
-    ];
-    const { getByTestId } = render(<Courses />, { appContext: mockAppContext });
-    const element = getByTestId(validIinfoButtonId);
-    expect(element).toBeInTheDocument();
-  });
 });
 
 describe('without courses present', () => {
