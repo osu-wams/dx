@@ -44,8 +44,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
   // Adds or removes a resource from FavoriteResource and refreshes the cache to get new list
   const updateFavorites = async () => {
     await Resources.postFavorite(resource.id, !favs, 0);
-    // TODO: add refreshing favorites call
-    // await user.refreshFavorites();
+    if (user.refreshFavorites) await user.refreshFavorites();
     Event('favorite-resource', resource.id, favoriteLabelText(favs));
   };
 
