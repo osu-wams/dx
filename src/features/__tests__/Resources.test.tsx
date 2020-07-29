@@ -1,11 +1,18 @@
 import React from 'react';
-import { waitFor, screen } from '@testing-library/react';
-import { render, authUser, mockEmployeeUser, renderWithUserContext } from 'src/util/test-utils';
+import { waitFor, screen, act } from '@testing-library/react';
+import {
+  render,
+  authUser,
+  mockEmployeeUser,
+  renderWithUserContext,
+  mockGradUser,
+} from 'src/util/test-utils';
 import { Context as ResponsiveContext } from 'react-responsive';
 import userEvent from '@testing-library/user-event';
 import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
+import { resourceUsage } from 'process';
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
@@ -303,6 +310,34 @@ describe('<Resources />', () => {
     });
   });
 
+  describe('Graduate Student', () => {
+    beforeEach(() => {
+      const { all } = renderResources(mockGradUser);
+      userEvent.click(all);
+    });
+
+    it('finds 3 total results that apply to them', async () => {
+      expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
+    });
+
+    it('finds "Graduate Student Only" item but not "Student Jobs" since that is tagged undegraduate', async () => {
+      expect(await screen.findByText(/Graduate Student Only/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Student Jobs/i)).toBeNull();
+    });
+  });
+
+  describe('Undergraduate Student', () => {
+    beforeEach(() => {
+      const { all } = renderResources();
+      userEvent.click(all);
+    });
+
+    it('finds "Student Jobs" since that is tagged undegraduate, but not "Graduate Student Only"', async () => {
+      expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Graduate Student Only/i)).toBeNull();
+    });
+  });
+
   describe('with student and employee affiliations', () => {
     it('finds Listservs as an employee but not Student Jobs, since that is student only', async () => {
       mockDefaultCategory.mockReturnValue('All');
@@ -351,10 +386,10 @@ describe('<Resources />', () => {
     it('cannot find "Listservs" when searching as a Student, but finds "Student Jobs"', async () => {
       const { searchInput } = renderResources();
 
-      await userEvent.type(searchInput, 'student job');
+      userEvent.type(searchInput, 'student job');
       expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
 
-      await userEvent.type(searchInput, 'Listservs');
+      userEvent.type(searchInput, 'Listservs');
       expect(screen.queryByText(/Listservs/)).toBeNull();
     });
 
@@ -372,12 +407,11 @@ describe('<Resources />', () => {
 
     it('finds the 3 student resources and cannot find Listservs employee resource', async () => {
       const { all } = renderResources();
-
-      await userEvent.click(all);
+      userEvent.click(all);
       expect(all).toHaveClass('selected');
-      expect(await screen.findByText(/found 3 results/)).toBeInTheDocument();
-      expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
-      expect(screen.queryByText(/Listservs/)).toBeNull();
+      expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
+      expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Listservs/i)).toBeNull();
     });
   });
 });

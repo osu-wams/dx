@@ -5,78 +5,7 @@ import userEvent from '@testing-library/user-event';
 import Training from 'src/pages/Training';
 import { mockGAEvent } from 'src/setupTests';
 import { Trainings } from '@osu-wams/hooks';
-const trainings = {
-  status: 'success',
-  isIdle: false,
-  isLoading: false,
-  isSuccess: true,
-  isError: false,
-  error: null,
-  isFetching: false,
-  failureCount: 0,
-  refetch: () => {},
-  data: [
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
-      title: 'Play nice with others',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>In this basic course, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['Employee Engagement'],
-      type: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e82',
-      title: 'Testo Training',
-      image: '',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body:
-        "<p>Training Body, you'll learn how to play nice with others. Activities include sharing toys, using your words, and being patient.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: true,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['Leadership'],
-      type: 'Professional Learning Community',
-      websiteUri: '',
-      websiteTitle: '',
-    },
-    {
-      audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-      id: '71560c56-dabb-48e1-a663-64da7a7bb6e83',
-      title: 'Super Testo 2',
-      image: 'https://data-stage.dx.oregonstate.edu/sites/default/files/2019-11/WellnessNook.jpg',
-      contact: 'noreply@oregonstate.edu',
-      cost: true,
-      body: "<p>Super Body, you'll learn how to play nice with others.</p>",
-      department: 'Daycare',
-      duration: '1hr',
-      featured: false,
-      frequency: 'Daily',
-      prerequisites: 'None',
-      courseDesign: 'Blended',
-      tags: ['Employee Engagement', 'Leadership'],
-      type: 'Professional Learning Community',
-      websiteUri: 'https://oregonstate.edu',
-      websiteTitle: '',
-    },
-  ],
-};
+
 const mockUseTrainings = jest.fn();
 const mockUseTrainingTags = jest.fn();
 const mockTrainings = Trainings.mockTrainings;
@@ -116,7 +45,7 @@ const renderTrainings = () => {
 describe('<Training />', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
-    mockUseTrainings.mockReturnValue(trainings);
+    mockUseTrainings.mockReturnValue(mockTrainings);
     mockUseTrainingTags.mockReturnValue(mockTrainingTags);
   });
 
@@ -255,7 +184,7 @@ describe('<Training />', () => {
 
       searchInput.value = ''; // clear search term
 
-      userEvent.type(searchInput, 'Super Testo 2');
+      userEvent.type(searchInput, 'Super Testo');
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
       expect(await screen.findByText('Super Testo 2')).toBeInTheDocument();
     });
@@ -264,7 +193,7 @@ describe('<Training />', () => {
   describe('Modal interactions', () => {
     it('Can open and close the Training Details modal', async () => {
       renderTrainings();
-      userEvent.click(screen.getByText('Super Testo 2'));
+      userEvent.click(await screen.findByText(/Super Testo 2/i));
 
       const close = await screen.findByRole('button', { name: /close/i });
       expect(close).toBeInTheDocument();
