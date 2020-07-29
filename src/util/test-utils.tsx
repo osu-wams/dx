@@ -33,6 +33,12 @@ export const authUser = {
   refreshFavorites: jest.fn(),
 };
 
+// The default undegraduate user with canvas opted in
+export const mockAdminUser = {
+  ...mockUser.userAdmin,
+  refreshFavorites: jest.fn(),
+};
+
 export const mockAppContext: IAppContext = {
   user: authUser,
   infoButtonData: [{ id: 'info-button-id', content: 'Info button content', title: 'Title' }],
