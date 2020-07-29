@@ -3,43 +3,33 @@ import { ThemeProvider } from 'styled-components';
 import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
-import { User } from '@osu-wams/hooks';
+import { User } from '@osu-wams/lib';
 import { mobile, desktop } from 'src/util/useMediaQuery';
 import { AppContext, IAppContext } from 'src/contexts/app-context';
 
-const { AFFILIATIONS } = User;
-export const mockUser = User.mockUser.user;
-export const authUserAudienceOverride = User.mockUser.userAudienceOverride;
-export const authUserClassification = User.mockUser.userClassification;
+const { mockUser } = User;
+export const authUserAudienceOverride = mockUser.userAudienceOverride;
+
+export const mockGradUser = {
+  ...mockUser.userGraduate,
+  refreshFavorites: jest.fn(),
+};
+
+export const authUserClassification = mockUser.userClassification;
 
 export const mockEmployeeUser = {
-  ...mockUser,
-  data: {
-    ...mockUser.data,
-    email: 'testo@oregonstate.edu',
-    affiliations: [AFFILIATIONS.employee, 'member'],
-    groups: [],
-    isAdmin: false,
-    isCanvasOptIn: false,
-    primaryAffiliation: AFFILIATIONS.employee,
-    classification: {},
-    audienceOverride: {},
-    favoriteResources: [],
-  },
+  ...mockUser.userEmployee,
   refreshFavorites: jest.fn(),
 };
 
 export const mockStudentEmployeeUser = {
-  ...mockUser,
-  data: {
-    ...mockUser.data,
-    affiliations: [AFFILIATIONS.employee, 'member'],
-  },
+  ...mockUser.userStudentEmployee,
   refreshFavorites: jest.fn(),
 };
 
+// The default undegraduate user with canvas opted in
 export const authUser = {
-  ...mockUser,
+  ...mockUser.user,
   refreshFavorites: jest.fn(),
 };
 
@@ -83,7 +73,7 @@ const renderWithAllContexts = (
   { appContext = mockAppContext, user = authUser, isDesktop = false, ...options } = {}
 ) => {
   appContext.user = user;
-  // console.log(user);
+
   const Wrapper = (props) => {
     return (
       <ThemeProvider theme={themesLookup[defaultTheme]}>
