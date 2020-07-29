@@ -54,7 +54,7 @@ export const dark: ThemeConfiguration = {
         color: primary,
       },
       menuItem: {
-        borderTop: neutral500,
+        borderTop: Color.transparent,
       },
       menuItemSelected: {
         color: bodyText,
