@@ -21,6 +21,7 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
   const themeContext = useContext(ThemeContext);
 
   const parseIconUrl = (iconUrl:string) => {
+    if (!iconUrl) return '';
     return 'fal.' + iconUrl
       .substring(icon.lastIndexOf('/')+1)
       .split('.')[0]
