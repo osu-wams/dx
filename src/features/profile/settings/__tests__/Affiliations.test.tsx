@@ -27,23 +27,6 @@ describe('<Affiliations />', () => {
     expect(queryAllByText('(Override)')).toHaveLength(0);
   });
 
-  it('renders with test data as overridden settings', async () => {
-    mockUser.mockReturnValue({
-      ...authUser,
-      data: {
-        ...authUser.data,
-        audienceOverride: {
-          ...authUser.data.audienceOverride,
-          firstYear: false,
-          graduate: false,
-          international: false,
-        },
-      },
-    });
-    const { queryAllByText } = render(<Affiliations />, { user: mockUser() });
-    expect(queryAllByText('(Override)')).toHaveLength(3);
-  });
-
   it('submits updates when a change is fired', async () => {
     mockPostSettings.mockReturnValue(Promise.resolve());
     render(<Affiliations />);
