@@ -21,22 +21,36 @@ import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
  */
 const PlannerItems = () => {
   const { user } = useContext(AppContext);
-  const { data, loading } = usePlannerItems(() => {
-    if (user.setUser && user.isCanvasOptIn) {
-      user.setUser((prevUser) => ({
-        ...prevUser,
-        data: { ...prevUser.data, isCanvasOptIn: false },
-      }));
-    }
+  const { data, isLoading } = usePlannerItems({
+    enabled: user.isCanvasOptIn,
+    retry: false,
+    // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,
+    // a 403 is returned to the frontend, the user isCanvasOptIn should be changed to false and the hook disabled, causing the
+    // component to render the "Authorize Canvas" button giving the user the ability to opt-in again.
+    // @ts-error never read
+    onError: (err) => {
+      const {
+        response: { status },
+      } = err as any;
+      if (status === 403) {
+        if (user.setUser && user.isCanvasOptIn) {
+          user.setUser((prevUser) => ({
+            ...prevUser,
+            isCanvasOptIn: false,
+            data: { ...prevUser.data, isCanvasOptIn: false },
+          }));
+        }
+      }
+    },
   });
   const courses = useCourseSchedule();
 
   const listOrEmpty = () => {
-    if (loading) {
+    if (isLoading) {
       return <Skeleton count={5} />;
     }
 
-    if (!courses.loading && data.length && user.isCanvasOptIn === true) {
+    if (!courses.loading && data && data.length && user.isCanvasOptIn === true) {
       return (
         <List>
           <CanvasPlannerItems data={data} courses={courses.data} />
@@ -56,7 +70,7 @@ const PlannerItems = () => {
     <Card>
       <CardHeader
         title="Canvas"
-        badge={<CardIcon icon={faFileEdit} count={user.isCanvasOptIn ? data.length : undefined} />}
+        badge={<CardIcon icon={faFileEdit} count={user.isCanvasOptIn ? data?.length : undefined} />}
       />
       <CardContent>
         {/* If not authorized to canvas, we display the link to have them authorize */}
