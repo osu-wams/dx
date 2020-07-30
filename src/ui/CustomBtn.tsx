@@ -1,6 +1,8 @@
-import React, { FC, InputHTMLAttributes } from 'react';
+import React, { FC, InputHTMLAttributes, useContext } from 'react';
 import styled from 'styled-components/macro';
-import { fontSize } from '../theme';
+import { fontSize, Color } from '../theme';
+import { IconLookup } from 'src/features/resources/resources-utils';
+import { ThemeContext } from 'styled-components/macro';
 
 interface BtnProps {
   text: string;
@@ -15,14 +17,29 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
   icon,
   clickHandler,
   selected,
-}) => (
-  <StyledBtn id={id} onClick={clickHandler} className={selected ? 'selected' : ''}>
-    <CustomLabel htmlFor={id} selected={selected}>
-      {icon && <Icon src={icon} alt="" />}
-      {text}
-    </CustomLabel>
-  </StyledBtn>
-);
+}) => {
+  const themeContext = useContext(ThemeContext);
+
+  const parseIconUrl = (iconUrl:string) => {
+    return 'fal.' + iconUrl
+      .substring(icon.lastIndexOf('/')+1)
+      .split('.')[0]
+  }
+
+  return (
+    <StyledBtn id={id} onClick={clickHandler} className={selected ? 'selected' : ''}>
+      <CustomLabel htmlFor={id} selected={selected}>
+        {IconLookup(
+          parseIconUrl(icon),
+          selected
+            ? themeContext.ui.button.custom.selectedColor
+            : themeContext.ui.button.custom.color
+        )}
+        <LabelText>{text}</LabelText>
+      </CustomLabel>
+    </StyledBtn>
+  );
+};
 
 const StyledBtn = styled.button`
   border: 0;
@@ -56,5 +73,11 @@ const CustomLabel = styled.label<{ selected: boolean }>(
       color: theme.ui.button.custom.selectedColor,
     }
 );
+
+const LabelText = styled.p`
+  margin: 0px;
+  padding: 0px;
+  margin-left: 6px;
+`
 
 export default CustomBtn;
