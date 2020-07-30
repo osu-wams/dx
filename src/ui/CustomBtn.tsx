@@ -1,6 +1,6 @@
 import React, { FC, InputHTMLAttributes, useContext } from 'react';
 import styled from 'styled-components/macro';
-import { fontSize, Color } from '../theme';
+import { fontSize } from '../theme';
 import { IconLookup } from 'src/features/resources/resources-utils';
 import { ThemeContext } from 'styled-components/macro';
 
@@ -47,11 +47,6 @@ const StyledBtn = styled.button`
   background: none;
   /* iOS adds large paddings around buttons, we are reducing it */
   padding: 0 0.4rem 0.4rem;
-`;
-
-const Icon = styled.img`
-  height: 12px;
-  margin-right: 6px;
 `;
 
 const CustomLabel = styled.label<{ selected: boolean }>(

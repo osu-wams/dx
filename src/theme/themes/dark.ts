@@ -382,10 +382,10 @@ export const dark: ThemeConfiguration = {
         color: buttonSecondary,
       },
       custom: {
-        background: componentBackground,
-        selectedBackground: primary,
-        border: primary,
-        color: primary,
+        background: Color.black,
+        selectedBackground: neutral500,
+        border: neutral700,
+        color: neutral700,
         selectedColor: Color.white,
       },
       info: {
