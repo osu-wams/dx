@@ -6,6 +6,9 @@ import { Event } from 'src/util/gaTracking';
 import logo from 'src/assets/osu-logo.svg';
 import ecampusLogo from 'src/assets/osu-ecampus.svg';
 import cascadesLogo from 'src/assets/osu-cascades.svg';
+import logoDark from 'src/assets/osu-logo-dark.svg';
+import ecampusLogoDark from 'src/assets/osu-ecampus-dark.svg';
+import cascadesLogoDark from 'src/assets/osu-cascades-dark.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { HeaderNav } from './HeaderNav';
@@ -77,16 +80,24 @@ const Logo = styled.img`
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
  */
-const campusLogo = (user: Types.User) => {
+const campusLogo = (user: Types.User, selectedTheme: string) => {
   const { campusCode } = usersCampus(user);
   const osu = 'Oregon State University';
+  const isDarkMode = selectedTheme === 'dark';
   if (arrayIncludes(CAMPUS_CODES.ecampus, campusCode)) {
-    return { image: ecampusLogo, alt: `${osu} Ecampus` };
+    return {
+      image: isDarkMode ? ecampusLogoDark : ecampusLogo,
+      alt: `${osu} Ecampus`,
+    };
   }
   if (arrayIncludes(CAMPUS_CODES.bend, campusCode)) {
-    return { image: cascadesLogo, alt: `${osu} Cascades` };
+    return {
+      image: isDarkMode ? cascadesLogoDark : cascadesLogo,
+      alt: `${osu} Cascades`,
+    };
   }
-  return { image: logo, alt: osu };
+
+  return { image: isDarkMode ? logoDark : logo, alt: osu };
 };
 
 const mainTitle = (user) => {
@@ -99,9 +110,9 @@ const mainTitle = (user) => {
 };
 
 const Header = () => {
-  const { user } = useContext(AppContext);
+  const { user, selectedTheme } = useContext(AppContext);
   const title = mainTitle(user.data);
-  const { image, alt } = campusLogo(user.data);
+  const { image, alt } = campusLogo(user.data, selectedTheme);
   return (
     <>
       <HeaderWrapper>
