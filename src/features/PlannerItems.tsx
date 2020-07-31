@@ -12,7 +12,7 @@ import assignment from '../assets/assignment.svg';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
 import { userState, plannerItemState } from 'src/state/application';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 /**
  * Upcoming Assignments Card
@@ -20,7 +20,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
-  const [user] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
   const { data, isLoading } = useRecoilValue(plannerItemState);
   const courses = useCourseSchedule();
 
