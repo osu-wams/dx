@@ -1,16 +1,19 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, mockAppContext } from 'src/util/test-utils';
+import { render } from 'src/util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
+import { infoButtonState } from 'src/state/application';
 
 const { resourcesCardData } = Resources.mockResources;
+const mockInitialState = jest.fn();
 
 const mockUseResourcesByQueue = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
     useResourcesByQueue: () => mockUseResourcesByQueue(),
   };
@@ -75,31 +78,39 @@ describe('<ResourcesCard />', () => {
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  const validIinfoButtonId = 'financial-resources';
-
   beforeEach(() => {
     mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
   });
 
   test('does not display the button when the infoButtonData is missing it', async () => {
-    mockAppContext.infoButtonData = [{ id: 'invalid-id', content: 'content', title: 'title' }];
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [{ content: '...', id: 'some-other-id', title: '...' }],
+      },
+    ]);
     const { queryByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
-      appContext: mockAppContext,
+      initialStates: mockInitialState(),
     });
 
-    const element = queryByTestId(validIinfoButtonId);
+    const element = queryByTestId('financial-resources');
     expect(element).not.toBeInTheDocument();
   });
 
   test('displays the button when the infoButtonData is included', () => {
-    mockAppContext.infoButtonData = [
-      { id: validIinfoButtonId, content: 'content', title: 'title' },
-    ];
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [
+          { content: 'Info Button Content', id: 'financial-resources', title: 'Info Button Title' },
+        ],
+      },
+    ]);
     const { getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
-      appContext: mockAppContext,
+      initialStates: mockInitialState(),
     });
 
-    const element = getByTestId(validIinfoButtonId);
+    const element = getByTestId('financial-resources');
     expect(element).toBeInTheDocument();
   });
 });

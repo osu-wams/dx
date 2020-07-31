@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { faAnalytics } from '@fortawesome/pro-light-svg-icons';
 import {
   Card,
@@ -7,7 +7,7 @@ import {
   CardContentRow,
   CardContentCell,
   CardFooter,
-  CardIcon
+  CardIcon,
 } from '../ui/Card';
 import { AcademicStanding } from './academic-overview/AcademicStanding';
 import { StudentHolds } from './academic-overview/StudentHolds';
@@ -16,13 +16,14 @@ import { StudentEnrolledCredits } from './academic-overview/StudentEnrolledCredi
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
-import { AppContext } from 'src/contexts/app-context';
 import { User } from '@osu-wams/hooks';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const { isGraduate } = User;
 
 export const AcademicOverview = () => {
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
 
   return (
     <Card collapsing={false}>

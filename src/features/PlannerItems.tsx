@@ -1,18 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from '../ui/List';
-import { useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
+import { useCourseSchedule } from '@osu-wams/hooks';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
-
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
-import { AppContext } from 'src/contexts/app-context';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
+import { userState, plannerItemState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 /**
  * Upcoming Assignments Card
@@ -20,29 +20,8 @@ import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
  * Displays upcoming assignments from Canvas.
  */
 const PlannerItems = () => {
-  const { user } = useContext(AppContext);
-  const { data, isLoading } = usePlannerItems({
-    enabled: user.isCanvasOptIn,
-    retry: false,
-    // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,
-    // a 403 is returned to the frontend, the user isCanvasOptIn should be changed to false and the hook disabled, causing the
-    // component to render the "Authorize Canvas" button giving the user the ability to opt-in again.
-    // @ts-error never read
-    onError: (err) => {
-      const {
-        response: { status },
-      } = err as any;
-      if (status === 403) {
-        if (user.setUser && user.isCanvasOptIn) {
-          user.setUser((prevUser) => ({
-            ...prevUser,
-            isCanvasOptIn: false,
-            data: { ...prevUser.data, isCanvasOptIn: false },
-          }));
-        }
-      }
-    },
-  });
+  const user = useRecoilValue(userState);
+  const { data, isLoading } = useRecoilValue(plannerItemState);
   const courses = useCourseSchedule();
 
   const listOrEmpty = () => {

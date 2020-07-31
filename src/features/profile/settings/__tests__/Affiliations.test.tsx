@@ -4,8 +4,8 @@ import userEvent from '@testing-library/user-event';
 import { render, authUser } from 'src/util/test-utils';
 import Affiliations from '../Affiliations';
 
-const mockPostSettings = jest.fn();
 const mockUser = jest.fn();
+const mockPostSettings = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   const original = jest.requireActual('@osu-wams/hooks');
   return {
@@ -18,9 +18,13 @@ jest.mock('@osu-wams/hooks', () => {
 });
 
 describe('<Affiliations />', () => {
+  afterEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    mockPostSettings.mockReturnValue(Promise.resolve());
+  });
   it('renders with default test data settings', async () => {
-    render(<Affiliations />);
-    expect(screen.queryAllByText('(Override)')).toHaveLength(0);
+    const { queryAllByText } = render(<Affiliations />);
+    expect(queryAllByText('(Override)')).toHaveLength(0);
   });
 
   it('submits updates when a change is fired', async () => {

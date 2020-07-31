@@ -9,6 +9,7 @@ import * as cache from './util/cache';
 import { Errors } from '@osu-wams/hooks';
 import idleTimer from './util/idleTimer';
 import cookieRefreshTimer from './util/cookieRefreshTimer';
+import { RecoilRoot } from 'recoil';
 
 const { postError, IGNORED_ERRORS } = Errors;
 
@@ -59,9 +60,11 @@ try {
   cookieRefreshTimer();
 
   ReactDOM.render(
-    <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
-      <App containerElement={applicationRoot} />
-    </ErrorBoundary>,
+    <RecoilRoot>
+      <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
+        <App containerElement={applicationRoot} />
+      </ErrorBoundary>
+    </RecoilRoot>,
     applicationRoot
   );
 } catch (e) {

@@ -6,19 +6,20 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Resources } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
-import { AppContext } from 'src/contexts/app-context';
 import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src/ui/List';
 import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
 import { TrendingEvent } from './GATrendingResource';
 import { Event } from 'src/util/gaTracking';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 // Adds all font awesome icons so we can call them by name (coming from Drupal API)
 library.add(fal, fab);
 
 const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: any }) => {
   const themeContext = useContext(ThemeContext);
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const [favs, setFav] = useState(false);
 
   const isFavorite = (resId: string, favs: Types.FavoriteResource[]) => {
@@ -43,7 +44,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
   // Adds or removes a resource from FavoriteResource and refreshes the cache to get new list
   const updateFavorites = async () => {
     await Resources.postFavorite(resource.id, !favs, 0);
-    await user.refreshFavorites();
+    if (user.refreshFavorites) await user.refreshFavorites();
     Event('favorite-resource', resource.id, favoriteLabelText(favs));
   };
 

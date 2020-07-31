@@ -5,7 +5,8 @@ import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/lib';
 import { mobile, desktop } from 'src/util/useMediaQuery';
-import { AppContext, IAppContext } from 'src/contexts/app-context';
+import { RecoilRoot } from 'recoil';
+import { userState } from 'src/state/application';
 
 const { mockUser } = User;
 export const authUserAudienceOverride = mockUser.userAudienceOverride;
@@ -39,36 +40,36 @@ export const mockAdminUser = {
   refreshFavorites: jest.fn(),
 };
 
-export const mockAppContext: IAppContext = {
-  user: authUser,
-  infoButtonData: [{ id: 'info-button-id', content: 'Info button content', title: 'Title' }],
-  appVersions: {
-    serverVersion: 'server-test-123',
-    appVersion: 'client-test-123',
-  },
-  themes: Object.keys(themesLookup),
-  selectedTheme: 'light',
-  setTheme: () => {},
-};
-
-const renderWithUserContext = (ui, { user = authUser, ...options } = {}) => {
-  mockAppContext.user = user;
+const renderWithUserContext = (
+  ui,
+  { user = authUser, initialStates = new Array(), ...options } = {}
+) => {
   const Wrapper = (props) => {
     return (
-      <ThemeProvider theme={themesLookup[defaultTheme]}>
-        <AppContext.Provider value={mockAppContext} {...props} />
-      </ThemeProvider>
+      <RecoilRoot
+        initializeState={(snap) => {
+          snap.set(userState, user);
+          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+        }}
+      >
+        <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+      </RecoilRoot>
     );
   };
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
 };
 
-const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = {}) => {
+const renderWithAppContext = (ui, { initialStates = new Array(), ...options } = {}) => {
   const Wrapper = (props) => {
     return (
-      <ThemeProvider theme={themesLookup[defaultTheme]}>
-        <AppContext.Provider value={appContext} {...props} />
-      </ThemeProvider>
+      <RecoilRoot
+        initializeState={(snap) => {
+          snap.set(userState, authUser);
+          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+        }}
+      >
+        <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+      </RecoilRoot>
     );
   };
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
@@ -76,21 +77,20 @@ const renderWithAppContext = (ui, { appContext = mockAppContext, ...options } = 
 
 const renderWithAllContexts = (
   ui,
-  { appContext = mockAppContext, user = authUser, isDesktop = false, ...options } = {}
+  { user = authUser, isDesktop = false, initialStates = new Array(), ...options } = {}
 ) => {
-  appContext.user = user;
-
   const Wrapper = (props) => {
     return (
-      <ThemeProvider theme={themesLookup[defaultTheme]}>
-        <AppContext.Provider value={appContext} {...props}>
-          <ResponsiveContext.Provider value={{ width: isDesktop ? desktop : mobile }} {...props}>
-            <AppContext.Provider value={appContext} {...props}>
-              {props.children}
-            </AppContext.Provider>
-          </ResponsiveContext.Provider>
-        </AppContext.Provider>
-      </ThemeProvider>
+      <RecoilRoot
+        initializeState={(snap) => {
+          snap.set(userState, user);
+          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+        }}
+      >
+        <ThemeProvider theme={themesLookup[defaultTheme]}>
+          <ResponsiveContext.Provider value={{ width: isDesktop ? desktop : mobile }} {...props} />
+        </ThemeProvider>
+      </RecoilRoot>
     );
   };
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });

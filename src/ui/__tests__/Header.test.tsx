@@ -5,6 +5,8 @@ import {
   authUserClassification,
   mockEmployeeUser,
   authUserAudienceOverride,
+  authUser,
+  mockUser,
 } from 'src/util/test-utils';
 import Header from '../Header';
 import { mockGAEvent } from 'src/setupTests';
@@ -142,63 +144,113 @@ describe('Student mobile menu interactions', () => {
   });
 });
 
-describe('as a Corvallis user', () => {
-  it('renders the appropriate header logo', () => {
-    act(() => {
-      render(<Header />);
-      const appHeader = screen.getByTestId('app-header-logo');
-      expect(appHeader).toBeInTheDocument();
+describe('with a campus code', () => {
+  const mockUser = jest.fn();
+  afterEach(() => jest.clearAllMocks());
 
-      const src = appHeader.getAttribute('src');
-      expect(src).toEqual('osu-logo.svg');
-      expect(screen.getByRole('img', { name: 'Oregon State University' }));
+  describe('as a Corvallis user', () => {
+    it('renders the appropriate header logo', () => {
+      act(() => {
+        render(<Header />);
+        const appHeader = screen.getByTestId('app-header-logo');
+        expect(appHeader).toBeInTheDocument();
+
+        const src = appHeader.getAttribute('src');
+        expect(src).toEqual('osu-logo.svg');
+        expect(screen.getByRole('img', { name: 'Oregon State University' }));
+      });
+    });
+
+    it('renders the appropriate header logo with another campus code', async () => {
+      mockUser.mockReturnValue({
+        ...authUser,
+        data: {
+          ...authUser.data,
+          classification: {
+            ...authUser.data.classification,
+            attributes: {
+              ...authUser.data.classification.attributes,
+              campusCode: 'J',
+            },
+          },
+          audienceOverride: {
+            ...authUser.data.audienceOverride,
+            campusCode: 'J',
+          },
+        },
+      });
+      act(() => {
+        render(<Header />);
+
+        const appHeader = screen.getByTestId('app-header-logo');
+        expect(appHeader).toBeInTheDocument();
+        const src = appHeader.getAttribute('src');
+        expect(src).toEqual('osu-logo.svg');
+        expect(screen.getByRole('img', { name: 'Oregon State University' }));
+      });
     });
   });
 
-  it('renders the appropriate header logo with another campus code', async () => {
-    act(() => {
-      authUserClassification!.attributes!.campusCode = 'J';
-      authUserAudienceOverride.campusCode = 'J';
-      render(<Header />);
+  describe('as a Bend user', () => {
+    it('renders the appropriate header logo', async () => {
+      mockUser.mockReturnValue({
+        ...authUser,
+        data: {
+          ...authUser.data,
+          classification: {
+            ...authUser.data.classification,
+            attributes: {
+              ...authUser.data.classification.attributes,
+              campusCode: 'B',
+            },
+          },
+          audienceOverride: {
+            ...authUser.data.audienceOverride,
+            campusCode: 'B',
+          },
+        },
+      });
+      act(() => {
+        render(<Header />, { user: mockUser() });
 
-      const appHeader = screen.getByTestId('app-header-logo');
-      expect(appHeader).toBeInTheDocument();
-      const src = appHeader.getAttribute('src');
-      expect(src).toEqual('osu-logo.svg');
-      expect(screen.getByRole('img', { name: 'Oregon State University' }));
+        const appHeader = screen.getByTestId('app-header-logo');
+        expect(appHeader).toBeInTheDocument();
+        const src = appHeader.getAttribute('src');
+        expect(src).toEqual('osu-cascades.svg');
+        expect(screen.getByRole('img', { name: 'Oregon State University Cascades' }));
+      });
     });
   });
-});
 
-describe('as a Bend user', () => {
-  it('renders the appropriate header logo', async () => {
-    act(() => {
-      authUserClassification!.attributes!.campusCode = 'B';
-      authUserAudienceOverride.campusCode = 'B';
-      render(<Header />);
+  describe('as an Ecampus user', () => {
+    it('renders the appropriate header logo', async () => {
+      mockUser.mockReturnValue({
+        ...authUser,
+        data: {
+          ...authUser.data,
+          classification: {
+            ...authUser.data.classification,
+            attributes: {
+              ...authUser.data.classification.attributes,
+              campusCode: 'DSC',
+            },
+          },
+          audienceOverride: {
+            ...authUser.data.audienceOverride,
+            campusCode: 'DSC',
+          },
+        },
+      });
+      act(() => {
+        render(<Header />, { user: mockUser() });
 
-      const appHeader = screen.getByTestId('app-header-logo');
-      expect(appHeader).toBeInTheDocument();
-      const src = appHeader.getAttribute('src');
-      expect(src).toEqual('osu-cascades.svg');
-      expect(screen.getByRole('img', { name: 'Oregon State University Cascades' }));
-    });
-  });
-});
+        const appHeader = screen.getByTestId('app-header-logo');
+        expect(appHeader).toBeInTheDocument();
 
-describe('as an Ecampus user', () => {
-  it('renders the appropriate header logo', async () => {
-    act(() => {
-      authUserClassification!.attributes!.campusCode = 'DSC';
-      authUserAudienceOverride.campusCode = 'DSC';
-      render(<Header />);
-
-      const appHeader = screen.getByTestId('app-header-logo');
-      expect(appHeader).toBeInTheDocument();
-
-      const src = appHeader.getAttribute('src');
-      expect(src).toEqual('osu-ecampus.svg');
-      expect(screen.getByRole('img', { name: 'Oregon State University Ecampus' }));
+        const src = appHeader.getAttribute('src');
+        expect(src).toEqual('osu-ecampus.svg');
+        expect(screen.getByRole('img', { name: 'Oregon State University Ecampus' }));
+      });
     });
   });
 });
