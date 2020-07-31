@@ -1,17 +1,20 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, mockAppContext } from 'src/util/test-utils';
+import { render } from 'src/util/test-utils';
 import { Student } from '@osu-wams/hooks';
 import Courses from '../Courses';
 import { mockGAEvent } from 'src/setupTests';
 import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
+import { infoButtonState } from 'src/state/application';
 
 const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
 const mockUseCourseSchedule = jest.fn();
+const mockInitialState = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
     useCourseSchedule: () => mockUseCourseSchedule(),
   };
@@ -131,21 +134,29 @@ test('Footer has a Link that when clicked and Google Analytics Event fired', asy
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  const validIinfoButtonId = 'current-courses';
-
   it('does not display the button when the infoButtonData is missing it', async () => {
-    mockAppContext.infoButtonData = [{ id: 'invalid-id', content: 'content', title: 'title' }];
-    const { queryByTestId } = render(<Courses />, { appContext: mockAppContext });
-    const element = queryByTestId(validIinfoButtonId);
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [{ content: '...', id: 'some-other-id', title: '...' }],
+      },
+    ]);
+    const { queryByTestId } = render(<Courses />, { initialStates: mockInitialState() });
+    const element = queryByTestId('current-courses');
     expect(element).toBeNull();
   });
 
   it('displays the button when the infoButtonData is included', async () => {
-    mockAppContext.infoButtonData = [
-      { id: validIinfoButtonId, content: 'content', title: 'title' },
-    ];
-    const { getByTestId } = render(<Courses />, { appContext: mockAppContext });
-    const element = getByTestId(validIinfoButtonId);
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [
+          { content: 'Info Button Content', id: 'current-courses', title: 'Info Button Title' },
+        ],
+      },
+    ]);
+    const { getByTestId } = render(<Courses />, { initialStates: mockInitialState() });
+    const element = getByTestId('current-courses');
     expect(element).toBeInTheDocument();
   });
 });

@@ -14,9 +14,11 @@ const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
 const mockUseCourseSchedule = jest.fn();
 const mockHolds = Student.Holds.mockHolds;
 const mockUseHolds = jest.fn();
+const mockUser = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
     useAcademicStatus: () => mockUseAcademicStatus(),
     useCourseSchedule: () => mockUseCourseSchedule(),
@@ -53,7 +55,22 @@ describe('<Academic Overview />', () => {
   });
 
   it('Academic Overview has a footer that can be clicked to access My Degrees', async () => {
-    render(<AcademicOverview />);
+    mockUser.mockReturnValue({
+      ...authUser,
+      data: {
+        ...authUser.data,
+        classification: {
+          ...authUser.data.classification,
+          attributes: {
+            ...authUser.data.classification.attributes,
+            levelCode: '',
+          },
+        },
+        audienceOverride: {},
+      },
+    });
+
+    render(<AcademicOverview />, { user: mockUser() });
     const element = await screen.findByText('View more in MyDegrees');
     userEvent.click(element);
 

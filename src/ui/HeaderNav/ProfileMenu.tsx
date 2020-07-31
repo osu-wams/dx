@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, navigate } from '@reach/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -15,12 +15,13 @@ import { Event } from 'src/util/gaTracking';
 import { User } from '@osu-wams/hooks';
 import { Mobile, Desktop } from 'src/util/useMediaQuery';
 import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
-import { AppContext } from 'src/contexts/app-context';
+import { userState } from 'src/state/application';
+import { useRecoilState } from 'recoil';
 
 const { postSettings, usersSettings, AFFILIATIONS } = User;
 
 const ProfileMenu = () => {
-  const { user } = useContext(AppContext);
+  const [user, setUser] = useRecoilState(userState);
   const [toggledAffiliation, setToggledAffiliation] = useState(
     user.data?.primaryAffiliationOverride ?? ''
   );
@@ -34,7 +35,7 @@ const ProfileMenu = () => {
     // Checks for any employee affiliation (finds Student Employees too)
     if (
       user.data?.primaryAffiliation === AFFILIATIONS.student &&
-      user.data?.affiliations?.includes(AFFILIATIONS.employee)
+      user.data?.affiliations.includes(AFFILIATIONS.employee)
     ) {
       setStudentEmployee(true);
     }
@@ -45,7 +46,7 @@ const ProfileMenu = () => {
     settings.primaryAffiliationOverride = affiliationType;
 
     postSettings({ primaryAffiliationOverride: settings.primaryAffiliationOverride }).then((d) => {
-      user.setUser((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
+      setUser((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
       navigate('/');
     });
   };

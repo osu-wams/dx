@@ -6,12 +6,13 @@ import Theme from './settings/Theme';
 import Campus from './settings/Campus';
 import { ThemeProvider } from '@material-ui/core/styles';
 import getMUITheme from 'src/ui/MUITheme';
-import { AppContext } from 'src/contexts/app-context';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const Settings: FC = () => {
-  const { selectedTheme } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   return (
-    <ThemeProvider theme={getMUITheme(selectedTheme)}>
+    <ThemeProvider theme={getMUITheme(user.data.theme)}>
       <Card>
         <CardHeader title="Dashboard Settings" badge={<CardIcon icon={faUserCog} />} />
         <CardContent>

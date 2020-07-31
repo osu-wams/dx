@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Router, Location, RouteComponentProps } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
-import { InitialAppContext, IAppContext, AppContext } from './contexts/app-context';
 import Header from './ui/Header';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
@@ -16,10 +15,13 @@ import PageNotFound from './pages/PageNotFound';
 import Training from './pages/Training';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useUser } from '@osu-wams/hooks';
-import { useAppVersions, useInfoButtons } from '@osu-wams/hooks';
-import { themesLookup, defaultTheme } from './theme/themes';
+import { useUser, usePlannerItems } from '@osu-wams/hooks';
+import { useInfoButtons } from '@osu-wams/hooks';
+import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
+import { userState, themeState, infoButtonState, plannerItemState } from './state/application';
+import { useRecoilState } from 'recoil';
+import { Types } from '@osu-wams/lib';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -44,32 +46,63 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
   props.pageComponent;
 
 const App = (props: AppProps) => {
-  const user = useUser();
+  const [user, setUser] = useRecoilState<Types.UserState>(userState);
+  const [theme, setTheme] = useRecoilState<string>(themeState);
+  const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
+  const [plannerItemData, setPlannerItemData] = useRecoilState(plannerItemState);
+  const userHook = useUser();
   const infoButtons = useInfoButtons();
-  const appVersions = useAppVersions(InitialAppContext.appVersions);
-  const [theme, setTheme] = useState<string>(defaultTheme);
-  const [appContext, setAppContext] = useState<IAppContext>({
-    ...InitialAppContext,
-    setTheme,
+  const plannerItems = usePlannerItems({
+    enabled: user.isCanvasOptIn,
+    retry: false,
+    // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,
+    // a 403 is returned to the frontend, the user isCanvasOptIn should be changed to false and the hook disabled, causing the
+    // component to render the "Authorize Canvas" button giving the user the ability to opt-in again.
+    // @ts-ignore never read
+    onError: (err) => {
+      const {
+        response: { status },
+      } = err as any;
+      if (user.isCanvasOptIn && status === 403) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          isCanvasOptIn: false,
+          data: { ...prevUser.data, isCanvasOptIn: false },
+        }));
+      }
+    },
   });
+
   const containerElementRef = useRef(props.containerElement);
 
   /* eslint-disable react-hooks/exhaustive-deps  */
   useEffect(() => {
-    setAppContext((previous) => ({
-      ...previous,
-      user: user,
-      infoButtonData: infoButtons.data,
-      appVersions: appVersions.data,
-      selectedTheme: user.data?.theme ?? theme,
-    }));
+    if (plannerItems.data && plannerItems.data !== plannerItemData.data) {
+      setPlannerItemData({
+        data: plannerItems.data,
+        isLoading: plannerItems.isLoading,
+        error: plannerItems.error,
+      });
+    }
+  }, [plannerItems.data]);
 
-    setTheme(user.data?.theme ?? theme);
+  useEffect(() => {
+    if (infoButtons.data !== infoButtonData) {
+      setInfoButtonData(infoButtons.data);
+    }
+  }, [infoButtons.data]);
 
-    if (!user.loading && !user.error) {
+  useEffect(() => {
+    if (!userHook.loading && userHook.data !== user.data) {
+      setUser(userHook);
+      setTheme(user.data?.theme ?? theme);
+    }
+    if (!userHook.loading && !userHook.error) {
       containerElementRef.current.style.opacity = '1';
     }
+  }, [userHook.data, userHook.loading, userHook.error, theme]);
 
+  useEffect(() => {
     // Manage focus styles on keyboard navigable elements.
     //   - Add focus styles if tab used to navigate.
     //   - Start listening for clicks to remove focus styles.
@@ -91,43 +124,41 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
-  }, [infoButtons.data, user.error, user.loading, appVersions.data, theme, user.data]);
+  }, []);
 
   return (
     <ThemeProvider theme={themesLookup[theme]}>
-      <AppContext.Provider value={appContext}>
-        <GlobalStyles />
-        <Header />
-        <Alerts />
-        <ContentWrapper>
-          <Location>
-            {({ location }) => (
-              <PageGridWrapper key={location.key}>
-                {ReactGA.pageview(location.pathname + location.search + location.hash)}
+      <GlobalStyles />
+      <Header />
+      <Alerts />
+      <ContentWrapper>
+        <Location>
+          {({ location }) => (
+            <PageGridWrapper key={location.key}>
+              {ReactGA.pageview(location.pathname + location.search + location.hash)}
 
-                <AnimatePresence exitBeforeEnter>
-                  <Router location={location} key={location.key} className="router-styles">
-                    <RouterPage path="/" pageComponent={<Dashboard />} />
-                    <RouterPage path="profile" pageComponent={<Profile />} />
-                    <RouterPage path="academics/*" pageComponent={<Academics />} />
-                    <RouterPage path="finances" pageComponent={<Finances />} />
-                    <RouterPage path="resources" pageComponent={<Resources />} />
-                    <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                      <RouterPage path="training" pageComponent={<Training />} />
-                    )}
-                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                      <RouterPage path="notifications" pageComponent={<Notifications />} />
-                    )}
-                    <RouterPage default pageComponent={<PageNotFound />} />
-                  </Router>
-                </AnimatePresence>
-              </PageGridWrapper>
-            )}
-          </Location>
-        </ContentWrapper>
-        <Footer />
-      </AppContext.Provider>
+              <AnimatePresence exitBeforeEnter>
+                <Router location={location} key={location.key} className="router-styles">
+                  <RouterPage path="/" pageComponent={<Dashboard />} />
+                  <RouterPage path="profile" pageComponent={<Profile />} />
+                  <RouterPage path="academics/*" pageComponent={<Academics />} />
+                  <RouterPage path="finances" pageComponent={<Finances />} />
+                  <RouterPage path="resources" pageComponent={<Resources />} />
+                  <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                  {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                    <RouterPage path="training" pageComponent={<Training />} />
+                  )}
+                  {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                    <RouterPage path="notifications" pageComponent={<Notifications />} />
+                  )}
+                  <RouterPage default pageComponent={<PageNotFound />} />
+                </Router>
+              </AnimatePresence>
+            </PageGridWrapper>
+          )}
+        </Location>
+      </ContentWrapper>
+      <Footer />
     </ThemeProvider>
   );
 };
