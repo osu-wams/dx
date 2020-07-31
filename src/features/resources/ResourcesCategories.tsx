@@ -4,21 +4,21 @@ import { spacing } from 'src/theme';
 import CustomBtn from 'src/ui/CustomBtn';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
+import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
+import { resourceSearchState, categoryState, selectedCategoryState } from 'src/state/application';
 
 /**
  * Displays a list of clickable categories for the Resources page
  * Favorites category button is only rendered if the user has any favorite resources
  */
-const ResourceCategories = ({
-  categories,
-  setQuery,
-  selectedCategory,
-  setSelectedCategory,
-  hasFavorite,
-}) => {
+const ResourceCategories = ({ hasFavorite }) => {
+  const setQuery = useSetRecoilState(resourceSearchState);
+  const categories = useRecoilValue(categoryState);
+  const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);
+
   return (
     <CategoriesWrapper>
-      {categories.length > 0 && (
+      {categories.data.length > 0 && (
         <>
           <CustomBtn
             icon="https://data.dx.oregonstate.edu/sites/default/files/2019-05/th.svg"
@@ -44,7 +44,7 @@ const ResourceCategories = ({
               selected={selectedCategory?.toLowerCase() === 'favorites' ? true : false}
             />
           )}
-          {categories.map((category: Types.Category) => (
+          {categories.data.map((category: Types.Category) => (
             <CustomBtn
               icon={category.icon}
               text={category.name}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
@@ -7,127 +7,83 @@ import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
 import ResourcesCategories from 'src/features/resources/ResourcesCategories';
 import ResourcesSearch from 'src/features/resources/ResourcesSearch';
 import ResourcesList from 'src/features/resources/ResourcesList';
-import { Types } from '@osu-wams/lib';
-import { Resources as hooksResources, useCategories, useResources, User } from '@osu-wams/hooks';
+import { useCategories, useResources, User } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
-import { activeFavoriteResources } from 'src/features/resources/resources-utils';
 import { Event } from 'src/util/gaTracking';
-import { userState } from 'src/state/application';
-import { useRecoilValue } from 'recoil';
+import {
+  userState,
+  resourceSearchState,
+  resourceState,
+  selectedCategoryState,
+  categoryState,
+  debouncedResourceSearchState,
+  filteredResourcesState,
+} from 'src/state/application';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
-const { defaultCategoryName } = hooksResources;
-const { hasAudience, getAffiliation } = User;
+const { getAffiliation } = User;
 
 // Resources Page with components to filter, search and favorite resources
 const Resources = () => {
   const user = useRecoilValue(userState);
-  const [activeCategory, setActiveCategory] = useState<string>(getInitialCategory());
-  const [query, setQuery] = useState<string>('');
-  const [debouncedQuery] = useDebounce(query, 250);
-  const categories = useCategories();
-  const res = useResources();
-  const [filteredResources, setFilteredResources] = useState<any>([]);
-  const [filteredCategories, setFilteredCategories] = useState<any>([]);
-
-  /**
-   * A delegate method for children components to call and set the selected category. This
-   * pushes the category name to the window history and updates the location bar, when the
-   * Back/Forward buttons are pressed the category name is available.
-   * @param name the category name
-   */
-  const setSelectedCategory = (name: string) => {
-    setActiveCategory(decodeURI(name));
-  };
-
-  /**
-   * Filter a list of resources where it has a category in its list matching the provided name
-   * parameter unless the category is 'all'.
-   * @param {string} name the category name to filter on
-   * @param {Resource[]} resources a list of resources to inspect for matching category
-   */
-  const filterByCategory = React.useCallback(
-    (name: string, resources: Types.Resource[]): Types.Resource[] => {
-      // Skips categories and displays all resources
-      if (name === 'all') return resources;
-
-      // Skips categories and filters based on user favorite preferences
-      if (name === 'favorites' && user.data.favoriteResources) {
-        return activeFavoriteResources(user.data.favoriteResources, resources);
-      }
-
-      return resources.filter(
-        (resource) =>
-          resource.categories?.length > 0 &&
-          resource.categories.findIndex((s) => s.toLowerCase().includes(name.toLowerCase())) > -1
-      );
-    },
-    [user.data.favoriteResources]
-  );
-
-  const filteredByAudience = (resources: Types.Resource[], user: Types.User): Types.Resource[] => {
-    return resources.filter((r) => hasAudience(user, r));
-  };
-
-  /**
-   * Checks the affiliation data coming from user and determines if an object with affiliation data
-   * should or should not appear for the given user.
-   * @param o object having an affiliation string array
-   * @returns {boolean} true or false depending if the item is associated with the current affiliation
-   */
-  const checkAffiliation = (user: any, o: { affiliation: string[] }): boolean => {
-    const userAffiliation = getAffiliation(user).toLowerCase();
-    return (
-      o.affiliation?.length === 0 ||
-      o.affiliation?.map((a) => a.toLowerCase()).filter((a) => a === userAffiliation).length > 0
-    );
-  };
-
+  const query = useRecoilValue(resourceSearchState);
+  const [debouncedValue] = useDebounce(query, 250);
+  const [debouncedQuery, setDebouncedQuery] = useRecoilState(debouncedResourceSearchState);
+  const filteredResources = useRecoilValue(filteredResourcesState);
+  const catHook = useCategories();
+  const [categories, setCategories] = useRecoilState(categoryState);
+  const [activeCategory, setActiveCategory] = useRecoilState(selectedCategoryState);
+  const resHook = useResources();
+  const [resources, setResources] = useRecoilState(resourceState);
   /**
    * Filter the categories to include any that have an affilation related to the type of user
    * (student vs employee)
    */
   useEffect(() => {
-    if (categories.data && user.data && Array.isArray(categories.data)) {
-      setFilteredCategories(categories.data.filter((c) => checkAffiliation(user.data, c)));
+    if (catHook.data && user.data && Array.isArray(catHook.data)) {
+      const { data, isLoading, isSuccess } = catHook;
+      setCategories({
+        data: data.filter((c) => {
+          const userAffiliation = getAffiliation(user.data).toLowerCase();
+          return (
+            c.affiliation?.length === 0 ||
+            c.affiliation?.map((a) => a.toLowerCase()).filter((a) => a === userAffiliation).length >
+              0
+          );
+        }),
+        isLoading,
+        isSuccess,
+      });
     }
-  }, [categories.data, user.data]);
+
+    if (resHook.data && resHook.data !== resources.data) {
+      const { data, isLoading, isSuccess } = resHook;
+      setResources({ data, isLoading, isSuccess });
+    }
+  }, [resHook.data, catHook.data, user.data]);
+
+  /**
+   * When useDebounce triggers a change in debouncedValue, propagate that value
+   * to the debounced resource search term state.
+   */
+  useEffect(() => {
+    setDebouncedQuery(debouncedValue);
+  }, [debouncedValue]);
 
   useEffect(() => {
-    if (res.data && user.data && filteredCategories.length > 0) {
-      let filtered = res.data.filter((r) => checkAffiliation(user.data, r));
-
-      // When clicking a category we filter all results based on selected category
-      if (!debouncedQuery && activeCategory && Array.isArray(filtered)) {
-        filtered = filterByCategory(activeCategory, filtered);
-      } else {
-        // When typing we search for synonyms and names to get results
-        const queriedResources = filtered.filter((resource) => {
-          if (
-            resource.synonyms.length > 0 &&
-            resource.synonyms.find((s) => s.toLowerCase().includes(debouncedQuery.toLowerCase()))
-          ) {
-            return true;
-          }
-          return resource.title.toLowerCase().includes(debouncedQuery.toLowerCase());
-        });
-
-        // If a query has no results, emit a GA Event to track for improving
-        // resources and synonyms
-        if (queriedResources.length === 0) {
-          Event('resource-search-failed', debouncedQuery);
-        }
-
-        // Avoids sending single characters to Google Analytics
-        if (debouncedQuery.length >= 2 && queriedResources.length > 0) {
-          Event('resource-search', debouncedQuery);
-        }
-
-        filtered = queriedResources;
+    if (debouncedQuery) {
+      // If a query has no results, emit a GA Event to track for improving resources and synonyms
+      if (filteredResources.length === 0) {
+        Event('resource-search-failed', debouncedQuery);
       }
-      setFilteredResources(filtered);
+
+      // Avoids sending single characters to Google Analytics
+      if (debouncedQuery.length >= 2 && filteredResources.length > 0) {
+        Event('resource-search', debouncedQuery);
+      }
     }
-  }, [activeCategory, filteredCategories, filterByCategory, debouncedQuery, res.data, user.data]);
+  }, [debouncedQuery, filteredResources]);
 
   /* eslint-disable no-restricted-globals */
   /**
@@ -156,6 +112,7 @@ const Resources = () => {
      */
     if (typeof history.pushState === 'function') {
       if (
+        activeCategory &&
         history.state?.category !== activeCategory &&
         !window.location.search.includes(activeCategory)
       ) {
@@ -176,12 +133,8 @@ const Resources = () => {
         <ResourcesWrapper>
           {activeCategory !== '' && (
             <>
-              <ResourcesSearch
-                query={query}
-                setQuery={setQuery}
-                setSelectedCategory={setSelectedCategory}
-              />
-              {res.isSuccess && res.data && res.data.length > 0 && (
+              <ResourcesSearch />
+              {resources.isSuccess && resources.data.length > 0 && (
                 // Anchor link matches ResourcesList component main div id
                 <VisuallyHidden>
                   <a href="#resourcesResults">Skip to results</a>
@@ -189,24 +142,20 @@ const Resources = () => {
               )}
               {categories.isLoading && <Skeleton />}
               <ResourcesCategories
-                categories={filteredCategories}
-                selectedCategory={activeCategory}
-                setQuery={setQuery}
-                setSelectedCategory={setSelectedCategory}
                 hasFavorite={
                   user.data.favoriteResources && user.data.favoriteResources.some((f) => f.active)
                 }
               />
             </>
           )}
-          {res.isLoading && <Skeleton count={5} />}
-          {res.isSuccess && res.data && res.data.length > 0 ? (
+          {resources.isLoading && <Skeleton count={5} />}
+          {resources.isSuccess && resources.data.length > 0 ? (
             <ResourcesList
-              resources={filteredByAudience(filteredResources, user.data)}
+              resources={filteredResources.filter((r) => User.hasAudience(user.data, r))}
               user={user.data}
             />
           ) : (
-            res.isSuccess && (
+            resources.isSuccess && (
               /* @TODO need mockup styling to do and messaging for no results */
               <div>No results</div>
             )
@@ -215,16 +164,6 @@ const Resources = () => {
       </MainGrid>
     </MainGridWrapper>
   );
-};
-
-const getInitialCategory = () => {
-  if (window.location.search.startsWith('?category=')) {
-    const terms = window.location.search.split('=');
-    if (terms.length === 2) {
-      return decodeURI(terms[1]);
-    }
-  }
-  return decodeURI(defaultCategoryName());
 };
 
 const ResourcesWrapper = styled(CardBase)`

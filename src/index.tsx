@@ -21,6 +21,7 @@ const isGADebug = process.env.REACT_APP_GA_DEBUG === 'true';
 const applicationRoot = document.getElementById('root') as HTMLElement;
 const redirectToError = () => window.location.assign('./error.html');
 
+/*
 // Add Accessibility reporting in development via Chrome console through React-axe
 if (isDevelopment) {
   var axe = require('react-axe');
@@ -37,6 +38,7 @@ if (isDevelopment) {
   // We get a lot of false positives on contrast when clicking around do to our animations
   axe(React, ReactDOM, 3000, axeConfig);
 }
+*/
 try {
   // When running tests, intialize in ./setupTests.js instead
   if (!isTest) {
