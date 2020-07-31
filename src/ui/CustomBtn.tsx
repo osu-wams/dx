@@ -20,18 +20,22 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
 }) => {
   const themeContext = useContext(ThemeContext);
 
-  const parseIconUrl = (iconUrl:string) => {
-    if (!iconUrl) return '';
-    return 'fal.' + iconUrl
-      .substring(icon.lastIndexOf('/')+1)
-      .split('.')[0]
-  }
+  const parseIconUrl = () => {
+    if (!icon) return '';
+
+    // Return a icon name stripped from the icon URL
+    return (
+      'fal.' + icon
+        .substring(icon.lastIndexOf('/') + 1)
+        .split('_' || '.')[0]
+    );
+  };
 
   return (
     <StyledBtn id={id} onClick={clickHandler} className={selected ? 'selected' : ''}>
       <CustomLabel htmlFor={id} selected={selected}>
         {IconLookup(
-          parseIconUrl(icon),
+          parseIconUrl(),
           selected
             ? themeContext.ui.button.custom.selectedColor
             : themeContext.ui.button.custom.color
@@ -74,6 +78,6 @@ const LabelText = styled.p`
   margin: 0px;
   padding: 0px;
   margin-left: 6px;
-`
+`;
 
 export default CustomBtn;
