@@ -6,6 +6,7 @@ import {
   authUser,
 } from 'src/util/test-utils';
 import Header from '../Header';
+import {themeState} from 'src/state/application';
 import { mockGAEvent } from 'src/setupTests';
 import { act, screen } from '@testing-library/react';
 
@@ -165,7 +166,10 @@ describe('with a campus code', () => {
         },
       });
       act(() => {
-        render(<Header />, {user: mockUser()});
+        render(<Header />, {user: mockUser(), initialStates: [{
+          state: themeState,
+          value: 'dark'
+        }]});
         const appHeader = screen.getByTestId('app-header-logo');
         expect(appHeader).toBeInTheDocument();
 
@@ -255,7 +259,10 @@ describe('with a campus code', () => {
         },
       });
       act(() => {
-        render(<Header />, {user: mockUser()});
+        render(<Header />, {user: mockUser(), initialStates: [{
+          state: themeState,
+          value: 'dark'
+        }]});
         const appHeader = screen.getByTestId('app-header-logo');
         expect(appHeader).toBeInTheDocument();
 
@@ -316,7 +323,10 @@ describe('with a campus code', () => {
         },
       });
       act(() => {
-        render(<Header />, {user: mockUser()});
+        render(<Header />, {user: mockUser(), initialStates: [{
+          state: themeState,
+          value: 'dark'
+        }]});
         const appHeader = screen.getByTestId('app-header-logo');
         expect(appHeader).toBeInTheDocument();
 

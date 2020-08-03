@@ -15,7 +15,7 @@ export const RadioButtonsGroup = () => {
   const themes = Object.keys(themesLookup);
   const [theme, setTheme] = useRecoilState(themeState); // eslint-disable-line
   const [user, setUser] = useRecoilState(userState);
-  const [value, setValue] = useState(defaultTheme);
+  const [value, setValue] = useState(user.data.theme || defaultTheme);
 
   useEffect(() => {
     setValue(theme);
