@@ -3,6 +3,8 @@ import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
 import * as cache from './util/cache';
 import { server } from 'src/mocks/server';
+import { rest } from 'msw';
+
 // Remove this when CRA updates to jsdom 16+ (not available as of CRA 3.4)
 import MutationObserver from '@sheerun/mutationobserver-shim';
 window.MutationObserver = MutationObserver;
@@ -14,6 +16,9 @@ ReactGA.initialize('UA-48705802-13', {
 export const mockGAEvent = jest.fn();
 export const mockTrendingEvent = jest.fn();
 
+/**
+ * MSW Setup
+ */
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 
@@ -24,6 +29,9 @@ afterEach(() => server.resetHandlers());
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
+/**
+ * Google Analytics setup
+ */
 jest.mock('../src/util/gaTracking', () => ({
   Event: () => {
     return mockGAEvent();
