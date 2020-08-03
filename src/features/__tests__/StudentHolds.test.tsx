@@ -3,8 +3,7 @@ import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import StudentHolds from '../academic-overview/StudentHolds';
 import { alterMock } from 'src/util/test-utils';
-
-const holdApi = '/api/student/holds';
+import { HOLDS_API } from 'src/mocks/apis';
 
 describe('<StudentHolds />', () => {
   it('should render and have a single hold', async () => {
@@ -15,7 +14,7 @@ describe('<StudentHolds />', () => {
   });
 
   it('should render and have a multiple holds', async () => {
-    alterMock('/api/student/holds', [{ description: 'blah' }, { description: 'BobRoss' }]);
+    alterMock(HOLDS_API, [{ description: 'blah' }, { description: 'BobRoss' }]);
     render(<StudentHolds />);
 
     expect(await screen.findByText('blah')).toBeInTheDocument();
@@ -25,7 +24,7 @@ describe('<StudentHolds />', () => {
   });
 
   it('should return appropriate text when data is empty', async () => {
-    alterMock(holdApi, []);
+    alterMock(HOLDS_API, []);
     render(<StudentHolds />);
 
     expect(await screen.findByText('0')).toBeInTheDocument();

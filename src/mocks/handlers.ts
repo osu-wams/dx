@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { Student } from '@osu-wams/hooks';
+import { HOLDS_API, GPA_API, ACADEMIC_STATUS_API, CLASS_SCHEDULE_API } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus.data;
@@ -9,19 +10,19 @@ const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 
 // Mock API Data for our Endpoints
 export const handlers = [
-  rest.get('/api/student/holds', async (req, res, ctx) => {
+  rest.get(HOLDS_API, async (req, res, ctx) => {
     return res(ctx.json(mockHolds));
   }),
 
-  rest.get('/api/student/gpa', async (req, res, ctx) => {
+  rest.get(GPA_API, async (req, res, ctx) => {
     return res(ctx.json(mockGpa.data));
   }),
 
-  rest.get('/api/student/academic-status', async (req, res, ctx) => {
+  rest.get(ACADEMIC_STATUS_API, async (req, res, ctx) => {
     return res(ctx.json(mockAcademicStatus));
   }),
 
-  rest.get('/api/student/class-schedule?term=current', async (req, res, ctx) => {
+  rest.get(CLASS_SCHEDULE_API, async (req, res, ctx) => {
     return res(ctx.json(mockCourseSchedule));
   }),
 ];

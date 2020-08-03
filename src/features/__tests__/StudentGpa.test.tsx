@@ -1,46 +1,47 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { render, alterMock, mockGradUser } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import StudentGpa from '../academic-overview/StudentGpa';
 import { Student } from '@osu-wams/hooks';
+import { GPA_API } from 'src/mocks/apis';
 
-const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
-const mockUseStudentGpa = jest.fn();
-
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    // @ts-ignore spread on object
-    ...jest.requireActual('@osu-wams/hooks'),
-    useGpa: () => mockUseStudentGpa(),
-  };
-});
+// Gradstudent GPA
+const { gpaHookData } = Student.Gpa.mockGpa;
 
 describe('<StudentGpa />', () => {
-  it('should render and have the approriate standing for a Graduate', async () => {
-    mockUseStudentGpa.mockReturnValue(gpaHookData);
-    const { getByText, queryByText } = render(<StudentGpa />);
-    const element = getByText('3.81');
-    expect(element).toBeInTheDocument();
-    const undergraduateText = queryByText('Undergraduate GPA across all past terms.');
-    expect(undergraduateText).not.toBeInTheDocument();
-    expect(getByText('Graduate GPA across all past terms.')).toBeInTheDocument();
-    expect(getByText('Institutional GPA')).toBeInTheDocument();
+  describe('Undergraduate Student', () => {
+    it('should render and have the approriate standing for an Undergraduate', async () => {
+      render(<StudentGpa />);
+      expect(await screen.findByText('3.1')).toBeInTheDocument();
+      expect(screen.queryByText('Graduate GPA across all past terms.')).toBeNull();
+      expect(
+        await screen.findByText('Undergraduate GPA across all past terms.')
+      ).toBeInTheDocument();
+      expect(await screen.findByText('Institutional GPA')).toBeInTheDocument();
+    });
+
+    it('should return appropriate text when data is empty', async () => {
+      alterMock(GPA_API, []);
+      render(<StudentGpa />);
+
+      expect(await screen.findByText(/first complete a term to have a GPA/i)).toBeInTheDocument();
+    });
   });
 
-  it('should render and have the approriate standing for an Undergraduate', async () => {
-    mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: gpaUndergraduateData });
-    const { getByText, queryByText } = render(<StudentGpa />);
-    const element = getByText('3.1');
-    expect(element).toBeInTheDocument();
-    const graduateText = queryByText('Graduate GPA across all past terms.');
-    expect(graduateText).not.toBeInTheDocument();
-    expect(getByText('Undergraduate GPA across all past terms.')).toBeInTheDocument();
-    expect(getByText('Institutional GPA')).toBeInTheDocument();
-  });
+  describe('Graduate Student', () => {
+    beforeEach(() => {
+      render(<StudentGpa />, { user: mockGradUser });
+      alterMock(GPA_API, gpaHookData.data);
+    });
 
-  it('should return appropriate text when data is empty', () => {
-    mockUseStudentGpa.mockReturnValue({ ...gpaHookData, data: [] });
-    const { getByText } = render(<StudentGpa />);
-    const element = getByText('You must first complete a term to have a GPA.');
-    expect(element).toBeInTheDocument();
+    it('Has apprpriate GPA and graduate references', async () => {
+      expect(await screen.findByText('3.81')).toBeInTheDocument();
+      expect(await screen.findByText(/Graduate GPA across all past terms/i)).toBeInTheDocument();
+      expect(await screen.findByText(/Institutional GPA/i)).toBeInTheDocument();
+    });
+
+    it('Has no undergradute references', async () => {
+      expect(screen.queryByText(/Undergraduate GPA across all past terms/i)).toBeNull();
+    });
   });
 });
