@@ -547,7 +547,7 @@ export const dark: ThemeConfiguration = {
         border: neutral200,
       },
       details: {
-        color: neutral600,
+        color: neutral200,
       },
     },
     siteTitle: {
