@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import Fuse from 'fuse.js';
 import { User, Resources } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { defaultTheme } from 'src/theme/themes';
@@ -83,6 +84,35 @@ export const debouncedResourceSearchState = atom<string | undefined>({
   default: undefined,
 });
 
+/**
+ * Once the resources items state is resolved with data from the server, create a fuse searchable
+ * index for another selector to operate on. The options are spit-balled to give fairly fuzzy
+ * searching without regard to where at in the keys the pattern is found (not necessarily the
+ * beginning of the matched words).
+ *
+ * If the resourceState is changed (refreshed from the server), the index is recreated and kept
+ * fresh.
+ */
+const resourceSearchIndex = selector<Fuse<Types.Resource> | undefined>({
+  key: 'resourceSearchIndex',
+  get: ({ get }) => {
+    const resources = get(resourceState);
+    if (resources.data.length) {
+      const options: Fuse.IFuseOptions<Types.Resource> = {
+        includeScore: true,
+        keys: ['title', 'synonyms'],
+        minMatchCharLength: 2,
+        threshold: 0.2,
+        ignoreLocation: true,
+      };
+      // create index
+      const fuse = new Fuse(resources.data, options);
+      return fuse;
+    }
+    return undefined;
+  },
+});
+
 // Not intended for export; an internal selector for managing state.
 const filteredResourcesByUserAffiliation = selector<Types.Resource[]>({
   key: 'filteredResourcesByUserAffiliation',
@@ -104,23 +134,23 @@ const filteredResourcesByCategory = selector<Types.Resource[]>({
   },
 });
 
-// Not intended for export; an internal selector for managing state.
+// Not intended for export; an internal selector for managing state and
+// filtering resources when a search term is set.
 const filteredResourcesBySearch = selector<Types.Resource[]>({
   key: 'filteredResourcesBySearch',
   get: ({ get }) => {
     const searchTerm = get(debouncedResourceSearchState);
     const query = searchTerm?.toLowerCase() ?? '';
     const resources = get(filteredResourcesByUserAffiliation);
-    // When typing we search for synonyms and names to get results
-    return resources.filter((resource) => {
-      if (
-        resource.synonyms.length > 0 &&
-        resource.synonyms.find((s) => s.toLowerCase().includes(query))
-      ) {
-        return true;
-      }
-      return resource.title.toLowerCase().includes(query);
-    });
+    const searchIndex = get(resourceSearchIndex);
+    if (searchIndex) {
+      const found = searchIndex.search(query);
+      const foundIds = found.map((f) => f.item.id);
+      // When typing we search for synonyms and names to get results
+      return resources.filter((resource) => foundIds.includes(resource.id));
+    } else {
+      return resources;
+    }
   },
 });
 
