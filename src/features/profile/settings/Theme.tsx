@@ -13,13 +13,13 @@ const { postSettings, usersSettings } = User;
 
 export const RadioButtonsGroup = () => {
   const themes = Object.keys(themesLookup);
-  const [_, setTheme] = useRecoilState(themeState); // eslint-disable-line
+  const [theme, setTheme] = useRecoilState(themeState); // eslint-disable-line
   const [user, setUser] = useRecoilState(userState);
   const [value, setValue] = useState(defaultTheme);
 
   useEffect(() => {
-    setValue(user.data.theme || defaultTheme);
-  }, [user.data]);
+    setValue(theme);
+  }, [theme]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = (event.target as HTMLInputElement).value;
