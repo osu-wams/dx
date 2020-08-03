@@ -161,6 +161,23 @@ describe('with a campus code', () => {
       });
     });
 
+    it('render the appropriate header logo in dark mode', async () => {
+      mockUser.mockReturnValue({
+        data: {
+          theme: 'dark',
+        },
+      });
+      act(() => {
+        render(<Header />, {user: mockUser()});
+        const appHeader = screen.getByTestId('app-header-logo');
+        expect(appHeader).toBeInTheDocument();
+
+        const src = appHeader.getAttribute('src');
+        expect(src).toEqual('osu-logo-dark.svg');
+        expect(screen.getByRole('img', { name: 'Oregon State University' }));
+      });
+    });
+
     it('renders the appropriate header logo with another campus code', async () => {
       mockUser.mockReturnValue({
         ...authUser,
@@ -220,6 +237,35 @@ describe('with a campus code', () => {
         expect(screen.getByRole('img', { name: 'Oregon State University Cascades' }));
       });
     });
+
+    it('render the appropriate header logo in dark mode', async () => {
+      mockUser.mockReturnValue({
+        ...authUser,
+        data: {
+          ...authUser.data,
+          classification: {
+            ...authUser.data.classification,
+            attributes: {
+              ...authUser.data.classification.attributes,
+              campusCode: 'B',
+            },
+          },
+          audienceOverride: {
+            ...authUser.data.audienceOverride,
+            campusCode: 'B',
+          },
+          theme: 'dark',
+        },
+      });
+      act(() => {
+        render(<Header />, {user: mockUser()});
+        const appHeader = screen.getByTestId('app-header-logo');
+        expect(appHeader).toBeInTheDocument();
+
+        const src = appHeader.getAttribute('src');
+        expect(src).toEqual('osu-cascades-dark.svg');
+      });
+    });
   });
 
   describe('as an Ecampus user', () => {
@@ -250,6 +296,35 @@ describe('with a campus code', () => {
         const src = appHeader.getAttribute('src');
         expect(src).toEqual('osu-ecampus.svg');
         expect(screen.getByRole('img', { name: 'Oregon State University Ecampus' }));
+      });
+    });
+
+    it('render the appropriate header logo in dark mode', async () => {
+      mockUser.mockReturnValue({
+        ...authUser,
+        data: {
+          ...authUser.data,
+          classification: {
+            ...authUser.data.classification,
+            attributes: {
+              ...authUser.data.classification.attributes,
+              campusCode: 'DSC',
+            },
+          },
+          audienceOverride: {
+            ...authUser.data.audienceOverride,
+            campusCode: 'DSC',
+          },
+          theme: 'dark',
+        },
+      });
+      act(() => {
+        render(<Header />, {user: mockUser()});
+        const appHeader = screen.getByTestId('app-header-logo');
+        expect(appHeader).toBeInTheDocument();
+
+        const src = appHeader.getAttribute('src');
+        expect(src).toEqual('osu-ecampus-dark.svg');
       });
     });
   });
