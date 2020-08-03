@@ -40,6 +40,7 @@ const Resources = () => {
    * Filter the categories to include any that have an affilation related to the type of user
    * (student vs employee)
    */
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (catHook.data && user.data && Array.isArray(catHook.data)) {
       const { data, isLoading, isSuccess } = catHook;
@@ -62,14 +63,17 @@ const Resources = () => {
       setResources({ data, isLoading, isSuccess });
     }
   }, [resHook.data, catHook.data, user.data]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   /**
    * When useDebounce triggers a change in debouncedValue, propagate that value
    * to the debounced resource search term state.
    */
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setDebouncedQuery(debouncedValue);
   }, [debouncedValue]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
     if (debouncedQuery) {
@@ -95,6 +99,7 @@ const Resources = () => {
    * * to detect if the history state includes the category name, in which case set the active category to match.
    * * Push the default activeCategory to the history at the start.
    */
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     window.onpopstate = function (e) {
       if (e.state) {
@@ -102,6 +107,7 @@ const Resources = () => {
       }
     };
   }, []);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   useEffect(() => {
     /**
