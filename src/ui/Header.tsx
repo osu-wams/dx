@@ -18,7 +18,7 @@ import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { BetaBadge } from './Badge';
 import { arrayIncludes } from 'src/util/helpers';
-import { userState } from 'src/state/application';
+import { userState, themeState } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
 
 const { usersCampus, CAMPUS_CODES } = User;
@@ -115,7 +115,8 @@ const mainTitle = (user: Types.User) => {
 const Header = () => {
   const user = useRecoilValue(userState);
   const title = mainTitle(user.data);
-  const { image, alt } = campusLogo(user.data, user.data.theme);
+  const theme = useRecoilValue(themeState);
+  const { image, alt } = campusLogo(user.data, theme);
   return (
     <>
       <HeaderWrapper>
