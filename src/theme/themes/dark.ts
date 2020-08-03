@@ -26,7 +26,7 @@ const secondGridBorderTop = neutral300;
 const componentBackground = Color.black;
 const dropdownBackground = Color.black;
 const linkForeground = Color.white;
-const iconPrimary = Color["neutral-400"];
+const iconPrimary = neutral700;
 const iconSecondary = Color.white;
 const buttonPrimary = Color.white;
 const buttonSecondary = Color.black;
@@ -67,8 +67,9 @@ export const dark: ThemeConfiguration = {
     },
     mainNavList: {
       background: Color.transparent,
-      color: neutral550,
+      color: neutral700,
       hoverColor: primary,
+      icon: neutral700,
       popOver: {
         background: neutral800,
         primaryNav: {

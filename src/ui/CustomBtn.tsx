@@ -24,11 +24,7 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
     if (!icon) return '';
 
     // Return a icon name stripped from the icon URL
-    return (
-      'fal.' + icon
-        .substring(icon.lastIndexOf('/') + 1)
-        .split('_' || '.')[0]
-    );
+    return 'fal.' + icon.substring(icon.lastIndexOf('/') + 1).split('_' || '.')[0];
   };
 
   return (
@@ -74,10 +70,8 @@ const CustomLabel = styled.label<{ selected: boolean }>(
     }
 );
 
-const LabelText = styled.p`
-  margin: 0px;
-  padding: 0px;
-  margin-left: 6px;
+const LabelText = styled.span`
+  padding-left: 6px;
 `;
 
 export default CustomBtn;

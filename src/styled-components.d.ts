@@ -36,6 +36,7 @@ declare module 'styled-components/macro' {
         background: string;
         color: string;
         hoverColor: string;
+        icon: string;
         popOver: {
           background: string;
           primaryNav: {

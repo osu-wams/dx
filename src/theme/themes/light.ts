@@ -68,6 +68,7 @@ export const light: ThemeConfiguration = {
       background: Color.white,
       color: neutral550,
       hoverColor: primary,
+      icon: neutral550,
       popOver: {
         background: neutral800,
         primaryNav: {

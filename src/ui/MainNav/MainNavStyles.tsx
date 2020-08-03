@@ -60,6 +60,7 @@ const NavLink = styled(Link)`
   color: ${({ theme }) => theme.header.mainNavList.color};
   ${IconStyle} {
     font-size: 20px;
+    color: ${({ theme }) => theme.header.mainNavList.icon};
   }
   /* select and hover styles */
   &[aria-current],
