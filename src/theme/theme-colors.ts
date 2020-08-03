@@ -37,6 +37,7 @@ export enum Color {
   'pine-600' = '#254A1A',
   'pine-700' = '#142E0C',
   'lava-400' = '#C72127',
+  'lava-500' = '#FF0000',
   'luminance-300' = '#FFCE57',
   'luminance-400' = '#FFB500',
   'roguewave-200' = '#B8DDE1',

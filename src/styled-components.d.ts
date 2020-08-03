@@ -12,6 +12,9 @@ declare module 'styled-components/macro' {
         color: string;
       };
       headerNavList: {
+        border: {
+          color: string;
+        };
         background: string;
         color: string;
         svg: {
@@ -33,6 +36,7 @@ declare module 'styled-components/macro' {
         background: string;
         color: string;
         hoverColor: string;
+        icon: string;
         popOver: {
           background: string;
           primaryNav: {
@@ -482,6 +486,7 @@ declare module 'styled-components/macro' {
         color: string;
         item: {
           background: string;
+          border: string;
           header: {
             color: string;
           };

@@ -74,6 +74,7 @@ const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
     }
     box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
     transform: translateY(-4px);
+    border: 1px solid ${({ theme }) => theme.ui.list.item.border};
   }
 `;
 
@@ -102,6 +103,7 @@ const ListItemFlex = styled(ListItem)`
     }
     box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
     transform: translateY(-4px);
+    border: 1px solid ${({ theme }) => theme.ui.list.item.border};
   }
 `;
 

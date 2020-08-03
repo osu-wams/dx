@@ -1,14 +1,8 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import {
-  render,
-  authUserClassification,
-  mockEmployeeUser,
-  authUserAudienceOverride,
-  authUser,
-  mockUser,
-} from 'src/util/test-utils';
+import { render, mockEmployeeUser, authUser } from 'src/util/test-utils';
 import Header from '../Header';
+import { themeState } from 'src/state/application';
 import { mockGAEvent } from 'src/setupTests';
 import { act, screen } from '@testing-library/react';
 
@@ -39,9 +33,7 @@ describe('Student mobile menu interactions', () => {
 
     const menu = screen.getByRole('button', { name: /menu/i });
 
-    act(() => {
-      userEvent.click(menu);
-    });
+    userEvent.click(menu);
 
     const studentDashboardMenu = await screen.findByText(title, { selector: 'h2' });
     expect(studentDashboardMenu).toBeVisible();
@@ -53,14 +45,10 @@ describe('Student mobile menu interactions', () => {
     render(<Header />);
 
     const menu = screen.getByText('Menu');
-    act(() => {
-      userEvent.click(menu);
-    });
+    userEvent.click(menu);
 
     const close = await screen.findByText(/close/i);
-    act(() => {
-      userEvent.click(close);
-    });
+    userEvent.click(close);
 
     const studentDashboard = await screen.findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
@@ -72,14 +60,10 @@ describe('Student mobile menu interactions', () => {
     render(<Header />);
 
     const menu = screen.getByText('Menu');
-    act(() => {
-      userEvent.click(menu);
-    });
+    userEvent.click(menu);
 
     const overview = await screen.findByText(/overview/i, { selector: '[role="dialog"] a' });
-    act(() => {
-      userEvent.click(overview);
-    });
+    userEvent.click(overview);
 
     const studentDashboard = await screen.findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
@@ -91,14 +75,10 @@ describe('Student mobile menu interactions', () => {
     render(<Header />);
 
     const menu = screen.getByText('Menu');
-    act(() => {
-      userEvent.click(menu);
-    });
+    userEvent.click(menu);
 
     const beta = await screen.findByText(/beta/i, { selector: '[role="dialog"] nav a' });
-    act(() => {
-      userEvent.click(beta);
-    });
+    userEvent.click(beta);
     const studentDashboard = await screen.findByText('Student Dashboard');
     expect(studentDashboard).not.toBeVisible();
 
@@ -106,9 +86,7 @@ describe('Student mobile menu interactions', () => {
   });
 
   it('Cannot find mobile menu in desktop version, all links visible immediately', async () => {
-    act(() => {
-      render(<Header />, { isDesktop: true });
-    });
+    render(<Header />, { isDesktop: true });
 
     const menu = screen.queryByText('Menu');
     expect(menu).toBeNull();
@@ -124,19 +102,15 @@ describe('Student mobile menu interactions', () => {
     render(<Header />);
 
     const helpMenu = screen.getByText('Help');
-    act(() => {
-      userEvent.click(helpMenu);
-    });
+    userEvent.click(helpMenu);
+
     expect(await screen.findByText(/get help/i)).toBeInTheDocument();
     expect(await screen.findByText(/give feedback/i)).toBeInTheDocument();
     expect(await screen.findByText(/getting started/i)).toBeInTheDocument();
 
     const profileMenu = screen.getByRole('button', { name: /profile/i });
 
-    // When clicking to open a modal updates state, you still need the act wrapper or warnings pop up
-    act(() => {
-      userEvent.click(profileMenu);
-    });
+    userEvent.click(profileMenu);
     expect(await screen.findByRole('menuitem', { name: /logout/i })).toBeInTheDocument();
     expect(await screen.findByRole('menuitem', { name: /profile/i })).toBeInTheDocument();
 
@@ -146,19 +120,33 @@ describe('Student mobile menu interactions', () => {
 
 describe('with a campus code', () => {
   const mockUser = jest.fn();
-  afterEach(() => jest.clearAllMocks());
 
   describe('as a Corvallis user', () => {
     it('renders the appropriate header logo', () => {
-      act(() => {
-        render(<Header />);
-        const appHeader = screen.getByTestId('app-header-logo');
-        expect(appHeader).toBeInTheDocument();
+      render(<Header />);
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
 
-        const src = appHeader.getAttribute('src');
-        expect(src).toEqual('osu-logo.svg');
-        expect(screen.getByRole('img', { name: 'Oregon State University' }));
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-logo.svg');
+      expect(screen.getByRole('img', { name: 'Oregon State University' }));
+    });
+
+    it('render the appropriate header logo in dark mode', async () => {
+      render(<Header />, {
+        initialStates: [
+          {
+            state: themeState,
+            value: 'dark',
+          },
+        ],
       });
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
+
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-logo-dark.svg');
+      expect(await screen.findByRole('img', { name: 'Oregon State University' }));
     });
 
     it('renders the appropriate header logo with another campus code', async () => {
@@ -173,26 +161,20 @@ describe('with a campus code', () => {
               campusCode: 'J',
             },
           },
-          audienceOverride: {
-            ...authUser.data.audienceOverride,
-            campusCode: 'J',
-          },
         },
       });
-      act(() => {
-        render(<Header />);
+      render(<Header />);
 
-        const appHeader = screen.getByTestId('app-header-logo');
-        expect(appHeader).toBeInTheDocument();
-        const src = appHeader.getAttribute('src');
-        expect(src).toEqual('osu-logo.svg');
-        expect(screen.getByRole('img', { name: 'Oregon State University' }));
-      });
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-logo.svg');
+      expect(screen.getByRole('img', { name: 'Oregon State University' }));
     });
   });
 
   describe('as a Bend user', () => {
-    it('renders the appropriate header logo', async () => {
+    beforeEach(() => {
       mockUser.mockReturnValue({
         ...authUser,
         data: {
@@ -204,26 +186,39 @@ describe('with a campus code', () => {
               campusCode: 'B',
             },
           },
-          audienceOverride: {
-            ...authUser.data.audienceOverride,
-            campusCode: 'B',
-          },
         },
       });
-      act(() => {
-        render(<Header />, { user: mockUser() });
+    });
+    it('renders the appropriate header logo', async () => {
+      render(<Header />, { user: mockUser() });
 
-        const appHeader = screen.getByTestId('app-header-logo');
-        expect(appHeader).toBeInTheDocument();
-        const src = appHeader.getAttribute('src');
-        expect(src).toEqual('osu-cascades.svg');
-        expect(screen.getByRole('img', { name: 'Oregon State University Cascades' }));
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-cascades.svg');
+      expect(screen.getByRole('img', { name: 'Oregon State University Cascades' }));
+    });
+
+    it('render the appropriate header logo in dark mode', async () => {
+      render(<Header />, {
+        user: mockUser(),
+        initialStates: [
+          {
+            state: themeState,
+            value: 'dark',
+          },
+        ],
       });
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
+
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-cascades-dark.svg');
     });
   });
 
   describe('as an Ecampus user', () => {
-    it('renders the appropriate header logo', async () => {
+    beforeEach(() => {
       mockUser.mockReturnValue({
         ...authUser,
         data: {
@@ -235,22 +230,35 @@ describe('with a campus code', () => {
               campusCode: 'DSC',
             },
           },
-          audienceOverride: {
-            ...authUser.data.audienceOverride,
-            campusCode: 'DSC',
-          },
         },
       });
-      act(() => {
-        render(<Header />, { user: mockUser() });
+    });
+    it('renders the appropriate header logo', async () => {
+      render(<Header />, { user: mockUser() });
 
-        const appHeader = screen.getByTestId('app-header-logo');
-        expect(appHeader).toBeInTheDocument();
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
 
-        const src = appHeader.getAttribute('src');
-        expect(src).toEqual('osu-ecampus.svg');
-        expect(screen.getByRole('img', { name: 'Oregon State University Ecampus' }));
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-ecampus.svg');
+      expect(screen.getByRole('img', { name: 'Oregon State University Ecampus' }));
+    });
+
+    it('render the appropriate header logo in dark mode', async () => {
+      render(<Header />, {
+        user: mockUser(),
+        initialStates: [
+          {
+            state: themeState,
+            value: 'dark',
+          },
+        ],
       });
+      const appHeader = screen.getByTestId('app-header-logo');
+      expect(appHeader).toBeInTheDocument();
+
+      const src = appHeader.getAttribute('src');
+      expect(src).toEqual('osu-ecampus-dark.svg');
     });
   });
 });
