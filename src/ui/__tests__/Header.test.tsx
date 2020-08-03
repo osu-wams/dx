@@ -2,11 +2,8 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import {
   render,
-  authUserClassification,
   mockEmployeeUser,
-  authUserAudienceOverride,
   authUser,
-  mockUser,
 } from 'src/util/test-utils';
 import Header from '../Header';
 import { mockGAEvent } from 'src/setupTests';

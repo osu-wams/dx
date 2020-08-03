@@ -38,19 +38,6 @@ describe('<Theme />', () => {
     expect(darkThemeButton).not.toBeChecked();
   });
 
-  it('renders with dark theme checked after click even', async () => {
-    render(<Theme />);
-    const lightThemeButton = screen.getByLabelText(/light/i);
-    expect(lightThemeButton).toBeInTheDocument();
-
-    const darkThemeButton = screen.getByLabelText(/dark/i);
-    expect(darkThemeButton).toBeInTheDocument();
-    userEvent.click(darkThemeButton);
-
-    expect(lightThemeButton).toBeChecked();
-    expect(darkThemeButton).not.toBeChecked();
-  });
-
   it('submits updates when a change is fired', async () => {
     render(<Theme />);
     const lightButton = screen.getByLabelText('Light');
