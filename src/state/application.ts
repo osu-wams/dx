@@ -5,16 +5,6 @@ import { Types } from '@osu-wams/lib';
 import { defaultTheme } from 'src/theme/themes';
 import { checkAffiliation, filterByCategory } from 'src/features/resources/resources-utils';
 
-const getInitialCategory = () => {
-  if (window.location.search.startsWith('?category=')) {
-    const terms = window.location.search.split('=');
-    if (terms.length === 2) {
-      return decodeURI(terms[1]);
-    }
-  }
-  return decodeURI(Resources.defaultCategoryName());
-};
-
 export const userState = atom<Types.UserState>({
   key: 'userState',
   default: { data: User.INITIAL_USER, loading: true, error: false },
@@ -40,7 +30,7 @@ export const resourceState = atom<{
 
 export const selectedCategoryState = atom<string>({
   key: 'selectedCategoryState',
-  default: getInitialCategory(),
+  default: '',
 });
 
 export const themeState = atom<string>({

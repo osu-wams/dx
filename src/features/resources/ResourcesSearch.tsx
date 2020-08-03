@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { breakpoints } from 'src/theme';
 import { SearchBar } from 'src/ui/SearchBar';
@@ -7,15 +7,19 @@ import {
   resourceSearchState,
   debouncedResourceSearchState,
 } from 'src/state/application';
-import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 const ResourcesSearch: React.FC<any> = () => {
-  const setQuery = useSetRecoilState(resourceSearchState);
+  const [query, setQuery] = useRecoilState(resourceSearchState);
   const [input, setInput] = useState('');
   const resetDebouncedQuery = useResetRecoilState(debouncedResourceSearchState);
   const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);
 
   const isDesktop = useMediaQuery({ query: `(min-width: ${breakpoints.small})` });
+
+  useEffect(() => {
+    setInput(query);
+  }, [query]);
 
   const onChange = (event) => {
     const newValue = event.target.value;

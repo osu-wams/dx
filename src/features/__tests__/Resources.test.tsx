@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitFor, screen, act } from '@testing-library/react';
+import { waitFor, screen } from '@testing-library/react';
 import {
   render,
   authUser,
@@ -12,7 +12,6 @@ import userEvent from '@testing-library/user-event';
 import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
-import { resourceUsage } from 'process';
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
@@ -165,7 +164,7 @@ describe('<Resources />', () => {
       expect(await screen.findByText(/Student Athletes/)).toBeInTheDocument();
       expect(await screen.findByText(/found 1 result/)).toBeInTheDocument();
       // Search input should be clear, 'noResults' should be gone
-      expect(searchInput.value).toEqual('');
+      await waitFor(() => expect(searchInput.value).toEqual(''));
     });
 
     it('should be able to reselect a category and get appropriate data back', async () => {
@@ -225,9 +224,9 @@ describe('<Resources />', () => {
       writable: true,
       value: location,
     });
-    const { findByText, featured, all } = renderResources();
 
-    expect(featured).not.toHaveClass('selected');
+    const { findByText, featured, all } = renderResources();
+    await waitFor(() => expect(featured).not.toHaveClass('selected'));
     expect(all).toHaveClass('selected');
     expect(await findByText(/Billing Information/)).toBeInTheDocument();
     expect(await findByText(/Student Jobs/)).toBeInTheDocument();
@@ -245,7 +244,7 @@ describe('<Resources />', () => {
     expect(all).toHaveClass('selected');
     // Back button causes window.onpopstate to fire and it would have the previously clicked category
     window.onpopstate!(new PopStateEvent('state', { state: { category: 'featured' } }));
-    expect(featured).toHaveClass('selected');
+    await waitFor(() => expect(featured).toHaveClass('selected'));
     expect(all).not.toHaveClass('selected');
   });
 

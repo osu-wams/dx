@@ -7,7 +7,7 @@ import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
 import ResourcesCategories from 'src/features/resources/ResourcesCategories';
 import ResourcesSearch from 'src/features/resources/ResourcesSearch';
 import ResourcesList from 'src/features/resources/ResourcesList';
-import { useCategories, useResources, User } from '@osu-wams/hooks';
+import { useCategories, useResources, User, Resources as HooksResources } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Event } from 'src/util/gaTracking';
@@ -23,6 +23,16 @@ import {
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 const { getAffiliation } = User;
+
+const getInitialCategory = () => {
+  if (window.location.search.startsWith('?category=')) {
+    const terms = window.location.search.split('=');
+    if (terms.length === 2) {
+      return decodeURI(terms[1]);
+    }
+  }
+  return decodeURI(HooksResources.defaultCategoryName());
+};
 
 // Resources Page with components to filter, search and favorite resources
 const Resources = () => {
@@ -101,6 +111,7 @@ const Resources = () => {
    */
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
+    setActiveCategory(getInitialCategory());
     window.onpopstate = function (e) {
       if (e.state) {
         if (e.state.category) setActiveCategory(decodeURI(e.state.category));

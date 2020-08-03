@@ -4,7 +4,7 @@ import { spacing } from 'src/theme';
 import CustomBtn from 'src/ui/CustomBtn';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
-import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { resourceSearchState, categoryState, selectedCategoryState } from 'src/state/application';
 
 /**
@@ -12,7 +12,7 @@ import { resourceSearchState, categoryState, selectedCategoryState } from 'src/s
  * Favorites category button is only rendered if the user has any favorite resources
  */
 const ResourceCategories = ({ hasFavorite }) => {
-  const setQuery = useSetRecoilState(resourceSearchState);
+  const resetQuery = useResetRecoilState(resourceSearchState);
   const categories = useRecoilValue(categoryState);
   const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);
 
@@ -53,7 +53,7 @@ const ResourceCategories = ({ hasFavorite }) => {
               clickHandler={() => {
                 setSelectedCategory(category.name);
                 // Clear search bar, since we are showing all results for the category
-                setQuery('');
+                resetQuery();
                 Event('resource-category', category.name);
               }}
               name="categories"
