@@ -111,7 +111,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
-    const duePartialText = `Due ${format(new Date(), 'dueAt')}`.slice(0, -2);
+    const duePartialText = `Due ${format(new Date(), 'dueAt')}`.slice(0, -3);
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
     const todayPlannerItem = screen.getByText(/Testo Planner Discussion/);

@@ -7,6 +7,17 @@ import { User } from '@osu-wams/lib';
 import { mobile, desktop } from 'src/util/useMediaQuery';
 import { RecoilRoot } from 'recoil';
 import { userState } from 'src/state/application';
+import { rest } from 'msw';
+import { server } from 'src/mocks/server';
+
+// Helper method to change the mock responses by MSW
+export const alterMock = (api: string, mock: any) => {
+  server.use(
+    rest.get(api, async (req, res, ctx) => {
+      return res(ctx.json(mock));
+    })
+  );
+};
 
 const { mockUser } = User;
 export const authUserAudienceOverride = mockUser.userAudienceOverride;
