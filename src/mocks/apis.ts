@@ -24,4 +24,4 @@ export const ACADEMIC_CALENDAR_API = events + 'academic-calendar';
 /**
  * Anouncements
  */
-export const ACADEMIC_ANNOUNCEMENTS_API = events + '*';
+export const ACADEMIC_ANNOUNCEMENTS_API = an + '*';
