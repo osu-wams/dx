@@ -5,6 +5,7 @@ import { borderRadius, fontSize, spacing, breakpoints } from 'src/theme';
 const MyDialog = styled(Dialog)<{ padding?: string }>`
   background: ${({ theme }) => theme.ui.myDialog.background};
   border-radius: ${borderRadius[16]};
+  border: 1px solid ${({theme}) => theme.ui.myDialog.details.color};
   .closeButton {
     float: right;
     margin-right: -1.5rem;
@@ -28,6 +29,9 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
     margin-top: -1rem;
     margin-bottom: 2rem;
   }
+  &[data-reach-dialog-content] {
+    ${(props) => (props.padding === 'false' ? 'padding: 0 0 1.5rem 0;' : '')}
+  }
   @media screen and (max-width: ${breakpoints.small}) {
     hr {
       margin: 0;
@@ -35,7 +39,7 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
     &[data-reach-dialog-content] {
       width: 100%;
       margin: 0;
-      ${(props) => (props.padding === 'false' ? 'padding: 0;' : '')}
+      ${(props) => (props.padding === 'false' ? 'padding: 0 0 1.5rem 0;' : '')}
       border-radius: 0;
     }
   }
@@ -55,6 +59,19 @@ const MyDialogFooter = styled.div`
   }
 `;
 
+const MyDialogImage = styled.img`
+  max-width: 100%;
+  @media (min-width: ${breakpoints.small}) {
+    border-radius: ${borderRadius[16]} ${borderRadius[16]} 0 0;
+  }
+`;
+
+const MyDialogContent = styled.main`
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+`;
+
 const MyDialogHeader = styled.div`
   padding: 1rem 1.5rem;
   border-bottom: 1px solid ${({ theme }) => theme.ui.myDialog.header.border};
@@ -69,5 +86,5 @@ const MyDialogHeader = styled.div`
   }
 `;
 
-export { MyDialogHeader, MyDialogFooter };
+export { MyDialogHeader, MyDialogContent, MyDialogFooter, MyDialogImage };
 export default MyDialog;

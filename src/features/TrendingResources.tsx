@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Types } from '@osu-wams/lib';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from 'src/ui/List';
 import { faFireAlt } from '@fortawesome/pro-light-svg-icons';
 import { useResources, useTrendingResources } from '@osu-wams/hooks';
-import { AppContext } from 'src/contexts/app-context';
 import { Event } from 'src/util/gaTracking';
 import { InternalLink } from 'src/ui/Link';
 import { ResourceItem } from './resources/ResourceItem';
 import { filteredTrendingResources } from './resources/resources-utils';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 export const TrendingResources = () => {
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const res = useResources();
   const trendingRes = useTrendingResources('7daysAgo');
   const [trendingResources, setTrendingResources] = useState<Types.Resource[]>([]);

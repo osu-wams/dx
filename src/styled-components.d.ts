@@ -12,6 +12,9 @@ declare module 'styled-components/macro' {
         color: string;
       };
       headerNavList: {
+        border: {
+          color: string;
+        };
         background: string;
         color: string;
         svg: {
@@ -33,6 +36,7 @@ declare module 'styled-components/macro' {
         background: string;
         color: string;
         hoverColor: string;
+        icon: string;
         popOver: {
           background: string;
           primaryNav: {
@@ -220,11 +224,6 @@ declare module 'styled-components/macro' {
           grade: {
             color: string;
           };
-          search: {
-            icon: {
-              color: string;
-            };
-          };
         };
         academicProgram: {
           first: {
@@ -340,12 +339,6 @@ declare module 'styled-components/macro' {
         icon: {
           color: string;
         };
-        search: {
-          input: {
-            background: string;
-          };
-          border: string;
-        };
       };
     };
     ui: {
@@ -429,6 +422,14 @@ declare module 'styled-components/macro' {
           };
         };
       };
+      featuredCard: {
+        title: {
+          color: string;
+        };
+        content: {
+          color: string;
+        };
+      };
       highlights: {
         card: {
           border: string;
@@ -485,6 +486,7 @@ declare module 'styled-components/macro' {
         color: string;
         item: {
           background: string;
+          border: string;
           header: {
             color: string;
           };
@@ -539,6 +541,18 @@ declare module 'styled-components/macro' {
           color: string;
         };
       };
+      search: {
+        input: {
+          color: string;
+          background: string;
+          border: {
+            color: string;
+          };
+        };
+        icon: {
+          color: string;
+        };
+      };
       subNav: {
         link: {
           borderBottom: string;
@@ -565,6 +579,14 @@ declare module 'styled-components/macro' {
           borderTop: string;
           stripedEvenChildren: {
             background: string;
+          };
+        };
+      };
+      text: {
+        lead: {
+          color: {
+            primary: string;
+            secondary: string;
           };
         };
       };

@@ -17,6 +17,8 @@ const alert = Color['lava-400'];
 const warn = Color['luminance-300'];
 const info = Color['stratosphere-400'];
 const success = Color['pine-400'];
+const dropdownDetail = Color.transparent;
+const listItemDetail = Color.transparent;
 const mainGridBackground = neutral100;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
@@ -42,6 +44,9 @@ export const light: ThemeConfiguration = {
       color: neutral550,
     },
     headerNavList: {
+      border: {
+        color: dropdownDetail,
+      },
       background: componentBackground,
       color: bodyText,
       svg: {
@@ -63,6 +68,7 @@ export const light: ThemeConfiguration = {
       background: Color.white,
       color: neutral550,
       hoverColor: primary,
+      icon: neutral550,
       popOver: {
         background: neutral800,
         primaryNav: {
@@ -250,11 +256,6 @@ export const light: ThemeConfiguration = {
         grade: {
           color: primary,
         },
-        search: {
-          icon: {
-            color: neutral600,
-          },
-        },
       },
       academicProgram: {
         first: {
@@ -370,12 +371,6 @@ export const light: ThemeConfiguration = {
       icon: {
         color: iconSecondary,
       },
-      search: {
-        input: {
-          background: componentBackground,
-        },
-        border: neutral200,
-      },
     },
   },
   ui: {
@@ -459,6 +454,14 @@ export const light: ThemeConfiguration = {
         },
       },
     },
+    featuredCard: {
+      title: {
+        color: neutral700,
+      },
+      content: {
+        color: neutral550,
+      },
+    },
     highlights: {
       card: {
         border: neutral200,
@@ -515,6 +518,7 @@ export const light: ThemeConfiguration = {
       color: neutral700,
       item: {
         background: Color.transparent,
+        border: listItemDetail,
         header: {
           color: neutral700,
         },
@@ -569,6 +573,18 @@ export const light: ThemeConfiguration = {
         color: primary,
       },
     },
+    search: {
+      input: {
+        color: neutral550,
+        background: componentBackground,
+        border: {
+          color: neutral400,
+        },
+      },
+      icon: {
+        color: neutral550,
+      },
+    },
     subNav: {
       link: {
         borderBottom: Color.transparent,
@@ -595,6 +611,14 @@ export const light: ThemeConfiguration = {
         borderTop: 'rgba(34, 36, 38, 0.15)',
         stripedEvenChildren: {
           background: '#f9fafb',
+        },
+      },
+    },
+    text: {
+      lead: {
+        color: {
+          primary: primary,
+          secondary: neutral550,
         },
       },
     },

@@ -14,7 +14,6 @@ import { Types } from '@osu-wams/lib';
 import Skeleton from 'react-loading-skeleton';
 import { List, ListItem, ListItemContent, ListItemDescription, ListItemText } from 'src/ui/List';
 import Icon from 'src/ui/Icon';
-import { AppContext } from 'src/contexts/app-context';
 import { ExternalLink } from 'src/ui/Link';
 import Url from 'src/util/externalUrls.data';
 import { Event } from 'src/util/gaTracking';
@@ -22,14 +21,16 @@ import { titleCase } from 'src/util/helpers';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import degreeImg from 'src/assets/program-of-study.svg';
 import { ThemeContext } from 'styled-components/macro';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const { usersCampus } = User;
 
 const AcademicProgram = () => {
   const themeContext = useContext(ThemeContext);
   const { data, loading }: { data: Types.Degree[]; loading: boolean } = useDegrees();
-  const { user } = React.useContext(AppContext);
-  const { campusName } = usersCampus(user);
+  const user = useRecoilValue(userState);
+  const { campusName } = usersCampus(user.data);
 
   const degreeData = {
     major: {
@@ -63,7 +64,7 @@ const AcademicProgram = () => {
     <EmptyState>
       <EmptyStateImage src={degreeImg} alt="" />
       <EmptyStateText>
-        You do not currently have a program of study. If you have recently enrolled or changed your
+        You do not currently have an academic program. If you have recently enrolled or changed your
         program, it may take a little while to appear.
       </EmptyStateText>
     </EmptyState>
@@ -114,7 +115,7 @@ const AcademicProgram = () => {
           <CardContent
             style={i === 0 ? { paddingBottom } : { borderTop }}
             className={`degree-card degree-card-${i}`}
-            key={d?.majors?.first?.major ?? 'undeclared'}
+            key={i}
           >
             <List>
               {d?.majors?.first?.major &&

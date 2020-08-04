@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { Types } from '@osu-wams/lib';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from 'src/ui/List';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
 import { useResources } from '@osu-wams/hooks';
-import { AppContext } from 'src/contexts/app-context';
 import { Event } from 'src/util/gaTracking';
 import FailedState from 'src/ui/FailedState';
 import { InternalLink } from 'src/ui/Link';
@@ -13,12 +12,14 @@ import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates'
 import { ResourceItem } from './resources/ResourceItem';
 import { activeFavoriteResources } from './resources/resources-utils';
 import favoritesImg from 'src/assets/favorites.svg';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 /**
  * Filters all resources to display a card with individuals FavoriteResources
  */
 export const FavoriteResources = () => {
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const res = useResources();
   const [favoriteResources, setFavoriteResources] = useState<Types.Resource[]>([]);
 

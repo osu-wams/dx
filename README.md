@@ -47,11 +47,9 @@ You need to modify package.json to work with the dx-monorepo locally:
 - Run `yarn install`
 - If there is a problem confirm your `yarn.lock` file calls your local version instead of the npm package
 
-## AppContext
+## Render helper
 
-The application is designed to set an application-wide context with data that will be used deep in the component tree. This data is queried once per session and is maintained throughout the lifecycle of the users experience. As such, in order to test components in isolation, the AppContext needs to be set during any `render` calls. This functionality has been baked into a testing utility and overrides `react-testing-library` render method. The override can be found at `src/util/test-utils.tsx`.
-
-**Tests should use this `render` method**:
+**Tests should use this `render` method provided by `src/util/test-utils.tsx`**:
 
     ...
     import { waitForElement } from '@testing-library/react';

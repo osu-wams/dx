@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styled from 'styled-components/macro';
 import { Link } from '@reach/router';
@@ -6,6 +6,9 @@ import { Event } from 'src/util/gaTracking';
 import logo from 'src/assets/osu-logo.svg';
 import ecampusLogo from 'src/assets/osu-ecampus.svg';
 import cascadesLogo from 'src/assets/osu-cascades.svg';
+import logoDark from 'src/assets/osu-logo-dark.svg';
+import ecampusLogoDark from 'src/assets/osu-ecampus-dark.svg';
+import cascadesLogoDark from 'src/assets/osu-cascades-dark.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { HeaderNav } from './HeaderNav';
@@ -14,8 +17,9 @@ import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { BetaBadge } from './Badge';
-import { AppContext } from 'src/contexts/app-context';
 import { arrayIncludes } from 'src/util/helpers';
+import { userState, themeState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -77,19 +81,29 @@ const Logo = styled.img`
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
  */
-const campusLogo = (user: Types.User) => {
-  const { campusCode } = usersCampus(user);
+const campusLogo = (user: Types.User, selectedTheme: string) => {
+  const isDarkMode = selectedTheme === 'dark';
   const osu = 'Oregon State University';
+  if (!user) return { image: isDarkMode ? logoDark : logo, alt: osu };
+
+  const { campusCode } = usersCampus(user);
   if (arrayIncludes(CAMPUS_CODES.ecampus, campusCode)) {
-    return { image: ecampusLogo, alt: `${osu} Ecampus` };
+    return {
+      image: isDarkMode ? ecampusLogoDark : ecampusLogo,
+      alt: `${osu} Ecampus`,
+    };
   }
   if (arrayIncludes(CAMPUS_CODES.bend, campusCode)) {
-    return { image: cascadesLogo, alt: `${osu} Cascades` };
+    return {
+      image: isDarkMode ? cascadesLogoDark : cascadesLogo,
+      alt: `${osu} Cascades`,
+    };
   }
-  return { image: logo, alt: osu };
+
+  return { image: isDarkMode ? logoDark : logo, alt: osu };
 };
 
-const mainTitle = (user) => {
+const mainTitle = (user: Types.User) => {
   let title = 'Student';
   if (!user) return title;
   if (UserUtil.getAffiliation(user) === User.AFFILIATIONS.employee) {
@@ -99,9 +113,10 @@ const mainTitle = (user) => {
 };
 
 const Header = () => {
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const title = mainTitle(user.data);
-  const { image, alt } = campusLogo(user.data);
+  const theme = useRecoilValue(themeState);
+  const { image, alt } = campusLogo(user.data, theme);
   return (
     <>
       <HeaderWrapper>

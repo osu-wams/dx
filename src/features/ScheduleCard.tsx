@@ -1,8 +1,8 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { useAcademicCalendarEvents, useCourseSchedule, usePlannerItems } from '@osu-wams/hooks';
+import { useAcademicCalendarEvents, useCourseSchedule } from '@osu-wams/hooks';
 import { getNextFiveDays, coursesOnDay, startDate } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
@@ -13,7 +13,8 @@ import {
 import { format } from '../util/helpers';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
-import { AppContext } from 'src/contexts/app-context';
+import { userState, plannerItemState } from 'src/state/application';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 /**
  * Course Schedule Card
@@ -21,15 +22,8 @@ import { AppContext } from 'src/contexts/app-context';
  * Displays courses for the next 5 days, filterable by day.
  */
 const ScheduleCard = () => {
-  const { user } = useContext(AppContext);
-  const plannerItems = usePlannerItems(() => {
-    if (user.setUser && user.isCanvasOptIn) {
-      user.setUser((prevUser) => ({
-        ...prevUser,
-        data: { ...prevUser.data, isCanvasOptIn: false },
-      }));
-    }
-  });
+  const [user] = useRecoilState(userState);
+  const plannerItems = useRecoilValue(plannerItemState);
   const courses = useCourseSchedule();
   const nextFiveDays = getNextFiveDays(startDate());
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
@@ -94,9 +88,9 @@ const ScheduleCard = () => {
           setSelectedDay={setSelectedDay}
           daysWithEvents={daysWithEvents}
         />
-        {plannerItems.loading && <Skeleton count={4} />}
+        {plannerItems.isLoading && <Skeleton count={4} />}
         <div aria-live="assertive" aria-atomic="true">
-          {!courses.loading && !plannerItems.loading && (
+          {!courses.loading && !plannerItems.isLoading && (
             <ScheduleCardAssignments
               courseList={courses.data}
               selectedPlannerItems={selectedPlannerItems}

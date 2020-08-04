@@ -97,3 +97,19 @@ export const formatPhone = (phone: string | null) => {
 export const arrayIncludes = (array: string[], value: string) => {
   return array.map((a) => a.toLowerCase()).includes(value.toLowerCase());
 };
+
+// Converts an array of strings into a comma separated list
+//  Returns element if only 1 item
+export const commaList = (list: any, emptyTerm?: string) => {
+  // List is null, false, or empty return an empty string or optional term
+  if (list?.length === 0 || !list) {
+    return emptyTerm ?? '';
+  }
+
+  // Returns comma separated list as a string or the single string
+  if (list && Array.isArray(list) && list.length > 1) {
+    return list.join(', ');
+  } else {
+    return list.toString();
+  }
+};

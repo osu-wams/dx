@@ -5,11 +5,14 @@ import Affiliations from './settings/Affiliations';
 import Theme from './settings/Theme';
 import Campus from './settings/Campus';
 import { ThemeProvider } from '@material-ui/core/styles';
-import MUITheme from 'src/ui/MUITheme';
+import getMUITheme from 'src/ui/MUITheme';
+import { themeState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const Settings: FC = () => {
+  const theme = useRecoilValue(themeState);
   return (
-    <ThemeProvider theme={MUITheme}>
+    <ThemeProvider theme={getMUITheme(theme)}>
       <Card>
         <CardHeader title="Dashboard Settings" badge={<CardIcon icon={faUserCog} />} />
         <CardContent>

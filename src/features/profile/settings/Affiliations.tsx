@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components/macro';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { fontSize } from 'src/theme';
-import { AppContext } from 'src/contexts/app-context';
+import { userState } from 'src/state/application';
+import { useRecoilState } from 'recoil';
 
 const { postSettings, usersSettings, settingIsOverridden } = User;
 
@@ -17,17 +18,29 @@ const Label = styled.span`
 `;
 
 export const SwitchesGroup = () => {
-  const { user } = useContext(AppContext);
-  const [state, setState] = useState({ firstYear: false, international: false, graduate: false });
+  const [user, setUser] = useRecoilState(userState);
+  const [state, setState] = useState<{
+    firstYear: boolean;
+    graduate: boolean;
+    international: boolean;
+  }>({ firstYear: false, graduate: false, international: false });
 
   useEffect(() => {
-    if (user.data.audienceOverride) {
-      const { firstYear, graduate, international } = user.data.audienceOverride;
-      setState({
-        firstYear: firstYear ?? false,
-        graduate: graduate ?? false,
-        international: international ?? false,
-      });
+    if (user.data) {
+      if (user.data.audienceOverride && Object.keys(user.data.audienceOverride).length) {
+        const { firstYear, graduate, international } = user.data.audienceOverride;
+        setState({
+          firstYear: firstYear ?? false,
+          graduate: graduate ?? false,
+          international: international ?? false,
+        });
+      } else {
+        setState({
+          firstYear: User.isFirstYear(user.data),
+          graduate: User.isGraduate(user.data),
+          international: User.isInternational(user.data),
+        });
+      }
     }
   }, [user.data]);
 
@@ -37,7 +50,7 @@ export const SwitchesGroup = () => {
     settings.audienceOverride![name] = checked;
 
     postSettings({ audienceOverride: settings.audienceOverride }).then((d) => {
-      user.setUser({
+      setUser({
         ...user,
         data: { ...user.data, ...settings },
       });
@@ -50,17 +63,18 @@ export const SwitchesGroup = () => {
       <FormGroup>
         <FormControlLabel
           control={
-            <Switch
-              data-testid="firstYear"
-              checked={state.firstYear}
-              onChange={handleChange('firstYear')}
-            />
+            <Switch checked={User.isFirstYear(user.data)} onChange={handleChange('firstYear')} />
           }
           label={
             <Label>
               First Year Student
               <span>
-                {settingIsOverridden(user.data, 'firstYear', state.firstYear, false)
+                {settingIsOverridden(
+                  user.data,
+                  'firstYear',
+                  state.firstYear,
+                  User.isFirstYear(user.data)
+                )
                   ? ' (Override) '
                   : ''}
               </span>
@@ -70,8 +84,7 @@ export const SwitchesGroup = () => {
         <FormControlLabel
           control={
             <Switch
-              data-testid="international"
-              checked={state.international}
+              checked={User.isInternational(user.data)}
               onChange={handleChange('international')}
             />
           }
@@ -79,7 +92,12 @@ export const SwitchesGroup = () => {
             <Label>
               International Student
               <span>
-                {settingIsOverridden(user.data, 'international', state.international, false)
+                {settingIsOverridden(
+                  user.data,
+                  'international',
+                  state.international,
+                  User.isInternational(user.data)
+                )
                   ? ' (Override) '
                   : ''}
               </span>
@@ -88,17 +106,18 @@ export const SwitchesGroup = () => {
         />
         <FormControlLabel
           control={
-            <Switch
-              data-testid="graduate"
-              checked={state.graduate}
-              onChange={handleChange('graduate')}
-            />
+            <Switch checked={User.isGraduate(user.data)} onChange={handleChange('graduate')} />
           }
           label={
             <Label>
               Graduate Student
               <span>
-                {settingIsOverridden(user.data, 'graduate', state.graduate, false)
+                {settingIsOverridden(
+                  user.data,
+                  'graduate',
+                  state.graduate,
+                  User.isGraduate(user.data)
+                )
                   ? ' (Override) '
                   : ''}
               </span>

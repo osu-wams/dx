@@ -1,17 +1,27 @@
 import React from 'react';
-import { waitFor } from '@testing-library/react';
+import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithUserContext, renderWithAllContexts } from 'src/util/test-utils';
+import { renderWithUserContext, render, renderWithAllContexts } from 'src/util/test-utils';
 import Footer from '../Footer';
 import { mockGAEvent } from 'src/setupTests';
-import { authUser } from 'src/util/test-utils';
+import {
+  mockAdminUser,
+  authUser,
+  mockEmployeeUser,
+  mockStudentEmployeeUser,
+  mockGradUser,
+} from 'src/util/test-utils';
 
 const mockGetMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
+const mockUseAppVersions = jest.fn();
+const mockUser = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
+    useAppVersions: () => mockUseAppVersions(),
     Masquerade: {
       getMasqueradeUser: () => mockGetMasqueradeUser(),
       postMasqueradeUser: () => mockPostMasqueradeUser(),
@@ -23,28 +33,35 @@ beforeEach(() => {
   Storage.prototype.clear = jest.fn();
   mockGetMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo' });
   mockPostMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo Post' });
+  mockUser.mockReturnValue(authUser);
+  mockUseAppVersions.mockReturnValue({
+    data: {
+      serverVersion: 'server-test-123',
+      appVersion: 'client-test-123',
+    },
+  });
 });
 
 it('Masquerade link is present for administrators and they can open and close the modal', async () => {
-  const { findByText, findByTestId, queryByTestId } = renderWithAllContexts(<Footer />);
+  render(<Footer />, { user: mockAdminUser });
 
   //Profile icon click - this text is visually hidden
-  const maskLink = await findByText('Masquerade');
+  const maskLink = await screen.findByText('Masquerade');
   userEvent.click(maskLink);
-  const maskOverlay = await findByTestId('masquerade-dialog');
+  const maskOverlay = await screen.findByTestId('masquerade-dialog');
 
   // Masquerade overlay shows up
   await waitFor(() => expect(maskOverlay).toBeInTheDocument());
 
   // Make sure we can close to overlay too
-  const cancelBtn = await findByText('Cancel');
+  const cancelBtn = await screen.findByText('Cancel');
   userEvent.click(cancelBtn);
 
-  await waitFor(() => expect(queryByTestId('masquerade-dialog')).toBeNull());
+  await waitFor(() => expect(screen.queryByTestId('masquerade-dialog')).toBeNull());
 });
 
 it('As an administrator, I can click "masquerade" and trigger the api calls', async () => {
-  const { findByText, findByTestId } = renderWithUserContext(<Footer />);
+  const { findByText, findByTestId } = renderWithUserContext(<Footer />, { user: mockAdminUser });
   //Profile icon click - this text is visually hidden
   const maskLink = await findByText('Masquerade');
   userEvent.click(maskLink);
@@ -56,7 +73,7 @@ it('As an administrator, I can click "masquerade" and trigger the api calls', as
   // Make sure we can close to overlay too
   const masqueradeSubmit = document.querySelector(`button[type='submit']`) as HTMLElement;
   const idInput = document.getElementById('osu-id') as HTMLInputElement;
-  await userEvent.type(idInput, '111');
+  userEvent.type(idInput, '111');
   userEvent.click(masqueradeSubmit);
 
   expect(Storage.prototype.clear).toHaveBeenCalledTimes(1);
@@ -64,13 +81,12 @@ it('As an administrator, I can click "masquerade" and trigger the api calls', as
 });
 
 it('Links to be present and tracked in Google Analytics', async () => {
-  const { getByText } = renderWithUserContext(<Footer />);
+  const { getByText } = renderWithUserContext(<Footer />, { user: mockUser() });
   //Profile icon click - this text is visually hidden
   const supportLink = getByText('Get Support');
   const feedbackLink = getByText('Give Feedback');
   const copyrightLink = getByText('Copyright');
   const disclaimerLink = getByText('Disclaimer');
-  const maskLink = getByText('Masquerade');
   const accessibilityLink = getByText(/Accessibility Information/);
 
   userEvent.click(supportLink);
@@ -78,13 +94,18 @@ it('Links to be present and tracked in Google Analytics', async () => {
   userEvent.click(copyrightLink);
   userEvent.click(disclaimerLink);
   userEvent.click(accessibilityLink);
-  userEvent.click(maskLink);
 
-  await waitFor(() => expect(mockGAEvent).toHaveBeenCalledTimes(6));
+  await waitFor(() => expect(mockGAEvent).toHaveBeenCalledTimes(5));
 });
 
 it('Application deployed versions', async () => {
-  const { getByText } = renderWithAllContexts(<Footer />);
+  mockUseAppVersions.mockReturnValue({
+    data: {
+      serverVersion: 'server-test-123',
+      appVersion: 'client-test-123',
+    },
+  });
+  const { getByText } = renderWithAllContexts(<Footer />, { user: mockAdminUser });
 
   const appText = getByText('server-test-123');
   const serverText = getByText('client-test-123');
@@ -92,17 +113,22 @@ it('Application deployed versions', async () => {
   expect(serverText).toBeInTheDocument();
 });
 
-describe('as a user who does not belong to masquerade group', () => {
-  let regularUser;
-  beforeEach(() => {
-    regularUser = authUser;
-    regularUser.data.groups = [];
+describe('Masquerade', () => {
+  [authUser, mockStudentEmployeeUser, mockEmployeeUser, mockGradUser].forEach((user) => {
+    it('Masquerade link should not be present for ' + user, async () => {
+      const { queryByText } = renderWithUserContext(<Footer />, { user: user });
+
+      const maskLink = queryByText('Masquerade');
+      expect(maskLink).not.toBeInTheDocument();
+    });
   });
 
-  it('Masquerade link should not be present if user is not an admin', async () => {
-    const { queryByText } = renderWithUserContext(<Footer />, { user: regularUser });
+  it('Masquerade link should be present for administrators with masquerade access', async () => {
+    render(<Footer />, { user: mockAdminUser });
 
-    const maskLink = queryByText('Masquerade');
-    expect(maskLink).not.toBeInTheDocument();
+    const maskLink = screen.getByText('Masquerade');
+    expect(maskLink).toBeInTheDocument();
+    userEvent.click(maskLink);
+    await waitFor(() => expect(mockGAEvent).toHaveBeenCalledTimes(1));
   });
 });

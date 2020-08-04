@@ -1,11 +1,18 @@
 import React from 'react';
-import { waitFor, screen } from '@testing-library/react';
-import { render, authUser, mockEmployeeUser, renderWithUserContext } from 'src/util/test-utils';
+import { waitFor, screen, act } from '@testing-library/react';
+import {
+  render,
+  authUser,
+  mockEmployeeUser,
+  renderWithUserContext,
+  mockGradUser,
+} from 'src/util/test-utils';
 import { Context as ResponsiveContext } from 'react-responsive';
 import userEvent from '@testing-library/user-event';
 import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
+import { resourceUsage } from 'process';
 
 const mockUseResources = jest.fn();
 const mockUseCategories = jest.fn();
@@ -63,108 +70,127 @@ describe('<Resources />', () => {
     mockDefaultCategory.mockReturnValue(defaultCategory);
   });
 
-  it('should not autoFocus the search input on mobile', () => {
-    const { searchInput } = renderResources();
-    expect(searchInput).not.toHaveFocus();
-  });
-
-  it('should autoFocus on desktop', () => {
-    renderWithUserContext(
-      <ResponsiveContext.Provider value={{ width: '768' }}>
-        <ResourcesComponent />
-      </ResponsiveContext.Provider>
-    );
-    const searchInput = screen.getByPlaceholderText('Find resources') as HTMLInputElement;
-    expect(searchInput).toHaveFocus();
-  });
-
-  it('should display the title Resources', () => {
-    renderResources();
-    expect(screen.getByText('Resources', { selector: 'h1' })).toBeInTheDocument();
-  });
-
-  it('should have the Featured tag selected', async () => {
-    const { all, featured } = renderResources();
-
-    await waitFor(() => expect(featured).toHaveClass('selected'));
-    expect(all).not.toHaveClass('selected');
-    expect(screen.getByText(/Billing Information/)).toBeInTheDocument();
-    expect(screen.queryByText(/Webcams/)).toBeNull();
-  });
-
-  it('Should have a link to skip to results with matching ID in the result container', async () => {
-    const { getByText, findByTestId } = renderResources();
-    const skipLink = getByText('Skip to results');
-    const anchor = skipLink.getAttribute('href')!.slice(1);
-    const results = await findByTestId('resourcesResults');
-    const resultsId = results.getAttribute('id');
-
-    expect(anchor).toEqual(resultsId);
-  });
-
-  it('should have "Featured" selected and clickable All category that gets appropriate results', async () => {
-    mockDefaultCategory.mockReturnValue('All');
-    const { findByText, all, featured } = renderResources();
-
-    expect(featured).toHaveClass('selected'); // default selected
-
-    userEvent.click(all);
-
-    expect(featured).not.toHaveClass('selected');
-    expect(all).toHaveClass('selected');
-    expect(await findByText(/Student Jobs/)).toBeInTheDocument();
-    expect(await findByText(/Billing Information/)).toBeInTheDocument();
-  });
-
-  it('should have clickable categories that report to GoogleAnalytics', async () => {
-    renderResources();
-    const BillingInformationResource = screen.getByText(/Billing Information/);
-    expect(BillingInformationResource).not.toBeNull();
-    userEvent.click(BillingInformationResource);
-    expect(mockGAEvent).toHaveBeenCalledTimes(1);
-    expect(mockTrendingEvent).toHaveBeenCalledTimes(1);
-  });
-
-  it('should have clickable categories that will not report as a trending resource', async () => {
-    mockDefaultCategory.mockReturnValue('All');
-    mockUseResources.mockReturnValue({
-      ...resourcesData,
-      data: [{ ...resourcesData.data[0], excludeTrending: true, locations: ['Corvallis', 'Bend'] }],
+  describe('Components', () => {
+    it('should display the title Resources', () => {
+      renderResources();
+      expect(screen.getByText('Resources', { selector: 'h1' })).toBeInTheDocument();
     });
-    renderResources();
-    const nonTrendingResource = screen.getByText(/Testo/);
-    expect(nonTrendingResource).not.toBeNull();
-    userEvent.click(nonTrendingResource);
-    expect(mockGAEvent).toHaveBeenCalledTimes(1);
-    expect(mockTrendingEvent).not.toHaveBeenCalledTimes(1);
+
+    it('should not autoFocus the search input on mobile', () => {
+      const { searchInput } = renderResources();
+      expect(searchInput).not.toHaveFocus();
+    });
+
+    it('should autoFocus on desktop', () => {
+      renderWithUserContext(
+        <ResponsiveContext.Provider value={{ width: '768' }}>
+          <ResourcesComponent />
+        </ResponsiveContext.Provider>
+      );
+      const searchInput = screen.getByPlaceholderText('Find resources') as HTMLInputElement;
+      expect(searchInput).toHaveFocus();
+    });
+
+    it('Should have a link to skip to results with matching ID in the result container', async () => {
+      const { getByText, findByTestId } = renderResources();
+      const skipLink = getByText('Skip to results');
+      const anchor = skipLink.getAttribute('href')!.slice(1);
+      const results = await findByTestId('resourcesResults');
+      const resultsId = results.getAttribute('id');
+
+      expect(anchor).toEqual(resultsId);
+    });
+
+    it('should load with the "Featured" category selected and results filtered accordingly', async () => {
+      const { all, featured } = renderResources();
+
+      await waitFor(() => expect(featured).toHaveClass('selected'));
+      expect(all).not.toHaveClass('selected');
+      expect(screen.getByText(/Billing Information/)).toBeInTheDocument();
+      expect(screen.queryByText(/Webcams/)).toBeNull();
+    });
   });
 
-  it('should empty input and get results for that category only when clicking category link', async () => {
-    mockDefaultCategory.mockReturnValue(defaultCategory);
-    const { searchInput } = renderResources();
+  describe('Category interactions', () => {
+    it('should have "Featured" selected and clickable All category that gets appropriate results', async () => {
+      mockDefaultCategory.mockReturnValue('All');
+      const { findByText, all, featured } = renderResources();
 
-    const academic = screen.getByLabelText('Academic');
+      expect(featured).toHaveClass('selected'); // default selected
 
-    // Search input value changed to "noResults"
-    await userEvent.type(searchInput, 'noResults');
+      userEvent.click(all);
 
-    expect(await screen.findByText(/found 0 results/)).toBeInTheDocument();
-    userEvent.click(academic);
-    expect(await screen.findByText(/Student Athletes/)).toBeInTheDocument();
-    expect(await screen.findByText(/found 1 result/)).toBeInTheDocument();
-    // Search input should be clear, 'noResults' should be gone
-    expect(searchInput.value).toEqual('');
+      expect(featured).not.toHaveClass('selected');
+      expect(all).toHaveClass('selected');
+      expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+      expect(await findByText(/Billing Information/)).toBeInTheDocument();
+    });
+
+    it('should have clickable categories that report to GoogleAnalytics', async () => {
+      renderResources();
+      const BillingInformationResource = screen.getByText(/Billing Information/);
+      expect(BillingInformationResource).not.toBeNull();
+      userEvent.click(BillingInformationResource);
+      expect(mockGAEvent).toHaveBeenCalledTimes(1);
+      expect(mockTrendingEvent).toHaveBeenCalledTimes(1);
+    });
+
+    it('should have clickable categories that will not report as a trending resource', async () => {
+      mockDefaultCategory.mockReturnValue('All');
+      mockUseResources.mockReturnValue({
+        ...resourcesData,
+        data: [
+          { ...resourcesData.data[0], excludeTrending: true, locations: ['Corvallis', 'Bend'] },
+        ],
+      });
+      renderResources();
+      const nonTrendingResource = screen.getByText(/Testo/);
+      expect(nonTrendingResource).not.toBeNull();
+      userEvent.click(nonTrendingResource);
+      expect(mockGAEvent).toHaveBeenCalledTimes(1);
+      expect(mockTrendingEvent).not.toHaveBeenCalledTimes(1);
+    });
+
+    it('should empty input and get results for that category only when clicking category link', async () => {
+      mockDefaultCategory.mockReturnValue(defaultCategory);
+      const { searchInput } = renderResources();
+
+      const academic = screen.getByLabelText('Academic');
+
+      // Search input value changed to "noResults"
+      await userEvent.type(searchInput, 'noResults');
+
+      expect(await screen.findByText(/found 0 results/)).toBeInTheDocument();
+      userEvent.click(academic);
+      expect(await screen.findByText(/Student Athletes/)).toBeInTheDocument();
+      expect(await screen.findByText(/found 1 result/)).toBeInTheDocument();
+      // Search input should be clear, 'noResults' should be gone
+      expect(searchInput.value).toEqual('');
+    });
+
+    it('should be able to reselect a category and get appropriate data back', async () => {
+      const { all } = renderResources();
+
+      const academic = screen.getByLabelText('Academic');
+
+      userEvent.click(all);
+      userEvent.click(academic);
+      expect(academic).toHaveClass('selected');
+      expect(all).not.toHaveClass('selected');
+      expect(await screen.findByText(/Student Athletes/)).toBeInTheDocument();
+      expect(screen.queryByText(/Billing Information/)).toBeNull();
+    });
   });
 
   it('Changes Search term should re-run the search effectively', async () => {
     const { searchInput } = renderResources();
     const badQuery = 'billingNotThere';
 
-    await userEvent.type(searchInput, badQuery);
+    userEvent.type(searchInput, badQuery);
 
     expect(await screen.findByText(/found 0 results/)).toBeInTheDocument();
     expect(screen.queryByText(/Billing Information/)).toBeNull();
-    expect(mockGAEvent).toHaveBeenCalledTimes(badQuery.length + 1);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
 
     // We need to clear the input value if not the below interaction sits on top of the previous
     searchInput.value = '';
@@ -172,6 +198,7 @@ describe('<Resources />', () => {
     await userEvent.type(searchInput, 'billing');
 
     expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('searches for case-insensitive synonyms', async () => {
@@ -235,6 +262,21 @@ describe('<Resources />', () => {
     expect(all).not.toHaveClass('selected');
   });
 
+  it('should move to the All category when searching', async () => {
+    const { featured, all, searchInput } = renderResources();
+
+    expect(featured).toHaveClass('selected');
+    expect(all).not.toHaveClass('selected');
+    await userEvent.type(searchInput, 'student job');
+    expect(await screen.findByText(/found 1 result/)).toBeInTheDocument();
+    expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
+
+    expect(featured).not.toHaveClass('selected');
+    expect(all).toHaveClass('selected');
+
+    expect(screen.queryByText(/Billing Information/)).toBeNull();
+  });
+
   describe('Favorite Resources tests', () => {
     it('should have favorites category when user has active favorites resources', async () => {
       renderResources();
@@ -257,8 +299,8 @@ describe('<Resources />', () => {
       // checking for el to avoid element might be null error
       el ? userEvent.click(el) : null;
       expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
-      expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
-      expect(mockGAEvent).toHaveBeenCalledTimes(2);
+      expect(authUser.refreshFavorites).toHaveBeenCalledTimes(1);
+      expect(mockGAEvent).toHaveBeenCalledTimes(1);
     });
 
     it('should not find the favorites category button when user does not have favorites resources', async () => {
@@ -267,21 +309,6 @@ describe('<Resources />', () => {
 
       expect(screen.queryByText(/favorites/i)).toBeNull();
     });
-  });
-
-  it('should move to the All category when searching', async () => {
-    const { featured, all, searchInput } = renderResources();
-
-    expect(featured).toHaveClass('selected');
-    expect(all).not.toHaveClass('selected');
-    await userEvent.type(searchInput, 'student job');
-    expect(await screen.findByText(/found 1 result/)).toBeInTheDocument();
-    expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
-
-    expect(featured).not.toHaveClass('selected');
-    expect(all).toHaveClass('selected');
-
-    expect(screen.queryByText(/Billing Information/)).toBeNull();
   });
 
   describe('with audiences', () => {
@@ -293,6 +320,34 @@ describe('<Resources />', () => {
       expect(all).toHaveClass('selected');
       expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
       expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
+    });
+  });
+
+  describe('Graduate Student', () => {
+    beforeEach(() => {
+      const { all } = renderResources(mockGradUser);
+      userEvent.click(all);
+    });
+
+    it('finds 3 total results that apply to them', async () => {
+      expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
+    });
+
+    it('finds "Graduate Student Only" item but not "Student Jobs" since that is tagged undegraduate', async () => {
+      expect(await screen.findByText(/Graduate Student Only/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Student Jobs/i)).toBeNull();
+    });
+  });
+
+  describe('Undergraduate Student', () => {
+    beforeEach(() => {
+      const { all } = renderResources();
+      userEvent.click(all);
+    });
+
+    it('finds "Student Jobs" since that is tagged undegraduate, but not "Graduate Student Only"', async () => {
+      expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Graduate Student Only/i)).toBeNull();
     });
   });
 
@@ -344,10 +399,10 @@ describe('<Resources />', () => {
     it('cannot find "Listservs" when searching as a Student, but finds "Student Jobs"', async () => {
       const { searchInput } = renderResources();
 
-      await userEvent.type(searchInput, 'student job');
+      userEvent.type(searchInput, 'student job');
       expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
 
-      await userEvent.type(searchInput, 'Listservs');
+      userEvent.type(searchInput, 'Listservs');
       expect(screen.queryByText(/Listservs/)).toBeNull();
     });
 
@@ -365,12 +420,11 @@ describe('<Resources />', () => {
 
     it('finds the 3 student resources and cannot find Listservs employee resource', async () => {
       const { all } = renderResources();
-
-      await userEvent.click(all);
+      userEvent.click(all);
       expect(all).toHaveClass('selected');
-      expect(await screen.findByText(/found 3 results/)).toBeInTheDocument();
-      expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
-      expect(screen.queryByText(/Listservs/)).toBeNull();
+      expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
+      expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Listservs/i)).toBeNull();
     });
   });
 });

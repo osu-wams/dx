@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   CardSection,
   SectionHeader,
@@ -9,9 +9,10 @@ import {
 import assignment from 'src/assets/assignment.svg';
 import { List } from 'src/ui/List';
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
-import { AppContext } from 'src/contexts/app-context';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
 import { Types } from '@osu-wams/lib';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const ScheduleCardAssignments = ({
   selectedPlannerItems,
@@ -20,7 +21,7 @@ const ScheduleCardAssignments = ({
   selectedPlannerItems: Types.PlannerItem[];
   courseList: Types.CourseSchedule[];
 }) => {
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
 
   const noAssignmentsDue = () => (
     <NoItems as="li">

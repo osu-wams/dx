@@ -1,22 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Fieldset, Legend } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { titleCase } from 'src/util/helpers';
-import { defaultTheme } from 'src/theme/themes';
-import { AppContext } from 'src/contexts/app-context';
+import { defaultTheme, themesLookup } from 'src/theme/themes';
+import { useRecoilState } from 'recoil';
+import { userState, themeState } from 'src/state/application';
 
 const { postSettings, usersSettings } = User;
 
 export const RadioButtonsGroup = () => {
-  const { user, setTheme, themes } = useContext(AppContext);
+  const themes = Object.keys(themesLookup);
+  const [theme, setTheme] = useRecoilState(themeState); // eslint-disable-line
+  const [user, setUser] = useRecoilState(userState);
   const [value, setValue] = useState(defaultTheme);
 
   useEffect(() => {
-    setValue(user.data.theme || defaultTheme);
-  }, [user.data]);
+    setValue(theme);
+  }, [theme]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = (event.target as HTMLInputElement).value;
@@ -24,7 +27,7 @@ export const RadioButtonsGroup = () => {
     settings.theme = selectedValue;
 
     postSettings({ theme: selectedValue }).then((d) => {
-      user.setUser((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
+      setUser((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
       setTheme(selectedValue);
     });
   };

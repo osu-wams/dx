@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -7,7 +7,8 @@ import { Fieldset, Legend } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { titleCase } from 'src/util/helpers';
 import { fontSize } from 'src/theme';
-import { AppContext } from 'src/contexts/app-context';
+import { userState } from 'src/state/application';
+import { useRecoilState } from 'recoil';
 
 const { CAMPUS_CODES, postSettings, settingIsDefault, usersSettings, DEFAULT_CAMPUS } = User;
 
@@ -19,7 +20,7 @@ const Label = styled.span`
 `;
 
 export const RadioButtonsGroup = () => {
-  const { user } = useContext(AppContext);
+  const [user, setUser] = useRecoilState(userState);
   const [value, setValue] = useState(DEFAULT_CAMPUS);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export const RadioButtonsGroup = () => {
     settings.audienceOverride!.campusCode = selectedValue;
 
     postSettings({ audienceOverride: settings.audienceOverride }).then((d) => {
-      user.setUser({
+      setUser({
         ...user,
         data: { ...user.data, ...settings },
       });

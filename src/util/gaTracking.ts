@@ -54,4 +54,8 @@ export type IComponents =
   | 'canvas-auth'
   | 'badge'
   | 'it-system-status'
-  | 'it-system-status-sticky';
+  | 'it-system-status-sticky'
+  | 'training'
+  | 'training-tags'
+  | 'training-search'
+  | 'training-search-failed';

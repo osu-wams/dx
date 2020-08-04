@@ -6,6 +6,7 @@ import {
   singularPlural,
   formatPhone,
   arrayIncludes,
+  commaList,
 } from '../helpers';
 
 describe('titleCase', () => {
@@ -110,5 +111,43 @@ describe('arrayIncludes', () => {
     ${{ array: ['A'], value: 'a' }} | ${true}
   `('finds case-insensitive array inclusion', ({ input, expected }) => {
     expect(arrayIncludes(input.array, input.value)).toBe(expected);
+  });
+});
+
+describe('commaList', () => {
+  const array1 = ['car'];
+  const array2 = ['car', 'boat'];
+  const array0 = [];
+  const string = 'car';
+
+  // optional empty parameter
+  const empty = 'empty';
+
+  it('Array with 1 item, returns no comma', () => {
+    expect(commaList(array1)).toBe('car');
+    expect(commaList(array1, empty)).toBe('car');
+  });
+
+  it('Array with 2 items, returns comma separated string', () => {
+    expect(commaList(array2)).toBe('car, boat');
+    expect(commaList(array2, empty)).toBe('car, boat');
+  });
+
+  it('If a string is entered it returns the string', () => {
+    expect(commaList(string)).toBe('car');
+    expect(commaList(string, empty)).toBe('car');
+  });
+
+  it('If an empty array returns empty string or the optional parameter', () => {
+    expect(commaList(array0)).toBe('');
+    expect(commaList(array0, empty)).toBe(empty);
+  });
+
+  it('If false or null is passed', () => {
+    expect(commaList(false)).toBe('');
+    expect(commaList(null)).toBe('');
+    expect(commaList(undefined)).toBe('');
+    expect(commaList(null, empty)).toBe(empty);
+    expect(commaList(false, empty)).toBe(empty);
   });
 });

@@ -9,7 +9,8 @@ import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
 import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
-import { AppContext } from 'src/contexts/app-context';
+import { useRecoilValue } from 'recoil';
+import { infoButtonState } from 'src/state/application';
 
 const DialogHeader = styled.div`
   display: flex;
@@ -32,7 +33,7 @@ const DialogContent = styled.div`
 
 const InfoButton = (props) => {
   const themeContext = useContext(ThemeContext);
-  const { infoButtonData } = useContext(AppContext);
+  const infoButtonData = useRecoilValue(infoButtonState);
   const [dialogVisible, toggleDialog] = useState(false);
   const [currentButton, setButton] = useState<InfoButtonState | null>(null);
 

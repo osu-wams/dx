@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { Title } from 'src/ui/PageTitle';
 import { Types } from '@osu-wams/lib';
@@ -11,8 +11,9 @@ import {
 import EventCard from './EventCard';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
-import { AppContext } from 'src/contexts/app-context';
 import { arrayIncludes } from 'src/util/helpers';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 const {
   hasAudience,
@@ -76,7 +77,7 @@ const filterEmployeeEvents = (
 
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<any>([]);
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const studentExperienceEvents = useStudentExperienceEvents();
   const employeeEvents = useEmployeeEvents();
 

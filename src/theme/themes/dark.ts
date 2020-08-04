@@ -13,18 +13,21 @@ const neutral800 = Color['neutral-200'];
 const bodyText = neutral700;
 const bodyBackground = neutral200;
 const primary = Color['orange-400'];
-const alert = Color['lava-400'];
+const alert = Color['lava-500'];
 const warn = Color['luminance-300'];
-const info = Color['stratosphere-400'];
+const info = Color['stratosphere-300'];
 const success = Color['pine-400'];
+const dropdownDetail = Color['neutral-800'];
+const listItemDetail = Color['neutral-800'];
 const mainGridBackground = neutral100;
 const mainGridBorderTop = neutral200;
 const secondGridBackground = neutral200;
 const secondGridBorderTop = neutral300;
-const componentBackground = neutral300;
+const componentBackground = Color.black;
+const dropdownBackground = Color.black;
 const linkForeground = Color.white;
-const iconPrimary = Color.white;
-const iconSecondary = Color.black;
+const iconPrimary = neutral700;
+const iconSecondary = Color.white;
 const buttonPrimary = Color.white;
 const buttonSecondary = Color.black;
 const titlePrimary = Color.white;
@@ -42,13 +45,16 @@ export const dark: ThemeConfiguration = {
       color: neutral550,
     },
     headerNavList: {
-      background: neutral800,
+      border: {
+        color: dropdownDetail,
+      },
+      background: dropdownBackground,
       color: linkForeground,
       svg: {
         color: primary,
       },
       menuItem: {
-        borderTop: neutral500,
+        borderTop: Color.transparent,
       },
       menuItemSelected: {
         color: bodyText,
@@ -61,8 +67,9 @@ export const dark: ThemeConfiguration = {
     },
     mainNavList: {
       background: Color.transparent,
-      color: neutral550,
+      color: neutral700,
       hoverColor: primary,
+      icon: neutral700,
       popOver: {
         background: neutral800,
         primaryNav: {
@@ -250,11 +257,6 @@ export const dark: ThemeConfiguration = {
         grade: {
           color: primary,
         },
-        search: {
-          icon: {
-            color: neutral600,
-          },
-        },
       },
       academicProgram: {
         first: {
@@ -268,7 +270,7 @@ export const dark: ThemeConfiguration = {
     canvas: {
       authorizeButton: {
         background: info,
-        color: iconPrimary,
+        color: iconSecondary,
       },
     },
     finances: {
@@ -368,13 +370,7 @@ export const dark: ThemeConfiguration = {
         color: neutral700,
       },
       icon: {
-        color: iconSecondary,
-      },
-      search: {
-        input: {
-          background: componentBackground,
-        },
-        border: neutral200,
+        color: iconPrimary,
       },
     },
   },
@@ -387,11 +383,11 @@ export const dark: ThemeConfiguration = {
         color: buttonSecondary,
       },
       custom: {
-        background: componentBackground,
-        selectedBackground: neutral550,
-        border: neutral300,
-        color: buttonSecondary,
-        selectedColor: buttonPrimary,
+        background: Color.transparent,
+        selectedBackground: neutral500,
+        border: neutral700,
+        color: neutral700,
+        selectedColor: Color.white,
       },
       info: {
         background: Color.transparent,
@@ -459,6 +455,14 @@ export const dark: ThemeConfiguration = {
         },
       },
     },
+    featuredCard: {
+      title: {
+        color: neutral700,
+      },
+      content: {
+        color: neutral550,
+      },
+    },
     highlights: {
       card: {
         border: neutral200,
@@ -478,7 +482,7 @@ export const dark: ThemeConfiguration = {
     },
     icon: {
       background: Color.transparent,
-      color: neutral400,
+      color: iconPrimary,
       counter: {
         background: primary,
         color: titlePrimary,
@@ -515,6 +519,7 @@ export const dark: ThemeConfiguration = {
       color: neutral700,
       item: {
         background: Color.transparent,
+        border: listItemDetail,
         header: {
           color: neutral700,
         },
@@ -543,7 +548,7 @@ export const dark: ThemeConfiguration = {
         border: neutral200,
       },
       details: {
-        color: neutral600,
+        color: neutral200,
       },
     },
     siteTitle: {
@@ -567,6 +572,18 @@ export const dark: ThemeConfiguration = {
       },
       link: {
         color: primary,
+      },
+    },
+    search: {
+      input: {
+        color: neutral550,
+        background: componentBackground,
+        border: {
+          color: neutral200,
+        },
+      },
+      icon: {
+        color: neutral400,
       },
     },
     subNav: {
@@ -595,6 +612,14 @@ export const dark: ThemeConfiguration = {
         borderTop: 'rgba(34, 36, 38, 0.15)',
         stripedEvenChildren: {
           background: '#f9fafb',
+        },
+      },
+    },
+    text: {
+      lead: {
+        color: {
+          primary: primary,
+          secondary: neutral550,
         },
       },
     },

@@ -1,15 +1,18 @@
 import React from 'react';
-import { render, mockAppContext } from 'src/util/test-utils';
+import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AcademicCalendar from '../AcademicCalendar';
 import { Events } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
+import { infoButtonState } from 'src/state/application';
 
 const { academicCalendar6, academicCalendar3 } = Events.mockEvents;
 const mockUseAcademicCalendarEvents = jest.fn();
+const mockInitialState = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => ({
+  // @ts-ignore spread object
   ...jest.requireActual('@osu-wams/hooks'),
   useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents(),
 }));
@@ -51,32 +54,39 @@ describe('<AcademicCalendar />', () => {
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  const validIinfoButtonId = 'academic-calendar';
   beforeEach(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar6);
   });
 
   test('does not display the button when the infoButtonData is missing it', async () => {
-    render(<AcademicCalendar />, {
-      appContext: {
-        ...mockAppContext,
-        infoButtonData: [{ id: 'invalid-id', content: 'content', title: 'title' }],
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [{ content: '...', id: 'some-other-id', title: '...' }],
       },
+    ]);
+    render(<AcademicCalendar />, {
+      initialStates: mockInitialState(),
     });
 
-    const element = screen.queryByTestId(validIinfoButtonId);
+    const element = screen.queryByTestId('academic-calendar');
     expect(element).not.toBeInTheDocument();
   });
 
   test('displays the button when the infoButtonData is included', async () => {
-    render(<AcademicCalendar />, {
-      appContext: {
-        ...mockAppContext,
-        infoButtonData: [{ id: validIinfoButtonId, content: 'content', title: 'title' }],
+    mockInitialState.mockReturnValue([
+      {
+        state: infoButtonState,
+        value: [
+          { content: 'Info Button Content', id: 'academic-calendar', title: 'Info Button Title' },
+        ],
       },
+    ]);
+    render(<AcademicCalendar />, {
+      initialStates: mockInitialState(),
     });
 
-    const element = screen.getByTestId(validIinfoButtonId);
+    const element = screen.getByTestId('academic-calendar');
     expect(element).toBeInTheDocument();
   });
 });
