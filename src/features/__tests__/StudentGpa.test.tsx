@@ -17,7 +17,7 @@ describe('<StudentGpa />', () => {
       expect(
         await screen.findByText('Undergraduate GPA across all past terms.')
       ).toBeInTheDocument();
-      expect(await screen.findByText('Institutional GPA')).toBeInTheDocument();
+      expect(await screen.findAllByText(/Undergraduate - Institution/i)).toHaveLength(2);
     });
 
     it('should return appropriate text when data is empty', async () => {
@@ -37,7 +37,7 @@ describe('<StudentGpa />', () => {
     it('Has apprpriate GPA and graduate references', async () => {
       expect(await screen.findByText('3.81')).toBeInTheDocument();
       expect(await screen.findByText(/Graduate GPA across all past terms/i)).toBeInTheDocument();
-      expect(await screen.findByText(/Institutional GPA/i)).toBeInTheDocument();
+      expect(await screen.findAllByText(/Graduate - Institution/i)).toHaveLength(3);
     });
 
     it('Has no undergradute references', async () => {

@@ -9,10 +9,11 @@ import {
 import { Types } from '@osu-wams/lib';
 import { useGpa } from '@osu-wams/hooks';
 import { StudentGpaMenu } from './StudentGpaMenu';
-import { AppContext } from 'src/contexts/app-context';
+import { userState } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
 
 export const StudentGpa: React.FC = () => {
-  const { user } = useContext(AppContext);
+  const user = useRecoilValue(userState);
   const [selectedGpa, setSelectedGpa] = useState<Types.GpaLevel>();
   const [filteredGpaLevels, setFilteredGpaLevels] = useState<Types.GpaLevel[]>([]);
   const { data, isLoading } = useGpa();
