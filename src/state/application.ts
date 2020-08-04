@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 import Fuse from 'fuse.js';
-import { User, Resources } from '@osu-wams/hooks';
+import { User } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { defaultTheme } from 'src/theme/themes';
 import { checkAffiliation, filterByCategory } from 'src/features/resources/resources-utils';
