@@ -165,14 +165,8 @@ const Resources = () => {
               />
             </>
           )}
-<<<<<<< HEAD
-          {resources.isLoading && <Skeleton count={5} />}
+          {resources.isLoading && <Loading lines={5} />}
           {resources.isSuccess && resources.data.length > 0 ? (
-=======
-
-          {res.isLoading && <Loading lines={5} />}
-          {res.isSuccess && res.data && res.data.length > 0 ? (
->>>>>>> Integrate loading component into all our pages
             <ResourcesList
               resources={filteredResources.filter((r) => User.hasAudience(user.data, r))}
               user={user.data}
