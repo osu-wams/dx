@@ -586,6 +586,10 @@ export const dark: ThemeConfiguration = {
         color: neutral400,
       },
     },
+    skeleton: {
+      color: Color['neutral-800'],
+      highlight: Color['neutral-700'],
+    },
     subNav: {
       link: {
         borderBottom: Color.transparent,

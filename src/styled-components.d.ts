@@ -553,6 +553,10 @@ declare module 'styled-components/macro' {
           color: string;
         };
       };
+      skeleton: {
+        color: string;
+        highlight: string;
+      };
       subNav: {
         link: {
           borderBottom: string;
