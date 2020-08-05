@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import {
   Highlight,
@@ -24,7 +24,7 @@ export const StudentHolds: React.FC = () => {
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Holds</HighlightTitle>
-      {loading && <Skeleton />}
+      {loading && <Loading />}
       {!loading && (
         <HighlightDescription>
           <span>You have</span>

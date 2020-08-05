@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { faDesktop } from '@fortawesome/pro-light-svg-icons';
 import {
@@ -53,7 +53,7 @@ const ITSystemStatus = () => {
   return (
     <Card collapsing={false}>
       <CardHeader title="IT System Status" badge={<CardIcon icon={faDesktop} />} />
-      {status.loading && <Skeleton count={5} />}
+      {status.loading && <Loading lines={5} />}
       {!status.loading && (
         <CardContentTable>
           {withStickyIncidents(status.data).length > 0 && (

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/macro';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import { useMealPlans } from '@osu-wams/hooks';
 import { formatDollars } from 'src/util/helpers';
 import {
@@ -29,7 +29,7 @@ export const MealPlans = () => {
     <Highlight textAlignLeft>
       {mealPlans.loading && (
         <HighlightTitle>
-          <Skeleton count={4} />
+          <Loading lines={4} />
         </HighlightTitle>
       )}
       {mealPlans?.data?.length ? (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import { Types } from '@osu-wams/lib';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from 'src/ui/List';
@@ -43,7 +43,7 @@ export const FavoriteResources = () => {
     <Card>
       <CardHeader title="Favorites" badge={<CardIcon icon={faHeart} />} />
       <CardContent>
-        {res.isLoading && <Skeleton count={5} />}
+        {res.isLoading && <Loading lines={5} />}
 
         {!res.isLoading && favoriteResources?.length > 0 && (
           <List data-testid="resource-container">

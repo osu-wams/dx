@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import {
   Highlight,
   HighlightTitle,
@@ -23,7 +23,7 @@ export const StudentGpa: React.FC = () => {
     <Highlight textAlignLeft>
       <HighlightEmphasis>{primaryGpa().gpa}</HighlightEmphasis>
       <HighlightTitle marginTop={0}>Institutional GPA</HighlightTitle>
-      {isLoading && <Skeleton count={3} />}
+      {isLoading && <Loading lines={3} />}
       {isSuccess && (
         <>
           <HighlightDescription>

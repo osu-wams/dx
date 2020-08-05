@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useAcademicCalendarEvents, useCourseSchedule } from '@osu-wams/hooks';
@@ -88,7 +88,7 @@ const ScheduleCard = () => {
           setSelectedDay={setSelectedDay}
           daysWithEvents={daysWithEvents}
         />
-        {plannerItems.isLoading && <Skeleton count={4} />}
+        {plannerItems.isLoading && <Loading lines={4} />}
         <div aria-live="assertive" aria-atomic="true">
           {!courses.loading && !plannerItems.isLoading && (
             <ScheduleCardAssignments
@@ -96,7 +96,7 @@ const ScheduleCard = () => {
               selectedPlannerItems={selectedPlannerItems}
             />
           )}
-          {courses.loading && <Skeleton count={4} />}
+          {courses.loading && <Loading lines={4} />}
           {!courses.loading && (
             <ScheduleCardCourses
               courses={courses.data}

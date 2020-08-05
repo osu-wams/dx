@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from '../ui/List';
@@ -26,7 +26,7 @@ const PlannerItems = () => {
 
   const listOrEmpty = () => {
     if (isLoading) {
-      return <Skeleton count={5} />;
+      return <Loading lines={5} />;
     }
 
     if (!courses.loading && data && data.length && user.isCanvasOptIn === true) {

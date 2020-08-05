@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from '@reach/accordion';
 import '@reach/accordion/styles.css';
@@ -41,7 +41,7 @@ const Notifications = () => {
     <MainGridWrapper>
       <PageTitle title="Notifications" />
       <MainGrid>
-        {notifications.loading && <Skeleton count={5} />}
+        {notifications.loading && <Loading lines={5} />}
         {notifications.data.items.length > 0 && (
           <Accordion>
             {notifications.data.items.map((n: Types.UserMessage) => (

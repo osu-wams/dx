@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
 import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
@@ -132,9 +132,9 @@ const Training = () => {
               <a href="#trainingResults">Skip to results</a>
             </VisuallyHidden>
           )}
-          {trainingTags.isLoading && <Skeleton />}
+          {trainingTags.isLoading && <Loading />}
 
-          {trainings.isLoading && <Skeleton count={5} />}
+          {trainings.isLoading && <Loading lines={5} />}
 
           {trainings.isSuccess && (
             <p style={{ marginTop: '0' }}>
