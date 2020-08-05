@@ -11,7 +11,7 @@ import { User } from '@osu-wams/hooks';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
 import { useDegrees } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import { List, ListItem, ListItemContent, ListItemDescription, ListItemText } from 'src/ui/List';
 import Icon from 'src/ui/Icon';
 import { ExternalLink } from 'src/ui/Link';
@@ -103,7 +103,7 @@ const AcademicProgram = () => {
   return (
     <Card>
       <CardHeader title="My Academic Program" badge={<CardIcon icon={faUserGraduate} />} />
-      {loading && <Skeleton />}
+      {loading && <Loading />}
       {!loading && data.length === 0 && (
         <CardContent>
           <NoDegreeData />

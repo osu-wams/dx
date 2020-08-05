@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
@@ -50,7 +50,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
     <Card>
       <CardHeader title={cardTitle} badge={<CardIcon icon={icon} />} />
       <ResourcesContainer>
-        {res.isLoading && <Skeleton count={5} />}
+        {res.isLoading && <Loading lines={5} />}
 
         {!res.isLoading && !user.loading && resources?.length > 0 && (
           <List data-testid="resource-container">

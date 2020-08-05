@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import { useDebounce } from 'use-debounce';
 import { useGrades } from '@osu-wams/hooks';
 import { fontSize, spacing, breakpoints, MainGridWrapper, MainGrid } from 'src/theme';
@@ -64,7 +64,7 @@ const PastCourses = () => {
           inputValue={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        {grades.loading && <Skeleton count={5} />}
+        {grades.loading && <Loading lines={5} />}
         {grades.data.length > 0 ? (
           <HistoryGrid aria-live="polite" aria-atomic="true">
             <span style={{ gridColumn: '1/4' }}>

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/macro';
 import { faEnvelope, faPhone, faMobileAlt } from '@fortawesome/pro-light-svg-icons';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import { usePerson } from '@osu-wams/hooks';
 import PlainCard from 'src/ui/PlainCard';
 import { ContactInfo, PairData, PersonName, renderPhone } from './osuprofile/osuprofile-utils';
@@ -14,7 +14,7 @@ const OSUProfile = () => {
 
   return (
     <PlainCard>
-      {person.loading && <Skeleton count={6} />}
+      {person.loading && <Loading lines={6} />}
       {!person.loading && !person.data && <p>Cannot find your information</p>}
       {!person.loading &&
         person.data &&

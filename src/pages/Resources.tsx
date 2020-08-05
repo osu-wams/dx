@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
 import { CardBase } from 'src/ui/Card';
@@ -157,7 +157,7 @@ const Resources = () => {
                   <a href="#resourcesResults">Skip to results</a>
                 </VisuallyHidden>
               )}
-              {categories.isLoading && <Skeleton />}
+              {categories.isLoading && <Loading />}
               <ResourcesCategories
                 hasFavorite={
                   user.data.favoriteResources && user.data.favoriteResources.some((f) => f.active)
@@ -165,7 +165,7 @@ const Resources = () => {
               />
             </>
           )}
-          {resources.isLoading && <Skeleton count={5} />}
+          {resources.isLoading && <Loading lines={5} />}
           {resources.isSuccess && resources.data.length > 0 ? (
             <ResourcesList
               resources={filteredResources.filter((r) => User.hasAudience(user.data, r))}

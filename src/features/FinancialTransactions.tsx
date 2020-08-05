@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
@@ -77,7 +77,7 @@ const FinancialTransactions: FC = () => {
         }
       />
       <CardContent flush>
-        {loading && <Skeleton count={5} />}
+        {loading && <Loading lines={5} />}
         {data?.attributes.transactions?.length ?? 0 ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
             <TableHeader>

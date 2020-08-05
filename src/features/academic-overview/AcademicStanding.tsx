@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import {
   Highlight,
   HighlightTitle,
@@ -17,7 +17,7 @@ export const AcademicStanding: React.FC = () => {
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Academic Standing</HighlightTitle>
-      {academicStatus.loading && <Skeleton />}
+      {academicStatus.loading && <Loading />}
       {!academicStatus.loading && (
         <HighlightDescription>
           {academicStatus.data.academicStanding?.length ?? 0 ? (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import {
   Highlight,
   HighlightTitle,
@@ -23,7 +23,7 @@ export const StudentEnrolledCredits: React.FC = () => {
 
   return (
     <Highlight textAlignLeft>
-      {courseSchedule.loading && <Skeleton count={5} />}
+      {courseSchedule.loading && <Loading lines={5} />}
       {!courseSchedule.loading && (
         <>
           <HighlightEmphasis>{enrolledCredits}</HighlightEmphasis>

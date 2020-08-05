@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Loading } from 'src/ui/Loading';
 import { faCalendar } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLinkSVG } from '../ui/List';
@@ -30,7 +30,7 @@ const AcademicCalendar = () => {
       />
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
-        {calEvents.loading && <Skeleton count={5} />}
+        {calEvents.loading && <Loading lines={5} />}
         {calEvents.data.length > 0 ? (
           <List>
             {calEvents.data.slice(0, 5).map(({ title, link, pubDate }) => (
