@@ -30,6 +30,7 @@ const FeatureCard = styled(CardButtonBase)<Featured>(
       [mq.small]: {
         flexBasis: '32%',
         marginLeft: '2%',
+        marginRight: '0',
         '&:nth-child(3n+1)': {
           marginLeft: '0',
         },
