@@ -538,6 +538,10 @@ export const dark: ThemeConfiguration = {
     },
     myDialog: {
       background: componentBackground,
+      border: `1px solid ${neutral200}`,
+      details: {
+        color: neutral200,
+      },
       h2: {
         color: primary,
       },
@@ -546,9 +550,6 @@ export const dark: ThemeConfiguration = {
       },
       header: {
         border: neutral200,
-      },
-      details: {
-        color: neutral200,
       },
     },
     siteTitle: {

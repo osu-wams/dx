@@ -5,7 +5,7 @@ import { borderRadius, fontSize, spacing, breakpoints } from 'src/theme';
 const MyDialog = styled(Dialog)<{ padding?: string }>`
   background: ${({ theme }) => theme.ui.myDialog.background};
   border-radius: ${borderRadius[16]};
-  border: 1px solid ${({theme}) => theme.ui.myDialog.details.color};
+  border: ${({ theme }) => theme.ui.myDialog.border};
   .closeButton {
     float: right;
     margin-right: -1.5rem;
@@ -61,6 +61,7 @@ const MyDialogFooter = styled.div`
 
 const MyDialogImage = styled.img`
   max-width: 100%;
+  min-width: 100%;
   @media (min-width: ${breakpoints.small}) {
     border-radius: ${borderRadius[16]} ${borderRadius[16]} 0 0;
   }
