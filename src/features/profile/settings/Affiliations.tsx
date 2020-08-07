@@ -6,7 +6,7 @@ import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { fontSize } from 'src/theme';
 import { userState } from 'src/state/application';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 const { postSettings, usersSettings, settingIsOverridden } = User;
 
@@ -18,7 +18,7 @@ const Label = styled.span`
 `;
 
 export const SwitchesGroup = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
   const [state, setState] = useState<{
     firstYear: boolean;
     graduate: boolean;
@@ -50,7 +50,10 @@ export const SwitchesGroup = () => {
     settings.audienceOverride![name] = checked;
 
     postSettings({ audienceOverride: settings.audienceOverride }).then((d) => {
-      setUser({
+      // This hook needs to reach into the UserState and call the underlying
+      // setter on the user object rather than the `setUser` on the
+      // recoil state itself.
+      user.setUser!({
         ...user,
         data: { ...user.data, ...settings },
       });

@@ -16,12 +16,12 @@ import { User } from '@osu-wams/hooks';
 import { Mobile, Desktop } from 'src/util/useMediaQuery';
 import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
 import { userState } from 'src/state/application';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 const { postSettings, usersSettings, AFFILIATIONS } = User;
 
 const ProfileMenu = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
   const [toggledAffiliation, setToggledAffiliation] = useState(
     user.data?.primaryAffiliationOverride ?? ''
   );
@@ -46,7 +46,10 @@ const ProfileMenu = () => {
     settings.primaryAffiliationOverride = affiliationType;
 
     postSettings({ primaryAffiliationOverride: settings.primaryAffiliationOverride }).then((d) => {
-      setUser((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
+      // This hook needs to reach into the UserState and call the underlying
+      // setter on the user object rather than the `setUser` on the
+      // recoil state itself.
+      user.setUser!((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
       navigate('/');
     });
   };

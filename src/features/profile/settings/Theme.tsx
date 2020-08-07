@@ -6,7 +6,7 @@ import { Fieldset, Legend } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { titleCase } from 'src/util/helpers';
 import { defaultTheme, themesLookup } from 'src/theme/themes';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { userState, themeState } from 'src/state/application';
 
 const { postSettings, usersSettings } = User;
@@ -14,7 +14,7 @@ const { postSettings, usersSettings } = User;
 export const RadioButtonsGroup = () => {
   const themes = Object.keys(themesLookup);
   const [theme, setTheme] = useRecoilState(themeState); // eslint-disable-line
-  const [user, setUser] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
   const [value, setValue] = useState(defaultTheme);
 
   useEffect(() => {
@@ -27,7 +27,10 @@ export const RadioButtonsGroup = () => {
     settings.theme = selectedValue;
 
     postSettings({ theme: selectedValue }).then((d) => {
-      setUser((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
+      // This hook needs to reach into the UserState and call the underlying
+      // setter on the user object rather than the `setUser` on the
+      // recoil state itself.
+      user.setUser!((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
       setTheme(selectedValue);
     });
   };
