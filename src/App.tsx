@@ -64,7 +64,10 @@ const App = (props: AppProps) => {
         response: { status },
       } = err as any;
       if (user.isCanvasOptIn && status === 403) {
-        setUser((prevUser) => ({
+        // This hook needs to reach into the UserState and call the underlying
+        // setter on the user object rather than the `setUser` on the
+        // recoil state itself.
+        user.setUser!((prevUser) => ({
           ...prevUser,
           isCanvasOptIn: false,
           data: { ...prevUser.data, isCanvasOptIn: false },

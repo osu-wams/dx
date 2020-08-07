@@ -8,7 +8,7 @@ import { User } from '@osu-wams/hooks';
 import { titleCase } from 'src/util/helpers';
 import { fontSize } from 'src/theme';
 import { userState } from 'src/state/application';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 const { CAMPUS_CODES, postSettings, settingIsDefault, usersSettings, DEFAULT_CAMPUS } = User;
 
@@ -20,7 +20,7 @@ const Label = styled.span`
 `;
 
 export const RadioButtonsGroup = () => {
-  const [user, setUser] = useRecoilState(userState);
+  const user = useRecoilValue(userState);
   const [value, setValue] = useState(DEFAULT_CAMPUS);
 
   useEffect(() => {
@@ -33,7 +33,10 @@ export const RadioButtonsGroup = () => {
     settings.audienceOverride!.campusCode = selectedValue;
 
     postSettings({ audienceOverride: settings.audienceOverride }).then((d) => {
-      setUser({
+      // This hook needs to reach into the UserState and call the underlying
+      // setter on the user object rather than the `setUser` on the
+      // recoil state itself.
+      user.setUser!({
         ...user,
         data: { ...user.data, ...settings },
       });

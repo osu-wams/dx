@@ -5,7 +5,7 @@ import { EmployeeDashboard } from './Dashboard/EmployeeDashboard';
 import { userState } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
 
-const { hasPrimaryAffiliation, AFFILIATIONS } = User;
+const { getAffiliation, AFFILIATIONS } = User;
 /**
  * Uses the user context to determine what main navigation the user is getting.
  * Defaults to student navigation
@@ -13,7 +13,7 @@ const { hasPrimaryAffiliation, AFFILIATIONS } = User;
  */
 const Dashboard = () => {
   const user = useRecoilValue(userState);
-  if (hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee])) {
+  if (getAffiliation(user.data) === AFFILIATIONS.employee) {
     return <EmployeeDashboard />;
   } else {
     return <StudentDashboard />;
