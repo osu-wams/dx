@@ -30,12 +30,13 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
   return (
     <StyledBtn id={id} onClick={clickHandler} className={selected ? 'selected' : ''}>
       <CustomLabel htmlFor={id} selected={selected}>
-        {IconLookup(
-          parseIconUrl(),
-          selected
-            ? themeContext.ui.button.custom.selectedColor
-            : themeContext.ui.button.custom.color
-        )}
+        {icon &&
+          IconLookup(
+            parseIconUrl(),
+            selected
+              ? themeContext.ui.button.custom.selectedColor
+              : themeContext.ui.button.custom.color
+          )}
         <LabelText>{text}</LabelText>
       </CustomLabel>
     </StyledBtn>

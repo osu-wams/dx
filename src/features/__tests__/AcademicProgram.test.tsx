@@ -24,7 +24,7 @@ describe('<ProgramOfStudy /> | Degree', () => {
 
     it('Loading state before data is rendered, removed after data is present', async () => {
       expect(screen.getByText(/loading/i)).toBeInTheDocument();
-      expect(await screen.findByText(/My Academic Program/i)).toBeInTheDocument();
+      expect(await screen.findByText(/Bachelor of Science/i)).toBeInTheDocument();
 
       // Since we have data already, the loading state should be gone
       expect(screen.queryByText(/loading/i)).toBeNull();

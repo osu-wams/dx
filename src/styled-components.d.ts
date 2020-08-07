@@ -505,6 +505,10 @@ declare module 'styled-components/macro' {
       };
       myDialog: {
         background: string;
+        border: string;
+        details: {
+          color: string;
+        };
         h2: {
           color: string;
         };
@@ -513,9 +517,6 @@ declare module 'styled-components/macro' {
         };
         header: {
           border: string;
-        };
-        details: {
-          color: string;
         };
       };
       siteTitle: {

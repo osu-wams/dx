@@ -537,6 +537,10 @@ export const light: ThemeConfiguration = {
     },
     myDialog: {
       background: componentBackground,
+      border: 'none',
+      details: {
+        color: neutral600,
+      },
       h2: {
         color: neutral600,
       },
@@ -545,9 +549,6 @@ export const light: ThemeConfiguration = {
       },
       header: {
         border: neutral200,
-      },
-      details: {
-        color: neutral600,
       },
     },
     siteTitle: {
@@ -587,7 +588,7 @@ export const light: ThemeConfiguration = {
     },
     skeleton: {
       color: neutral300,
-      highlight: neutral200
+      highlight: neutral200,
     },
     subNav: {
       link: {

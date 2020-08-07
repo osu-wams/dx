@@ -84,7 +84,7 @@
     "husky": "^4.2.3",
     "jest-styled-components": "^7.0.2",
     "lint-staged": "^10.2.7",
-    "msw": "^0.20.0",
+    "msw": "^0.20.3",
     "prettier": "^2.0.5",
     "prop-types": "^15.7.2",
     "react-axe": "^3.5.3",
