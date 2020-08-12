@@ -9,6 +9,7 @@ import {
   ACADEMIC_ANNOUNCEMENTS_API,
   RESOURCES_BY_QUEUE_API,
   DEGREES_API,
+  ACCOUNT_BALANCE_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -20,20 +21,17 @@ const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 const { academicCalendar6 } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const { resourcesCardData } = Resources.mockResources;
+const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 
 // Mock API Data for our Endpoints
 export const handlers = [
   // Students
-  rest.get(HOLDS_API, async (req, res, ctx) => {
-    return res(ctx.json(mockHolds));
-  }),
-
-  rest.get(GPA_API, async (req, res, ctx) => {
-    return res(ctx.json(mockGpa.data));
-  }),
-
   rest.get(ACADEMIC_STATUS_API, async (req, res, ctx) => {
     return res(ctx.json(mockAcademicStatus));
+  }),
+
+  rest.get(ACCOUNT_BALANCE_API, async (req, res, ctx) => {
+    return res(ctx.json(mockAccountBalance));
   }),
 
   rest.get(CLASS_SCHEDULE_API, async (req, res, ctx) => {
@@ -46,6 +44,14 @@ export const handlers = [
       attributes: d,
     }));
     return res(ctx.json(apiData));
+  }),
+
+  rest.get(GPA_API, async (req, res, ctx) => {
+    return res(ctx.json(mockGpa.data));
+  }),
+
+  rest.get(HOLDS_API, async (req, res, ctx) => {
+    return res(ctx.json(mockHolds));
   }),
 
   // Events

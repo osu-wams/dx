@@ -19,6 +19,8 @@ export const CLASS_SCHEDULE_API = stu + 'class-schedule?term=current';
 
 export const DEGREES_API = stu + 'degrees?term=';
 
+export const ACCOUNT_BALANCE_API = stu + 'account-balance';
+
 /**
  * Events API
  */
