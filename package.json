@@ -82,6 +82,7 @@
     "eslint-plugin-react-hooks": "^4.0.4",
     "eslint-plugin-testing-library": "^3.3.1",
     "husky": "^4.2.3",
+    "jest-axe": "^3.5.0",
     "jest-styled-components": "^7.0.2",
     "lint-staged": "^10.2.7",
     "msw": "^0.20.3",
