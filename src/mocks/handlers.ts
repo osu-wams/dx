@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { Student, Events, Announcements, Resources } from '@osu-wams/hooks';
+import { Student, Events, Announcements, Resources, Alerts } from '@osu-wams/hooks';
 import {
   HOLDS_API,
   GPA_API,
@@ -10,6 +10,8 @@ import {
   RESOURCES_BY_QUEUE_API,
   DEGREES_API,
   ACCOUNT_BALANCE_API,
+  DX_ALERTS_API,
+  RAVE_ALERTS_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -22,6 +24,7 @@ const { academicCalendar6 } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const { resourcesCardData } = Resources.mockResources;
 const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
+const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -67,5 +70,14 @@ export const handlers = [
   // Resources
   rest.get(RESOURCES_BY_QUEUE_API, async (req, res, ctx) => {
     return res(ctx.json(resourcesCardData.data));
+  }),
+
+  // Alerts
+  rest.get(RAVE_ALERTS_API, async (req, res, ctx) => {
+    return res(ctx.json(raveAlerts.data));
+  }),
+
+  rest.get(DX_ALERTS_API, async (req, res, ctx) => {
+    return res(ctx.json(dxAlerts.data));
   }),
 ];

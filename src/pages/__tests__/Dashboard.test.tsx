@@ -1,22 +1,23 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import { render, mockEmployeeUser } from 'src/util/test-utils';
 import Dashboard from '../Dashboard';
 
 describe('<Dashboard />', () => {
   it('renders', async () => {
-    const { getByTestId } = render(<Dashboard />);
-    expect(getByTestId('student-dashboard-page')).toBeInTheDocument();
+    render(<Dashboard />);
+    expect(screen.getByTestId('student-dashboard-page')).toBeInTheDocument();
   });
 
   it('should find "Courses" in the Student Dashboard', async () => {
-    const { findByText } = render(<Dashboard />);
-    const courses = await findByText('Courses');
+    render(<Dashboard />);
+    const courses = await screen.findByText('Courses');
     expect(courses).toBeInTheDocument();
   });
 
-  it('should find Employee Tools card', () => {
-    const { getByText } = render(<Dashboard />, { user: mockEmployeeUser });
-    const empcenter = getByText('Employee Tools');
+  it('should find Employee Tools card', async () => {
+    render(<Dashboard />, { user: mockEmployeeUser });
+    const empcenter = await screen.findByText('Employee Tools');
     expect(empcenter).toBeInTheDocument();
   });
 });
