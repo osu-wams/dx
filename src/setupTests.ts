@@ -7,6 +7,7 @@ import { server } from 'src/mocks/server';
 
 // Remove this when CRA updates to jsdom 16+ (not available as of CRA 3.4)
 import MutationObserver from '@sheerun/mutationobserver-shim';
+import { onUnhandledRequest } from 'msw/lib/types/onUnhandledRequest';
 window.MutationObserver = MutationObserver;
 
 ReactGA.initialize('UA-48705802-13', {
@@ -20,7 +21,11 @@ export const mockTrendingEvent = jest.fn();
  * MSW Setup
  */
 // Establish API mocking before all tests.
-beforeAll(() => server.listen());
+beforeAll(() =>
+  server.listen({
+    onUnhandledRequest: 'warn',
+  })
+);
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.

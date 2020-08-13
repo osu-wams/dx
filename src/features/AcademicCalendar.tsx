@@ -16,6 +16,7 @@ import { format } from '../util/helpers';
  */
 const AcademicCalendar = () => {
   const calEvents = useAcademicCalendarEvents();
+  const maxEvents = 5;
 
   return (
     <Card>
@@ -24,7 +25,7 @@ const AcademicCalendar = () => {
         badge={
           <CardIcon
             icon={faCalendar}
-            count={calEvents.data.length < 5 ? calEvents.data.length : 5}
+            count={calEvents.data.length < maxEvents ? calEvents.data.length : maxEvents}
           />
         }
       />
@@ -33,7 +34,7 @@ const AcademicCalendar = () => {
         {calEvents.loading && <Loading lines={5} />}
         {calEvents.data.length > 0 ? (
           <List>
-            {calEvents.data.slice(0, 5).map(({ title, link, pubDate }) => (
+            {calEvents.data.slice(0, maxEvents).map(({ title, link, pubDate }) => (
               <ListItem key={title + pubDate}>
                 <ListItemContentLinkSVG
                   href={link ?? Url.events.academicCalendar}

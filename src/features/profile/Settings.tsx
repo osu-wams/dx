@@ -23,7 +23,7 @@ const Settings: FC = () => {
           </p>
           <Campus />
           <Affiliations />
-          {process.env.REACT_APP_EXPERIMENTAL === 'true' && <Theme />}
+          <Theme />
         </CardContent>
 
         <CardFooter></CardFooter>

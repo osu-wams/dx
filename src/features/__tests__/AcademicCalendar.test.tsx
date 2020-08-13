@@ -1,32 +1,29 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { render, alterMock } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AcademicCalendar from '../AcademicCalendar';
 import { Events } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
 import { infoButtonState } from 'src/state/application';
+import { ACADEMIC_CALENDAR_API } from 'src/mocks/apis';
 
-const { academicCalendar6, academicCalendar3 } = Events.mockEvents;
-const mockUseAcademicCalendarEvents = jest.fn();
+const { academicCalendar3 } = Events.mockEvents;
 const mockInitialState = jest.fn();
 
-jest.mock('@osu-wams/hooks', () => ({
-  // @ts-ignore spread object
-  ...jest.requireActual('@osu-wams/hooks'),
-  useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents(),
-}));
-
 describe('<AcademicCalendar />', () => {
-  // Set mock function result before running any tests
-  beforeEach(() => {
-    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar6);
-  });
-
   it('should find the "Testo Event" as a title', async () => {
     render(<AcademicCalendar />);
-    const eventTitle = screen.getByText('Testo Event');
+    const eventTitle = await screen.findByText('Testo Event');
     expect(eventTitle).toBeInTheDocument();
+  });
+
+  it('Displays a maximum of 5 events, even if there are more', async () => {
+    render(<AcademicCalendar />);
+    await screen.findByText('Testo Event');
+
+    const eventCounter = await screen.findByTestId('icon-counter');
+    expect(eventCounter).toHaveTextContent('5');
   });
 
   it('can click on footer and event to send data to analytics', async () => {
@@ -40,24 +37,22 @@ describe('<AcademicCalendar />', () => {
   });
 
   it('should have "3" as a value when only 3 calendar events are present', async () => {
-    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
+    alterMock(ACADEMIC_CALENDAR_API, academicCalendar3.data);
     render(<AcademicCalendar />);
+    expect(await screen.findByText(/8-week session begins/i)).toBeInTheDocument();
+
     const eventCounter = await screen.findByTestId('icon-counter');
     expect(eventCounter).toHaveTextContent('3');
   });
 
   it('should return "No Calendar Events" when no events are loaded', async () => {
-    mockUseAcademicCalendarEvents.mockReturnValue({ data: [], loading: false, error: false });
+    alterMock(ACADEMIC_CALENDAR_API, []);
     render(<AcademicCalendar />);
-    expect(screen.getByText('No Calendar Events')).toBeInTheDocument();
+    expect(await screen.findByText('No Calendar Events')).toBeInTheDocument();
   });
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  beforeEach(() => {
-    mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar6);
-  });
-
   test('does not display the button when the infoButtonData is missing it', async () => {
     mockInitialState.mockReturnValue([
       {

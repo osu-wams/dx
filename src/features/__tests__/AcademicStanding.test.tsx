@@ -1,30 +1,19 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { render, alterMock } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import AcademicStanding from '../academic-overview/AcademicStanding';
-import { Student } from '@osu-wams/hooks';
-
-const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus;
-const mockUseAcademicStatus = jest.fn();
-
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    ...jest.requireActual('@osu-wams/hooks'),
-    useAcademicStatus: () => mockUseAcademicStatus(),
-  };
-});
+import { ACADEMIC_STATUS_API } from 'src/mocks/apis';
 
 describe('<AcademicStanding />', () => {
   it('should render and have the approriate standing', async () => {
-    mockUseAcademicStatus.mockReturnValue(mockAcademicStatus);
-    const { findByText } = render(<AcademicStanding />);
-    const element = await findByText('Good Standing');
-    expect(element).toBeInTheDocument();
+    render(<AcademicStanding />);
+    expect(await screen.findByText('Good Standing')).toBeInTheDocument();
   });
 
   it('should return appropriate text when data is empty', async () => {
-    mockUseAcademicStatus.mockReturnValue({ data: {}, loading: false, error: false });
-    const { findByText } = render(<AcademicStanding />);
-    const element = await findByText('You have no current academic standing.');
+    alterMock(ACADEMIC_STATUS_API, []);
+    render(<AcademicStanding />);
+    const element = await screen.findByText('You have no current academic standing.');
     expect(element).toBeInTheDocument();
   });
 });

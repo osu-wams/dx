@@ -6,6 +6,7 @@ const stu = '/api/student/';
 const events = '/api/events/';
 const an = '/api/announcements/';
 const res = '/api/resources/';
+const alerts = '/api/alerts';
 /**
  * Student API paths
  */
@@ -18,6 +19,8 @@ export const ACADEMIC_STATUS_API = stu + 'academic-status';
 export const CLASS_SCHEDULE_API = stu + 'class-schedule?term=current';
 
 export const DEGREES_API = stu + 'degrees?term=';
+
+export const ACCOUNT_BALANCE_API = stu + 'account-balance';
 
 /**
  * Events API
@@ -33,3 +36,10 @@ export const ACADEMIC_ANNOUNCEMENTS_API = an + '*';
  * Resources
  */
 export const RESOURCES_BY_QUEUE_API = res + 'category/*';
+
+/**
+ * Alerts
+ */
+export const RAVE_ALERTS_API = alerts;
+
+export const DX_ALERTS_API = alerts + '/dx';
