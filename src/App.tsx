@@ -148,9 +148,7 @@ const App = (props: AppProps) => {
                   <RouterPage path="finances" pageComponent={<Finances />} />
                   <RouterPage path="resources" pageComponent={<Resources />} />
                   <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                  {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                    <RouterPage path="training" pageComponent={<Training />} />
-                  )}
+                  <RouterPage path="training" pageComponent={<Training />} />
                   {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
                     <RouterPage path="notifications" pageComponent={<Notifications />} />
                   )}
