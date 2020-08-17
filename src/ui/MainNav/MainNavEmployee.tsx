@@ -18,13 +18,15 @@ const MainNavEmployee = (...props) => {
         <Icon icon={faToolbox} />
         Resources
       </NavLink>
-      <NavLink
-        to="training"
-        onClick={() => Event('employee-navigation-main', 'Training link clicked')}
-      >
-        <Icon icon={faUsersClass} />
-        Training
-      </NavLink>
+      {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+        <NavLink
+          to="training"
+          onClick={() => Event('employee-navigation-main', 'Training link clicked')}
+        >
+          <Icon icon={faUsersClass} />
+          Training
+        </NavLink>
+      )}
       <NavLink to="beta" onClick={() => Event('employee-navigation-main', 'Beta link clicked')}>
         <Icon icon={faFlaskPotion} />
         Beta
