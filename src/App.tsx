@@ -95,15 +95,24 @@ const App = (props: AppProps) => {
     }
   }, [infoButtons.data]);
 
+  /**
+   * User Bootstrap for User setup
+   */
   useEffect(() => {
     if (!userHook.loading && userHook.data !== user.data) {
       setUser(userHook);
-      setTheme(user.data?.theme ?? theme);
     }
     if (!userHook.loading && !userHook.error) {
       containerElementRef.current.style.opacity = '1';
     }
-  }, [userHook.data, userHook.loading, userHook.error, theme]);
+  }, [userHook.data, userHook.loading, userHook.error]);
+
+  /**
+   * Targets Theme.tsx shared user state modifications
+   */
+  useEffect(() => {
+    setTheme(user.data?.theme || theme);
+  }, [theme, user.data.theme]);
 
   useEffect(() => {
     // Manage focus styles on keyboard navigable elements.
@@ -148,7 +157,9 @@ const App = (props: AppProps) => {
                   <RouterPage path="finances" pageComponent={<Finances />} />
                   <RouterPage path="resources" pageComponent={<Resources />} />
                   <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                  <RouterPage path="training" pageComponent={<Training />} />
+                  {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                    <RouterPage path="training" pageComponent={<Training />} />
+                  )}
                   {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
                     <RouterPage path="notifications" pageComponent={<Notifications />} />
                   )}

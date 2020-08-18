@@ -30,8 +30,12 @@ export const RadioButtonsGroup = () => {
       // This hook needs to reach into the UserState and call the underlying
       // setter on the user object rather than the `setUser` on the
       // recoil state itself.
-      user.setUser!((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
+      user.setUser!({
+        ...user,
+        data: { ...user.data, ...settings },
+      });
       setTheme(selectedValue);
+      setValue(selectedValue);
     });
   };
 
