@@ -15,9 +15,9 @@ const StudentDashboard = () => {
         <PageTitle title="Overview" />
         <Masonry>
           <ScheduleCard />
-          <ResourcesCard categ="featured" icon={faStars} />
           <FavoriteResources />
           <TrendingResources />
+          <ResourcesCard categ="featured" icon={faStars} />
         </Masonry>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />

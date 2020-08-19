@@ -15,9 +15,9 @@ const EmployeeDashboard = () => {
         <PageTitle title="Overview" />
         <Masonry>
           <EmployeeTools />
-          <ResourcesCard categ="employee_featured" icon={faStars} />
-          <ITSystemStatus />
           <FavoriteResources />
+          <ITSystemStatus />
+          <ResourcesCard categ="employee_featured" icon={faStars} />
           <TrendingResources />
         </Masonry>
       </MainGridWrapper>
