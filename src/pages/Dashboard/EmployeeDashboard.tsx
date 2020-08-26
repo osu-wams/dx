@@ -7,6 +7,7 @@ import ResourcesCard from 'src/features/ResourcesCard';
 import { EmployeeTools, ITSystemStatus } from 'src/features/employee-only';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { TrendingResources } from 'src/features/TrendingResources';
+import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
 
 const EmployeeDashboard = () => {
   return (
@@ -19,6 +20,7 @@ const EmployeeDashboard = () => {
           <ITSystemStatus />
           <ResourcesCard categ="employee_featured" icon={faStars} />
           <TrendingResources />
+          {process.env.REACT_APP_EXPERIMENTAL === 'true' && <FeaturedTrainingsCard />}
         </Masonry>
       </MainGridWrapper>
       <EventCardContainer page="dashboard" />
