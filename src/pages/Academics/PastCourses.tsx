@@ -153,7 +153,7 @@ const Count = styled.span`
     grid-column: 1/3;
   }
 
-  @media (min-width: ${breakpoints.small}) {
+  @media (min-width: ${breakpoints.medium}) {
     grid-column: 1/4;
   }
 `;
@@ -180,7 +180,7 @@ const HistoryGrid = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-column-gap: ${spacing.mobile};
   }
-  @media (min-width: ${breakpoints.small}) {
+  @media (min-width: ${breakpoints.medium}) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: ${spacing.desktop};
   }
