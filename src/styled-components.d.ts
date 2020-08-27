@@ -34,6 +34,7 @@ declare module 'styled-components/macro' {
       };
       mainNavList: {
         background: string;
+        borderTop: string;
         color: string;
         hoverColor: string;
         icon: string;

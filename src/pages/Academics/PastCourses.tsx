@@ -67,9 +67,9 @@ const PastCourses = () => {
         {grades.loading && <Loading lines={5} />}
         {grades.data.length > 0 ? (
           <HistoryGrid aria-live="polite" aria-atomic="true">
-            <span style={{ gridColumn: '1/4' }}>
+            <Count>
               Found {filteredGrades.length} {singularPlural(filteredGrades.length, 'course')}
-            </span>
+            </Count>
             {Object.keys(gradesByTerm).map((key, index) => (
               <HistoryCard key={index} collapsing={CardCollapse(index, query)}>
                 <CardHeader title={key} />
@@ -148,6 +148,16 @@ const Grade = styled.span`
   text-align: center;
 `;
 
+const Count = styled.span`
+  @media (min-width: ${breakpoints.xs}) {
+    grid-column: 1/3;
+  }
+
+  @media (min-width: ${breakpoints.medium}) {
+    grid-column: 1/4;
+  }
+`;
+
 const CourseTitle = styled.span`
   color: ${({ theme }) => theme.features.academics.pastCourses.title.color};
 `;
@@ -166,7 +176,11 @@ const HistoryGrid = styled.div`
   & > div {
     height: min-content;
   }
-  @media screen and (min-width: ${breakpoints.small}) {
+  @media (min-width: ${breakpoints.xs}) {
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: ${spacing.mobile};
+  }
+  @media (min-width: ${breakpoints.medium}) {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: ${spacing.desktop};
   }

@@ -60,4 +60,28 @@ const FeatureCardContent = styled.div`
   font-size: ${fontSize[14]};
 `;
 
-export { FeatureCard, FeatureCardGrid, FeatureCardContent, FeatureCardHeader };
+/**
+ * Supported in all our browsers despite -webkit only prefix.
+ * cuts the text after the second line and replaces it with ellipsis
+ */
+const FeatureCardContentCompact = styled(FeatureCardContent)`
+  & > p,
+  & > div,
+  & > ul {
+    margin-top: 4px;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: 'ellipsis';
+  }
+`;
+
+export {
+  FeatureCard,
+  FeatureCardGrid,
+  FeatureCardContent,
+  FeatureCardContentCompact,
+  FeatureCardHeader,
+};

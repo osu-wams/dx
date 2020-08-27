@@ -66,6 +66,7 @@ export const light: ThemeConfiguration = {
     },
     mainNavList: {
       background: Color.white,
+      borderTop: 'none',
       color: neutral550,
       hoverColor: primary,
       icon: neutral550,

@@ -66,7 +66,8 @@ export const dark: ThemeConfiguration = {
       },
     },
     mainNavList: {
-      background: Color.transparent,
+      background: Color.black,
+      borderTop: '1px solid ' + Color['neutral-900'],
       color: neutral700,
       hoverColor: primary,
       icon: neutral700,
