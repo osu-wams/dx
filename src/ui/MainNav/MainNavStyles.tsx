@@ -18,7 +18,7 @@ const Nav = styled.nav`
   -ms-overflow-style: none;
   background: ${({ theme }) => theme.header.mainNavList.background};
   box-shadow: rgba(66, 62, 60, 0.1) 0 -10px 16px, rgba(105, 99, 97, 0.05) 0 -3px 16px;
-  /* border-top: 1px solid #eee; */
+  border-top: ${({ theme }) => theme.header.mainNavList.borderTop};
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -29,6 +29,7 @@ const Nav = styled.nav`
     box-shadow: none;
     max-width: 1200px;
     margin: 0 auto;
+    border-top: none; /* only on mobile dark mode we currently have this border */
   }
   @media (min-width: ${breakpoints.large}) {
     padding: 0;
