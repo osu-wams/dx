@@ -30,18 +30,18 @@ const FeaturedTrainingsCard = () => {
 
   useEffect(() => {
     if (trainings.isSuccess && trainings.data.length > 0) {
-      // Nobody has searched, so it's page load or tag click
+      // Just return the Featured Trainings
       const featured = trainings.data.filter((t) => {
         return t.featured === true;
       });
-      console.log(featured);
+
       featured.length && setFeaturedTrainings(featured);
     }
   }, [trainings.data, trainings.isSuccess]);
 
   return (
     <Card>
-      <CardHeader title="Featured Training" badge={<CardIcon icon={faUsersClass} />} />
+      <CardHeader title="Featured Trainings" badge={<CardIcon icon={faUsersClass} />} />
       <CardContent>
         {trainings.isLoading && <Loading lines={5} />}
 
