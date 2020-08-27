@@ -1,0 +1,90 @@
+name: Build and Push Server Application to AWS PREVIEW
+on:
+  push:
+    branches:
+      - preview
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [13.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: yarn install, lint, test
+        run: |
+          yarn install --frozen-lockfile
+          yarn run lint
+          yarn run test:coverage -w 1 --silent
+        env:
+          CI: true
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+      - name: report code coverage
+        run: npx codecov@3
+        if: matrix.node-version == '13.x'
+        env:
+          CI: true
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [13.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Build client
+        run: |
+          yarn install --frozen-lockfile
+          yarn run build
+          build_date=$(date +%Y%m%d%H%M%S)
+          git_sha=$(git rev-parse --short ${{ github.sha }})
+          app_version=$(expr ${build_date}-${git_sha})
+          expr ${app_version} > build/app_version
+        env:
+          CI: true
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          REACT_APP_EXPERIMENTAL: true
+      - name: Login to AWS
+        run: $(aws ecr get-login --region ${{ secrets.AWS_REGION }} --no-include-email)
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+      - name: Copy client to S3 and flush Cloudfront cache for PREVIEW
+        run: |
+          COMMIT_LINK=https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA
+          COMMIT_MESSAGE=$(git log --format=%B -n 1 $GITHUB_SHA | cat -)
+          POST_DATA="{\"username\": \"GitHub\", \"text\": \"FrontEnd: preview\nStatus: DEPLOYMENT_STARTED\nMessage: $COMMIT_MESSAGE\n$COMMIT_LINK\"}"
+          curl -d "${POST_DATA}" -H "Content-Type: application/json" -X POST ${{ secrets.SLACK_WAMS_CICD_HOOK_URL }}
+          s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-preview
+          aws s3 sync build ${s3_bucket_url}
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID_PREVIEW }} --paths /index.html
+          POST_DATA="{\"username\": \"GitHub\", \"text\": \"FrontEnd: preview\nStatus: DEPLOYMENT_COMPLETE\nMessage: $COMMIT_MESSAGE\n$COMMIT_LINK\"}"
+          curl -d "${POST_DATA}" -H "Content-Type: application/json" -X POST ${{ secrets.SLACK_WAMS_CICD_HOOK_URL }}
+        env:
+          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
