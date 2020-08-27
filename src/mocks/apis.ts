@@ -43,3 +43,10 @@ export const RESOURCES_BY_QUEUE_API = res + 'category/*';
 export const RAVE_ALERTS_API = alerts;
 
 export const DX_ALERTS_API = alerts + '/dx';
+
+/**
+ * Trainings
+ */
+export const TRAININGS_API = '/api/trainings';
+
+export const TRAININGS_TAGS_API = '/api/trainings/tags';

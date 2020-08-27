@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { Student, Events, Announcements, Resources, Alerts } from '@osu-wams/hooks';
+import { Student, Events, Announcements, Resources, Alerts, Trainings } from '@osu-wams/hooks';
 import {
   HOLDS_API,
   GPA_API,
@@ -12,6 +12,8 @@ import {
   ACCOUNT_BALANCE_API,
   DX_ALERTS_API,
   RAVE_ALERTS_API,
+  TRAININGS_API,
+  TRAININGS_TAGS_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -79,5 +81,14 @@ export const handlers = [
 
   rest.get(DX_ALERTS_API, async (req, res, ctx) => {
     return res(ctx.json(dxAlerts.data));
+  }),
+
+  // Trainings
+  rest.get(TRAININGS_API, async (req, res, ctx) => {
+    return res(ctx.json(Trainings.mockTrainings.data));
+  }),
+
+  rest.get(TRAININGS_TAGS_API, async (req, res, ctx) => {
+    return res(ctx.json(Trainings.mockTrainingTags.data));
   }),
 ];
