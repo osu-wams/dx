@@ -9,9 +9,9 @@ import { TrainingDetails } from './TrainingDetails';
 import { Event } from 'src/util/gaTracking';
 
 import {
-  FeatureCard,
+  FeatureCardCompact,
   FeatureCardHeader,
-  FeatureCardContentCompact,
+  FeatureCardContent,
 } from 'src/ui/Card/variants/FeatureCard';
 
 const FeaturedTrainingsCard = () => {
@@ -48,7 +48,7 @@ const FeaturedTrainingsCard = () => {
         {trainings.isSuccess && featuredTrainings.length > 0 ? (
           <>
             {featuredTrainings.map((t) => (
-              <FeatureCard
+              <FeatureCardCompact
                 key={t.id}
                 onClick={() => {
                   toggleTraining(t);
@@ -56,13 +56,10 @@ const FeaturedTrainingsCard = () => {
                 }}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.99 }}
-                style={{ marginBottom: 0 }}
               >
                 <FeatureCardHeader style={{ paddingTop: 0 }}>{t.title}</FeatureCardHeader>
-                {t.body && (
-                  <FeatureCardContentCompact dangerouslySetInnerHTML={{ __html: t.body }} />
-                )}
-              </FeatureCard>
+                {t.body && <FeatureCardContent dangerouslySetInnerHTML={{ __html: t.body }} />}
+              </FeatureCardCompact>
             ))}
 
             {isOpen && selectedTraining && (

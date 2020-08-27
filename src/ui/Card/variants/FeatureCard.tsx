@@ -64,24 +64,25 @@ const FeatureCardContent = styled.div`
  * Supported in all our browsers despite -webkit only prefix.
  * cuts the text after the second line and replaces it with ellipsis
  */
-const FeatureCardContentCompact = styled(FeatureCardContent)`
-  & > p,
-  & > div,
-  & > ul {
-    margin-top: 4px;
-    margin-bottom: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: 'ellipsis';
+const FeatureCardCompact = styled(CardButtonBase)`
+  border: none;
+  padding: 0;
+  text-align: left;
+  margin-bottom: 0 !important;
+  box-shadow: none;
+  ${FeatureCardContent} {
+    & > p,
+    & > div,
+    & > ul {
+      margin-top: 4px;
+      margin-bottom: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: 'ellipsis';
+    }
   }
 `;
 
-export {
-  FeatureCard,
-  FeatureCardGrid,
-  FeatureCardContent,
-  FeatureCardContentCompact,
-  FeatureCardHeader,
-};
+export { FeatureCard, FeatureCardCompact, FeatureCardGrid, FeatureCardContent, FeatureCardHeader };
