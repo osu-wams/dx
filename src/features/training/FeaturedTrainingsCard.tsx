@@ -29,7 +29,7 @@ const FeaturedTrainingsCard = () => {
   };
 
   useEffect(() => {
-    if (trainings.isSuccess && trainings.data.length > 0) {
+    if (trainings.isSuccess && trainings.data && trainings.data.length > 0) {
       // Just return the Featured Trainings
       const featured = trainings.data.filter((t) => {
         return t.featured === true;

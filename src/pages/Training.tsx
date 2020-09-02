@@ -60,7 +60,7 @@ const Training = () => {
   };
 
   useEffect(() => {
-    if (trainings.isSuccess && trainings.data.length > 0) {
+    if (trainings.isSuccess && trainings.data && trainings.data.length > 0) {
       let filtered = trainings.data;
       // Nobody has searched, so it's page load or tag click
       if (!debouncedQuery && selectedTrainingTag && Array.isArray(filtered)) {
@@ -127,7 +127,7 @@ const Training = () => {
                 ))}
             </div>
           )}
-          {!trainings.isLoading && trainings.isSuccess && trainings.data?.length > 0 && (
+          {!trainings.isLoading && trainings.isSuccess && trainings.data!.length > 0 && (
             <VisuallyHidden>
               <a href="#trainingResults">Skip to results</a>
             </VisuallyHidden>
