@@ -3,11 +3,10 @@ import styled, { ThemeContext } from 'styled-components/macro';
 import { Link } from '@reach/router';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentAlt, faChevronDown, faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
+import { faBell, faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
-import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
+import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
-import { Mobile, Desktop } from 'src/util/useMediaQuery';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import emptyNotificationsImg from 'src/assets/empty-notifications.svg';
 import MyDialog from 'src/ui/MyDialog';
@@ -109,16 +108,11 @@ const NotificationsMenu = () => {
         onClick={() => Event('header', 'notifications-button-menu', 'Notifications menu expanded')}
       >
         <span style={{ position: 'relative' }}>
-          <FontAwesomeIcon icon={faCommentAlt} size="lg" />
+          <FontAwesomeIcon icon={faBell} size="lg" />
           {filteredNotifications.length > 0 && <Badge />}
         </span>
-        <Mobile>
           <VisuallyHidden>Notifications</VisuallyHidden>
-        </Mobile>
-        <Desktop>
-          <HeaderNavText>Notifications</HeaderNavText>
-          <FontAwesomeIcon icon={faChevronDown} size="sm" />
-        </Desktop>
+        
       </HeaderNavButton>
       <MenuPopover>
         {filteredNotifications.length === 0 && <EmptyNotifications />}

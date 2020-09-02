@@ -2,16 +2,14 @@ import React from 'react';
 import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faChevronDown,
   faQuestionCircle,
   faComment,
   faBookOpen,
 } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import Url from 'src/util/externalUrls.data';
-import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
+import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
-import { Mobile, Desktop } from 'src/util/useMediaQuery';
 
 const HelpMenu = () => {
   return (
@@ -20,13 +18,8 @@ const HelpMenu = () => {
         onClick={() => Event('header', 'help-button-menu', 'Help button menu expanded')}
       >
         <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
-        <Mobile>
           <VisuallyHidden>Help</VisuallyHidden>
-        </Mobile>
-        <Desktop>
-          <HeaderNavText>Help</HeaderNavText>
-          <FontAwesomeIcon icon={faChevronDown} size="sm" />
-        </Desktop>
+        
       </HeaderNavButton>
       <MenuPopover>
         <HeaderNavList>
