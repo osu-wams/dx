@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { Link } from '@reach/router';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
@@ -108,11 +107,10 @@ const NotificationsMenu = () => {
         onClick={() => Event('header', 'notifications-button-menu', 'Notifications menu expanded')}
       >
         <span style={{ position: 'relative' }}>
-          <FontAwesomeIcon icon={faBell} size="lg" />
+          <Icon icon={faBell} size="lg" count={filteredNotifications.length || 0} top />
           {filteredNotifications.length > 0 && <Badge />}
         </span>
-          <VisuallyHidden>Notifications</VisuallyHidden>
-        
+        <VisuallyHidden>Notifications</VisuallyHidden>
       </HeaderNavButton>
       <MenuPopover>
         {filteredNotifications.length === 0 && <EmptyNotifications />}
