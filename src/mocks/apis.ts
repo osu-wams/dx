@@ -7,6 +7,7 @@ const events = '/api/events/';
 const an = '/api/announcements/';
 const res = '/api/resources/';
 const alerts = '/api/alerts';
+const persons = '/api/persons';
 /**
  * Student API paths
  */
@@ -50,3 +51,10 @@ export const DX_ALERTS_API = alerts + '/dx';
 export const TRAININGS_API = '/api/trainings';
 
 export const TRAININGS_TAGS_API = '/api/trainings/tags';
+
+/**
+ * Person
+ */
+export const PERSONS_API = persons;
+
+export const PERSONS_ADDRESSES_API = persons + '/addresses';

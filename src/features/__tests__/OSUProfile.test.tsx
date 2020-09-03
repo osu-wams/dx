@@ -1,7 +1,12 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import OSUProfile from '../profile/OSUProfile';
 import { Person } from '@osu-wams/hooks';
+import { mockGAEvent } from 'src/setupTests';
+
+// !TODO: After replacing mono-repo with react query, hook all this to MSW
 
 const { personsMailingAddressData, personsMinimalAddressData } = Person.Addresses.mockAddresses;
 const { personsData, preferredName, nullName, preferredFirstName } = Person.Persons.mockPersons;
@@ -30,9 +35,19 @@ describe('<OSUProfile />', () => {
     expect(getByText('Testo Last')).toBeInTheDocument();
   });
 
-  it('should find the "Mailing Address" label', () => {
-    const { getByText } = render(<OSUProfile />);
-    expect(getByText('Current Mailing')).toBeInTheDocument();
+  it('Renders footer with tracked link to Google Analytics', async () => {
+    render(<OSUProfile />);
+    const footerLink = await screen.findByText(/update personal information/i);
+    expect(footerLink).toBeInTheDocument();
+
+    userEvent.click(footerLink);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+  });
+
+  it('should find the "Mailing Address" label and appropriate address', async () => {
+    render(<OSUProfile />);
+    expect(await screen.findByText('Current Mailing')).toBeInTheDocument();
+    expect(await screen.findByText(/Bogus 1st Ave SW/i)).toBeInTheDocument();
   });
 
   it('should find "1234phone" only once, since user has the same phone number listed', async () => {

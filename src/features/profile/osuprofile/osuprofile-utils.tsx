@@ -18,13 +18,6 @@ const renderPhone = (title: string, field: string | null, icon: any, color: stri
   }
 };
 
-const PersonName = styled.h3`
-  color: ${({ theme }) => theme.features.profile.name.color};
-  margin: 0;
-  font-weight: 500;
-  font-size: ${fontSize[24]};
-`;
-
 const PairData = styled.dl`
   margin: 0.5rem 0;
   display: flex;
@@ -53,4 +46,4 @@ const ContactInfo = styled.dl`
   }
 `;
 
-export { ContactInfo, PairData, PersonName, renderPhone };
+export { ContactInfo, PairData, renderPhone };

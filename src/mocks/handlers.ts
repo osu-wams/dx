@@ -1,5 +1,13 @@
 import { rest } from 'msw';
-import { Student, Events, Announcements, Resources, Alerts, Trainings } from '@osu-wams/hooks';
+import {
+  Student,
+  Events,
+  Announcements,
+  Resources,
+  Alerts,
+  Trainings,
+  Person,
+} from '@osu-wams/hooks';
 import {
   HOLDS_API,
   GPA_API,
@@ -14,6 +22,8 @@ import {
   RAVE_ALERTS_API,
   TRAININGS_API,
   TRAININGS_TAGS_API,
+  PERSONS_ADDRESSES_API,
+  PERSONS_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -27,6 +37,8 @@ const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const { resourcesCardData } = Resources.mockResources;
 const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
+const { personsMailingAddressData } = Person.Addresses.mockAddresses;
+const { personsData } = Person.Persons.mockPersons;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -90,5 +102,15 @@ export const handlers = [
 
   rest.get(TRAININGS_TAGS_API, async (req, res, ctx) => {
     return res(ctx.json(Trainings.mockTrainingTags.data));
+  }),
+
+  // Persons
+  rest.get(PERSONS_API, async (req, res, ctx) => {
+    // console.log(personsData.data);
+    return res(ctx.json(personsData.data));
+  }),
+
+  rest.get(PERSONS_ADDRESSES_API, async (req, res, ctx) => {
+    return res(ctx.json(personsMailingAddressData.data));
   }),
 ];
