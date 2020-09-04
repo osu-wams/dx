@@ -106,7 +106,6 @@ export const handlers = [
 
   // Persons
   rest.get(PERSONS_API, async (req, res, ctx) => {
-    // console.log(personsData.data);
     return res(ctx.json(personsData.data));
   }),
 

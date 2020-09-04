@@ -1792,21 +1792,21 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@1.0.52":
-  version "1.0.52"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.52/958a227113699e396a547d7bd194503f95e1aa980663c6fca78c8dd6d86af273#ce45be5674f444be6935e2183c6036f253371ca1"
-  integrity sha512-l7gWSECDakO+OjohjAYRLTACE2115kCWIJEjzwZTOcypMxr4HQcRP01TOCaiLkSht27Nbln44Nj+1BgGge5saA==
+"@osu-wams/hooks@1.0.55":
+  version "1.0.55"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.55/79fd4dd9643ab00d0afd56e6aceecd8978797be52dd8cb7da8244f52064a3fcb#3b331bf5e7ec026ce1f9e3de112dc89a453cebba"
+  integrity sha512-isSYJ8t8M+bLs8rwxIenx4Jfjl0YNNlEigXUBTVEliJwrZFFBLuNZo+Bag8P33OwPjwYiT8ZkPQIcd6RjZ1d6g==
   dependencies:
-    "@osu-wams/lib" "^0.1.36"
+    "@osu-wams/lib" "^0.1.38"
     "@osu-wams/utils" "^0.0.7"
     axios "^0.19.1"
-    react-query "^2.4.7"
+    react-query "^2.9.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@0.1.36", "@osu-wams/lib@^0.1.36":
-  version "0.1.36"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.36/f837bead9698a926a900a33a778649e7a7ae4cc106b7bc1e4b8b23e765a286d0#39a663fdcb9e97f04c9fa8c4727c83071b6bf818"
-  integrity sha512-d0S+o+RAt0AvivHgKkcAK0PNDhgUlEt0LPoTJEU0uVxBQg2B9Sm1bNwzNk5coRsGhDj0Y94LMxs85kCK389trQ==
+"@osu-wams/lib@0.1.38", "@osu-wams/lib@^0.1.38":
+  version "0.1.38"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.38/4724b1324097a3095df5adfa99c048a89c64f41948666808e4248032a714877b#189bed8e5c48793a50c656a4e42aeb780638a883"
+  integrity sha512-ay4RhvfmeifrIaf2OpSWLxpIzvT2QHUiJYsSvRxl9UpZlX4NMlGrqJX1RCqHAJWPytayD26oZQXmFIyDyJY0FA==
 
 "@osu-wams/utils@^0.0.7":
   version "0.0.7"
@@ -11264,10 +11264,10 @@ react-loading-skeleton@^2.1.1:
   dependencies:
     "@emotion/core" "^10.0.22"
 
-react-query@^2.13.0, react-query@^2.4.7:
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.13.1.tgz#1232dadcfded18d7bd886f421a4a4662f0992830"
-  integrity sha512-PosCQJ3ENaT6+vVaN79rGtpZ0BOeaREQuM/iiuNMQi+XWQVWMJBmDiZin4yk046CjbSTQy6lm7kS8QI5XiuivA==
+react-query@^2.9.0:
+  version "2.15.1"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.15.1.tgz#0aa456c3488ec58193c74d6c62aee0ca8516c1d1"
+  integrity sha512-QsdxAxT/dj2RckrJQJQtlhol9Qp7Zuq9EitdWs9I8Y5bcueuAc/RgL+uwA/CXQ1Q9ikskyipr2dX1SgW1xwXNA==
 
 react-remove-scroll-bar@^2.1.0:
   version "2.1.0"

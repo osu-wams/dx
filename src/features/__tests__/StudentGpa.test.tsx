@@ -30,8 +30,8 @@ describe('<StudentGpa />', () => {
 
   describe('Graduate Student', () => {
     beforeEach(() => {
-      render(<StudentGpa />, { user: mockGradUser });
       alterMock(GPA_API, gpaHookData.data);
+      render(<StudentGpa />, { user: mockGradUser });
     });
 
     it('Has apprpriate GPA and graduate references', async () => {
