@@ -27,8 +27,6 @@ const HeaderNavWrapper = styled.div`
   }
 `;
 
-const HeaderNavTitle = styled.h2``;
-
 const HeaderNavList = styled(MenuList)`
   &[data-reach-menu-list] {
     background-color: ${({ theme }) => theme.header.headerNavList.background};

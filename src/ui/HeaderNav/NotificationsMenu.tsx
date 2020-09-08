@@ -6,8 +6,7 @@ import { faBell } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
-import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
-import emptyNotificationsImg from 'src/assets/empty-notifications.svg';
+import { EmptyState, EmptyStateText } from 'src/ui/EmptyStates';
 import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from 'src/ui/Button';
 import { useMessages, User } from '@osu-wams/hooks';
@@ -15,12 +14,19 @@ import { Types } from '@osu-wams/lib';
 import { InternalLink } from 'src/ui/Link';
 import { spacing, breakpoints, fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
+import { format } from 'src/util/helpers';
 
 const Dismiss = styled.button`
   border: none;
   background-color: transparent;
   padding-left: ${spacing.medium};
   margin: 0 0 0 ${spacing.large};
+  font-size: ${fontSize[14]};
+  color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
+`;
+
+const Date = styled.div`
+  margin-top: ${spacing.xs};
   font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
 `;
@@ -90,7 +96,6 @@ const NotificationsMenu = () => {
     <EmptyState>
       <MenuPopover>
         <HeaderNavList style={{ minWidth: '300px', textAlign: 'center' }}>
-          <EmptyStateImage src={emptyNotificationsImg} alt="" />
           <EmptyStateText>You have no new notifications.</EmptyStateText>
           <NotificationsLink />
         </HeaderNavList>
@@ -117,7 +122,7 @@ const NotificationsMenu = () => {
         <VisuallyHidden>Notifications</VisuallyHidden>
       </HeaderNavButton>
       <MenuPopover>
-        <div style={{ minWidth: '40rem' }}>
+        <div>
           {filteredNotifications.length === 0 && <EmptyNotifications />}
           {filteredNotifications.length > 0 && (
             <HeaderNavList>
@@ -156,7 +161,10 @@ const NotificationsMenu = () => {
                   }}
                 >
                   <Indicator />
-                  <NotificationTitle>{m.title}</NotificationTitle>
+                  <div>
+                    <NotificationTitle>{m.title}</NotificationTitle>
+                    {m.deliveredAt && <Date>{format(m.deliveredAt, "MMM do 'at' h a")}</Date>}
+                  </div>
                   <Dismiss
                     onClick={(event) => {
                       event.preventDefault();
