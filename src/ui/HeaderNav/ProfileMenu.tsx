@@ -5,7 +5,6 @@ import {
   faUserCircle,
   faUser,
   faSignOut,
-  faChevronDown,
   faGraduationCap,
   faBriefcase,
 } from '@fortawesome/pro-light-svg-icons';
@@ -13,8 +12,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { Event } from 'src/util/gaTracking';
 import { User } from '@osu-wams/hooks';
-import { Mobile, Desktop } from 'src/util/useMediaQuery';
-import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
+import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { userState } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
 
@@ -108,13 +106,7 @@ const ProfileMenu = () => {
         onClick={() => Event('header', 'user-button-menu', 'User button menu expanded')}
       >
         <FontAwesomeIcon icon={faUserCircle} size="lg" />
-        <Mobile>
-          <VisuallyHidden>Profile</VisuallyHidden>
-        </Mobile>
-        <Desktop>
-          <HeaderNavText>Profile</HeaderNavText>
-          <FontAwesomeIcon icon={faChevronDown} size="sm" />
-        </Desktop>
+        <VisuallyHidden>Profile</VisuallyHidden>
       </HeaderNavButton>
       <MenuPopover>
         <HeaderNavList>

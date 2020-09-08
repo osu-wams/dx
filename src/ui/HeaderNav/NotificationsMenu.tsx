@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { Link } from '@reach/router';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentAlt, faChevronDown, faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
+import { faBell } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
-import { HeaderNavButton, HeaderNavText, HeaderNavList } from './HeaderNavStyles';
+import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
-import { Mobile, Desktop } from 'src/util/useMediaQuery';
-import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
-import emptyNotificationsImg from 'src/assets/empty-notifications.svg';
+import { EmptyState, EmptyStateText } from 'src/ui/EmptyStates';
 import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from 'src/ui/Button';
 import { useMessages, User } from '@osu-wams/hooks';
@@ -17,34 +14,42 @@ import { Types } from '@osu-wams/lib';
 import { InternalLink } from 'src/ui/Link';
 import { spacing, breakpoints, fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
-
-const Badge = styled.div`
-  position: absolute;
-  top: 8px;
-  right: -3px;
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.header.headerNavList.notifications.indicator};
-`;
+import { format } from 'src/util/helpers';
 
 const Dismiss = styled.button`
   border: none;
   background-color: transparent;
   padding-left: ${spacing.medium};
-  margin: 0 0 0 ${spacing.medium};
+  margin: 0 0 0 ${spacing.large};
+  font-size: ${fontSize[14]};
+  color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
+`;
+
+const Date = styled.div`
+  margin-top: ${spacing.xs};
   font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
 `;
 
 const NotificationTitle = styled.div`
   width: 180px;
-  white-space: nowrap;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: 'ellipsis';
   @media (min-width: ${breakpoints.small}) {
     width: 300px;
   }
+`;
+
+const Indicator = styled.div`
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.header.headerNavList.notifications.indicator};
+  height: 8px;
+  width: 8px;
+  margin: 7px 16px 0 0;
 `;
 
 const NotificationAll = styled.div`
@@ -56,8 +61,10 @@ const NotificationAll = styled.div`
 
 const NotificationsMenu = () => {
   const notifications = useMessages();
-  const [filteredNotifications, setFilteredNotifications] = React.useState<Types.UserMessage[]>([]);
+  const [filteredNotifications, setFilteredNotifications] = useState<Types.UserMessage[]>([]);
   const [showDialog, setShowDialog] = React.useState(false);
+  const [selectedNotification, setSelectedNotification] = useState<Types.UserMessage | null>(null);
+
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
   const themeContext = React.useContext(ThemeContext);
@@ -87,11 +94,12 @@ const NotificationsMenu = () => {
 
   const EmptyNotifications = () => (
     <EmptyState>
-      <HeaderNavList style={{ minWidth: '300px', textAlign: 'center' }}>
-        <EmptyStateImage src={emptyNotificationsImg} alt="" />
-        <EmptyStateText>You have no new notifications.</EmptyStateText>
-        <NotificationsLink />
-      </HeaderNavList>
+      <MenuPopover>
+        <HeaderNavList style={{ minWidth: '300px', textAlign: 'center' }}>
+          <EmptyStateText>You have no new notifications.</EmptyStateText>
+          <NotificationsLink />
+        </HeaderNavList>
+      </MenuPopover>
     </EmptyState>
   );
 
@@ -109,68 +117,78 @@ const NotificationsMenu = () => {
         onClick={() => Event('header', 'notifications-button-menu', 'Notifications menu expanded')}
       >
         <span style={{ position: 'relative' }}>
-          <FontAwesomeIcon icon={faCommentAlt} size="lg" />
-          {filteredNotifications.length > 0 && <Badge />}
+          <Icon icon={faBell} size="lg" count={filteredNotifications.length} top />
         </span>
-        <Mobile>
-          <VisuallyHidden>Notifications</VisuallyHidden>
-        </Mobile>
-        <Desktop>
-          <HeaderNavText>Notifications</HeaderNavText>
-          <FontAwesomeIcon icon={faChevronDown} size="sm" />
-        </Desktop>
+        <VisuallyHidden>Notifications</VisuallyHidden>
       </HeaderNavButton>
       <MenuPopover>
-        {filteredNotifications.length === 0 && <EmptyNotifications />}
-        {filteredNotifications.length > 0 && (
-          <HeaderNavList>
-            {filteredNotifications.map((m: Types.UserMessage) => (
-              <MenuItem
-                key={m.messageId}
-                onClick={(event) => {
-                  event.preventDefault();
-                  open();
+        <div>
+          {filteredNotifications.length === 0 && <EmptyNotifications />}
+          {filteredNotifications.length > 0 && (
+            <HeaderNavList>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  padding: '10px 16px',
                 }}
-                onSelect={() => {}}
               >
-                <NotificationTitle>{m.title}</NotificationTitle>
-                <Dismiss
-                  onClick={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    dismissNotification(m);
+                <h2 style={{ fontSize: '16px', fontWeight: 'normal', margin: '0' }}>
+                  <Icon icon={faBell} size="lg" /> Notifications ({filteredNotifications.length})
+                </h2>
+                <MenuLink
+                  as={Link}
+                  to="/notifications"
+                  onClick={() =>
+                    Event('header', 'notifications-button-menu', `See all notifications page link`)
+                  }
+                  style={{ color: themeContext.ui.link.icon.internal.color, padding: 0 }}
+                >
+                  View all <VisuallyHidden>notifications</VisuallyHidden>
+                </MenuLink>
+              </div>
+
+              {filteredNotifications.map((m: Types.UserMessage) => (
+                <MenuItem
+                  key={m.messageId}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    open();
+                  }}
+                  onSelect={() => {
+                    setSelectedNotification(m);
                   }}
                 >
-                  Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
-                </Dismiss>
+                  <Indicator />
+                  <div>
+                    <NotificationTitle>{m.title}</NotificationTitle>
+                    {m.deliveredAt && <Date>{format(m.deliveredAt, "MMM do 'at' h a")}</Date>}
+                  </div>
+                  <Dismiss
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      dismissNotification(m);
+                    }}
+                  >
+                    Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
+                  </Dismiss>
+                </MenuItem>
+              ))}
+              {showDialog && selectedNotification && (
                 <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
                   <CloseButton onClick={close} />
                   <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
-                    {m.title}
+                    {selectedNotification.title}
                   </h2>
-                  <p>{m.content}</p>
+                  <p>{selectedNotification.content}</p>
                   <NotificationsLink onClick={close} />
                 </MyDialog>
-              </MenuItem>
-            ))}
-            <MenuLink
-              as={Link}
-              to="notifications"
-              onClick={() =>
-                Event('header', 'notifications-button-menu', `See all notifications page link`)
-              }
-              style={{ color: themeContext.ui.link.icon.internal.color }}
-            >
-              See all notifications
-              <Icon
-                icon={faLongArrowRight}
-                color={`${themeContext.ui.link.icon.internal.color} !important`}
-                fontSize="inherit !important"
-                style={{ marginLeft: '1.2rem' }}
-              />
-            </MenuLink>
-          </HeaderNavList>
-        )}
+              )}
+            </HeaderNavList>
+          )}
+        </div>
       </MenuPopover>
     </Menu>
   );

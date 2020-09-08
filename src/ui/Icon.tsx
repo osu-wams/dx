@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import { fontSize } from '../theme';
 
 type IconProps = {
@@ -9,20 +9,32 @@ type IconProps = {
   fontSize?: string;
 };
 
+type CounterProps = {
+  count?: number;
+  top?: boolean;
+}
+
 const IconWrapper = styled.div`
   position: relative;
 `;
 
-const IconCounter = styled.div`
-  font-size: ${fontSize[12]};
-  position: absolute;
-  bottom: -${12 / 2 / 10}rem;
-  right: -${12 / 2 / 10}rem;
-  color: ${({ theme }) => theme.ui.icon.counter.color};
-  background-color: ${({ theme }) => theme.ui.icon.counter.background};
-  padding: 0 ${12 / 2 / 10}rem !important;
-  border-radius: ${(12 * (3 / 4)) / 10}rem;
-`;
+const IconCounter = styled.div<CounterProps>(
+  ({theme}) => ({
+    fontSize: fontSize[12],
+    position: 'absolute',
+    color: theme.ui.icon.counter.color,
+    backgroundColor: theme.ui.icon.counter.background,
+    padding: '0 .6rem !important',
+    borderRadius: '1rem',
+  }),
+  ({top}) =>  !top ? {
+    bottom: '-.5rem',
+    right: '-.8rem',
+  } : {
+    top: '-.6rem',
+    left: '50%',
+  }
+);
 
 export const IconStyle = styled(FontAwesomeIcon)<IconProps>(
   ({ theme, color, bg }) => ({
@@ -40,13 +52,13 @@ export const IconStyle = styled(FontAwesomeIcon)<IconProps>(
     }
 );
 
-const Icon = (props: any) => {
+const Icon = (props: CounterProps & FontAwesomeIconProps & IconProps) => {
   if (props.count !== undefined) {
-    const { count, ...others } = props;
+    const { count, top, ...others } = props;
     return (
       <IconWrapper>
         <IconStyle {...others} />
-        <IconCounter data-testid="icon-counter">{count}</IconCounter>
+        <IconCounter data-testid="icon-counter" top={top}>{count}</IconCounter>
       </IconWrapper>
     );
   }

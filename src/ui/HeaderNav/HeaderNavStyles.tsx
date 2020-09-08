@@ -34,7 +34,7 @@ const HeaderNavList = styled(MenuList)`
     color: ${({ theme }) => theme.header.headerNavList.color};
     min-width: 15rem;
     padding: ${spacing.medium} 0;
-    border: 1px solid ${({theme}) => theme.header.headerNavList.border.color};
+    border: 1px solid ${({ theme }) => theme.header.headerNavList.border.color};
     box-shadow: ${shadows[1]};
     [data-reach-menu-item] {
       background-color: ${({ theme }) => theme.header.headerNavList.background};
@@ -42,14 +42,13 @@ const HeaderNavList = styled(MenuList)`
       font-size: ${fontSize[16]};
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
       svg {
         color: ${({ theme }) => theme.header.headerNavList.svg.color};
         margin-right: 1.2rem;
         font-size: ${fontSize[24]};
       }
     }
-
     div + div {
       [data-reach-menu-item] {
         border: none;

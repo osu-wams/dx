@@ -24,6 +24,7 @@ const Nav = styled.nav`
   justify-content: space-evenly;
   z-index: 10;
   @media (min-width: ${breakpoints.small}) {
+    width: auto;
     justify-content: left;
     position: static;
     box-shadow: none;

@@ -119,10 +119,11 @@ describe('<Resources />', () => {
 
       userEvent.click(all);
 
-      expect(featured).not.toHaveClass('selected');
-      expect(all).toHaveClass('selected');
       expect(await findByText(/Student Jobs/)).toBeInTheDocument();
       expect(await findByText(/Billing Information/)).toBeInTheDocument();
+
+      expect(featured).not.toHaveClass('selected');
+      expect(all).toHaveClass('selected');
     });
 
     it('should have clickable categories that report to GoogleAnalytics', async () => {
@@ -173,11 +174,16 @@ describe('<Resources />', () => {
       const academic = screen.getByLabelText('Academic');
 
       userEvent.click(all);
+      // Billing information is present for all
+      expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
+
       userEvent.click(academic);
-      expect(academic).toHaveClass('selected');
-      expect(all).not.toHaveClass('selected');
+      // Student Athletes is present but Billing information is no longer present
       expect(await screen.findByText(/Student Athletes/)).toBeInTheDocument();
       expect(screen.queryByText(/Billing Information/)).toBeNull();
+
+      expect(academic).toHaveClass('selected');
+      expect(all).not.toHaveClass('selected');
     });
   });
 
@@ -237,11 +243,13 @@ describe('<Resources />', () => {
     const { featured, all } = renderResources();
 
     expect(all).toBeInTheDocument();
-    expect(featured).toHaveClass('selected');
+    await waitFor(() => expect(featured).toHaveClass('selected'));
     expect(all).not.toHaveClass('selected');
+
     userEvent.click(all);
+    await waitFor(() => expect(all).toHaveClass('selected'));
     expect(featured).not.toHaveClass('selected');
-    expect(all).toHaveClass('selected');
+
     // Back button causes window.onpopstate to fire and it would have the previously clicked category
     window.onpopstate!(new PopStateEvent('state', { state: { category: 'featured' } }));
     await waitFor(() => expect(featured).toHaveClass('selected'));
@@ -303,9 +311,9 @@ describe('<Resources />', () => {
       const { all } = renderResources(newAuthUser);
 
       userEvent.click(all);
-      expect(all).toHaveClass('selected');
       expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
       expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
+      expect(all).toHaveClass('selected');
     });
   });
 
@@ -343,8 +351,8 @@ describe('<Resources />', () => {
       const { all } = renderResources(mockEmployeeUser);
       userEvent.click(all);
 
-      expect(all).toHaveClass('selected');
       expect(await screen.findByText(/found 4 results/)).toBeInTheDocument();
+
       // employee and student tagged events
       expect(screen.getByText(/Academics for Student Athletes/)).toBeInTheDocument();
       expect(screen.getByText(/Billing Information/)).toBeInTheDocument();
@@ -357,6 +365,9 @@ describe('<Resources />', () => {
       expect(screen.queryByText(/Student Jobs/)).toBeNull();
       // Bend only event not present for Corvallis Employee
       expect(screen.queryByText(/Bend Testo Success Center/)).toBeNull();
+
+      // styles are applied
+      expect(all).toHaveClass('selected');
     });
 
     it('finds Listservs as an employee when clicking the Financial category', async () => {
@@ -365,10 +376,10 @@ describe('<Resources />', () => {
 
       userEvent.click(financial);
 
-      expect(financial).toHaveClass('selected');
       expect(await screen.findByText(/found 2 results/)).toBeInTheDocument();
       expect(await screen.findByText(/Listservs/)).toBeInTheDocument();
       expect(screen.queryByText(/Student Jobs/)).toBeNull();
+      expect(financial).toHaveClass('selected');
     });
 
     it('cannot find "Student Jobs" when searching as an Employee, but finds "Listservs"', async () => {
@@ -394,23 +405,23 @@ describe('<Resources />', () => {
 
     it('finds "Student Jobs" and "Billing Information" but not "Listservs" when clicking the Financial category', async () => {
       const { queryByText, getByText, findByText, financial } = renderResources();
-
       userEvent.click(financial);
 
-      expect(financial).toHaveClass('selected');
       expect(await findByText(/found 2 results/)).toBeInTheDocument();
       expect(queryByText(/Listservs/)).toBeNull();
       expect(getByText(/Student Jobs/)).toBeInTheDocument();
       expect(getByText(/Billing Information/)).toBeInTheDocument();
+      expect(financial).toHaveClass('selected');
     });
 
     it('finds the 3 student resources and cannot find Listservs employee resource', async () => {
       const { all } = renderResources();
       userEvent.click(all);
-      expect(all).toHaveClass('selected');
+
       expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
       expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
       expect(screen.queryByText(/Listservs/i)).toBeNull();
+      expect(all).toHaveClass('selected');
     });
   });
 });

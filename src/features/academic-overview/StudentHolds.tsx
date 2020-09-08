@@ -28,7 +28,7 @@ export const StudentHolds: React.FC = () => {
       {!loading && (
         <HighlightDescription>
           <span>You have</span>
-          <HighlightEmphasisInline>{data.length}</HighlightEmphasisInline>
+          <HighlightEmphasisInline> {data.length}</HighlightEmphasisInline>
           <span> {singularPlural(data.length, 'hold')} on your student account.</span>
           {data.length > 0 && (
             <HoldsList>
