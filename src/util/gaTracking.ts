@@ -1,19 +1,5 @@
 import ReactGA from 'react-ga';
 
-/**
- * Event - Add custom tracking event.
- * @param {enum} category
- * @param {string} action
- * @param {string} label
- */
-export const Event = (category: IComponents, action: string, label?: string) => {
-  ReactGA.event({
-    category,
-    action,
-    label,
-  });
-};
-
 // To make it easier to filter, our components will be the categories in Google Analytics
 export type IComponents =
   | 'footer'
@@ -60,3 +46,17 @@ export type IComponents =
   | 'training-tags'
   | 'training-search'
   | 'training-search-failed';
+
+/**
+ * Event - Add custom tracking event.
+ * @param {enum} category
+ * @param {string} action
+ * @param {string} label
+ */
+export const Event = (category: IComponents, action: string, label?: string) => {
+  ReactGA.event({
+    category,
+    action,
+    label,
+  });
+};
