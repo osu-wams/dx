@@ -10,7 +10,7 @@ exports[`Renders a button with Pine background and default size and foreground 1
   padding: .6rem 1.4rem;
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-left: 8px;
 }
 
@@ -31,7 +31,7 @@ exports[`Renders a button with Pine foreground and default size and background 1
   padding: .6rem 1.4rem;
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-left: 8px;
 }
 
@@ -52,7 +52,7 @@ exports[`Renders a default button with orange background and white foreground 1`
   padding: .6rem 1.4rem;
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-left: 8px;
 }
 
@@ -74,7 +74,7 @@ exports[`Renders a large button with default colors 1`] = `
   font-size: 1.8rem;
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-left: 8px;
 }
 
@@ -96,7 +96,7 @@ exports[`Renders a small button with default colors 1`] = `
   font-size: 1.4rem;
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-left: 8px;
 }
 
@@ -118,7 +118,7 @@ exports[`Renders a super button with all the props changed: bg, fg, size 1`] = `
   font-size: 1.8rem;
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-left: 8px;
 }
 
@@ -130,7 +130,7 @@ exports[`Renders a super button with all the props changed: bg, fg, size 1`] = `
 `;
 
 exports[`Renders default CloseButton with the SVG close icon 1`] = `
-.c2 {
+.c3 {
   color: #B7B1AF;
   background-color: transparent;
 }
@@ -142,22 +142,25 @@ exports[`Renders default CloseButton with the SVG close icon 1`] = `
   border-radius: 4px;
   cursor: pointer;
   padding: .6rem 1.4rem;
+}
+
+.c0 + .c0 {
+  margin-left: 8px;
+}
+
+.c2 {
   color: #000000;
   background: transparent;
   padding: 1rem 2rem;
   font-size: 2.4rem;
 }
 
-.c1 + .c0 {
-  margin-left: 8px;
-}
-
 <button
-  class="Button-ce8m3h-0 c0 c1 closeButton"
+  class="c0 c1 c2 closeButton"
 >
   <svg
     aria-hidden="true"
-    class="svg-inline--fa fa-times fa-w-10 c2"
+    class="svg-inline--fa fa-times fa-w-10 c3"
     data-icon="times"
     data-prefix="fal"
     focusable="false"

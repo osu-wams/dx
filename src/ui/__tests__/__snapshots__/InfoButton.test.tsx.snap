@@ -19,7 +19,7 @@ exports[`with an application state provided renders an info button  1`] = `
   padding: .6rem 1.4rem;
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-left: 8px;
 }
 
