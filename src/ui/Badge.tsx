@@ -1,9 +1,10 @@
+import { Link } from '@reach/router';
 import React, { FC } from 'react';
 import styled from 'styled-components/macro';
 import { fontSize } from 'src/theme';
 import { Event } from 'src/util/gaTracking';
 
-const Badge = styled.a`
+const Badge = styled(Link)`
   background-color: ${({ theme }) => theme.ui.siteTitle.badge.background};
   color: ${({ theme }) => theme.ui.siteTitle.badge.color};
   font-size: ${fontSize[12]};
@@ -24,7 +25,7 @@ const Badge = styled.a`
 
 const BetaBadge: FC<{ title?: string }> = ({ title, ...props }) => {
   return (
-    <Badge href="/beta" onClick={() => Event('beta', `${title} beta badge clicked`)}>
+    <Badge to="beta" onClick={() => Event('beta', `${title} beta badge clicked`)}>
       Beta
     </Badge>
   );

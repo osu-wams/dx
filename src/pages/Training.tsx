@@ -127,7 +127,7 @@ const Training = () => {
                 ))}
             </div>
           )}
-          {!trainings.isLoading && trainings.isSuccess && trainings.data!.length > 0 && (
+          {!trainings.isLoading && trainings.isSuccess && trainings.data && trainings.data.length > 0 && (
             <VisuallyHidden>
               <a href="#trainingResults">Skip to results</a>
             </VisuallyHidden>
