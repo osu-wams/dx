@@ -2,6 +2,14 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { borderRadius, fontSize, spacing } from 'src/theme';
 
+type IBtnSizes = 'small' | 'large';
+
+type BtnProps = {
+  bg?: string;
+  fg?: string;
+  btnSize?: IBtnSizes;
+};
+
 const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>(
   ({ theme, fg, bg }) => ({
     backgroundColor: bg ?? theme.ui.button.background,
@@ -15,14 +23,6 @@ const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>(
   }),
   ({ btnSize = 'normal' }) => btnVariants[btnSize]
 );
-
-type IBtnSizes = 'small' | 'large';
-
-type BtnProps = {
-  bg?: string;
-  fg?: string;
-  btnSize?: IBtnSizes;
-};
 
 const btnVariants = {
   normal: {

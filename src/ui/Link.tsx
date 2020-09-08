@@ -5,6 +5,11 @@ import { faLongArrowRight, faExternalLink } from '@fortawesome/pro-light-svg-ico
 import Icon from './Icon';
 import { borderRadius, spacing, fontSize } from 'src/theme';
 
+type StyleProps = {
+  fg?: string;
+  bg?: string;
+};
+
 const LinkStyles = styled.a<StyleProps>(
   ({ theme, fg }) => ({
     ':hover, :active, :focus': {
@@ -32,11 +37,6 @@ const HighlightExternalLinkStyles = styled(LinkStyles)<StyleProps>(() => ({
   fontWeight: 600,
   fontSize: fontSize[24],
 }));
-
-type StyleProps = {
-  fg?: string;
-  bg?: string;
-};
 
 const ExternalLink = ({ children, ...props }) => {
   const themeContext = useContext(ThemeContext);
