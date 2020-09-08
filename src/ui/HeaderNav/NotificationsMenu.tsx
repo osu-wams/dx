@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { Link } from '@reach/router';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
-import { faBell, faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
+import { faBell } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
@@ -16,33 +16,34 @@ import { InternalLink } from 'src/ui/Link';
 import { spacing, breakpoints, fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
 
-const Badge = styled.div`
-  position: absolute;
-  top: 8px;
-  right: -3px;
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.header.headerNavList.notifications.indicator};
-`;
-
 const Dismiss = styled.button`
   border: none;
   background-color: transparent;
   padding-left: ${spacing.medium};
-  margin: 0 0 0 ${spacing.medium};
+  margin: 0 0 0 ${spacing.large};
   font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
 `;
 
 const NotificationTitle = styled.div`
   width: 180px;
-  white-space: nowrap;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: 'ellipsis';
   @media (min-width: ${breakpoints.small}) {
     width: 300px;
   }
+`;
+
+const Indicator = styled.div`
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.header.headerNavList.notifications.indicator};
+  height: 8px;
+  width: 8px;
+  margin: 7px 16px 0 0;
 `;
 
 const NotificationAll = styled.div`
@@ -85,11 +86,13 @@ const NotificationsMenu = () => {
 
   const EmptyNotifications = () => (
     <EmptyState>
-      <HeaderNavList style={{ minWidth: '300px', textAlign: 'center' }}>
-        <EmptyStateImage src={emptyNotificationsImg} alt="" />
-        <EmptyStateText>You have no new notifications.</EmptyStateText>
-        <NotificationsLink />
-      </HeaderNavList>
+      <MenuPopover>
+        <HeaderNavList style={{ minWidth: '300px', textAlign: 'center' }}>
+          <EmptyStateImage src={emptyNotificationsImg} alt="" />
+          <EmptyStateText>You have no new notifications.</EmptyStateText>
+          <NotificationsLink />
+        </HeaderNavList>
+      </MenuPopover>
     </EmptyState>
   );
 
@@ -107,62 +110,71 @@ const NotificationsMenu = () => {
         onClick={() => Event('header', 'notifications-button-menu', 'Notifications menu expanded')}
       >
         <span style={{ position: 'relative' }}>
-          <Icon icon={faBell} size="lg" count={filteredNotifications.length || 0} top />
-          {filteredNotifications.length > 0 && <Badge />}
+          <Icon icon={faBell} size="lg" count={filteredNotifications.length} top />
         </span>
         <VisuallyHidden>Notifications</VisuallyHidden>
       </HeaderNavButton>
       <MenuPopover>
-        {filteredNotifications.length === 0 && <EmptyNotifications />}
-        {filteredNotifications.length > 0 && (
-          <HeaderNavList>
-            {filteredNotifications.map((m: Types.UserMessage) => (
-              <MenuItem
-                key={m.messageId}
-                onClick={(event) => {
-                  event.preventDefault();
-                  open();
+        <div style={{ minWidth: '40rem' }}>
+          {filteredNotifications.length === 0 && <EmptyNotifications />}
+          {filteredNotifications.length > 0 && (
+            <HeaderNavList>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  padding: '10px 16px',
                 }}
-                onSelect={() => {}}
               >
-                <NotificationTitle>{m.title}</NotificationTitle>
-                <Dismiss
+                <h2 style={{ fontSize: '16px', fontWeight: 'normal', margin: '0' }}>
+                  <Icon icon={faBell} size="lg" /> Notifications ({filteredNotifications.length})
+                </h2>
+                <MenuLink
+                  as={Link}
+                  to="/notifications"
+                  onClick={() =>
+                    Event('header', 'notifications-button-menu', `See all notifications page link`)
+                  }
+                  style={{ color: themeContext.ui.link.icon.internal.color, padding: 0 }}
+                >
+                  View all <VisuallyHidden>notifications</VisuallyHidden>
+                </MenuLink>
+              </div>
+
+              {filteredNotifications.map((m: Types.UserMessage) => (
+                <MenuItem
+                  key={m.messageId}
                   onClick={(event) => {
                     event.preventDefault();
-                    event.stopPropagation();
-                    dismissNotification(m);
+                    open();
                   }}
+                  onSelect={() => {}}
                 >
-                  Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
-                </Dismiss>
-                <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
-                  <CloseButton onClick={close} />
-                  <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
-                    {m.title}
-                  </h2>
-                  <p>{m.content}</p>
-                  <NotificationsLink onClick={close} />
-                </MyDialog>
-              </MenuItem>
-            ))}
-            <MenuLink
-              as={Link}
-              to="notifications"
-              onClick={() =>
-                Event('header', 'notifications-button-menu', `See all notifications page link`)
-              }
-              style={{ color: themeContext.ui.link.icon.internal.color }}
-            >
-              See all notifications
-              <Icon
-                icon={faLongArrowRight}
-                color={`${themeContext.ui.link.icon.internal.color} !important`}
-                fontSize="inherit !important"
-                style={{ marginLeft: '1.2rem' }}
-              />
-            </MenuLink>
-          </HeaderNavList>
-        )}
+                  <Indicator />
+                  <NotificationTitle>{m.title}</NotificationTitle>
+                  <Dismiss
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      dismissNotification(m);
+                    }}
+                  >
+                    Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
+                  </Dismiss>
+                  <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
+                    <CloseButton onClick={close} />
+                    <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
+                      {m.title}
+                    </h2>
+                    <p>{m.content}</p>
+                    <NotificationsLink onClick={close} />
+                  </MyDialog>
+                </MenuItem>
+              ))}
+            </HeaderNavList>
+          )}
+        </div>
       </MenuPopover>
     </Menu>
   );

@@ -1,11 +1,7 @@
 import React from 'react';
 import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faQuestionCircle,
-  faComment,
-  faBookOpen,
-} from '@fortawesome/pro-light-svg-icons';
+import { faQuestionCircle, faComment, faBookOpen } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import Url from 'src/util/externalUrls.data';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
@@ -18,8 +14,7 @@ const HelpMenu = () => {
         onClick={() => Event('header', 'help-button-menu', 'Help button menu expanded')}
       >
         <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
-          <VisuallyHidden>Help</VisuallyHidden>
-        
+        <VisuallyHidden>Help</VisuallyHidden>
       </HeaderNavButton>
       <MenuPopover>
         <HeaderNavList>
