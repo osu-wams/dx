@@ -1,4 +1,4 @@
-export enum Color {
+export const enum Color {
   'transparent' = 'transparent',
   'white' = '#ffffff',
   'black' = '#000000',
