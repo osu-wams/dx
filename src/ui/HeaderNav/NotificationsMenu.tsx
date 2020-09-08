@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { Link } from '@reach/router';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
@@ -55,8 +55,10 @@ const NotificationAll = styled.div`
 
 const NotificationsMenu = () => {
   const notifications = useMessages();
-  const [filteredNotifications, setFilteredNotifications] = React.useState<Types.UserMessage[]>([]);
+  const [filteredNotifications, setFilteredNotifications] = useState<Types.UserMessage[]>([]);
   const [showDialog, setShowDialog] = React.useState(false);
+  const [selectedNotification, setSelectedNotification] = useState<Types.UserMessage | null>(null);
+
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
   const themeContext = React.useContext(ThemeContext);
@@ -145,11 +147,13 @@ const NotificationsMenu = () => {
               {filteredNotifications.map((m: Types.UserMessage) => (
                 <MenuItem
                   key={m.messageId}
-                  onClick={(event) => {
-                    event.preventDefault();
+                  onClick={(e) => {
+                    e.preventDefault();
                     open();
                   }}
-                  onSelect={() => {}}
+                  onSelect={() => {
+                    setSelectedNotification(m);
+                  }}
                 >
                   <Indicator />
                   <NotificationTitle>{m.title}</NotificationTitle>
@@ -162,16 +166,18 @@ const NotificationsMenu = () => {
                   >
                     Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
                   </Dismiss>
-                  <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
-                    <CloseButton onClick={close} />
-                    <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
-                      {m.title}
-                    </h2>
-                    <p>{m.content}</p>
-                    <NotificationsLink onClick={close} />
-                  </MyDialog>
                 </MenuItem>
               ))}
+              {showDialog && selectedNotification && (
+                <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
+                  <CloseButton onClick={close} />
+                  <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
+                    {selectedNotification.title}
+                  </h2>
+                  <p>{selectedNotification.content}</p>
+                  <NotificationsLink onClick={close} />
+                </MyDialog>
+              )}
             </HeaderNavList>
           )}
         </div>
