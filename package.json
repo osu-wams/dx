@@ -31,7 +31,7 @@
     "react-loading-skeleton": "^2.1.1",
     "react-query": "^2.9.0",
     "react-responsive": "^8.1.0",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^3.4.0",
     "react-swipeable": "^5.5.1",
     "react-toastify": "5.5.0",
     "recoil": "^0.0.10",
@@ -41,8 +41,8 @@
     "use-debounce": "^3.4.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "EXTEND_ESLINT=true react-scripts start",
+    "build": "EXTEND_ESLINT=true react-scripts build",
     "test": "TZ=UTC react-scripts test --env=jsdom",
     "test:coverage": "TZ=UTC react-scripts test --env=jsdom --coverage --watchAll=false",
     "eject": "react-scripts eject",
