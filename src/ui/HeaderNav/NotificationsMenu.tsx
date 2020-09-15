@@ -19,8 +19,8 @@ import { format } from 'src/util/helpers';
 const Dismiss = styled.button`
   border: none;
   background-color: transparent;
-  padding-left: ${spacing.medium};
-  margin: 0 0 0 ${spacing.large};
+  padding: ${spacing.small} ${spacing.small} ${spacing.small} ${spacing.medium};
+  margin: 0 0 0 ${spacing.medium};
   font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
 `;
@@ -28,7 +28,7 @@ const Dismiss = styled.button`
 const Date = styled.div`
   margin-top: ${spacing.xs};
   font-size: ${fontSize[14]};
-  color: ${({ theme }) => theme.header.headerNavList.notifications.dismiss};
+  color: ${({ theme }) => theme.notification.date};
 `;
 
 const NotificationTitle = styled.div`
@@ -46,10 +46,10 @@ const NotificationTitle = styled.div`
 
 const Indicator = styled.div`
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.header.headerNavList.notifications.indicator};
+  background-color: ${({ theme }) => theme.notification.indicator.unread};
   height: 8px;
   width: 8px;
-  margin: 7px 16px 0 0;
+  margin: 7px 12px 0 0;
 `;
 
 const NotificationAll = styled.div`
@@ -131,7 +131,7 @@ const NotificationsMenu = () => {
                   display: 'flex',
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  padding: '10px 16px',
+                  padding: '10px 12px',
                 }}
               >
                 <h2 style={{ fontSize: '16px', fontWeight: 'normal', margin: '0' }}>

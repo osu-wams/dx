@@ -38,7 +38,7 @@ const HeaderNavList = styled(MenuList)`
     box-shadow: ${shadows[1]};
     [data-reach-menu-item] {
       background-color: ${({ theme }) => theme.header.headerNavList.background};
-      padding: ${spacing.medium} ${spacing.default};
+      padding: ${spacing.medium} ${spacing.xm};
       font-size: ${fontSize[16]};
       display: flex;
       flex-direction: row;

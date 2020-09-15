@@ -60,7 +60,6 @@ export const light: ThemeConfiguration = {
         background: Color.transparent,
       },
       notifications: {
-        indicator: primary,
         dismiss: neutral550,
       },
     },

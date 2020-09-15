@@ -7,8 +7,9 @@ import { NotificationsMenu } from './NotificationsMenu';
 const HeaderNav = () => {
   return (
     <HeaderNavWrapper>
-      {process.env.REACT_APP_EXPERIMENTAL === 'true' && <NotificationsMenu />}
       <HelpMenu />
+      {process.env.REACT_APP_EXPERIMENTAL === 'true' && <NotificationsMenu />}
+
       <ProfileMenu />
     </HeaderNavWrapper>
   );
