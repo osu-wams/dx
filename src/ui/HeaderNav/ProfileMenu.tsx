@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, navigate } from '@reach/router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUserCircle,
   faUser,
@@ -14,6 +13,7 @@ import { Event } from 'src/util/gaTracking';
 import { User } from '@osu-wams/hooks';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { userState } from 'src/state/application';
+import Icon from 'src/ui/Icon';
 import { useRecoilValue } from 'recoil';
 
 const { postSettings, usersSettings, AFFILIATIONS } = User;
@@ -95,7 +95,7 @@ const ProfileMenu = () => {
           changeAffiliation(affiliationOverride);
         }}
       >
-        <FontAwesomeIcon icon={toggleIcon} /> {description}
+        <Icon icon={toggleIcon} /> {description}
       </MenuLink>
     );
   };
@@ -105,7 +105,7 @@ const ProfileMenu = () => {
       <HeaderNavButton
         onClick={() => Event('header', 'user-button-menu', 'User button menu expanded')}
       >
-        <FontAwesomeIcon icon={faUserCircle} size="lg" />
+        <Icon icon={faUserCircle} size="lg" />
         <VisuallyHidden>Profile</VisuallyHidden>
       </HeaderNavButton>
       <MenuPopover>
@@ -118,7 +118,7 @@ const ProfileMenu = () => {
               Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
             }
           >
-            <FontAwesomeIcon icon={faUser} />
+            <Icon icon={faUser} />
             Profile
           </MenuLink>
           {ToggleAffiliationLink()}
@@ -128,7 +128,7 @@ const ProfileMenu = () => {
             href="/logout"
             onClick={() => Event('header', 'user-button-menu', 'Logout link clicked')}
           >
-            <FontAwesomeIcon icon={faSignOut} /> Logout
+            <Icon icon={faSignOut} /> Logout
           </MenuLink>
         </HeaderNavList>
       </MenuPopover>

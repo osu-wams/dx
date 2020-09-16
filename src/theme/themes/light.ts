@@ -481,7 +481,7 @@ export const light: ThemeConfiguration = {
     },
     icon: {
       background: Color.transparent,
-      color: neutral400,
+      color: neutral550,
       counter: {
         background: primary,
         color: titlePrimary,

@@ -117,7 +117,11 @@ const NotificationsMenu = () => {
         onClick={() => Event('header', 'notifications-button-menu', 'Notifications menu expanded')}
       >
         <span style={{ position: 'relative' }}>
-          <Icon icon={faBell} size="lg" count={filteredNotifications.length} top />
+          {filteredNotifications.length > 0 ? (
+            <Icon icon={faBell} size="lg" count={filteredNotifications.length} top />
+          ) : (
+            <Icon icon={faBell} size="lg" top />
+          )}
         </span>
         <VisuallyHidden>Notifications</VisuallyHidden>
       </HeaderNavButton>

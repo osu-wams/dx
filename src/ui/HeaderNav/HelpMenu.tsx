@@ -1,11 +1,11 @@
 import React from 'react';
 import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle, faComment, faBookOpen } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
 import Url from 'src/util/externalUrls.data';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
+import Icon from 'src/ui/Icon';
 
 const HelpMenu = () => {
   return (
@@ -13,7 +13,7 @@ const HelpMenu = () => {
       <HeaderNavButton
         onClick={() => Event('header', 'help-button-menu', 'Help button menu expanded')}
       >
-        <FontAwesomeIcon icon={faQuestionCircle} size="lg" />
+        <Icon icon={faQuestionCircle} size="lg" />
         <VisuallyHidden>Help</VisuallyHidden>
       </HeaderNavButton>
       <MenuPopover>
@@ -24,7 +24,7 @@ const HelpMenu = () => {
             target="_blank"
             onClick={() => Event('header', 'help-button-menu', 'Getting started link clicked')}
           >
-            <FontAwesomeIcon icon={faBookOpen} />
+            <Icon icon={faBookOpen} />
             Getting Started
           </MenuLink>
 
@@ -34,7 +34,7 @@ const HelpMenu = () => {
             target="_blank"
             onClick={() => Event('header', 'help-button-menu', 'Get help link clicked')}
           >
-            <FontAwesomeIcon icon={faQuestionCircle} />
+            <Icon icon={faQuestionCircle} />
             Get Help
           </MenuLink>
 
@@ -44,7 +44,7 @@ const HelpMenu = () => {
             target="_blank"
             onClick={() => Event('header', 'help-button-menu', 'Give feedback link clicked')}
           >
-            <FontAwesomeIcon icon={faComment} />
+            <Icon icon={faComment} />
             Give feedback
           </MenuLink>
         </HeaderNavList>
