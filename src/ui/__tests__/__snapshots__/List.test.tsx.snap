@@ -131,7 +131,7 @@ exports[`An icon on the right 1`] = `
 
 exports[`Default style with icon on left 1`] = `
 .c3 {
-  color: #B7B1AF;
+  color: #7B746F;
   background-color: transparent;
 }
 
@@ -259,7 +259,7 @@ exports[`Default style with icon on left 1`] = `
 
 exports[`Icon on both left and right 1`] = `
 .c3 {
-  color: #B7B1AF;
+  color: #7B746F;
   background-color: transparent;
 }
 
