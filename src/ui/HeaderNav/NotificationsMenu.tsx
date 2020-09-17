@@ -120,7 +120,7 @@ const NotificationsMenu = () => {
           {filteredNotifications.length > 0 ? (
             <Icon icon={faBell} size="lg" count={filteredNotifications.length} top />
           ) : (
-            <Icon icon={faBell} size="lg" top />
+            <Icon icon={faBell} size="lg" />
           )}
         </span>
         <VisuallyHidden>Notifications</VisuallyHidden>
