@@ -61,7 +61,6 @@ export const dark: ThemeConfiguration = {
         background: Color.transparent,
       },
       notifications: {
-        indicator: primary,
         dismiss: neutral550,
       },
     },
@@ -128,10 +127,10 @@ export const dark: ThemeConfiguration = {
   },
   notification: {
     title: bodyText,
-    date: neutral550,
+    date: neutral700,
     indicator: {
-      unread: neutral550,
-      read: primary,
+      unread: primary,
+      read: neutral700,
     },
   },
   mainGrid: {

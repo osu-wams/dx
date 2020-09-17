@@ -28,7 +28,6 @@ declare module 'styled-components/macro' {
           background: string;
         };
         notifications: {
-          indicator: string;
           dismiss: string;
         };
       };

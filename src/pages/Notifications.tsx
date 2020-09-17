@@ -1,41 +1,26 @@
 import React from 'react';
 import { Loading } from 'src/ui/Loading';
 import styled, { ThemeContext } from 'styled-components/macro';
-import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from '@reach/accordion';
+import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  useAccordionItemContext,
+} from '@reach/accordion';
 import '@reach/accordion/styles.css';
-import { faCircle, faChevronCircleRight } from '@fortawesome/pro-light-svg-icons';
+import { faCircle } from '@fortawesome/pro-solid-svg-icons';
 import { spacing, MainGridWrapper, MainGrid, breakpoints, fontSize, borderRadius } from 'src/theme';
 import { Types } from '@osu-wams/lib';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import Icon from 'src/ui/Icon';
-import { useMessages } from '@osu-wams/hooks';
+import { useMessages, User } from '@osu-wams/hooks';
 import { format } from 'src/util/helpers';
 
 const Notifications = () => {
-  const themeContext = React.useContext(ThemeContext);
   const notifications = useMessages();
-
-  type NotiType = 'unread' | 'read';
-  // default to read
-  // We might eventually support more message states and have different icons
-  const IndicatorIcon: React.FC<{ type?: NotiType }> = ({ type = 'read' }) => {
-    let iIcon = faCircle;
-    let text = 'Opened previously: ';
-    let iColor = themeContext.notification.indicator.read;
-
-    if (type === 'unread') {
-      iIcon = faChevronCircleRight;
-      text = 'New: ';
-      iColor = themeContext.notification.indicator.unread;
-    }
-    return (
-      <span>
-        <Icon icon={iIcon} color={iColor} fontSize="12px" />
-        <VisuallyHidden>{text}</VisuallyHidden>
-      </span>
-    );
-  };
 
   return (
     <MainGridWrapper>
@@ -43,23 +28,65 @@ const Notifications = () => {
       <MainGrid>
         {notifications.loading && <Loading lines={5} />}
         {notifications.data.items.length > 0 && (
-          <Accordion>
-            {notifications.data.items.map((n: Types.UserMessage) => (
+          <Accordion multiple collapsible defaultIndex={0}>
+            {notifications.data.items.map((n) => (
               <DXAccordionItem key={n.messageId}>
-                <h2>
-                  <DXAccordionButton>
-                    {n.status !== 'READ' ? <IndicatorIcon type="unread" /> : <IndicatorIcon />}
-                    <NotificationTitle>{n.title}</NotificationTitle>
-                    <NotificationDate>{n.deliveredAt && format(n?.deliveredAt)}</NotificationDate>
-                  </DXAccordionButton>
-                </h2>
-                <DXAccordionPanel>{n.content}</DXAccordionPanel>
+                <DXMessage n={n} />
               </DXAccordionItem>
             ))}
           </Accordion>
         )}
       </MainGrid>
     </MainGridWrapper>
+  );
+};
+
+const DXMessage = ({ n }: { n: Types.UserMessage }) => {
+  const { isExpanded } = useAccordionItemContext();
+
+  const themeContext = React.useContext(ThemeContext);
+
+  type NotiType = 'unread' | 'read';
+  // default to read
+  // We might eventually support more message states and have different icons
+  const IndicatorIcon: React.FC<{ type?: NotiType }> = ({ type = 'read' }) => {
+    let text = 'Opened previously: ';
+    let iColor = themeContext.notification.indicator.read;
+
+    if (type === 'unread') {
+      text = 'New: ';
+      iColor = themeContext.notification.indicator.unread;
+    }
+    return (
+      <span>
+        <Icon icon={faCircle} color={iColor} fontSize="10px" />
+        <VisuallyHidden>{text}</VisuallyHidden>
+      </span>
+    );
+  };
+
+  const markRead = (m: Types.UserMessage) => {
+    if (m.status !== 'read') {
+      User.updateUserMessage({ messageId: m.messageId, status: 'read' });
+    }
+  };
+
+  return (
+    <>
+      <h2>
+        <DXAccordionButton onClick={() => markRead(n)}>
+          {n.status !== 'READ' ? <IndicatorIcon type="unread" /> : <IndicatorIcon />}
+          <NotificationTitle>
+            {n.title}
+            <NotificationDate>
+              {n.deliveredAt && format(n.deliveredAt, "'Received' MMM do 'at' h a")}
+            </NotificationDate>
+          </NotificationTitle>
+          <Icon icon={isExpanded ? faChevronDown : faChevronUp} css={{ marginLeft: 'auto' }} />
+        </DXAccordionButton>
+      </h2>
+      <DXAccordionPanel>{n.content}</DXAccordionPanel>
+    </>
   );
 };
 
@@ -70,7 +97,7 @@ const DXAccordionItem = styled(AccordionItem)`
   overflow: hidden;
   margin-bottom: ${spacing.mobile};
   @media (min-width: ${breakpoints.small}) {
-    margin-bottom: ${spacing.desktop};
+    margin-bottom: ${spacing.large};
   }
   h2 {
     font-size: ${fontSize[16]};
@@ -79,9 +106,10 @@ const DXAccordionItem = styled(AccordionItem)`
   }
 `;
 
-const NotificationDate = styled.span`
+const NotificationDate = styled.div`
   font-size: ${fontSize[14]};
-  min-width: 90px;
+  margin-top: ${spacing.medium};
+  color: ${({ theme }) => theme.notification.date};
 `;
 
 const NotificationTitle = styled.span`
@@ -98,7 +126,7 @@ const DXAccordionButton = styled(AccordionButton)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 `;
 

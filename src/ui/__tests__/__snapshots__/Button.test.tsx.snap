@@ -131,7 +131,7 @@ exports[`Renders a super button with all the props changed: bg, fg, size 1`] = `
 
 exports[`Renders default CloseButton with the SVG close icon 1`] = `
 .c3 {
-  color: #B7B1AF;
+  color: #7B746F;
   background-color: transparent;
 }
 

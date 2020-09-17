@@ -46,9 +46,9 @@ const PastCourses = () => {
     {}
   );
 
-  // Make Cards Expended (collapse: false) when searching or the first card
+  // Make Cards Expanded (collapse: false) when searching or the first card
   const CardCollapse = (index: number, query) => {
-    if (index === 0 || query.length > 1) {
+    if (index < 2 || query.length > 1) {
       return false;
     }
   };
