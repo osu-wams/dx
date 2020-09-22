@@ -49,7 +49,7 @@ const ListItemContent = styled.div<SpacedList>`
   justify-content: flex-start;
   flex-wrap: nowrap;
   align-items: center;
-  border: none;
+  border: 1px solid transparent;
   border-radius: ${borderRadius[8]};
   transition: all 150ms ease-in-out 0s;
   padding: ${(props) => (props.spaced ? spacing.default : spacing.xm)};
@@ -72,8 +72,6 @@ const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
     ${ListItemContentLinkName} {
       color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
     }
-    box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
-    transform: translateY(-4px);
     border: 1px solid ${({ theme }) => theme.ui.list.item.border};
   }
 `;
@@ -89,12 +87,16 @@ const ListItemContentLinkSVG = styled(ListItemContentLink)`
 const ListItemFlex = styled(ListItem)`
   display: flex;
   align-items: center;
-  padding-right: 5px;
+  border: 1px solid transparent;
   /* Material UI checkbox style update */
   .MuiCheckbox-root {
     width: 48px;
     height: 48px;
     font-size: ${fontSize[18]};
+    margin-right: 5px;
+  }
+  ${ListItemText} {
+    padding-right: 0;
   }
   &:hover {
     ${ListItemHeader},
@@ -102,8 +104,8 @@ const ListItemFlex = styled(ListItem)`
       color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
     }
     box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
-    transform: translateY(-4px);
-    border: 1px solid ${({ theme }) => theme.ui.list.item.border};
+    transform: translateY(-1px);
+    border-color: ${({ theme }) => theme.ui.list.item.border};
   }
 `;
 
