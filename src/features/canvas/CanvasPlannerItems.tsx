@@ -45,7 +45,7 @@ export const canvasUrl = (url) => {
 
 // removes underscores from plannable_type
 const replaceUnderScore = (val: string) => {
-  return val.replaceAll('_', ' ');
+  return val.replace('_', ' ');
 };
 
 /* Announcements from Canvas should not display a due date */

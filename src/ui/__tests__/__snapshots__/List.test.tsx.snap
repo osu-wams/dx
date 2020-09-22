@@ -58,7 +58,7 @@ exports[`An icon on the right 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 8px;
   -webkit-transition: all 150ms ease-in-out 0s;
   transition: all 150ms ease-in-out 0s;
@@ -187,7 +187,7 @@ exports[`Default style with icon on left 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 8px;
   -webkit-transition: all 150ms ease-in-out 0s;
   transition: all 150ms ease-in-out 0s;
@@ -315,7 +315,7 @@ exports[`Icon on both left and right 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 8px;
   -webkit-transition: all 150ms ease-in-out 0s;
   transition: all 150ms ease-in-out 0s;
