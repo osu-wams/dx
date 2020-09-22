@@ -375,6 +375,10 @@ export const dark: ThemeConfiguration = {
     },
   },
   ui: {
+    bubble: {
+      background: Color['neutral-550'],
+      color: Color.white,
+    },
     button: {
       background: primary,
       color: buttonPrimary,
