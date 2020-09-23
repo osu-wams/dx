@@ -1,4 +1,3 @@
-import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -22,13 +21,13 @@ const applicationRoot = document.getElementById('root') as HTMLElement;
 const redirectToError = () => window.location.assign('./error.html');
 
 /*
-// Add Accessibility reporting in development via Chrome console through React-axe
+// Add Accessibility reportin   g in development via Chrome console through React-axe
 if (isDevelopment) {
   var axe = require('react-axe');
   // const wcagRules = axe.getRules(['wcag21aa', 'wcag21a']);
   const axeConfig = {
     rules: [
-      {
+      {   
         id: 'region',
         enabled: false,
       },
