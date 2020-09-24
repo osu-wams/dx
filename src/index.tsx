@@ -1,4 +1,3 @@
-import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -28,7 +27,7 @@ if (isDevelopment) {
   // const wcagRules = axe.getRules(['wcag21aa', 'wcag21a']);
   const axeConfig = {
     rules: [
-      {
+      {   
         id: 'region',
         enabled: false,
       },

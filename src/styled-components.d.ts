@@ -342,6 +342,10 @@ declare module 'styled-components/macro' {
       };
     };
     ui: {
+      bubble: {
+        background: string;
+        color: string;
+      };
       button: {
         background: string;
         color: string;

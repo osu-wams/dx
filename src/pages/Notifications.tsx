@@ -18,6 +18,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import Icon from 'src/ui/Icon';
 import { useMessages, User } from '@osu-wams/hooks';
 import { format } from 'src/util/helpers';
+import { RichTextContent } from 'src/ui/RichText';
 
 const Notifications = () => {
   const notifications = useMessages();
@@ -85,7 +86,9 @@ const DXMessage = ({ n }: { n: Types.UserMessage }) => {
           <Icon icon={isExpanded ? faChevronDown : faChevronUp} css={{ marginLeft: 'auto' }} />
         </DXAccordionButton>
       </h2>
-      <DXAccordionPanel>{n.content}</DXAccordionPanel>
+      <DXAccordionPanel>
+        <RichTextContent dangerouslySetInnerHTML={{ __html: n.content }}></RichTextContent>
+      </DXAccordionPanel>
     </>
   );
 };

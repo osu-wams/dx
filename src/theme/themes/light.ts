@@ -374,6 +374,10 @@ export const light: ThemeConfiguration = {
     },
   },
   ui: {
+    bubble: {
+      background: Color['neutral-200'],
+      color: Color['neutral-800'],
+    },
     button: {
       background: primary,
       color: buttonPrimary,

@@ -4,17 +4,18 @@ import { ThemeContext } from 'styled-components/macro';
 import { Types } from '@osu-wams/lib';
 import Icon from 'src/ui/Icon';
 import {
-  ListItem,
   ListItemContentLink,
   ListItemContent,
   ListItemDescription,
   ListItemHeader,
   ListItemText,
+  ListItemFlex,
 } from 'src/ui/List';
 import { courseCodeOrIcon } from 'src/features/Courses';
 import { format } from 'src/util/helpers';
 import Url from 'src/util/externalUrls.data';
 import { Event } from 'src/util/gaTracking';
+import { Bubble } from 'src/ui/Bubble';
 
 /**
  * Some Canvas link include the full path including https://instructure...
@@ -42,6 +43,26 @@ export const canvasUrl = (url) => {
   }
 };
 
+// removes underscores from plannable_type
+const replaceUnderScore = (val: string) => {
+  return val.replace('_', ' ');
+};
+
+/* Announcements from Canvas should not display a due date */
+const dateItem = (type, date) => {
+  if (!date || type === 'announcement') {
+    return;
+  }
+
+  if (type && date) {
+    if (type === 'calendar_event') {
+      return format(date);
+    } else {
+      return `Due ${format(date, 'dueAt')}`;
+    }
+  }
+};
+
 export const CanvasPlannerItems = ({
   data,
   courses,
@@ -54,13 +75,7 @@ export const CanvasPlannerItems = ({
   const PlannerText = ({ title, plannable_type, plannable_date }) => (
     <ListItemText>
       <ListItemHeader>{title}</ListItemHeader>
-      <ListItemDescription>
-        {/* Announcements from Canvas should not display a due date */}
-        {plannable_type &&
-          plannable_date &&
-          plannable_type !== 'announcement' &&
-          `Due ${format(plannable_date, 'dueAt')}`}
-      </ListItemDescription>
+      <ListItemDescription>{dateItem(plannable_type, plannable_date)}</ListItemDescription>
     </ListItemText>
   );
 
@@ -82,7 +97,7 @@ export const CanvasPlannerItems = ({
           html_url,
           plannable: { title },
         }) => (
-          <ListItem key={plannable_id}>
+          <ListItemFlex key={plannable_id}>
             {html_url ? (
               <ListItemContentLink
                 href={canvasUrl(html_url)}
@@ -97,6 +112,7 @@ export const CanvasPlannerItems = ({
                   plannable_type={plannable_type}
                   plannable_date={plannable_date}
                 />
+                <Bubble>{replaceUnderScore(plannable_type)}</Bubble>
               </ListItemContentLink>
             ) : (
               /* Some canvas items have no url assigned to them */
@@ -107,9 +123,10 @@ export const CanvasPlannerItems = ({
                   plannable_type={plannable_type}
                   plannable_date={plannable_date}
                 />
+                <Bubble>{replaceUnderScore(plannable_type)}</Bubble>
               </ListItemContent>
             )}
-          </ListItem>
+          </ListItemFlex>
         )
       )}
     </>
