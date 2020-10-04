@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 import Fuse from 'fuse.js';
 import { User } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
@@ -157,6 +157,45 @@ export const filteredResourcesState = selector<Types.Resource[]>({
       return get(filteredResourcesByCategory);
     } else {
       return get(filteredResourcesBySearch);
+    }
+  },
+});
+
+/**
+ * Local state for all the user messages
+ */
+export const userMessagesState = atom<{
+  data: Types.UserMessage[];
+  isLoading: boolean;
+  isSuccess: boolean;
+}>({
+  key: 'userMessagesState',
+  default: { data: [], isLoading: true, isSuccess: false },
+});
+
+/**
+ * Allows to filter notifications by their status or not at all
+ */
+export const filteredNotifications = selectorFamily<Types.UserMessage[], string>({
+  key: 'filteredNotifications',
+  get: (filter) => ({ get }) => {
+    const notifications = get(userMessagesState);
+
+    if (notifications && notifications.data && notifications.data.length > 0) {
+      switch (filter) {
+        case 'unread':
+          return notifications.data.filter(
+            (m: Types.UserMessage) => m.status.toLowerCase() !== 'read'
+          );
+        case 'read':
+          return notifications.data.filter(
+            (m: Types.UserMessage) => m.status.toLowerCase() === 'read'
+          );
+        default:
+          return notifications.data;
+      }
+    } else {
+      return [];
     }
   },
 });
