@@ -1,5 +1,4 @@
 import React from 'react';
-import { Loading } from 'src/ui/Loading';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import {
@@ -16,23 +15,32 @@ import { Types } from '@osu-wams/lib';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import Icon from 'src/ui/Icon';
-import { useMessages, User } from '@osu-wams/hooks';
+import { User } from '@osu-wams/hooks';
 import { format } from 'src/util/helpers';
 import { RichTextContent } from 'src/ui/RichText';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { filteredNotifications, userMessagesState } from 'src/state/application';
+import { queryCache } from 'react-query';
 
 const Notifications = () => {
-  const notifications = useMessages();
+  const notifications = useRecoilValue(filteredNotifications('all'));
+
+  // Updates the first message as read in the DB
+  React.useEffect(() => {
+    if (notifications.length > 0 && notifications[0].status !== 'READ') {
+      User.updateUserMessage({ messageId: notifications[0].messageId, status: 'READ' });
+    }
+  }, [notifications]);
 
   return (
     <MainGridWrapper>
       <PageTitle title="Notifications" />
       <MainGrid>
-        {notifications.loading && <Loading lines={5} />}
-        {notifications.data.items.length > 0 && (
+        {notifications.length > 0 && (
           <Accordion multiple collapsible defaultIndex={0}>
-            {notifications.data.items.map((n) => (
+            {notifications.map((n, index) => (
               <DXAccordionItem key={n.messageId}>
-                <DXMessage n={n} />
+                <DXMessage n={n} index={index} />
               </DXAccordionItem>
             ))}
           </Accordion>
@@ -42,9 +50,9 @@ const Notifications = () => {
   );
 };
 
-const DXMessage = ({ n }: { n: Types.UserMessage }) => {
+const DXMessage = ({ n, index }: { n: Types.UserMessage; index: number }) => {
   const { isExpanded } = useAccordionItemContext();
-
+  const setNotifications = useSetRecoilState(userMessagesState);
   const themeContext = React.useContext(ThemeContext);
 
   type NotiType = 'unread' | 'read';
@@ -67,8 +75,29 @@ const DXMessage = ({ n }: { n: Types.UserMessage }) => {
   };
 
   const markRead = (m: Types.UserMessage) => {
-    if (m.status !== 'read') {
-      User.updateUserMessage({ messageId: m.messageId, status: 'read' });
+    if (m.status !== 'READ') {
+      User.updateUserMessage({ messageId: m.messageId, status: 'READ' }).then(() => {
+        queryCache.invalidateQueries('userMessages');
+
+        setNotifications((prevState: any) => {
+          const newNotifications = prevState.data.map((noti, i) => {
+            if (i === index) {
+              console.log(i, index);
+              return {
+                ...noti,
+                status: 'READ',
+              };
+            } else {
+              return noti;
+            }
+          });
+          return {
+            data: newNotifications,
+            isLoading: prevState.isLoading,
+            isSuccess: prevState.isSuccess,
+          };
+        });
+      });
     }
   };
 
@@ -76,7 +105,7 @@ const DXMessage = ({ n }: { n: Types.UserMessage }) => {
     <>
       <h2>
         <DXAccordionButton onClick={() => markRead(n)}>
-          {n.status !== 'READ' ? <IndicatorIcon type="unread" /> : <IndicatorIcon />}
+          {n.status !== 'READ' && index !== 0 ? <IndicatorIcon type="unread" /> : <IndicatorIcon />}
           <NotificationTitle>
             {n.title}
             <NotificationDate>
