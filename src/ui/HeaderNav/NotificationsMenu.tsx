@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
+import { queryCache } from 'react-query';
 import { Link } from '@reach/router';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
 import { faBell } from '@fortawesome/pro-light-svg-icons';
@@ -9,12 +10,14 @@ import { Event } from 'src/util/gaTracking';
 import { EmptyState, EmptyStateText } from 'src/ui/EmptyStates';
 import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from 'src/ui/Button';
-import { useMessages, User } from '@osu-wams/hooks';
+import { User, useMessages } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { InternalLink } from 'src/ui/Link';
 import { spacing, breakpoints, fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
 import { format } from 'src/util/helpers';
+import { filteredNotifications, userMessagesState } from 'src/state/application';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const Dismiss = styled.button`
   border: none;
@@ -60,8 +63,10 @@ const NotificationAll = styled.div`
 `;
 
 const NotificationsMenu = () => {
-  const notifications = useMessages();
-  const [filteredNotifications, setFilteredNotifications] = useState<Types.UserMessage[]>([]);
+  const notifications = useRecoilValue<Types.UserMessage[]>(filteredNotifications('unread'));
+  const notificationsHook = useMessages();
+  const setNotifications = useSetRecoilState(userMessagesState);
+
   const [showDialog, setShowDialog] = React.useState(false);
   const [selectedNotification, setSelectedNotification] = useState<Types.UserMessage | null>(null);
 
@@ -70,12 +75,16 @@ const NotificationsMenu = () => {
   const themeContext = React.useContext(ThemeContext);
 
   useEffect(() => {
-    if (notifications.data.items.length > 0) {
-      setFilteredNotifications(
-        notifications.data.items.filter((m: Types.UserMessage) => m.status.toLowerCase() !== 'read')
-      );
+    // Initial data setting to local state
+    const { data, isLoading, isSuccess } = notificationsHook;
+    if (data && data.items.length > 0) {
+      setNotifications(() => ({
+        data: data.items,
+        isLoading,
+        isSuccess,
+      }));
     }
-  }, [notifications.data]);
+  }, [notificationsHook.data]);
 
   const NotificationsLink = (onClick) => (
     <NotificationAll>
@@ -104,11 +113,28 @@ const NotificationsMenu = () => {
   );
 
   const dismissNotification = (m: Types.UserMessage) => {
-    const status = 'read';
-    const updated = User.updateUserMessage({ messageId: m.messageId, status });
-    if (updated) {
-      setFilteredNotifications(filteredNotifications.filter((n) => n.messageId !== m.messageId));
-    }
+    User.updateUserMessage({ messageId: m.messageId, status: 'READ' }).then(() => {
+      queryCache.invalidateQueries('userMessages'); // destroy cache so it doesn't conflict with local state
+
+      // Local State Update
+      setNotifications((prevState: any) => {
+        const newNotifications = prevState.data.map((noti) => {
+          if (m.messageId === noti.messageId) {
+            return {
+              ...noti,
+              status: 'READ',
+            };
+          } else {
+            return noti;
+          }
+        });
+        return {
+          data: newNotifications,
+          isLoading: prevState.isLoading,
+          isSuccess: prevState.isSuccess,
+        };
+      });
+    });
   };
 
   return (
@@ -117,8 +143,8 @@ const NotificationsMenu = () => {
         onClick={() => Event('header', 'notifications-button-menu', 'Notifications menu expanded')}
       >
         <span style={{ position: 'relative' }}>
-          {filteredNotifications.length > 0 ? (
-            <Icon icon={faBell} size="lg" count={filteredNotifications.length} top />
+          {notifications.length > 0 ? (
+            <Icon icon={faBell} size="lg" count={notifications.length} top />
           ) : (
             <Icon icon={faBell} size="lg" />
           )}
@@ -127,8 +153,8 @@ const NotificationsMenu = () => {
       </HeaderNavButton>
       <MenuPopover>
         <div>
-          {filteredNotifications.length === 0 && <EmptyNotifications />}
-          {filteredNotifications.length > 0 && (
+          {notifications.length === 0 && <EmptyNotifications />}
+          {notifications.length > 0 && (
             <HeaderNavList>
               <div
                 style={{
@@ -139,7 +165,7 @@ const NotificationsMenu = () => {
                 }}
               >
                 <h2 style={{ fontSize: '16px', fontWeight: 'normal', margin: '0' }}>
-                  <Icon icon={faBell} size="lg" /> Notifications ({filteredNotifications.length})
+                  <Icon icon={faBell} size="lg" /> Notifications ({notifications.length})
                 </h2>
                 <MenuLink
                   as={Link}
@@ -153,7 +179,7 @@ const NotificationsMenu = () => {
                 </MenuLink>
               </div>
 
-              {filteredNotifications.map((m: Types.UserMessage) => (
+              {notifications.map((m: Types.UserMessage, index) => (
                 <MenuItem
                   key={m.messageId}
                   onClick={(e) => {
