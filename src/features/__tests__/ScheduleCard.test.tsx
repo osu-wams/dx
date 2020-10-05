@@ -89,7 +89,16 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     const courses = screen.getAllByTestId('course-list-item-header');
     expect(courses[0]).toHaveTextContent('WR214');
 
-    expect(screen.queryByText('View WR 214 location')).toBeNull();
+    expect(screen.queryByText('View WR 214 location on map')).toBeNull();
+  });
+
+  it('should find a course without a clickable map link because it is a remote learning course', async () => {
+    const { debug } = render(<ScheduleCard />, { initialStates: mockInitialState() });
+    const courses = screen.getAllByTestId('course-list-item-header');
+    expect(courses[2]).not.toHaveTextContent('RL100');
+    expect(courses[3]).toHaveTextContent('RL100');
+
+    expect(screen.queryByText('View RL 100 location on map')).toBeNull();
   });
 
   it('should find a course but no MID term associated', async () => {

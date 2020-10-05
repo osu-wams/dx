@@ -9,7 +9,7 @@ const mockUseCourseSchedule = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useCourseSchedule: () => mockUseCourseSchedule()
+    useCourseSchedule: () => mockUseCourseSchedule(),
   };
 });
 
@@ -17,7 +17,7 @@ describe('<StudentEnrolledCredits />', () => {
   it('should render and have the approriate standing', () => {
     mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     const { getByText } = render(<StudentEnrolledCredits />);
-    const element = getByText('20');
+    const element = getByText('21');
     expect(element).toBeInTheDocument();
   });
 
