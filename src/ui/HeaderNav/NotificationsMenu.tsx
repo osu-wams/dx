@@ -196,7 +196,12 @@ const NotificationsMenu = () => {
                     {m.deliveredAt && <Date>{format(m.deliveredAt, "MMM do 'at' h a")}</Date>}
                   </div>
                   <Dismiss
-                    onClick={(event) => {
+                    onMouseUp={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      dismissNotification(m);
+                    }}
+                    onKeyDown={(event) => {
                       event.preventDefault();
                       event.stopPropagation();
                       dismissNotification(m);
