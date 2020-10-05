@@ -31,9 +31,9 @@ describe('<Courses />', () => {
     expect(courseTitle).toBeInTheDocument();
   });
 
-  it('Finds "7" as the course count in the Badge', async () => {
+  it('Finds "8" as the course count in the Badge', async () => {
     const { findByText } = render(<Courses />);
-    const NumCourses = await findByText('7');
+    const NumCourses = await findByText('8');
     expect(NumCourses).toBeInTheDocument();
   });
 
@@ -47,6 +47,7 @@ describe('<Courses />', () => {
       'ED408',
       'PH212',
       'PH222',
+      'RL100',
       'WR214',
     ]);
   });
