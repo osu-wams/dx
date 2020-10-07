@@ -11,8 +11,6 @@ import gDrive from 'src/assets/logo-drive.png';
 import gMail from 'src/assets/logo-gmail.png';
 import zoom from 'src/assets/logo-zoom.png';
 
-const { usersCampus, getAffiliation } = User;
-
 /**
  * Filters Resources which exist in the TrendingResources that match the users attributes
  * @param trendingResources
@@ -23,13 +21,11 @@ const filteredTrendingResources = (
   resourcesList: Types.Resource[],
   user: any
 ): Types.Resource[] => {
-  const { campusName } = usersCampus(user);
-  const usersAffiliation = getAffiliation(user);
-  const usersTrendingResources = trendingResources.filter(
-    (tr) =>
-      usersAffiliation.toLowerCase() === tr.affiliation.toLowerCase() &&
-      tr.campus.toLowerCase() === campusName
-  );
+  const usersTrendingResources = trendingResources.filter((tr) => {
+    const resource = resourcesList.find((r) => r.id === tr.resourceId);
+    if (!resource) return false;
+    return User.hasAudience(user, resource);
+  });
   // Get the average number of unique events for a basic dynamic filtering mechanism
   const averageUniqueEvents =
     usersTrendingResources.reduce((p, c) => p + c.uniqueEvents, 0) / usersTrendingResources.length;
