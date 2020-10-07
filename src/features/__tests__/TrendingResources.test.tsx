@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, mockEmployeeUser } from 'src/util/test-utils';
+import { render, mockEmployeeUser, mockGradUser } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { TrendingResources } from 'src/features/TrendingResources';
 import { mockGAEvent } from 'src/setupTests';
@@ -11,9 +11,10 @@ const mockUseTrendingResources = jest.fn();
 const { resourcesData, trendingResourcesData } = Resources.mockResources;
 
 jest.mock('@osu-wams/hooks', () => ({
+  // @ts-ignore spreading object
   ...jest.requireActual('@osu-wams/hooks'),
   useResources: () => mockUseResources(),
-  useTrendingResources: () => mockUseTrendingResources()
+  useTrendingResources: () => mockUseTrendingResources(),
 }));
 
 describe('Trending Resources Card', () => {
@@ -33,6 +34,22 @@ describe('Trending Resources Card', () => {
     expect(await findByText('Trending')).toBeInTheDocument();
     expect(await findByText('Student Jobs')).toBeInTheDocument();
     expect(queryByText('Employee Only')).toBeNull();
+  });
+
+  it('does not render a graduate student resource for the undergraduate student user', async () => {
+    const { findByText, queryByText } = render(<TrendingResources />);
+    expect(await findByText('Trending')).toBeInTheDocument();
+    expect(await findByText('Student Jobs')).toBeInTheDocument();
+    expect(queryByText('Employee Only')).toBeNull();
+    expect(queryByText('Graduate Student Only')).toBeNull();
+  });
+
+  it('renders a graduate student resource for the graduate student user', async () => {
+    const { findByText, queryByText } = render(<TrendingResources />, { user: mockGradUser });
+    expect(await findByText('Trending')).toBeInTheDocument();
+    expect(await findByText('Graduate Student Only')).toBeInTheDocument();
+    expect(queryByText('Employee Only')).toBeNull();
+    expect(queryByText('Student Jobs')).toBeNull();
   });
 
   it('Renders Trending Resources Card Title and the 1 active trending resource for the employee', async () => {
