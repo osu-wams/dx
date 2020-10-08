@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 import styled from 'styled-components/macro';
 import { fontSize, breakpoints } from 'src/theme';
 
@@ -11,12 +11,12 @@ type Props = {
 // Currently hidden and just for accessibility purposes
 const PageTitle: FC<Props> = ({ title }) => {
   return (
-    <HelmetProvider>
+    <>
       <Title>{title}</Title>
       <Helmet>
-        <title>{title}</title>
+        <title>MyOregonState{title ? ` - ${title}` : ''}</title>
       </Helmet>
-    </HelmetProvider>
+    </>
   );
 };
 

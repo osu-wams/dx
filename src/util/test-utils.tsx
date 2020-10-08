@@ -9,6 +9,7 @@ import { RecoilRoot } from 'recoil';
 import { userState } from 'src/state/application';
 import { rest } from 'msw';
 import { server } from 'src/mocks/server';
+import { HelmetProvider } from 'react-helmet-async';
 
 // Helper method to change the mock responses by MSW
 export const alterMock = (api: string, mock: any) => {
@@ -63,7 +64,9 @@ const renderWithUserContext = (
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
-        <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+        <HelmetProvider>
+          <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+        </HelmetProvider>
       </RecoilRoot>
     );
   };
@@ -79,7 +82,9 @@ const renderWithAppContext = (ui, { initialStates = new Array(), ...options } = 
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
-        <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+        <HelmetProvider>
+          <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+        </HelmetProvider>
       </RecoilRoot>
     );
   };
@@ -98,9 +103,14 @@ const renderWithAllContexts = (
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
-        <ThemeProvider theme={themesLookup[defaultTheme]}>
-          <ResponsiveContext.Provider value={{ width: isDesktop ? desktop : mobile }} {...props} />
-        </ThemeProvider>
+        <HelmetProvider>
+          <ThemeProvider theme={themesLookup[defaultTheme]}>
+            <ResponsiveContext.Provider
+              value={{ width: isDesktop ? desktop : mobile }}
+              {...props}
+            />
+          </ThemeProvider>
+        </HelmetProvider>
       </RecoilRoot>
     );
   };

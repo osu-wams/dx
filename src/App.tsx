@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { Router, Location, RouteComponentProps } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
@@ -139,39 +140,41 @@ const App = (props: AppProps) => {
   }, []);
 
   return (
-    <ThemeProvider theme={themesLookup[theme]}>
-      <GlobalStyles />
-      <Header />
-      <Alerts />
-      <ContentWrapper>
-        <Location>
-          {({ location }) => (
-            <PageGridWrapper key={location.key}>
-              {ReactGA.pageview(location.pathname + location.search + location.hash)}
+    <HelmetProvider>
+      <ThemeProvider theme={themesLookup[theme]}>
+        <GlobalStyles />
+        <Header />
+        <Alerts />
+        <ContentWrapper>
+          <Location>
+            {({ location }) => (
+              <PageGridWrapper key={location.key}>
+                {ReactGA.pageview(location.pathname + location.search + location.hash)}
 
-              <AnimatePresence exitBeforeEnter>
-                <Router location={location} key={location.key} className="router-styles">
-                  <RouterPage path="/" pageComponent={<Dashboard />} />
-                  <RouterPage path="profile" pageComponent={<Profile />} />
-                  <RouterPage path="academics/*" pageComponent={<Academics />} />
-                  <RouterPage path="finances" pageComponent={<Finances />} />
-                  <RouterPage path="resources" pageComponent={<Resources />} />
-                  <RouterPage path="beta" pageComponent={<BetaDashboard />} />
-                  {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                    <RouterPage path="training" pageComponent={<Training />} />
-                  )}
-                  {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                    <RouterPage path="notifications" pageComponent={<Notifications />} />
-                  )}
-                  <RouterPage default pageComponent={<PageNotFound />} />
-                </Router>
-              </AnimatePresence>
-            </PageGridWrapper>
-          )}
-        </Location>
-      </ContentWrapper>
-      <Footer />
-    </ThemeProvider>
+                <AnimatePresence exitBeforeEnter>
+                  <Router location={location} key={location.key} className="router-styles">
+                    <RouterPage path="/" pageComponent={<Dashboard />} />
+                    <RouterPage path="profile" pageComponent={<Profile />} />
+                    <RouterPage path="academics/*" pageComponent={<Academics />} />
+                    <RouterPage path="finances" pageComponent={<Finances />} />
+                    <RouterPage path="resources" pageComponent={<Resources />} />
+                    <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                      <RouterPage path="training" pageComponent={<Training />} />
+                    )}
+                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                      <RouterPage path="notifications" pageComponent={<Notifications />} />
+                    )}
+                    <RouterPage default pageComponent={<PageNotFound />} />
+                  </Router>
+                </AnimatePresence>
+              </PageGridWrapper>
+            )}
+          </Location>
+        </ContentWrapper>
+        <Footer />
+      </ThemeProvider>
+    </HelmetProvider>
   );
 };
 
