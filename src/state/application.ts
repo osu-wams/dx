@@ -164,11 +164,7 @@ export const filteredResourcesState = selector<Types.Resource[]>({
 /**
  * Local state for all the user messages
  */
-export const userMessagesState = atom<{
-  data: Types.UserMessage[];
-  isLoading: boolean;
-  isSuccess: boolean;
-}>({
+export const userMessagesState = atom<Types.UserMessagesState>({
   key: 'userMessagesState',
   default: { data: [], isLoading: true, isSuccess: false },
 });
@@ -176,26 +172,30 @@ export const userMessagesState = atom<{
 /**
  * Allows to filter notifications by their status or not at all
  */
-export const filteredNotifications = selectorFamily<Types.UserMessage[], string>({
+export const filteredNotifications = selectorFamily<Types.UserMessagesState, string>({
   key: 'filteredNotifications',
   get: (filter) => ({ get }) => {
     const notifications = get(userMessagesState);
 
+    let filtered = notifications.data;
     if (notifications && notifications.data && notifications.data.length > 0) {
       switch (filter) {
         case 'unread':
-          return notifications.data.filter(
+          filtered = notifications.data.filter(
             (m: Types.UserMessage) => m.status.toLowerCase() !== 'read'
           );
+          break;
+
         case 'read':
-          return notifications.data.filter(
+          filtered = notifications.data.filter(
             (m: Types.UserMessage) => m.status.toLowerCase() === 'read'
           );
-        default:
-          return notifications.data;
+          break;
       }
-    } else {
-      return [];
     }
+    return {
+      ...notifications,
+      data: filtered,
+    };
   },
 });
