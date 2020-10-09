@@ -19,7 +19,8 @@ const Url = {
     financialTransactions:
       'https://xe.ucsadm.oregonstate.edu:9990/ssomanager/c/SSB?pkg=OSU_ARWEB.P_ViewBillDate',
     studentProfile: 'https://xe.ucsadm.oregonstate.edu:8890/StudentSelfService/ssb/studentProfile',
-    editProfile: 'https://xe.ucsadm.oregonstate.edu:9990/ssomanager/c/SSB?pkg=twbkwbis.P_GenMenu?name=bmenu.P_GenMnu',
+    editProfile:
+      'https://xe.ucsadm.oregonstate.edu:9990/ssomanager/c/SSB?pkg=twbkwbis.P_GenMenu?name=bmenu.P_GenMnu',
   },
   myosu: {
     main: 'https://myosu.oregonstate.edu/',
@@ -45,7 +46,7 @@ const Url = {
     main: 'https://osu.workforcehosting.com/',
   },
   evals: {
-    main: 'https://myosu.oregonstate.edu/web/myosu/employee?gpi=10190',
+    main: 'https://evals.oregonstate.edu/',
   },
   itSystemStatus: {
     main: 'https://status.is.oregonstate.edu',
