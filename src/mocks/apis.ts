@@ -8,6 +8,7 @@ const an = '/api/announcements/';
 const res = '/api/resources/';
 const alerts = '/api/alerts';
 const persons = '/api/persons';
+const user = '/api/user';
 /**
  * Student API paths
  */
@@ -58,3 +59,8 @@ export const TRAININGS_TAGS_API = '/api/trainings/tags';
 export const PERSONS_API = persons;
 
 export const PERSONS_ADDRESSES_API = persons + '/addresses';
+
+/**
+ * User
+ */
+export const USER_MESSAGES_API = user + '/messages';
