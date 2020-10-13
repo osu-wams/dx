@@ -28,6 +28,8 @@ export type IComponents =
   | 'it-system-status'
   | 'it-system-status-sticky'
   | 'meal-plans'
+  | 'notifications'
+  | 'notifications-menu'
   | 'past-courses-search'
   | 'planner-items'
   | 'profile'
