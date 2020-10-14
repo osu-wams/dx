@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { LocationProvider } from '@reach/router';
 import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
@@ -64,9 +65,11 @@ const renderWithUserContext = (
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
-        <HelmetProvider>
-          <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
-        </HelmetProvider>
+        <LocationProvider>
+          <HelmetProvider>
+            <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+          </HelmetProvider>
+        </LocationProvider>
       </RecoilRoot>
     );
   };
@@ -82,9 +85,11 @@ const renderWithAppContext = (ui, { initialStates = new Array(), ...options } = 
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
-        <HelmetProvider>
-          <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
-        </HelmetProvider>
+        <LocationProvider>
+          <HelmetProvider>
+            <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+          </HelmetProvider>
+        </LocationProvider>
       </RecoilRoot>
     );
   };
@@ -103,14 +108,16 @@ const renderWithAllContexts = (
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
-        <HelmetProvider>
-          <ThemeProvider theme={themesLookup[defaultTheme]}>
-            <ResponsiveContext.Provider
-              value={{ width: isDesktop ? desktop : mobile }}
-              {...props}
-            />
-          </ThemeProvider>
-        </HelmetProvider>
+        <LocationProvider>
+          <HelmetProvider>
+            <ThemeProvider theme={themesLookup[defaultTheme]}>
+              <ResponsiveContext.Provider
+                value={{ width: isDesktop ? desktop : mobile }}
+                {...props}
+              />
+            </ThemeProvider>
+          </HelmetProvider>
+        </LocationProvider>
       </RecoilRoot>
     );
   };
