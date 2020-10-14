@@ -42,6 +42,7 @@ const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
 const { personsData } = Person.Persons.mockPersons;
 const mockUserMessages = User.mockUser.userMessageItems;
+const readUserMessage = User.mockUser.userReadMessage;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -119,5 +120,9 @@ export const handlers = [
   // User
   rest.get(USER_MESSAGES_API, async (req, res, ctx) => {
     return res(ctx.json(mockUserMessages));
+  }),
+
+  rest.post(USER_MESSAGES_API, async (req, res, ctx) => {
+    return res(ctx.json(readUserMessage));
   }),
 ];
