@@ -19,8 +19,10 @@ import CustomBtn from 'src/ui/CustomBtn';
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
 import { singularPlural } from 'src/util/helpers';
 import placeholderImage from 'src/assets/training-placeholder.png';
+import { useResetScroll } from 'src/util/useResetScroll';
 
 const Training = () => {
+  useResetScroll();
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery] = useDebounce(query, 250);
   const [selectedTrainingTag, setSelectedTrainingTag] = useState('all');
@@ -127,11 +129,14 @@ const Training = () => {
                 ))}
             </div>
           )}
-          {!trainings.isLoading && trainings.isSuccess && trainings.data && trainings.data.length > 0 && (
-            <VisuallyHidden>
-              <a href="#trainingResults">Skip to results</a>
-            </VisuallyHidden>
-          )}
+          {!trainings.isLoading &&
+            trainings.isSuccess &&
+            trainings.data &&
+            trainings.data.length > 0 && (
+              <VisuallyHidden>
+                <a href="#trainingResults">Skip to results</a>
+              </VisuallyHidden>
+            )}
           {trainingTags.isLoading && <Loading />}
 
           {trainings.isLoading && <Loading lines={5} />}
