@@ -10,6 +10,7 @@ const mockUseGrades = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
+    // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
     useGrades: () => mockUseGrades(),
   };

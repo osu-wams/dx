@@ -7,6 +7,7 @@ import {
   Alerts,
   Trainings,
   Person,
+  User,
 } from '@osu-wams/hooks';
 import {
   HOLDS_API,
@@ -24,6 +25,7 @@ import {
   TRAININGS_TAGS_API,
   PERSONS_ADDRESSES_API,
   PERSONS_API,
+  USER_MESSAGES_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -39,6 +41,8 @@ const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
 const { personsData } = Person.Persons.mockPersons;
+const mockUserMessages = User.mockUser.userMessageItems;
+const readUserMessage = User.mockUser.userReadMessage;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -111,5 +115,14 @@ export const handlers = [
 
   rest.get(PERSONS_ADDRESSES_API, async (req, res, ctx) => {
     return res(ctx.json(personsMailingAddressData.data));
+  }),
+
+  // User
+  rest.get(USER_MESSAGES_API, async (req, res, ctx) => {
+    return res(ctx.json(mockUserMessages));
+  }),
+
+  rest.post(USER_MESSAGES_API, async (req, res, ctx) => {
+    return res(ctx.json(readUserMessage));
   }),
 ];

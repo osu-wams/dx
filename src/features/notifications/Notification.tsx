@@ -12,6 +12,7 @@ import { User } from '@osu-wams/hooks';
 import { format } from 'src/util/helpers';
 import { RichTextContent } from 'src/ui/RichText';
 import { queryCache } from 'react-query';
+import { Event } from 'src/util/gaTracking';
 
 export const Notification = ({
   n,
@@ -43,6 +44,7 @@ export const Notification = ({
 
   const markRead = (m: Types.UserMessage) => {
     if (m.status !== 'READ') {
+      Event('notifications', `expanded (READ)`, m.title);
       User.updateUserMessage({ messageId: m.messageId, status: 'READ' }).then(() => {
         queryCache.invalidateQueries('userMessages');
       });

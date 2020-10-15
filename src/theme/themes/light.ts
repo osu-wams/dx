@@ -129,7 +129,7 @@ export const light: ThemeConfiguration = {
     date: neutral550,
     indicator: {
       unread: primary,
-      read: neutral550,
+      read: Color.transparent,
     },
   },
   mainGrid: {

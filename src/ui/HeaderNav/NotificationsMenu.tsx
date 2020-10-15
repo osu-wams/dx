@@ -86,9 +86,7 @@ const NotificationsMenu = () => {
 
   return (
     <Menu>
-      <HeaderNavButton
-        onClick={() => Event('header', 'notifications-button-menu', 'Notifications menu expanded')}
-      >
+      <HeaderNavButton onClick={() => Event('notifications-menu', 'open menu')}>
         <span style={{ position: 'relative' }}>
           {notifications.data.length > 0 ? (
             <Icon icon={faBell} size="lg" count={notifications.data.length} top />
@@ -115,7 +113,7 @@ const NotificationsMenu = () => {
               as={Link}
               to="/notifications"
               onClick={() => {
-                Event('header', 'notifications-button-menu', `See all notifications page link`);
+                Event('notifications-menu', `See all notifications page`);
               }}
               style={{ color: themeContext.ui.link.icon.internal.color, padding: 0 }}
             >
@@ -147,6 +145,7 @@ const NotificationsMenu = () => {
                 onSelect={() => {
                   setSelectedNotification(m);
                   dismissNotification(m);
+                  Event('notifications-menu', 'opened notification', m.title);
                 }}
               >
                 <Indicator />
@@ -156,7 +155,10 @@ const NotificationsMenu = () => {
                 </div>
               </MenuItem>
               <MenuItem
-                onSelect={() => dismissNotification(m)}
+                onSelect={() => {
+                  dismissNotification(m);
+                  Event('notifications-menu', 'dismissed notification', m.title);
+                }}
                 onMouseUp={(event) => {
                   event.preventDefault();
                   event.stopPropagation();
@@ -193,7 +195,7 @@ const NotificationsMenu = () => {
                 <InternalLink
                   to={'notifications'}
                   onClick={() => {
-                    Event('header', 'notifications-button-menu', `See all notifications page link`);
+                    Event('notifications-menu', 'modal link: See all notifications page link');
                     close();
                   }}
                   fg={themeContext.ui.link.icon.internal.color}
@@ -204,7 +206,12 @@ const NotificationsMenu = () => {
             </MyDialog>
           )}
           {notifications.data.length > 0 && (
-            <MenuItem onSelect={() => dismissAll()}>
+            <MenuItem
+              onSelect={() => {
+                dismissAll();
+                Event('notifications-menu', 'Dismiss ALL notifications');
+              }}
+            >
               <span style={{ marginLeft: 'auto' }}>
                 Dismiss all <VisuallyHidden>notifications</VisuallyHidden>
               </span>

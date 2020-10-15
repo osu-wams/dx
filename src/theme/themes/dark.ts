@@ -130,7 +130,7 @@ export const dark: ThemeConfiguration = {
     date: neutral700,
     indicator: {
       unread: primary,
-      read: neutral700,
+      read: Color.transparent,
     },
   },
   mainGrid: {
