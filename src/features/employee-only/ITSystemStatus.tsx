@@ -9,6 +9,7 @@ import {
   CardContentRow,
   CardIcon,
   CardFooter,
+  CardHeaderSimple,
 } from 'src/ui/Card';
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
@@ -21,10 +22,15 @@ import operationalStatus from 'src/assets/systems-status-operational.svg';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 
 const AllOperational = () => (
-  <EmptyState>
-    <EmptyStateImage src={operationalStatus} alt="" />
-    <EmptyStateText>All IT systems operating normally.</EmptyStateText>
-  </EmptyState>
+  <CardHeaderSimple>
+    <CardIcon icon={faDesktop} />
+    <ExternalLink
+      href={Url.itSystemStatus.main}
+      onClick={() => Event('it-system-status', `All IT systems are operating normally`)}
+    >
+      All IT systems are operating normally
+    </ExternalLink>
+  </CardHeaderSimple>
 );
 
 const { withStickyIncidents, sortedByStatus, allOperational } = Status;
@@ -48,37 +54,42 @@ const StatusItemRow = styled(CardContentRow)`
 `;
 
 const ITSystemStatus = () => {
-  const status = useStatus();
+  const { data, isLoading, isSuccess } = useStatus();
 
   return (
     <Card collapsing={false}>
-      <CardHeader title="IT System Status" badge={<CardIcon icon={faDesktop} />} />
-      {status.loading && <Loading lines={5} />}
-      {!status.loading && (
-        <CardContentTable>
-          {withStickyIncidents(status.data).length > 0 && (
-            <CardContentRow className="row-span-1">
-              <ITSystemSticky components={withStickyIncidents(status.data)}></ITSystemSticky>
-            </CardContentRow>
-          )}
-          {allOperational(status.data) && <AllOperational />}
-          <StatusItemRow>
-            {!allOperational(status.data) &&
-              status.data.length &&
-              sortedByStatus(status.data)
-                .filter((c) => c.status > 1)
-                .map((c) => <ITSystemItem key={`item-${c.id}`} component={c} />)}
-          </StatusItemRow>
-        </CardContentTable>
+      {isLoading && <Loading lines={2} />}
+
+      {isSuccess && data && allOperational(data) && AllOperational()}
+
+      {isSuccess && data && !allOperational(data) && (
+        <>
+          <CardHeader title="IT System Status" badge={<CardIcon icon={faDesktop} />} />
+          <CardContentTable>
+            {withStickyIncidents(data).length > 0 && (
+              <CardContentRow className="row-span-1">
+                <ITSystemSticky components={withStickyIncidents(data)}></ITSystemSticky>
+              </CardContentRow>
+            )}
+
+            <StatusItemRow>
+              {!allOperational(data) &&
+                data.length &&
+                sortedByStatus(data)
+                  .filter((c) => c.status > 1)
+                  .map((c) => <ITSystemItem key={`item-${c.id}`} component={c} />)}
+            </StatusItemRow>
+          </CardContentTable>
+          <CardFooter infoButtonId="it-system-status">
+            <ExternalLink
+              href={Url.itSystemStatus.main}
+              onClick={() => Event('it-system-status', `view it system status link`)}
+            >
+              View more at status portal
+            </ExternalLink>
+          </CardFooter>
+        </>
       )}
-      <CardFooter infoButtonId="it-system-status">
-        <ExternalLink
-          href={Url.itSystemStatus.main}
-          onClick={() => Event('it-system-status', `view it system status link`)}
-        >
-          View more at status portal
-        </ExternalLink>
-      </CardFooter>
     </Card>
   );
 };

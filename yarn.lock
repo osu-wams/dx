@@ -1806,10 +1806,10 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@1.0.63":
-  version "1.0.63"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.63/bba4b8a8774039f4fc569abb82226b853ab0ec1591bcc334c135ed1043b6c360#1e19f9a0333be8bded3159bbdf1712df1e75a2d5"
-  integrity sha512-54Di4hXcmvkUlkBVV5jWOvqT9jACFWCTYKrT+0uwnPmN4m5o8ypPCchOmAf3P46jKsIiZAAj94GXzreawdWP+A==
+"@osu-wams/hooks@1.0.64":
+  version "1.0.64"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.64/2f6713916077ecb56a1816e5cd7948416c5f042be2832c46e31a5bf84c8fba3c#1f888801196b4546666978044058846eb8af13f1"
+  integrity sha512-jNI+Yj2Gc3yNSIoD1xJZQzjyla5Nl64b2BB10Ca7/cJT/7tsq6wdu73A+AtupHsNJo6E+ppxyjoqktj90fdhOA==
   dependencies:
     "@osu-wams/lib" "^0.1.44"
     "@osu-wams/utils" "^0.0.8"
@@ -2109,7 +2109,7 @@
     "@testing-library/dom" "^7.22.2"
     "@types/testing-library__cypress" "^5.0.6"
 
-"@testing-library/dom@^7.11.0", "@testing-library/dom@^7.22.2", "@testing-library/dom@^7.23.0":
+"@testing-library/dom@^7.11.0", "@testing-library/dom@^7.22.2", "@testing-library/dom@^7.24.2":
   version "7.26.0"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.26.0.tgz#da4d052dc426a4ccc916303369c6e7552126f680"
   integrity sha512-fyKFrBbS1IigaE3FV21LyeC7kSGF84lqTlSYdKmGaHuK2eYQ/bXVPM5vAa2wx/AU1iPD6oQHsxy2QQ17q9AMCg==
@@ -2137,7 +2137,7 @@
     lodash "^4.17.15"
     redent "^3.0.0"
 
-"@testing-library/react-hooks@^3.4.1":
+"@testing-library/react-hooks@^3.4.2":
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/@testing-library/react-hooks/-/react-hooks-3.4.2.tgz#8deb94f7684e0d896edd84a4c90e5b79a0810bc2"
   integrity sha512-RfPG0ckOzUIVeIqlOc1YztKgFW+ON8Y5xaSPbiBkfj9nMkkiLhLeBXT5icfPX65oJV/zCZu4z8EVnUc6GY9C5A==
@@ -2145,18 +2145,18 @@
     "@babel/runtime" "^7.5.4"
     "@types/testing-library__react-hooks" "^3.4.0"
 
-"@testing-library/react@11.0.2":
-  version "11.0.2"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-11.0.2.tgz#4588cc537085907bd1d98b531eb247dbbf57b1cc"
-  integrity sha512-iOuNNHt4ZgMH5trSKC4kaWDcKzUOf7e7KQIcu7xvGCd68/w1EegbW89F9T5sZ4IjS0gAXdvOfZbG9ESZ7YjOug==
+"@testing-library/react@11.0.4":
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-11.0.4.tgz#c84082bfe1593d8fcd475d46baee024452f31dee"
+  integrity sha512-U0fZO2zxm7M0CB5h1+lh31lbAwMSmDMEMGpMT3BUPJwIjDEKYWOV4dx7lb3x2Ue0Pyt77gmz/VropuJnSz/Iew==
   dependencies:
     "@babel/runtime" "^7.11.2"
-    "@testing-library/dom" "^7.23.0"
+    "@testing-library/dom" "^7.24.2"
 
-"@testing-library/user-event@^12.1.3":
-  version "12.1.7"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.7.tgz#67a81ee04e81b4abca8931804655d364fbb93c10"
-  integrity sha512-wuJiPqSQTVIHsYuumv1PAOBjblSrYA5vyN1nkUDF5HgfuWGz44jQsO22u7PQNkuACGYJE4eU0sybX8CzsySv+Q==
+"@testing-library/user-event@^12.1.6":
+  version "12.1.8"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.8.tgz#52b419455a3da2ac7ac17b77f8fd621c3700ec12"
+  integrity sha512-UUcTuT8HyDwGaRXgNgvMS1uOlreLv9+WsXi1FNj3mmumnB2d3hv2cov0RAd99lx8QI2CtAAOELxoihGj8x/nWg==
   dependencies:
     "@babel/runtime" "^7.10.2"
 
