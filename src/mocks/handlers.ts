@@ -8,6 +8,7 @@ import {
   Trainings,
   Person,
   User,
+  Status,
 } from '@osu-wams/hooks';
 import {
   HOLDS_API,
@@ -26,6 +27,7 @@ import {
   PERSONS_ADDRESSES_API,
   PERSONS_API,
   USER_MESSAGES_API,
+  IT_STATUS_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -43,6 +45,7 @@ const { personsMailingAddressData } = Person.Addresses.mockAddresses;
 const { personsData } = Person.Persons.mockPersons;
 const mockUserMessages = User.mockUser.userMessageItems;
 const readUserMessage = User.mockUser.userReadMessage;
+const mockStatus = Status.mockStatus.statusData;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -124,5 +127,10 @@ export const handlers = [
 
   rest.post(USER_MESSAGES_API, async (req, res, ctx) => {
     return res(ctx.json(readUserMessage));
+  }),
+
+  // Status
+  rest.get(IT_STATUS_API, async (req, res, ctx) => {
+    return res(ctx.json(mockStatus));
   }),
 ];
