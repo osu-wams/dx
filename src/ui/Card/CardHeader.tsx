@@ -50,4 +50,13 @@ const CardHeaderWrapper = styled.h2<ICollapse>`
     collapsed && collapsible ? 'none' : `1px solid ${theme.ui.card.header.borderBottom}`};
 `;
 
+export const CardHeaderSimple = styled.div`
+  font-size: ${fontSize[16]};
+  height: 64px;
+  width: 100%;
+  padding: ${spacing.default};
+  display: flex;
+  align-items: center;
+`;
+
 export default CardHeader;
