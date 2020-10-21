@@ -76,7 +76,7 @@ export const SwitchesGroup = () => {
                   user.data,
                   'firstYear',
                   state.firstYear,
-                  User.isFirstYear(user.data)
+                  User.isFirstYear(user.data, false)
                 )
                   ? ' (Override) '
                   : ''}
@@ -99,7 +99,7 @@ export const SwitchesGroup = () => {
                   user.data,
                   'international',
                   state.international,
-                  User.isInternational(user.data)
+                  User.isInternational(user.data, false)
                 )
                   ? ' (Override) '
                   : ''}
@@ -119,7 +119,7 @@ export const SwitchesGroup = () => {
                   user.data,
                   'graduate',
                   state.graduate,
-                  User.isGraduate(user.data)
+                  User.isGraduate(user.data, false)
                 )
                   ? ' (Override) '
                   : ''}
