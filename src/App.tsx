@@ -103,7 +103,7 @@ const App = (props: AppProps) => {
     if (!userHook.loading && userHook.data !== user.data) {
       setUser(userHook);
     }
-    if (!userHook.loading && !userHook.error) {
+    if (!userHook.loading && !userHook.error && userHook.data.osuId) {
       containerElementRef.current.style.opacity = '1';
     }
   }, [userHook.data, userHook.loading, userHook.error]);
