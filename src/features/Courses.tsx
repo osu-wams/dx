@@ -33,7 +33,7 @@ export const courseCodeOrIcon = (
   courseList: Types.CourseSchedule[],
   iconElement: JSX.Element
 ): JSX.Element => {
-  const course = matchedCourseContext(contextName, courseList);
+  const course = matchedCourseContext(courseList, contextName);
   if (!course) return iconElement;
   return courseItemLeadText(course.courseSubject, course.courseNumber);
 };

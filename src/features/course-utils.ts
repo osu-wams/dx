@@ -74,13 +74,15 @@ export const getIconByScheduleType = (scheduleType: string) => {
  * If there are no matches found for any reason (the format of the contextName changes, there are
  * no courses returned from the API, etc) then return undefined.
  * * example contextName = "INTRO NATIVE AMERICAN STUDIES (ES_241_400_F2019)"
- * @param contextName the course context name from Canvas
+ * @param contextName the course context name from Canvas, not included in every kind of planner item (ie. planner_note)
  * @param courseList the array of courses for the student
  */
 export const matchedCourseContext = (
-  contextName: string,
-  courses: Types.CourseSchedule[]
+  courses: Types.CourseSchedule[],
+  contextName?: string
 ): { courseSubject: string; courseNumber: string } | undefined => {
+  if (!contextName) return undefined;
+
   // Expecting the context name to include something like "(PSY_240_400_F2019)"
   // and matching groups as subject "PSY" and number "240"
   const matches = contextName.match(/\((?<courseSubject>\w+)_(?<courseNumber>\w+)_\w+_\w+\)/);
