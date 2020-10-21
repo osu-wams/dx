@@ -29,6 +29,27 @@ describe('<PlannerItems />', () => {
     await findByText('Week 5 Lab Discussion');
   });
 
+  it('should have a "My Awesome Planner Note" note on our mock data', async () => {
+    mockInitialState.mockReturnValue([
+      {
+        state: plannerItemState,
+        value: {
+          data: [
+            {
+              ...mockPlannerItems.data[0],
+              context_type: undefined,
+              plannable: { title: 'My Awesome Planner Note' },
+            },
+          ],
+          isLoading: false,
+          error: null,
+        },
+      },
+    ]);
+    const { findByText } = render(<PlannerItems />, { initialStates: mockInitialState() });
+    await findByText('My Awesome Planner Note');
+  });
+
   it('should track analytics when footer link and assignment is clicked', async () => {
     const { getByText, findByText } = render(<PlannerItems />, {
       initialStates: mockInitialState(),
