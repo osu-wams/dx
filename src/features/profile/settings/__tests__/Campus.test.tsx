@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { render, authUser } from 'src/util/test-utils';
+import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
 import Campus from '../Campus';
 
 const mockPostSettings = jest.fn();
@@ -83,12 +83,9 @@ describe('<Campus />', () => {
     expect(queryAllByText('(Default)')).toHaveLength(1);
   });
 
-  it('renders with test data as a non-student user having no classification attributes', async () => {
+  it('renders with test data as an Employee only user having no classification attributes', async () => {
     mockUser.mockReturnValue({
-      ...authUser,
-      data: {
-        classification: {},
-      },
+      ...mockEmployeeUser,
     });
     const { getByText } = render(<Campus />, { user: mockUser() });
     const defaultCampus = getByText('(Default)');
