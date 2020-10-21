@@ -51,7 +51,7 @@ describe('<PlannerItems />', () => {
   });
 
   it('should track analytics when footer link and assignment is clicked', async () => {
-    const { getByText, findByText, debug } = render(<PlannerItems />, {
+    const { getByText, findByText } = render(<PlannerItems />, {
       initialStates: mockInitialState(),
     });
 
