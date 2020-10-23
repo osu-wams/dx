@@ -1,9 +1,15 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { render, mockAdminUser } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import Profile from '../Profile';
 
-// TODO: Fix these on Github Actions consistent failures
-xit('renders', async () => {
-  const { getByTestId } = render(<Profile />);
-  expect(getByTestId('profile-page')).toBeInTheDocument();
+it('Regular user cannot see the Admin Settings card', async () => {
+  render(<Profile />);
+  expect(screen.getByTestId('profile-page')).toBeInTheDocument();
+  expect(screen.queryByText(/Admin Settings/i)).toBeNull();
+});
+
+it('Admin user can see the Admin Settings card', async () => {
+  render(<Profile />, { user: mockAdminUser });
+  expect(await screen.findByText(/Admin Settings/i)).toBeInTheDocument();
 });
