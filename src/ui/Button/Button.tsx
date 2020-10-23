@@ -20,6 +20,9 @@ const Button = styled.button<BtnProps & React.HTMLProps<HTMLButtonElement>>(
     '& + &': {
       marginLeft: spacing.medium,
     },
+    '&:disabled': {
+      cursor: 'not-allowed',
+    },
   }),
   ({ btnSize = 'normal' }) => btnVariants[btnSize]
 );

@@ -6,6 +6,7 @@ export type IComponents =
   | 'academic-calendar'
   | 'academic-overview'
   | 'account-balance'
+  | 'admin'
   | 'anouncements'
   | 'badge'
   | 'beta'
