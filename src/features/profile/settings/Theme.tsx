@@ -8,6 +8,7 @@ import { titleCase } from 'src/util/helpers';
 import { defaultTheme, themesLookup } from 'src/theme/themes';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { userState, themeState } from 'src/state/application';
+import { Event } from 'src/util/gaTracking';
 
 const { postSettings, usersSettings } = User;
 
@@ -36,6 +37,7 @@ export const RadioButtonsGroup = () => {
       });
       setTheme(selectedValue);
       setValue(selectedValue);
+      Event('profile', 'Theme changed', selectedValue);
     });
   };
 

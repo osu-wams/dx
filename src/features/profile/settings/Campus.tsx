@@ -9,6 +9,7 @@ import { titleCase } from 'src/util/helpers';
 import { fontSize } from 'src/theme';
 import { userState } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
+import { Event } from 'src/util/gaTracking';
 
 const { CAMPUS_CODES, postSettings, settingIsDefault, usersSettings, DEFAULT_CAMPUS } = User;
 
@@ -36,6 +37,7 @@ export const RadioButtonsGroup = () => {
       // This hook needs to reach into the UserState and call the underlying
       // setter on the user object rather than the `setUser` on the
       // recoil state itself.
+      Event('profile', 'Campus changed', 'campus code: ' + selectedValue);
       user.setUser!({
         ...user,
         data: { ...user.data, ...settings },

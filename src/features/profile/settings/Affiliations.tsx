@@ -7,6 +7,7 @@ import { User } from '@osu-wams/hooks';
 import { fontSize } from 'src/theme';
 import { userState } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
+import { Event } from 'src/util/gaTracking';
 
 const { postSettings, usersSettings, settingIsOverridden } = User;
 
@@ -48,6 +49,7 @@ export const SwitchesGroup = () => {
     const checked = (event.target as HTMLInputElement).checked;
     const settings = usersSettings(user.data);
     settings.audienceOverride![name] = checked;
+    Event('profile', 'Audience Override', name);
 
     postSettings({ audienceOverride: settings.audienceOverride }).then((d) => {
       // This hook needs to reach into the UserState and call the underlying
