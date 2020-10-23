@@ -23,6 +23,7 @@ import { GlobalStyles } from './theme';
 import { userState, themeState, infoButtonState, plannerItemState } from './state/application';
 import { useRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
+import { ReactQueryDevtools } from 'react-query-devtools';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -174,6 +175,7 @@ const App = (props: AppProps) => {
         </ContentWrapper>
         <Footer />
       </ThemeProvider>
+      {user.data.isAdmin && user.data.devTools && <ReactQueryDevtools initialIsOpen={false} />}
     </HelmetProvider>
   );
 };
