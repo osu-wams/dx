@@ -24,6 +24,7 @@ const AdminSettings: FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = (event.target as HTMLInputElement).checked;
     const settings = usersSettings({ ...user.data, devTools: checked });
+    Event('admin', 'ReactQuery DevTools', 'set to: ' + checked);
 
     postSettings({ devTools: checked }).then((d) => {
       // This hook needs to reach into the UserState and call the underlying
