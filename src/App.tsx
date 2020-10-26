@@ -30,7 +30,7 @@ import {
 } from './state/application';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
-import { ReactQueryDevtools } from 'react-query-devtools';
+import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 
 const ContentWrapper = styled.main`
   display: flex;
