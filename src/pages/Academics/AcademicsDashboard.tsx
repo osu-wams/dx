@@ -10,8 +10,13 @@ import AcademicOverview from 'src/features/AcademicOverview';
 import ResourcesCard from 'src/features/ResourcesCard';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { AcademicProgram } from 'src/features/AcademicProgram';
+import { filteredCards } from 'src/state/application';
+import { useRecoilValue } from 'recoil';
+import { Card } from 'src/ui/Card';
 
 const AcademicsDashboard = () => {
+  const cards = useRecoilValue(filteredCards('Academics'));
+
   return (
     <>
       <MainGridWrapper data-testid="academics-dashboard">
@@ -24,6 +29,9 @@ const AcademicsDashboard = () => {
           <PlannerItems />
           <Courses />
           <AcademicCalendar />
+          {cards.map((c) => (
+            <Card key={c.id}>{c.title}</Card>
+          ))}
         </Masonry>
       </MainGridWrapper>
       <AnnouncementContainer data-testid="academics-announcements" page="academics" />
