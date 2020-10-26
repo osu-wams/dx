@@ -7,7 +7,7 @@ import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
 import ResourcesCategories from 'src/features/resources/ResourcesCategories';
 import ResourcesSearch from 'src/features/resources/ResourcesSearch';
 import ResourcesList from 'src/features/resources/ResourcesList';
-import { useCategories, useResources, User, Resources as HooksResources } from '@osu-wams/hooks';
+import { useCategories, User, Resources as HooksResources } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Event } from 'src/util/gaTracking';
@@ -44,8 +44,7 @@ const Resources = () => {
   const catHook = useCategories();
   const [categories, setCategories] = useRecoilState(categoryState);
   const [activeCategory, setActiveCategory] = useRecoilState(selectedCategoryState);
-  const resHook = useResources();
-  const [resources, setResources] = useRecoilState(resourceState);
+  const resources = useRecoilValue(resourceState);
   /**
    * Filter the categories to include any that have an affilation related to the type of user
    * (student vs employee)
@@ -67,12 +66,7 @@ const Resources = () => {
         isSuccess,
       });
     }
-
-    if (resHook.data && resHook.data !== resources.data) {
-      const { data, isLoading, isSuccess } = resHook;
-      setResources({ data, isLoading, isSuccess });
-    }
-  }, [resHook.data, catHook.data, user.data]);
+  }, [catHook.data, user.data]);
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /**
