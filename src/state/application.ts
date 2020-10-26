@@ -23,9 +23,10 @@ export const resourceState = atom<{
   data: Types.Resource[];
   isLoading: boolean;
   isSuccess: boolean;
+  isError: boolean;
 }>({
   key: 'resourceState',
-  default: { data: [], isLoading: true, isSuccess: false },
+  default: { data: [], isLoading: true, isSuccess: false, isError: false },
 });
 
 export const selectedCategoryState = atom<string>({
@@ -197,5 +198,34 @@ export const filteredNotifications = selectorFamily<Types.UserMessagesState, str
       ...notifications,
       data: filtered,
     };
+  },
+});
+
+export const dynamicCardState = atom<{
+  data: Types.DynamicCard[];
+  isLoading: boolean;
+  isSuccess: boolean;
+}>({
+  key: 'dynamicCardState',
+  default: { data: [], isLoading: true, isSuccess: false },
+});
+
+export const filteredCards = selectorFamily<Types.DynamicCard[], string>({
+  key: 'dynamicCardsWithResources',
+  get: (page) => ({ get }) => {
+    const cards = get(dynamicCardState);
+    const resources = get(resourceState);
+    if (cards.data.length && resources.data.length) {
+      return cards.data
+        .filter((c) => c.pages.includes(page))
+        .map((c) => ({
+          ...c,
+          resources:
+            c.resources?.map(
+              (resourceId) => resources.data.find((r) => r.id === resourceId) ?? resourceId
+            ) ?? [],
+        }));
+    }
+    return [];
   },
 });
