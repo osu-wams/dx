@@ -4,7 +4,6 @@ import { Types } from '@osu-wams/lib';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from 'src/ui/List';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
-import { useResources } from '@osu-wams/hooks';
 import { Event } from 'src/util/gaTracking';
 import FailedState from 'src/ui/FailedState';
 import { InternalLink } from 'src/ui/Link';
@@ -12,7 +11,7 @@ import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates'
 import { ResourceItem } from './resources/ResourceItem';
 import { activeFavoriteResources } from './resources/resources-utils';
 import favoritesImg from 'src/assets/favorites.svg';
-import { userState } from 'src/state/application';
+import { resourceState, userState } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
 
 /**
@@ -20,7 +19,7 @@ import { useRecoilValue } from 'recoil';
  */
 export const FavoriteResources = () => {
   const user = useRecoilValue(userState);
-  const res = useResources();
+  const res = useRecoilValue(resourceState);
   const [favoriteResources, setFavoriteResources] = useState<Types.Resource[]>([]);
 
   useEffect(() => {
@@ -56,9 +55,9 @@ export const FavoriteResources = () => {
             ))}
           </List>
         )}
-        {!res.isLoading && !res.error && favoriteResources?.length === 0 && <NoFavorites />}
+        {!res.isLoading && !res.isError && favoriteResources?.length === 0 && <NoFavorites />}
 
-        {!res.isLoading && res.error && <FailedState>Oops, something went wrong!</FailedState>}
+        {!res.isLoading && res.isError && <FailedState>Oops, something went wrong!</FailedState>}
       </CardContent>
       <CardFooter infoButtonId="favorite-resources">
         <InternalLink

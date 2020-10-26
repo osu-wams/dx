@@ -12,8 +12,9 @@ import userEvent from '@testing-library/user-event';
 import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
+import { resourceState } from 'src/state/application';
 
-const mockUseResources = jest.fn();
+const mockInitialState = jest.fn();
 const mockUseCategories = jest.fn();
 const mockDefaultCategory = jest.fn();
 const mockPostFavorite = jest.fn();
@@ -23,7 +24,6 @@ jest.mock('@osu-wams/hooks', () => {
   const original = jest.requireActual('@osu-wams/hooks');
   return {
     ...original,
-    useResources: () => mockUseResources(),
     useCategories: () => mockUseCategories(),
     defaultCategoryName: () => mockDefaultCategory(),
     Resources: {
@@ -41,10 +41,11 @@ jest.mock('@osu-wams/hooks', () => {
 const renderResources = (userType?: any) => {
   let utils;
   if (!userType) {
-    utils = render(<ResourcesComponent />);
+    utils = render(<ResourcesComponent />, { initialStates: mockInitialState() });
   } else {
     utils = render(<ResourcesComponent />, {
       user: userType,
+      initialStates: mockInitialState(),
     });
   }
   const featured = utils.getByLabelText('Featured');
@@ -64,7 +65,12 @@ const renderResources = (userType?: any) => {
 describe('<Resources />', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
-    mockUseResources.mockReturnValue(resourcesData);
+    mockInitialState.mockReturnValue([
+      {
+        state: resourceState,
+        value: resourcesData,
+      },
+    ]);
     mockUseCategories.mockReturnValue(categoriesData);
     mockDefaultCategory.mockReturnValue(defaultCategory);
   });
@@ -137,12 +143,19 @@ describe('<Resources />', () => {
 
     it('should have clickable categories that will not report as a trending resource', async () => {
       mockDefaultCategory.mockReturnValue('All');
-      mockUseResources.mockReturnValue({
-        ...resourcesData,
-        data: [
-          { ...resourcesData.data[0], excludeTrending: true, locations: ['Corvallis', 'Bend'] },
-        ],
-      });
+      mockInitialState.mockReturnValue([
+        {
+          state: resourceState,
+          value: {
+            isLoading: resourcesData.isLoading,
+            isSuccess: resourcesData.isSuccess,
+            isError: resourcesData.isError,
+            data: [
+              { ...resourcesData.data[0], excludeTrending: true, locations: ['Corvallis', 'Bend'] },
+            ],
+          },
+        },
+      ]);
       renderResources();
       const nonTrendingResource = screen.getByText(/Testo/);
       expect(nonTrendingResource).not.toBeNull();

@@ -16,12 +16,19 @@ import PageNotFound from './pages/PageNotFound';
 import Training from './pages/Training';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useUser, usePlannerItems } from '@osu-wams/hooks';
+import { useUser, usePlannerItems, useCards, useResources } from '@osu-wams/hooks';
 import { useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
-import { userState, themeState, infoButtonState, plannerItemState } from './state/application';
-import { useRecoilState } from 'recoil';
+import {
+  userState,
+  themeState,
+  infoButtonState,
+  plannerItemState,
+  dynamicCardState,
+  resourceState,
+} from './state/application';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools';
 
@@ -52,6 +59,10 @@ const App = (props: AppProps) => {
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
   const [plannerItemData, setPlannerItemData] = useRecoilState(plannerItemState);
+  const setCards = useSetRecoilState(dynamicCardState);
+  const setResources = useSetRecoilState(resourceState);
+  const cardsHook = useCards();
+  const resHook = useResources();
   const userHook = useUser();
   const infoButtons = useInfoButtons();
   const plannerItems = usePlannerItems({
@@ -96,6 +107,27 @@ const App = (props: AppProps) => {
       setInfoButtonData(infoButtons.data);
     }
   }, [infoButtons.data]);
+
+  useEffect(() => {
+    if (cardsHook.isSuccess && cardsHook.data) {
+      setCards({
+        data: cardsHook.data,
+        isLoading: cardsHook.isLoading,
+        isSuccess: cardsHook.isSuccess,
+      });
+    }
+  }, [cardsHook.data, cardsHook.isSuccess]);
+
+  useEffect(() => {
+    if (resHook.isSuccess && resHook.data) {
+      setResources({
+        data: resHook.data,
+        isLoading: resHook.isLoading,
+        isSuccess: resHook.isSuccess,
+        isError: resHook.isError,
+      });
+    }
+  }, [resHook.data, resHook.isSuccess]);
 
   /**
    * User Bootstrap for User setup
