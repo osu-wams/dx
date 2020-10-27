@@ -44,7 +44,6 @@ const Masonry = ({ children }) => {
 
   const createCols = () => {
     for (let i = 0; i < numCols; i++) cols[i] = [];
-    const all = [];
     children.forEach((child, i) => {
       if (Array.isArray(child)) {
         child.forEach((c, i) => {
