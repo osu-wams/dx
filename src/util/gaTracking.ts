@@ -16,6 +16,7 @@ export type IComponents =
   | 'course'
   | 'courses'
   | 'dx-event'
+  | 'dynamic-card'
   | 'employee-navigation-main'
   | 'employee-tools'
   | 'events'

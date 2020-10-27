@@ -6,20 +6,23 @@ import BetaReleaseNotes from '../features/beta/BetaReleaseNotes';
 import { MainGridWrapper, Masonry } from '../theme';
 import { useRecoilValue } from 'recoil';
 import { filteredCards } from 'src/state/application';
-import { Card } from 'src/ui/Card';
+import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 
 const BetaDashboard = () => {
   const cards = useRecoilValue(filteredCards('Beta'));
+
   return (
     <MainGridWrapper data-testid="betadash-page">
       <PageTitle title="Beta" />
       <Masonry>
         <BetaInfo />
         <BetaReleaseNotes />
-        <BetaResources />
-        {cards.map((c) => (
-          <Card key={c.id}>{c.title}</Card>
-        ))}
+        <>
+          <BetaResources />
+          {cards.map((d) => (
+            <DynamicCard key={d.id} data={d} />
+          ))}
+        </>
       </Masonry>
     </MainGridWrapper>
   );

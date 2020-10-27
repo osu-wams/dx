@@ -12,7 +12,7 @@ import { AcademicSubNav } from './AcademicsSubNav';
 import { AcademicProgram } from 'src/features/AcademicProgram';
 import { filteredCards } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
-import { Card } from 'src/ui/Card';
+import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 
 const AcademicsDashboard = () => {
   const cards = useRecoilValue(filteredCards('Academics'));
@@ -30,7 +30,7 @@ const AcademicsDashboard = () => {
           <Courses />
           <AcademicCalendar />
           {cards.map((c) => (
-            <Card key={c.id}>{c.title}</Card>
+            <DynamicCard key={c.id} data={c} />
           ))}
         </Masonry>
       </MainGridWrapper>
