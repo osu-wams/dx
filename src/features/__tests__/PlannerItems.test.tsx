@@ -26,7 +26,9 @@ describe('<PlannerItems />', () => {
   });
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
     const { findByText } = render(<PlannerItems />, { initialStates: mockInitialState() });
-    await findByText('Week 5 Lab Discussion');
+    const el = await findByText('Week 5 Lab Discussion');
+    const li = el.closest('li');
+    expect(li).toMatchSnapshot('with hover');
   });
 
   it('should have a "My Awesome Planner Note" note on our mock data', async () => {
@@ -38,6 +40,8 @@ describe('<PlannerItems />', () => {
             {
               ...mockPlannerItems.data[0],
               context_type: undefined,
+              html_url: undefined,
+              plannable_date: '2020-01-01T01:01:00Z',
               plannable: { title: 'My Awesome Planner Note' },
             },
           ],
@@ -47,7 +51,10 @@ describe('<PlannerItems />', () => {
       },
     ]);
     const { findByText } = render(<PlannerItems />, { initialStates: mockInitialState() });
-    await findByText('My Awesome Planner Note');
+
+    const el = await findByText('My Awesome Planner Note');
+    const li = el.closest('li');
+    expect(li).toMatchSnapshot('without hover');
   });
 
   it('should track analytics when footer link and assignment is clicked', async () => {

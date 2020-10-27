@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { css } from 'styled-components';
 import { spacing, fontSize, borderRadius } from 'src/theme';
 
 type SpacedList = {
@@ -84,7 +85,9 @@ const ListItemContentLinkSVG = styled(ListItemContentLink)`
   }
 `;
 
-const ListItemFlex = styled(ListItem)`
+const ListItemFlex = styled(ListItem).attrs((props: { hoverable?: boolean }) => ({
+  hoverable: props.hoverable ?? true,
+}))`
   display: flex;
   align-items: center;
   border: 1px solid transparent;
@@ -98,15 +101,19 @@ const ListItemFlex = styled(ListItem)`
   ${ListItemText} {
     padding-right: 0;
   }
-  &:hover {
-    ${ListItemHeader},
-    ${ListItemContent} {
-      color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
-    }
-    box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
-    transform: translateY(-1px);
-    border-color: ${({ theme }) => theme.ui.list.item.border};
-  }
+  ${(props) =>
+    props.hoverable &&
+    css`
+      &:hover {
+        ${ListItemHeader},
+        ${ListItemContent} {
+          color: ${({ theme }) => theme.ui.list.item.link.hoverColor};
+        }
+        box-shadow: ${({ theme }) => theme.ui.list.item.link.boxShadow};
+        transform: translateY(-1px);
+        border-color: ${({ theme }) => theme.ui.list.item.border};
+      }
+    `}
 `;
 
 type TLink = React.HTMLProps<HTMLAnchorElement>;
