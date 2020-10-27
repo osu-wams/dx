@@ -6,7 +6,7 @@ import { spacing, fontSize } from 'src/theme';
 import styled from 'styled-components/macro';
 import { CardContext } from './Card';
 
-const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props }) => {
+const CardHeader: FC<{ title?: string; badge?: any }> = ({ title, badge, ...props }) => {
   const { collapsed, toggleCollapsed, collapsible, uuid } = useContext(CardContext);
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -26,8 +26,9 @@ const CardHeader: FC<{ title: string; badge?: any }> = ({ title, badge, ...props
       tabIndex={collapsible ? 0 : undefined}
       {...props}
     >
-      {badge}
-      <span>{title}</span>
+      {badge && badge}
+      {title && <span>{title}</span>}
+      {props.children && props.children}
       {collapsible && (
         <Icon icon={collapsed ? faChevronDown : faChevronUp} css={{ marginLeft: 'auto' }} />
       )}
