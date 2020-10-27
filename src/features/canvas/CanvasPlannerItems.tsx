@@ -97,7 +97,7 @@ export const CanvasPlannerItems = ({
           html_url,
           plannable: { title },
         }) => (
-          <ListItemFlex key={plannable_id}>
+          <ListItemFlex key={plannable_id} hoverable={typeof html_url !== 'undefined'}>
             {html_url ? (
               <ListItemContentLink
                 href={canvasUrl(html_url)}
