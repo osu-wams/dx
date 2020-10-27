@@ -41,6 +41,7 @@ describe('<PlannerItems />', () => {
               ...mockPlannerItems.data[0],
               context_type: undefined,
               html_url: undefined,
+              plannable_date: '2020-01-01T01:01:00Z',
               plannable: { title: 'My Awesome Planner Note' },
             },
           ],
