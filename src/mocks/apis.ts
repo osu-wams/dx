@@ -69,3 +69,8 @@ export const USER_MESSAGES_API = user + '/messages';
  * Status
  */
 export const IT_STATUS_API = '/api/status';
+
+/**
+ * Cards (Dynamic Cards)
+ */
+export const CARDS_API = '/api/cards';

@@ -9,6 +9,7 @@ import {
   Person,
   User,
   Status,
+  Cards,
 } from '@osu-wams/hooks';
 import {
   HOLDS_API,
@@ -28,6 +29,7 @@ import {
   PERSONS_API,
   USER_MESSAGES_API,
   IT_STATUS_API,
+  CARDS_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -46,6 +48,7 @@ const { personsData } = Person.Persons.mockPersons;
 const mockUserMessages = User.mockUser.userMessageItems;
 const readUserMessage = User.mockUser.userReadMessage;
 const mockStatus = Status.mockStatus.statusData;
+const mockCards = Cards.mockCards.cardsArray;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -132,5 +135,10 @@ export const handlers = [
   // Status
   rest.get(IT_STATUS_API, async (req, res, ctx) => {
     return res(ctx.json(mockStatus));
+  }),
+
+  // Dynamic Cards
+  rest.get(CARDS_API, async (req, res, ctx) => {
+    return res(ctx.json(mockCards));
   }),
 ];

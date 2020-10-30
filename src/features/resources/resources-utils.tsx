@@ -69,7 +69,7 @@ const activeFavoriteResources = (
  * @param iconName string with the icon name
  */
 const IconLookup = (iconName, color) => {
-  if (iconName !== undefined || iconName !== '' || iconName !== null) {
+  if (iconName) {
     const iconSplit = iconName.split('.');
     if (iconSplit[0] === 'fal' || iconSplit[0] === 'fab') {
       const lookupIconDefinition: IconDefinition = findIconDefinition({

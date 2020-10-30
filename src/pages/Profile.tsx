@@ -11,7 +11,7 @@ import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 
 const Profile = () => {
   const user = useRecoilValue(userState);
-  const cards = useRecoilValue(filteredCards('Academics'));
+  const cards = useRecoilValue(filteredCards('Profile'));
 
   return (
     <div data-testid="profile-page">
