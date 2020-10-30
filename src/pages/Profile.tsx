@@ -6,9 +6,12 @@ import Settings from '../features/profile/Settings';
 import { MainGridWrapper, Masonry } from '../theme';
 import { useRecoilValue } from 'recoil';
 import { userState } from 'src/state/application';
+import { filteredCards } from 'src/state/application';
+import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 
 const Profile = () => {
   const user = useRecoilValue(userState);
+  const cards = useRecoilValue(filteredCards('Profile'));
 
   return (
     <div data-testid="profile-page">
@@ -18,6 +21,9 @@ const Profile = () => {
           <OSUProfile />
           <Settings />
           {user.data.isAdmin && <AdminSettings />}
+          {cards.map((c) => (
+            <DynamicCard key={c.id} data={c} />
+          ))}
         </Masonry>
       </MainGridWrapper>
     </div>
