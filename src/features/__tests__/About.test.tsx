@@ -36,9 +36,8 @@ describe('<About />', () => {
     expect(getByText('About MyOregonState', { selector: 'h1' })).toBeInTheDocument();
   });
 
-  it('should display "Dashboard Beta" card title with appropriate content', async () => {
+  it('should display card with appropriate content', async () => {
     const { findByText } = render(<About />);
-    expect(await findByText(/Dashboard Beta/i, { selector: 'h2 span' })).toBeInTheDocument();
     expect(await findByText('Beta Page Title')).toBeInTheDocument();
     expect(await findByText('beta list item', { selector: 'li' })).toBeInTheDocument();
   });
@@ -50,12 +49,12 @@ describe('<About />', () => {
     expect(await findByText(/test release note body content/i)).toBeInTheDocument();
   });
 
-  it('should have beta resources links that are tracked via GA', () => {
+  it('should have support resources links that are tracked via GA', () => {
     const { getByText } = render(<About />);
-    const oldMyOSU = getByText(/old MyOSU portal/);
-    const getHelp = getByText(/Get help/);
-    const giveFeedback = getByText(/Give us feedback/);
-    userEvent.click(oldMyOSU);
+    const started = getByText(/getting started/i);
+    const getHelp = getByText(/Get help/i);
+    const giveFeedback = getByText(/Give us feedback/i);
+    userEvent.click(started);
     userEvent.click(getHelp);
     userEvent.click(giveFeedback);
     expect(mockGAEvent).toHaveBeenCalledTimes(3);

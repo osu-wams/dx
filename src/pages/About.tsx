@@ -1,8 +1,8 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
-import BetaInfo from '../features/about/BetaInfo';
-import BetaResources from '../features/about/BetaResources';
-import BetaReleaseNotes from '../features/about/BetaReleaseNotes';
+import Info from '../features/about/info';
+import SupportResources from '../features/about/SupportResources';
+import ReleaseNotes from '../features/about/ReleaseNotes';
 import { MainGridWrapper, Masonry } from '../theme';
 import { useRecoilValue } from 'recoil';
 import { filteredCards } from 'src/state/application';
@@ -15,10 +15,10 @@ const About = () => {
     <MainGridWrapper data-testid="about-page">
       <PageTitle title="About MyOregonState" />
       <Masonry>
-        <BetaInfo />
-        <BetaReleaseNotes />
+        <Info />
+        <ReleaseNotes />
         <>
-          <BetaResources />
+          <SupportResources />
           {cards.map((d) => (
             <DynamicCard key={d.id} data={d} />
           ))}

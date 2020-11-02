@@ -4,13 +4,13 @@ import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card
 import { useReleaseNotes } from '@osu-wams/hooks';
 import { RichTextContent, RichTextTitle } from 'src/ui/RichText';
 
-const BetaReleaseNotes: FC = () => {
+const ReleaseNotes: FC = () => {
   const releaseNotes = useReleaseNotes();
 
   return (
     <>
       {releaseNotes.data.length &&
-        releaseNotes.data.map((releaseNote, i) => (
+        releaseNotes.data.slice(0, 3).map((releaseNote, i) => (
           <Card key={`release-notes-${i}`}>
             <CardHeader
               title={`Release : ${releaseNote?.date}`}
@@ -29,4 +29,4 @@ const BetaReleaseNotes: FC = () => {
   );
 };
 
-export default BetaReleaseNotes;
+export default ReleaseNotes;
