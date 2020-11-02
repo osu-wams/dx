@@ -72,7 +72,6 @@
     "axios-mock-adapter": "^1.18.1",
     "codecov": "^3.7.2",
     "cypress": "^5.0.0",
-    "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-cypress": "^2.11.1",
