@@ -16,7 +16,6 @@ import { breakpoints, fontSize, spacing } from 'src/theme';
 import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
-import { BetaBadge } from './Badge';
 import { arrayIncludes } from 'src/util/helpers';
 import { userState, themeState } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
@@ -123,10 +122,7 @@ const Header = () => {
         <Link to="/" onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
           <Logo data-testid="app-header-logo" src={image} alt={alt} />
         </Link>
-        <SiteTitle>
-          {title}
-          <BetaBadge title={title} />
-        </SiteTitle>
+        <SiteTitle>{title}</SiteTitle>
         <HeaderNav />
       </HeaderWrapper>
       <Navigation>
