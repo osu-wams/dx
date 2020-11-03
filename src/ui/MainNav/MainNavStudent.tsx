@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  faHome,
-  faGraduationCap,
-  faHandsUsd,
-  faList,
-  faFlask
-} from '@fortawesome/pro-light-svg-icons';
+import { faHome, faGraduationCap, faHandsUsd, faList } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { FullMobileMenu } from './FullMobileMenu';
@@ -54,10 +48,6 @@ const DesktopLinks = () => {
       >
         <Icon icon={faList} />
         Resources
-      </NavLink>
-      <NavLink to="beta" onClick={() => Event('student-navigation-main', 'Beta link clicked')}>
-        <Icon icon={faFlask} />
-        Beta
       </NavLink>
     </>
   );

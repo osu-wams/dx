@@ -77,8 +77,8 @@ describe('Student mobile menu interactions', () => {
     const menu = screen.getByText('Menu');
     userEvent.click(menu);
 
-    const beta = await screen.findByText(/beta/i, { selector: '[role="dialog"] nav a' });
-    userEvent.click(beta);
+    const about = await screen.findByText(/about/i, { selector: '[role="dialog"] nav a' });
+    userEvent.click(about);
     const studentDashboard = await screen.findByText('Student Dashboard');
     expect(studentDashboard).toBeInTheDocument(); // !TODO:  check visibile?
 
@@ -91,7 +91,6 @@ describe('Student mobile menu interactions', () => {
     const menu = screen.queryByText('Menu');
     expect(menu).toBeNull();
 
-    expect(await screen.findByText(/beta/i, { selector: 'nav a' })).toBeInTheDocument();
     expect(await screen.findByText(/overview/i, { selector: 'nav a' })).toBeInTheDocument();
     expect(await screen.findByText(/academics/i, { selector: 'nav a' })).toBeInTheDocument();
     expect(await screen.findByText(/finances/i, { selector: 'nav a' })).toBeInTheDocument();

@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import { fontSize, spacing } from 'src/theme';
 
 /**
- * Content currently from Drupal used in ReleaseNotes and BetaInfo
+ * Content currently from Drupal used in ReleaseNotes and Info among others
  */
 export const RichTextContent = styled.div`
   ul,

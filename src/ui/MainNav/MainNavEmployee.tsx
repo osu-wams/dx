@@ -1,5 +1,5 @@
 import React from 'react';
-import { faHome, faToolbox, faFlaskPotion, faUsersClass } from '@fortawesome/pro-light-svg-icons';
+import { faHome, faToolbox, faUsersClass } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { Nav, NavLink } from './MainNavStyles';
@@ -27,10 +27,6 @@ const MainNavEmployee = (...props) => {
           Training
         </NavLink>
       )}
-      <NavLink to="beta" onClick={() => Event('employee-navigation-main', 'Beta link clicked')}>
-        <Icon icon={faFlaskPotion} />
-        Beta
-      </NavLink>
     </Nav>
   );
 };
