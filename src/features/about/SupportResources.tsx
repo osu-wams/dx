@@ -18,22 +18,22 @@ import {
 import { Event } from 'src/util/gaTracking';
 import Url from 'src/util/externalUrls.data';
 
-const BetaResources: FC = () => {
+const SupportResources: FC = () => {
   const themeContext = useContext(ThemeContext);
   return (
     <Card collapsing={false}>
-      <CardHeader title="Beta Resources" badge={<CardIcon icon={faCogs} />} />
+      <CardHeader title="Support Resources" badge={<CardIcon icon={faCogs} />} />
       <CardContent>
         <List>
           <ListItem>
             <ListItemContentLinkSVG
               href={Url.feedback.main}
               target="_blank"
-              onClick={() => Event('beta', 'feedback')}
+              onClick={() => Event('about', 'feedback')}
             >
               <Icon icon={faCommentAltLines} color={themeContext.ui.list.item.link.color} />
               <ListItemText>
-                <ListItemContentLinkName>Give us feedback on the beta</ListItemContentLinkName>
+                <ListItemContentLinkName>Give us feedback on MyOregonState</ListItemContentLinkName>
               </ListItemText>
             </ListItemContentLinkSVG>
           </ListItem>
@@ -41,23 +41,23 @@ const BetaResources: FC = () => {
             <ListItemContentLinkSVG
               href={Url.support.main}
               target="_blank"
-              onClick={() => Event('beta', 'get help')}
+              onClick={() => Event('about', 'get help')}
             >
               <Icon icon={faUserHeadset} color={themeContext.ui.list.item.link.color} />
               <ListItemText>
-                <ListItemContentLinkName>Get help with the dashboard</ListItemContentLinkName>
+                <ListItemContentLinkName>Get help with MyOregonState</ListItemContentLinkName>
               </ListItemText>
             </ListItemContentLinkSVG>
           </ListItem>
           <ListItem>
             <ListItemContentLinkSVG
-              href={Url.myosu.main}
+              href={Url.gettingStarted.main}
               target="_blank"
-              onClick={() => Event('beta', 'old my osu')}
+              onClick={() => Event('about', 'getting started')}
             >
               <Icon icon={faExternalLink} color={themeContext.ui.list.item.link.color} />
               <ListItemText>
-                <ListItemContentLinkName>Go back to the old MyOSU portal</ListItemContentLinkName>
+                <ListItemContentLinkName>Getting started</ListItemContentLinkName>
               </ListItemText>
             </ListItemContentLinkSVG>
           </ListItem>
@@ -68,4 +68,4 @@ const BetaResources: FC = () => {
   );
 };
 
-export default BetaResources;
+export default SupportResources;

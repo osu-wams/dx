@@ -1,24 +1,24 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
-import BetaInfo from '../features/beta/BetaInfo';
-import BetaResources from '../features/beta/BetaResources';
-import BetaReleaseNotes from '../features/beta/BetaReleaseNotes';
+import Info from '../features/about/Info';
+import SupportResources from '../features/about/SupportResources';
+import ReleaseNotes from '../features/about/ReleaseNotes';
 import { MainGridWrapper, Masonry } from '../theme';
 import { useRecoilValue } from 'recoil';
 import { filteredCards } from 'src/state/application';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 
-const BetaDashboard = () => {
-  const cards = useRecoilValue(filteredCards('Beta'));
+const About = () => {
+  const cards = useRecoilValue(filteredCards('About'));
 
   return (
-    <MainGridWrapper data-testid="betadash-page">
-      <PageTitle title="Beta" />
+    <MainGridWrapper data-testid="about-page">
+      <PageTitle title="About MyOregonState" />
       <Masonry>
-        <BetaInfo />
-        <BetaReleaseNotes />
+        <Info />
+        <ReleaseNotes />
         <>
-          <BetaResources />
+          <SupportResources />
           {cards.map((d) => (
             <DynamicCard key={d.id} data={d} />
           ))}
@@ -28,4 +28,4 @@ const BetaDashboard = () => {
   );
 };
 
-export default BetaDashboard;
+export default About;

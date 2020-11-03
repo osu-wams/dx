@@ -8,7 +8,6 @@ import { CloseButton } from 'src/ui/Button';
 import { Event } from 'src/util/gaTracking';
 import { NavLink } from './MainNavStyles';
 import { MobileMenuStudents } from './MobileMenuStudents';
-import { BetaBadge } from '../Badge';
 import { MobileMenuFooter } from './MobileMenuFooter';
 
 const MobileMenuHeader = styled.div`
@@ -52,10 +51,7 @@ const FullMobileMenu = () => {
         aria-labelledby="mobile-menu-title"
       >
         <MobileMenuHeader>
-          <MobileMenuTitle id="mobile-menu-title">
-            {title}
-            <BetaBadge title={title} />
-          </MobileMenuTitle>
+          <MobileMenuTitle id="mobile-menu-title">{title}</MobileMenuTitle>
           <MobileMenuClose onClick={(e: React.MouseEvent<HTMLElement>) => toggleFullMenu(false)} />
         </MobileMenuHeader>
         <MobileMenuContent>

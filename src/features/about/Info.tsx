@@ -1,15 +1,13 @@
 import React, { FC } from 'react';
-import { faFlaskPotion } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
+import { Card, CardContent, CardFooter } from 'src/ui/Card';
 import { usePageContent } from '@osu-wams/hooks';
 import { RichTextContent, RichTextTitle } from 'src/ui/RichText';
 
-const BetaInfo: FC = () => {
-  const pageContent = usePageContent('beta');
+const Info: FC = () => {
+  const pageContent = usePageContent('about');
 
   return (
     <Card collapsing={false}>
-      <CardHeader title="Dashboard Beta" badge={<CardIcon icon={faFlaskPotion} />} />
       <CardContent>
         <RichTextTitle>{pageContent.data[0]?.title}</RichTextTitle>
         <RichTextContent
@@ -21,4 +19,4 @@ const BetaInfo: FC = () => {
   );
 };
 
-export default BetaInfo;
+export default Info;

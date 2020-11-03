@@ -10,7 +10,7 @@ import Profile from './pages/Profile';
 import Academics from './pages/Academics';
 import Finances from './pages/Finances';
 import Resources from './pages/Resources';
-import BetaDashboard from './pages/BetaDashboard';
+import About from './pages/About';
 import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import Training from './pages/Training';
@@ -191,7 +191,7 @@ const App = (props: AppProps) => {
                     <RouterPage path="academics/*" pageComponent={<Academics />} />
                     <RouterPage path="finances" pageComponent={<Finances />} />
                     <RouterPage path="resources" pageComponent={<Resources />} />
-                    <RouterPage path="beta" pageComponent={<BetaDashboard />} />
+                    <RouterPage path="about" pageComponent={<About />} />
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
                       <RouterPage path="training" pageComponent={<Training />} />
                     )}

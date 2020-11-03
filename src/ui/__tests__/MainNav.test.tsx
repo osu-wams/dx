@@ -1,5 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
+import { screen } from '@testing-library/react';
 import { mockEmployeeUser, render } from 'src/util/test-utils';
 import MainNav from '../MainNav/';
 import { mockGAEvent } from 'src/setupTests';
@@ -20,39 +21,36 @@ describe('student main navigation', () => {
     expect(mockGAEvent).toHaveBeenCalledTimes(4);
   });
 
-  it('Main Navigation in desktop has 2 additional links that are tracked in Google Analytics', async () => {
-    const { getByText, queryByText } = render(<MainNav />, { isDesktop: true });
+  it('Main Navigation in desktop has "Resources" link tracked in Google Analytics', async () => {
+    render(<MainNav />, { isDesktop: true });
 
-    const beta = getByText('Beta');
-    const resources = getByText('Resources');
-    const menu = queryByText('Menu');
+    const resources = screen.getByText('Resources');
+    const menu = screen.queryByText('Menu');
 
+    expect(resources).toBeInTheDocument();
     expect(menu).toBeNull();
 
-    userEvent.click(beta);
     userEvent.click(resources);
-
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 });
 
 it('Main Navigation for Employee visible and tracked in Google Analytics', async () => {
-  const { getByText, queryByText } = render(<MainNav />, {
+  render(<MainNav />, {
     user: mockEmployeeUser,
   });
 
-  const home = getByText('Overview');
-  const beta = getByText('Beta');
-  const resources = getByText('Resources');
+  const home = screen.getByText('Overview');
+  const resources = screen.getByText('Resources');
 
-  await expect(resources).toBeInTheDocument();
+  expect(home).toBeInTheDocument();
+  expect(resources).toBeInTheDocument();
 
   // Not present in employee nav
-  const more = queryByText('More');
-  await expect(more).not.toBeInTheDocument();
+  expect(screen.queryByText('More')).toBeNull();
+
   userEvent.click(home);
-  userEvent.click(beta);
   userEvent.click(resources);
 
-  expect(mockGAEvent).toHaveBeenCalledTimes(3);
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });

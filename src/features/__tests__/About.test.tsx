@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
-import BetaDashboard from 'src/pages/BetaDashboard';
+import About from 'src/pages/About';
 import { mockGAEvent } from 'src/setupTests';
 import { PageContents, ReleaseNotes } from '@osu-wams/hooks';
 
@@ -25,37 +25,36 @@ beforeEach(() => {
   mockUseReleaseNotes.mockReturnValue(mockReleaseNotes);
 });
 
-describe('<BetaDashboard />', () => {
-  it('should render the beta dashboard page', () => {
-    const { getByTestId } = render(<BetaDashboard />);
-    expect(getByTestId('betadash-page')).toBeInTheDocument();
+describe('<About />', () => {
+  it('should render the about page', () => {
+    const { getByTestId } = render(<About />);
+    expect(getByTestId('about-page')).toBeInTheDocument();
   });
 
-  it('should display the title Beta', () => {
-    const { getByText } = render(<BetaDashboard />);
-    expect(getByText('Beta', { selector: 'h1' })).toBeInTheDocument();
+  it('should display the title "About MyOregonState"', () => {
+    const { getByText } = render(<About />);
+    expect(getByText('About MyOregonState', { selector: 'h1' })).toBeInTheDocument();
   });
 
-  it('should display "Dashboard Beta" card title with appropriate content', async () => {
-    const { findByText } = render(<BetaDashboard />);
-    expect(await findByText(/Dashboard Beta/i, { selector: 'h2 span' })).toBeInTheDocument();
+  it('should display card with appropriate content', async () => {
+    const { findByText } = render(<About />);
     expect(await findByText('Beta Page Title')).toBeInTheDocument();
     expect(await findByText('beta list item', { selector: 'li' })).toBeInTheDocument();
   });
 
   it('should find the release notes card with appropriate content', async () => {
-    const { findByText } = render(<BetaDashboard />);
+    const { findByText } = render(<About />);
     expect(await findByText('Release : Winter test 2019')).toBeInTheDocument();
     expect(await findByText('Test Release Note')).toBeInTheDocument();
     expect(await findByText(/test release note body content/i)).toBeInTheDocument();
   });
 
-  it('should have beta resources links that are tracked via GA', () => {
-    const { getByText } = render(<BetaDashboard />);
-    const oldMyOSU = getByText(/old MyOSU portal/);
-    const getHelp = getByText(/Get help/);
-    const giveFeedback = getByText(/Give us feedback/);
-    userEvent.click(oldMyOSU);
+  it('should have support resources links that are tracked via GA', () => {
+    const { getByText } = render(<About />);
+    const started = getByText(/getting started/i);
+    const getHelp = getByText(/Get help/i);
+    const giveFeedback = getByText(/Give us feedback/i);
+    userEvent.click(started);
     userEvent.click(getHelp);
     userEvent.click(giveFeedback);
     expect(mockGAEvent).toHaveBeenCalledTimes(3);

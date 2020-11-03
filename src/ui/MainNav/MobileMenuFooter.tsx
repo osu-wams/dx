@@ -1,5 +1,5 @@
 import React from 'react';
-import { faQuestionCircle, faFlask, faComment } from '@fortawesome/pro-light-svg-icons';
+import { faQuestionCircle, faComment, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { MobileFooter, MobileFooterLink } from './MainNavStyles';
 import { Event } from 'src/util/gaTracking';
@@ -31,14 +31,14 @@ const MobileMenuFooter = ({ toggleFullMenu, ...props }) => {
         Feedback
       </MobileFooterLink>
       <MobileFooterLink
-        to="beta"
+        to="about"
         onClick={() => {
           toggleFullMenu(false);
-          Event('footer-menu-nav', 'Beta link clicked');
+          Event('footer-menu-nav', 'About link clicked');
         }}
       >
-        <Icon icon={faFlask} />
-        Beta
+        <Icon icon={faInfoCircle} />
+        About
       </MobileFooterLink>
     </MobileFooter>
   );
