@@ -1,6 +1,6 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
-import Info from '../features/about/info';
+import Info from '../features/about/Info';
 import SupportResources from '../features/about/SupportResources';
 import ReleaseNotes from '../features/about/ReleaseNotes';
 import { MainGridWrapper, Masonry } from '../theme';

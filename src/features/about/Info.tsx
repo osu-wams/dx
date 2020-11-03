@@ -4,7 +4,7 @@ import { usePageContent } from '@osu-wams/hooks';
 import { RichTextContent, RichTextTitle } from 'src/ui/RichText';
 
 const Info: FC = () => {
-  const pageContent = usePageContent('beta');
+  const pageContent = usePageContent('about');
 
   return (
     <Card collapsing={false}>
