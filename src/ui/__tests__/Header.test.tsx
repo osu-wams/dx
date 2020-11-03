@@ -105,7 +105,7 @@ describe('Student mobile menu interactions', () => {
 
     expect(await screen.findByText(/get help/i)).toBeInTheDocument();
     expect(await screen.findByText(/give feedback/i)).toBeInTheDocument();
-    expect(await screen.findByText(/getting started/i)).toBeInTheDocument();
+    expect(await screen.findByText(/about myoregonstate/i)).toBeInTheDocument();
 
     const profileMenu = screen.getByRole('button', { name: /profile/i });
 
