@@ -32,10 +32,11 @@ describe('<PastCourses />', () => {
     expect(screen.getByPlaceholderText('Find past courses')).toBeInTheDocument();
   });
 
-  it('should find the course: "Test Course Title"', async () => {
+  it('should find the course: "Test Course Title" and the CRN', async () => {
     render(<PastCourses />);
     const Algebra = screen.getByText('Test Course Title');
     expect(Algebra).toBeInTheDocument();
+    expect(await screen.findByText(/CRN: 15625/i)).toBeInTheDocument();
   });
 
   it('should find only one instace of a course excluded from GPA', async () => {

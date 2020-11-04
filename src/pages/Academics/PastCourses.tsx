@@ -88,6 +88,7 @@ const PastCourses = () => {
                             courseNumber,
                             courseSubject,
                             repeatedCourseInd,
+                            courseReferenceNumber,
                             creditHours,
                             gradeFinal,
                             courseTitle,
@@ -104,6 +105,10 @@ const PastCourses = () => {
                                   </strong>{' '}
                                   {creditHours} {singularPlural(creditHours, 'Credit')}
                                 </CourseData>
+                                ={' '}
+                                {courseReferenceNumber && (
+                                  <CourseData>CRN: {courseReferenceNumber}</CourseData>
+                                )}
                               </TableCell>
                               <TableCell>
                                 <Grade>{gradeFinal}</Grade>
