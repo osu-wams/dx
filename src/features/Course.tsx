@@ -81,7 +81,9 @@ const meetingDateTime = (meetingTime: Types.CourseScheduleMeetingTime): string =
     returnData += date || '';
   }
   if (meetingTime.beginTime && meetingTime.endTime) {
-    const time = `\u00B7 ${formatTime(meetingTime.beginTime)} - ${formatTime(meetingTime.endTime)}`;
+    const time = ` \u00B7 ${formatTime(meetingTime.beginTime)} - ${formatTime(
+      meetingTime.endTime
+    )}`;
     returnData += time || '';
   }
   return returnData ? returnData : 'There are no dates and times associated with this course.';
@@ -207,6 +209,15 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
           <List>
             {exceptMeetingTypes(course.attributes.meetingTimes, ['MID', 'FNL']).map((m) =>
               meetingTimeListItem(m, themeContext)
+            )}
+            {course.attributes.courseReferenceNumber && (
+              <ListItemContent style={{ paddingBottom: 0 }}>
+                <ListItemText>
+                  <ListItemDescription>
+                    CRN {course.attributes.courseReferenceNumber}
+                  </ListItemDescription>
+                </ListItemText>
+              </ListItemContent>
             )}
           </List>
           <List>
