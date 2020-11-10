@@ -1,29 +1,15 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { render } from 'src/util/test-utils';
-import { Student } from '@osu-wams/hooks';
+import { alterMock, render } from 'src/util/test-utils';
 import Courses from '../Courses';
 import { mockGAEvent } from 'src/setupTests';
 import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
 import { infoButtonState } from 'src/state/application';
+import { CLASS_SCHEDULE_API } from 'src/mocks/apis';
 
-const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
-const mockUseCourseSchedule = jest.fn();
 const mockInitialState = jest.fn();
-
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    // @ts-ignore spread object
-    ...jest.requireActual('@osu-wams/hooks'),
-    useCourseSchedule: () => mockUseCourseSchedule(),
-  };
-});
-
-beforeEach(() => {
-  mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
-});
 
 describe('<Courses />', () => {
   beforeEach(() => {
@@ -106,8 +92,8 @@ describe('<Courses />', () => {
     expect(courseDialog).toHaveTextContent(monthDay);
   });
 
-  test('Course Midterm data is excluded from view', async () => {
-    const TestoBtn = screen.getByText(/testo physics/i);
+  it('Course Midterm data is excluded from view', async () => {
+    const TestoBtn = await screen.findByText(/testo physics/i);
     userEvent.click(TestoBtn);
 
     // Dialg is present and displays the corrent course
@@ -118,8 +104,8 @@ describe('<Courses />', () => {
     expect(screen.queryByText(/MID GRP/)).not.toBeInTheDocument();
   });
 
-  test('Footer has a Link that when clicked and Google Analytics Event fired', async () => {
-    const CanvasLink = screen.getByText(/View more in Canvas/i);
+  it('Footer has a Link that when clicked and Google Analytics Event fired', async () => {
+    const CanvasLink = await screen.findByText(/View more in Canvas/i);
     userEvent.click(CanvasLink);
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -156,7 +142,7 @@ describe('with an InfoButton in the CardFooter', () => {
 
 describe('without courses present', () => {
   beforeEach(() => {
-    mockUseCourseSchedule.mockReturnValue({ data: [] });
+    alterMock(CLASS_SCHEDULE_API, []);
     render(<Courses />);
   });
 

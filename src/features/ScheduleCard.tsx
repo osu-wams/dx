@@ -30,15 +30,17 @@ const ScheduleCard = () => {
   const calEvents = useAcademicCalendarEvents();
 
   const getCoursesOnSelectedDay = () => {
-    return coursesOnDay(courses.data, selectedDay).filter((course) => {
-      course.attributes.meetingTimes = course.attributes.meetingTimes.filter((meeting) => {
-        return isWithinInterval(selectedDay, {
-          start: parseISO(meeting.beginDate),
-          end: parseISO(meeting.endDate),
+    if (courses.data) {
+      return coursesOnDay(courses.data, selectedDay).filter((course) => {
+        course.attributes.meetingTimes = course.attributes.meetingTimes.filter((meeting) => {
+          return isWithinInterval(selectedDay, {
+            start: parseISO(meeting.beginDate),
+            end: parseISO(meeting.endDate),
+          });
         });
+        return course.attributes.meetingTimes.length;
       });
-      return course.attributes.meetingTimes.length;
-    });
+    }
   };
 
   let selectedPlannerItems: any[] = [];
@@ -59,7 +61,7 @@ const ScheduleCard = () => {
   const daysWithEvents = useMemo(
     () =>
       nextFiveDays.filter((day) => {
-        const hasCourses = coursesOnDay(courses.data, day).length > 0;
+        const hasCourses = coursesOnDay(courses.data ?? [], day).length > 0;
         const calendarEventsOnDay = calEvents.data.filter((event) => {
           return event.pubDate ? isSameDay(Date.parse(event.pubDate), day) : '';
         });
@@ -90,17 +92,17 @@ const ScheduleCard = () => {
         />
         {plannerItems.isLoading && <Loading lines={4} />}
         <div aria-live="assertive" aria-atomic="true">
-          {!courses.loading && !plannerItems.isLoading && (
+          {courses.data && courses.isSuccess && !plannerItems.isLoading && (
             <ScheduleCardAssignments
               courseList={courses.data}
               selectedPlannerItems={selectedPlannerItems}
             />
           )}
-          {courses.loading && <Loading lines={4} />}
-          {!courses.loading && (
+          {courses.isLoading && <Loading lines={4} />}
+          {courses.isSuccess && courses.data && (
             <ScheduleCardCourses
               courses={courses.data}
-              selectedCourses={getCoursesOnSelectedDay()}
+              selectedCourses={getCoursesOnSelectedDay() ?? []}
             />
           )}
           <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />

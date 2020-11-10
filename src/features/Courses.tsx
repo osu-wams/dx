@@ -68,29 +68,30 @@ const Courses = () => {
 
   const CourseList = () => (
     <List>
-      {Array.from(sortedGroupedByCourseName(courses.data).entries(), ([key, coursesMap]) => (
-        <ListItem key={key}>
-          <ListItemContentButton
-            onClick={() => {
-              toggleCourse(coursesMap);
-              Event('courses', 'course clicked', key);
-            }}
-          >
-            {courseItemLeadText(coursesMap.subject, coursesMap.number)}
-            <ListItemText>
-              <ListItemDescription
-                fontSize={fontSize[16]}
-                color={themeContext.features.academics.courses.list.title.color}
-              >
-                {coursesMap.title}
-              </ListItemDescription>
-              <ListItemDescription>
-                {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
-              </ListItemDescription>
-            </ListItemText>
-          </ListItemContentButton>
-        </ListItem>
-      ))}
+      {courses.data &&
+        Array.from(sortedGroupedByCourseName(courses.data).entries(), ([key, coursesMap]) => (
+          <ListItem key={key}>
+            <ListItemContentButton
+              onClick={() => {
+                toggleCourse(coursesMap);
+                Event('courses', 'course clicked', key);
+              }}
+            >
+              {courseItemLeadText(coursesMap.subject, coursesMap.number)}
+              <ListItemText>
+                <ListItemDescription
+                  fontSize={fontSize[16]}
+                  color={themeContext.features.academics.courses.list.title.color}
+                >
+                  {coursesMap.title}
+                </ListItemDescription>
+                <ListItemDescription>
+                  {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
+                </ListItemDescription>
+              </ListItemText>
+            </ListItemContentButton>
+          </ListItem>
+        ))}
     </List>
   );
 
@@ -128,13 +129,13 @@ const Courses = () => {
         }
       />
       <CardContent>
-        {courses && courses.data.length ? <CourseList /> : <NoCourses />}
+        {courses.data && courses.data.length ? <CourseList /> : <NoCourses />}
         {isOpen && showCoursesMap && showCoursesMap.courses.length > 0 && (
           <Course coursesMap={showCoursesMap} toggleCourse={toggleCourse} isOpen />
         )}
       </CardContent>
       <CardFooter infoButtonId="current-courses">
-        {courses && courses.data.length ? <FooterLink /> : <NoCoursesFooterLink />}
+        {courses.data && courses.data.length ? <FooterLink /> : <NoCoursesFooterLink />}
       </CardFooter>
     </Card>
   );

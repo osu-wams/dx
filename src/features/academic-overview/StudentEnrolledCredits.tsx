@@ -14,17 +14,19 @@ export const StudentEnrolledCredits: React.FC = () => {
   const courseSchedule = useCourseSchedule();
 
   useEffect(() => {
-    setEnrolledCredits(
-      courseSchedule.data
-        .map((c: Types.CourseSchedule) => c.attributes.creditHours)
-        .reduce((a: number, v: number) => a + v, 0)
-    );
+    if (courseSchedule.data) {
+      setEnrolledCredits(
+        courseSchedule.data
+          .map((c: Types.CourseSchedule) => c.attributes.creditHours)
+          .reduce((a: number, v: number) => a + v, 0)
+      );
+    }
   }, [courseSchedule.data]);
 
   return (
     <Highlight textAlignLeft>
-      {courseSchedule.loading && <Loading lines={5} />}
-      {!courseSchedule.loading && (
+      {courseSchedule.isLoading && <Loading lines={5} />}
+      {courseSchedule.isSuccess && (
         <>
           <HighlightEmphasis>{enrolledCredits}</HighlightEmphasis>
           <HighlightTitle marginTop={0}>Credits</HighlightTitle>
