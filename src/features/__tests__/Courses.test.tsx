@@ -1,45 +1,32 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render } from 'src/util/test-utils';
-import { Student } from '@osu-wams/hooks';
+import { screen } from '@testing-library/react';
+import { alterMock, render } from 'src/util/test-utils';
 import Courses from '../Courses';
 import { mockGAEvent } from 'src/setupTests';
 import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
 import { infoButtonState } from 'src/state/application';
+import { CLASS_SCHEDULE_API } from 'src/mocks/apis';
 
-const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
-const mockUseCourseSchedule = jest.fn();
 const mockInitialState = jest.fn();
 
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    // @ts-ignore spread object
-    ...jest.requireActual('@osu-wams/hooks'),
-    useCourseSchedule: () => mockUseCourseSchedule(),
-  };
-});
-
-beforeEach(() => {
-  mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
-});
-
 describe('<Courses />', () => {
+  beforeEach(() => {
+    render(<Courses />);
+  });
   it('renders a list of courses for the current user', async () => {
-    const { findByText } = render(<Courses />);
-    const courseTitle = await findByText(/data structures/i);
+    const courseTitle = await screen.findByText(/data structures/i);
     expect(courseTitle).toBeInTheDocument();
   });
 
   it('Finds "8" as the course count in the Badge', async () => {
-    const { findByText } = render(<Courses />);
-    const NumCourses = await findByText('8');
+    const NumCourses = await screen.findByText('8');
     expect(NumCourses).toBeInTheDocument();
   });
 
   it('renders a list of sorted courses for the current user', async () => {
-    const { findAllByTestId } = render(<Courses />);
-    const courses = await findAllByTestId('course-list-item-header');
+    const courses = await screen.findAllByTestId('course-list-item-header');
     expect(courses.map((c) => c.textContent)).toStrictEqual([
       'CS261',
       'CS262',
@@ -51,87 +38,78 @@ describe('<Courses />', () => {
       'WR214',
     ]);
   });
-});
 
-it('loads a modal with course details when clicked, close button dismisses it', async () => {
-  const { findByText, findByTestId, queryByTestId } = render(<Courses />);
+  it('loads a modal with course details when clicked, close button dismisses it', async () => {
+    const OpSysBtn = await screen.findByText(/data structures/i);
+    userEvent.click(OpSysBtn);
 
-  const OpSysBtn = await findByText(/data structures/i);
-  userEvent.click(OpSysBtn);
+    // Dialg is present and displays the current course
+    const courseDialog = await screen.findByTestId('course-dialog');
+    expect(courseDialog).toBeInTheDocument();
+    expect(courseDialog).toHaveTextContent(/data structures/i);
+    expect(courseDialog).toHaveTextContent(/CRN 23909/i);
 
-  // Dialg is present and displays the current course
-  const courseDialog = await findByTestId('course-dialog');
-  expect(courseDialog).toBeInTheDocument();
-  expect(courseDialog).toHaveTextContent(/data structures/i);
+    // Close dialog
+    const closeBtn = await screen.findByText('Close');
+    userEvent.click(closeBtn);
+    expect(screen.queryByTestId('course-dialog')).toBeNull();
+  });
 
-  // Close dialog
-  const closeBtn = await findByText('Close');
-  userEvent.click(closeBtn);
-  expect(queryByTestId('course-dialog')).toBeNull();
-});
+  it('Various Links are present as well as Google Analytics events are recorded', async () => {
+    const OpSysBtn = await screen.findByText(/data structures/i);
+    userEvent.click(OpSysBtn);
 
-test('Various Links are present as well as Google Analytics events are recorded', async () => {
-  const { findByText, findByTestId } = render(<Courses />);
+    // Dialog is present and displays the current course
+    const courseDialog = await screen.findByTestId('course-dialog');
+    expect(courseDialog).toHaveTextContent(/data structures/i);
 
-  const OpSysBtn = await findByText(/data structures/i);
-  userEvent.click(OpSysBtn);
+    // MapLink is present and clickable
+    const MapLink = await screen.findByText(/View Strand Agriculture Hall/i);
+    userEvent.click(MapLink);
 
-  // Dialog is present and displays the current course
-  const courseDialog = await findByTestId('course-dialog');
-  expect(courseDialog).toHaveTextContent(/data structures/i);
+    // Professor email link is clickable
+    const ContactProfessorLink = await screen.findByText(/E-mail Hess/i);
+    userEvent.click(ContactProfessorLink);
 
-  // MapLink is present and clickable
-  const MapLink = await findByText(/View Strand Agriculture Hall/i);
-  userEvent.click(MapLink);
+    // All Courses Link
+    const ViewCoursesLink = await screen.findByText(/view courses/i);
+    userEvent.click(ViewCoursesLink);
 
-  // Professor email link is clickable
-  const ContactProfessorLink = await findByText(/E-mail Hess/i);
-  userEvent.click(ContactProfessorLink);
+    // We click 4 links, so 4 GA events need to have been triggered
+    expect(mockGAEvent).toHaveBeenCalledTimes(4);
+  });
 
-  // All Courses Link
-  const ViewCoursesLink = await findByText(/view courses/i);
-  userEvent.click(ViewCoursesLink);
+  it('Course spells out the month and day for Final exams', async () => {
+    const TestoBtn = await screen.findByText(/testo physics/i);
+    userEvent.click(TestoBtn);
 
-  // We click 4 links, so 4 GA events need to have been triggered
-  expect(mockGAEvent).toHaveBeenCalledTimes(4);
-});
+    // Dialg is present and displays the corrent course
+    const courseDialog = await screen.findByTestId('course-dialog');
+    expect(courseDialog).toBeInTheDocument();
 
-it('Course spells out the month and day for Final exams', async () => {
-  const { findByText, findByTestId } = render(<Courses />);
+    // For Final exams we spell out the month and day (match meetingDateTime format on Course.tsx)
+    const monthDay = format(startDate(), 'MMMM d');
+    expect(courseDialog).toHaveTextContent(monthDay);
+  });
 
-  const TestoBtn = await findByText(/testo physics/i);
-  userEvent.click(TestoBtn);
+  it('Course Midterm data is excluded from view', async () => {
+    const TestoBtn = await screen.findByText(/testo physics/i);
+    userEvent.click(TestoBtn);
 
-  // Dialg is present and displays the corrent course
-  const courseDialog = await findByTestId('course-dialog');
-  expect(courseDialog).toBeInTheDocument();
+    // Dialg is present and displays the corrent course
+    const courseDialog = await screen.findByTestId('course-dialog');
+    expect(courseDialog).toBeInTheDocument();
 
-  // For Final exams we spell out the month and day (match meetingDateTime format on Course.tsx)
-  const monthDay = format(startDate(), 'MMMM d');
-  expect(courseDialog).toHaveTextContent(monthDay);
-});
+    // Mid terms are currently excluded due to inconsistent data source
+    expect(screen.queryByText(/MID GRP/)).not.toBeInTheDocument();
+  });
 
-test('Course Midterm data is excluded from view', async () => {
-  const { getByText, queryByText, findByTestId } = render(<Courses />);
+  it('Footer has a Link that when clicked and Google Analytics Event fired', async () => {
+    const CanvasLink = await screen.findByText(/View more in Canvas/i);
+    userEvent.click(CanvasLink);
 
-  const TestoBtn = getByText(/testo physics/i);
-  userEvent.click(TestoBtn);
-
-  // Dialg is present and displays the corrent course
-  const courseDialog = await findByTestId('course-dialog');
-  expect(courseDialog).toBeInTheDocument();
-
-  // Mid terms are currently excluded due to inconsistent data source
-  expect(queryByText(/MID GRP/)).not.toBeInTheDocument();
-});
-
-test('Footer has a Link that when clicked and Google Analytics Event fired', async () => {
-  const { getByText } = render(<Courses />);
-
-  const CanvasLink = getByText(/View more in Canvas/i);
-  userEvent.click(CanvasLink);
-
-  expect(mockGAEvent).toHaveBeenCalledTimes(1);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe('with an InfoButton in the CardFooter', () => {
@@ -164,19 +142,16 @@ describe('with an InfoButton in the CardFooter', () => {
 
 describe('without courses present', () => {
   beforeEach(() => {
-    mockUseCourseSchedule.mockReturnValue({ data: [] });
+    alterMock(CLASS_SCHEDULE_API, []);
+    render(<Courses />);
   });
 
   it('contains message about no courses scheduled this term', () => {
-    const { getByText } = render(<Courses />);
-
-    expect(getByText(/do not have any courses scheduled/i)).toBeInTheDocument();
+    expect(screen.getByText(/do not have any courses scheduled/i)).toBeInTheDocument();
   });
 
   it('contains past courses link and tracked in GA', () => {
-    const { getByText } = render(<Courses />);
-
-    const pastCoursesLink = getByText(/past courses and grades/i, { selector: 'a' });
+    const pastCoursesLink = screen.getByText(/past courses and grades/i, { selector: 'a' });
     expect(pastCoursesLink).toBeInTheDocument();
 
     userEvent.click(pastCoursesLink);

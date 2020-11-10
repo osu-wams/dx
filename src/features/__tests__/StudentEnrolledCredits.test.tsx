@@ -1,30 +1,24 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { alterMock, render } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import StudentEnrolledCredits from '../academic-overview/StudentEnrolledCredits';
-import { Student } from '@osu-wams/hooks';
-
-const { schedule: mockCourseSchedule } = Student.CourseSchedule.mockCourseSchedule;
-const mockUseCourseSchedule = jest.fn();
-
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    ...jest.requireActual('@osu-wams/hooks'),
-    useCourseSchedule: () => mockUseCourseSchedule(),
-  };
-});
+import { CLASS_SCHEDULE_API } from 'src/mocks/apis';
 
 describe('<StudentEnrolledCredits />', () => {
-  it('should render and have the approriate standing', () => {
-    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
-    const { getByText } = render(<StudentEnrolledCredits />);
-    const element = getByText('21');
+  it('should render and have the approriate standing', async () => {
+    render(<StudentEnrolledCredits />);
+    expect(screen.getByText(/loading.../i)).toBeInTheDocument();
+
+    const element = await screen.findByText('21');
     expect(element).toBeInTheDocument();
+
+    expect(screen.queryByText(/loading.../i)).toBeNull();
   });
 
-  it('should return appropriate text when data is empty', () => {
-    mockUseCourseSchedule.mockReturnValue({ data: [], loading: false, error: false });
-    const { getByText } = render(<StudentEnrolledCredits />);
-    const element = getByText('0');
+  it('should return appropriate text when data is empty', async () => {
+    alterMock(CLASS_SCHEDULE_API, []);
+    render(<StudentEnrolledCredits />);
+    const element = await screen.findByText('0');
     expect(element).toBeInTheDocument();
   });
 });

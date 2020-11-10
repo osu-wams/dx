@@ -29,7 +29,7 @@ const PlannerItems = () => {
       return <Loading lines={5} />;
     }
 
-    if (!courses.loading && data && data.length && user.isCanvasOptIn === true) {
+    if (courses.isSuccess && courses.data && data && data.length && user.isCanvasOptIn === true) {
       return (
         <List>
           <CanvasPlannerItems data={data} courses={courses.data} />

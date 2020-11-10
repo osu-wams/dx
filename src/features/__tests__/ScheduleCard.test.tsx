@@ -1,22 +1,23 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { render, authUser } from 'src/util/test-utils';
+import { render, authUser, alterMock } from 'src/util/test-utils';
 import { Events, Student } from '@osu-wams/hooks';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from 'src/setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
 import { format } from 'src/util/helpers';
 import { plannerItemState } from 'src/state/application';
+import { CLASS_SCHEDULE_API } from 'src/mocks/apis';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
-const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule;
+// const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.courseScheduleData;
 const mockSimpleSchedule = Student.CourseSchedule.mockCourseSchedule.simpleSchedule;
 const getThisDate = (): number => {
   return Date.now();
 };
 const mockGetStartDate = jest.fn();
-const mockUseCourseSchedule = jest.fn();
+// const mockUseCourseSchedule = jest.fn();
 const { academicCalendar3 } = Events.mockEvents;
 const mockUseAcademicCalendarEvents = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
@@ -28,7 +29,7 @@ jest.mock('@osu-wams/hooks', () => {
     // @ts-ignore spread error on object only
     ...jest.requireActual('@osu-wams/hooks'),
     useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents(),
-    useCourseSchedule: () => mockUseCourseSchedule(),
+    // useCourseSchedule: () => mockUseCourseSchedule(),
     usePlannerItems: () => mockUsePlannerItems(),
   };
 });
@@ -44,7 +45,6 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   beforeEach(() => {
     mockGetStartDate.mockReturnValue(getThisDate());
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
-    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockInitialState.mockReturnValue([
       {
         state: plannerItemState,
@@ -65,7 +65,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   it('should find "Every Day Test" Course in card', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const todayCourse = screen.getByText(/Every Day Test/);
+    const todayCourse = await screen.findByText(/Every Day Test/);
     expect(todayCourse).toBeInTheDocument();
   });
 
@@ -79,24 +79,23 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   it('should find a course with a clickable map link', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const mapLink = screen.getByText(/View PH 222 location/);
+    const mapLink = await screen.findByText(/View PH 222 location/);
     userEvent.click(mapLink);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should find a course without a clickable map link because it is in Bend', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
-    const courses = screen.getAllByTestId('course-list-item-header');
+    const courses = await screen.findAllByTestId('course-list-item-header');
     expect(courses[0]).toHaveTextContent('WR214');
 
     expect(screen.queryByText('View WR 214 location on map')).toBeNull();
   });
 
   it('should find a course without a clickable map link because it is a remote learning course', async () => {
-    const { debug } = render(<ScheduleCard />, { initialStates: mockInitialState() });
-    const courses = screen.getAllByTestId('course-list-item-header');
-    expect(courses[2]).not.toHaveTextContent('RL100');
-    expect(courses[3]).toHaveTextContent('RL100');
+    render(<ScheduleCard />, { initialStates: mockInitialState() });
+    const courses = await screen.findAllByTestId('course-list-item-header');
+    expect(courses[2]).toHaveTextContent('RL100');
 
     expect(screen.queryByText('View RL 100 location on map')).toBeNull();
   });
@@ -123,7 +122,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     const duePartialText = `Due ${format(new Date(), 'dueAt')}`.slice(0, -5);
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const todayPlannerItem = screen.getByText(/Testo Planner Discussion/);
+    const todayPlannerItem = await screen.findByText(/Testo Planner Discussion/);
     expect(todayPlannerItem).toBeInTheDocument();
     // Check the planner item description element to see if it has the due date text like 'Due Oct 11 at 12:`
     expect(todayPlannerItem.nextElementSibling).toHaveTextContent(duePartialText);
@@ -134,7 +133,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   it('should not associate a due date with a "Planner Announcement Test" PlannerItem in card', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const todayPlannerAnnouncement = screen.getByText(/Planner Announcement Test/);
+    const todayPlannerAnnouncement = await screen.findByText(/Planner Announcement Test/);
 
     // Select the text of description "Due today at ..."
     const dueAt =
@@ -159,7 +158,6 @@ describe('<ScheduleCard /> accessibility checks', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
-    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockGetStartDate.mockReturnValue(getThisDate());
     mockInitialState.mockReturnValue([
       {
@@ -193,7 +191,6 @@ describe('<ScheduleCard /> accessibility checks', () => {
 describe('<ScheduleCard /> without data for given days', () => {
   beforeEach(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
-    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockGetStartDate.mockReturnValue(getThisDate());
     mockInitialState.mockReturnValue([
       {
@@ -214,10 +211,10 @@ describe('<ScheduleCard /> without data for given days', () => {
   });
 
   it(`should find "You don't have any courses scheduled for today"`, async () => {
-    mockUseCourseSchedule.mockReturnValue(mockNoData);
+    alterMock(CLASS_SCHEDULE_API, []);
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const noCoursesText = screen.getByText(/You don't have any courses scheduled/);
+    const noCoursesText = await screen.findByText(/You don't have any courses scheduled/);
 
     expect(noCoursesText).toBeInTheDocument();
   });
@@ -235,7 +232,7 @@ describe('<ScheduleCard /> without data for given days', () => {
     ]);
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const noPlannerItemsText = screen.getByText(/No Canvas assignments/);
+    const noPlannerItemsText = await screen.findByText(/No Canvas assignments/);
     expect(noPlannerItemsText).toBeInTheDocument();
   });
 });
@@ -251,7 +248,6 @@ describe('<ScheduleCard /> without canvas authorization', () => {
       isCanvasOptIn: false,
     });
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
-    mockUseCourseSchedule.mockReturnValue(mockCourseSchedule);
     mockGetStartDate.mockReturnValue(getThisDate());
     mockInitialState.mockReturnValue([
       {
@@ -266,7 +262,7 @@ describe('<ScheduleCard /> without canvas authorization', () => {
 
     render(<ScheduleCard />, { user: mockUser(), initialStates: mockInitialState() });
 
-    const todayPlannerItem = screen.getByText(/Authorize Canvas to see your assignments/);
+    const todayPlannerItem = await screen.findByText(/Authorize Canvas to see your assignments/);
 
     expect(todayPlannerItem).toBeInTheDocument();
   });
@@ -295,9 +291,8 @@ describe('<ScheduleCard /> with a simple schedule', () => {
       mockGetStartDate.mockImplementation(() => {
         return startDate.getTime();
       });
-      mockUseCourseSchedule.mockReturnValue(
-        mockSimpleSchedule(startDate.toISOString().slice(0, 10))
-      );
+      const singleCourseData = mockSimpleSchedule(startDate.toISOString().slice(0, 10));
+      alterMock(CLASS_SCHEDULE_API, singleCourseData.data);
       const { findByText } = render(<ScheduleCard />, { initialStates: mockInitialState() });
       switch (todayShortCode) {
         case 'M':

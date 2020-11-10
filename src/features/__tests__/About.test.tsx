@@ -1,45 +1,34 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
+import { screen } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
 import About from 'src/pages/About';
 import { mockGAEvent } from 'src/setupTests';
-import { PageContents, ReleaseNotes } from '@osu-wams/hooks';
-
-const mockPageContent = PageContents.mockPageContents;
-const mockReleaseNotes = ReleaseNotes.mockReleaseNotes;
-
-const mockUsePageContent = jest.fn();
-const mockUseReleaseNotes = jest.fn();
-
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    // @ts-ignore spreading warning
-    ...jest.requireActual('@osu-wams/hooks'),
-    usePageContent: () => mockUsePageContent(),
-    useReleaseNotes: () => mockUseReleaseNotes(),
-  };
-});
-
-beforeEach(() => {
-  mockUsePageContent.mockReturnValue(mockPageContent);
-  mockUseReleaseNotes.mockReturnValue(mockReleaseNotes);
-});
 
 describe('<About />', () => {
   it('should render the about page', () => {
-    const { getByTestId } = render(<About />);
-    expect(getByTestId('about-page')).toBeInTheDocument();
+    render(<About />);
+    expect(screen.getByTestId('about-page')).toBeInTheDocument();
+    expect(screen.getByText('About MyOregonState', { selector: 'h1' })).toBeInTheDocument();
   });
 
-  it('should display the title "About MyOregonState"', () => {
-    const { getByText } = render(<About />);
-    expect(getByText('About MyOregonState', { selector: 'h1' })).toBeInTheDocument();
+  it('should display loading while data is not present, then it goes away', async () => {
+    render(<About />);
+    // 2 loading pieces for Release Notes and Page Content
+    expect(screen.getAllByText(/loading/i)).toHaveLength(2);
+
+    expect(await screen.findByText('PageContent Title')).toBeInTheDocument();
+
+    // Once data is present, no loading screen should be visible
+    expect(screen.queryByText(/loading/i)).toBeNull();
   });
 
   it('should display card with appropriate content', async () => {
     const { findByText } = render(<About />);
-    expect(await findByText('Beta Page Title')).toBeInTheDocument();
-    expect(await findByText('beta list item', { selector: 'li' })).toBeInTheDocument();
+    expect(await findByText('PageContent Title')).toBeInTheDocument();
+    expect(
+      await findByText(/This is the PageContent body content/i, { selector: 'p' })
+    ).toBeInTheDocument();
   });
 
   it('should find the release notes card with appropriate content', async () => {

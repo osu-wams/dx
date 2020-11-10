@@ -10,6 +10,8 @@ import {
   User,
   Status,
   Cards,
+  PageContents,
+  ReleaseNotes,
 } from '@osu-wams/hooks';
 import {
   HOLDS_API,
@@ -30,11 +32,13 @@ import {
   USER_MESSAGES_API,
   IT_STATUS_API,
   CARDS_API,
+  RELEASE_NOTES_API,
+  PAGE_CONTENT_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus.data;
-const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.schedule.data;
+const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.courseScheduleData;
 const mockDegrees = Student.Degrees.mockDegrees.data;
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
 const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
@@ -49,6 +53,8 @@ const mockUserMessages = User.mockUser.userMessageItems;
 const readUserMessage = User.mockUser.userReadMessage;
 const mockStatus = Status.mockStatus.statusData;
 const mockCards = Cards.mockCards.cardsArray;
+const mockPageContent = PageContents.mockPageContents.pageContentData;
+const mockReleaseNotes = ReleaseNotes.mockReleaseNotes.releaseNotesData;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -140,5 +146,15 @@ export const handlers = [
   // Dynamic Cards
   rest.get(CARDS_API, async (req, res, ctx) => {
     return res(ctx.json(mockCards));
+  }),
+
+  // Release Notes
+  rest.get(RELEASE_NOTES_API, async (req, res, ctx) => {
+    return res(ctx.json(mockReleaseNotes));
+  }),
+
+  // Page Content (About Page for Now)
+  rest.get(PAGE_CONTENT_API + '/about', async (req, res, ctx) => {
+    return res(ctx.json(mockPageContent));
   }),
 ];

@@ -30,6 +30,7 @@ const PastCourses = () => {
           `${e.attributes.courseSubject}${e.attributes.courseNumber}`.match(re) ||
           `${e.attributes.courseSubject} ${e.attributes.courseNumber}`.match(re) ||
           `${e.attributes.courseSubjectDescription}`.match(re) ||
+          `${e.attributes.courseReferenceNumber}`.match(re) ||
           `${e.attributes.gradeFinal}`.match(re)
       );
       setFilteredGrades(matchingGrades);
@@ -88,6 +89,7 @@ const PastCourses = () => {
                             courseNumber,
                             courseSubject,
                             repeatedCourseInd,
+                            courseReferenceNumber,
                             creditHours,
                             gradeFinal,
                             courseTitle,
@@ -104,6 +106,9 @@ const PastCourses = () => {
                                   </strong>{' '}
                                   {creditHours} {singularPlural(creditHours, 'Credit')}
                                 </CourseData>
+                                {courseReferenceNumber && (
+                                  <CourseData>CRN: {courseReferenceNumber}</CourseData>
+                                )}
                               </TableCell>
                               <TableCell>
                                 <Grade>{gradeFinal}</Grade>

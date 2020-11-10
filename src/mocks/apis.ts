@@ -74,3 +74,13 @@ export const IT_STATUS_API = '/api/status';
  * Cards (Dynamic Cards)
  */
 export const CARDS_API = '/api/cards';
+
+/**
+ * Page Content (about page and such from Drupal)
+ */
+export const PAGE_CONTENT_API = '/api/page-content';
+
+/**
+ * Release Notes
+ */
+export const RELEASE_NOTES_API = '/api/release-notes';
