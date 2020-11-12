@@ -36,6 +36,8 @@ if (
       `Mobile app user redirecting to Ready Education auth workflow with token: ${token}`
     );
     window.location.assign(`/login${qs}`);
+  } else {
+    window.location.assign('/');
   }
 }
 
