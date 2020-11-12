@@ -9,6 +9,7 @@ import { Errors } from '@osu-wams/hooks';
 import idleTimer from './util/idleTimer';
 import cookieRefreshTimer from './util/cookieRefreshTimer';
 import { RecoilRoot } from 'recoil';
+import ReadyIntegration from './util/ready-integration';
 
 const { postError, IGNORED_ERRORS } = Errors;
 
@@ -16,6 +17,27 @@ const { postError, IGNORED_ERRORS } = Errors;
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isTest = process.env.NODE_ENV === 'test';
 const isGADebug = process.env.REACT_APP_GA_DEBUG === 'true';
+
+// Ready Education authentication flow as described in DD-1103
+if (
+  process.env.REACT_APP_EXPERIMENTAL === 'true' &&
+  window.location.pathname.endsWith('/ready-education-auth')
+) {
+  let token = ReadyIntegration.getUserToken();
+  if (token) {
+    // Retain previous query string params, such as ?returnUrl=page_name
+    let qs = window.location.search;
+    if (!qs) {
+      qs = `?u=x&t=${token}`;
+    } else {
+      qs = `${qs}&u=x&t=${token}`;
+    }
+    console.debug(
+      `Mobile app user redirecting to Ready Education auth workflow with token: ${token}`
+    );
+    window.location.assign(`/login${qs}`);
+  }
+}
 
 const applicationRoot = document.getElementById('root') as HTMLElement;
 const redirectToError = () => window.location.assign('./error.html');
@@ -27,7 +49,7 @@ if (isDevelopment) {
   // const wcagRules = axe.getRules(['wcag21aa', 'wcag21a']);
   const axeConfig = {
     rules: [
-      {   
+      {
         id: 'region',
         enabled: false,
       },
