@@ -195,9 +195,7 @@ const App = (props: AppProps) => {
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
                       <RouterPage path="training" pageComponent={<Training />} />
                     )}
-                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                      <RouterPage path="notifications" pageComponent={<Notifications />} />
-                    )}
+                    <RouterPage path="notifications" pageComponent={<Notifications />} />
                     <RouterPage default pageComponent={<PageNotFound />} />
                   </Router>
                 </AnimatePresence>
