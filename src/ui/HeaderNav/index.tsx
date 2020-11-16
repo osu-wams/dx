@@ -8,8 +8,7 @@ const HeaderNav = () => {
   return (
     <HeaderNavWrapper>
       <HelpMenu />
-      {process.env.REACT_APP_EXPERIMENTAL === 'true' && <NotificationsMenu />}
-
+      <NotificationsMenu />
       <ProfileMenu />
     </HeaderNavWrapper>
   );
