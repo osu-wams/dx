@@ -50,25 +50,6 @@
     express "4.17.1"
     lodash.flatten "4.4.0"
 
-"@applitools/eyes-sdk-core@12.5.5":
-  version "12.5.5"
-  resolved "https://registry.yarnpkg.com/@applitools/eyes-sdk-core/-/eyes-sdk-core-12.5.5.tgz#e0b2a67949eb1191efeace27128b60b073b3caa0"
-  integrity sha512-kLOXwOqu7WQZdqa4prZlWpeH3i8AEuR83YKof4/2kUPAwTFVrxKoaHPufVt/AWdxBTjqvQ6UK2mdo8nxLmxHPA==
-  dependencies:
-    "@applitools/dom-capture" "8.0.1"
-    "@applitools/dom-snapshot" "4.2.5"
-    "@applitools/isomorphic-fetch" "3.0.0"
-    "@applitools/snippets" "2.1.0"
-    axios "0.19.2"
-    chalk "3.0.0"
-    cosmiconfig "6.0.0"
-    dateformat "3.0.3"
-    debug "4.2.0"
-    deepmerge "4.2.2"
-    png-async "0.9.4"
-    stack-trace "0.0.10"
-    tunnel "0.0.6"
-
 "@applitools/eyes-sdk-core@12.5.7":
   version "12.5.7"
   resolved "https://registry.yarnpkg.com/@applitools/eyes-sdk-core/-/eyes-sdk-core-12.5.7.tgz#59bb1f8d018b33e8760427dbcd93c3aa7ef16379"
@@ -1810,23 +1791,18 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@1.0.75":
-  version "1.0.75"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.75/ae168016008dd74ed338c7712f39e72a0444530b4c10f3d029125793f8acd72c#8ff814e263c4f3d4031c0fd385ca26409ca49424"
-  integrity sha512-c4Cvc8yH+ljUKrIC4IZisFeDJDa/8pxdk9fz6qf82MXX8NQXQl63hVsF19jMK0ttuSeuDBZFhP8XlJo5nrrHVQ==
+"@osu-wams/hooks@1.0.76":
+  version "1.0.76"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.76/f0538dc5bafb7312076a2510d792f0e8a2da83162ec336520b67a1ef511e8458#54fc0b77adc0f713c6a96e3fa2b5b3775682d402"
+  integrity sha512-peMGIYMEczpMTgCbtZ8rHVSy8TSbE74bnTKv5rWEfQKBUYxsQtZ1Aai2pSgdm+7t/9VZ3MXl7C4EoA40VYpsHw==
   dependencies:
-    "@osu-wams/lib" "^0.1.52"
+    "@osu-wams/lib" "^0.1.53"
     "@osu-wams/utils" "^0.0.8"
     axios "^0.19.1"
     react-query "2.23.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@0.1.52":
-  version "0.1.52"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.52/b388486a6079911522e501b87bc48e03be13336fd8d0f31c6ca7eca2165993cd#14518724482059fa1e045bb03ac90b17c3eb9383"
-  integrity sha512-1SqfTPUkmsBl2BFu0YVM/qAuU+se2DIRjnMOjkoBxqs+2bYmDMzmLlstpoUXAxO5UFPB/+RvRSLSW2YjUfbbTg==
-
-"@osu-wams/lib@^0.1.52":
+"@osu-wams/lib@0.1.53", "@osu-wams/lib@^0.1.53":
   version "0.1.53"
   resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.53/fe0502c42594d140b608cf1ed94a3b7815cff6a23dbbecc461d43da038688bf8#44b13ddacaf4fe9f45a23c788d967806aaf2e7b0"
   integrity sha512-UpVjmEX6TtbUe9FGyianitjetbtUntjbv/eMT+q7Nkzt5R7IRq6MiTCQMBJMeKnRUMnwjzOPua4BOeogngllXw==
