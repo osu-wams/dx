@@ -16,10 +16,8 @@ import { ExternalLink } from 'src/ui/Link';
 import Url from 'src/util/externalUrls.data';
 import { ITSystemSticky } from './ITSystemSticky';
 import { Status, useStatus } from '@osu-wams/hooks';
-import { ITSystemItem } from './ITSystemItem';
+import { ITSystemItem } from '../it-systems-status/ITSystemItem';
 import { breakpoints } from 'src/theme';
-import operationalStatus from 'src/assets/systems-status-operational.svg';
-import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 
 const AllOperational = () => (
   <CardHeaderSimple>
