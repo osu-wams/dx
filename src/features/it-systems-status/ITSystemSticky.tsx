@@ -10,6 +10,7 @@ import { fontSize } from 'src/theme';
 import { format } from 'src/util/helpers';
 import Icon from 'src/ui/Icon';
 import { ICachetComponent, ICachetIncident } from '@osu-wams/hooks/dist/api/status';
+import VisuallyHidden from '@reach/visually-hidden';
 
 const Header = styled.div`
   display: flex;
@@ -70,9 +71,9 @@ const ITSystemSticky: React.FC<{ components: ICachetComponent[] }> = ({ componen
       <ExternalLink
         style={{ float: 'right', paddingTop: '16px' }}
         href={Url.itSystemStatus.main}
-        onClick={() => Event('it-system-status-sticky', `view it system status sticky link`)}
+        onClick={() => Event('it-system-status-sticky', `view IT system status sticky link`)}
       >
-        View details
+        View details <VisuallyHidden>about IT incidents</VisuallyHidden>
       </ExternalLink>
     </CardContentCell>
   );

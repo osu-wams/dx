@@ -10,6 +10,7 @@ import { TrendingResources } from 'src/features/TrendingResources';
 import { filteredCards } from 'src/state/application';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
+import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
 
 const StudentDashboard = () => {
   const cards = useRecoilValue(filteredCards('Dashboard'));
@@ -19,7 +20,10 @@ const StudentDashboard = () => {
       <MainGridWrapper data-testid="student-dashboard-page">
         <PageTitle title="Overview" />
         <Masonry>
-          <ScheduleCard />
+          <>
+            <ScheduleCard />
+            <ITSystemStatus />
+          </>
           <FavoriteResources />
           <TrendingResources />
           <ResourcesCard categ="featured" icon={faStars} />
