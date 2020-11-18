@@ -19,7 +19,7 @@
     "axios": "^0.20.0",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.10",
-    "framer-motion": "^2.7.5",
+    "framer-motion": "^2.9.4",
     "fuse.js": "^6.4.1",
     "http-proxy-middleware": "1.0.5",
     "libphonenumber-js": "^1.7.52",

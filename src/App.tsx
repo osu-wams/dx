@@ -31,6 +31,7 @@ import {
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
+import MobileCovid from './pages/mobile-app/MobileCovid';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -172,11 +173,15 @@ const App = (props: AppProps) => {
     window.addEventListener('keydown', handleTabOnce);
   }, []);
 
+  // If logged in through mobile app, this is true
+  // We use this to conditionally load/strip the header and footer
+  const mobileApp = user.data.isMobile;
+
   return (
     <HelmetProvider>
       <ThemeProvider theme={themesLookup[theme]}>
         <GlobalStyles />
-        <Header />
+        {!mobileApp && <Header />}
         <Alerts />
         <ContentWrapper>
           <Location>
@@ -197,13 +202,16 @@ const App = (props: AppProps) => {
                     )}
                     <RouterPage path="notifications" pageComponent={<Notifications />} />
                     <RouterPage default pageComponent={<PageNotFound />} />
+                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                      <RouterPage path="covid" pageComponent={<MobileCovid />} />
+                    )}
                   </Router>
                 </AnimatePresence>
               </PageGridWrapper>
             )}
           </Location>
         </ContentWrapper>
-        <Footer />
+        {!mobileApp && <Footer />}
       </ThemeProvider>
       {user.data.isAdmin && user.data.devTools && <ReactQueryDevtools initialIsOpen={false} />}
     </HelmetProvider>
