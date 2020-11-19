@@ -103,4 +103,7 @@ const DXAccordionButton = styled(AccordionButton)`
 const DXAccordionPanel = styled(AccordionPanel)`
   font-size: ${fontSize[14]};
   padding: 0 ${spacing.default} ${spacing.default} ${spacing.xl};
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
 `;
