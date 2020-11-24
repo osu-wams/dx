@@ -53,10 +53,8 @@
     "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json"
   },
   "devDependencies": {
-    "@applitools/eyes-cypress": "^3.13.4",
     "@fortawesome/fontawesome-pro": "^5.7.2",
     "@sheerun/mutationobserver-shim": "^0.3.3",
-    "@testing-library/cypress": "^6.0.1",
     "@testing-library/jest-dom": "5.11.5",
     "@testing-library/react": "11.1.0",
     "@testing-library/react-hooks": "^3.4.2",
@@ -71,10 +69,8 @@
     "@typescript-eslint/parser": "^4.0.1",
     "axios-mock-adapter": "^1.18.1",
     "codecov": "^3.7.2",
-    "cypress": "^5.0.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-cypress": "^2.11.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest-dom": "^3.2.2",
     "eslint-plugin-jsx-a11y": "^6.3.1",
