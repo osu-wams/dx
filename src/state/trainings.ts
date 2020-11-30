@@ -2,20 +2,20 @@ import { atom, selector } from 'recoil';
 import Fuse from 'fuse.js';
 import { Types } from '@osu-wams/lib';
 import { filterByTag } from 'src/features/training/trainings-utils';
-import { userState } from './application';
 
 export const trainingTagState = atom<{
   data: Types.TrainingTag[];
   isLoading: boolean;
   isSuccess: boolean;
+  isError: boolean;
 }>({
   key: 'trainingTagState',
-  default: { data: [], isLoading: true, isSuccess: false },
+  default: { data: [], isLoading: true, isSuccess: false, isError: false },
 });
 
 export const selectedTrainingTagState = atom<string>({
   key: 'selectedTrainingTagState',
-  default: '',
+  default: 'all',
 });
 
 export const trainingState = atom<{
@@ -98,10 +98,9 @@ const trainingSearchIndex = selector<Fuse<Types.Training> | undefined>({
 const filteredTrainingsByTag = selector<Types.Training[]>({
   key: 'filteredTrainingsByTag',
   get: ({ get }) => {
-    const user = get(userState);
     const trainings = get(trainingState);
     const selectedTag = get(selectedTrainingTagState);
-    return filterByTag(user.data, selectedTag, trainings.data);
+    return filterByTag(selectedTag, trainings.data);
   },
 });
 
@@ -114,8 +113,9 @@ const filteredTrainingsBySearch = selector<Types.Training[]>({
     const query = searchTerm?.toLowerCase() ?? '';
     const trainings = get(filteredTrainingsByTag);
     const searchIndex = get(trainingSearchIndex);
-    if (searchIndex) {
+    if (searchIndex && query) {
       const found = searchIndex.search(query);
+      console.log(searchIndex, query, found);
       const foundIds = found.map((f) => f.item.id);
       return trainings.filter((t) => foundIds.includes(t.id));
     } else {
@@ -134,9 +134,9 @@ export const filteredTrainingsState = selector<Types.Training[]>({
   get: ({ get }) => {
     const debouncedQuery = get(debouncedTrainingSearchState);
     if (!debouncedQuery) {
-      return get(filteredTrainingsBySearch);
-    } else {
       return get(filteredTrainingsByTag);
+    } else {
+      return get(filteredTrainingsBySearch);
     }
   },
 });

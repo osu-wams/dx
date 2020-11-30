@@ -14,20 +14,34 @@ import {
   resourceSearchState,
   resourceState,
 } from './resources';
+import {
+  debouncedTrainingSearchState,
+  filteredTrainingsState,
+  selectedTrainingTagState,
+  trainingSearchState,
+  trainingState,
+  trainingTagState,
+} from './trainings';
 
 export {
   categoryState,
   debouncedResourceSearchState,
+  debouncedTrainingSearchState,
   dynamicCardState,
   filteredCards,
   filteredNotifications,
   filteredResourcesState,
+  filteredTrainingsState,
   infoButtonState,
   plannerItemState,
   resourceSearchState,
   resourceState,
   selectedCategoryState,
+  selectedTrainingTagState,
   themeState,
+  trainingSearchState,
+  trainingState,
+  trainingTagState,
   userState,
   userMessagesState,
 };
