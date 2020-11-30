@@ -5,7 +5,7 @@ import SupportResources from '../features/about/SupportResources';
 import ReleaseNotes from '../features/about/ReleaseNotes';
 import { MainGridWrapper, Masonry } from '../theme';
 import { useRecoilValue } from 'recoil';
-import { filteredCards } from 'src/state/application';
+import { filteredCards } from 'src/state';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 
 const About = () => {

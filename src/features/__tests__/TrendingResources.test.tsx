@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { TrendingResources } from 'src/features/TrendingResources';
 import { mockGAEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
-import { resourceState } from 'src/state/application';
+import { resourceState } from 'src/state';
 
 const mockInitialState = jest.fn();
 const mockUseTrendingResources = jest.fn();

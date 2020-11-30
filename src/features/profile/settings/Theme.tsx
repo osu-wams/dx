@@ -7,7 +7,7 @@ import { User } from '@osu-wams/hooks';
 import { titleCase } from 'src/util/helpers';
 import { defaultTheme, themesLookup } from 'src/theme/themes';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { userState, themeState } from 'src/state/application';
+import { userState, themeState } from 'src/state';
 import { Event } from 'src/util/gaTracking';
 
 const { postSettings, usersSettings } = User;

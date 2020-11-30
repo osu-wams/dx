@@ -17,7 +17,7 @@ import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 import { User } from '@osu-wams/hooks';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { isGraduate } = User;

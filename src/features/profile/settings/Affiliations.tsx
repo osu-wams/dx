@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { fontSize } from 'src/theme';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { Event } from 'src/util/gaTracking';
 

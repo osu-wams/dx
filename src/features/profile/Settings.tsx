@@ -6,7 +6,7 @@ import Theme from './settings/Theme';
 import Campus from './settings/Campus';
 import { ThemeProvider } from '@material-ui/core/styles';
 import getMUITheme from 'src/ui/MUITheme';
-import { themeState } from 'src/state/application';
+import { themeState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const Settings: FC = () => {

@@ -10,7 +10,7 @@ import { Event } from '../util/gaTracking';
 import { Types } from '@osu-wams/lib';
 import { User, useResourcesByQueue } from '@osu-wams/hooks';
 import { ResourceItem } from './resources/ResourceItem';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { hasAudience } = User;

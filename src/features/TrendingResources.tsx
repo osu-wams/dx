@@ -8,7 +8,7 @@ import { Event } from 'src/util/gaTracking';
 import { InternalLink } from 'src/ui/Link';
 import { ResourceItem } from './resources/ResourceItem';
 import { filteredTrendingResources } from './resources/resources-utils';
-import { resourceState, userState } from 'src/state/application';
+import { resourceState, userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 export const TrendingResources = () => {

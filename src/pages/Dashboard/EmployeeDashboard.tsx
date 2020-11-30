@@ -9,7 +9,7 @@ import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { TrendingResources } from 'src/features/TrendingResources';
 import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
-import { filteredCards } from 'src/state/application';
+import { filteredCards } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 

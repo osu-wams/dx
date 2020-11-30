@@ -11,7 +11,7 @@ import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
 import { TrendingEvent } from './GATrendingResource';
 import { Event } from 'src/util/gaTracking';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 // Adds all font awesome icons so we can call them by name (coming from Drupal API)

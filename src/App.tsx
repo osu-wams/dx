@@ -27,7 +27,7 @@ import {
   plannerItemState,
   dynamicCardState,
   resourceState,
-} from './state/application';
+} from './state';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';

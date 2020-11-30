@@ -7,7 +7,7 @@ import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent } from 'src/setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
 import { format } from 'src/util/helpers';
-import { plannerItemState } from 'src/state/application';
+import { plannerItemState } from 'src/state';
 import { CLASS_SCHEDULE_API } from 'src/mocks/apis';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;

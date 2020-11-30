@@ -2,7 +2,7 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, mockEmployeeUser, authUser } from 'src/util/test-utils';
 import Header from '../Header';
-import { themeState } from 'src/state/application';
+import { themeState } from 'src/state';
 import { mockGAEvent } from 'src/setupTests';
 import { act, screen } from '@testing-library/react';
 

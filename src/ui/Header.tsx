@@ -17,7 +17,7 @@ import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
 import { arrayIncludes } from 'src/util/helpers';
-import { userState, themeState } from 'src/state/application';
+import { userState, themeState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { usersCampus, CAMPUS_CODES } = User;

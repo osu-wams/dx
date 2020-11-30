@@ -12,7 +12,7 @@ import Academics from 'src/pages/Academics';
 import Profile from 'src/pages/Profile';
 
 import { Resources, Cards } from '@osu-wams/hooks';
-import { resourceState, dynamicCardState } from 'src/state/application';
+import { resourceState, dynamicCardState } from 'src/state';
 
 const { resourcesData } = Resources.mockResources;
 const { cardsData } = Cards.mockCards;

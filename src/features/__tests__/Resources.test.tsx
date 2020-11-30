@@ -12,7 +12,7 @@ import userEvent from '@testing-library/user-event';
 import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
-import { resourceState } from 'src/state/application';
+import { resourceState } from 'src/state';
 
 const mockInitialState = jest.fn();
 const mockUseCategories = jest.fn();

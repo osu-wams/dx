@@ -19,7 +19,7 @@ import {
   categoryState,
   debouncedResourceSearchState,
   filteredResourcesState,
-} from 'src/state/application';
+} from 'src/state';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 const { getAffiliation } = User;

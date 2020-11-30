@@ -9,7 +9,7 @@ import {
 import { useGpa } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { useRecoilValue } from 'recoil';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 
 export const StudentGpa: React.FC = () => {
   const user = useRecoilValue(userState);

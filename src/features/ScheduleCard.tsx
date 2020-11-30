@@ -13,7 +13,7 @@ import {
 import { format } from '../util/helpers';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
-import { userState, plannerItemState } from 'src/state/application';
+import { userState, plannerItemState } from 'src/state';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 /**

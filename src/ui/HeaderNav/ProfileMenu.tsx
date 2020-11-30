@@ -12,7 +12,7 @@ import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { Event } from 'src/util/gaTracking';
 import { User } from '@osu-wams/hooks';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import Icon from 'src/ui/Icon';
 import { useRecoilValue } from 'recoil';
 
