@@ -6,14 +6,14 @@ import { Types } from '@osu-wams/lib';
  * @param {string} name the tag name to filter on
  * @param {Training[]} trainings a list of trainings to inspect for matching tag
  */
-const filterByTag = (user: any, name: string, trainings: Types.Training[]): Types.Training[] => {
+const filterByTag = (name: string, trainings: Types.Training[]): Types.Training[] => {
   // Skips tags and displays all
   if (name === 'all') return trainings;
 
   return trainings.filter(
     (t) =>
       t.tags?.length > 0 &&
-      t.tags.findIndex((tag) => tag.toLowerCase().includes(name.toLowerCase())) > -1
+      t.tags.findIndex((tag) => tag?.toLowerCase().includes(name.toLowerCase())) > -1
   );
 };
 
