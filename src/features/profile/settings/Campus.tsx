@@ -7,7 +7,7 @@ import { Fieldset, Legend } from 'src/ui/forms';
 import { User } from '@osu-wams/hooks';
 import { titleCase } from 'src/util/helpers';
 import { fontSize } from 'src/theme';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { Event } from 'src/util/gaTracking';
 

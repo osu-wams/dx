@@ -7,7 +7,7 @@ import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/lib';
 import { mobile, desktop } from 'src/util/useMediaQuery';
 import { RecoilRoot } from 'recoil';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { rest } from 'msw';
 import { server } from 'src/mocks/server';
 import { HelmetProvider } from 'react-helmet-async';

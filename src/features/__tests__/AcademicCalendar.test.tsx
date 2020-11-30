@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import AcademicCalendar from '../AcademicCalendar';
 import { Events } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
-import { infoButtonState } from 'src/state/application';
+import { infoButtonState } from 'src/state';
 import { ACADEMIC_CALENDAR_API } from 'src/mocks/apis';
 
 const { academicCalendar3 } = Events.mockEvents;

@@ -21,7 +21,7 @@ import { titleCase } from 'src/util/helpers';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import degreeImg from 'src/assets/program-of-study.svg';
 import { ThemeContext } from 'styled-components/macro';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { usersCampus } = User;

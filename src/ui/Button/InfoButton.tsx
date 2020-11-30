@@ -10,7 +10,7 @@ import Button from './Button';
 import { Event } from 'src/util/gaTracking';
 import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
 import { useRecoilValue } from 'recoil';
-import { infoButtonState } from 'src/state/application';
+import { infoButtonState } from 'src/state';
 
 const DialogHeader = styled.div`
   display: flex;

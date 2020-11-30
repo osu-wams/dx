@@ -2,7 +2,7 @@ import React from 'react';
 import { MainNavStudent } from './MainNavStudent';
 import { MainNavEmployee } from './MainNavEmployee';
 import { User } from '@osu-wams/hooks';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { hasPrimaryAffiliation, AFFILIATIONS } = User;

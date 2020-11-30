@@ -11,7 +11,7 @@ import { List } from 'src/ui/List';
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
 import { Types } from '@osu-wams/lib';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const ScheduleCardAssignments = ({

@@ -5,7 +5,7 @@ import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { useRecoilValue } from 'recoil';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { User, Admin } from '@osu-wams/hooks';
 import Button from 'src/ui/Button';
 import { Event } from 'src/util/gaTracking';

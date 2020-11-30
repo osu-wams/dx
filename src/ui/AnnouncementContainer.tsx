@@ -5,7 +5,7 @@ import { Title } from 'src/ui/PageTitle';
 import { User } from '@osu-wams/hooks';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { Announcements, useAnnouncements } from '@osu-wams/hooks';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { hasAudience, getAffiliation } = User;

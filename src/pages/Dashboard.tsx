@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from '@osu-wams/hooks';
 import { StudentDashboard } from './Dashboard/StudentDashboard';
 import { EmployeeDashboard } from './Dashboard/EmployeeDashboard';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { getAffiliation, AFFILIATIONS } = User;

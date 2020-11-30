@@ -10,7 +10,7 @@ import AcademicOverview from 'src/features/AcademicOverview';
 import ResourcesCard from 'src/features/ResourcesCard';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { AcademicProgram } from 'src/features/AcademicProgram';
-import { filteredCards } from 'src/state/application';
+import { filteredCards } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 

@@ -5,7 +5,7 @@ import Notifications from '../Notifications';
 import { mockGAEvent } from 'src/setupTests';
 import { screen } from '@testing-library/react';
 import { User } from '@osu-wams/hooks';
-import { userMessagesState } from 'src/state/application';
+import { userMessagesState } from 'src/state';
 
 // Mock recoi state
 const mockInitialState = jest.fn();

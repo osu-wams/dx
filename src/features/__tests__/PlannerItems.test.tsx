@@ -4,7 +4,7 @@ import { render, authUser } from 'src/util/test-utils';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from 'src/setupTests';
 import { Student } from '@osu-wams/hooks';
-import { infoButtonState, plannerItemState } from 'src/state/application';
+import { infoButtonState, plannerItemState } from 'src/state';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockInitialState = jest.fn();

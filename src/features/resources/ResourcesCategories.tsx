@@ -5,7 +5,7 @@ import CustomBtn from 'src/ui/CustomBtn';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { resourceSearchState, categoryState, selectedCategoryState } from 'src/state/application';
+import { resourceSearchState, categoryState, selectedCategoryState } from 'src/state';
 
 /**
  * Displays a list of clickable categories for the Resources page

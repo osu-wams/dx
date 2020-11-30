@@ -6,7 +6,7 @@ import { spacing, MainGridWrapper, MainGrid, breakpoints, fontSize, borderRadius
 import PageTitle from 'src/ui/PageTitle';
 import { User } from '@osu-wams/hooks';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { filteredNotifications, userMessagesState } from 'src/state/application';
+import { filteredNotifications, userMessagesState } from 'src/state';
 import { markNotificationRead } from 'src/features/notifications/notifications-utils';
 import { Notification } from 'src/features/notifications/Notification';
 import { queryCache } from 'react-query';

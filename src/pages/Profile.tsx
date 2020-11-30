@@ -5,8 +5,7 @@ import { AdminSettings } from 'src/features/profile/AdminSettings';
 import Settings from '../features/profile/Settings';
 import { MainGridWrapper, Masonry } from '../theme';
 import { useRecoilValue } from 'recoil';
-import { userState } from 'src/state/application';
-import { filteredCards } from 'src/state/application';
+import { filteredCards, userState } from 'src/state';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 
 const Profile = () => {

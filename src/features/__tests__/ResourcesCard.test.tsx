@@ -5,7 +5,7 @@ import { faCube } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
-import { infoButtonState } from 'src/state/application';
+import { infoButtonState } from 'src/state';
 
 const { resourcesCardData } = Resources.mockResources;
 const mockInitialState = jest.fn();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
 import { InfoButton } from '../Button';
-import { infoButtonState } from 'src/state/application';
+import { infoButtonState } from 'src/state';
 
 it('does not render an info button because no id is supplied', () => {
   const { container } = render(<InfoButton />);

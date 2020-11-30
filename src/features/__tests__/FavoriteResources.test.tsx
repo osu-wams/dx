@@ -5,7 +5,7 @@ import { render, authUser } from 'src/util/test-utils';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { mockGAEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
-import { resourceState } from 'src/state/application';
+import { resourceState } from 'src/state';
 
 const mockInitialState = jest.fn();
 const mockPostFavorite = jest.fn();

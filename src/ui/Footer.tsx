@@ -14,7 +14,7 @@ import Url from 'src/util/externalUrls.data';
 import Masquerade from 'src/features/Masquerade';
 import { User, useAppVersions } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
-import { userState } from 'src/state/application';
+import { userState } from 'src/state';
 
 const { GROUPS } = User;
 

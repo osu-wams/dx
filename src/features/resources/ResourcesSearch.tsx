@@ -6,7 +6,7 @@ import {
   selectedCategoryState,
   resourceSearchState,
   debouncedResourceSearchState,
-} from 'src/state/application';
+} from 'src/state';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
 const ResourcesSearch: React.FC<any> = () => {

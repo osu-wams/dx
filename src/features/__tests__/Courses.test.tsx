@@ -6,7 +6,7 @@ import Courses from '../Courses';
 import { mockGAEvent } from 'src/setupTests';
 import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
-import { infoButtonState } from 'src/state/application';
+import { infoButtonState } from 'src/state';
 import { CLASS_SCHEDULE_API } from 'src/mocks/apis';
 
 const mockInitialState = jest.fn();

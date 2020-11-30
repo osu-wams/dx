@@ -16,7 +16,7 @@ import { InternalLink } from 'src/ui/Link';
 import { spacing, breakpoints, fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
 import { format } from 'src/util/helpers';
-import { filteredNotifications, userMessagesState } from 'src/state/application';
+import { filteredNotifications, userMessagesState } from 'src/state';
 import { dismissAll } from 'src/features/notifications/notifications-utils';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { RichTextContent } from '../RichText';

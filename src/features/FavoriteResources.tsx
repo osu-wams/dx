@@ -11,7 +11,7 @@ import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates'
 import { ResourceItem } from './resources/ResourceItem';
 import { activeFavoriteResources } from './resources/resources-utils';
 import favoritesImg from 'src/assets/favorites.svg';
-import { resourceState, userState } from 'src/state/application';
+import { resourceState, userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 /**
