@@ -115,7 +115,6 @@ const filteredTrainingsBySearch = selector<Types.Training[]>({
     const searchIndex = get(trainingSearchIndex);
     if (searchIndex && query) {
       const found = searchIndex.search(query);
-      console.log(searchIndex, query, found);
       const foundIds = found.map((f) => f.item.id);
       return trainings.filter((t) => foundIds.includes(t.id));
     } else {
