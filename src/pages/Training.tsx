@@ -3,7 +3,6 @@ import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
 import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
-import { Types } from '@osu-wams/lib';
 import { useTrainings, useTrainingTags } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -14,37 +13,35 @@ import {
   FeatureCardHeader,
   FeatureCardContent,
 } from 'src/ui/Card/variants/FeatureCard';
-import { SearchBar } from 'src/ui/SearchBar';
 import CustomBtn from 'src/ui/CustomBtn';
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
 import { singularPlural } from 'src/util/helpers';
 import placeholderImage from 'src/assets/training-placeholder.png';
 import { useResetScroll } from 'src/util/useResetScroll';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  trainingState,
+  trainingTagState,
+  debouncedTrainingSearchState,
+  filteredTrainingsState,
+  selectedTrainingTagState,
+  trainingSearchState,
+} from 'src/state';
+import TrainingsSearch from 'src/features/training/TrainingsSearch';
 
 const Training = () => {
   useResetScroll();
-  const [query, setQuery] = useState<string>('');
-  const [debouncedQuery] = useDebounce(query, 250);
-  const [selectedTrainingTag, setSelectedTrainingTag] = useState('all');
   const [isOpen, setOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState(null);
-  const [filteredTrainings, setFilteredTrainings] = useState<Types.Training[]>([]);
+  const [query, setQuery] = useRecoilState(trainingSearchState);
+  const [debouncedValue] = useDebounce(query, 250);
+  const [debouncedQuery, setDebouncedQuery] = useRecoilState(debouncedTrainingSearchState);
+  const filteredTrainings = useRecoilValue(filteredTrainingsState);
+  const [activeTag, setActiveTag] = useRecoilState(selectedTrainingTagState);
   const trainingTags = useTrainingTags();
+  const setTrainingTags = useSetRecoilState(trainingTagState);
   const trainings = useTrainings();
-
-  const filterByTag = React.useCallback(
-    (name: string, trainings: Types.Training[]): Types.Training[] => {
-      // Do not filter, give me all trainings
-      if (name === 'all') return trainings;
-
-      return trainings.filter(
-        (training) =>
-          training.tags?.length > 0 &&
-          training.tags.findIndex((s) => s.toLowerCase().includes(name.toLowerCase())) > -1
-      );
-    },
-    []
-  );
+  const setTrainings = useSetRecoilState(trainingState);
 
   // Hides or shows course details
   const toggleTraining = (t?) => {
@@ -56,63 +53,68 @@ const Training = () => {
 
   // Actions to perform on tagClick
   const tagClick = (name: string) => {
-    setSelectedTrainingTag(name);
+    setActiveTag(name);
     Event('training-tags', name);
     query && setQuery(''); // clears search input to show all trainings with that tag
   };
 
   useEffect(() => {
-    if (trainings.isSuccess && trainings.data && trainings.data.length > 0) {
-      let filtered = trainings.data;
-      // Nobody has searched, so it's page load or tag click
-      if (!debouncedQuery && selectedTrainingTag && Array.isArray(filtered)) {
-        filtered = filterByTag(selectedTrainingTag, filtered);
-      } else {
-        const re = new RegExp(debouncedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-        filtered = filtered.filter((t) => t.title.match(re) || t.body?.match(re));
+    if (trainings.isSuccess && trainings.data) {
+      setTrainings({
+        data: trainings.data,
+        isLoading: trainings.isLoading,
+        isSuccess: trainings.isSuccess,
+        isError: trainings.isError,
+      });
+    }
+  }, [trainings.data, trainings.isSuccess]);
 
-        if (debouncedQuery.length >= 2 && filtered.length > 0) {
-          Event('training-search', debouncedQuery);
-        }
+  useEffect(() => {
+    if (trainingTags.isSuccess && trainingTags.data) {
+      setTrainingTags({
+        data: trainingTags.data,
+        isLoading: trainingTags.isLoading,
+        isSuccess: trainingTags.isSuccess,
+        isError: trainingTags.isError,
+      });
+    }
+  }, [trainingTags.data, trainingTags.isSuccess]);
 
-        // If a query has no results, emit a GA Event to track for improving
-        if (filtered.length === 0) {
-          Event('training-search-failed', debouncedQuery);
-        }
+  /**
+   * When useDebounce triggers a change in debouncedValue, propagate that value
+   * to the debounced training search term state.
+   */
+  useEffect(() => {
+    setDebouncedQuery(debouncedValue);
+  }, [debouncedValue]);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      // If a query has no results, emit a GA Event to track for improving trainings
+      if (filteredTrainings.length === 0) {
+        Event('training-search-failed', debouncedQuery);
       }
 
-      setFilteredTrainings(filtered);
+      // Avoids sending single characters to Google Analytics
+      if (debouncedQuery.length >= 2 && filteredTrainings.length > 0) {
+        Event('training-search', debouncedQuery);
+      }
     }
-  }, [
-    debouncedQuery,
-    selectedTraining,
-    filterByTag,
-    selectedTrainingTag,
-    trainings.data,
-    trainings.isSuccess,
-  ]);
+  }, [debouncedQuery, filteredTrainings]);
 
   return (
     <MainGridWrapper>
       <PageTitle title="Training and Professional Development" />
       <MainGrid>
         <TrainingWrapper>
-          <SearchBar
-            id="training"
-            labelText="Search"
-            inputValue={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              selectedTrainingTag !== 'all' && setSelectedTrainingTag('all');
-            }}
-          />
-          {selectedTrainingTag && (
+          <TrainingsSearch />
+          {activeTag && (
             <div style={{ marginBottom: spacing.default }}>
               <CustomBtn
                 key="all"
                 text="All"
                 id="all"
-                selected={selectedTrainingTag?.toLowerCase() === 'all' ? true : false}
+                selected={activeTag?.toLowerCase() === 'all' ? true : false}
                 clickHandler={() => tagClick('all')}
               />
               {trainingTags?.data?.length &&
@@ -121,9 +123,7 @@ const Training = () => {
                     key={type.id}
                     text={type.name}
                     id={type.name}
-                    selected={
-                      selectedTrainingTag?.toLowerCase() === type.name.toLowerCase() ? true : false
-                    }
+                    selected={activeTag?.toLowerCase() === type.name.toLowerCase() ? true : false}
                     clickHandler={() => tagClick(type.name)}
                   />
                 ))}

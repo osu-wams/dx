@@ -13,7 +13,7 @@ const renderTrainings = () => {
   const utils = render(<Training />);
 
   const all = utils.getByLabelText('All');
-  const searchInput = utils.getByPlaceholderText('Search') as HTMLInputElement;
+  const searchInput = utils.getByPlaceholderText('Search for trainings') as HTMLInputElement;
   return {
     ...utils,
     searchInput,
