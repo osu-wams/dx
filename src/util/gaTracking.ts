@@ -47,6 +47,7 @@ export type IComponents =
   | 'training'
   | 'training-featured'
   | 'training-tags'
+  | 'training-audiences'
   | 'training-search'
   | 'training-search-failed'
   | 'trending-resource'
