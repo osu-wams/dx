@@ -27,6 +27,7 @@ import {
   RAVE_ALERTS_API,
   TRAININGS_API,
   TRAININGS_TAGS_API,
+  TRAININGS_AUDIENCES_API,
   PERSONS_ADDRESSES_API,
   PERSONS_API,
   USER_MESSAGES_API,
@@ -118,6 +119,10 @@ export const handlers = [
 
   rest.get(TRAININGS_TAGS_API, async (req, res, ctx) => {
     return res(ctx.json(Trainings.mockTrainingTags.data));
+  }),
+
+  rest.get(TRAININGS_AUDIENCES_API, async (req, res, ctx) => {
+    return res(ctx.json(Trainings.mockTrainingAudiences.data));
   }),
 
   // Persons

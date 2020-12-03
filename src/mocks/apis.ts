@@ -53,6 +53,8 @@ export const TRAININGS_API = '/api/trainings';
 
 export const TRAININGS_TAGS_API = '/api/trainings/tags';
 
+export const TRAININGS_AUDIENCES_API = '/api/trainings/audiences';
+
 /**
  * Person
  */
