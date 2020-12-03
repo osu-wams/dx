@@ -6,6 +6,7 @@ import {
   selectedTrainingTagState,
   trainingSearchState,
   debouncedTrainingSearchState,
+  selectedTrainingAudienceState,
 } from 'src/state';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
@@ -14,6 +15,7 @@ const TrainingsSearch: React.FC<any> = () => {
   const [input, setInput] = useState('');
   const resetDebouncedQuery = useResetRecoilState(debouncedTrainingSearchState);
   const [selectedTag, setSelectedTag] = useRecoilState(selectedTrainingTagState);
+  const [selectedAudience, setSelectedAudience] = useRecoilState(selectedTrainingAudienceState);
 
   const isDesktop = useMediaQuery({ query: `(min-width: ${breakpoints.small})` });
 
@@ -26,6 +28,7 @@ const TrainingsSearch: React.FC<any> = () => {
     setInput(newValue);
     if (!newValue.length) resetDebouncedQuery();
     if (selectedTag !== 'all') setSelectedTag('all');
+    if (selectedAudience !== 'all') setSelectedAudience('all');
     // Expensive function, let it operate async, state updates will cause related values
     // to refresh and render to happen asap
     setTimeout(setQuery(newValue));
