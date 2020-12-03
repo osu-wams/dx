@@ -373,6 +373,32 @@ export const dark: ThemeConfiguration = {
         color: iconPrimary,
       },
     },
+    trainings: {
+      filter: {
+        border: neutral200,
+        color: neutral550,
+        background: Color.black,
+        selected: {
+          color: Color.black,
+          background: neutral550,
+        },
+      },
+      menu: {
+        background: Color.white,
+        color: neutral550,
+        border: { color: neutral200 },
+        svg: {
+          color: neutral550,
+        },
+        menuItem: {
+          borderTop: neutral550,
+        },
+        menuItemSelected: {
+          color: primary,
+          background: Color.transparent,
+        },
+      },
+    },
   },
   ui: {
     bubble: {
