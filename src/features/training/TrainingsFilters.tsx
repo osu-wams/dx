@@ -54,6 +54,7 @@ export const MenuListWrapper = styled(MenuList)`
       svg {
         color: ${({ theme }) => theme.features.trainings.menu.svg.color};
         margin-right: 1.2rem;
+        margin-top: 4px;
         font-size: ${fontSize[14]};
       }
     }
