@@ -1259,6 +1259,13 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.32"
 
+"@fortawesome/free-regular-svg-icons@^5.15.1":
+  version "5.15.1"
+  resolved "https://npm.fontawesome.com/@fortawesome/free-regular-svg-icons/-/5.15.1/free-regular-svg-icons-5.15.1.tgz#a8897d0ce325352dbba0e943101323e0175ee2b2"
+  integrity sha512-eD9NWFy89e7SVVtrLedJUxIpCBGhd4x7s7dhesokjyo1Tw62daqN5UcuAGu1NrepLLq1IeAYUVfWwnOjZ/j3HA==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.32"
+
 "@fortawesome/pro-light-svg-icons@^5.12.1":
   version "5.15.1"
   resolved "https://npm.fontawesome.com/@fortawesome/pro-light-svg-icons/-/5.15.1/pro-light-svg-icons-5.15.1.tgz#bbe0cff115f271419327dd8d77e2fcb7634004ad"
@@ -1584,21 +1591,21 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@1.0.76":
-  version "1.0.76"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.76/f0538dc5bafb7312076a2510d792f0e8a2da83162ec336520b67a1ef511e8458#54fc0b77adc0f713c6a96e3fa2b5b3775682d402"
-  integrity sha512-peMGIYMEczpMTgCbtZ8rHVSy8TSbE74bnTKv5rWEfQKBUYxsQtZ1Aai2pSgdm+7t/9VZ3MXl7C4EoA40VYpsHw==
+"@osu-wams/hooks@^1.0.78":
+  version "1.0.78"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.78/17c0fac2db2d1ab46e1d72fec3d1a05c086589aa303e5f023f75aa64129f3ee7#405faba1330bc7aaf2bd4797cb7f653c8bd0fd04"
+  integrity sha512-5HS8Fl2Z4isBM16pwJ+rl/GEGd8qalhbcx/zp70ww6cLkuXAtQz+jtnh8wszKvPm/m+Jjek4QkOcVsyW/R5Cgg==
   dependencies:
-    "@osu-wams/lib" "^0.1.53"
+    "@osu-wams/lib" "^0.1.55"
     "@osu-wams/utils" "^0.0.8"
     axios "^0.19.1"
     react-query "2.23.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@0.1.53", "@osu-wams/lib@^0.1.53":
-  version "0.1.53"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.53/fe0502c42594d140b608cf1ed94a3b7815cff6a23dbbecc461d43da038688bf8#44b13ddacaf4fe9f45a23c788d967806aaf2e7b0"
-  integrity sha512-UpVjmEX6TtbUe9FGyianitjetbtUntjbv/eMT+q7Nkzt5R7IRq6MiTCQMBJMeKnRUMnwjzOPua4BOeogngllXw==
+"@osu-wams/lib@^0.1.55":
+  version "0.1.55"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.55/9326429bbbf9e6d665cce1089222869c1bcb9f7b6e0392c33531683085f5ba6d#e826fb50f0a77ef39ecf42ece5f15360d37d3ba1"
+  integrity sha512-cI81FcVHyVT6zDQ2VbnRwu+abwjQ415ngsDS8akBkiyxAyL882hxRcVA5JDbEEKRa1hcxykf2Wf4Lm06cvdLyw==
 
 "@osu-wams/utils@^0.0.8":
   version "0.0.8"
