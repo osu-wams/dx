@@ -1,6 +1,6 @@
 const Url = {
   myDegrees: {
-    main: 'https://mydegrees.oregonstate.edu/DashboardServlet',
+    main: 'https://uit.oregonstate.edu/mydegrees-maintenance',
   },
   canvas: {
     main: 'https://canvas.oregonstate.edu',
