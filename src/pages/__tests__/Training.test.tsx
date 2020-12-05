@@ -52,11 +52,22 @@ describe('<Training />', () => {
       expect(searchInput).toBeInTheDocument();
     });
 
-    it('Finds the tags, 3 total', async () => {
+    it('Finds the categories, 3 total', async () => {
       const { category } = renderTrainings();
       expect(category).toBeInTheDocument();
-      expect(await screen.findByLabelText(/leadership/i)).toBeInTheDocument();
-      expect(await screen.findByLabelText(/employee engagement/i)).toBeInTheDocument();
+      userEvent.click(category);
+      expect(await screen.findByText('All Trainings')).toBeInTheDocument();
+      expect(await screen.findByText('Leadership')).toBeInTheDocument();
+      expect(await screen.findByText('Employee Engagement')).toBeInTheDocument();
+    });
+
+    it('Finds the audience, 2 total', async () => {
+      const { audience } = renderTrainings();
+      expect(audience).toBeInTheDocument();
+      userEvent.click(audience);
+      expect(await screen.findByText('All Audiences')).toBeInTheDocument();
+      expect(await screen.findByText('Classified Staff')).toBeInTheDocument();
+      expect(await screen.findByText('Student')).toBeInTheDocument();
     });
 
     it('Finds 3 total results for trainings ', async () => {
@@ -89,7 +100,7 @@ describe('<Training />', () => {
     });
   });
 
-  describe('Tag behavior', () => {
+  describe('Filter behavior', () => {
     it('Filters training results when clicking on category button', async () => {
       const { category } = renderTrainings();
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
@@ -187,13 +198,15 @@ describe('<Training />', () => {
       expect(mockGAEvent).toHaveBeenCalledTimes(6);
     });
 
-    it('Clicking a tag clears previously entered data and shows all results under the tag', async () => {
+    it('Clicking a category clears previously entered data and shows all results under the tag', async () => {
       const { searchInput, category } = renderTrainings();
 
       userEvent.type(searchInput, 'Super Testo 2');
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
 
       userEvent.click(category);
+      const alltrainings = await screen.findByText('All Trainings');
+      userEvent.click(alltrainings);
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
       expect(searchInput.value).toEqual('');
     });
@@ -230,16 +243,17 @@ describe('<Training />', () => {
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
     });
 
-    it('Searches activate the "all" tag and looks through all trainings even if a different tag was selected', async () => {
+    it('Searches reset category and audience filters and looks through all trainings', async () => {
       const { category, searchInput } = renderTrainings();
       const nice = 'Play nice with others';
-      userEvent.click(await screen.findByLabelText(/leadership/i));
+      userEvent.click(category);
+      const leadership = await screen.findByText('Leadership');
+      userEvent.click(leadership);
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
       expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not tagged 'leadership'
 
       userEvent.type(searchInput, nice);
       expect(await screen.findByText(nice)).toBeInTheDocument();
-      expect(category).toHaveClass('selected'); // all tag selected
     });
 
     it('Changing search term re-runs the search and finds result', async () => {
