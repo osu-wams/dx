@@ -17,9 +17,11 @@ import {
 import {
   debouncedTrainingSearchState,
   filteredTrainingsState,
+  selectedTrainingAudienceState,
   selectedTrainingTagState,
   trainingSearchState,
   trainingState,
+  trainingAudienceState,
   trainingTagState,
 } from './trainings';
 
@@ -37,10 +39,12 @@ export {
   resourceSearchState,
   resourceState,
   selectedCategoryState,
+  selectedTrainingAudienceState,
   selectedTrainingTagState,
   themeState,
   trainingSearchState,
   trainingState,
+  trainingAudienceState,
   trainingTagState,
   userState,
   userMessagesState,

@@ -1,7 +1,22 @@
 import { atom, selector } from 'recoil';
 import Fuse from 'fuse.js';
 import { Types } from '@osu-wams/lib';
-import { filterByTag } from 'src/features/training/trainings-utils';
+import { filterByProperties } from 'src/features/training/trainings-utils';
+
+export const trainingAudienceState = atom<{
+  data: any[];
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+}>({
+  key: 'trainingAudienceState',
+  default: { data: [], isLoading: true, isSuccess: false, isError: false },
+});
+
+export const selectedTrainingAudienceState = atom<string>({
+  key: 'selectedTrainingAudienceState',
+  default: 'all',
+});
 
 export const trainingTagState = atom<{
   data: Types.TrainingTag[];
@@ -95,12 +110,13 @@ const trainingSearchIndex = selector<Fuse<Types.Training> | undefined>({
 });
 
 // Not intended for export; an internal selector for managing state.
-const filteredTrainingsByTag = selector<Types.Training[]>({
-  key: 'filteredTrainingsByTag',
+const filteredTrainings = selector<Types.Training[]>({
+  key: 'filteredTrainings',
   get: ({ get }) => {
     const trainings = get(trainingState);
     const selectedTag = get(selectedTrainingTagState);
-    return filterByTag(selectedTag, trainings.data);
+    const selectedAudience = get(selectedTrainingAudienceState);
+    return filterByProperties(selectedTag, selectedAudience, trainings.data);
   },
 });
 
@@ -111,7 +127,7 @@ const filteredTrainingsBySearch = selector<Types.Training[]>({
   get: ({ get }) => {
     const searchTerm = get(debouncedTrainingSearchState);
     const query = searchTerm?.toLowerCase() ?? '';
-    const trainings = get(filteredTrainingsByTag);
+    const trainings = get(filteredTrainings);
     const searchIndex = get(trainingSearchIndex);
     if (searchIndex && query) {
       const found = searchIndex.search(query);
@@ -133,7 +149,7 @@ export const filteredTrainingsState = selector<Types.Training[]>({
   get: ({ get }) => {
     const debouncedQuery = get(debouncedTrainingSearchState);
     if (!debouncedQuery) {
-      return get(filteredTrainingsByTag);
+      return get(filteredTrainings);
     } else {
       return get(filteredTrainingsBySearch);
     }

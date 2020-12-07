@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
-import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
-import { useTrainings, useTrainingTags } from '@osu-wams/hooks';
+import { MainGridWrapper, MainGrid } from 'src/theme';
+import { useTrainings, useTrainingAudiences, useTrainingTags } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Event } from 'src/util/gaTracking';
@@ -13,7 +13,6 @@ import {
   FeatureCardHeader,
   FeatureCardContent,
 } from 'src/ui/Card/variants/FeatureCard';
-import CustomBtn from 'src/ui/CustomBtn';
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
 import { singularPlural } from 'src/util/helpers';
 import placeholderImage from 'src/assets/training-placeholder.png';
@@ -26,20 +25,24 @@ import {
   filteredTrainingsState,
   selectedTrainingTagState,
   trainingSearchState,
+  trainingAudienceState,
 } from 'src/state';
 import TrainingsSearch from 'src/features/training/TrainingsSearch';
+import TrainingsFilters from 'src/features/training/TrainingsFilters';
 
 const Training = () => {
   useResetScroll();
   const [isOpen, setOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState(null);
-  const [query, setQuery] = useRecoilState(trainingSearchState);
+  const query = useRecoilValue(trainingSearchState);
   const [debouncedValue] = useDebounce(query, 250);
   const [debouncedQuery, setDebouncedQuery] = useRecoilState(debouncedTrainingSearchState);
   const filteredTrainings = useRecoilValue(filteredTrainingsState);
-  const [activeTag, setActiveTag] = useRecoilState(selectedTrainingTagState);
+  const activeTag = useRecoilValue(selectedTrainingTagState);
   const trainingTags = useTrainingTags();
   const setTrainingTags = useSetRecoilState(trainingTagState);
+  const trainingAudiences = useTrainingAudiences();
+  const setTrainingAudiences = useSetRecoilState(trainingAudienceState);
   const trainings = useTrainings();
   const setTrainings = useSetRecoilState(trainingState);
 
@@ -49,13 +52,6 @@ const Training = () => {
     if (t) {
       setSelectedTraining(t);
     }
-  };
-
-  // Actions to perform on tagClick
-  const tagClick = (name: string) => {
-    setActiveTag(name);
-    Event('training-tags', name);
-    query && setQuery(''); // clears search input to show all trainings with that tag
   };
 
   useEffect(() => {
@@ -79,6 +75,17 @@ const Training = () => {
       });
     }
   }, [trainingTags.data, trainingTags.isSuccess]);
+
+  useEffect(() => {
+    if (trainingAudiences.isSuccess && trainingAudiences.data) {
+      setTrainingAudiences({
+        data: trainingAudiences.data,
+        isLoading: trainingAudiences.isLoading,
+        isSuccess: trainingAudiences.isSuccess,
+        isError: trainingAudiences.isError,
+      });
+    }
+  }, [trainingAudiences.data, trainingAudiences.isSuccess]);
 
   /**
    * When useDebounce triggers a change in debouncedValue, propagate that value
@@ -108,27 +115,7 @@ const Training = () => {
       <MainGrid>
         <TrainingWrapper>
           <TrainingsSearch />
-          {activeTag && (
-            <div style={{ marginBottom: spacing.default }}>
-              <CustomBtn
-                key="all"
-                text="All"
-                id="all"
-                selected={activeTag?.toLowerCase() === 'all' ? true : false}
-                clickHandler={() => tagClick('all')}
-              />
-              {trainingTags?.data?.length &&
-                trainingTags?.data?.map((type) => (
-                  <CustomBtn
-                    key={type.id}
-                    text={type.name}
-                    id={type.name}
-                    selected={activeTag?.toLowerCase() === type.name.toLowerCase() ? true : false}
-                    clickHandler={() => tagClick(type.name)}
-                  />
-                ))}
-            </div>
-          )}
+          {activeTag && <TrainingsFilters />}
           {!trainings.isLoading &&
             trainings.isSuccess &&
             trainings.data &&

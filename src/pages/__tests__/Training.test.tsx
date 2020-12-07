@@ -4,24 +4,43 @@ import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import Training from 'src/pages/Training';
 import { mockGAEvent } from 'src/setupTests';
+import { trainingTagState, trainingAudienceState } from 'src/state';
+import { Trainings } from '@osu-wams/hooks';
+
+const mockInitialState = jest.fn();
 
 /**
  * Render Trainings with the most commonly used features
  * We reuse a lot of these elements in our tests
  */
 const renderTrainings = () => {
-  const utils = render(<Training />);
+  const utils = render(<Training />, { initialStates: mockInitialState() });
 
-  const all = utils.getByLabelText('All');
+  const category = utils.getByRole('button', { name: 'Category Category' });
+  const audience = utils.getByRole('button', { name: 'Audience Audience' });
   const searchInput = utils.getByPlaceholderText('Search for trainings') as HTMLInputElement;
   return {
     ...utils,
     searchInput,
-    all,
+    category,
+    audience,
   };
 };
 
 describe('<Training />', () => {
+  beforeEach(() => {
+    mockInitialState.mockReturnValue([
+      {
+        state: trainingAudienceState,
+        value: Trainings.mockTrainingAudiences,
+      },
+      {
+        state: trainingTagState,
+        value: Trainings.mockTrainingTags,
+      },
+    ]);
+  });
+
   describe('Main components', () => {
     it('Renders and finds the page title', () => {
       renderTrainings();
@@ -33,11 +52,22 @@ describe('<Training />', () => {
       expect(searchInput).toBeInTheDocument();
     });
 
-    it('Finds the tags, 3 total', async () => {
-      const { all } = renderTrainings();
-      expect(all).toBeInTheDocument();
-      expect(await screen.findByLabelText(/leadership/i)).toBeInTheDocument();
-      expect(await screen.findByLabelText(/employee engagement/i)).toBeInTheDocument();
+    it('Finds the categories, 3 total', async () => {
+      const { category } = renderTrainings();
+      expect(category).toBeInTheDocument();
+      userEvent.click(category);
+      expect(await screen.findByText('All Trainings')).toBeInTheDocument();
+      expect(await screen.findByText('Leadership')).toBeInTheDocument();
+      expect(await screen.findByText('Employee Engagement')).toBeInTheDocument();
+    });
+
+    it('Finds the audience, 2 total', async () => {
+      const { audience } = renderTrainings();
+      expect(audience).toBeInTheDocument();
+      userEvent.click(audience);
+      expect(await screen.findByText('All Audiences')).toBeInTheDocument();
+      expect(await screen.findByText('Classified Staff')).toBeInTheDocument();
+      expect(await screen.findByText('Student')).toBeInTheDocument();
     });
 
     it('Finds 3 total results for trainings ', async () => {
@@ -70,43 +100,113 @@ describe('<Training />', () => {
     });
   });
 
-  describe('Tag behavior', () => {
-    it('Filters training results when clicking on tags', async () => {
-      const { all } = renderTrainings();
-      expect(all).toHaveClass('selected'); // default selected
+  describe('Filter behavior', () => {
+    it('Filters training results when clicking on category button', async () => {
+      const { category } = renderTrainings();
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
       const nice = 'Play nice with others';
       expect(screen.getByText(nice)).toBeInTheDocument();
 
-      const leadership = await screen.findByLabelText(/leadership/i);
-      const engagement = await screen.findByLabelText(/employee engagement/i);
+      userEvent.click(category);
+      const alltrainings = await screen.findByText('All Trainings');
+      const leadership = await screen.findByText('Leadership');
+      const engagement = await screen.findByText('Employee Engagement');
 
       userEvent.click(leadership);
+      expect(category).toHaveTextContent('Leadership');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
       expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not tagged 'leadership'
       expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
-      expect(leadership).toHaveClass('selected');
 
       userEvent.click(engagement);
+      expect(category).toHaveTextContent('Employee Engagement');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
       expect(screen.getByText(nice)).toBeInTheDocument(); // play nice is found again under 'engagement'
-      expect(engagement).toHaveClass('selected');
-      expect(all).not.toHaveClass('selected');
-      expect(leadership).not.toHaveClass('selected');
 
-      userEvent.click(all);
+      userEvent.click(alltrainings);
+      expect(category).toHaveTextContent('Category');
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
 
-      expect(mockGAEvent).toHaveBeenCalledTimes(3);
+      expect(mockGAEvent).toHaveBeenCalledTimes(4);
     });
 
-    it('Clicking a tag clears previously entered data and shows all results under the tag', async () => {
-      const { searchInput, all } = renderTrainings();
+    it('Filters training results when clicking on audience button', async () => {
+      const { audience } = renderTrainings();
+      expect(await screen.findByText('found 3 results')).toBeInTheDocument();
+      const nice = 'Play nice with others';
+      expect(screen.getByText(nice)).toBeInTheDocument();
+
+      userEvent.click(audience);
+      const allaudience = await screen.findByText('All Audiences');
+      const classified = await screen.findByText('Classified Staff');
+      const student = await screen.findByText('Student');
+
+      userEvent.click(classified);
+      expect(audience).toHaveTextContent('Classified Staff');
+      expect(await screen.findByText('found 2 results')).toBeInTheDocument();
+      expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not for 'Classified Staff' audience
+      expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
+
+      userEvent.click(student);
+      expect(audience).toHaveTextContent('Student');
+      expect(await screen.findByText('found 1 result')).toBeInTheDocument();
+      expect(screen.getByText(nice)).toBeInTheDocument(); // play nice is found again for 'Student' audience
+
+      userEvent.click(allaudience);
+      expect(audience).toHaveTextContent('Audience');
+      expect(await screen.findByText('found 3 results')).toBeInTheDocument();
+
+      expect(mockGAEvent).toHaveBeenCalledTimes(4);
+    });
+
+    it('Filters training as a composite of both audience and category', async () => {
+      const { audience, category } = renderTrainings();
+      expect(await screen.findByText('found 3 results')).toBeInTheDocument();
+      const nice = 'Play nice with others';
+      expect(screen.getByText(nice)).toBeInTheDocument();
+
+      userEvent.click(audience);
+      const allaudience = await screen.findByText('All Audiences');
+      const classified = await screen.findByText('Classified Staff');
+      userEvent.click(category);
+      const alltrainings = await screen.findByText('All Trainings');
+      const engagement = await screen.findByText('Employee Engagement');
+
+      // Set an audience filter and find 1 training is filtered out now.
+      userEvent.click(classified);
+      expect(audience).toHaveTextContent('Classified Staff');
+      expect(await screen.findByText('found 2 results')).toBeInTheDocument();
+      expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not for 'Classified Staff' audience
+      expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
+
+      // Add the category filter and find that another training has been filtered out now.
+      userEvent.click(engagement);
+      expect(category).toHaveTextContent('Employee Engagement');
+      expect(await screen.findByText('found 1 result')).toBeInTheDocument();
+      expect(screen.queryByText(/Testo Training/i)).toBeNull(); // Cannot find Testo Training because it's not for 'Employee Engagement'
+
+      // Unset the category filter and find that more results show again.
+      userEvent.click(alltrainings);
+      expect(category).toHaveTextContent('Category');
+      expect(await screen.findByText('found 2 results')).toBeInTheDocument(); // Reset to all categories now shows the filter as it was with audiences filtered only
+
+      // Unset the audience filter and find that all results show now.
+      userEvent.click(allaudience);
+      expect(audience).toHaveTextContent('Audience');
+      expect(await screen.findByText('found 3 results')).toBeInTheDocument(); // Reset to all trainings now shows with no filters set
+
+      expect(mockGAEvent).toHaveBeenCalledTimes(6);
+    });
+
+    it('Clicking a category clears previously entered data and shows all results under the tag', async () => {
+      const { searchInput, category } = renderTrainings();
 
       userEvent.type(searchInput, 'Super Testo 2');
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
 
-      userEvent.click(all);
+      userEvent.click(category);
+      const alltrainings = await screen.findByText('All Trainings');
+      userEvent.click(alltrainings);
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
       expect(searchInput.value).toEqual('');
     });
@@ -143,16 +243,17 @@ describe('<Training />', () => {
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
     });
 
-    it('Searches activate the "all" tag and looks through all trainings even if a different tag was selected', async () => {
-      const { all, searchInput } = renderTrainings();
+    it('Searches reset category and audience filters and looks through all trainings', async () => {
+      const { category, searchInput } = renderTrainings();
       const nice = 'Play nice with others';
-      userEvent.click(await screen.findByLabelText(/leadership/i));
+      userEvent.click(category);
+      const leadership = await screen.findByText('Leadership');
+      userEvent.click(leadership);
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
       expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not tagged 'leadership'
 
       userEvent.type(searchInput, nice);
       expect(await screen.findByText(nice)).toBeInTheDocument();
-      expect(all).toHaveClass('selected'); // all tag selected
     });
 
     it('Changing search term re-runs the search and finds result', async () => {

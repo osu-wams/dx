@@ -372,6 +372,32 @@ export const light: ThemeConfiguration = {
         color: iconSecondary,
       },
     },
+    trainings: {
+      filter: {
+        border: neutral200,
+        color: neutral550,
+        background: Color.white,
+        selected: {
+          color: Color.white,
+          background: neutral550,
+        },
+      },
+      menu: {
+        background: Color.white,
+        color: neutral550,
+        border: { color: neutral200 },
+        svg: {
+          color: neutral550,
+        },
+        menuItem: {
+          borderTop: neutral550,
+        },
+        menuItemSelected: {
+          color: primary,
+          background: Color.transparent,
+        },
+      },
+    },
   },
   ui: {
     bubble: {

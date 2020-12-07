@@ -340,6 +340,32 @@ declare module 'styled-components/macro' {
           color: string;
         };
       };
+      trainings: {
+        filter: {
+          border: string;
+          color: string;
+          background: string;
+          selected: {
+            color: string;
+            background: string;
+          };
+        };
+        menu: {
+          background: string;
+          color: string;
+          border: { color: string };
+          svg: {
+            color: string;
+          };
+          menuItem: {
+            borderTop: string;
+          };
+          menuItemSelected: {
+            color: string;
+            background: string;
+          };
+        };
+      };
     };
     ui: {
       bubble: {
