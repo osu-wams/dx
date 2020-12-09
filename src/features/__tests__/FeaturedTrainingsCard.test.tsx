@@ -22,7 +22,7 @@ describe('<FeaturedTrainingsCard />', () => {
         await screen.findByRole('button', { name: /Play nice with others/ })
       ).toBeInTheDocument();
       // Does not find it since it's not a featured training
-      expect(screen.queryByRole('button', { name: /Super Testo 2/i })).toBeNull();
+      expect(screen.queryByRole('button', { name: /Super Testo 2/i })).not.toBeInTheDocument();
     });
 
     it('Has a clickable footer link that reports to GA', async () => {
@@ -44,7 +44,7 @@ describe('<FeaturedTrainingsCard />', () => {
       expect(await screen.findByText(/Professional Learning Community/i)).toBeInTheDocument();
 
       userEvent.click(close);
-      expect(screen.queryByRole('button', { name: /close/i })).toBeNull();
+      expect(screen.queryByRole('button', { name: /close/i })).not.toBeInTheDocument();
     });
   });
 });

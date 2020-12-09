@@ -13,7 +13,7 @@ describe('<StudentGpa />', () => {
     it('should render and have the approriate standing for an Undergraduate', async () => {
       render(<StudentGpa />);
       expect(await screen.findByText('3.1')).toBeInTheDocument();
-      expect(screen.queryByText('Graduate GPA across all past terms.')).toBeNull();
+      expect(screen.queryByText('Graduate GPA across all past terms.')).not.toBeInTheDocument();
       expect(
         await screen.findByText('Undergraduate GPA across all past terms.')
       ).toBeInTheDocument();
@@ -41,7 +41,9 @@ describe('<StudentGpa />', () => {
     });
 
     it('Has no undergradute references', async () => {
-      expect(screen.queryByText(/Undergraduate GPA across all past terms/i)).toBeNull();
+      expect(
+        screen.queryByText(/Undergraduate GPA across all past terms/i)
+      ).not.toBeInTheDocument();
     });
   });
 });

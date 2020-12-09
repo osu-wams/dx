@@ -37,7 +37,7 @@ describe('Favorite Resources Card', () => {
     const noFavUser = { ...authUser, data: { ...authUser.data, favoriteResources: [] } };
     render(<FavoriteResources />, { user: noFavUser, initialStates: mockInitialState() });
     expect(await screen.findByText(/You have not added any favorite/i)).toBeInTheDocument();
-    expect(screen.queryByText('Academics for Student Athletes')).toBeNull();
+    expect(screen.queryByText('Academics for Student Athletes')).not.toBeInTheDocument();
   });
 
   it('Renders Favorite Resources Card Title and the 2 active favorite resources', async () => {

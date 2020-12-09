@@ -28,7 +28,7 @@ describe('student main navigation', () => {
     const menu = screen.queryByText('Menu');
 
     expect(resources).toBeInTheDocument();
-    expect(menu).toBeNull();
+    expect(menu).not.toBeInTheDocument();
 
     userEvent.click(resources);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -47,7 +47,7 @@ it('Main Navigation for Employee visible and tracked in Google Analytics', async
   expect(resources).toBeInTheDocument();
 
   // Not present in employee nav
-  expect(screen.queryByText('More')).toBeNull();
+  expect(screen.queryByText('More')).not.toBeInTheDocument();
 
   userEvent.click(home);
   userEvent.click(resources);

@@ -23,15 +23,15 @@ describe('<ITSystemStatus /> with issues', () => {
     expect(await screen.findByText(/View details/)).toBeInTheDocument();
     expect(await screen.findAllByText(/G Suite/)).toHaveLength(4);
     expect(await screen.findByTestId('sticky-incident-badge')).toBeInTheDocument();
-    expect(screen.queryByText(/operating normally/)).toBeNull();
+    expect(screen.queryByText(/operating normally/)).not.toBeInTheDocument();
   });
 
   it('should have some systems not operating normally but hide the operational systems', async () => {
     expect(await screen.findByText(/View details/i)).toBeInTheDocument();
     expect(await screen.findByText(/Major Outage/i)).toBeInTheDocument();
     expect(await screen.findByText(/Performance Issues/i)).toBeInTheDocument();
-    expect(screen.queryAllByText(/Operational/i)).toHaveLength(0);
-    expect(screen.queryByText(/operating normally/i)).toBeNull();
+    expect(screen.queryByText(/Operational/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/operating normally/i)).not.toBeInTheDocument();
   });
 });
 
@@ -41,8 +41,8 @@ it('should have an all systems operational state and link is tracked', async () 
 
   const status = await screen.findByText(/operating normally/i);
   expect(status).toBeInTheDocument();
-  expect(screen.queryByText(/Major Outage/i)).toBeNull();
-  expect(screen.queryByText(/View details/i)).toBeNull();
+  expect(screen.queryByText(/Major Outage/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/View details/i)).not.toBeInTheDocument();
 
   userEvent.click(status);
   expect(mockGAEvent).toHaveBeenCalledTimes(1);

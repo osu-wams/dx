@@ -98,7 +98,7 @@ it('Link is present and triggers google analytics', () => {
 
 it('Renders contact email when website url is blank', () => {
   render(<TrainingDetails training={emptyWebsite} />);
-  expect(screen.queryByText('Learn more and register')).toBeNull();
+  expect(screen.queryByText('Learn more and register')).not.toBeInTheDocument();
   const contact = screen.getByText(/Contact: noreply@oregonstate.edu/i);
   expect(contact).toBeInTheDocument();
   userEvent.click(contact);
@@ -114,6 +114,6 @@ it('Renders "Not available" when fields are missing', () => {
   const images = document.querySelectorAll('img');
   expect(images.length).toEqual(0);
 
-  expect(screen.queryByText('Learn more and register')).toBeNull();
-  expect(screen.queryByText(/Contact:/i)).toBeNull();
+  expect(screen.queryByText('Learn more and register')).not.toBeInTheDocument();
+  expect(screen.queryByText(/Contact:/i)).not.toBeInTheDocument();
 });

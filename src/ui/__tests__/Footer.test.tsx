@@ -57,7 +57,7 @@ it('Masquerade link is present for administrators and they can open and close th
   const cancelBtn = await screen.findByText('Cancel');
   userEvent.click(cancelBtn);
 
-  await waitFor(() => expect(screen.queryByTestId('masquerade-dialog')).toBeNull());
+  await waitFor(() => expect(screen.queryByTestId('masquerade-dialog')).not.toBeInTheDocument());
 });
 
 it('As an administrator, I can click "masquerade" and trigger the api calls', async () => {

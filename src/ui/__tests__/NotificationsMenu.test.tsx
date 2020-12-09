@@ -63,7 +63,7 @@ describe('Without unread notifications', () => {
 
   it('Main notification bell button with 1 notification since it is read', async () => {
     expect(await screen.findByRole('button', { name: /notification/i })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /1 notification/i })).toBeNull();
+    expect(screen.queryByRole('button', { name: /1 notification/i })).not.toBeInTheDocument();
   });
 
   it('No notifications present when there are only READ notifications', async () => {
@@ -110,5 +110,5 @@ it('With 3 notifications, 2 unread 1 read', async () => {
   ).toBeInTheDocument();
 
   // Does not find Second Message since it's READ
-  expect(screen.queryByRole('menuitem', { name: /Second Message Title/i })).toBeNull();
+  expect(screen.queryByRole('menuitem', { name: /Second Message Title/i })).not.toBeInTheDocument();
 });

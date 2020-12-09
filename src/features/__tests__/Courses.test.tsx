@@ -52,7 +52,7 @@ describe('<Courses />', () => {
     // Close dialog
     const closeBtn = await screen.findByText('Close');
     userEvent.click(closeBtn);
-    expect(screen.queryByTestId('course-dialog')).toBeNull();
+    expect(screen.queryByTestId('course-dialog')).not.toBeInTheDocument();
   });
 
   it('Various Links are present as well as Google Analytics events are recorded', async () => {
@@ -122,7 +122,7 @@ describe('with an InfoButton in the CardFooter', () => {
     ]);
     const { queryByTestId } = render(<Courses />, { initialStates: mockInitialState() });
     const element = queryByTestId('current-courses');
-    expect(element).toBeNull();
+    expect(element).not.toBeInTheDocument();
   });
 
   it('displays the button when the infoButtonData is included', async () => {

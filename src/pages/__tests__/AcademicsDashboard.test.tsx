@@ -18,7 +18,7 @@ describe('<AcademicsDashboard />', () => {
     expect(await screen.findByText(/Week Zero Summer Session Ends/i)).toBeInTheDocument();
 
     // Does not render Academic Announcements
-    expect(screen.queryByTestId('academics-announcements')).toBeNull();
+    expect(screen.queryByTestId('academics-announcements')).not.toBeInTheDocument();
   });
 
   it('should render Announcements and event cards when at least one event is present', async () => {

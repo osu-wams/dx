@@ -20,7 +20,7 @@ describe('<About />', () => {
     expect(await screen.findByText('PageContent Title')).toBeInTheDocument();
 
     // Once data is present, no loading screen should be visible
-    expect(screen.queryByText(/loading/i)).toBeNull();
+    expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
   });
 
   it('should display card with appropriate content', async () => {

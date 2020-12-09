@@ -37,7 +37,7 @@ describe('<ErrorBoundary />', () => {
       </ErrorBoundary>
     );
     expect(screen.getByText('Success')).toBeInTheDocument();
-    expect(screen.queryByText('Error')).toBeNull();
+    expect(screen.queryByText('Error')).not.toBeInTheDocument();
   });
   it('should render an error when one happens', async () => {
     render(
@@ -46,7 +46,7 @@ describe('<ErrorBoundary />', () => {
       </ErrorBoundary>
     );
     expect(screen.getByText('Error')).toBeInTheDocument();
-    expect(screen.queryByText('Success')).toBeNull();
+    expect(screen.queryByText('Success')).not.toBeInTheDocument();
     expect(mockedPostError).toBeCalledTimes(1);
     expect(console.error).toHaveBeenCalledTimes(2);
   });
@@ -60,7 +60,7 @@ describe('<ErrorBoundary />', () => {
       </ErrorBoundary>
     );
     expect(screen.getByText('Error')).toBeInTheDocument();
-    expect(screen.queryByText('Success')).toBeNull();
+    expect(screen.queryByText('Success')).not.toBeInTheDocument();
     expect(mockedPostError).toBeCalledTimes(1);
     expect(mockedErrorCallback).toBeCalledTimes(1);
     expect(console.error).toHaveBeenCalledTimes(2);

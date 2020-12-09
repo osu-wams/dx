@@ -12,7 +12,7 @@ describe('<Alerts />', () => {
       alterMock(DX_ALERTS_API, []);
       render(<Alerts />);
       expect(await screen.findByText('First Rave')).toBeInTheDocument();
-      expect(screen.queryByText('BobRoss')).toBeNull();
+      expect(screen.queryByText('BobRoss')).not.toBeInTheDocument();
     });
   });
 
@@ -23,7 +23,7 @@ describe('<Alerts />', () => {
       const dxTitle = await screen.findByText('BobRoss');
       const raveTitle = screen.queryByText('First Rave');
       expect(dxTitle).toBeInTheDocument();
-      expect(raveTitle).toBeNull();
+      expect(raveTitle).not.toBeInTheDocument();
     });
   });
 
@@ -36,7 +36,7 @@ describe('<Alerts />', () => {
       const dxTitle = await screen.findByText(/Old Dx Alert/i);
       const raveTitle = screen.queryByText('First Rave');
       expect(dxTitle).toBeInTheDocument();
-      expect(raveTitle).toBeNull();
+      expect(raveTitle).not.toBeInTheDocument();
     });
   });
 
@@ -65,8 +65,8 @@ describe('<Alerts />', () => {
       render(<Alerts />);
       const dxTitle = screen.queryByText('BobRoss');
       const raveTitle = screen.queryByText('First Rave');
-      expect(dxTitle).toBeNull();
-      expect(raveTitle).toBeNull();
+      expect(dxTitle).not.toBeInTheDocument();
+      expect(raveTitle).not.toBeInTheDocument();
     });
   });
 });

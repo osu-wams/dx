@@ -112,7 +112,7 @@ describe('<Resources />', () => {
       await waitFor(() => expect(featured).toHaveClass('selected'));
       expect(all).not.toHaveClass('selected');
       expect(screen.getByText(/Billing Information/)).toBeInTheDocument();
-      expect(screen.queryByText(/Webcams/)).toBeNull();
+      expect(screen.queryByText(/Webcams/)).not.toBeInTheDocument();
     });
   });
 
@@ -135,7 +135,7 @@ describe('<Resources />', () => {
     it('should have clickable categories that report to GoogleAnalytics', async () => {
       renderResources();
       const BillingInformationResource = screen.getByText(/Billing Information/);
-      expect(BillingInformationResource).not.toBeNull();
+      expect(BillingInformationResource).toBeInTheDocument();
       userEvent.click(BillingInformationResource);
       expect(mockGAEvent).toHaveBeenCalledTimes(1);
       expect(mockTrendingEvent).toHaveBeenCalledTimes(1);
@@ -157,8 +157,8 @@ describe('<Resources />', () => {
         },
       ]);
       renderResources();
-      const nonTrendingResource = screen.getByText(/Testo/);
-      expect(nonTrendingResource).not.toBeNull();
+      const nonTrendingResource = await screen.findByText(/Testo/);
+      expect(nonTrendingResource).toBeInTheDocument();
       userEvent.click(nonTrendingResource);
       expect(mockGAEvent).toHaveBeenCalledTimes(1);
       expect(mockTrendingEvent).not.toHaveBeenCalledTimes(1);
@@ -193,7 +193,7 @@ describe('<Resources />', () => {
       userEvent.click(academic);
       // Student Athletes is present but Billing information is no longer present
       expect(await screen.findByText(/Student Athletes/)).toBeInTheDocument();
-      expect(screen.queryByText(/Billing Information/)).toBeNull();
+      expect(screen.queryByText(/Billing Information/)).not.toBeInTheDocument();
 
       expect(academic).toHaveClass('selected');
       expect(all).not.toHaveClass('selected');
@@ -207,7 +207,7 @@ describe('<Resources />', () => {
     userEvent.type(searchInput, badQuery);
 
     expect(await screen.findByText(/found 0 results/)).toBeInTheDocument();
-    expect(screen.queryByText(/Billing Information/)).toBeNull();
+    expect(screen.queryByText(/Billing Information/)).not.toBeInTheDocument();
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
 
     // We need to clear the input value if not the below interaction sits on top of the previous
@@ -281,7 +281,7 @@ describe('<Resources />', () => {
     expect(featured).not.toHaveClass('selected');
     expect(all).toHaveClass('selected');
 
-    expect(screen.queryByText(/Billing Information/)).toBeNull();
+    expect(screen.queryByText(/Billing Information/)).not.toBeInTheDocument();
   });
 
   describe('Favorite Resources tests', () => {
@@ -314,7 +314,7 @@ describe('<Resources />', () => {
       const noFavUser = { ...authUser, data: { ...authUser.data, favoriteResources: [] } };
       renderResources(noFavUser);
 
-      expect(screen.queryByText(/favorites/i)).toBeNull();
+      expect(screen.queryByText(/favorites/i)).not.toBeInTheDocument();
     });
   });
 
@@ -342,7 +342,7 @@ describe('<Resources />', () => {
 
     it('finds "Graduate Student Only" item but not "Student Jobs" since that is tagged undegraduate', async () => {
       expect(await screen.findByText(/Graduate Student Only/i)).toBeInTheDocument();
-      expect(screen.queryByText(/Student Jobs/i)).toBeNull();
+      expect(screen.queryByText(/Student Jobs/i)).not.toBeInTheDocument();
     });
   });
 
@@ -354,7 +354,7 @@ describe('<Resources />', () => {
 
     it('finds "Student Jobs" since that is tagged undegraduate, but not "Graduate Student Only"', async () => {
       expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
-      expect(screen.queryByText(/Graduate Student Only/i)).toBeNull();
+      expect(screen.queryByText(/Graduate Student Only/i)).not.toBeInTheDocument();
     });
   });
 
@@ -375,9 +375,9 @@ describe('<Resources />', () => {
       expect(screen.getByText(/Employee Only/)).toBeInTheDocument();
 
       // student only event cannot be found
-      expect(screen.queryByText(/Student Jobs/)).toBeNull();
+      expect(screen.queryByText(/Student Jobs/)).not.toBeInTheDocument();
       // Bend only event not present for Corvallis Employee
-      expect(screen.queryByText(/Bend Testo Success Center/)).toBeNull();
+      expect(screen.queryByText(/Bend Testo Success Center/)).not.toBeInTheDocument();
 
       // styles are applied
       expect(all).toHaveClass('selected');
@@ -391,7 +391,7 @@ describe('<Resources />', () => {
 
       expect(await screen.findByText(/found 2 results/)).toBeInTheDocument();
       expect(await screen.findByText(/Listservs/)).toBeInTheDocument();
-      expect(screen.queryByText(/Student Jobs/)).toBeNull();
+      expect(screen.queryByText(/Student Jobs/)).not.toBeInTheDocument();
       expect(financial).toHaveClass('selected');
     });
 
@@ -400,7 +400,7 @@ describe('<Resources />', () => {
 
       await userEvent.type(searchInput, 'student job');
       // Student Jobs resources is null because it's only there for Student, not employee
-      expect(screen.queryByText(/Student Jobs/)).toBeNull();
+      expect(screen.queryByText(/Student Jobs/)).not.toBeInTheDocument();
 
       await userEvent.type(searchInput, 'Listservs');
       expect(await screen.findByText(/Listservs/)).toBeInTheDocument();
@@ -413,7 +413,7 @@ describe('<Resources />', () => {
       expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
 
       userEvent.type(searchInput, 'Listservs');
-      expect(screen.queryByText(/Listservs/)).toBeNull();
+      expect(screen.queryByText(/Listservs/)).not.toBeInTheDocument();
     });
 
     it('finds "Student Jobs" and "Billing Information" but not "Listservs" when clicking the Financial category', async () => {
@@ -421,7 +421,7 @@ describe('<Resources />', () => {
       userEvent.click(financial);
 
       expect(await findByText(/found 2 results/)).toBeInTheDocument();
-      expect(queryByText(/Listservs/)).toBeNull();
+      expect(queryByText(/Listservs/)).not.toBeInTheDocument();
       expect(getByText(/Student Jobs/)).toBeInTheDocument();
       expect(getByText(/Billing Information/)).toBeInTheDocument();
       expect(financial).toHaveClass('selected');
@@ -433,7 +433,7 @@ describe('<Resources />', () => {
 
       expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
       expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
-      expect(screen.queryByText(/Listservs/i)).toBeNull();
+      expect(screen.queryByText(/Listservs/i)).not.toBeInTheDocument();
       expect(all).toHaveClass('selected');
     });
   });

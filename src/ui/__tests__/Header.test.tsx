@@ -89,7 +89,7 @@ describe('Student mobile menu interactions', () => {
     render(<Header />, { isDesktop: true });
 
     const menu = screen.queryByText('Menu');
-    expect(menu).toBeNull();
+    expect(menu).not.toBeInTheDocument();
 
     expect(await screen.findByText(/overview/i, { selector: 'nav a' })).toBeInTheDocument();
     expect(await screen.findByText(/academics/i, { selector: 'nav a' })).toBeInTheDocument();
