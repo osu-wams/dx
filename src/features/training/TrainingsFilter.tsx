@@ -23,10 +23,10 @@ export const MenuButtonWrapper = styled(MenuButton)<{ selected: boolean }>`
     selected
       ? theme.features.trainings.filter.selected.color
       : theme.features.trainings.filter.color};
-  margin-right: 8px;
+  margin-right: ${spacing.medium};
   font-size: ${fontSize[16]};
   font-weight: 'semi-bold';
-  padding: 12px 15px;
+  padding: ${spacing.xm} ${spacing.default};
   text-decoration: none;
   border-radius: ${borderRadius[8]};
   border: 1px solid ${({ theme }) => theme.features.trainings.filter.border};
@@ -60,7 +60,7 @@ export const MenuListWrapper = styled(MenuList)`
       svg {
         color: ${({ theme }) => theme.features.trainings.menu.svg.color};
         margin-right: 1.2rem;
-        margin-top: 4px;
+        margin-top: ${spacing.medium};
         font-size: ${fontSize[14]};
       }
     }
