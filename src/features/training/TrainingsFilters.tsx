@@ -8,10 +8,12 @@ import {
   trainingAudienceState,
   trainingTagState,
 } from 'src/state';
+import { TrainingSubHeader } from './TrainingStyles';
 
 const TrainingsFilters: React.FC<any> = () => {
   return (
     <>
+      <TrainingSubHeader>Filter by topic and audience</TrainingSubHeader>
       <TrainingsFilter
         filterState={selectedTrainingTagState}
         searchState={trainingSearchState}

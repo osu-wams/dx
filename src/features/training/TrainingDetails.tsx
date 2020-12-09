@@ -65,10 +65,10 @@ const TrainingDetails: React.FC<any> = ({
             <LeadText>Course Type</LeadText>
             <Description>{training.type ? training.type : empty}</Description>
 
-            <LeadText>Course Design</LeadText>
+            <LeadText>Delivery Method</LeadText>
             <Description>{training.courseDesign ? training.courseDesign : empty}</Description>
 
-            <LeadText>Department</LeadText>
+            <LeadText>Offered by</LeadText>
             <Description>{training.department ? training.department : empty}</Description>
           </div>
 

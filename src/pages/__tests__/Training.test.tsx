@@ -56,7 +56,9 @@ describe('<Training />', () => {
       const { category } = renderTrainings();
       expect(category).toBeInTheDocument();
       userEvent.click(category);
-      expect(await screen.findByText('All Trainings')).toBeInTheDocument();
+
+      expect(await screen.findByRole('menuitem', { name: /All Trainings/i })).toBeInTheDocument();
+
       expect(await screen.findByText('Leadership')).toBeInTheDocument();
       expect(await screen.findByText('Employee Engagement')).toBeInTheDocument();
     });
@@ -108,14 +110,14 @@ describe('<Training />', () => {
       expect(screen.getByText(nice)).toBeInTheDocument();
 
       userEvent.click(category);
-      const alltrainings = await screen.findByText('All Trainings');
+      const alltrainings = await screen.findByRole('menuitem', { name: /All Trainings/i });
       const leadership = await screen.findByText('Leadership');
       const engagement = await screen.findByText('Employee Engagement');
 
       userEvent.click(leadership);
       expect(category).toHaveTextContent('Leadership');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
-      expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not tagged 'leadership'
+      expect(screen.queryByText(nice)).not.toBeInTheDocument(); // Cannot find play nice since it's not tagged 'leadership'
       expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
 
       userEvent.click(engagement);
@@ -144,7 +146,7 @@ describe('<Training />', () => {
       userEvent.click(classified);
       expect(audience).toHaveTextContent('Classified Staff');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
-      expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not for 'Classified Staff' audience
+      expect(screen.queryByText(nice)).not.toBeInTheDocument(); // Cannot find play nice since it's not for 'Classified Staff' audience
       expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
 
       userEvent.click(student);
@@ -169,21 +171,21 @@ describe('<Training />', () => {
       const allaudience = await screen.findByText('All Audiences');
       const classified = await screen.findByText('Classified Staff');
       userEvent.click(category);
-      const alltrainings = await screen.findByText('All Trainings');
+      const alltrainings = await screen.findByRole('menuitem', { name: /All Trainings/i });
       const engagement = await screen.findByText('Employee Engagement');
 
       // Set an audience filter and find 1 training is filtered out now.
       userEvent.click(classified);
       expect(audience).toHaveTextContent('Classified Staff');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
-      expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not for 'Classified Staff' audience
+      expect(screen.queryByText(nice)).not.toBeInTheDocument(); // Cannot find play nice since it's not for 'Classified Staff' audience
       expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
 
       // Add the category filter and find that another training has been filtered out now.
       userEvent.click(engagement);
       expect(category).toHaveTextContent('Employee Engagement');
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
-      expect(screen.queryByText(/Testo Training/i)).toBeNull(); // Cannot find Testo Training because it's not for 'Employee Engagement'
+      expect(screen.queryByText(/Testo Training/i)).not.toBeInTheDocument(); // Cannot find Testo Training because it's not for 'Employee Engagement'
 
       // Unset the category filter and find that more results show again.
       userEvent.click(alltrainings);
@@ -203,12 +205,23 @@ describe('<Training />', () => {
 
       userEvent.type(searchInput, 'Super Testo 2');
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
-
       userEvent.click(category);
-      const alltrainings = await screen.findByText('All Trainings');
+      const alltrainings = await screen.findByRole('menuitem', { name: /All Trainings/i });
       userEvent.click(alltrainings);
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
       expect(searchInput.value).toEqual('');
+    });
+
+    it('Can show and hide header Spotlighted Trainings as needed', async () => {
+      const { searchInput } = renderTrainings();
+
+      expect(await screen.findByText('Spotlighted Trainings')).toBeInTheDocument();
+      userEvent.type(searchInput, 'Super Testo 2');
+
+      expect(await screen.findByText('found 1 result')).toBeInTheDocument();
+
+      expect(await screen.findByRole('heading', { name: /All Trainings/i }));
+      expect(screen.queryByText('Spotlighted Trainings')).not.toBeInTheDocument();
     });
   });
 
@@ -232,7 +245,7 @@ describe('<Training />', () => {
       expect(await screen.findByText('Try another search term')).toBeInTheDocument();
 
       // no longer shows up
-      expect(screen.queryByText(/Super Testo 2/i)).toBeNull();
+      expect(screen.queryByText(/Super Testo 2/i)).not.toBeInTheDocument();
       expect(mockGAEvent).toHaveBeenCalledTimes(1);
     });
 
@@ -250,7 +263,7 @@ describe('<Training />', () => {
       const leadership = await screen.findByText('Leadership');
       userEvent.click(leadership);
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
-      expect(screen.queryByText(nice)).toBeNull(); // Cannot find play nice since it's not tagged 'leadership'
+      expect(screen.queryByText(nice)).not.toBeInTheDocument(); // Cannot find play nice since it's not tagged 'leadership'
 
       userEvent.type(searchInput, nice);
       expect(await screen.findByText(nice)).toBeInTheDocument();
@@ -279,7 +292,7 @@ describe('<Training />', () => {
       expect(close).toBeInTheDocument();
 
       userEvent.click(close);
-      expect(screen.queryByRole('button', { name: /close/i })).toBeNull();
+      expect(screen.queryByRole('button', { name: /close/i })).not.toBeInTheDocument();
     });
   });
 });
