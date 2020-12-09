@@ -60,7 +60,7 @@ export const MenuListWrapper = styled(MenuList)`
       svg {
         color: ${({ theme }) => theme.features.trainings.menu.svg.color};
         margin-right: 1.2rem;
-        margin-top: ${spacing.medium};
+        margin-top: ${spacing.small};
         font-size: ${fontSize[14]};
       }
     }
