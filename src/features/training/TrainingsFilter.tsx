@@ -24,9 +24,9 @@ export const MenuButtonWrapper = styled(MenuButton)<{ selected: boolean }>`
       ? theme.features.trainings.filter.selected.color
       : theme.features.trainings.filter.color};
   margin-right: 8px;
-  font-size: ${fontSize[14]};
+  font-size: ${fontSize[16]};
   font-weight: 'semi-bold';
-  padding: 5px 7px;
+  padding: 12px 15px;
   text-decoration: none;
   border-radius: ${borderRadius[8]};
   border: 1px solid ${({ theme }) => theme.features.trainings.filter.border};
