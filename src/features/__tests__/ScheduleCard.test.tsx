@@ -71,9 +71,9 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
   it('should find one workshop and not the meeting time set to the past', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
-    const todayWorkshop = await screen.findAllByText(/Workshop/);
-    expect(todayWorkshop).toHaveLength(1);
-    expect(screen.queryByText('Joyce Collin Furman Hall Old')).toBeNull();
+    const todayWorkshop = await screen.findByText(/Workshop/);
+    expect(todayWorkshop).toBeInTheDocument();
+    expect(screen.queryByText('Joyce Collin Furman Hall Old')).not.toBeInTheDocument();
   });
 
   it('should find a course with a clickable map link', async () => {
@@ -89,7 +89,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     const courses = await screen.findAllByTestId('course-list-item-header');
     expect(courses[0]).toHaveTextContent('WR214');
 
-    expect(screen.queryByText('View WR 214 location on map')).toBeNull();
+    expect(screen.queryByText('View WR 214 location on map')).not.toBeInTheDocument();
   });
 
   it('should find a course without a clickable map link because it is a remote learning course', async () => {
@@ -97,7 +97,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     const courses = await screen.findAllByTestId('course-list-item-header');
     expect(courses[2]).toHaveTextContent('RL100');
 
-    expect(screen.queryByText('View RL 100 location on map')).toBeNull();
+    expect(screen.queryByText('View RL 100 location on map')).not.toBeInTheDocument();
   });
 
   it('should find a course but no MID term associated', async () => {
@@ -105,7 +105,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     await screen.findAllByText(/PH 212/);
 
     // Mid terms are currently excluded due to inconsistent data source
-    expect(screen.queryByText(/MID Group Events/)).toBeNull();
+    expect(screen.queryByText(/MID Group Events/)).not.toBeInTheDocument();
   });
 
   it('should find Testo Physics, open modal and find the final exam for that course', async () => {

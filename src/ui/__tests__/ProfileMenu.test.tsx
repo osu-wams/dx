@@ -71,7 +71,7 @@ describe('Menu items per role', () => {
     expect(await screen.findByRole('menuitem', { name: /profile/i })).toBeInTheDocument();
 
     // Students cannot toggle to employee dashboard
-    expect(screen.queryByRole('menuitem', { name: /dashboard/i })).toBeNull();
+    expect(screen.queryByRole('menuitem', { name: /dashboard/i })).not.toBeInTheDocument();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
@@ -108,7 +108,7 @@ describe('Menu items per role', () => {
     ).toBeInTheDocument();
 
     // They should not see student dashboard toggle initially
-    expect(screen.queryByRole('menuitem', { name: /student dashboard/i })).toBeNull();
+    expect(screen.queryByRole('menuitem', { name: /student dashboard/i })).not.toBeInTheDocument();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });

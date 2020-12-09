@@ -29,6 +29,7 @@ import {
 } from 'src/state';
 import TrainingsSearch from 'src/features/training/TrainingsSearch';
 import TrainingsFilters from 'src/features/training/TrainingsFilters';
+import { TrainingSubHeader } from 'src/features/training/TrainingStyles';
 
 const Training = () => {
   useResetScroll();
@@ -87,6 +88,14 @@ const Training = () => {
     }
   }, [trainingAudiences.data, trainingAudiences.isSuccess]);
 
+  const featuredTrainings = (training) => {
+    return training.featured === true;
+  };
+
+  const allTrainings = (training) => {
+    return !training.featured;
+  };
+
   /**
    * When useDebounce triggers a change in debouncedValue, propagate that value
    * to the debounced training search term state.
@@ -129,29 +138,56 @@ const Training = () => {
           {trainings.isLoading && <Loading lines={5} />}
 
           {trainings.isSuccess && (
-            <p style={{ marginTop: '0' }}>
+            <p>
               found {filteredTrainings.length} {singularPlural(filteredTrainings.length, 'result')}
             </p>
           )}
           {trainings.isSuccess && filteredTrainings.length > 0 ? (
-            <FeatureCardGrid id="trainingResults" aria-live="polite" aria-atomic="true">
-              {filteredTrainings.map((t) => (
-                <FeatureCard
-                  key={t.id}
-                  featured={t.featured}
-                  onClick={() => {
-                    toggleTraining(t);
-                    Event('training', 'training opened', t.title);
-                  }}
-                  whileHover={{ y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {t.featured && t.image && <img src={t.image} alt="" />}
-                  {t.featured && !t.image && <img src={placeholderImage} alt="" />}
-                  <FeatureCardHeader>{t.title}</FeatureCardHeader>
-                  {t.body && <FeatureCardContent dangerouslySetInnerHTML={{ __html: t.body }} />}
-                </FeatureCard>
-              ))}
+            <div id="trainingResults" aria-live="polite" aria-atomic="true">
+              {filteredTrainings.filter(featuredTrainings).length > 0 && (
+                <>
+                  <TrainingSubHeader>Spotlighted Trainings</TrainingSubHeader>
+
+                  <FeatureCardGrid>
+                    {filteredTrainings.filter(featuredTrainings).map((t) => (
+                      <FeatureCard
+                        key={t.id}
+                        featured={true}
+                        onClick={() => {
+                          toggleTraining(t);
+                          Event('training', 'featured training opened', t.title);
+                        }}
+                        whileHover={{ y: -4 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <img src={t.image ? t.image : placeholderImage} alt="" />
+                        <FeatureCardHeader>{t.title}</FeatureCardHeader>
+                        {t.body && (
+                          <FeatureCardContent dangerouslySetInnerHTML={{ __html: t.body }} />
+                        )}
+                      </FeatureCard>
+                    ))}
+                  </FeatureCardGrid>
+                </>
+              )}
+              <TrainingSubHeader>All Trainings</TrainingSubHeader>
+              <FeatureCardGrid>
+                {filteredTrainings.filter(allTrainings).map((t) => (
+                  <FeatureCard
+                    key={t.id}
+                    onClick={() => {
+                      toggleTraining(t);
+                      Event('training', 'training opened', t.title);
+                    }}
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <FeatureCardHeader>{t.title}</FeatureCardHeader>
+                    {t.body && <FeatureCardContent dangerouslySetInnerHTML={{ __html: t.body }} />}
+                  </FeatureCard>
+                ))}
+              </FeatureCardGrid>
+
               {isOpen && selectedTraining && (
                 <TrainingDetails
                   training={selectedTraining}
@@ -159,11 +195,11 @@ const Training = () => {
                   toggleTraining={toggleTraining}
                 />
               )}
-            </FeatureCardGrid>
+            </div>
           ) : (
             !trainings.isLoading && (
               /* @TODO need mockup styling to do and messaging for no results */
-              <div>Try another search term</div>
+              <p>Try another search term</p>
             )
           )}
         </TrainingWrapper>

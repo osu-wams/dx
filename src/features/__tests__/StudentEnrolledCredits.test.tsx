@@ -12,7 +12,7 @@ describe('<StudentEnrolledCredits />', () => {
     const element = await screen.findByText('21');
     expect(element).toBeInTheDocument();
 
-    expect(screen.queryByText(/loading.../i)).toBeNull();
+    expect(screen.queryByText(/loading.../i)).not.toBeInTheDocument();
   });
 
   it('should return appropriate text when data is empty', async () => {

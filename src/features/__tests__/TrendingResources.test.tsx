@@ -32,7 +32,7 @@ describe('Trending Resources Card', () => {
   it('does not render when there are no trending resources', async () => {
     mockUseTrendingResources.mockReturnValue({ ...trendingResourcesData, data: [] });
     const { queryByText } = render(<TrendingResources />, { initialStates: mockInitialState() });
-    expect(queryByText('Trending')).toBeNull();
+    expect(queryByText('Trending')).not.toBeInTheDocument();
   });
 
   it('Renders Trending Resources Card Title and the 1 active trending resource for the student', async () => {
@@ -41,7 +41,7 @@ describe('Trending Resources Card', () => {
     });
     expect(await findByText('Trending')).toBeInTheDocument();
     expect(await findByText('Student Jobs')).toBeInTheDocument();
-    expect(queryByText('Employee Only')).toBeNull();
+    expect(queryByText('Employee Only')).not.toBeInTheDocument();
   });
 
   it('does not render a graduate student resource for the undergraduate student user', async () => {
@@ -50,8 +50,8 @@ describe('Trending Resources Card', () => {
     });
     expect(await findByText('Trending')).toBeInTheDocument();
     expect(await findByText('Student Jobs')).toBeInTheDocument();
-    expect(queryByText('Employee Only')).toBeNull();
-    expect(queryByText('Graduate Student Only')).toBeNull();
+    expect(queryByText('Employee Only')).not.toBeInTheDocument();
+    expect(queryByText('Graduate Student Only')).not.toBeInTheDocument();
   });
 
   it('renders a graduate student resource for the graduate student user', async () => {
@@ -61,8 +61,8 @@ describe('Trending Resources Card', () => {
     });
     expect(await findByText('Trending')).toBeInTheDocument();
     expect(await findByText('Graduate Student Only')).toBeInTheDocument();
-    expect(queryByText('Employee Only')).toBeNull();
-    expect(queryByText('Student Jobs')).toBeNull();
+    expect(queryByText('Employee Only')).not.toBeInTheDocument();
+    expect(queryByText('Student Jobs')).not.toBeInTheDocument();
   });
 
   it('Renders Trending Resources Card Title and the 1 active trending resource for the employee', async () => {
@@ -72,7 +72,7 @@ describe('Trending Resources Card', () => {
     });
     expect(await findByText('Trending')).toBeInTheDocument();
     expect(await findByText('Employee Only')).toBeInTheDocument();
-    expect(queryByText('Student Jobs')).toBeNull();
+    expect(queryByText('Student Jobs')).not.toBeInTheDocument();
   });
 
   it('User can click on the resource and it sends a google analytics event', async () => {

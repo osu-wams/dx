@@ -66,8 +66,8 @@ describe('<DynamicCard />', () => {
       expect(within(dynamicCard!).getByText(/Academics for Student Athletes/i)).toBeInTheDocument();
 
       // Does not find Student affiliation dynamic card or Graduate Student card
-      expect(screen.queryByText(/All Students!/i)).toBeNull();
-      expect(screen.queryByText(/Graduates Card!/i)).toBeNull();
+      expect(screen.queryByText(/All Students!/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
     });
 
     it('Undergrad should find "All Students" Dynamic Card', async () => {
@@ -85,8 +85,8 @@ describe('<DynamicCard />', () => {
       expect(await screen.findByText(/Everyone!/i)).toBeInTheDocument();
 
       // Does not find Student affiliation dynamic card
-      expect(screen.queryByText(/All Employees!/i)).toBeNull();
-      expect(screen.queryByText(/Graduates Card!/i)).toBeNull();
+      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
     });
 
     it('Grad Student  should find "All Students" Dynamic Card', async () => {
@@ -107,7 +107,7 @@ describe('<DynamicCard />', () => {
       expect(within(dynamicCard!).getByText(/Academics for Student Athletes/i)).toBeInTheDocument();
 
       // Does not find Employee affiliation dynamic card
-      expect(screen.queryByText(/All Employees!/i)).toBeNull();
+      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
     });
 
     it('Student Employee should find "All Students" and "Everyone!" Dynamic Card', async () => {
@@ -118,7 +118,7 @@ describe('<DynamicCard />', () => {
       expect(await screen.findByText(/Everyone!/i)).toBeInTheDocument();
 
       // Does not find Employee affiliation dynamic card
-      expect(screen.queryByText(/Graduates Card!/i)).toBeNull();
+      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
     });
   });
 
@@ -138,8 +138,8 @@ describe('<DynamicCard />', () => {
 
       expect(screen.getByText(/All Employees!/i)).toBeInTheDocument();
 
-      expect(screen.queryByText(/All Students!/i)).toBeNull();
-      expect(screen.queryByText(/Graduates Card!/i)).toBeNull();
+      expect(screen.queryByText(/All Students!/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
     });
 
     it('Undergrad should only find "All Students" Dynamic Card', async () => {
@@ -147,8 +147,8 @@ describe('<DynamicCard />', () => {
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
 
-      expect(screen.queryByText(/All Employees!/i)).toBeNull();
-      expect(screen.queryByText(/Graduates Card!/i)).toBeNull();
+      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
     });
 
     it('Grad Student should find "All Students" and "Graduates Card" Dynamic Cards', async () => {
@@ -157,7 +157,7 @@ describe('<DynamicCard />', () => {
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
       expect(screen.getByText(/Graduates Card!/i)).toBeInTheDocument();
 
-      expect(screen.queryByText(/All Employees!/i)).toBeNull();
+      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
     });
   });
 
@@ -176,15 +176,15 @@ describe('<DynamicCard />', () => {
       render(<Academics />, { user: mockEmployeeUser, initialStates: mockInitialState() });
 
       expect(screen.getByText(/All Employees!/i)).toBeInTheDocument();
-      expect(screen.queryByText(/All Students!/i)).toBeNull();
+      expect(screen.queryByText(/All Students!/i)).not.toBeInTheDocument();
     });
 
     it('Undergrad should only find "All Students" Dynamic Card', async () => {
       render(<Academics />, { initialStates: mockInitialState() });
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
-      expect(screen.queryByText(/All Employees!/i)).toBeNull();
-      expect(screen.queryByText(/Graduates Card!/i)).toBeNull();
+      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
     });
 
     it('Grad Student should find "All Students" and "Graduates Card" Dynamic Cards', async () => {
@@ -193,7 +193,7 @@ describe('<DynamicCard />', () => {
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
       expect(screen.getByText(/Graduates Card!/i)).toBeInTheDocument();
 
-      expect(screen.queryByText(/All Employees!/i)).toBeNull();
+      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
     });
   });
 
@@ -212,15 +212,15 @@ describe('<DynamicCard />', () => {
       render(<Profile />, { user: mockEmployeeUser, initialStates: mockInitialState() });
 
       expect(screen.getByText(/All Employees!/i)).toBeInTheDocument();
-      expect(screen.queryByText(/All Students!/i)).toBeNull();
+      expect(screen.queryByText(/All Students!/i)).not.toBeInTheDocument();
     });
 
     it('Undergrad should only find "All Students" Dynamic Card', async () => {
       render(<Profile />, { initialStates: mockInitialState() });
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
-      expect(screen.queryByText(/All Employees!/i)).toBeNull();
-      expect(screen.queryByText(/Graduates Card!/i)).toBeNull();
+      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
     });
 
     it('Grad Student should find "All Students" and "Graduates Card" Dynamic Cards', async () => {
@@ -229,7 +229,7 @@ describe('<DynamicCard />', () => {
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
       expect(screen.getByText(/Graduates Card!/i)).toBeInTheDocument();
 
-      expect(screen.queryByText(/All Employees!/i)).toBeNull();
+      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
     });
   });
 });

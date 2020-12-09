@@ -16,8 +16,8 @@ describe('<AnnouncementContainer> as Academics', () => {
   it('Should show Academic announcements and untagged', async () => {
     expect(screen.getByText(/Every Page Announcement Title/)).toBeInTheDocument();
     expect(screen.getByText(/Academics Announcement Title/)).toBeInTheDocument();
-    expect(screen.queryByText(/Finances Announcement Title/)).toBeNull();
-    expect(screen.queryByText(/Employee Announcement Title/i)).toBeNull();
+    expect(screen.queryByText(/Finances Announcement Title/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Employee Announcement Title/i)).not.toBeInTheDocument();
   });
 
   it('should track clicks to annoucements', async () => {
@@ -39,8 +39,8 @@ describe('<AnnouncementContainer> as Finances', () => {
   it('Should show Finance announcements and untagged', async () => {
     expect(screen.getByText(/Every Page Announcement Title/)).toBeInTheDocument();
     expect(screen.getByText(/Finances Announcement Title/)).toBeInTheDocument();
-    expect(screen.queryByText(/Academics Announcement Title/)).toBeNull();
-    expect(screen.queryByText(/Employee Announcement Title/i)).toBeNull();
+    expect(screen.queryByText(/Academics Announcement Title/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Employee Announcement Title/i)).not.toBeInTheDocument();
   });
 
   it('should track clicks to annoucements', async () => {

@@ -36,8 +36,8 @@ describe('<OSUProfile />', () => {
     });
 
     it('should find "1234phone" only once, since user has the same phone number listed', async () => {
-      const phoneArray = await screen.findAllByText(/1234phone/);
-      expect(phoneArray).toHaveLength(1);
+      const phoneArray = await screen.findByText(/1234phone/);
+      expect(phoneArray).toBeInTheDocument();
     });
   });
 
@@ -76,13 +76,13 @@ describe('<OSUProfile />', () => {
       expect(
         await screen.findByText('displayFirstName displayMiddleName displayLastName')
       ).toBeInTheDocument();
-      expect(screen.queryByText('FirstName Testo')).toBeNull();
+      expect(screen.queryByText('FirstName Testo')).not.toBeInTheDocument();
     });
 
     it('should find 2 phones, mobile and home and not a primary phone', async () => {
       expect(await screen.findByText('Home phone')).toBeInTheDocument();
       expect(await screen.findByText('Mobile phone')).toBeInTheDocument();
-      expect(screen.queryByText('Primary phone')).toBeNull();
+      expect(screen.queryByText('Primary phone')).not.toBeInTheDocument();
     });
   });
 
@@ -92,7 +92,7 @@ describe('<OSUProfile />', () => {
       render(<OSUProfile />);
 
       expect(await screen.findByText('displayFirstName Testo')).toBeInTheDocument();
-      expect(screen.queryByText('FirstName Testo')).toBeNull();
+      expect(screen.queryByText('FirstName Testo')).not.toBeInTheDocument();
     });
   });
 
@@ -102,7 +102,7 @@ describe('<OSUProfile />', () => {
       render(<OSUProfile />);
 
       expect(await screen.findByText(/Cannot find your information/i)).toBeInTheDocument();
-      expect(screen.queryByText('Testo Last')).toBeNull();
+      expect(screen.queryByText('Testo Last')).not.toBeInTheDocument();
     });
 
     it('should not find the "Mailing Address" when address is null', async () => {
@@ -110,7 +110,7 @@ describe('<OSUProfile />', () => {
       render(<OSUProfile />);
 
       expect(await screen.findByText(/Testo Last/i)).toBeInTheDocument();
-      expect(screen.queryByText('Current Mailing')).toBeNull();
+      expect(screen.queryByText('Current Mailing')).not.toBeInTheDocument();
     });
   });
 });

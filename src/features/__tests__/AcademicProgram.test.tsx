@@ -27,7 +27,7 @@ describe('<ProgramOfStudy /> | Degree', () => {
       expect(await screen.findByText(/Bachelor of Science/i)).toBeInTheDocument();
 
       // Since we have data already, the loading state should be gone
-      expect(screen.queryByText(/loading/i)).toBeNull();
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     });
 
     it('Expects "corvallis" to show up as the Campus', async () => {
@@ -79,7 +79,7 @@ describe('<ProgramOfStudy /> | Degree', () => {
         await screen.findByText(/You do not currently have an academic program/i)
       ).toBeInTheDocument();
 
-      expect(screen.queryByText(/Bachelor of Science/i)).toBeNull();
+      expect(screen.queryByText(/Bachelor of Science/i)).not.toBeInTheDocument();
     });
   });
 });

@@ -22,8 +22,8 @@ describe('<Academic Overview />', () => {
     render(<AcademicOverview />, { user: mockGradUser });
 
     expect(await screen.findByText(/bill is overdue/i)).toBeInTheDocument();
-    expect(screen.queryByText('View more in MyDegrees')).toBeNull();
-    expect(screen.queryByText('Academic Standing')).toBeNull();
+    expect(screen.queryByText('View more in MyDegrees')).not.toBeInTheDocument();
+    expect(screen.queryByText('Academic Standing')).not.toBeInTheDocument();
   });
 
   it('Academic Overview has a footer that can be clicked to access My Degrees', async () => {
