@@ -9,7 +9,6 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { filteredNotifications, userMessagesState } from 'src/state';
 import { markNotificationRead } from 'src/features/notifications/notifications-utils';
 import { Notification } from 'src/features/notifications/Notification';
-import { queryCache } from 'react-query';
 
 const Notifications = () => {
   const notifications = useRecoilValue(filteredNotifications('all'));
@@ -20,8 +19,7 @@ const Notifications = () => {
     if (notifications.data.length > 0 && notifications.data[0].status !== 'READ') {
       User.updateUserMessage({ messageId: notifications.data[0].messageId, status: 'READ' }).then(
         () => {
-          queryCache.invalidateQueries('userMessages');
-          setNotifications(markNotificationRead(notifications, notifications.data[0].messageId));
+          setNotifications((state) => markNotificationRead(state, notifications.data[0].messageId));
         }
       );
     }

@@ -11,8 +11,10 @@ import Icon from 'src/ui/Icon';
 import { User } from '@osu-wams/hooks';
 import { format } from 'src/util/helpers';
 import { RichTextContent } from 'src/ui/RichText';
-import { queryCache } from 'react-query';
 import { Event } from 'src/util/gaTracking';
+import { useSetRecoilState } from 'recoil';
+import { userMessagesState } from 'src/state';
+import { markNotificationRead } from './notifications-utils';
 
 export const Notification = ({
   n,
@@ -23,6 +25,7 @@ export const Notification = ({
 }) => {
   const { isExpanded } = useAccordionItemContext();
   const themeContext = React.useContext(ThemeContext);
+  const setNotifications = useSetRecoilState(userMessagesState);
 
   type NotiType = 'unread' | 'read';
   // We might eventually support more message states and have different icons
@@ -46,7 +49,7 @@ export const Notification = ({
     if (m.status !== 'READ') {
       Event('notifications', `expanded (READ)`, m.title);
       User.updateUserMessage({ messageId: m.messageId, status: 'READ' }).then(() => {
-        queryCache.invalidateQueries('userMessages');
+        setNotifications((state) => markNotificationRead(state, m.messageId));
       });
     }
   };

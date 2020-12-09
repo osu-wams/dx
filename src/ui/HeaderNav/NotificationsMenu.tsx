@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
-import { queryCache } from 'react-query';
 import { Link } from '@reach/router';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
 import { faBell } from '@fortawesome/pro-light-svg-icons';
@@ -17,7 +16,7 @@ import { spacing, breakpoints, fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
 import { format } from 'src/util/helpers';
 import { filteredNotifications, userMessagesState } from 'src/state';
-import { dismissAll } from 'src/features/notifications/notifications-utils';
+import { dismissAll, markNotificationRead } from 'src/features/notifications/notifications-utils';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { RichTextContent } from '../RichText';
 
@@ -80,7 +79,7 @@ const NotificationsMenu = () => {
 
   const dismissNotification = (m: Types.UserMessage) => {
     User.updateUserMessage({ messageId: m.messageId, status: 'READ' }).then(() => {
-      queryCache.invalidateQueries('userMessages'); // destroy cache so it doesn't conflict with local state
+      setNotifications((state) => markNotificationRead(state, m.messageId));
     });
   };
 
