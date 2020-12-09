@@ -19,7 +19,7 @@ const Notifications = () => {
     if (notifications.data.length > 0 && notifications.data[0].status !== 'READ') {
       User.updateUserMessage({ messageId: notifications.data[0].messageId, status: 'READ' }).then(
         () => {
-          setNotifications(markNotificationRead(notifications, notifications.data[0].messageId));
+          setNotifications((state) => markNotificationRead(state, notifications.data[0].messageId));
         }
       );
     }

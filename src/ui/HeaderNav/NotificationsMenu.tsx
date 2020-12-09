@@ -79,7 +79,7 @@ const NotificationsMenu = () => {
 
   const dismissNotification = (m: Types.UserMessage) => {
     User.updateUserMessage({ messageId: m.messageId, status: 'READ' }).then(() => {
-      setNotifications(markNotificationRead(notifications, m.messageId));
+      setNotifications((state) => markNotificationRead(state, m.messageId));
     });
   };
 

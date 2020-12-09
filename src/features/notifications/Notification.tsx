@@ -49,7 +49,7 @@ export const Notification = ({
     if (m.status !== 'READ') {
       Event('notifications', `expanded (READ)`, m.title);
       User.updateUserMessage({ messageId: m.messageId, status: 'READ' }).then(() => {
-        setNotifications(markNotificationRead(notifications, m.messageId));
+        setNotifications((state) => markNotificationRead(state, m.messageId));
       });
     }
   };
