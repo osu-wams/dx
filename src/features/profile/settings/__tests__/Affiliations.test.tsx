@@ -23,8 +23,8 @@ describe('<Affiliations />', () => {
     mockPostSettings.mockReturnValue(Promise.resolve());
   });
   it('renders with default test data settings', async () => {
-    const { queryAllByText } = render(<Affiliations />);
-    expect(queryAllByText('(Override)')).toHaveLength(0);
+    render(<Affiliations />);
+    expect(screen.queryByText('(Override)')).not.toBeInTheDocument();
   });
 
   it('submits updates when a change is fired', async () => {
@@ -93,8 +93,8 @@ describe('<Affiliations />', () => {
       },
     });
     render(<Affiliations />, { user: mockUser() });
-    const found = await screen.findAllByText(/Override/i);
+    const found = await screen.findByText(/Override/i);
 
-    expect(found).toHaveLength(1);
+    expect(found).toBeInTheDocument();
   });
 });

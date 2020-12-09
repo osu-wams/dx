@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
 import Campus from '../Campus';
 
@@ -34,11 +34,11 @@ describe('<Campus />', () => {
         },
       },
     });
-    const { getByText, queryAllByText } = render(<Campus />, { user: mockUser() });
-    const defaultCampus = getByText('(Default)');
+    render(<Campus />, { user: mockUser() });
+    const defaultCampus = screen.getByText('(Default)');
+    expect(defaultCampus).toBeInTheDocument();
     const campusLabel = defaultCampus!.parentElement;
     expect(campusLabel).toHaveTextContent('Corvallis');
-    expect(queryAllByText('(Default)')).toHaveLength(1);
   });
 
   it('renders with default test data in the context of a bend student', async () => {
@@ -55,11 +55,11 @@ describe('<Campus />', () => {
         },
       },
     });
-    const { getByText, queryAllByText } = render(<Campus />, { user: mockUser() });
-    const defaultCampus = getByText('(Default)');
+    render(<Campus />, { user: mockUser() });
+    const defaultCampus = screen.getByText('(Default)');
+    expect(defaultCampus).toBeInTheDocument();
     const campusLabel = defaultCampus!.parentElement;
     expect(campusLabel).toHaveTextContent('Bend');
-    expect(queryAllByText('(Default)')).toHaveLength(1);
   });
 
   it('renders with default test data in the context of a corvallis student with an non standard campus code', async () => {
@@ -76,11 +76,11 @@ describe('<Campus />', () => {
         },
       },
     });
-    const { getByText, queryAllByText } = render(<Campus />, { user: mockUser() });
-    const defaultCampus = getByText('(Default)');
+    render(<Campus />, { user: mockUser() });
+    const defaultCampus = screen.getByText('(Default)');
+    expect(defaultCampus).toBeInTheDocument();
     const campusLabel = defaultCampus!.parentElement;
     expect(campusLabel).toHaveTextContent('Corvallis');
-    expect(queryAllByText('(Default)')).toHaveLength(1);
   });
 
   it('renders with test data as an Employee only user having no classification attributes', async () => {
