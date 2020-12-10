@@ -4,26 +4,7 @@ import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
 import { mockGAEvent } from 'src/setupTests';
-
-const fullItem = {
-  audiences: ['Academic Faculty', 'Professional Faculty', 'Staff', 'Students'],
-  id: '71560c56-dabb-48e1-a663-64da7a7bb6e8',
-  title: 'Play nice with others',
-  image: 'WellnessNook.jpg',
-  contact: 'noreply@oregonstate.edu',
-  cost: true,
-  body: '<p>In this basic course...</p>',
-  department: 'Daycare',
-  duration: '1hr',
-  featured: true,
-  frequency: 'Daily',
-  prerequisites: 'None',
-  courseDesign: 'Blended',
-  tags: ['Employee Engagement'],
-  type: 'Professional Learning Community',
-  websiteUri: 'https://oregonstate.edu',
-  websiteTitle: '',
-};
+import { Trainings } from '@osu-wams/hooks';
 
 const emptyItem = {
   audiences: [],
@@ -34,7 +15,7 @@ const emptyItem = {
   cost: false,
   body: "<p>Training Body, you'll learn how to play nice with others.</p>",
   department: '',
-  duration: '',
+  courseLength: '',
   featured: false,
   frequency: '',
   prerequisites: '',
@@ -45,7 +26,7 @@ const emptyItem = {
   websiteTitle: '',
 };
 
-const emptyWebsite = { ...fullItem, websiteUri: '' };
+const emptyWebsite = { ...Trainings.mockTrainings.data[0], websiteUri: '' };
 
 /**
  * Featured with empty image, shows no image
@@ -55,14 +36,12 @@ const emptyWebsite = { ...fullItem, websiteUri: '' };
  */
 
 it('Renders all the data', () => {
-  render(<TrainingDetails training={fullItem} />);
+  render(<TrainingDetails training={Trainings.mockTrainings.data[0]} />);
   // Title
   expect(screen.getByRole('heading', { name: 'Play nice with others' })).toBeInTheDocument();
 
   // Audience exploded array
-  expect(
-    screen.getByText(/Academic Faculty, Professional Faculty, Staff, Students/i)
-  ).toBeInTheDocument();
+  expect(screen.getByText(/Academic Faculty, Professional Faculty, Student/i)).toBeInTheDocument();
 
   // Department
   expect(screen.getByText('Daycare')).toBeInTheDocument();
@@ -72,6 +51,9 @@ it('Renders all the data', () => {
 
   //Prerequisites
   expect(screen.getByText('None')).toBeInTheDocument();
+
+  //Course Length
+  expect(screen.getByText('Full day')).toBeInTheDocument();
 
   // Cost
   expect(screen.getByText('Yes')).toBeInTheDocument();
@@ -88,7 +70,7 @@ it('Renders all the data', () => {
 });
 
 it('Link is present and triggers google analytics', () => {
-  render(<TrainingDetails training={fullItem} />);
+  render(<TrainingDetails training={Trainings.mockTrainings.data[0]} />);
   const website = screen.getByText('Learn more and register');
   expect(website).toBeInTheDocument();
 
@@ -109,7 +91,7 @@ it('Renders "Not available" when fields are missing', () => {
   render(<TrainingDetails training={emptyItem} />);
   expect(screen.getByText('No cost')).toBeInTheDocument();
 
-  expect(screen.getAllByText('Not available')).toHaveLength(5);
+  expect(screen.getAllByText('Not available')).toHaveLength(6);
 
   const images = document.querySelectorAll('img');
   expect(images.length).toEqual(0);
