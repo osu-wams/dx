@@ -15,7 +15,7 @@ const emptyItem = {
   cost: false,
   body: "<p>Training Body, you'll learn how to play nice with others.</p>",
   department: '',
-  coureLength: '',
+  courseLength: '',
   featured: false,
   frequency: '',
   prerequisites: '',
