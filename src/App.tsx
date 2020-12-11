@@ -16,7 +16,7 @@ import PageNotFound from './pages/PageNotFound';
 import Training from './pages/Training';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useUser, usePlannerItems, useCards, useResources } from '@osu-wams/hooks';
+import { Constants, useUser, usePlannerItems, useCards, useResources } from '@osu-wams/hooks';
 import { useInfoButtons } from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
@@ -67,6 +67,7 @@ const App = (props: AppProps) => {
   const userHook = useUser();
   const infoButtons = useInfoButtons();
   const plannerItems = usePlannerItems({
+    ...Constants.REACT_QUERY_DEFAULT_CONFIG,
     enabled: user.isCanvasOptIn,
     retry: false,
     // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,

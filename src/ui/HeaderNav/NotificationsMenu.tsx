@@ -9,7 +9,7 @@ import { Event } from 'src/util/gaTracking';
 import { EmptyStateText } from 'src/ui/EmptyStates';
 import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from 'src/ui/Button';
-import { User, useMessages } from '@osu-wams/hooks';
+import { Constants, User, useMessages } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { InternalLink } from 'src/ui/Link';
 import { spacing, breakpoints, fontSize } from 'src/theme';
@@ -56,7 +56,11 @@ const FooterLinks = styled.div`
 
 const NotificationsMenu = () => {
   const notifications = useRecoilValue<Types.UserMessagesState>(filteredNotifications('unread'));
-  const notificationsHook = useMessages({ cacheTime: 0 });
+  const notificationsHook = useMessages({
+    ...Constants.REACT_QUERY_DEFAULT_CONFIG,
+    cacheTime: 1000 * 30,
+    staleTime: 1000 * 30,
+  });
   const setNotifications = useSetRecoilState(userMessagesState);
   const [showDialog, setShowDialog] = React.useState(false);
   const [selectedNotification, setSelectedNotification] = useState<Types.UserMessage | null>(null);
