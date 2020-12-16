@@ -521,7 +521,7 @@ export const dark: ThemeConfiguration = {
     input: {
       border: neutral300,
       default: {
-        color: neutral700,
+        color: neutral200,
       },
       large: {
         color: neutral700,
