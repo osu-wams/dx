@@ -4,30 +4,13 @@ import { render } from 'src/util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
-import { Resources } from '@osu-wams/hooks';
 import { infoButtonState } from 'src/state';
 
-const { resourcesCardData } = Resources.mockResources;
 const mockInitialState = jest.fn();
-
-const mockUseResourcesByQueue = jest.fn();
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    // @ts-ignore spread object
-    ...jest.requireActual('@osu-wams/hooks'),
-    useResourcesByQueue: () => mockUseResourcesByQueue(),
-  };
-});
-
 describe('<ResourcesCard />', () => {
-  // Set mock function result before running any tests
-  beforeEach(() => {
-    mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
-  });
-
   it('should render the appropriate title', async () => {
-    const { getByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
-    expect(getByText('Featured')).toBeInTheDocument();
+    const { findByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
+    expect(await findByText('Featured')).toBeInTheDocument();
   });
 
   it('should have items with icons and text', async () => {
@@ -67,22 +50,14 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should return "No resources available" when Resources data is empty', async () => {
-    mockUseResourcesByQueue.mockReturnValue({
-      data: { entityQueueTitle: 'hi', items: [] },
-      loading: false,
-      error: false,
-    });
+    // TODO: Reach into the MSW mock and (alterMock), and set the data.items to be empty?
     const { findByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
     expect(await findByText('No resources available.')).toBeInTheDocument();
   });
 });
 
 describe('with an InfoButton in the CardFooter', () => {
-  beforeEach(() => {
-    mockUseResourcesByQueue.mockReturnValue(resourcesCardData);
-  });
-
-  test('does not display the button when the infoButtonData is missing it', async () => {
+  it('does not display the button when the infoButtonData is missing it', async () => {
     mockInitialState.mockReturnValue([
       {
         state: infoButtonState,
@@ -97,7 +72,7 @@ describe('with an InfoButton in the CardFooter', () => {
     expect(element).not.toBeInTheDocument();
   });
 
-  test('displays the button when the infoButtonData is included', () => {
+  it('displays the button when the infoButtonData is included', async () => {
     mockInitialState.mockReturnValue([
       {
         state: infoButtonState,
@@ -106,11 +81,10 @@ describe('with an InfoButton in the CardFooter', () => {
         ],
       },
     ]);
-    const { getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
+    const { findByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />, {
       initialStates: mockInitialState(),
     });
 
-    const element = getByTestId('financial-resources');
-    expect(element).toBeInTheDocument();
+    expect(await findByTestId('financial-resources')).toBeInTheDocument();
   });
 });
