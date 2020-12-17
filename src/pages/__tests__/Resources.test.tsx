@@ -6,12 +6,14 @@ import {
   mockEmployeeUser,
   renderWithUserContext,
   mockGradUser,
+  mockGradStudentEmployeeUser,
 } from 'src/util/test-utils';
 import { Context as ResponsiveContext } from 'react-responsive';
 import userEvent from '@testing-library/user-event';
 import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
+import { User } from '@osu-wams/lib';
 import { resourceState } from 'src/state';
 
 const mockInitialState = jest.fn();
@@ -354,6 +356,41 @@ describe('<Resources />', () => {
 
     it('finds "Student Jobs" since that is tagged undegraduate, but not "Graduate Student Only"', async () => {
       expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Graduate Student Only/i)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Graduate Student Employee', () => {
+    beforeEach(() => {
+      const { all } = renderResources(mockGradStudentEmployeeUser);
+      userEvent.click(all);
+    });
+
+    it('finds 3 total results that apply to them', async () => {
+      expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
+    });
+
+    it('finds "Graduate Student Only" item but not "Student Jobs" since that is tagged undegraduate', async () => {
+      expect(await screen.findByText(/Graduate Student Only/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Student Jobs/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Employee Only/i)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Graduate Student Employee on the Employee Dashboard', () => {
+    beforeEach(() => {
+      const { all } = renderResources({
+        ...mockGradStudentEmployeeUser,
+        data: {
+          ...mockGradStudentEmployeeUser.data,
+          primaryAffiliationOverride: User.AFFILIATIONS.employee,
+        },
+      });
+      userEvent.click(all);
+    });
+
+    it('does not find "Graduate Student Only" item because employee of dashboard defaults', async () => {
+      expect(await screen.findByText(/Employee Only/i)).toBeInTheDocument();
       expect(screen.queryByText(/Graduate Student Only/i)).not.toBeInTheDocument();
     });
   });
