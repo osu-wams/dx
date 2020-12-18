@@ -1,10 +1,11 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render } from 'src/util/test-utils';
+import { render, alterMock } from 'src/util/test-utils';
 import { faCube } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { infoButtonState } from 'src/state';
+import { RESOURCES_BY_QUEUE_API } from 'src/mocks/apis';
 
 const mockInitialState = jest.fn();
 describe('<ResourcesCard />', () => {
@@ -50,7 +51,10 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should return "No resources available" when Resources data is empty', async () => {
-    // TODO: Reach into the MSW mock and (alterMock), and set the data.items to be empty?
+    alterMock(RESOURCES_BY_QUEUE_API, {
+      entityQueueTitle: "Foo Bar",
+      items: []
+    });
     const { findByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
     expect(await findByText('No resources available.')).toBeInTheDocument();
   });
