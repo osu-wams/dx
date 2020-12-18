@@ -24,6 +24,9 @@ export const DEGREES_API = stu + 'degrees?term=';
 
 export const ACCOUNT_BALANCE_API = stu + 'account-balance';
 
+export const ACCOUNT_TRANSACTION_API = stu + 'account-transactions';
+
+
 /**
  * Events API
  */
@@ -59,6 +62,8 @@ export const TRAININGS_AUDIENCES_API = '/api/trainings/audiences';
  * Person
  */
 export const PERSONS_API = persons;
+
+export const PERSONS_MEALPLAN_API = persons + '/meal-plans';
 
 export const PERSONS_ADDRESSES_API = persons + '/addresses';
 
