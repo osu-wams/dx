@@ -35,6 +35,7 @@ import {
   CARDS_API,
   RELEASE_NOTES_API,
   PAGE_CONTENT_API,
+  HEALTH_CHECK_API
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -161,5 +162,10 @@ export const handlers = [
   // Page Content (About Page for Now)
   rest.get(PAGE_CONTENT_API + '/about', async (req, res, ctx) => {
     return res(ctx.json(mockPageContent));
+  }),
+
+  // Health Check
+  rest.get(HEALTH_CHECK_API, async (req, res, ctx) => {
+    return res(ctx.text('body')); // currently doesn't return anything, no mocks around this one
   }),
 ];
