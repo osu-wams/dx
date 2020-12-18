@@ -21,6 +21,7 @@ import {
   ACADEMIC_CALENDAR_API,
   ACADEMIC_ANNOUNCEMENTS_API,
   RESOURCES_BY_QUEUE_API,
+  ACCOUNT_TRANSACTION_API,
   DEGREES_API,
   ACCOUNT_BALANCE_API,
   DX_ALERTS_API,
@@ -30,6 +31,7 @@ import {
   TRAININGS_AUDIENCES_API,
   PERSONS_ADDRESSES_API,
   PERSONS_API,
+  PERSONS_MEALPLAN_API,
   USER_MESSAGES_API,
   IT_STATUS_API,
   CARDS_API,
@@ -42,6 +44,7 @@ const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus.data;
 const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.courseScheduleData;
 const mockDegrees = Student.Degrees.mockDegrees.data;
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
+const { mockAccountTransations } = Student.AccountTransactions.mockAccountTransactions;
 const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 const { academicCalendar6 } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
@@ -50,6 +53,7 @@ const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
 const { personsData } = Person.Persons.mockPersons;
+const { personsMealPlan } = Person.MealPlans.mockMealPlans;
 const mockUserMessages = User.mockUser.userMessageItems;
 const readUserMessage = User.mockUser.userReadMessage;
 const mockStatus = Status.mockStatus.statusData;
@@ -86,6 +90,10 @@ export const handlers = [
 
   rest.get(HOLDS_API, async (req, res, ctx) => {
     return res(ctx.json(mockHolds));
+  }),
+
+  rest.get(ACCOUNT_TRANSACTION_API, async (req, res, ctx) => {
+    return res(ctx.json(mockAccountTransations.data));
   }),
 
   // Events
@@ -128,6 +136,10 @@ export const handlers = [
   // Persons
   rest.get(PERSONS_API, async (req, res, ctx) => {
     return res(ctx.json(personsData.data));
+  }),
+
+  rest.get(PERSONS_MEALPLAN_API, async (req, res, ctx) => {
+    return res(ctx.json(personsMealPlan.data));
   }),
 
   rest.get(PERSONS_ADDRESSES_API, async (req, res, ctx) => {
