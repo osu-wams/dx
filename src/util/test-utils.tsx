@@ -41,6 +41,11 @@ export const mockStudentEmployeeUser = {
   refreshFavorites: jest.fn(),
 };
 
+export const mockGradStudentEmployeeUser = {
+  ...mockUser.userGraduateStudentEmployee,
+  refreshFavorites: jest.fn(),
+};
+
 // The default undegraduate user with canvas opted in
 export const authUser = {
   ...mockUser.user,
