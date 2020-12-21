@@ -12,9 +12,11 @@ import {
   Cards,
   PageContents,
   ReleaseNotes,
+  InfoButtons,
 } from '@osu-wams/hooks';
 import {
   HOLDS_API,
+  INFO_BUTTON_API,
   GPA_API,
   ACADEMIC_STATUS_API,
   CLASS_SCHEDULE_API,
@@ -49,6 +51,7 @@ const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 const { academicCalendar6 } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const { resourcesCardData } = Resources.mockResources;
+const { mockInfoButtons } = InfoButtons;
 const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
@@ -155,6 +158,11 @@ export const handlers = [
     return res(ctx.json(readUserMessage));
   }),
 
+  // Info-Button
+  rest.get(INFO_BUTTON_API, async (req, res, ctx) => {
+    return res(ctx.json(mockInfoButtons.data));
+  }),
+  
   // Status
   rest.get(IT_STATUS_API, async (req, res, ctx) => {
     return res(ctx.json(mockStatus));
