@@ -9,6 +9,7 @@ const res = '/api/resources/';
 const alerts = '/api/alerts';
 const persons = '/api/persons';
 const user = '/api/user';
+const info = '/api/info-buttons';
 /**
  * Student API paths
  */
@@ -71,6 +72,13 @@ export const PERSONS_ADDRESSES_API = persons + '/addresses';
  * User
  */
 export const USER_MESSAGES_API = user + '/messages';
+
+/**
+ * Info-Buttons
+ */
+
+export const INFO_BUTTON_API = info;
+
 
 /**
  * Status
