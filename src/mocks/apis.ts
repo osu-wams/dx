@@ -91,3 +91,13 @@ export const PAGE_CONTENT_API = '/api/page-content';
  * Release Notes
  */
 export const RELEASE_NOTES_API = '/api/release-notes';
+
+/**
+ * Healthcheck
+ */
+export const HEALTH_CHECK_API = '/healthcheck';
+
+/**
+ * App Version API
+ */
+export const APP_VERSION_API = '/app_version';
