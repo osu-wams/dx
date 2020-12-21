@@ -35,7 +35,8 @@ import {
   CARDS_API,
   RELEASE_NOTES_API,
   PAGE_CONTENT_API,
-  HEALTH_CHECK_API
+  HEALTH_CHECK_API,
+  APP_VERSION_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -166,6 +167,16 @@ export const handlers = [
 
   // Health Check
   rest.get(HEALTH_CHECK_API, async (req, res, ctx) => {
-    return res(ctx.text('body')); // currently doesn't return anything, no mocks around this one
+    return res(
+      ctx.json({
+        version: 'server-test-123',
+        useMocks: 0,
+      })
+    );
+  }),
+
+  // App Version
+  rest.get(APP_VERSION_API, async (req, res, ctx) => {
+    return res(ctx.body('client-test-123'));
   }),
 ];

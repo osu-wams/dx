@@ -14,14 +14,14 @@ import {
 
 const mockGetMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
-const mockUseAppVersions = jest.fn();
+
 const mockUser = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
     // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
-    useAppVersions: () => mockUseAppVersions(),
+    
     Masquerade: {
       getMasqueradeUser: () => mockGetMasqueradeUser(),
       postMasqueradeUser: () => mockPostMasqueradeUser(),
@@ -34,12 +34,7 @@ beforeEach(() => {
   mockGetMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo' });
   mockPostMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo Post' });
   mockUser.mockReturnValue(authUser);
-  mockUseAppVersions.mockReturnValue({
-    data: {
-      serverVersion: 'server-test-123',
-      appVersion: 'client-test-123',
-    },
-  });
+  
 });
 
 it('Masquerade link is present for administrators and they can open and close the modal', async () => {
@@ -99,18 +94,9 @@ it('Links to be present and tracked in Google Analytics', async () => {
 });
 
 it('Application deployed versions', async () => {
-  mockUseAppVersions.mockReturnValue({
-    data: {
-      serverVersion: 'server-test-123',
-      appVersion: 'client-test-123',
-    },
-  });
-  const { getByText } = renderWithAllContexts(<Footer />, { user: mockAdminUser });
-
-  const appText = getByText('server-test-123');
-  const serverText = getByText('client-test-123');
-  expect(appText).toBeInTheDocument();
-  expect(serverText).toBeInTheDocument();
+  render(<Footer />, { user: mockAdminUser });
+  expect(await screen.findByText('server-test-123')).toBeInTheDocument();
+  expect(await screen.findByText('client-test-123')).toBeInTheDocument();
 });
 
 describe('Masquerade', () => {
