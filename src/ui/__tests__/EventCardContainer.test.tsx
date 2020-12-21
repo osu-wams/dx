@@ -149,10 +149,6 @@ describe('<EventCardContainer />', () => {
   it('should only display a max of 12 eventcards', async () => {
     mockUseAnnouncements.mockReturnValue(announcementsData_10);
     mockUseStudentExperienceEvents.mockReturnValue(studentExperienceEvents_10);
-
-    //alterMock(CLASS_SCHEDULE_API, [ /*put the test data right here*/ */]); //import alterMock
-
-
     const { findAllByTestId } = render(<EventCardContainer page="dashboard" />);
     expect(await findAllByTestId('eventcard')).toHaveLength(12);
   });
