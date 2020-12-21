@@ -44,7 +44,7 @@ const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus.data;
 const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.courseScheduleData;
 const mockDegrees = Student.Degrees.mockDegrees.data;
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
-const { mockAccountTransations } = Student.AccountTransactions.mockAccountTransactions;
+const { mockAccountTransactions } = Student.AccountTransactions;
 const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 const { academicCalendar6 } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
@@ -53,7 +53,7 @@ const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
 const { personsData } = Person.Persons.mockPersons;
-const { personsMealPlan } = Person.MealPlans.mockMealPlans;
+const { mockMealPlans } = Person.MealPlans;
 const mockUserMessages = User.mockUser.userMessageItems;
 const readUserMessage = User.mockUser.userReadMessage;
 const mockStatus = Status.mockStatus.statusData;
@@ -93,7 +93,7 @@ export const handlers = [
   }),
 
   rest.get(ACCOUNT_TRANSACTION_API, async (req, res, ctx) => {
-    return res(ctx.json(mockAccountTransations.data));
+    return res(ctx.json(mockAccountTransactions.data));
   }),
 
   // Events
@@ -139,7 +139,7 @@ export const handlers = [
   }),
 
   rest.get(PERSONS_MEALPLAN_API, async (req, res, ctx) => {
-    return res(ctx.json(personsMealPlan.data));
+    return res(ctx.json(mockMealPlans.data));
   }),
 
   rest.get(PERSONS_ADDRESSES_API, async (req, res, ctx) => {
