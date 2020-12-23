@@ -16,6 +16,8 @@ import {
 import {
   HOLDS_API,
   GPA_API,
+  RESOURCES_API,
+  TRENDING_RESOURCES_API,
   ACADEMIC_STATUS_API,
   CLASS_SCHEDULE_API,
   ACADEMIC_CALENDAR_API,
@@ -23,11 +25,13 @@ import {
   RESOURCES_BY_QUEUE_API,
   ACCOUNT_TRANSACTION_API,
   DEGREES_API,
+  CATEGORIES_API,
   ACCOUNT_BALANCE_API,
   DX_ALERTS_API,
   RAVE_ALERTS_API,
   TRAININGS_API,
   TRAININGS_TAGS_API,
+  FAVORITE_RESOURCES_API,
   TRAININGS_AUDIENCES_API,
   PERSONS_ADDRESSES_API,
   PERSONS_API,
@@ -49,6 +53,10 @@ const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 const { academicCalendar6 } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const { resourcesCardData } = Resources.mockResources;
+const { resourcesData } = Resources.mockResources;
+const { favoriteResource } = Resources.mockResources;
+const { categoriesData } = Resources.mockResources;
+const { trendingResourcesData } = Resources.mockResources;
 const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
@@ -107,8 +115,24 @@ export const handlers = [
   }),
 
   // Resources
+  rest.get(TRENDING_RESOURCES_API, async (req, res, ctx) => {
+    return res(ctx.json(trendingResourcesData.data));
+  }),
+
+  rest.get(RESOURCES_API, async (req, res, ctx) => {
+    return res(ctx.json(resourcesData.data));
+  }),
+
   rest.get(RESOURCES_BY_QUEUE_API, async (req, res, ctx) => {
     return res(ctx.json(resourcesCardData.data));
+  }),
+
+  rest.get(CATEGORIES_API, async (req, res, ctx) => {
+    return res(ctx.json(categoriesData.data));
+  }),
+
+  rest.post(FAVORITE_RESOURCES_API, async (req, res, ctx) => {
+    return res(ctx.json(favoriteResource));
   }),
 
   // Alerts

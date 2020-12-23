@@ -2,6 +2,7 @@ import React from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import {
   render,
+  alterMock,
   authUser,
   mockEmployeeUser,
   renderWithUserContext,
@@ -17,16 +18,14 @@ import { User } from '@osu-wams/lib';
 import { resourceState } from 'src/state';
 
 const mockInitialState = jest.fn();
-const mockUseCategories = jest.fn();
 const mockDefaultCategory = jest.fn();
 const mockPostFavorite = jest.fn();
-const { resourcesData, categoriesData, defaultCategory } = Resources.mockResources;
+const { resourcesData, defaultCategory } = Resources.mockResources;
 
 jest.mock('@osu-wams/hooks', () => {
   const original = jest.requireActual('@osu-wams/hooks');
   return {
     ...original,
-    useCategories: () => mockUseCategories(),
     defaultCategoryName: () => mockDefaultCategory(),
     Resources: {
       ...original.Resources,
@@ -35,12 +34,13 @@ jest.mock('@osu-wams/hooks', () => {
   };
 });
 
+
 /**
  * Render Resources with the most commonly used features
  * We reuse a lot of these elements in our tests
  * Here we can simplify the logic in one place
  */
-const renderResources = (userType?: any) => {
+const renderResources = async (userType?: any) => {
   let utils;
   if (!userType) {
     utils = render(<ResourcesComponent />, { initialStates: mockInitialState() });
@@ -50,10 +50,10 @@ const renderResources = (userType?: any) => {
       initialStates: mockInitialState(),
     });
   }
-  const featured = utils.getByLabelText('Featured');
-  const all = utils.getByLabelText('All');
-  const searchInput = utils.getByPlaceholderText('Find resources') as HTMLInputElement;
-  const financial = utils.getByLabelText('Financial');
+  const featured = await utils.findByLabelText('Featured');
+  const all = await utils.findByLabelText('All');
+  const searchInput = await utils.findByPlaceholderText('Find resources') as HTMLInputElement;
+  const financial = await utils.findByLabelText('Financial');
 
   return {
     ...utils,
@@ -73,18 +73,16 @@ describe('<Resources />', () => {
         value: resourcesData,
       },
     ]);
-    mockUseCategories.mockReturnValue(categoriesData);
-    mockDefaultCategory.mockReturnValue(defaultCategory);
   });
 
   describe('Components', () => {
-    it('should display the title Resources', () => {
-      renderResources();
+    it('should display the title Resources', async () => {
+      await renderResources();
       expect(screen.getByText('Resources', { selector: 'h1' })).toBeInTheDocument();
     });
 
-    it('should not autoFocus the search input on mobile', () => {
-      const { searchInput } = renderResources();
+    it('should not autoFocus the search input on mobile', async () => {
+      const { searchInput } = await renderResources();
       expect(searchInput).not.toHaveFocus();
     });
 
@@ -99,7 +97,7 @@ describe('<Resources />', () => {
     });
 
     it('Should have a link to skip to results with matching ID in the result container', async () => {
-      const { getByText, findByTestId } = renderResources();
+      const { getByText, findByTestId } = await renderResources();
       const skipLink = getByText('Skip to results');
       const anchor = skipLink.getAttribute('href')!.slice(1);
       const results = await findByTestId('resourcesResults');
@@ -109,7 +107,7 @@ describe('<Resources />', () => {
     });
 
     it('should load with the "Featured" category selected and results filtered accordingly', async () => {
-      const { all, featured } = renderResources();
+      const { all, featured } = await renderResources();
 
       await waitFor(() => expect(featured).toHaveClass('selected'));
       expect(all).not.toHaveClass('selected');
@@ -121,7 +119,7 @@ describe('<Resources />', () => {
   describe('Category interactions', () => {
     it('should have "Featured" selected and clickable All category that gets appropriate results', async () => {
       mockDefaultCategory.mockReturnValue('All');
-      const { findByText, all, featured } = renderResources();
+      const { findByText, all, featured } = await renderResources();
 
       expect(featured).toHaveClass('selected'); // default selected
 
@@ -168,7 +166,7 @@ describe('<Resources />', () => {
 
     it('should empty input and get results for that category only when clicking category link', async () => {
       mockDefaultCategory.mockReturnValue(defaultCategory);
-      const { searchInput } = renderResources();
+      const { searchInput } = await renderResources();
 
       const academic = screen.getByLabelText('Academic');
 
@@ -184,7 +182,7 @@ describe('<Resources />', () => {
     });
 
     it('should be able to reselect a category and get appropriate data back', async () => {
-      const { all } = renderResources();
+      const { all } = await renderResources();
 
       const academic = screen.getByLabelText('Academic');
 
@@ -203,7 +201,7 @@ describe('<Resources />', () => {
   });
 
   it('Changes Search term should re-run the search effectively', async () => {
-    const { searchInput } = renderResources();
+    const { searchInput } = await renderResources();
     const badQuery = 'billingNotThere';
 
     userEvent.type(searchInput, badQuery);
@@ -223,7 +221,7 @@ describe('<Resources />', () => {
 
   it('searches for case-insensitive synonyms', async () => {
     const badQuery = 'billingNotThere';
-    const { searchInput } = renderResources();
+    const { searchInput } = await renderResources();
     await userEvent.type(searchInput, 'BOO');
     expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
     // We need to clear the input value if not the below interaction sits on top of the previous
@@ -246,7 +244,7 @@ describe('<Resources />', () => {
       value: location,
     });
 
-    const { findByText, featured, all } = renderResources();
+    const { findByText, featured, all } = await renderResources();
     await waitFor(() => expect(featured).not.toHaveClass('selected'));
     expect(all).toHaveClass('selected');
     expect(await findByText(/Billing Information/)).toBeInTheDocument();
@@ -255,7 +253,7 @@ describe('<Resources />', () => {
   });
 
   it('should change categories when the back button is clicked', async () => {
-    const { featured, all } = renderResources();
+    const { featured, all } = await renderResources();
 
     expect(all).toBeInTheDocument();
     await waitFor(() => expect(featured).toHaveClass('selected'));
@@ -272,7 +270,7 @@ describe('<Resources />', () => {
   });
 
   it('should move to the All category when searching', async () => {
-    const { featured, all, searchInput } = renderResources();
+    const { featured, all, searchInput } = await renderResources();
 
     expect(featured).toHaveClass('selected');
     expect(all).not.toHaveClass('selected');
@@ -288,7 +286,7 @@ describe('<Resources />', () => {
 
   describe('Favorite Resources tests', () => {
     it('should have favorites category when user has active favorites resources', async () => {
-      renderResources();
+      await renderResources();
       const favorites = await screen.findByText(/favorites/i);
       expect(favorites).toBeInTheDocument();
       userEvent.click(favorites);
@@ -296,7 +294,7 @@ describe('<Resources />', () => {
     });
 
     it('Finds Student Jobs resource, clicking on heart input adds it as a favorite', async () => {
-      const { findByText, all } = renderResources();
+      const { findByText, all } = await renderResources();
       userEvent.click(all);
 
       expect(await findByText(/Student Jobs/)).toBeInTheDocument();
@@ -307,6 +305,7 @@ describe('<Resources />', () => {
 
       // checking for el to avoid element might be null error
       el ? userEvent.click(el) : null;
+
       expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
       expect(authUser.refreshFavorites).toHaveBeenCalledTimes(1);
       expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -323,7 +322,7 @@ describe('<Resources />', () => {
   describe('with audiences', () => {
     it('shows all resources', async () => {
       const newAuthUser = { ...authUser, classification: { id: authUser.data.osuId } };
-      const { all } = renderResources(newAuthUser);
+      const { all } = await renderResources(newAuthUser);
 
       userEvent.click(all);
       expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
@@ -333,8 +332,8 @@ describe('<Resources />', () => {
   });
 
   describe('Graduate Student', () => {
-    beforeEach(() => {
-      const { all } = renderResources(mockGradUser);
+    beforeEach( async () => {
+      const { all } = await renderResources(mockGradUser);
       userEvent.click(all);
     });
 
@@ -349,8 +348,8 @@ describe('<Resources />', () => {
   });
 
   describe('Undergraduate Student', () => {
-    beforeEach(() => {
-      const { all } = renderResources();
+    beforeEach(async () => {
+      const { all } = await renderResources();
       userEvent.click(all);
     });
 
@@ -361,8 +360,8 @@ describe('<Resources />', () => {
   });
 
   describe('Graduate Student Employee', () => {
-    beforeEach(() => {
-      const { all } = renderResources(mockGradStudentEmployeeUser);
+    beforeEach(async () => {
+      const { all } = await renderResources(mockGradStudentEmployeeUser);
       userEvent.click(all);
     });
 
@@ -378,8 +377,8 @@ describe('<Resources />', () => {
   });
 
   describe('Graduate Student Employee on the Employee Dashboard', () => {
-    beforeEach(() => {
-      const { all } = renderResources({
+    beforeEach(async () => {
+      const { all } = await renderResources({
         ...mockGradStudentEmployeeUser,
         data: {
           ...mockGradStudentEmployeeUser.data,
@@ -398,7 +397,7 @@ describe('<Resources />', () => {
   describe('with student and employee affiliations', () => {
     it('finds Listservs as an employee but not Student Jobs, since that is student only', async () => {
       mockDefaultCategory.mockReturnValue('All');
-      const { all } = renderResources(mockEmployeeUser);
+      const { all } = await renderResources(mockEmployeeUser);
       userEvent.click(all);
 
       expect(await screen.findByText(/found 4 results/)).toBeInTheDocument();
@@ -422,7 +421,7 @@ describe('<Resources />', () => {
 
     it('finds Listservs as an employee when clicking the Financial category', async () => {
       mockDefaultCategory.mockReturnValue('Financial');
-      const { financial } = renderResources(mockEmployeeUser);
+      const { financial } = await renderResources(mockEmployeeUser);
 
       userEvent.click(financial);
 
@@ -433,7 +432,7 @@ describe('<Resources />', () => {
     });
 
     it('cannot find "Student Jobs" when searching as an Employee, but finds "Listservs"', async () => {
-      const { searchInput } = renderResources(mockEmployeeUser);
+      const { searchInput } = await renderResources(mockEmployeeUser);
 
       await userEvent.type(searchInput, 'student job');
       // Student Jobs resources is null because it's only there for Student, not employee
@@ -444,7 +443,7 @@ describe('<Resources />', () => {
     });
 
     it('cannot find "Listservs" when searching as a Student, but finds "Student Jobs"', async () => {
-      const { searchInput } = renderResources();
+      const { searchInput } = await renderResources();
 
       userEvent.type(searchInput, 'student job');
       expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
@@ -454,7 +453,7 @@ describe('<Resources />', () => {
     });
 
     it('finds "Student Jobs" and "Billing Information" but not "Listservs" when clicking the Financial category', async () => {
-      const { queryByText, getByText, findByText, financial } = renderResources();
+      const { queryByText, getByText, findByText, financial } = await renderResources();
       userEvent.click(financial);
 
       expect(await findByText(/found 2 results/)).toBeInTheDocument();
@@ -465,7 +464,7 @@ describe('<Resources />', () => {
     });
 
     it('finds the 3 student resources and cannot find Listservs employee resource', async () => {
-      const { all } = renderResources();
+      const { all } = await renderResources();
       userEvent.click(all);
 
       expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();

@@ -40,7 +40,12 @@ export const ACADEMIC_ANNOUNCEMENTS_API = an + '*';
 /**
  * Resources
  */
+
+export const RESOURCES_API = res;
 export const RESOURCES_BY_QUEUE_API = res + 'category/*';
+export const CATEGORIES_API = res + 'categories/';
+export const TRENDING_RESOURCES_API = res + 'trending/*';
+export const FAVORITE_RESOURCES_API = res + 'favorites/';
 
 /**
  * Alerts
