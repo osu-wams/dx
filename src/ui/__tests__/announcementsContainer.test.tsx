@@ -5,7 +5,7 @@ import { render, alterMock } from 'src/util/test-utils';
 import AnnouncementContainer from '../AnnouncementContainer';
 import { mockGAEvent } from 'src/setupTests';
 import { Announcements } from '@osu-wams/hooks';
-import { ACADEMIC_ANNOUNCEMENTS_API } from 'src/mocks/apis';
+import { ANNOUNCEMENTS_API } from 'src/mocks/apis';
 const { financialAnnouncementResult } = Announcements.mockAnnouncements;
 
 describe('<AnnouncementContainer> as Academics', () => {
@@ -31,7 +31,7 @@ describe('<AnnouncementContainer> as Academics', () => {
 
 describe('<AnnouncementContainer> as Finances', () => {
   beforeEach(async () => {
-    alterMock(ACADEMIC_ANNOUNCEMENTS_API, financialAnnouncementResult.data);
+    alterMock(ANNOUNCEMENTS_API, financialAnnouncementResult.data);
     render(<AnnouncementContainer page="finances" />);
     await screen.findAllByTestId('eventcard');
   });

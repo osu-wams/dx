@@ -169,8 +169,10 @@ describe('<EventCardContainer />', () => {
     render(<EventCardContainer page="dashboard" />);
     const test2 = await findAllByTestId('eventcard');
 
-    // make sure they are the same length first
-    expect(test1.length).toEqual(test2.length);
+    await waitFor(() => {
+      // make sure they are the same length first
+      expect(test1.length).toEqual(test2.length);
+    });
 
     // loop through each and check to see if either of the arrays at index x dont match
     for (let x = 0; x < test1.length; x++) {
