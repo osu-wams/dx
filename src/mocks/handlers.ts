@@ -19,7 +19,7 @@ import {
   ACADEMIC_STATUS_API,
   CLASS_SCHEDULE_API,
   ACADEMIC_CALENDAR_API,
-  ACADEMIC_ANNOUNCEMENTS_API,
+  ANNOUNCEMENTS_API,
   RESOURCES_BY_QUEUE_API,
   ACCOUNT_TRANSACTION_API,
   DEGREES_API,
@@ -37,6 +37,9 @@ import {
   CARDS_API,
   RELEASE_NOTES_API,
   PAGE_CONTENT_API,
+  STUDENT_EVENTS_API,
+  EMPLOYEE_EVENTS_API,
+  CAMPUS_EVENTS_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -46,7 +49,7 @@ const mockDegrees = Student.Degrees.mockDegrees.data;
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
 const { mockAccountTransactions } = Student.AccountTransactions;
 const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
-const { academicCalendar6 } = Events.mockEvents;
+const { academicCalendar6, employeeEvents, studentExperienceEvents } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const { resourcesCardData } = Resources.mockResources;
 const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
@@ -102,7 +105,7 @@ export const handlers = [
   }),
 
   // Anouncements
-  rest.get(ACADEMIC_ANNOUNCEMENTS_API, async (req, res, ctx) => {
+  rest.get(ANNOUNCEMENTS_API, async (req, res, ctx) => {
     return res(ctx.json(academicAnnouncementResult.data));
   }),
 
@@ -173,5 +176,20 @@ export const handlers = [
   // Page Content (About Page for Now)
   rest.get(PAGE_CONTENT_API + '/about', async (req, res, ctx) => {
     return res(ctx.json(mockPageContent));
+  }),
+
+  // Student Events
+  rest.get(STUDENT_EVENTS_API, async (req, res, ctx) => {
+    return res(ctx.json(studentExperienceEvents.data));
+  }),
+
+  // Employee Events
+  rest.get(EMPLOYEE_EVENTS_API, async (req, res, ctx) => {
+    return res(ctx.json(employeeEvents.data));
+  }),
+
+  // Campus Events
+  rest.get(CAMPUS_EVENTS_API, async (req, res, ctx) => {
+    return res(ctx.json(studentExperienceEvents.data));
   }),
 ];

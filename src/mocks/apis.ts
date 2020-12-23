@@ -3,7 +3,7 @@
  */
 
 const stu = '/api/student/';
-const events = '/api/events/';
+const events = '/api/events';
 const an = '/api/announcements/';
 const res = '/api/resources/';
 const alerts = '/api/alerts';
@@ -26,16 +26,21 @@ export const ACCOUNT_BALANCE_API = stu + 'account-balance';
 
 export const ACCOUNT_TRANSACTION_API = stu + 'account-transactions';
 
-
 /**
  * Events API
  */
-export const ACADEMIC_CALENDAR_API = events + 'academic-calendar';
+export const ACADEMIC_CALENDAR_API = events + '/academic-calendar';
+
+export const STUDENT_EVENTS_API = events;
+
+export const EMPLOYEE_EVENTS_API = events + '/employee';
+
+export const CAMPUS_EVENTS_API = events + '/campus/*';
 
 /**
  * Anouncements
  */
-export const ACADEMIC_ANNOUNCEMENTS_API = an + '*';
+export const ANNOUNCEMENTS_API = an + '*';
 
 /**
  * Resources
