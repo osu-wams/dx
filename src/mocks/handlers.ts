@@ -12,9 +12,11 @@ import {
   Cards,
   PageContents,
   ReleaseNotes,
+  InfoButtons,
 } from '@osu-wams/hooks';
 import {
   HOLDS_API,
+  INFO_BUTTON_API,
   GPA_API,
   ACADEMIC_STATUS_API,
   CLASS_SCHEDULE_API,
@@ -40,6 +42,8 @@ import {
   STUDENT_EVENTS_API,
   EMPLOYEE_EVENTS_API,
   CAMPUS_EVENTS_API,
+  HEALTH_CHECK_API,
+  APP_VERSION_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -52,6 +56,7 @@ const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 const { academicCalendar6, employeeEvents, studentExperienceEvents } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const { resourcesCardData } = Resources.mockResources;
+const { mockInfoButtons } = InfoButtons;
 const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
@@ -158,6 +163,11 @@ export const handlers = [
     return res(ctx.json(readUserMessage));
   }),
 
+  // Info-Button
+  rest.get(INFO_BUTTON_API, async (req, res, ctx) => {
+    return res(ctx.json(mockInfoButtons.data));
+  }),
+
   // Status
   rest.get(IT_STATUS_API, async (req, res, ctx) => {
     return res(ctx.json(mockStatus));
@@ -191,5 +201,20 @@ export const handlers = [
   // Campus Events
   rest.get(CAMPUS_EVENTS_API, async (req, res, ctx) => {
     return res(ctx.json(studentExperienceEvents.data));
+  }),
+
+  // Health Check
+  rest.get(HEALTH_CHECK_API, async (req, res, ctx) => {
+    return res(
+      ctx.json({
+        version: 'server-test-123',
+        useMocks: 0,
+      })
+    );
+  }),
+
+  // App Version
+  rest.get(APP_VERSION_API, async (req, res, ctx) => {
+    return res(ctx.body('client-test-123'));
   }),
 ];
