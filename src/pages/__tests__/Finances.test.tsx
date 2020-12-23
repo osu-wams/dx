@@ -1,15 +1,7 @@
 import React from 'react';
 import Finances from '../Finances';
 import { render, alterMock } from 'src/util/test-utils';
-import { Announcements, Person, Resources, Student } from '@osu-wams/hooks';
-import { ACADEMIC_ANNOUNCEMENTS_API } from 'src/mocks/apis';
-
-
-const { resourcesCardData } = Resources.mockResources;
-const { academicAnnouncementResult } = Announcements.mockAnnouncements;
-const mockAccountBalance = Student.AccountBalance.mockAccountBalance;
-const mockAccountTransactions = Student.AccountTransactions.mockAccountTransactions;
-const mockMealPlans = Person.MealPlans.mockMealPlans;
+import { ANNOUNCEMENTS_API } from 'src/mocks/apis';
 
 describe('Finances page with standard data', () => {
 
@@ -28,11 +20,7 @@ describe('Finances page with standard data', () => {
   });
 
   it('should not render Announcements with no events', async () => {
-    alterMock(ACADEMIC_ANNOUNCEMENTS_API, {
-      data: [],
-      loading: false,
-      error: false
-    })
+    alterMock(ANNOUNCEMENTS_API, []);
     const { getByTestId, findByText } = render(<Finances />);
     await findByText('Student Account Balance');
     expect(() => getByTestId('finances-announcements')).toThrow(); //will throw if announcements is being displayed
