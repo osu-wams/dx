@@ -2,7 +2,7 @@ import React from 'react';
 import { render, alterMock } from 'src/util/test-utils';
 import AcademicsDashboard from '../Academics/AcademicsDashboard';
 import { screen } from '@testing-library/react';
-import { ACADEMIC_ANNOUNCEMENTS_API } from 'src/mocks/apis';
+import { ANNOUNCEMENTS_API } from 'src/mocks/apis';
 
 describe('<AcademicsDashboard />', () => {
   it('renders without errors', async () => {
@@ -11,7 +11,7 @@ describe('<AcademicsDashboard />', () => {
   });
 
   it('should not render Announcements with no events', async () => {
-    alterMock(ACADEMIC_ANNOUNCEMENTS_API, []);
+    alterMock(ANNOUNCEMENTS_API, []);
     render(<AcademicsDashboard />);
 
     // Finds Academic Calendar Events

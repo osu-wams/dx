@@ -3,12 +3,13 @@
  */
 
 const stu = '/api/student/';
-const events = '/api/events/';
+const events = '/api/events';
 const an = '/api/announcements/';
 const res = '/api/resources/';
 const alerts = '/api/alerts';
 const persons = '/api/persons';
 const user = '/api/user';
+const info = '/api/info-buttons';
 /**
  * Student API paths
  */
@@ -26,16 +27,21 @@ export const ACCOUNT_BALANCE_API = stu + 'account-balance';
 
 export const ACCOUNT_TRANSACTION_API = stu + 'account-transactions';
 
-
 /**
  * Events API
  */
-export const ACADEMIC_CALENDAR_API = events + 'academic-calendar';
+export const ACADEMIC_CALENDAR_API = events + '/academic-calendar';
+
+export const STUDENT_EVENTS_API = events;
+
+export const EMPLOYEE_EVENTS_API = events + '/employee';
+
+export const CAMPUS_EVENTS_API = events + '/campus/*';
 
 /**
  * Anouncements
  */
-export const ACADEMIC_ANNOUNCEMENTS_API = an + '*';
+export const ANNOUNCEMENTS_API = an + '*';
 
 /**
  * Resources
@@ -78,6 +84,13 @@ export const PERSONS_ADDRESSES_API = persons + '/addresses';
 export const USER_MESSAGES_API = user + '/messages';
 
 /**
+ * Info-Buttons
+ */
+
+export const INFO_BUTTON_API = info;
+
+
+/**
  * Status
  */
 export const IT_STATUS_API = '/api/status';
@@ -96,3 +109,13 @@ export const PAGE_CONTENT_API = '/api/page-content';
  * Release Notes
  */
 export const RELEASE_NOTES_API = '/api/release-notes';
+
+/**
+ * Healthcheck
+ */
+export const HEALTH_CHECK_API = '/healthcheck';
+
+/**
+ * App Version API
+ */
+export const APP_VERSION_API = '/app_version';
