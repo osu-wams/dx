@@ -59,11 +59,13 @@ const { mockAccountTransactions } = Student.AccountTransactions;
 const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 const { academicCalendar6, employeeEvents, studentExperienceEvents } = Events.mockEvents;
 const { academicAnnouncementResult } = Announcements.mockAnnouncements;
-const { resourcesCardData } = Resources.mockResources;
-const { resourcesData } = Resources.mockResources;
-const { favoriteResource } = Resources.mockResources;
-const { categoriesData } = Resources.mockResources;
-const { trendingResourcesData } = Resources.mockResources;
+const {
+  resourcesCardData,
+  resourcesData,
+  favoriteResource,
+  categoriesData,
+  trendingResourcesData,
+} = Resources.mockResources;
 const { mockInfoButtons } = InfoButtons;
 const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
