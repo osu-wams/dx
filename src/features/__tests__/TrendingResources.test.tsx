@@ -7,16 +7,8 @@ import { Resources } from '@osu-wams/hooks';
 import { resourceState } from 'src/state';
 
 const mockInitialState = jest.fn();
-const mockUseTrendingResources = jest.fn();
 
-const { resourcesData, trendingResourcesData } = Resources.mockResources;
-
-jest.mock('@osu-wams/hooks', () => ({
-  // @ts-ignore spreading object
-  ...jest.requireActual('@osu-wams/hooks'),
-  useResources: () => mockUseResources(),
-  useTrendingResources: () => mockUseTrendingResources(),
-}));
+const { resourcesData } = Resources.mockResources;
 
 describe('Trending Resources Card', () => {
   beforeEach(() => {
@@ -26,11 +18,9 @@ describe('Trending Resources Card', () => {
         value: resourcesData,
       },
     ]);
-    mockUseTrendingResources.mockReturnValue(trendingResourcesData);
   });
 
   it('does not render when there are no trending resources', async () => {
-    mockUseTrendingResources.mockReturnValue({ ...trendingResourcesData, data: [] });
     const { queryByText } = render(<TrendingResources />, { initialStates: mockInitialState() });
     expect(queryByText('Trending')).not.toBeInTheDocument();
   });

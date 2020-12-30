@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
 import { NotificationsMenu } from '../HeaderNav/NotificationsMenu';
 import { mockGAEvent } from 'src/setupTests';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { alterMock } from 'src/util/test-utils';
 import { USER_MESSAGES_API } from 'src/mocks/apis';
 import { User } from '@osu-wams/hooks';
@@ -57,7 +57,7 @@ describe('With 1 SENT notifications', () => {
 
 describe('Without unread notifications', () => {
   beforeEach(() => {
-    alterMock(USER_MESSAGES_API, User.mockUser.userReadMessage);
+    alterMock(USER_MESSAGES_API, { items: [User.mockUser.userReadMessage], lastKey: undefined });
     render(<NotificationsMenu />);
   });
 

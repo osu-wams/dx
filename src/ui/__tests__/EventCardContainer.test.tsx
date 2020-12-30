@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, screen, waitFor } from '@testing-library/react';
+import { cleanup, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EventCardContainer from '../EventCardContainer';
 import { render, mockEmployeeUser, alterMock } from 'src/util/test-utils';
@@ -116,13 +116,15 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should alternate types of events', async () => {
-    const { findAllByTestId, getAllByText } = render(<EventCardContainer page="dashboard" />);
-    const cards = await findAllByTestId('eventcard');
-    const bodyText = getAllByText(/body text/i);
-    expect(cards[0]).toContainElement(bodyText[0]);
-    expect(cards[2]).toContainElement(bodyText[1]);
-    expect(cards[1]).not.toContainElement(bodyText[0]);
-    expect(cards[1]).not.toContainElement(bodyText[1]);
+    const { getAllByTestId, getAllByText } = render(<EventCardContainer page="dashboard" />);
+    await waitFor(() => {
+      const cards = getAllByTestId('eventcard');
+      const bodyText = getAllByText(/body text/i);
+      expect(cards[0]).toContainElement(bodyText[0]);
+      expect(cards[2]).toContainElement(bodyText[1]);
+      expect(cards[1]).not.toContainElement(bodyText[0]);
+      expect(cards[1]).not.toContainElement(bodyText[1]);
+    });
   });
 
   it('should render only announcements when no localist events loaded', async () => {
