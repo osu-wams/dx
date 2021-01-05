@@ -9,14 +9,25 @@ import {
 } from 'src/ui/Highlights';
 import { fontSize } from 'src/theme';
 import { useHolds } from '@osu-wams/hooks';
-import { singularPlural } from 'src/util/helpers';
+import { singularPlural, format } from 'src/util/helpers';
 
 const HoldsList = styled.ul`
   margin: 0;
-  padding: 0 0 0 20px;
+  padding: 0;
+  list-style-type: none;
   > li {
-    font-size: ${fontSize[12]};
+    padding: 15px 0 0 0;
   }
+`;
+
+const HoldTitle = styled.div`
+  color: ${({ theme }) => theme.ui.list.item.header.color};
+  font-size: ${fontSize[14]};
+`;
+
+const HoldDescription = styled.div`
+  color: ${({ theme }) => theme.ui.list.item.description.color};
+  font-size: ${fontSize[13]};
 `;
 
 export const StudentHolds: React.FC = () => {
@@ -32,7 +43,15 @@ export const StudentHolds: React.FC = () => {
           <span> {singularPlural(data.length, 'hold')} on your student account.</span>
           {data.length > 0 && (
             <HoldsList>
-              {data.map((h, i) => h.description && <li key={i}>{h.description}</li>)}
+              {data.map(
+                (h, i) =>
+                  h.description && (
+                    <li key={i}>
+                      <HoldTitle>{h.description.toUpperCase()}</HoldTitle>
+                      <HoldDescription>Effective {format(h.toDate)}</HoldDescription>
+                    </li>
+                  )
+              )}
             </HoldsList>
           )}
         </HighlightDescription>
