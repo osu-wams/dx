@@ -40,8 +40,7 @@ describe('<FeaturedTrainingsCard />', () => {
       const close = await screen.findByRole('button', { name: /close/i });
       expect(close).toBeInTheDocument();
 
-      // Modeal only text from Course Type
-      screen.debug();
+      // Modal only text from Course Type
       expect(await screen.findByText(/Blended/i)).toBeInTheDocument();
 
       userEvent.click(close);
