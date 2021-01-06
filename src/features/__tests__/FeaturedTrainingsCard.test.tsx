@@ -41,7 +41,8 @@ describe('<FeaturedTrainingsCard />', () => {
       expect(close).toBeInTheDocument();
 
       // Modeal only text from Course Type
-      expect(await screen.findByText(/Professional Learning Community/i)).toBeInTheDocument();
+      screen.debug();
+      expect(await screen.findByText(/Blended/i)).toBeInTheDocument();
 
       userEvent.click(close);
       expect(screen.queryByRole('button', { name: /close/i })).not.toBeInTheDocument();
