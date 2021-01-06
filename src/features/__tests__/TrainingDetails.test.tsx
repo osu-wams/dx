@@ -14,14 +14,13 @@ const emptyItem = {
   contact: '',
   cost: false,
   body: "<p>Training Body, you'll learn how to play nice with others.</p>",
-  department: '',
+  offeredBy: '',
   courseLength: '',
   featured: false,
   frequency: '',
   prerequisites: '',
-  courseDesign: '',
+  deliveryMethod: [],
   tags: [],
-  type: '',
   websiteUri: '',
   websiteTitle: '',
 };
@@ -43,11 +42,11 @@ it('Renders all the data', () => {
   // Audience exploded array
   expect(screen.getByText(/Academic Faculty, Professional Faculty, Student/i)).toBeInTheDocument();
 
-  // Department
+  // offeredBy
   expect(screen.getByText('Daycare')).toBeInTheDocument();
 
-  // Design
-  expect(screen.getByText('Blended')).toBeInTheDocument();
+  // DeliveryMethod
+  expect(screen.getByText('Online, Blended')).toBeInTheDocument();
 
   //Prerequisites
   expect(screen.getByText('None')).toBeInTheDocument();

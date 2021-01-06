@@ -63,10 +63,10 @@ const TrainingDetails: React.FC<any> = ({
         <TwoCol>
           <div>
             <LeadText>Delivery Method</LeadText>
-            <Description>{training.courseDesign ? training.courseDesign : empty}</Description>
+            <Description>{commaList(training.deliveryMethod, empty)}</Description>
 
             <LeadText>Offered by</LeadText>
-            <Description>{training.department ? training.department : empty}</Description>
+            <Description>{training.offeredBy ? training.offeredBy : empty}</Description>
 
             <LeadText>Course length</LeadText>
             <Description>{training.courseLength ? training.courseLength : empty}</Description>
