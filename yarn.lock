@@ -1588,10 +1588,10 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@^1.0.88":
-  version "1.0.88"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.88/a869559d85da78370bd1cc902a32d29e3304fcb1658c28c49c0388d4c9744c81#61ac09fa65e90925c79359363b3549b354c20720"
-  integrity sha512-MxRLZN6RmDC3geYD94EOlUrKxZh0vU8BYT1qBsb8RXfwG2xc/qD5zHxmTMxDmpD5ryPjuL5gYEoB8sM1NYVWRw==
+"@osu-wams/hooks@^1.0.89":
+  version "1.0.89"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.89/b5480a2d5cd4321171d4c209f1c3cc92185846d019db61f13baf3f0f6d5a6b92#f13c08258b1bff0e68333c99dc0ba220331a70c5"
+  integrity sha512-pQ/eZNpxkGEF4ZofEdUscLVWy7R4MwJlpxh1Tcfq4yc6bMqVd/+nfU3iMCTM9iIyE7zB10kyv9IWPC3aBjFXoQ==
   dependencies:
     "@osu-wams/lib" "^0.1.61"
     "@osu-wams/utils" "^0.0.8"
@@ -2969,6 +2969,20 @@ axios-mock-adapter@^1.18.1:
   dependencies:
     fast-deep-equal "^3.1.3"
     is-buffer "^2.0.3"
+
+<<<<<<< HEAD
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+=======
+axios@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
+  integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+>>>>>>> fixed effective date to display the hold's fromDate instead of toDate
+  dependencies:
+    follow-redirects "^1.10.0"
 
 axios@^0.21.1:
   version "0.21.1"

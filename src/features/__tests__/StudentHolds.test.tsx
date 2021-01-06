@@ -15,8 +15,8 @@ describe('<StudentHolds />', () => {
 
   it('should render and have a multiple holds', async () => {
     alterMock(HOLDS_API, [
-      { description: 'BLAH', toDate: '2020-10-11' },
-      { description: 'BOBROSS', toDate: '2019-09-01' },
+      { description: 'BLAH', fromDate: '2020-10-11' },
+      { description: 'BOBROSS', fromDate: '2019-09-01' },
     ]);
     render(<StudentHolds />);
 

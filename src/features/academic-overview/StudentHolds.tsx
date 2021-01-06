@@ -48,7 +48,7 @@ export const StudentHolds: React.FC = () => {
                   h.description && (
                     <li key={i}>
                       <HoldTitle>{h.description.toUpperCase()}</HoldTitle>
-                      <HoldDescription>Effective {format(h.toDate)}</HoldDescription>
+                      <HoldDescription>Effective {format(h.fromDate)}</HoldDescription>
                     </li>
                   )
               )}
