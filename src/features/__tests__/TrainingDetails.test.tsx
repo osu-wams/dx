@@ -91,7 +91,7 @@ it('Renders "Not available" when fields are missing', () => {
   render(<TrainingDetails training={emptyItem} />);
   expect(screen.getByText('No cost')).toBeInTheDocument();
 
-  expect(screen.getAllByText('Not available')).toHaveLength(6);
+  expect(screen.getAllByText('Not available')).toHaveLength(5);
 
   const images = document.querySelectorAll('img');
   expect(images.length).toEqual(0);

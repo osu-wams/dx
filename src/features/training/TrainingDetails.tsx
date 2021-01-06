@@ -62,9 +62,6 @@ const TrainingDetails: React.FC<any> = ({
         <div dangerouslySetInnerHTML={{ __html: training.body! }} />
         <TwoCol>
           <div>
-            <LeadText>Course Type</LeadText>
-            <Description>{training.type ? training.type : empty}</Description>
-
             <LeadText>Delivery Method</LeadText>
             <Description>{training.courseDesign ? training.courseDesign : empty}</Description>
 
