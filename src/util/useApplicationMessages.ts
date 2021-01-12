@@ -7,8 +7,11 @@ export const useApplicationMessages = () => {
   const setMessages = useSetRecoilState(messagesState);
   const message = useRecoilValue(showMessage);
 
-  // Update messageState setting the message visibility to false, this causes
-  // the showMessage selector to return the next visible message
+  /**
+   * Update messageState setting the message visibility to false, this causes
+   * the showMessage selector to return the next visible message
+   * @param message the message to be dismissed
+   */
   const dismissMessage = (message: Types.Message) => {
     setMessages((messages) => {
       if (!messages.length) return [];
@@ -30,8 +33,12 @@ export const useApplicationMessages = () => {
     });
   };
 
-  // Update messagesState to include a new visible message with a unique ID, this causes
-  // the showMessage selector to return this message as being visible
+  /**
+   * Update messagesState to include a new visible message with a unique ID, this causes
+   * the showMessage selector to return this message as being visible.
+   * TODO: Consider conditionally (error only?) serializing the message and posting to the server for logging/analysis
+   * @param message the message to add to the top of the stack
+   */
   const addMessage = (message: Types.Message) => {
     setMessages((messages) => [
       {
