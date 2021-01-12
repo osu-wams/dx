@@ -6,7 +6,7 @@ import { Message } from '@osu-wams/lib';
 import { messagesState } from '../messages';
 import { useApplicationMessages } from '../../util/useApplicationMessages';
 
-jest.mock('uuid', () => ({ v4: () => `messageuuid${Date.now()}` }));
+jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
 
 const newMessage = jest.fn();
 
