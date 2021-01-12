@@ -28,7 +28,7 @@ const idleTimer = () => {
     if (timerId) {
       clearTimeout(timerId);
     }
-    timerId = setTimeout(redirectTo, TIMEOUT_MS);
+    timerId = window.setTimeout(redirectTo, TIMEOUT_MS);
   };
 
   window.addEventListener('load', resetTimer, true);

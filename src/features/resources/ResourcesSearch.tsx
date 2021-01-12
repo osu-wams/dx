@@ -28,7 +28,7 @@ const ResourcesSearch: React.FC<any> = () => {
     if (selectedCategory !== 'all') setSelectedCategory('all');
     // Expensive function, let it operate async, state updates will cause related values
     // to refresh and render to happen asap
-    setTimeout(setQuery(newValue));
+    setTimeout(() => setQuery(newValue));
   };
 
   return (
