@@ -13,3 +13,5 @@ config.js
 yarn-error.log
 server/config/local.js
 .env
+.yalc
+yalc.lock

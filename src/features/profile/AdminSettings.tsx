@@ -9,6 +9,7 @@ import { userState } from 'src/state';
 import { User, Admin } from '@osu-wams/hooks';
 import Button from 'src/ui/Button';
 import { Event } from 'src/util/gaTracking';
+import { useApplicationMessages } from 'src/util/useApplicationMessages';
 
 const { postSettings, usersSettings } = User;
 
@@ -16,6 +17,7 @@ const AdminSettings: FC = () => {
   const user = useRecoilValue(userState);
   const [devTools, setDevTools] = React.useState<boolean>(user.data.devTools ?? false);
   const [disabled, setDisabled] = React.useState<boolean>(false);
+  const { addMessage } = useApplicationMessages();
 
   React.useEffect(() => {
     setDevTools(user.data.devTools ?? false);
@@ -58,13 +60,18 @@ const AdminSettings: FC = () => {
             onClick={() => {
               Admin.getResetApiCache();
               Event('admin', 'Reset all API Caches');
+              addMessage({
+                body: 'API caches have been cleared.',
+                title: 'Clear API Cache',
+                type: 'success',
+                visible: true,
+              });
               setDisabled(true);
             }}
             disabled={disabled}
           >
             Clear All API Caches
           </Button>
-          {disabled && <span style={{ marginLeft: '10px' }}>API Caches have been cleared</span>}
         </Fieldset>
       </CardContent>
 

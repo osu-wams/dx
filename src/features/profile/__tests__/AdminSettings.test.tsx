@@ -5,6 +5,15 @@ import { render } from 'src/util/test-utils';
 import { AdminSettings } from '../AdminSettings';
 import { mockGAEvent } from 'src/setupTests';
 
+jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
+
+const mockAddMessage = jest.fn();
+jest.mock('../../../util/useApplicationMessages.ts', () => ({
+  useApplicationMessages: () => ({
+    addMessage: mockAddMessage,
+  }),
+}));
+
 const mockPostSettings = jest.fn();
 const mockApiCache = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
@@ -55,6 +64,18 @@ describe('<AdminSettings />', () => {
       userEvent.click(clear);
       expect(mockGAEvent).toHaveBeenCalledTimes(1);
       expect(await screen.findByRole('button', { name: /Clear All API Caches/i })).toBeDisabled();
+    });
+
+    it('Clear ALL API button adds an application message to state', async () => {
+      const clear = screen.getByRole('button', { name: /Clear All API Caches/i });
+      expect(clear).toBeInTheDocument();
+      userEvent.click(clear);
+      expect(mockAddMessage).toHaveBeenCalledWith({
+        body: 'API caches have been cleared.',
+        title: 'Clear API Cache',
+        type: 'success',
+        visible: true,
+      });
     });
   });
 });
