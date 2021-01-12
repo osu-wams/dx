@@ -31,7 +31,7 @@ const TrainingsSearch: React.FC<any> = () => {
     if (selectedAudience !== 'all') setSelectedAudience('all');
     // Expensive function, let it operate async, state updates will cause related values
     // to refresh and render to happen asap
-    setTimeout(setQuery(newValue));
+    setTimeout(() => setQuery(newValue));
   };
 
   return (
