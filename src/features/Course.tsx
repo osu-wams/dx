@@ -2,7 +2,7 @@ import React, { FC, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import styled, { ThemeContext } from 'styled-components/macro';
 import ReactGA from 'react-ga';
-import generateId from 'uuid/v4';
+import nanoid from 'nanoid';
 import { faMapMarkerAlt, faEnvelope } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../ui/Icon';
 import { CloseButton } from 'src/ui/Button';
@@ -93,7 +93,7 @@ const meetingTimeListItem = (
   meetingTime: Types.CourseScheduleMeetingTime,
   themeContext: ThemeConfiguration
 ): JSX.Element => (
-  <CourseListItem key={generateId()}>
+  <CourseListItem key={nanoid()}>
     <ListItemContent style={{ paddingBottom: 0 }}>
       <Icon
         icon={getIconByScheduleType(meetingTime.scheduleType)}
@@ -204,7 +204,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
         </div>
       </MyDialogHeader>
       {coursesMap.courses.map((course, index) => (
-        <div key={generateId()} style={{ padding: '0.5rem' }}>
+        <div key={nanoid()} style={{ padding: '0.5rem' }}>
           {index > 0 && <Divider />}
           <List>
             {exceptMeetingTypes(course.attributes.meetingTimes, ['MID', 'FNL']).map((m) =>
@@ -231,7 +231,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
         <>
           <Divider />
           <List>
-            <CourseListItem key={generateId()}>
+            <CourseListItem key={nanoid()}>
               <ListItemContent style={{ paddingBottom: 0 }}>
                 <ListItemText>
                   <ListItemHeader>Other Meetings</ListItemHeader>
@@ -239,7 +239,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
               </ListItemContent>
             </CourseListItem>
             {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL']).map((m) => (
-              <CourseListItem key={generateId()}>
+              <CourseListItem key={nanoid()}>
                 <ListItemContent>
                   <ListItemText>
                     <ListItemHeader>{examName(m)}</ListItemHeader>

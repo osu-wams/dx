@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import uuidv4 from 'uuid/v4';
+import nanoid from 'nanoid';
 import { useMediaQuery } from 'react-responsive';
 import { CardBase } from './StyledCardComponents';
 import { breakpoints } from 'src/theme';
@@ -7,8 +7,8 @@ import { breakpoints } from 'src/theme';
 const CardContext = React.createContext<any>(null);
 
 const Card: FC<{ collapsing?: boolean }> = ({ children, collapsing = true, ...props }) => {
-  // Generate a UUID for linking header to controlled content
-  const uuid = uuidv4();
+  // Generate a unique id for linking header to controlled content
+  const uuid = nanoid();
   const [collapsed, setCollapsed] = useState(true);
   const toggleCollapsed = () => setCollapsed(!collapsed);
   const isMobile = !useMediaQuery({ minWidth: breakpoints.small });
