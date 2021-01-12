@@ -1,7 +1,7 @@
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { messagesState, showMessage } from 'src/state/messages';
 import { Types } from '@osu-wams/lib';
-import uuid from 'uuid';
+import nanoid from 'nanoid';
 
 export const useApplicationMessages = () => {
   const setMessages = useSetRecoilState(messagesState);
@@ -36,7 +36,7 @@ export const useApplicationMessages = () => {
     setMessages((messages) => [
       {
         ...message,
-        id: uuid.v4(),
+        id: nanoid(),
         visible: true,
       },
       ...messages,
