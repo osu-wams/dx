@@ -2,7 +2,6 @@ import React, { FC, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import styled, { ThemeContext } from 'styled-components/macro';
 import ReactGA from 'react-ga';
-import nanoid from 'nanoid';
 import { faMapMarkerAlt, faEnvelope } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../ui/Icon';
 import { CloseButton } from 'src/ui/Button';
@@ -90,10 +89,11 @@ const meetingDateTime = (meetingTime: Types.CourseScheduleMeetingTime): string =
 };
 
 const meetingTimeListItem = (
+  key: string,
   meetingTime: Types.CourseScheduleMeetingTime,
   themeContext: ThemeConfiguration
 ): JSX.Element => (
-  <CourseListItem key={nanoid()}>
+  <CourseListItem key={key}>
     <ListItemContent style={{ paddingBottom: 0 }}>
       <Icon
         icon={getIconByScheduleType(meetingTime.scheduleType)}
@@ -204,11 +204,11 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
         </div>
       </MyDialogHeader>
       {coursesMap.courses.map((course, index) => (
-        <div key={nanoid()} style={{ padding: '0.5rem' }}>
+        <div key={`${course.id}-${index}`} style={{ padding: '0.5rem' }}>
           {index > 0 && <Divider />}
           <List>
-            {exceptMeetingTypes(course.attributes.meetingTimes, ['MID', 'FNL']).map((m) =>
-              meetingTimeListItem(m, themeContext)
+            {exceptMeetingTypes(course.attributes.meetingTimes, ['MID', 'FNL']).map((m, i) =>
+              meetingTimeListItem(`${i}-meetingtime`, m, themeContext)
             )}
             {course.attributes.courseReferenceNumber && (
               <ListItemContent style={{ paddingBottom: 0 }}>
@@ -231,15 +231,15 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
         <>
           <Divider />
           <List>
-            <CourseListItem key={nanoid()}>
+            <CourseListItem key={'other-meetings'}>
               <ListItemContent style={{ paddingBottom: 0 }}>
                 <ListItemText>
                   <ListItemHeader>Other Meetings</ListItemHeader>
                 </ListItemText>
               </ListItemContent>
             </CourseListItem>
-            {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL']).map((m) => (
-              <CourseListItem key={nanoid()}>
+            {onlyMeetingTypes(coursesMap.meetingTimes, ['FNL']).map((m, i) => (
+              <CourseListItem key={`${i}-other-meeting`}>
                 <ListItemContent>
                   <ListItemText>
                     <ListItemHeader>{examName(m)}</ListItemHeader>
