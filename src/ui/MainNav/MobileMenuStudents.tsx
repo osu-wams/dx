@@ -13,19 +13,19 @@ const MobileMenuStudents = ({ toggleFullMenu, ...props }) => {
 
   return (
     <MobileMainNav {...props}>
-      <MobileNavLink to="/" onClick={() => ClickEvents('Overview')}>
+      <MobileNavLink to="/student" onClick={() => ClickEvents('Overview')}>
         <Icon icon={faHome} />
         Overview
       </MobileNavLink>
-      <MobileNavLink to="academics" onClick={() => ClickEvents('Academics')}>
+      <MobileNavLink to="student/academics" onClick={() => ClickEvents('Academics')}>
         <Icon icon={faGraduationCap} />
         Academics
       </MobileNavLink>
-      <MobileNavLink to="finances" onClick={() => ClickEvents('Finances')}>
+      <MobileNavLink to="student/finances" onClick={() => ClickEvents('Finances')}>
         <Icon icon={faHandsUsd} />
         Finances
       </MobileNavLink>
-      <MobileNavLink to="resources" onClick={() => ClickEvents('Resources')}>
+      <MobileNavLink to="student/resources" onClick={() => ClickEvents('Resources')}>
         <Icon icon={faList} />
         Resources
       </MobileNavLink>

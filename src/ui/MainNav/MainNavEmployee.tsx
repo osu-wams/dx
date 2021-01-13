@@ -7,12 +7,15 @@ import { Nav, NavLink } from './MainNavStyles';
 const MainNavEmployee = (...props) => {
   return (
     <Nav {...props}>
-      <NavLink to="/" onClick={() => Event('employee-navigation-main', 'Overview link clicked')}>
+      <NavLink
+        to="/employee"
+        onClick={() => Event('employee-navigation-main', 'Overview link clicked')}
+      >
         <Icon icon={faHome} />
         Overview
       </NavLink>
       <NavLink
-        to="resources"
+        to="employee/resources"
         onClick={() => Event('employee-navigation-main', 'Resources link clicked')}
       >
         <Icon icon={faToolbox} />
@@ -20,7 +23,7 @@ const MainNavEmployee = (...props) => {
       </NavLink>
       {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
         <NavLink
-          to="training"
+          to="employee/training"
           onClick={() => Event('employee-navigation-main', 'Training link clicked')}
         >
           <Icon icon={faUsersClass} />
