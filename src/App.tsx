@@ -1,19 +1,11 @@
 import React, { useEffect, useRef } from 'react';
+import Loadable from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { Router, Location, RouteComponentProps } from '@reach/router';
+import { Router, Location, navigate } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
 import Header from './ui/Header';
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
-import Academics from './pages/Academics';
-import Finances from './pages/Finances';
-import Resources from './pages/Resources';
-import About from './pages/About';
-import Notifications from './pages/Notifications';
-import PageNotFound from './pages/PageNotFound';
-import Training from './pages/Training';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { Constants, useUser, usePlannerItems, useCards, useResources } from '@osu-wams/hooks';
@@ -31,7 +23,6 @@ import {
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
-import MobileCovid from './pages/mobile-app/MobileCovid';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
 
 const ContentWrapper = styled.main`
@@ -53,8 +44,31 @@ interface AppProps {
   containerElement: HTMLElement;
 }
 
-const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
-  props.pageComponent;
+const Loading = (props) => {
+  if (props.error) {
+    return (
+      <div>
+        Error! <button onClick={props.retry}>Retry</button>
+      </div>
+    );
+  } else if (props.pastDelay) {
+    return <div>Loading...</div>;
+  } else {
+    return null;
+  }
+};
+
+const EmployeeRouter = Loadable({
+  loader: () => import('./routers/Employee'),
+  loading: Loading,
+  delay: 200,
+});
+
+const StudentRouter = Loadable({
+  loader: () => import('./routers/Student'),
+  loading: Loading,
+  delay: 200,
+});
 
 const App = (props: AppProps) => {
   const [user, setUser] = useRecoilState<Types.UserState>(userState);
@@ -141,6 +155,12 @@ const App = (props: AppProps) => {
     }
     if (!userHook.loading && !userHook.error && userHook.data.osuId) {
       containerElementRef.current.style.opacity = '1';
+      console.log(userHook, window.location);
+      if (window.location.pathname === '/') {
+        navigate(
+          `/${userHook.data.primaryAffiliationOverride ?? userHook.data.primaryAffiliation}`
+        );
+      }
     }
   }, [userHook.data, userHook.loading, userHook.error]);
 
@@ -191,23 +211,10 @@ const App = (props: AppProps) => {
             {({ location }) => (
               <PageGridWrapper key={location.key}>
                 {ReactGA.pageview(location.pathname + location.search + location.hash)}
-
                 <AnimatePresence exitBeforeEnter>
-                  <Router location={location} key={location.key} className="router-styles">
-                    <RouterPage path="/" pageComponent={<Dashboard />} />
-                    <RouterPage path="profile" pageComponent={<Profile />} />
-                    <RouterPage path="academics/*" pageComponent={<Academics />} />
-                    <RouterPage path="finances" pageComponent={<Finances />} />
-                    <RouterPage path="resources" pageComponent={<Resources />} />
-                    <RouterPage path="about" pageComponent={<About />} />
-                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                      <RouterPage path="training" pageComponent={<Training />} />
-                    )}
-                    <RouterPage path="notifications" pageComponent={<Notifications />} />
-                    <RouterPage default pageComponent={<PageNotFound />} />
-                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                      <RouterPage path="covid" pageComponent={<MobileCovid />} />
-                    )}
+                  <Router>
+                    <EmployeeRouter path="employee/*" />
+                    <StudentRouter path="student/*" />
                   </Router>
                 </AnimatePresence>
               </PageGridWrapper>
