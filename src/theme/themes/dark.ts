@@ -125,6 +125,44 @@ export const dark: ThemeConfiguration = {
       },
     },
   },
+  message: {
+    background: componentBackground,
+    closeIcon: {
+      color: neutral550,
+    },
+    success: {
+      header: {
+        color: Color['pine-300'],
+      },
+      border: {
+        color: Color['pine-200'],
+      },
+    },
+    info: {
+      header: {
+        color: Color['stratosphere-300'],
+      },
+      border: {
+        color: Color['roguewave-200'],
+      },
+    },
+    warn: {
+      header: {
+        color: Color['luminance-400'],
+      },
+      border: {
+        color: Color['luminance-200'],
+      },
+    },
+    error: {
+      header: {
+        color: Color['lava-300'],
+      },
+      border: {
+        color: Color['lava-200'],
+      },
+    },
+  },
   notification: {
     title: bodyText,
     date: neutral700,

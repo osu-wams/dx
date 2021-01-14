@@ -44,7 +44,6 @@ export const useApplicationMessages = () => {
       {
         ...message,
         id: nanoid(),
-        visible: true,
       },
       ...messages,
     ]);

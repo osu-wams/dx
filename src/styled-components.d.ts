@@ -92,6 +92,44 @@ declare module 'styled-components/macro' {
         };
       };
     };
+    message: {
+      background: string;
+      closeIcon: {
+        color: neutral550;
+      };
+      success: {
+        header: {
+          color: string;
+        };
+        border: {
+          color: string;
+        };
+      };
+      info: {
+        header: {
+          color: string;
+        };
+        border: {
+          color: string;
+        };
+      };
+      warn: {
+        header: {
+          color: string;
+        };
+        border: {
+          color: string;
+        };
+      };
+      error: {
+        header: {
+          color: string;
+        };
+        border: {
+          color: string;
+        };
+      };
+    };
     notification: {
       title: string;
       date: string;

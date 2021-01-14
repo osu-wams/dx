@@ -32,6 +32,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 import MobileCovid from './pages/mobile-app/MobileCovid';
+import { Message } from 'src/ui/Message';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -184,6 +185,7 @@ const App = (props: AppProps) => {
         <GlobalStyles />
         {!mobileApp && <Header />}
         <Alerts />
+        <Message />
         <ContentWrapper>
           <Location>
             {({ location }) => (
