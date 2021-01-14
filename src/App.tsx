@@ -38,6 +38,7 @@ import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
 import { useApplicationMessages } from './util/useApplicationMessages';
 import { changeAffiliation } from './util/user';
+import { WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD } from './state/messages';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -181,17 +182,17 @@ const App = (props: AppProps) => {
       } else {
         const onStudentDashboard = pathname.toLowerCase().startsWith('/student');
         const onEmployeeDashboard = pathname.toLowerCase().startsWith('/employee');
+        // Visiting any route that doesn't start with /student or /employee just loads the application
         if (!onStudentDashboard && !onEmployeeDashboard) {
           setIsLoaded(true);
         } else {
           // User is a student (non-employee type) visiting an employee dashboard link, redirect them to the student dashboard
           if (!User.isEmployee(userHook.data) && onEmployeeDashboard) {
-            // TODO: Get title, body, type from comms folks for messaging
-            addMessage({ body: '', title: '', type: 'error', visible: true });
+            addMessage(WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD);
             navigate('/student');
             setIsLoaded(true);
           } else {
-            // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to run
+            // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to re-run
             // and finally be handled the by the last else-statement to setIsLoaded(true)
             if (userSetDashboard !== 'student' && onStudentDashboard) {
               changeAffiliation('student', userHook);

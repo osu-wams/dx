@@ -20,3 +20,11 @@ export const showMessage = selector<Types.Message | undefined>({
     return messages.filter((m) => m.visible)[0];
   },
 });
+
+export const WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD: Types.Message = {
+  body:
+    'It looks like you were trying to access a page that is only for Oregon State employees. Unfortunately, as a student you do not have access to the MyOregonState employee dashboard or its employee resources. If you believe that you should be able to access this page, please contact your supervisor and/or work with the Office of Human Resources to confirm your employee status.',
+  title: 'You do not have permission to access this page.',
+  type: 'warn',
+  visible: true,
+};
