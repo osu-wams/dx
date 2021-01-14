@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Loadable from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
 import { Router, Location, navigate } from '@reach/router';
@@ -8,8 +8,14 @@ import ReactGA from 'react-ga';
 import Header from './ui/Header';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { Constants, useUser, usePlannerItems, useCards, useResources } from '@osu-wams/hooks';
-import { useInfoButtons } from '@osu-wams/hooks';
+import {
+  Constants,
+  useInfoButtons,
+  useUser,
+  usePlannerItems,
+  useCards,
+  useResources,
+} from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
 import {
@@ -21,9 +27,17 @@ import {
   resourceState,
 } from './state';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { Types } from '@osu-wams/lib';
+import { User, Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
+import { RouterPage } from './routers';
+import Profile from './pages/Profile';
+import About from './pages/About';
+import Notifications from './pages/Notifications';
+import PageNotFound from './pages/PageNotFound';
+import MobileCovid from './pages/mobile-app/MobileCovid';
+import { useApplicationMessages } from './util/useApplicationMessages';
+import { changeAffiliation } from './util/user';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -44,6 +58,7 @@ interface AppProps {
   containerElement: HTMLElement;
 }
 
+// TODO: Improve error state and "Loading" when it exceeds delay
 const Loading = (props) => {
   if (props.error) {
     return (
@@ -52,7 +67,7 @@ const Loading = (props) => {
       </div>
     );
   } else if (props.pastDelay) {
-    return <div>Loading...</div>;
+    return <div></div>;
   } else {
     return null;
   }
@@ -71,12 +86,15 @@ const StudentRouter = Loadable({
 });
 
 const App = (props: AppProps) => {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [user, setUser] = useRecoilState<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
   const [plannerItemData, setPlannerItemData] = useRecoilState(plannerItemState);
   const setCards = useSetRecoilState(dynamicCardState);
   const setResources = useSetRecoilState(resourceState);
+  const containerElementRef = useRef(props.containerElement);
+  const { addMessage } = useApplicationMessages();
   const cardsHook = useCards();
   const resHook = useResources();
   const userHook = useUser();
@@ -105,8 +123,6 @@ const App = (props: AppProps) => {
       }
     },
   });
-
-  const containerElementRef = useRef(props.containerElement);
 
   /* eslint-disable react-hooks/exhaustive-deps  */
   useEffect(() => {
@@ -154,15 +170,49 @@ const App = (props: AppProps) => {
       setUser(userHook);
     }
     if (!userHook.loading && !userHook.error && userHook.data.osuId) {
-      containerElementRef.current.style.opacity = '1';
-      console.log(userHook, window.location);
-      if (window.location.pathname === '/') {
-        navigate(
-          `/${userHook.data.primaryAffiliationOverride ?? userHook.data.primaryAffiliation}`
-        );
+      const userSetDashboard = User.getAffiliation(userHook.data).toLowerCase();
+      const { pathname } = window.location;
+      // Visiting root of the application which should be a dashboard overview (/student or /employee), redirect
+      // user to the dashboard they were last one or what matches their primaryAffiliation, set application loaded to
+      // make it visible
+      if (pathname === '/') {
+        navigate(`/${userSetDashboard}`);
+        setIsLoaded(true);
+      } else {
+        const onStudentDashboard = pathname.toLowerCase().startsWith('/student');
+        const onEmployeeDashboard = pathname.toLowerCase().startsWith('/employee');
+        if (!onStudentDashboard && !onEmployeeDashboard) {
+          setIsLoaded(true);
+        } else {
+          // User is a student (non-employee type) visiting an employee dashboard link, redirect them to the student dashboard
+          if (!User.isEmployee(userHook.data) && onEmployeeDashboard) {
+            // TODO: Get title, body, type from comms folks for messaging
+            addMessage({ body: '', title: '', type: 'error', visible: true });
+            navigate('/student');
+            setIsLoaded(true);
+          } else {
+            // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to run
+            // and finally be handled the by the last else-statement to setIsLoaded(true)
+            if (userSetDashboard !== 'student' && onStudentDashboard) {
+              changeAffiliation('student', userHook);
+            } else if (userSetDashboard !== 'employee' && onEmployeeDashboard) {
+              changeAffiliation('employee', userHook);
+            } else {
+              // The user is visiting the dashboard matching thier setting, the application is ready for rendering
+              setIsLoaded(true);
+            }
+          }
+        }
       }
     }
   }, [userHook.data, userHook.loading, userHook.error]);
+
+  // After userHook useEffect resolves the user and dashboard context, it tells the app to become visible
+  useEffect(() => {
+    if (isLoaded) {
+      containerElementRef.current.style.opacity = '1';
+    }
+  }, [isLoaded]);
 
   /**
    * Targets Theme.tsx shared user state modifications
@@ -213,8 +263,15 @@ const App = (props: AppProps) => {
                 {ReactGA.pageview(location.pathname + location.search + location.hash)}
                 <AnimatePresence exitBeforeEnter>
                   <Router>
+                    <RouterPage default pageComponent={<PageNotFound />} />
                     <EmployeeRouter path="employee/*" />
                     <StudentRouter path="student/*" />
+                    <RouterPage path="profile" pageComponent={<Profile />} />
+                    <RouterPage path="about" pageComponent={<About />} />
+                    <RouterPage path="notifications" pageComponent={<Notifications />} />
+                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                      <RouterPage path="covid" pageComponent={<MobileCovid />} />
+                    )}
                   </Router>
                 </AnimatePresence>
               </PageGridWrapper>
