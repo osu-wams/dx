@@ -136,6 +136,19 @@ it('does not render if there is no message in state', async () => {
   expect(screen.queryByText(body)).not.toBeInTheDocument();
 });
 
+it('does not render if visibility is false', async () => {
+  render(<ApplicationMessages />, {
+    initialStates: [
+      {
+        state: messagesState,
+        value: [{ ...mockMessage, visible: false }],
+      },
+    ],
+  });
+  expect(screen.queryByText(title)).not.toBeInTheDocument();
+  expect(screen.queryByText(body)).not.toBeInTheDocument();
+});
+
 it('adds and displays a new message', async () => {
   newMessage.mockReturnValueOnce({
     ...mockMessage,
