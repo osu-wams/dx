@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Loadable from 'react-loadable';
+import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { Router, Location, navigate } from '@reach/router';
+import { Router, Location, navigate, RouteComponentProps } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
@@ -78,13 +78,13 @@ const EmployeeRouter = Loadable({
   loader: () => import('./routers/Employee'),
   loading: Loading,
   delay: 200,
-});
+}) as React.FunctionComponent<RouteComponentProps> & LoadableComponent;
 
 const StudentRouter = Loadable({
   loader: () => import('./routers/Student'),
   loading: Loading,
   delay: 200,
-});
+}) as React.FunctionComponent<RouteComponentProps> & LoadableComponent;
 
 const App = (props: AppProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
