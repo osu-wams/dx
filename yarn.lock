@@ -1570,21 +1570,21 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@^1.0.90":
-  version "1.0.90"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.90/3d7c38b923d02fed2aef558f7c80153942eec91d02ce2db6aae110ad928d3d0a#84fe1854b0959d4588ee9f827d61dbf3bd5b5be5"
-  integrity sha512-UlAjBZ9OoEytASr5tjZdlLoTyF/Ydmn9uH3ZyrNz6Rl0SiQo7O9r/erhFtDIuciqFJ6aaEPGdk06uLhBH6LwdQ==
+"@osu-wams/hooks@^1.0.92":
+  version "1.0.92"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.92/a140eef5428dac5adacb78e75d7b04fddae0e7249ac2f8fb902cf929c7f8ccb4#ce02da0c5423b77746cccfbfadcd22e7a1aae25d"
+  integrity sha512-sFK4MnCTyjf3lUXBA2fyJ4VqzxkHpy+5KLN+0dKwqfI/417m1WJ4IDJLrOqJmG9eiikWv8eT5rOg1pWP8fiD0Q==
   dependencies:
-    "@osu-wams/lib" "^0.1.62"
+    "@osu-wams/lib" "^0.1.64"
     "@osu-wams/utils" "^0.0.8"
     axios "^0.21.1"
     react-query "2.23.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@^0.1.62":
-  version "0.1.62"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.62/0192c47fe8a95f9d3c2b7d639deec43d3df2466ebef04312023042f476dfc114#c8ff13fce0b7e2cc91002893337a284266e838b3"
-  integrity sha512-74hCag2bv2xD0V8PQi52llEPkWnRoTmptTfaoYI0XCLlG+TKhNQVby1y+rEz/NhTsk5OZlBNqGTgiWV9OMsI+g==
+"@osu-wams/lib@^0.1.64":
+  version "0.1.64"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.64/6aba352e18654595e1e7a497a94181bbb2a46cc7c4fcf725499ba8b4fa37f629#7814159ba5912bfc20ca85def8d1cba550061418"
+  integrity sha512-rIywR+po7IlBVxvUKQAdnxxlJvFzwiHRIsMp1Mn/hLxhxcqdXmSwRwOE2mYIRGxOu4pl7jFoW0Y5nOl4PDidxA==
 
 "@osu-wams/utils@^0.0.8":
   version "0.0.8"
@@ -1913,6 +1913,11 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
+"@types/anymatch@*":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
+  integrity sha512-/+CRPXpBDpo2RK9C68N3b2cOvO0Cf5B9aPijHsoDQTHivnGSObdOF2BRQOYjojWTDy6nQvMjmqRXIxH55VjxxA==
+
 "@types/aria-query@^4.2.0":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-4.2.1.tgz#78b5433344e2f92e8b306c06a5622c50c245bf6b"
@@ -2111,6 +2116,14 @@
   dependencies:
     "@types/react" "^16"
 
+"@types/react-loadable@^5.5.4":
+  version "5.5.4"
+  resolved "https://registry.yarnpkg.com/@types/react-loadable/-/react-loadable-5.5.4.tgz#9bfb31e1299e9a3b23ea6cae437fa8813afde544"
+  integrity sha512-otKcjNCfVUzdBMdwOqFITTmBruIXw6GeoZitTBvJ6BMrif8Utu2JLy42GWukNnYI7ewJdncUCooz5Y/1dBz4+w==
+  dependencies:
+    "@types/react" "*"
+    "@types/webpack" "*"
+
 "@types/react-test-renderer@*":
   version "17.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-17.0.0.tgz#9be47b375eeb906fced37049e67284a438d56620"
@@ -2149,6 +2162,11 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
+"@types/source-list-map@*":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
+  integrity sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
+
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
@@ -2162,6 +2180,11 @@
     "@types/hoist-non-react-statics" "*"
     "@types/react" "*"
     csstype "^3.0.2"
+
+"@types/tapable@*":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.6.tgz#a9ca4b70a18b270ccb2bc0aaafefd1d486b7ea74"
+  integrity sha512-W+bw9ds02rAQaMvaLYxAbJ6cvguW/iJXNT6lTssS1ps6QdrMKttqEAMEG/b5CR8TZl3/L7/lH0ZV5nNR1LXikA==
 
 "@types/testing-library__jest-dom@^5.9.1":
   version "5.9.5"
@@ -2177,6 +2200,13 @@
   dependencies:
     "@types/react-test-renderer" "*"
 
+"@types/uglify-js@*":
+  version "3.11.1"
+  resolved "https://registry.yarnpkg.com/@types/uglify-js/-/uglify-js-3.11.1.tgz#97ff30e61a0aa6876c270b5f538737e2d6ab8ceb"
+  integrity sha512-7npvPKV+jINLu1SpSYVWG8KvyJBhBa8tmzMMdDoVc2pWUYHN8KIXlPJhjJ4LT97c4dXJA2SHL/q6ADbDriZN+Q==
+  dependencies:
+    source-map "^0.6.1"
+
 "@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
@@ -2186,6 +2216,27 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/warning/-/warning-3.0.0.tgz#0d2501268ad8f9962b740d387c4654f5f8e23e52"
   integrity sha1-DSUBJorY+ZYrdA04fEZU9fjiPlI=
+
+"@types/webpack-sources@*":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-2.1.0.tgz#8882b0bd62d1e0ce62f183d0d01b72e6e82e8c10"
+  integrity sha512-LXn/oYIpBeucgP1EIJbKQ2/4ZmpvRl+dlrFdX7+94SKRUV3Evy3FsfMZY318vGhkWUS5MPhtOM3w1/hCOAOXcg==
+  dependencies:
+    "@types/node" "*"
+    "@types/source-list-map" "*"
+    source-map "^0.7.3"
+
+"@types/webpack@*":
+  version "4.41.26"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.26.tgz#27a30d7d531e16489f9c7607c747be6bc1a459ef"
+  integrity sha512-7ZyTfxjCRwexh+EJFwRUM+CDB2XvgHl4vfuqf1ZKrgGvcS5BrNvPQqJh3tsZ0P6h6Aa1qClVHaJZszLPzpqHeA==
+  dependencies:
+    "@types/anymatch" "*"
+    "@types/node" "*"
+    "@types/tapable" "*"
+    "@types/uglify-js" "*"
+    "@types/webpack-sources" "*"
+    source-map "^0.6.0"
 
 "@types/yargs-parser@*":
   version "20.2.0"
@@ -10449,7 +10500,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -10726,6 +10777,13 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-loadable@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-5.5.0.tgz#582251679d3da86c32aae2c8e689c59f1196d8c4"
+  integrity sha512-C8Aui0ZpMd4KokxRdVAm2bQtI03k2RMRNzOB+IipV3yxFTSVICv7WoUr5L9ALB5BmKO1iHgZtWM8EvYG83otdg==
+  dependencies:
+    prop-types "^15.5.0"
 
 react-loading-skeleton@^2.1.1:
   version "2.1.1"
@@ -11859,6 +11917,11 @@ source-map@^0.5.0, source-map@^0.5.6, source-map@^0.5.7:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
+
+source-map@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.3.tgz#5302f8169031735226544092e64981f751750383"
+  integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
 
 spdx-correct@^3.0.0:
   version "3.1.1"

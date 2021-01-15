@@ -9,19 +9,22 @@ import { Mobile, Desktop } from 'src/util/useMediaQuery';
 const MainNavStudent = (...props) => {
   return (
     <Nav {...props}>
-      <NavLink to="/" onClick={() => Event('student-navigation-main', 'Overview link clicked')}>
+      <NavLink
+        to="/student"
+        onClick={() => Event('student-navigation-main', 'Overview link clicked')}
+      >
         <Icon icon={faHome} />
         Overview
       </NavLink>
       <NavLink
-        to="academics"
+        to="student/academics"
         onClick={() => Event('student-navigation-main', 'Academics link clicked')}
       >
         <Icon icon={faGraduationCap} />
         Academics
       </NavLink>
       <NavLink
-        to="finances"
+        to="student/finances"
         onClick={() => Event('student-navigation-main', 'Finances link clicked')}
       >
         <Icon icon={faHandsUsd} />
@@ -43,7 +46,7 @@ const DesktopLinks = () => {
   return (
     <>
       <NavLink
-        to="resources"
+        to="student/resources"
         onClick={() => Event('student-navigation-main', 'Resource link clicked')}
       >
         <Icon icon={faList} />
