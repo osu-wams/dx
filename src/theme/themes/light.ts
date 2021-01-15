@@ -124,6 +124,44 @@ export const light: ThemeConfiguration = {
       },
     },
   },
+  message: {
+    background: componentBackground,
+    closeIcon: {
+      color: neutral550,
+    },
+    success: {
+      header: {
+        color: Color['pine-700'],
+      },
+      border: {
+        color: Color['pine-200'],
+      },
+    },
+    info: {
+      header: {
+        color: Color['stratosphere-700'],
+      },
+      border: {
+        color: Color['roguewave-200'],
+      },
+    },
+    warn: {
+      header: {
+        color: Color['luminance-700'],
+      },
+      border: {
+        color: Color['luminance-200'],
+      },
+    },
+    error: {
+      header: {
+        color: Color['lava-700'],
+      },
+      border: {
+        color: Color['lava-200'],
+      },
+    },
+  },
   notification: {
     title: bodyText,
     date: neutral550,

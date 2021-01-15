@@ -1,7 +1,7 @@
 export const Color: { [key: string]: string } = {
-  'transparent': 'transparent',
-  'white': '#ffffff',
-  'black': '#000000',
+  transparent: 'transparent',
+  white: '#ffffff',
+  black: '#000000',
   // Neutral Palette
   'neutral-100': '#F7F5F5', // only use as an off white background
   'neutral-200': '#E9E5E4', // use as a light gray background with dark text
@@ -36,12 +36,16 @@ export const Color: { [key: string]: string } = {
   'pine-500': '#3C692E',
   'pine-600': '#254A1A',
   'pine-700': '#142E0C',
+  'lava-200': '#EE878A',
   'lava-400': '#C72127',
   'lava-500': '#FF0000',
+  'lava-700': '#590003',
+  'luminance-200': '#FDDB8B',
   'luminance-300': '#FFCE57',
   'luminance-400': '#FFB500',
+  'luminance-700': '#915513',
   'roguewave-200': '#B8DDE1',
   'roguewave-400': '#00859B',
   'roguewave-500': '#007082',
   'roguewave-600': '#0D5257',
-}
+};
