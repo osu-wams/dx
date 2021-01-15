@@ -13,7 +13,7 @@ import Icon from './Icon';
 import { CloseButton } from './Button';
 import { useApplicationMessages } from 'src/util/useApplicationMessages';
 
-const Message = () => {
+const ApplicationMessages = () => {
   const themeContext = React.useContext(ThemeContext);
   const { message, dismissMessage } = useApplicationMessages();
 
@@ -32,17 +32,20 @@ const Message = () => {
 
   return message ? (
     <Portal>
-      <Wrapper type={message.type ?? 'info'}>
+      <MessageWrapper id={message.id} type={message.type ?? 'info'}>
         <Header>
           <Icon
             icon={iconType(message.type)}
-            color={themeContext.message[message.type].header.color ?? themeContext.body.color}
+            color={
+              themeContext.message[message.type]?.header.color ??
+              themeContext.message.info.header.color
+            }
           />
           <Title>{message.title}</Title>
           <CloseButton onClick={() => dismissMessage(message)} />
         </Header>
         {message.body}
-      </Wrapper>
+      </MessageWrapper>
     </Portal>
   ) : null;
 };
@@ -65,20 +68,22 @@ const Title = styled.h2`
   padding-left: ${spacing.medium};
 `;
 
-const Wrapper = styled.div<messageType>`
+const MessageWrapper = styled.div<messageType>`
   position: fixed;
   bottom: 20px;
   right: 20px;
   width: 400px;
   border: solid 3px hsla(0, 0%, 0%, 0.25);
-  border-color: ${({ theme, type }) => theme.message[type].border.color};
+  border-color: ${({ theme, type }) =>
+    theme.message[type]?.border.color ?? theme.message.info.border.color};
   box-shadow: ${shadows[1]};
   border-radius: ${borderRadius[8]};
   padding: 0 ${spacing.large} ${spacing.large};
   background: ${({ theme }) => theme.message.background};
   ${Title} {
-    color: ${({ theme, type }) => theme.message[type].header.color ?? theme.body.color};
+    color: ${({ theme, type }) =>
+      theme.message[type]?.header.color ?? theme.message.info.header.color};
   }
 `;
 
-export { Message };
+export { ApplicationMessages };
