@@ -19,7 +19,7 @@ export const useApplicationMessages = () => {
       if (messages.length === 1) return [dismissedMessage];
 
       const index = messages.findIndex((m) => m.id === message.id);
-      if (!index) return [dismissedMessage, ...messages];
+      if (!index) return [dismissedMessage, ...messages.slice(index + 1)];
 
       // slice around target message, setting its visibility without mutation
       return [
@@ -28,7 +28,7 @@ export const useApplicationMessages = () => {
           ...message,
           visible: false,
         },
-        ...messages.slice(index),
+        ...messages.slice(index + 1),
       ];
     });
   };
