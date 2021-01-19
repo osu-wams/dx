@@ -88,7 +88,7 @@ const StudentRouter = Loadable({
 
 const App = (props: AppProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [initialRoute, setInitialRoute] = useState('/');
+  const [initialRoute, setInitialRoute] = useState<string | undefined>();
   const [user, setUser] = useRecoilState<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
@@ -201,8 +201,8 @@ const App = (props: AppProps) => {
               changeAffiliation('employee', userHook);
             } else {
               // The user is visiting the dashboard matching thier setting, the application is ready for rendering
-              if (initialRoute !== '/') {
-                navigate(initialRoute);
+              if (initialRoute && initialRoute !== '/') {
+                navigate(initialRoute!);
               }
               setIsLoaded(true);
             }
@@ -216,6 +216,7 @@ const App = (props: AppProps) => {
   useEffect(() => {
     if (isLoaded) {
       containerElementRef.current.style.opacity = '1';
+      setInitialRoute(undefined);
     }
   }, [isLoaded]);
 
