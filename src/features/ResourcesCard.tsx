@@ -29,6 +29,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<Types.Resource[]>([]);
   const [cardTitle, setCardTitle] = useState('');
+  const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
 
   useEffect(() => {
     if (Object.keys(user.data).length && res.data && res.data.items.length) {
@@ -71,7 +72,7 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
       {resources?.length > 0 && (
         <CardFooter infoButtonId={`${categ}-resources`}>
           <InternalLink
-            to={`/resources?category=${categ.toLowerCase()}`}
+            to={`${dashboardLink}/resources?category=${categ.toLowerCase()}`}
             onClick={() => Event('resources-card', `view all ${categ} link`)}
           >
             View more {categ} resources
