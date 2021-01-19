@@ -71,7 +71,7 @@ describe('Trending Resources Card', () => {
     expect(resource).toBeInTheDocument();
     userEvent.click(resource);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
-    var el = document.querySelector('a[href="/resources"]');
+    var el = document.querySelector('a[href="/student/resources"]');
     if (el) {
       userEvent.click(el);
     }

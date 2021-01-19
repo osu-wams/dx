@@ -88,6 +88,7 @@ const StudentRouter = Loadable({
 
 const App = (props: AppProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [initialRoute, setInitialRoute] = useState('/');
   const [user, setUser] = useRecoilState<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
@@ -200,13 +201,16 @@ const App = (props: AppProps) => {
               changeAffiliation('employee', userHook);
             } else {
               // The user is visiting the dashboard matching thier setting, the application is ready for rendering
+              if (initialRoute !== '/') {
+                navigate(initialRoute);
+              }
               setIsLoaded(true);
             }
           }
         }
       }
     }
-  }, [userHook.data, userHook.loading, userHook.error]);
+  }, [userHook.data, userHook.loading, userHook.error, initialRoute]);
 
   // After userHook useEffect resolves the user and dashboard context, it tells the app to become visible
   useEffect(() => {
@@ -244,6 +248,8 @@ const App = (props: AppProps) => {
 
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
+
+    setInitialRoute(window.location.pathname);
   }, []);
 
   // If logged in through mobile app, this is true

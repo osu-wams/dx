@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Loading } from 'src/ui/Loading';
-import { Types } from '@osu-wams/lib';
+import { Types, User } from '@osu-wams/lib';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from 'src/ui/List';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
@@ -21,6 +21,7 @@ export const FavoriteResources = () => {
   const user = useRecoilValue(userState);
   const res = useRecoilValue(resourceState);
   const [favoriteResources, setFavoriteResources] = useState<Types.Resource[]>([]);
+  const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
 
   useEffect(() => {
     if (user.data.favoriteResources && res.data && res.data.length > 0) {
@@ -61,7 +62,7 @@ export const FavoriteResources = () => {
       </CardContent>
       <CardFooter infoButtonId="favorite-resources">
         <InternalLink
-          to="/resources?category=all"
+          to={`${dashboardLink}/resources?category=all`}
           onClick={() => Event('favorite-resources-card', `view all resources link`)}
         >
           View all resources

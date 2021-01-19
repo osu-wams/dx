@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Types } from '@osu-wams/lib';
+import { Types, User } from '@osu-wams/lib';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from 'src/ui/List';
 import { faFireAlt } from '@fortawesome/pro-light-svg-icons';
@@ -16,6 +16,7 @@ export const TrendingResources = () => {
   const res = useRecoilValue(resourceState);
   const trendingRes = useTrendingResources('7daysAgo');
   const [trendingResources, setTrendingResources] = useState<Types.Resource[]>([]);
+  const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
 
   useEffect(() => {
     if (
@@ -46,7 +47,7 @@ export const TrendingResources = () => {
         </CardContent>
         <CardFooter infoButtonId="trending-resources">
           <InternalLink
-            to="/resources"
+            to={`${dashboardLink}/resources`}
             onClick={() => Event('trending-resources-card', `view resources link`)}
           >
             View resources
