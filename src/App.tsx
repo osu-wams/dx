@@ -202,7 +202,7 @@ const App = (props: AppProps) => {
             } else {
               // The user is visiting the dashboard matching thier setting, the application is ready for rendering
               if (initialRoute && initialRoute !== '/') {
-                navigate(initialRoute!);
+                navigate(initialRoute);
               }
               setIsLoaded(true);
             }
