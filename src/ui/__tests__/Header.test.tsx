@@ -261,3 +261,26 @@ describe('with a campus code', () => {
     });
   });
 });
+
+describe('with a dashboard context', () => {
+  describe('as a student', () => {
+    it('renders the appropriate header link', () => {
+      render(<Header />);
+      const appLink = screen.getByTestId('app-header-logo').parentElement!;
+      expect(appLink).toBeInTheDocument();
+
+      const href = appLink.getAttribute('href');
+      expect(href).toEqual('/student');
+    });
+  });
+  describe('as an employee', () => {
+    it('renders the appropriate header link', () => {
+      render(<Header />, { user: mockEmployeeUser });
+      const appLink = screen.getByTestId('app-header-logo').parentElement!;
+      expect(appLink).toBeInTheDocument();
+
+      const href = appLink.getAttribute('href');
+      expect(href).toEqual('/employee');
+    });
+  });
+});

@@ -116,10 +116,12 @@ const Header = () => {
   const title = mainTitle(user.data);
   const theme = useRecoilValue(themeState);
   const { image, alt } = campusLogo(user.data, theme);
+  const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
+
   return (
     <>
       <HeaderWrapper>
-        <Link to="/" onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
+        <Link to={dashboardLink} onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
           <Logo data-testid="app-header-logo" src={image} alt={alt} />
         </Link>
         <SiteTitle>{title}</SiteTitle>
