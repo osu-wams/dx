@@ -80,7 +80,7 @@ const AcademicProgram = () => {
       return;
     }
 
-    if (fields && Array.isArray(fields) && fields.length > 1) {
+    if (fields && Array.isArray(fields) && fields[1] != null) {
       fields = fields.join(', ');
     }
 
