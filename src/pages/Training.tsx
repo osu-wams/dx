@@ -45,7 +45,7 @@ const Training = () => {
   const trainingAudiences = useTrainingAudiences();
   const setTrainingAudiences = useSetRecoilState(trainingAudienceState);
   const trainings = useTrainings();
-  const setTrainings = useSetRecoilState(trainingState);
+  const [trainingsState, setTrainings] = useRecoilState(trainingState);
 
   // Hides or shows course details
   const toggleTraining = (t?) => {
@@ -56,7 +56,8 @@ const Training = () => {
   };
 
   useEffect(() => {
-    if (trainings.isSuccess && trainings.data) {
+    // Only reset trainingState when the hook has returned new data that isn't already set
+    if (trainings.isSuccess && trainings.data && trainings.data !== trainingsState.data) {
       setTrainings({
         data: trainings.data,
         isLoading: trainings.isLoading,
