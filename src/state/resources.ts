@@ -1,8 +1,8 @@
 import { atom, selector } from 'recoil';
-import Fuse from 'fuse.js';
 import { Types } from '@osu-wams/lib';
 import { checkAffiliation, filterByCategory } from 'src/features/resources/resources-utils';
 import { selectedCategoryState, userState } from './application';
+import { searchIndex } from './search';
 
 export const resourceState = atom<{
   data: Types.Resource[];
@@ -36,35 +36,6 @@ export const debouncedResourceSearchState = atom<string | undefined>({
   default: undefined,
 });
 
-/**
- * Once the resources items state is resolved with data from the server, create a fuse searchable
- * index for another selector to operate on. The options are spit-balled to give fairly fuzzy
- * searching without regard to where at in the keys the pattern is found (not necessarily the
- * beginning of the matched words).
- *
- * If the resourceState is changed (refreshed from the server), the index is recreated and kept
- * fresh.
- */
-const resourceSearchIndex = selector<Fuse<Types.Resource> | undefined>({
-  key: 'resourceSearchIndex',
-  get: ({ get }) => {
-    const resources = get(resourceState);
-    if (resources.data.length) {
-      const options: Fuse.IFuseOptions<Types.Resource> = {
-        includeScore: true,
-        keys: ['title', 'synonyms'],
-        minMatchCharLength: 2,
-        threshold: 0.2,
-        ignoreLocation: true,
-      };
-      // create index
-      const fuse = new Fuse(resources.data, options);
-      return fuse;
-    }
-    return undefined;
-  },
-});
-
 // Not intended for export; an internal selector for managing state.
 const filteredResourcesByUserAffiliation = selector<Types.Resource[]>({
   key: 'filteredResourcesByUserAffiliation',
@@ -94,15 +65,12 @@ const filteredResourcesBySearch = selector<Types.Resource[]>({
     const searchTerm = get(debouncedResourceSearchState);
     const query = searchTerm?.toLowerCase() ?? '';
     const resources = get(filteredResourcesByUserAffiliation);
-    const searchIndex = get(resourceSearchIndex);
-    if (searchIndex) {
-      const found = searchIndex.search(query);
-      const foundIds = found.map((f) => f.item.id);
-      // When typing we search for synonyms and names to get results
-      return resources.filter((resource) => foundIds.includes(resource.id));
-    } else {
+    if (!query) {
       return resources;
     }
+    const found = get(searchIndex(query));
+    const foundIds = found.filter((i) => i.item.attr.resource).map((i) => i.item.attr.resource!.id);
+    return resources.filter((r) => foundIds.includes(r.id));
   },
 });
 
