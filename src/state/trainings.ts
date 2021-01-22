@@ -1,7 +1,7 @@
 import { atom, selector } from 'recoil';
-import Fuse from 'fuse.js';
 import { Types } from '@osu-wams/lib';
 import { filterByProperties } from 'src/features/training/trainings-utils';
+import { searchIndex } from './search';
 
 export const trainingAudienceState = atom<{
   data: any[];
@@ -65,50 +65,6 @@ export const debouncedTrainingSearchState = atom<string | undefined>({
   default: undefined,
 });
 
-/**
- * Once the trainings state is resolved with data from the server, create a fuse searchable
- * index for another selector to operate on. The options are spit-balled to give fairly fuzzy
- * searching without regard to where at in the keys the pattern is found (not necessarily the
- * beginning of the matched words).
- *
- * If the trainingState is changed (refreshed from the server), the index is recreated and kept
- * fresh.
- */
-const trainingSearchIndex = selector<Fuse<Types.Training> | undefined>({
-  key: 'trainingSearchIndex',
-  get: ({ get }) => {
-    const trainings = get(trainingState);
-    if (trainings.data.length) {
-      const options: Fuse.IFuseOptions<Types.Training> = {
-        includeScore: true,
-        keys: [
-          'audiences',
-          'body',
-          'contact',
-          'cost',
-          'courseDesign',
-          'department',
-          'duration',
-          'frequency',
-          'prerequisites',
-          'tags',
-          'title',
-          'type',
-          'websiteTitle',
-          'websiteUri',
-        ],
-        minMatchCharLength: 2,
-        threshold: 0.2,
-        ignoreLocation: true,
-      };
-      // create index
-      const fuse = new Fuse(trainings.data, options);
-      return fuse;
-    }
-    return undefined;
-  },
-});
-
 // Not intended for export; an internal selector for managing state.
 const filteredTrainings = selector<Types.Training[]>({
   key: 'filteredTrainings',
@@ -128,14 +84,12 @@ const filteredTrainingsBySearch = selector<Types.Training[]>({
     const searchTerm = get(debouncedTrainingSearchState);
     const query = searchTerm?.toLowerCase() ?? '';
     const trainings = get(filteredTrainings);
-    const searchIndex = get(trainingSearchIndex);
-    if (searchIndex && query) {
-      const found = searchIndex.search(query);
-      const foundIds = found.map((f) => f.item.id);
-      return trainings.filter((t) => foundIds.includes(t.id));
-    } else {
+    if (!query) {
       return trainings;
     }
+    const found = get(searchIndex(query));
+    const foundIds = found.filter((i) => i.item.attr.training).map((i) => i.item.attr.training!.id);
+    return trainings.filter((t) => foundIds.includes(t.id));
   },
 });
 

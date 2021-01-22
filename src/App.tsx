@@ -94,11 +94,11 @@ const App = (props: AppProps) => {
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
   const [plannerItemData, setPlannerItemData] = useRecoilState(plannerItemState);
   const setCards = useSetRecoilState(dynamicCardState);
-  const setResources = useSetRecoilState(resourceState);
+  const [resourcesState, setResources] = useRecoilState(resourceState);
   const containerElementRef = useRef(props.containerElement);
   const { addMessage } = useApplicationMessages();
   const cardsHook = useCards();
-  const resHook = useResources();
+  const resources = useResources();
   const userHook = useUser();
   const infoButtons = useInfoButtons();
   const plannerItems = usePlannerItems({
@@ -154,15 +154,16 @@ const App = (props: AppProps) => {
   }, [cardsHook.data, cardsHook.isSuccess]);
 
   useEffect(() => {
-    if (resHook.isSuccess && resHook.data) {
+    // Only reset resourceState when the hook has returned new data that isn't already set
+    if (resources.isSuccess && resources.data && resources.data !== resourcesState.data) {
       setResources({
-        data: resHook.data,
-        isLoading: resHook.isLoading,
-        isSuccess: resHook.isSuccess,
-        isError: resHook.isError,
+        data: resources.data,
+        isLoading: resources.isLoading,
+        isSuccess: resources.isSuccess,
+        isError: resources.isError,
       });
     }
-  }, [resHook.data, resHook.isSuccess]);
+  }, [resources.data, resources.isSuccess]);
 
   /**
    * User Bootstrap for User setup
