@@ -36,7 +36,9 @@ export const plannerItemState = atom<{
   data: Types.PlannerItem[];
   isLoading: boolean;
   error: Error | null;
+  isSuccess: boolean;
+  isError: boolean;
 }>({
   key: 'plannerItemState',
-  default: { data: [], isLoading: false, error: null },
+  default: { data: [], isLoading: false, error: null, isError: false, isSuccess: false },
 });
