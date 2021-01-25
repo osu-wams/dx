@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Loading } from 'src/ui/Loading';
 import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { useAcademicCalendarEvents, useCourseSchedule } from '@osu-wams/hooks';
+import { useAcademicCalendarEvents } from '@osu-wams/hooks';
 import { getNextFiveDays, coursesOnDay, startDate } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
@@ -15,6 +15,7 @@ import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
 import { userState, plannerItemState } from 'src/state';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
 
 /**
  * Course Schedule Card
@@ -24,24 +25,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 const ScheduleCard = () => {
   const [user] = useRecoilState(userState);
   const plannerItems = useRecoilValue(plannerItemState);
-  const courses = useCourseSchedule();
+  const { courses } = useCourseScheduleState();
   const nextFiveDays = getNextFiveDays(startDate());
   const [selectedDay, setSelectedDay] = useState(nextFiveDays[0]);
   const calEvents = useAcademicCalendarEvents();
-
-  const getCoursesOnSelectedDay = () => {
-    if (courses.data) {
-      return coursesOnDay(courses.data, selectedDay).filter((course) => {
-        course.attributes.meetingTimes = course.attributes.meetingTimes.filter((meeting) => {
-          return isWithinInterval(selectedDay, {
-            start: parseISO(meeting.beginDate),
-            end: parseISO(meeting.endDate),
-          });
-        });
-        return course.attributes.meetingTimes.length;
-      });
-    }
-  };
 
   let selectedPlannerItems: any[] = [];
 
@@ -100,10 +87,7 @@ const ScheduleCard = () => {
           )}
           {courses.isLoading && <Loading lines={4} />}
           {courses.isSuccess && courses.data && (
-            <ScheduleCardCourses
-              courses={courses.data}
-              selectedCourses={getCoursesOnSelectedDay() ?? []}
-            />
+            <ScheduleCardCourses courses={courses.data} selectedDay={selectedDay} />
           )}
           <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
         </div>

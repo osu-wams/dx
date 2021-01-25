@@ -28,13 +28,15 @@ import {
   ICoursesMap,
   exceptMeetingTypes,
   examName,
+  coursesOnDay,
 } from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
 import Course from '../Course';
 import { Types } from '@osu-wams/lib';
+import { isWithinInterval, parseISO } from 'date-fns';
 
 interface ScheduleCardCoursesProps {
-  selectedCourses: Types.CourseSchedule[];
+  selectedDay: Date;
   courses: Types.CourseSchedule[];
 }
 
@@ -61,11 +63,29 @@ const meetingTimeCampusMap = (
   </a>
 );
 
+const meetingTimesOnDay = (meetingTimes: Types.CourseScheduleMeetingTime[], day: Date) =>
+  meetingTimes.filter(({ beginDate, endDate }) =>
+    isWithinInterval(day, {
+      start: parseISO(beginDate),
+      end: parseISO(endDate),
+    })
+  );
+
+// Return courses from array which are found to have meeting time(s) scheduled on the day provided
+const getCoursesOnSelectedDay = (courses: Types.CourseSchedule[], day: Date) => {
+  if (courses) {
+    return coursesOnDay(courses, day).filter(
+      ({ attributes: { meetingTimes } }) => meetingTimesOnDay(meetingTimes, day).length > 0
+    );
+  }
+  return [];
+};
+
 const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
   const themeContext = useContext(ThemeContext);
   const [isOpen, setOpen] = useState(false);
   const [showCoursesMap, setShowCoursesMap] = useState<ICoursesMap | null>(null);
-  const { selectedCourses, courses } = props;
+  const { selectedDay, courses } = props;
   // use sortedGroupedByCourseName as a convenience method for getting a coursesMap
   const coursesMap: Map<string, ICoursesMap> = sortedGroupedByCourseName(courses);
 
@@ -86,8 +106,9 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
     coursesMap: Map<string, ICoursesMap>,
     course: Types.CourseSchedule,
     themeContext: ThemeConfiguration
-  ): JSX.Element[] =>
-    exceptMeetingTypes(course.attributes.meetingTimes, ['MID']).map(
+  ): JSX.Element[] => {
+    const meetingTimes = meetingTimesOnDay(course.attributes.meetingTimes, selectedDay);
+    return exceptMeetingTypes(meetingTimes, ['MID']).map(
       (meetingTime: Types.CourseScheduleMeetingTime) => (
         <ListItem key={`${course.id}${meetingTime.beginDate}${meetingTime.beginTime}`}>
           <ListItemContentButton
@@ -122,6 +143,9 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
         </ListItem>
       )
     );
+  };
+
+  const selectedCourses = getCoursesOnSelectedDay(courses, selectedDay);
 
   return (
     <CardSection>
