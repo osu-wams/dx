@@ -8,24 +8,10 @@ import ReactGA from 'react-ga';
 import Header from './ui/Header';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import {
-  Constants,
-  useInfoButtons,
-  useUser,
-  usePlannerItems,
-  useCards,
-  useResources,
-} from '@osu-wams/hooks';
+import { useInfoButtons, useUser, useCards, useResources } from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
-import {
-  userState,
-  themeState,
-  infoButtonState,
-  plannerItemState,
-  dynamicCardState,
-  resourceState,
-} from './state';
+import { userState, themeState, infoButtonState, dynamicCardState, resourceState } from './state';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { User, Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
@@ -39,6 +25,7 @@ import MobileCovid from './pages/mobile-app/MobileCovid';
 import { useApplicationMessages } from './util/useApplicationMessages';
 import { changeAffiliation } from './util/user';
 import { WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD } from './state/messages';
+import usePlannerItemsState from './hooks/usePlannerItemsState';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -92,7 +79,6 @@ const App = (props: AppProps) => {
   const [user, setUser] = useRecoilState<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
-  const [plannerItemData, setPlannerItemData] = useRecoilState(plannerItemState);
   const setCards = useSetRecoilState(dynamicCardState);
   const [resourcesState, setResources] = useRecoilState(resourceState);
   const containerElementRef = useRef(props.containerElement);
@@ -101,41 +87,10 @@ const App = (props: AppProps) => {
   const resources = useResources();
   const userHook = useUser();
   const infoButtons = useInfoButtons();
-  const plannerItems = usePlannerItems({
-    ...Constants.REACT_QUERY_DEFAULT_CONFIG,
-    enabled: user.isCanvasOptIn,
-    retry: false,
-    // If the user had previously approved Canvas, but planner-items fails on the server side due to invalid oauth,
-    // a 403 is returned to the frontend, the user isCanvasOptIn should be changed to false and the hook disabled, causing the
-    // component to render the "Authorize Canvas" button giving the user the ability to opt-in again.
-    // @ts-ignore never read
-    onError: (err) => {
-      const {
-        response: { status },
-      } = err as any;
-      if (user.isCanvasOptIn && status === 403) {
-        // This hook needs to reach into the UserState and call the underlying
-        // setter on the user object rather than the `setUser` on the
-        // recoil state itself.
-        user.setUser!((prevUser) => ({
-          ...prevUser,
-          isCanvasOptIn: false,
-          data: { ...prevUser.data, isCanvasOptIn: false },
-        }));
-      }
-    },
-  });
+
+  usePlannerItemsState();
 
   /* eslint-disable react-hooks/exhaustive-deps  */
-  useEffect(() => {
-    if (plannerItems.data && plannerItems.data !== plannerItemData.data) {
-      setPlannerItemData({
-        data: plannerItems.data,
-        isLoading: plannerItems.isLoading,
-        error: plannerItems.error,
-      });
-    }
-  }, [plannerItems.data]);
 
   useEffect(() => {
     if (infoButtons.data !== infoButtonData) {
