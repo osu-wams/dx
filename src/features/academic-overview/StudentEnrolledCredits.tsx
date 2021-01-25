@@ -8,7 +8,7 @@ import {
 } from 'src/ui/Highlights';
 import { Types } from '@osu-wams/lib';
 import { useRecoilValue } from 'recoil';
-import { courseState } from 'src/state/courses';
+import { courseState } from 'src/state';
 
 export const StudentEnrolledCredits: React.FC = () => {
   const [enrolledCredits, setEnrolledCredits] = useState(0);

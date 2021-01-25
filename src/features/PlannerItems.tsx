@@ -10,9 +10,8 @@ import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
-import { userState, plannerItemState } from 'src/state';
+import { courseState, userState, plannerItemState } from 'src/state';
 import { useRecoilValue } from 'recoil';
-import { courseState } from 'src/state/courses';
 
 /**
  * Upcoming Assignments Card
