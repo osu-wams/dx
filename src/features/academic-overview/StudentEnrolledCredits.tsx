@@ -6,27 +6,28 @@ import {
   HighlightEmphasis,
   HighlightDescription,
 } from 'src/ui/Highlights';
-import { useCourseSchedule } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
+import { useRecoilValue } from 'recoil';
+import { courseState } from 'src/state/courses';
 
 export const StudentEnrolledCredits: React.FC = () => {
   const [enrolledCredits, setEnrolledCredits] = useState(0);
-  const courseSchedule = useCourseSchedule();
+  const courses = useRecoilValue(courseState);
 
   useEffect(() => {
-    if (courseSchedule.data) {
+    if (courses.data) {
       setEnrolledCredits(
-        courseSchedule.data
+        courses.data
           .map((c: Types.CourseSchedule) => c.attributes.creditHours)
           .reduce((a: number, v: number) => a + v, 0)
       );
     }
-  }, [courseSchedule.data]);
+  }, [courses.data]);
 
   return (
     <Highlight textAlignLeft>
-      {courseSchedule.isLoading && <Loading lines={5} />}
-      {courseSchedule.isSuccess && (
+      {courses.isLoading && <Loading lines={5} />}
+      {courses.isSuccess && (
         <>
           <HighlightEmphasis>{enrolledCredits}</HighlightEmphasis>
           <HighlightTitle marginTop={0}>Credits</HighlightTitle>

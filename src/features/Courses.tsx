@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { ThemeContext } from 'styled-components/macro';
-import { useCourseSchedule } from '@osu-wams/hooks';
 import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
 import { sortedGroupedByCourseName, ICoursesMap } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
 import {
@@ -22,6 +21,8 @@ import { Event } from '../util/gaTracking';
 import { matchedCourseContext } from './course-utils';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { Types } from '@osu-wams/lib';
+import { useRecoilValue } from 'recoil';
+import { courseState } from 'src/state/courses';
 
 /**
  * Get the course item lead text or the icon
@@ -54,7 +55,7 @@ export const courseItemLeadText = (subject: string, number: string): JSX.Element
 
 const Courses = () => {
   const themeContext = useContext(ThemeContext);
-  const courses = useCourseSchedule();
+  const courses = useRecoilValue(courseState);
   const [isOpen, setOpen] = useState(false);
   const [showCoursesMap, setShowCoursesMap] = useState<ICoursesMap | null>(null);
 

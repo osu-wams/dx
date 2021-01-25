@@ -13,9 +13,11 @@ import { AcademicProgram } from 'src/features/AcademicProgram';
 import { filteredCards } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
+import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
 
 const AcademicsDashboard = () => {
   const cards = useRecoilValue(filteredCards('Academics'));
+  useCourseScheduleState();
 
   return (
     <>

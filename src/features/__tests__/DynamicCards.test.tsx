@@ -13,6 +13,8 @@ import Profile from 'src/pages/Profile';
 
 import { Resources, Cards } from '@osu-wams/hooks';
 import { resourceState, dynamicCardState } from 'src/state';
+import { mockCourseSchedule } from 'src/mocks/handlers';
+import { courseState } from 'src/state/courses';
 
 const { resourcesData } = Resources.mockResources;
 const { cardsData } = Cards.mockCards;
@@ -45,6 +47,10 @@ describe('<DynamicCard />', () => {
       {
         state: dynamicCardState,
         value: () => mockCardData(),
+      },
+      {
+        state: courseState,
+        value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
       },
     ]);
   });
