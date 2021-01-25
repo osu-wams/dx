@@ -5,6 +5,8 @@ import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from 'src/setupTests';
 import { Student } from '@osu-wams/hooks';
 import { infoButtonState, plannerItemState } from 'src/state';
+import { courseState } from 'src/state/courses';
+import { mockCourseSchedule } from 'src/mocks/handlers';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockInitialState = jest.fn();
@@ -20,6 +22,15 @@ describe('<PlannerItems />', () => {
           data: mockPlannerItems.data,
           isLoading: false,
           error: null,
+        },
+      },
+      {
+        state: courseState,
+        value: {
+          isLoading: false,
+          isError: false,
+          isSuccess: true,
+          data: mockCourseSchedule,
         },
       },
     ]);
@@ -47,6 +58,15 @@ describe('<PlannerItems />', () => {
           ],
           isLoading: false,
           error: null,
+        },
+      },
+      {
+        state: courseState,
+        value: {
+          isLoading: false,
+          isError: false,
+          isSuccess: true,
+          data: mockCourseSchedule,
         },
       },
     ]);
@@ -85,6 +105,15 @@ describe('<PlannerItems />', () => {
           error: null,
         },
       },
+      {
+        state: courseState,
+        value: {
+          isLoading: false,
+          isError: false,
+          isSuccess: true,
+          data: mockCourseSchedule,
+        },
+      },
     ]);
 
     const { findByText } = render(<PlannerItems />, {
@@ -109,6 +138,15 @@ describe('with an InfoButton in the CardFooter', () => {
       {
         state: infoButtonState,
         value: [{ content: '...', id: 'some-other-id', title: '...' }],
+      },
+      {
+        state: courseState,
+        value: {
+          isLoading: false,
+          isError: false,
+          isSuccess: true,
+          data: mockCourseSchedule,
+        },
       },
     ]);
     const { queryByTestId, findByText } = render(<PlannerItems />, {
@@ -135,6 +173,15 @@ describe('with an InfoButton in the CardFooter', () => {
         state: infoButtonState,
         value: [{ content: 'Info Button Content', id: 'canvas', title: 'Info Button Title' }],
       },
+      {
+        state: courseState,
+        value: {
+          isLoading: false,
+          isError: false,
+          isSuccess: true,
+          data: mockCourseSchedule,
+        },
+      },
     ]);
     const { findByTestId } = render(<PlannerItems />, { initialStates: mockInitialState() });
 
@@ -152,6 +199,15 @@ describe('with a user who has not opted-in Canvas', () => {
           data: mockPlannerItems.data,
           isLoading: false,
           error: null,
+        },
+      },
+      {
+        state: courseState,
+        value: {
+          isLoading: false,
+          isError: false,
+          isSuccess: true,
+          data: mockCourseSchedule,
         },
       },
     ]);

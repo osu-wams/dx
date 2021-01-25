@@ -3,7 +3,6 @@ import { Loading } from 'src/ui/Loading';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from '../ui/List';
-import { useCourseSchedule } from '@osu-wams/hooks';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
 import Url from '../util/externalUrls.data';
 import { ExternalLink } from '../ui/Link';
@@ -13,6 +12,7 @@ import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
 import { userState, plannerItemState } from 'src/state';
 import { useRecoilValue } from 'recoil';
+import { courseState } from 'src/state/courses';
 
 /**
  * Upcoming Assignments Card
@@ -22,7 +22,7 @@ import { useRecoilValue } from 'recoil';
 const PlannerItems = () => {
   const user = useRecoilValue(userState);
   const { data, isLoading } = useRecoilValue(plannerItemState);
-  const courses = useCourseSchedule();
+  const courses = useRecoilValue(courseState);
 
   const listOrEmpty = () => {
     if (isLoading) {

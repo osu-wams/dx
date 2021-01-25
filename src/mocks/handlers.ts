@@ -52,7 +52,7 @@ import {
 
 const mockHolds = Student.Holds.mockHolds.data;
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus.data;
-const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.courseScheduleData;
+export const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.courseScheduleData;
 const mockDegrees = Student.Degrees.mockDegrees.data;
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
 const { mockAccountTransactions } = Student.AccountTransactions;

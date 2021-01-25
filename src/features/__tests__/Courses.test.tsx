@@ -1,19 +1,26 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { alterMock, render } from 'src/util/test-utils';
+import { render } from 'src/util/test-utils';
 import Courses from '../Courses';
 import { mockGAEvent } from 'src/setupTests';
 import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
 import { infoButtonState } from 'src/state';
-import { CLASS_SCHEDULE_API } from 'src/mocks/apis';
+import { courseState } from 'src/state/courses';
+import { mockCourseSchedule } from 'src/mocks/handlers';
 
 const mockInitialState = jest.fn();
 
 describe('<Courses />', () => {
   beforeEach(() => {
-    render(<Courses />);
+    mockInitialState.mockReturnValue([
+      {
+        state: courseState,
+        value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
+      },
+    ]);
+    render(<Courses />, { initialStates: mockInitialState() });
   });
   it('renders a list of courses for the current user', async () => {
     const courseTitle = await screen.findByText(/data structures/i);
@@ -142,8 +149,13 @@ describe('with an InfoButton in the CardFooter', () => {
 
 describe('without courses present', () => {
   beforeEach(() => {
-    alterMock(CLASS_SCHEDULE_API, []);
-    render(<Courses />);
+    mockInitialState.mockReturnValue([
+      {
+        state: courseState,
+        value: { isLoading: false, isError: false, isSuccess: true, data: [] },
+      },
+    ]);
+    render(<Courses />, { initialStates: mockInitialState() });
   });
 
   it('contains message about no courses scheduled this term', () => {
