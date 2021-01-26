@@ -1,13 +1,14 @@
 import {
   categoryState,
   infoButtonState,
-  plannerItemState,
   selectedCategoryState,
   themeState,
   userState,
 } from './application';
+import { courseState } from './courses';
 import { dynamicCardState, filteredCards } from './dynamicCards';
 import { filteredNotifications, userMessagesState } from './notifications';
+import { plannerItemState } from './plannerItems';
 import {
   debouncedResourceSearchState,
   filteredResourcesState,
@@ -27,6 +28,7 @@ import {
 
 export {
   categoryState,
+  courseState,
   debouncedResourceSearchState,
   debouncedTrainingSearchState,
   dynamicCardState,

@@ -10,11 +10,9 @@ import Dashboard from 'src/pages/Dashboard';
 import Finances from 'src/pages/Finances';
 import Academics from 'src/pages/Academics';
 import Profile from 'src/pages/Profile';
-
 import { Resources, Cards } from '@osu-wams/hooks';
-import { resourceState, dynamicCardState } from 'src/state';
+import { courseState, resourceState, dynamicCardState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
-import { courseState } from 'src/state/courses';
 
 const { resourcesData } = Resources.mockResources;
 const { cardsData } = Cards.mockCards;

@@ -22,7 +22,7 @@ import { matchedCourseContext } from './course-utils';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { Types } from '@osu-wams/lib';
 import { useRecoilValue } from 'recoil';
-import { courseState } from 'src/state/courses';
+import { courseState } from 'src/state';
 
 /**
  * Get the course item lead text or the icon

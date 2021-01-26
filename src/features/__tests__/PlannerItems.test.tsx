@@ -4,8 +4,7 @@ import { render, authUser } from 'src/util/test-utils';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from 'src/setupTests';
 import { Student } from '@osu-wams/hooks';
-import { infoButtonState, plannerItemState } from 'src/state';
-import { courseState } from 'src/state/courses';
+import { courseState, infoButtonState, plannerItemState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;

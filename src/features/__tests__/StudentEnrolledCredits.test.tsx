@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import StudentEnrolledCredits from '../academic-overview/StudentEnrolledCredits';
-import { courseState } from 'src/state/courses';
+import { courseState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 const mockInitialState = jest.fn();

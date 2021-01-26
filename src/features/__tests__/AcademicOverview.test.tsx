@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { render, mockGradUser } from 'src/util/test-utils';
 import AcademicOverview from '../AcademicOverview';
 import { mockGAEvent } from 'src/setupTests';
-import { courseState } from 'src/state/courses';
+import { courseState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 const mockInitialState = jest.fn();
