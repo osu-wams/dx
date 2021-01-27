@@ -160,21 +160,15 @@ describe('<EventCardContainer />', () => {
   it('should not display the announcements in the same order everytime', async () => {
     alterMock(ANNOUNCEMENTS_API, announcementsData_10.data);
     alterMock(STUDENT_EVENTS_API, studentExperienceEvents_10.data);
-
     let match = true;
-
     const { findAllByTestId } = render(<EventCardContainer page="dashboard" />);
     const test1 = await findAllByTestId('eventcard');
 
-    // rerendering the screen, not using rerender because the randomizer is in a useEffect that isn't getting triggered by rerender
-    await cleanup();
+    cleanup(); // ensure the dom fully clears and cleans before rendering a second time
     render(<EventCardContainer page="dashboard" />);
-    const test2 = await findAllByTestId('eventcard');
 
-    await waitFor(() => {
-      // make sure they are the same length first
-      expect(test1.length).toEqual(test2.length);
-    });
+    const test2 = await findAllByTestId('eventcard');
+    expect(test1.length).toEqual(test2.length);
 
     // loop through each and check to see if either of the arrays at index x dont match
     for (let x = 0; x < test1.length; x++) {
