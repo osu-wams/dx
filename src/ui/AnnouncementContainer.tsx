@@ -3,12 +3,13 @@ import styled from 'styled-components/macro';
 import EventCard from './EventCard';
 import { Title } from 'src/ui/PageTitle';
 import { User } from '@osu-wams/hooks';
+import { Types } from '@osu-wams/lib';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
-import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
+import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
 
-const { hasAudience, getAffiliation } = User;
+const { hasAudience } = User;
 
 const AnnouncementContainerWrapper = styled.div`
   max-width: ${breakpoints.large};
@@ -24,24 +25,15 @@ const AnnouncementContainerWrapper = styled.div`
 `;
 
 const AnnouncementContainer = ({ page, ...props }) => {
-  const [events, setEvents] = useState<any>([]);
+  const [events, setEvents] = useState<Types.Announcement[]>([]);
   const user = useRecoilValue(userState);
-  const announcements = useAnnouncements(page);
-  const { hasAffiliation } = Announcements;
+  const { filtered } = useAnnouncementsState(page); // TODO: Promote to application-state for search
 
-  // Fetch data on load
   useEffect(() => {
-    let announcementsToUse: any[] = [];
-
-    if (!user.loading && !announcements.loading && Array.isArray(announcements.data)) {
-      announcementsToUse = announcements.data.filter(
-        (announcement) =>
-          hasAudience(user.data, announcement) &&
-          hasAffiliation(getAffiliation(user.data), announcement)
-      );
+    if (filtered.length) {
+      setEvents(filtered.filter((announcement) => hasAudience(user.data, announcement)));
     }
-    setEvents(announcementsToUse);
-  }, [announcements.data, hasAffiliation, announcements.loading, user.data, user.loading]);
+  }, [filtered]);
 
   if (events.length === 0) {
     return null;
