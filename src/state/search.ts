@@ -33,7 +33,7 @@ const announcementSearchItems = selector<SearchItem[]>({
           },
         }))
       )
-      .flat();
+      .reduce((p, v) => p.concat(v), []);
     // unique array of items based on thier item.id
     return Array.from(new Map(all.map((item) => [item.id, item])).values());
   },
