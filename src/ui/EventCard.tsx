@@ -7,6 +7,7 @@ import { spacing, fontSize, mq } from 'src/theme';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
 import { format } from 'src/util/helpers';
+import { Types } from '@osu-wams/lib';
 
 const ButtonWithIcon = styled(Button).attrs({
   as: 'a',
@@ -83,7 +84,7 @@ const EventCardText = styled.div`
   flex-grow: 2;
 `;
 
-const EventCardWrapper = styled(CardBase)<{ imageUrl: string | null }>(
+const EventCardWrapper = styled(CardBase)<{ imageUrl?: string }>(
   ({ theme }) => ({
     color: theme.ui.eventCard.color,
     backgroundColor: theme.ui.eventCard.background,
@@ -128,18 +129,18 @@ const EventCardBody = styled.a`
   justify-content: center;
 `;
 
-const EventCardContent = ({ item }) => {
+const EventCardContent = ({ item }: { item: Types.LocalistEvent | Types.Announcement }) => {
   const themeContext = useContext(ThemeContext);
 
   return (
     <>
       {!item.body && (
         <EventCardBody
-          href={item.action.link}
+          href={item.action?.link}
           target="_blank"
-          onClick={() => Event('calendar-event', item.title, item.action.link)}
+          onClick={() => Event('calendar-event', item.title, item.action?.link)}
         >
-          <EventCardDate month={format(item.date, 'MMM')} day={format(item.date, 'd')} />
+          <EventCardDate month={format(item.date!, 'MMM')} day={format(item.date!, 'd')} />
           <EventCardLargeTitle>{item.title}</EventCardLargeTitle>
         </EventCardBody>
       )}
@@ -152,7 +153,7 @@ const EventCardContent = ({ item }) => {
               <ButtonWithIcon
                 fg={themeContext.ui.eventCard.button.color}
                 href={item.action.link}
-                onClick={() => Event('dx-event', item.title, item.action.link)}
+                onClick={() => Event('dx-event', item.title, item.action?.link)}
                 target="_blank"
               >
                 {item.action.title}
@@ -166,7 +167,7 @@ const EventCardContent = ({ item }) => {
   );
 };
 
-const EventCard = ({ itemContent }) => {
+const EventCard = ({ itemContent }: { itemContent: Types.LocalistEvent | Types.Announcement }) => {
   return (
     <div data-testid="eventcard">
       <EventCardWrapper imageUrl={itemContent.bg_image}>
