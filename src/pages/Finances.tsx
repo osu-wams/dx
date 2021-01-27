@@ -9,6 +9,7 @@ import { MainGridWrapper, Masonry } from '../theme';
 import { filteredCards } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
+import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
 
 const Finances = () => {
   const cards = useRecoilValue(filteredCards('Finances'));
@@ -26,7 +27,10 @@ const Finances = () => {
           ))}
         </Masonry>
       </MainGridWrapper>
-      <AnnouncementContainer data-testid="finances-announcements" page="finances" />
+      <AnnouncementContainer
+        data-testid="finances-announcements"
+        page={ANNOUNCEMENT_PAGES.finances}
+      />
     </>
   );
 };

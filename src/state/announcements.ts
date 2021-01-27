@@ -1,6 +1,12 @@
 import { atomFamily, selectorFamily } from 'recoil';
 import { Types } from '@osu-wams/lib';
 
+export const ANNOUNCEMENT_PAGES = {
+  academics: 'academics',
+  dashboard: 'dashboard',
+  finances: 'finances',
+};
+
 export const announcementsFilterState = atomFamily<{ affiliation?: string; page: string }, string>({
   key: 'announcementsPageFilterState',
   default: (param) => ({

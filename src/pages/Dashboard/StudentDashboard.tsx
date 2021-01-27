@@ -11,6 +11,7 @@ import { filteredCards } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
+import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
 
 const StudentDashboard = () => {
   const cards = useRecoilValue(filteredCards('Dashboard'));
@@ -32,7 +33,7 @@ const StudentDashboard = () => {
           ))}
         </Masonry>
       </MainGridWrapper>
-      <EventCardContainer page="dashboard" />
+      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />
     </>
   );
 };
