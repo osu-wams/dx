@@ -70,9 +70,8 @@ describe('<ProgramOfStudy /> | Degree', () => {
       expect(await screen.findByText(/Certificate/i)).toBeInTheDocument();
     });
 
-    // when a student graduates, they have a major but no department
+    // When a student graduates, they have a major but no department
     it('no extra comma after major, since no department', async () => {
-      // get rid of departments in mock
       let newApiData = apiData;
       newApiData[0].attributes.majors.first.department = '';
       newApiData[0].attributes.majors.second.department = '';
@@ -80,9 +79,6 @@ describe('<ProgramOfStudy /> | Degree', () => {
       alterMock(DEGREES_API, newApiData);
 
       render(<AcademicProgram />);
-
-      console.log('old api data: ', apiData[0].attributes.majors);
-      console.log('new api data: ', newApiData[0].attributes.majors);
 
       expect(screen.queryByText(/, School of Mech, Ind, Manf Engr/i)).not.toBeInTheDocument();
     });
