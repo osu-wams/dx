@@ -22,6 +22,9 @@ const ScheduleCardAssignments = ({
   courseList: Types.CourseSchedule[];
 }) => {
   const user = useRecoilValue(userState);
+  {
+    console.log('Schedule Card Assignments');
+  }
 
   const noAssignmentsDue = () => (
     <NoItems as="li">
@@ -33,6 +36,7 @@ const ScheduleCardAssignments = ({
   return (
     <CardSection>
       <SectionHeader>Assignments</SectionHeader>
+      {console.log(selectedPlannerItems, user)}
       <List>
         {!user.isCanvasOptIn && <AuthorizeCanvasCompact />}
         {user.isCanvasOptIn && selectedPlannerItems.length === 0 && noAssignmentsDue()}

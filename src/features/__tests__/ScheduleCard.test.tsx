@@ -4,26 +4,22 @@ import { screen } from '@testing-library/react';
 import { render, authUser } from 'src/util/test-utils';
 import { Events, Student } from '@osu-wams/hooks';
 import ScheduleCard from '../ScheduleCard';
-import { mockGAEvent } from 'src/setupTests';
+import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
 import { format } from 'src/util/helpers';
 import { courseState, plannerItemState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
-// const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.courseScheduleData;
 const mockSimpleSchedule = Student.CourseSchedule.mockCourseSchedule.simpleSchedule;
 const getThisDate = (): number => {
   return Date.now();
 };
 const mockGetStartDate = jest.fn();
-// const mockUseCourseSchedule = jest.fn();
 const { academicCalendar3 } = Events.mockEvents;
 const mockUseAcademicCalendarEvents = jest.fn();
 const mockNoData = { data: [], loading: false, error: false };
-const mockInitialState = jest.fn();
 const mockUser = jest.fn();
-const mockCourseScheduleData = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
@@ -45,13 +41,13 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   beforeEach(() => {
     mockGetStartDate.mockReturnValue(getThisDate());
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
-    mockCourseScheduleData.mockReturnValue(mockCourseSchedule);
     mockInitialState.mockReturnValue([
       {
         state: plannerItemState,
         value: {
           data: mockPlannerItems.data,
           isLoading: false,
+          isSuccess: true,
           error: null,
         },
       },
@@ -61,7 +57,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
           isLoading: false,
           isError: false,
           isSuccess: true,
-          data: mockCourseScheduleData(),
+          data: mockCourseSchedule,
         },
       },
     ]);
@@ -117,10 +113,10 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     const course = await screen.findAllByText(/Lecture Testo/);
 
     userEvent.click(course[0]);
-    const courseDialog = await screen.findByTestId('course-dialog');
+    const courseDialog = screen.getByTestId('course-dialog');
     expect(courseDialog).toHaveTextContent(/TESTO Physics/i);
     expect(courseDialog).toHaveTextContent(/Final Exam/i);
-  }, 10000);
+  });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
     const duePartialText = `Due ${format(new Date(), 'dueAt')}`.slice(0, -5);
@@ -163,13 +159,13 @@ describe('<ScheduleCard /> accessibility checks', () => {
   beforeEach(() => {
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockGetStartDate.mockReturnValue(getThisDate());
-    mockCourseScheduleData.mockReturnValue(mockCourseSchedule);
     mockInitialState.mockReturnValue([
       {
         state: plannerItemState,
         value: {
           data: mockPlannerItems.data,
           isLoading: false,
+          isSuccess: true,
           error: null,
         },
       },
@@ -179,7 +175,7 @@ describe('<ScheduleCard /> accessibility checks', () => {
           isLoading: false,
           isError: false,
           isSuccess: true,
-          data: mockCourseScheduleData(),
+          data: mockCourseSchedule,
         },
       },
     ]);
@@ -196,7 +192,7 @@ describe('<ScheduleCard /> accessibility checks', () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
     const nextDayButton = document.querySelector('button:first-child + button');
     if (nextDayButton) userEvent.click(nextDayButton);
-    const noPlannerItemsText = await screen.findByText(/No Canvas assignments due/);
+    const noPlannerItemsText = screen.getByText(/No Canvas assignments due/);
 
     expect(noPlannerItemsText).toBeInTheDocument();
   });
@@ -267,6 +263,7 @@ describe('<ScheduleCard /> without data for given days', () => {
         value: {
           data: [],
           isLoading: false,
+          isSuccess: true,
           error: null,
         },
       },
@@ -276,13 +273,13 @@ describe('<ScheduleCard /> without data for given days', () => {
           isLoading: false,
           isError: false,
           isSuccess: true,
-          data: mockCourseScheduleData(),
+          data: mockCourseSchedule,
         },
       },
     ]);
-    render(<ScheduleCard />, { initialStates: mockInitialState() });
+    render(<ScheduleCard />, { initialStates: mockInitialState(), user: authUser });
 
-    const noPlannerItemsText = await screen.findByText(/No Canvas assignments/);
+    const noPlannerItemsText = screen.getByText(/No Canvas assignments due/);
     expect(noPlannerItemsText).toBeInTheDocument();
   });
 });
@@ -299,13 +296,13 @@ describe('<ScheduleCard /> without canvas authorization', () => {
     });
     mockUseAcademicCalendarEvents.mockReturnValue(academicCalendar3);
     mockGetStartDate.mockReturnValue(getThisDate());
-    mockCourseScheduleData.mockReturnValue(mockCourseSchedule);
     mockInitialState.mockReturnValue([
       {
         state: plannerItemState,
         value: {
           data: mockPlannerItems.data,
           isLoading: false,
+          isSuccess: true,
           error: null,
         },
       },
@@ -315,7 +312,7 @@ describe('<ScheduleCard /> without canvas authorization', () => {
           isLoading: false,
           isError: false,
           isSuccess: true,
-          data: mockCourseScheduleData(),
+          data: mockCourseSchedule,
         },
       },
     ]);

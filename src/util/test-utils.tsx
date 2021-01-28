@@ -106,17 +106,14 @@ const renderWithAllContexts = (
   { user = authUser, isDesktop = false, initialStates = new Array(), ...options } = {}
 ) => {
   const Wrapper = (props) => {
-    // useRecoilCallback(({ snapshot }) => () => {
-    //   console.log('State: ', snapshot.getLoadable(initialStates[0]?.state).contents);
-    // });
     return (
       <RecoilRoot
         initializeState={(snap) => {
           snap.set(userState, user);
           initialStates.forEach((s: { state: any; value: any }) => {
-            console.log('State: ', snap.getLoadable(s.state).contents);
+            // console.log('State: ', snap.getLoadable(s.state).contents);
             snap.set(s.state, s.value);
-            console.log('State: ', snap.getLoadable(s.state).contents);
+            // console.log('State: ', snap.getLoadable(s.state).contents);
           });
         }}
       >

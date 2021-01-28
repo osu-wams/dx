@@ -38,6 +38,7 @@ const AnnouncementContainer = ({ page, ...props }) => {
   if (events.length === 0) {
     return null;
   }
+  console.log(events);
 
   return (
     <SecondGridWrapper>
