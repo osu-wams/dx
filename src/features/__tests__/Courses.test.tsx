@@ -3,17 +3,15 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
 import Courses from '../Courses';
-import { mockGAEvent } from 'src/setupTests';
+import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { format } from 'src/util/helpers';
 import { startDate } from '../schedule/schedule-utils';
 import { courseState, infoButtonState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
-const mockInitialState = jest.fn();
-
 describe('<Courses />', () => {
   beforeEach(() => {
-    mockInitialState.mockReturnValue([
+    mockInitialState.mockReturnValueOnce([
       {
         state: courseState,
         value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
@@ -28,6 +26,7 @@ describe('<Courses />', () => {
 
   it('Finds "8" as the course count in the Badge', async () => {
     const NumCourses = await screen.findByText('8');
+
     expect(NumCourses).toBeInTheDocument();
   });
 
@@ -118,21 +117,25 @@ describe('<Courses />', () => {
   });
 });
 
-describe('with an InfoButton in the CardFooter', () => {
-  it('does not display the button when the infoButtonData is missing it', async () => {
-    mockInitialState.mockReturnValue([
+describe('with an InfoButton in the CardFooter and missing data', () => {
+  beforeEach(() => {
+    mockInitialState.mockReturnValueOnce([
       {
         state: infoButtonState,
         value: [{ content: '...', id: 'some-other-id', title: '...' }],
       },
     ]);
+  });
+
+  it('does not display the button when the infoButtonData is missing it', async () => {
     const { queryByTestId } = render(<Courses />, { initialStates: mockInitialState() });
     const element = queryByTestId('current-courses');
     expect(element).not.toBeInTheDocument();
   });
-
-  it('displays the button when the infoButtonData is included', async () => {
-    mockInitialState.mockReturnValue([
+});
+describe('with an InfoButton in the CardFooter', () => {
+  beforeEach(() => {
+    mockInitialState.mockReturnValueOnce([
       {
         state: infoButtonState,
         value: [
@@ -140,6 +143,10 @@ describe('with an InfoButton in the CardFooter', () => {
         ],
       },
     ]);
+  });
+
+  it.only('displays the button when the infoButtonData is included', async () => {
+    console.log(infoButtonState);
     const { getByTestId } = render(<Courses />, { initialStates: mockInitialState() });
     const element = getByTestId('current-courses');
     expect(element).toBeInTheDocument();
@@ -148,7 +155,7 @@ describe('with an InfoButton in the CardFooter', () => {
 
 describe('without courses present', () => {
   beforeEach(() => {
-    mockInitialState.mockReturnValue([
+    mockInitialState.mockReturnValueOnce([
       {
         state: courseState,
         value: { isLoading: false, isError: false, isSuccess: true, data: [] },

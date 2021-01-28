@@ -34,7 +34,6 @@ jest.mock('@osu-wams/hooks', () => {
   };
 });
 
-
 /**
  * Render Resources with the most commonly used features
  * We reuse a lot of these elements in our tests
@@ -52,7 +51,7 @@ const renderResources = async (userType?: any) => {
   }
   const featured = await utils.findByLabelText('Featured');
   const all = await utils.findByLabelText('All');
-  const searchInput = await utils.findByPlaceholderText('Find resources') as HTMLInputElement;
+  const searchInput = (await utils.findByPlaceholderText('Find resources')) as HTMLInputElement;
   const financial = await utils.findByLabelText('Financial');
 
   return {
@@ -77,7 +76,7 @@ describe('<Resources />', () => {
 
   describe('Components', () => {
     it('should display the title Resources', async () => {
-      await renderResources();
+      renderResources();
       expect(screen.getByText('Resources', { selector: 'h1' })).toBeInTheDocument();
     });
 
@@ -332,7 +331,7 @@ describe('<Resources />', () => {
   });
 
   describe('Graduate Student', () => {
-    beforeEach( async () => {
+    beforeEach(async () => {
       const { all } = await renderResources(mockGradUser);
       userEvent.click(all);
     });

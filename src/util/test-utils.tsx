@@ -6,7 +6,7 @@ import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/lib';
 import { mobile, desktop } from 'src/util/useMediaQuery';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilCallback } from 'recoil';
 import { userState } from 'src/state';
 import { rest } from 'msw';
 import { server } from 'src/mocks/server';
@@ -15,7 +15,7 @@ import { HelmetProvider } from 'react-helmet-async';
 // Helper method to change the mock responses by MSW
 export const alterMock = (api: string, mock: any) => {
   server.use(
-    rest.get(api, async (req, res, ctx) => {
+    rest.get('*' + api, async (req, res, ctx) => {
       return res(ctx.json(mock));
     })
   );
@@ -106,11 +106,18 @@ const renderWithAllContexts = (
   { user = authUser, isDesktop = false, initialStates = new Array(), ...options } = {}
 ) => {
   const Wrapper = (props) => {
+    // useRecoilCallback(({ snapshot }) => () => {
+    //   console.log('State: ', snapshot.getLoadable(initialStates[0]?.state).contents);
+    // });
     return (
       <RecoilRoot
         initializeState={(snap) => {
           snap.set(userState, user);
-          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+          initialStates.forEach((s: { state: any; value: any }) => {
+            console.log('State: ', snap.getLoadable(s.state).contents);
+            snap.set(s.state, s.value);
+            console.log('State: ', snap.getLoadable(s.state).contents);
+          });
         }}
       >
         <LocationProvider>
