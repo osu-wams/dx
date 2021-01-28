@@ -21,7 +21,7 @@ export const ACADEMIC_STATUS_API = stu + 'academic-status';
 
 export const CLASS_SCHEDULE_API = stu + 'class-schedule?term=current';
 
-export const DEGREES_API = stu + 'degrees?term=';
+export const DEGREES_API = stu + 'degrees*';
 
 export const ACCOUNT_BALANCE_API = stu + 'account-balance';
 

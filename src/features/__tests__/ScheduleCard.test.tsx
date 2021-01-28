@@ -120,7 +120,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     const courseDialog = await screen.findByTestId('course-dialog');
     expect(courseDialog).toHaveTextContent(/TESTO Physics/i);
     expect(courseDialog).toHaveTextContent(/Final Exam/i);
-  });
+  }, 10000);
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
     const duePartialText = `Due ${format(new Date(), 'dueAt')}`.slice(0, -5);

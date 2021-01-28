@@ -72,16 +72,16 @@ describe('<Courses />', () => {
     const MapLink = await screen.findByText(/View Strand Agriculture Hall/i);
     userEvent.click(MapLink);
 
-    // Professor email link is clickable
-    const ContactProfessorLink = await screen.findByText(/E-mail Hess/i);
-    userEvent.click(ContactProfessorLink);
+    // Professor email link is visible, it shoudn't be clicked with jest though,
+    // the testing framework doesn't support a href="mailto:...."
+    expect(await screen.findByText(/E-mail Hess/i)).toBeInTheDocument();
 
     // All Courses Link
     const ViewCoursesLink = await screen.findByText(/view courses/i);
     userEvent.click(ViewCoursesLink);
 
     // We click 4 links, so 4 GA events need to have been triggered
-    expect(mockGAEvent).toHaveBeenCalledTimes(4);
+    expect(mockGAEvent).toHaveBeenCalledTimes(3);
   });
 
   it('Course spells out the month and day for Final exams', async () => {
@@ -95,7 +95,7 @@ describe('<Courses />', () => {
     // For Final exams we spell out the month and day (match meetingDateTime format on Course.tsx)
     const monthDay = format(startDate(), 'MMMM d');
     expect(courseDialog).toHaveTextContent(monthDay);
-  });
+  }, 10000);
 
   it('Course Midterm data is excluded from view', async () => {
     const TestoBtn = await screen.findByText(/testo physics/i);
@@ -107,7 +107,7 @@ describe('<Courses />', () => {
 
     // Mid terms are currently excluded due to inconsistent data source
     expect(screen.queryByText(/MID GRP/)).not.toBeInTheDocument();
-  });
+  }, 10000);
 
   it('Footer has a Link that when clicked and Google Analytics Event fired', async () => {
     const CanvasLink = await screen.findByText(/View more in Canvas/i);
@@ -145,7 +145,7 @@ describe('with an InfoButton in the CardFooter', () => {
     ]);
   });
 
-  it.only('displays the button when the infoButtonData is included', async () => {
+  it('displays the button when the infoButtonData is included', async () => {
     console.log(infoButtonState);
     const { getByTestId } = render(<Courses />, { initialStates: mockInitialState() });
     const element = getByTestId('current-courses');

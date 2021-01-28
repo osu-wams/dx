@@ -89,7 +89,7 @@ window.matchMedia = window.matchMedia || matchMedia;
 // Jest 25 has issues with window.location so we are using this to mock
 Object.defineProperty(window, 'location', {
   writable: true,
-  value: { search: '', assign: jest.fn() },
+  value: { search: '', assign: jest.fn(), pathname: '' },
 });
 // Mock the location change method
 window.location.assign = jest.fn();
