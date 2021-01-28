@@ -14,6 +14,7 @@ import { filteredCards } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
+import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
 
 const AcademicsDashboard = () => {
   const cards = useRecoilValue(filteredCards('Academics'));
@@ -36,7 +37,10 @@ const AcademicsDashboard = () => {
           ))}
         </Masonry>
       </MainGridWrapper>
-      <AnnouncementContainer data-testid="academics-announcements" page="academics" />
+      <AnnouncementContainer
+        data-testid="academics-announcements"
+        page={ANNOUNCEMENT_PAGES.academics}
+      />
     </>
   );
 };

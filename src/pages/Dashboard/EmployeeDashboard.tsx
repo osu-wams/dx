@@ -12,6 +12,7 @@ import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCa
 import { filteredCards } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
+import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
 
 const EmployeeDashboard = () => {
   const cards = useRecoilValue(filteredCards('Dashboard'));
@@ -32,7 +33,7 @@ const EmployeeDashboard = () => {
           ))}
         </Masonry>
       </MainGridWrapper>
-      <EventCardContainer page="dashboard" />
+      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />
     </>
   );
 };

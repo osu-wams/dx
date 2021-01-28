@@ -10,19 +10,12 @@ import {
 } from '@osu-wams/hooks';
 import EventCard from './EventCard';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
-import { Announcements, useAnnouncements } from '@osu-wams/hooks';
 import { arrayIncludes } from 'src/util/helpers';
 import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
+import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
 
-const {
-  hasAudience,
-  atCampus,
-  CAMPUS_CODES,
-  hasPrimaryAffiliation,
-  AFFILIATIONS,
-  getAffiliation,
-} = User;
+const { hasAudience, atCampus, CAMPUS_CODES, hasPrimaryAffiliation, AFFILIATIONS } = User;
 
 const EventCardContainerWrapper = styled.div`
   max-width: ${breakpoints.large};
@@ -76,24 +69,24 @@ const filterEmployeeEvents = (
 };
 
 const EventCardContainer = ({ page, ...props }) => {
-  const [events, setEvents] = useState<any>([]);
+  const [events, setEvents] = useState<(Types.LocalistEvent | Types.Announcement)[]>([]);
   const user = useRecoilValue(userState);
   const studentExperienceEvents = useStudentExperienceEvents();
   const employeeEvents = useEmployeeEvents();
-
   const bendEvents = useCampusEvents('bend');
-  const announcements = useAnnouncements(page);
+  const { filtered, announcements } = useAnnouncementsState(page); // TODO: Promote to application-state for search
 
-  // Fetch data on load
   useEffect(() => {
-    let announcementsToUse: any[] = [];
+    let announcementsToUse: Types.Announcement[] = [];
     let eventsToUse: Types.LocalistEvent[] = [];
 
-    if (!announcements.loading) {
-      announcementsToUse = announcements.data;
-    }
-
-    if (!user.loading) {
+    if (
+      !user.loading &&
+      !announcements.isLoading &&
+      !studentExperienceEvents.loading &&
+      !bendEvents.loading &&
+      !employeeEvents.loading
+    ) {
       /**
        * Checks to see if you are an employee or a student at Bend or Corvallis
        * Returns the appropriate events based on that
@@ -116,43 +109,37 @@ const EventCardContainer = ({ page, ...props }) => {
         }
       }
 
-      if (!announcements.loading && Array.isArray(announcements.data)) {
+      if (filtered.length) {
         announcementsToUse = shuffleArray(
-          announcements.data.filter(
-            (announcement) =>
-              hasAudience(user.data, announcement) &&
-              Announcements.hasAffiliation(getAffiliation(user.data), announcement)
-          )
+          filtered.filter((announcement) => hasAudience(user.data, announcement))
         );
       }
-    }
+      announcementsToUse = announcementsToUse.slice(0, 6);
+      eventsToUse = eventsToUse.slice(0, 6);
 
-    announcementsToUse = announcementsToUse.slice(0, 6);
-    eventsToUse = eventsToUse.slice(0, 6);
+      if (announcementsToUse.length || eventsToUse.length) {
+        // Weave two arrays alternating an item from each providing that the array
+        // with more elements ends with its remaining items "at the end of the array".
+        //
+        // * How this works;
+        // *  - Create an array setting its length to match the max of the two being weaved.
+        // *  - Map through each of this arrays elements, populating it with the item at that index
+        // *    from each of the weaved arrays. For example if array 'a' had 4 elements and 'b' had 2 the
+        // *    resulting weaved array would look like: [ [a[0],b[0]], [a[1],b[1]], [a[2],undefined], [a[3], undefined] ]
+        // *  - Flatten (reduce/concat) the array: [ a[0],b[0],a[1],b[1],a[2],undefined,a[3],undefined ]
+        // *  - Finally, filter out the 'undefined': [ a[0],b[0],a[1],b[1],a[2],a[3] ]
+        const weavedArrays = Array.from(
+          { length: Math.max(announcementsToUse.length, eventsToUse.length) },
+          (_, i) => [announcementsToUse[i], eventsToUse[i]]
+        )
+          .reduce((p, c) => p.concat(c))
+          .filter((e) => e !== undefined);
 
-    if (announcementsToUse.length || eventsToUse.length) {
-      // Weave two arrays alternating an item from each providing that the array
-      // with more elements ends with its remaining items "at the end of the array".
-      //
-      // * How this works;
-      // *  - Create an array setting its length to match the max of the two being weaved.
-      // *  - Map through each of this arrays elements, populating it with the item at that index
-      // *    from each of the weaved arrays. For example if array 'a' had 4 elements and 'b' had 2 the
-      // *    resulting weaved array would look like: [ [a[0],b[0]], [a[1],b[1]], [a[2],undefined], [a[3], undefined] ]
-      // *  - Flatten (reduce/concat) the array: [ a[0],b[0],a[1],b[1],a[2],undefined,a[3],undefined ]
-      // *  - Finally, filter out the 'undefined': [ a[0],b[0],a[1],b[1],a[2],a[3] ]
-      const weavedArrays = Array.from(
-        { length: Math.max(announcementsToUse.length, eventsToUse.length) },
-        (_, i) => [announcementsToUse[i], eventsToUse[i]]
-      )
-        .reduce((p, c) => p.concat(c))
-        .filter((e) => e !== undefined);
-
-      setEvents(weavedArrays);
+        setEvents(weavedArrays);
+      }
     }
   }, [
-    announcements.data,
-    announcements.loading,
+    announcements,
     studentExperienceEvents.data,
     studentExperienceEvents.loading,
     user.data,
