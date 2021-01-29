@@ -39,6 +39,8 @@ const ResourceCategories = ({ hasFavorite }) => {
               name="categories"
               clickHandler={() => {
                 setSelectedCategory('favorites');
+                // Clear search bar, since we are showing all results for the category
+                resetQuery();
                 Event('resource-category', 'favorites');
               }}
               selected={selectedCategory?.toLowerCase() === 'favorites' ? true : false}
