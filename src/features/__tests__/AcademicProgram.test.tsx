@@ -59,6 +59,31 @@ describe('<ProgramOfStudy /> | Degree', () => {
     });
   });
 
+  describe('Graduated student', () => {
+    it('in is not shown in degree', async () => {
+      let newApiData = JSON.parse(JSON.stringify(apiData));
+      newApiData[0].attributes.degree = 'Certificate in'; // is there a better way to do this??
+
+      alterMock(DEGREES_API, newApiData);
+      render(<AcademicProgram />);
+
+      expect(await screen.findByText(/Certificate/i)).toBeInTheDocument();
+    });
+
+    // When a student graduates, they have a major but no department
+    it('no extra comma after major, since no department', async () => {
+      let newApiData = JSON.parse(JSON.stringify(apiData));
+      newApiData[0].attributes.majors.first.department = '';
+      newApiData[0].attributes.majors.second.department = '';
+
+      alterMock(DEGREES_API, newApiData);
+
+      render(<AcademicProgram />);
+
+      expect(screen.queryByText(/, School of Mech, Ind, Manf Engr/i)).not.toBeInTheDocument();
+    });
+  });
+
   describe('Dual Degrees', () => {
     it('Has two sets of degree UI rendered', async () => {
       alterMock(DEGREES_API, [...apiData, ...apiData]);
