@@ -48,6 +48,7 @@ import {
   CAMPUS_EVENTS_API,
   HEALTH_CHECK_API,
   APP_VERSION_API,
+  USER_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -72,6 +73,7 @@ const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
 const { personsData } = Person.Persons.mockPersons;
 const { mockMealPlans } = Person.MealPlans;
+const mockUser = User.mockUser.user;
 const mockUserMessages = User.mockUser.userMessageItems;
 const readUserMessage = User.mockUser.userReadMessage;
 const mockStatus = Status.mockStatus.statusData;
@@ -181,6 +183,10 @@ export const handlers = [
   }),
 
   // User
+  rest.get(USER_API, async (req, res, ctx) => {
+    return res(ctx.json(mockUser));
+  }),
+
   rest.get(USER_MESSAGES_API, async (req, res, ctx) => {
     return res(ctx.json(mockUserMessages));
   }),

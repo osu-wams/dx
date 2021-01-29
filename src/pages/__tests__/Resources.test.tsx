@@ -2,7 +2,6 @@ import React from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import {
   render,
-  alterMock,
   authUser,
   mockEmployeeUser,
   renderWithUserContext,
@@ -51,6 +50,7 @@ const renderResources = async (userType?: any) => {
   }
   const featured = await utils.findByLabelText('Featured');
   const all = await utils.findByLabelText('All');
+  const favorites = await utils.findByLabelText('Favorites');
   const searchInput = (await utils.findByPlaceholderText('Find resources')) as HTMLInputElement;
   const financial = await utils.findByLabelText('Financial');
 
@@ -60,6 +60,7 @@ const renderResources = async (userType?: any) => {
     featured,
     financial,
     all,
+    favorites,
   };
 };
 
@@ -176,6 +177,27 @@ describe('<Resources />', () => {
       userEvent.click(academic);
       expect(await screen.findByText(/Student Athletes/)).toBeInTheDocument();
       expect(await screen.findByText(/found 1 result/)).toBeInTheDocument();
+      // Search input should be clear, 'noResults' should be gone
+      await waitFor(() => expect(searchInput.value).toEqual(''));
+    });
+
+    it('should empty input and get results for favorites category only when clicking category link', async () => {
+      mockDefaultCategory.mockReturnValue(defaultCategory);
+      const { searchInput, favorites } = await renderResources();
+
+      // Search input value changed to "noResults"
+      await userEvent.type(searchInput, 'noResults');
+
+      expect(await screen.findByText(/found 0 results/)).toBeInTheDocument();
+      userEvent.click(favorites);
+
+      // Mock data has three favorites for the default user, two are active and one is not so will
+      // not be displayed.
+      expect(await screen.findByText(/found 2 results/)).toBeInTheDocument();
+      expect(await screen.findByText(/Student Athletes/)).toBeInTheDocument();
+      expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
+      expect(screen.queryByText(/Bend Testo/)).not.toBeInTheDocument();
+
       // Search input should be clear, 'noResults' should be gone
       await waitFor(() => expect(searchInput.value).toEqual(''));
     });
