@@ -71,7 +71,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   it('should find current and not past course in schedule', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const todayCourse = await screen.findByText(/Every Day Test/);
+    const todayCourse = screen.getByText(/Every Day Test/);
     expect(todayCourse).toBeInTheDocument();
     expect(screen.queryByText('Joyce Collin Furman Hall Old')).not.toBeInTheDocument();
   });
@@ -79,14 +79,14 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   it('should find a course with a clickable map link', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const mapLink = await screen.findByText(/View PH 222 location/);
+    const mapLink = screen.getByText(/View PH 222 location/);
     userEvent.click(mapLink);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should find a course without a clickable map link because it is in Bend', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
-    const courses = await screen.findAllByTestId('course-list-item-header');
+    const courses = screen.getAllByTestId('course-list-item-header');
     expect(courses[0]).toHaveTextContent('WR214');
 
     expect(screen.queryByText('View WR 214 location on map')).not.toBeInTheDocument();
@@ -94,7 +94,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
   it('should find a course without a clickable map link because it is a remote learning course', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
-    const courses = await screen.findAllByTestId('course-list-item-header');
+    const courses = screen.getAllByTestId('course-list-item-header');
     expect(courses[2]).toHaveTextContent('RL100');
 
     expect(screen.queryByText('View RL 100 location on map')).not.toBeInTheDocument();
@@ -102,7 +102,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
   it('should find a course but no MID term associated', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
-    await screen.findAllByText(/PH 212/);
+    screen.getAllByText(/PH 212/);
 
     // Mid terms are currently excluded due to inconsistent data source
     expect(screen.queryByText(/MID Group Events/)).not.toBeInTheDocument();
@@ -110,7 +110,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
 
   it('should find Testo Physics, open modal and find the final exam for that course', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
-    const course = await screen.findAllByText(/Lecture Testo/);
+    const course = screen.getAllByText(/Lecture Testo/);
 
     userEvent.click(course[0]);
     const courseDialog = screen.getByTestId('course-dialog');
@@ -122,7 +122,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     const duePartialText = `Due ${format(new Date(), 'dueAt')}`.slice(0, -5);
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const todayPlannerItem = await screen.findByText(/Testo Planner Discussion/);
+    const todayPlannerItem = screen.getByText(/Testo Planner Discussion/);
     expect(todayPlannerItem).toBeInTheDocument();
     // Check the planner item description element to see if it has the due date text like 'Due Oct 11 at 12:`
     expect(todayPlannerItem.nextElementSibling).toHaveTextContent(duePartialText);
@@ -133,7 +133,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   it('should not associate a due date with a "Planner Announcement Test" PlannerItem in card', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const todayPlannerAnnouncement = await screen.findByText(/Planner Announcement Test/);
+    const todayPlannerAnnouncement = screen.getByText(/Planner Announcement Test/);
 
     // Select the text of description "Due today at ..."
     const dueAt =
@@ -212,6 +212,7 @@ describe('<ScheduleCard /> without data for given days', () => {
           data: mockPlannerItems.data,
           isLoading: false,
           error: null,
+          isSuccess: true,
         },
       },
       {
@@ -320,7 +321,7 @@ describe('<ScheduleCard /> without canvas authorization', () => {
 
     render(<ScheduleCard />, { user: mockUser(), initialStates: mockInitialState() });
 
-    const todayPlannerItem = await screen.findByText(/Authorize Canvas to see your assignments/);
+    const todayPlannerItem = screen.getByText(/Authorize Canvas to see your assignments/);
 
     expect(todayPlannerItem).toBeInTheDocument();
   });
