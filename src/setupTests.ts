@@ -90,3 +90,4 @@ Object.defineProperty(window, 'location', {
 });
 // Mock the location change method
 window.location.assign = jest.fn();
+window.scrollTo = jest.fn();
