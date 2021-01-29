@@ -84,6 +84,7 @@ export const PERSONS_ADDRESSES_API = persons + '/addresses';
 /**
  * User
  */
+export const USER_API = user;
 export const USER_MESSAGES_API = user + '/messages';
 
 /**
