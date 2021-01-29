@@ -61,7 +61,7 @@ describe('<ProgramOfStudy /> | Degree', () => {
 
   describe('Graduated student', () => {
     it('in is not shown in degree', async () => {
-      let newApiData = apiData;
+      let newApiData = JSON.parse(JSON.stringify(apiData));
       newApiData[0].attributes.degree = 'Certificate in'; // is there a better way to do this??
 
       alterMock(DEGREES_API, newApiData);
@@ -72,7 +72,7 @@ describe('<ProgramOfStudy /> | Degree', () => {
 
     // When a student graduates, they have a major but no department
     it('no extra comma after major, since no department', async () => {
-      let newApiData = apiData;
+      let newApiData = JSON.parse(JSON.stringify(apiData));
       newApiData[0].attributes.majors.first.department = '';
       newApiData[0].attributes.majors.second.department = '';
 
