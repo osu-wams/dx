@@ -35,7 +35,7 @@ describe('Student mobile menu interactions', () => {
 
     userEvent.click(menu);
 
-    const studentDashboardMenu = await screen.findByText(title, { selector: 'h2' });
+    const studentDashboardMenu = screen.getByText(title, { selector: 'h2' });
     expect(studentDashboardMenu).toBeVisible();
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -47,10 +47,10 @@ describe('Student mobile menu interactions', () => {
     const menu = screen.getByText('Menu');
     userEvent.click(menu);
 
-    const close = await screen.findByText(/close/i);
+    const close = screen.getByText(/close/i);
     userEvent.click(close);
 
-    const studentDashboard = await screen.findByText('Student Dashboard');
+    const studentDashboard = screen.getByText('Student Dashboard');
     expect(studentDashboard).toBeInTheDocument(); // !TODO:  check visibile?
 
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -62,10 +62,10 @@ describe('Student mobile menu interactions', () => {
     const menu = screen.getByText('Menu');
     userEvent.click(menu);
 
-    const overview = await screen.findByText(/overview/i, { selector: '[role="dialog"] a' });
+    const overview = screen.getByText(/overview/i, { selector: '[role="dialog"] a' });
     userEvent.click(overview);
 
-    const studentDashboard = await screen.findByText('Student Dashboard');
+    const studentDashboard = screen.getByText('Student Dashboard');
     expect(studentDashboard).toBeInTheDocument(); // !TODO:  check visibile?
 
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
@@ -77,9 +77,9 @@ describe('Student mobile menu interactions', () => {
     const menu = screen.getByText('Menu');
     userEvent.click(menu);
 
-    const about = await screen.findByText(/about/i, { selector: '[role="dialog"] nav a' });
+    const about = screen.getByText(/about/i, { selector: '[role="dialog"] nav a' });
     userEvent.click(about);
-    const studentDashboard = await screen.findByText('Student Dashboard');
+    const studentDashboard = screen.getByText('Student Dashboard');
     expect(studentDashboard).toBeInTheDocument(); // !TODO:  check visibile?
 
     expect(mockGAEvent).toHaveBeenCalledTimes(2);

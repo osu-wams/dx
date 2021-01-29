@@ -2,14 +2,15 @@
  * API Endpoints
  */
 
-const stu = '/api/student/';
-const events = '/api/events';
-const an = '/api/announcements/';
-const res = '/api/resources/';
-const alerts = '/api/alerts';
-const persons = '/api/persons';
-const user = '/api/user';
-const info = '/api/info-buttons';
+const stu = '*/api/student/';
+const events = '*/api/events';
+const an = '*/api/announcements/';
+const res = '*/api/resources/';
+const alerts = '*/api/alerts';
+const persons = '*/api/persons';
+const user = '*/api/user';
+const info = '*/api/info-buttons';
+const train = '*/api/trainings/';
 /**
  * Student API paths
  */
@@ -19,9 +20,11 @@ export const GPA_API = stu + 'gpa';
 
 export const ACADEMIC_STATUS_API = stu + 'academic-status';
 
-export const CLASS_SCHEDULE_API = stu + 'class-schedule?term=current';
+// class-schedule?term=current
+export const CLASS_SCHEDULE_API = stu + 'class-schedule*';
 
-export const DEGREES_API = stu + 'degrees?term=';
+// degrees?term=
+export const DEGREES_API = stu + 'degrees*';
 
 export const ACCOUNT_BALANCE_API = stu + 'account-balance';
 
@@ -63,11 +66,11 @@ export const DX_ALERTS_API = alerts + '/dx';
 /**
  * Trainings
  */
-export const TRAININGS_API = '/api/trainings';
+export const TRAININGS_API = train;
 
-export const TRAININGS_TAGS_API = '/api/trainings/tags';
+export const TRAININGS_TAGS_API = train + 'tags';
 
-export const TRAININGS_AUDIENCES_API = '/api/trainings/audiences';
+export const TRAININGS_AUDIENCES_API = train + 'audiences';
 
 /**
  * Person
@@ -89,33 +92,32 @@ export const USER_MESSAGES_API = user + '/messages';
 
 export const INFO_BUTTON_API = info;
 
-
 /**
  * Status
  */
-export const IT_STATUS_API = '/api/status';
+export const IT_STATUS_API = '*/api/status';
 
 /**
  * Cards (Dynamic Cards)
  */
-export const CARDS_API = '/api/cards';
+export const CARDS_API = '*/api/cards';
 
 /**
  * Page Content (about page and such from Drupal)
  */
-export const PAGE_CONTENT_API = '/api/page-content';
+export const PAGE_CONTENT_API = '*/api/page-content';
 
 /**
  * Release Notes
  */
-export const RELEASE_NOTES_API = '/api/release-notes';
+export const RELEASE_NOTES_API = '*/api/release-notes';
 
 /**
  * Healthcheck
  */
-export const HEALTH_CHECK_API = '/healthcheck';
+export const HEALTH_CHECK_API = '*/healthcheck';
 
 /**
  * App Version API
  */
-export const APP_VERSION_API = '/app_version';
+export const APP_VERSION_API = '*/app_version';

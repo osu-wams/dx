@@ -18,7 +18,7 @@ describe('<ProgramOfStudy /> | Degree', () => {
       render(<AcademicProgram />);
     });
 
-    it('Expects "Program of Study" card to render', async () => {
+    it('Expects "My Academic Program" card to render', async () => {
       expect(await screen.findByText(/My Academic Program/i)).toBeInTheDocument();
     });
 

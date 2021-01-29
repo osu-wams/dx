@@ -1,15 +1,14 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
-import { renderWithUserContext } from 'src/util/test-utils';
-
+import { screen } from '@testing-library/react';
 import Academics from '../Academics';
 
-test('renders', () => {
-  const { getByTestId } = renderWithUserContext(<Academics />);
-  expect(getByTestId('academics-dashboard')).toBeInTheDocument();
+it('renders', async () => {
+  render(<Academics />);
+  expect(screen.getByTestId('academics-dashboard')).toBeInTheDocument();
 });
 
-test('should display the title Academics', () => {
-  const { getByText } = render(<Academics />);
-  expect(getByText('Academics')).toBeInTheDocument();
+it('should display the title Academics', async () => {
+  render(<Academics />);
+  expect(screen.getByText('Academics')).toBeInTheDocument();
 });

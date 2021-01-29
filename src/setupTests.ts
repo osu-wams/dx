@@ -4,32 +4,49 @@ import 'jest-styled-components';
 import * as cache from './util/cache';
 import { queryCache } from 'react-query';
 import { server } from 'src/mocks/server';
-
-// Remove this when CRA updates to jsdom 16+ (not available as of CRA 3.4)
-import MutationObserver from '@sheerun/mutationobserver-shim';
-import { onUnhandledRequest } from 'msw/lib/types/onUnhandledRequest';
-window.MutationObserver = MutationObserver;
+import axios from 'axios';
 
 ReactGA.initialize('UA-48705802-13', {
   testMode: true,
 });
 
+export const mockInitialState = jest.fn();
 export const mockGAEvent = jest.fn();
 export const mockTrendingEvent = jest.fn();
+
+mockGAEvent.mockResolvedValue(Promise.resolve(true));
+mockTrendingEvent.mockResolvedValue(Promise.resolve(true));
 
 /**
  * MSW Setup
  */
 // Establish API mocking before all tests.
-beforeAll(() =>
+beforeAll(() => {
+  axios.defaults.baseURL = 'http://localhost:4000';
+
   server.listen({
     onUnhandledRequest: 'warn',
-  })
-);
+  });
+});
+
+beforeEach(() => {
+  // Mock sessionStorage interface
+  Storage.prototype.clear = jest.fn();
+  Storage.prototype.getItem = jest.fn();
+  Storage.prototype.setItem = jest.fn();
+  Storage.prototype.removeItem = jest.fn();
+  cache.clear();
+  mockInitialState.mockClear();
+  mockGAEvent.mockClear();
+  mockTrendingEvent.mockClear();
+});
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
 afterEach(() => {
+  // don't output debug statements to console
+  jest.spyOn(console, 'debug').mockImplementation(() => {});
+  jest.clearAllMocks();
   queryCache.clear();
   server.resetHandlers();
 });
@@ -52,20 +69,6 @@ jest.mock('../src/features/resources/GATrendingResource', () => ({
   },
 }));
 
-mockGAEvent.mockResolvedValue(Promise.resolve(true));
-mockTrendingEvent.mockResolvedValue(Promise.resolve(true));
-
-beforeEach(() => {
-  mockGAEvent.mockClear();
-});
-
-afterEach(() => {
-  // don't output debug statements to console
-  jest.spyOn(console, 'debug').mockImplementation(() => {});
-
-  jest.clearAllMocks();
-});
-
 // Supress missing CSS warnings in tests from @reach ui components
 jest.mock('@reach/utils', () => ({
   ...jest.requireActual('@reach/utils'),
@@ -80,14 +83,11 @@ const matchMedia = () => ({
 });
 window.matchMedia = window.matchMedia || matchMedia;
 
+// Jest 25 has issues with window.location so we are using this to mock
+Object.defineProperty(window, 'location', {
+  writable: true,
+  value: { search: '', assign: jest.fn(), pathname: '', reload: jest.fn() },
+});
 // Mock the location change method
 window.location.assign = jest.fn();
-
-// Mock sessionStorage interface
-beforeEach(() => {
-  Storage.prototype.clear = jest.fn();
-  Storage.prototype.getItem = jest.fn();
-  Storage.prototype.setItem = jest.fn();
-  Storage.prototype.removeItem = jest.fn();
-  cache.clear();
-});
+window.scrollTo = jest.fn();

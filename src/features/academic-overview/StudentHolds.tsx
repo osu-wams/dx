@@ -32,6 +32,7 @@ const HoldDescription = styled.div`
 
 export const StudentHolds: React.FC = () => {
   const { data, loading } = useHolds();
+
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Holds</HighlightTitle>

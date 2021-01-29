@@ -6,12 +6,12 @@ const localhostUrl = 'http://localhost:4000/';
 
 const options = {
   target: localhostUrl,
-  changeOrigin: true
+  changeOrigin: true,
 };
 
 const devProxy = createProxyMiddleware(options);
 
-module.exports = app => {
+module.exports = (app) => {
   app.use('/healthcheck', devProxy);
   app.use('/api', devProxy);
   app.use('/login', devProxy);

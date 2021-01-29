@@ -58,7 +58,7 @@ const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
 const { mockAccountTransactions } = Student.AccountTransactions;
 const mockGpa = { ...gpaHookData, data: gpaUndergraduateData };
 const { academicCalendar6, employeeEvents, studentExperienceEvents } = Events.mockEvents;
-const { academicAnnouncementResult } = Announcements.mockAnnouncements;
+export const { academicAnnouncementResult } = Announcements.mockAnnouncements;
 const {
   resourcesCardData,
   resourcesData,

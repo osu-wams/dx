@@ -9,6 +9,7 @@ import { courseState } from './courses';
 import { dynamicCardState, filteredCards } from './dynamicCards';
 import { filteredNotifications, userMessagesState } from './notifications';
 import { plannerItemState } from './plannerItems';
+import { announcementState } from './announcements';
 import {
   debouncedResourceSearchState,
   filteredResourcesState,
@@ -50,4 +51,5 @@ export {
   trainingTagState,
   userState,
   userMessagesState,
+  announcementState,
 };

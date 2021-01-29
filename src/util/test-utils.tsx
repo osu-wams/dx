@@ -15,7 +15,7 @@ import { HelmetProvider } from 'react-helmet-async';
 // Helper method to change the mock responses by MSW
 export const alterMock = (api: string, mock: any) => {
   server.use(
-    rest.get(api, async (req, res, ctx) => {
+    rest.get('*' + api, async (req, res, ctx) => {
       return res(ctx.json(mock));
     })
   );
