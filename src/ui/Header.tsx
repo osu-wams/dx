@@ -46,22 +46,21 @@ const Navigation = styled.div`
   }
 `;
 
+const NavHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  max-width: ${breakpoints.large};
+  margin: 0 auto;
+`;
+
 const SiteTitle = styled.header`
   display: none;
   @media (min-width: ${breakpoints.small}) {
     display: block;
-    font-size: ${fontSize[20]};
-    font-weight: 300;
-    margin: 0 auto;
-    text-align: center;
+    font-size: ${fontSize[18]};
+    font-weight: 500;
     max-width: ${breakpoints.large};
-    margin-top: 20px;
-  }
-  @media (min-width: ${breakpoints.medium}) {
-    font-size: ${fontSize[26]};
-  }
-  @media (min-width: 1750px) {
-    text-align: left;
   }
 `;
 
@@ -124,11 +123,13 @@ const Header = () => {
         <Link to={dashboardLink} onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
           <Logo data-testid="app-header-logo" src={image} alt={alt} />
         </Link>
-        <SiteTitle>{title}</SiteTitle>
         <HeaderNav />
       </HeaderWrapper>
       <Navigation>
-        <MainNav />
+        <NavHeaderWrapper>
+          <SiteTitle>{title}</SiteTitle>
+          <MainNav />
+        </NavHeaderWrapper>
       </Navigation>
     </>
   );
