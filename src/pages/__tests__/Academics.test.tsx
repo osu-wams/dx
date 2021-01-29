@@ -8,7 +8,7 @@ it('renders', async () => {
   expect(screen.getByTestId('academics-dashboard')).toBeInTheDocument();
 });
 
-it('should display the title Academics', () => {
+it('should display the title Academics', async () => {
   render(<Academics />);
   expect(screen.getByText('Academics')).toBeInTheDocument();
 });

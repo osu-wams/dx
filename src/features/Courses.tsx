@@ -135,7 +135,7 @@ const Courses = () => {
           <Course coursesMap={showCoursesMap} toggleCourse={toggleCourse} isOpen />
         )}
       </CardContent>
-      <CardFooter infoButtonId="current-courses" id="silly">
+      <CardFooter infoButtonId="current-courses">
         {courses.data && courses.data.length ? <FooterLink /> : <NoCoursesFooterLink />}
       </CardFooter>
     </Card>

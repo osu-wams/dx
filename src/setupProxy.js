@@ -6,7 +6,7 @@ const localhostUrl = 'http://localhost:4000/';
 
 const options = {
   target: localhostUrl,
-  changeOrigin: false,
+  changeOrigin: true,
 };
 
 const devProxy = createProxyMiddleware(options);

@@ -11,7 +11,6 @@ ReactGA.initialize('UA-48705802-13', {
 });
 
 export const mockInitialState = jest.fn();
-
 export const mockGAEvent = jest.fn();
 export const mockTrendingEvent = jest.fn();
 
@@ -47,9 +46,7 @@ beforeEach(() => {
 afterEach(() => {
   // don't output debug statements to console
   jest.spyOn(console, 'debug').mockImplementation(() => {});
-
   jest.clearAllMocks();
-
   queryCache.clear();
   server.resetHandlers();
 });

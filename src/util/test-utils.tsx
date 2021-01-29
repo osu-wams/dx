@@ -6,7 +6,7 @@ import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/lib';
 import { mobile, desktop } from 'src/util/useMediaQuery';
-import { RecoilRoot, useRecoilCallback } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import { userState } from 'src/state';
 import { rest } from 'msw';
 import { server } from 'src/mocks/server';
@@ -110,9 +110,7 @@ const renderWithAllContexts = (
       <RecoilRoot
         initializeState={(snap) => {
           snap.set(userState, user);
-          initialStates.forEach((s: { state: any; value: any }) => {
-            snap.set(s.state, s.value);
-          });
+          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
         <LocationProvider>
