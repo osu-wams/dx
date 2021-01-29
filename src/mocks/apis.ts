@@ -10,6 +10,7 @@ const alerts = '*/api/alerts';
 const persons = '*/api/persons';
 const user = '*/api/user';
 const info = '*/api/info-buttons';
+const train = '*/api/trainings/';
 /**
  * Student API paths
  */
@@ -19,8 +20,10 @@ export const GPA_API = stu + 'gpa';
 
 export const ACADEMIC_STATUS_API = stu + 'academic-status';
 
-export const CLASS_SCHEDULE_API = stu + 'class-schedule?term=current';
+// class-schedule?term=current
+export const CLASS_SCHEDULE_API = stu + 'class-schedule*';
 
+// degrees?term=
 export const DEGREES_API = stu + 'degrees*';
 
 export const ACCOUNT_BALANCE_API = stu + 'account-balance';
@@ -63,11 +66,11 @@ export const DX_ALERTS_API = alerts + '/dx';
 /**
  * Trainings
  */
-export const TRAININGS_API = '*/api/trainings';
+export const TRAININGS_API = train;
 
-export const TRAININGS_TAGS_API = '*/api/trainings/tags';
+export const TRAININGS_TAGS_API = train + 'tags';
 
-export const TRAININGS_AUDIENCES_API = '*/api/trainings/audiences';
+export const TRAININGS_AUDIENCES_API = train + 'audiences';
 
 /**
  * Person

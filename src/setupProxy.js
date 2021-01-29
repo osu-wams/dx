@@ -11,8 +11,6 @@ const options = {
 
 const devProxy = createProxyMiddleware(options);
 
-console.log('testo setupProxy');
-
 module.exports = (app) => {
   app.use('/healthcheck', devProxy);
   app.use('/api', devProxy);

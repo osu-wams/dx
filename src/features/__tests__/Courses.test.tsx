@@ -148,10 +148,9 @@ describe('with an InfoButton in the CardFooter', () => {
   });
 
   it('displays the button when the infoButtonData is included', async () => {
-    console.log(infoButtonState);
-    const { getByTestId } = render(<Courses />, { initialStates: mockInitialState() });
-    const element = getByTestId('current-courses');
-    expect(element).toBeInTheDocument();
+    render(<Courses />, { initialStates: mockInitialState() });
+
+    expect(screen.getByTestId('current-courses')).toBeInTheDocument();
   });
 });
 

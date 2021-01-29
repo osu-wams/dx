@@ -3,11 +3,9 @@ import { screen } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import Training from 'src/pages/Training';
-import { mockGAEvent } from 'src/setupTests';
+import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { trainingTagState, trainingAudienceState } from 'src/state';
 import { Trainings } from '@osu-wams/hooks';
-
-const mockInitialState = jest.fn();
 
 /**
  * Render Trainings with the most commonly used features
@@ -57,19 +55,19 @@ describe('<Training />', () => {
       expect(category).toBeInTheDocument();
       userEvent.click(category);
 
-      expect(await screen.findByRole('menuitem', { name: /All Trainings/i })).toBeInTheDocument();
+      expect(screen.getByRole('menuitem', { name: /All Trainings/i })).toBeInTheDocument();
 
-      expect(await screen.findByText('Leadership')).toBeInTheDocument();
-      expect(await screen.findByText('Employee Engagement')).toBeInTheDocument();
+      expect(screen.getByText('Leadership')).toBeInTheDocument();
+      expect(screen.getByText('Employee Engagement')).toBeInTheDocument();
     });
 
     it('Finds the audience, 2 total', async () => {
       const { audience } = renderTrainings();
       expect(audience).toBeInTheDocument();
       userEvent.click(audience);
-      expect(await screen.findByText('All Audiences')).toBeInTheDocument();
-      expect(await screen.findByText('Classified Staff')).toBeInTheDocument();
-      expect(await screen.findByText('Student')).toBeInTheDocument();
+      expect(screen.getByText('All Audiences')).toBeInTheDocument();
+      expect(screen.getByText('Classified Staff')).toBeInTheDocument();
+      expect(screen.getByText('Student')).toBeInTheDocument();
     });
 
     it('Finds 3 total results for trainings ', async () => {

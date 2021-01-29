@@ -48,9 +48,7 @@ export const StudentHolds: React.FC = () => {
                 (h, i) =>
                   h.description && (
                     <li key={i}>
-                      <HoldTitle>
-                        {h.description} {console.log(data)}
-                      </HoldTitle>
+                      <HoldTitle>{h.description}</HoldTitle>
                       <HoldDescription>Effective {format(h.fromDate)}</HoldDescription>
                     </li>
                   )

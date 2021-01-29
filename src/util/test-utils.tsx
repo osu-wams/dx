@@ -111,9 +111,7 @@ const renderWithAllContexts = (
         initializeState={(snap) => {
           snap.set(userState, user);
           initialStates.forEach((s: { state: any; value: any }) => {
-            // console.log('State: ', snap.getLoadable(s.state).contents);
             snap.set(s.state, s.value);
-            // console.log('State: ', snap.getLoadable(s.state).contents);
           });
         }}
       >

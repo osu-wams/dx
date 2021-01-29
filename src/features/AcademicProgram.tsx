@@ -102,7 +102,6 @@ const AcademicProgram = () => {
 
   return (
     <Card>
-      {data && console.log(data)}
       <CardHeader title="My Academic Program" badge={<CardIcon icon={faUserGraduate} />} />
       {loading && <Loading />}
       {!loading && data.length === 0 && (

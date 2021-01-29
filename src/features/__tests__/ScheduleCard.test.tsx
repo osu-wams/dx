@@ -237,6 +237,7 @@ describe('<ScheduleCard /> without data for given days', () => {
           data: mockPlannerItems.data,
           isLoading: false,
           error: null,
+          isSuccess: true,
         },
       },
       {
@@ -251,7 +252,7 @@ describe('<ScheduleCard /> without data for given days', () => {
     ]);
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
-    const noCoursesText = await screen.findByText(/You don't have any courses scheduled/);
+    const noCoursesText = screen.getByText(/You don't have any courses scheduled/);
 
     expect(noCoursesText).toBeInTheDocument();
   });
@@ -346,6 +347,7 @@ describe('<ScheduleCard /> with a simple schedule', () => {
             data: mockPlannerItems.data,
             isLoading: false,
             error: null,
+            isSuccess: true,
           },
         },
         {
@@ -358,24 +360,24 @@ describe('<ScheduleCard /> with a simple schedule', () => {
           },
         },
       ]);
-      const { findByText, findAllByText, debug } = render(<ScheduleCard />, {
+      render(<ScheduleCard />, {
         initialStates: mockInitialState(),
       });
       switch (todayShortCode) {
         case 'M':
         case 'F':
-          const buildingText = await findAllByText(/Building/);
+          const buildingText = screen.getAllByText(/Building/);
           expect(buildingText).toHaveLength(2);
           break;
         case 'T':
         case 'Th':
         case 'Sa':
         case 'Su':
-          const noCoursesText = await findByText(/You don't have any courses scheduled/);
+          const noCoursesText = screen.getByText(/You don't have any courses scheduled/);
           expect(noCoursesText).toBeInTheDocument();
           break;
         case 'W':
-          const afternoonText = await findByText(/Afternoon/);
+          const afternoonText = screen.getByText(/Afternoon/);
           expect(afternoonText).toBeInTheDocument();
           break;
       }
