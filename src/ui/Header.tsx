@@ -19,6 +19,9 @@ import { Types } from '@osu-wams/lib';
 import { arrayIncludes } from 'src/util/helpers';
 import { userState, themeState } from 'src/state';
 import { useRecoilValue } from 'recoil';
+import { SearchBar } from './SearchBar';
+import { Desktop } from 'src/util/useMediaQuery';
+import { SearchWrapper } from 'src/ui/SearchBar';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -31,7 +34,6 @@ const HeaderWrapper = styled.div`
   padding: ${spacing.medium} ${spacing.medium} ${spacing.unit * 1.5}px;
   align-items: center;
   @media (min-width: ${breakpoints.small}) {
-    display: block;
     height: 100px;
   }
 `;
@@ -69,9 +71,18 @@ const Logo = styled.img`
   height: 60px;
   @media (min-width: ${breakpoints.small}) {
     height: 80px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
+  }
+`;
+
+const HeaderSearchWrapper = styled.div`
+  flex-grow: 1;
+  padding-left: ${spacing.large};
+  padding-right: ${spacing.large};
+  @media (min-width: ${breakpoints.xl}) {
+    padding-right: 150px;
+  }
+  ${SearchWrapper} {
+    margin: 0 auto;
   }
 `;
 
@@ -123,6 +134,11 @@ const Header = () => {
         <Link to={dashboardLink} onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
           <Logo data-testid="app-header-logo" src={image} alt={alt} />
         </Link>
+        <Desktop>
+          <HeaderSearchWrapper>
+            <SearchBar id="appSearch" labelText="Search" inputValue="" />
+          </HeaderSearchWrapper>
+        </Desktop>
         <HeaderNav />
       </HeaderWrapper>
       <Navigation>

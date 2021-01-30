@@ -3,11 +3,12 @@ import { faSearch } from '@fortawesome/pro-light-svg-icons';
 import styled, { ThemeContext } from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
 import Icon from 'src/ui/Icon';
-import { fontSize } from 'src/theme';
+import { breakpoints, fontSize } from 'src/theme';
 import Input from 'src/ui/Input';
 
 const SearchWrapper = styled.div`
   position: relative;
+  max-width: ${breakpoints.large};
   svg {
     position: absolute;
     top: 2rem;
@@ -39,4 +40,4 @@ const SearchBar = ({ id, labelText, inputValue, ...props }) => {
   );
 };
 
-export { SearchBar };
+export { SearchBar, SearchWrapper };

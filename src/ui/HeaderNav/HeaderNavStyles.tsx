@@ -20,11 +20,7 @@ const HeaderNavButton = styled(MenuButton)`
 `;
 
 const HeaderNavWrapper = styled.div`
-  @media (min-width: ${breakpoints.small}) {
-    position: absolute;
-    top: 35px;
-    right: 10px;
-  }
+  width: auto;
 `;
 
 const HeaderNavList = styled(MenuList)`
