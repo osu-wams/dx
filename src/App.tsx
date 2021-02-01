@@ -19,6 +19,7 @@ import { ApplicationMessages } from 'src/ui/ApplicationMessages';
 import { RouterPage } from './routers';
 import Profile from './pages/Profile';
 import About from './pages/About';
+import { Search } from './pages/Search';
 import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
@@ -232,6 +233,8 @@ const App = (props: AppProps) => {
                     <StudentRouter path="student/*" />
                     <RouterPage path="profile" pageComponent={<Profile />} />
                     <RouterPage path="about" pageComponent={<About />} />
+                    <RouterPage path="search" pageComponent={<Search />} />
+
                     <RouterPage path="notifications" pageComponent={<Notifications />} />
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
                       <RouterPage path="covid" pageComponent={<MobileCovid />} />

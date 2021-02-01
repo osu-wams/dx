@@ -14,7 +14,8 @@ export const breakpoints = {
   small: '768px',
   medium: '992px',
   large: '1200px',
-  xl: '1500px',
+  headerSearch: '1500px',
+  xl: '1800px',
 };
 
 export const mq = {
