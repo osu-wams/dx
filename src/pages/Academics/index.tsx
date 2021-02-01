@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, RouteComponentProps } from '@reach/router';
 import PastCourses from './PastCourses';
 import AcademicsDashboard from './AcademicsDashboard';
+import PageNotFound from './../PageNotFound';
 
 const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
   props.pageComponent;
@@ -9,8 +10,9 @@ const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps)
 const Academics = () => {
   return (
     <Router className="router-styles">
-      <RouterPage pageComponent={<AcademicsDashboard />} path="/" default={true} />
+      <RouterPage pageComponent={<AcademicsDashboard />} path="/" />
       <RouterPage pageComponent={<PastCourses />} path="past-courses" />
+      <RouterPage pageComponent={<PageNotFound />} path="*" />
     </Router>
   );
 };
