@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Loading } from 'src/ui/Loading';
-import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
+import { isSameDay } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useAcademicCalendarEvents } from '@osu-wams/hooks';
 import { getNextFiveDays, coursesOnDay, startDate } from './schedule/schedule-utils';
@@ -38,7 +38,7 @@ const ScheduleCard = () => {
     );
   }
 
-  const selectedCalEvents = calEvents.data.filter((event) => {
+  const selectedCalEvents = (calEvents.data ?? []).filter((event) => {
     return event.pubDate ? isSameDay(Date.parse(event.pubDate), selectedDay) : '';
   });
 
@@ -49,7 +49,7 @@ const ScheduleCard = () => {
     () =>
       nextFiveDays.filter((day) => {
         const hasCourses = coursesOnDay(courses.data ?? [], day).length > 0;
-        const calendarEventsOnDay = calEvents.data.filter((event) => {
+        const calendarEventsOnDay = (calEvents.data ?? []).filter((event) => {
           return event.pubDate ? isSameDay(Date.parse(event.pubDate), day) : '';
         });
 

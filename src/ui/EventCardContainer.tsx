@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { Title } from 'src/ui/PageTitle';
 import { Types } from '@osu-wams/lib';
-import {
-  User,
-  useStudentExperienceEvents,
-  useCampusEvents,
-  useEmployeeEvents,
-} from '@osu-wams/hooks';
+import { User } from '@osu-wams/hooks';
 import EventCard from './EventCard';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { arrayIncludes } from 'src/util/helpers';
 import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
+import useCampusEventsState from 'src/hooks/useCampusEventsState';
+import useAffiliationEventsState from 'src/hooks/useAffiliationEventsState';
 
 const { hasAudience, atCampus, CAMPUS_CODES, hasPrimaryAffiliation, AFFILIATIONS } = User;
 
@@ -71,9 +68,9 @@ const filterEmployeeEvents = (
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<(Types.LocalistEvent | Types.Announcement)[]>([]);
   const user = useRecoilValue(userState);
-  const studentExperienceEvents = useStudentExperienceEvents();
-  const employeeEvents = useEmployeeEvents();
-  const bendEvents = useCampusEvents('bend');
+  const { events: studentExperienceEvents } = useAffiliationEventsState(User.AFFILIATIONS.student);
+  const { events: employeeEvents } = useAffiliationEventsState(User.AFFILIATIONS.employee);
+  const { events: bendEvents } = useCampusEventsState('bend');
   const { filtered, announcements } = useAnnouncementsState(page); // TODO: Promote to application-state for search
 
   useEffect(() => {
@@ -83,9 +80,9 @@ const EventCardContainer = ({ page, ...props }) => {
     if (
       !user.loading &&
       !announcements.isLoading &&
-      !studentExperienceEvents.loading &&
-      !bendEvents.loading &&
-      !employeeEvents.loading
+      !studentExperienceEvents.isLoading &&
+      !bendEvents.isLoading &&
+      !employeeEvents.isLoading
     ) {
       /**
        * Checks to see if you are an employee or a student at Bend or Corvallis
@@ -96,16 +93,16 @@ const EventCardContainer = ({ page, ...props }) => {
 
       if (
         hasPrimaryAffiliation(user.data, [AFFILIATIONS.employee]) &&
-        !employeeEvents.loading &&
+        !employeeEvents.isLoading &&
         Array.isArray(employeeEvents.data)
       ) {
         eventsToUse = filterEmployeeEvents(inBend, inCorvallis, employeeEvents.data);
       } else {
-        if (!studentExperienceEvents.loading && !inBend) {
-          eventsToUse = studentExperienceEvents.data;
+        if (!studentExperienceEvents.isLoading && !inBend) {
+          eventsToUse = studentExperienceEvents.data ?? [];
         }
-        if (!bendEvents.loading && inBend) {
-          eventsToUse = bendEvents.data;
+        if (!bendEvents.isLoading && inBend) {
+          eventsToUse = bendEvents.data ?? [];
         }
       }
 
@@ -141,13 +138,13 @@ const EventCardContainer = ({ page, ...props }) => {
   }, [
     announcements,
     studentExperienceEvents.data,
-    studentExperienceEvents.loading,
+    studentExperienceEvents.isLoading,
     user.data,
     user.loading,
     bendEvents.data,
-    bendEvents.loading,
+    bendEvents.isLoading,
     employeeEvents.data,
-    employeeEvents.loading,
+    employeeEvents.isLoading,
   ]);
 
   if (events.length === 0) {
