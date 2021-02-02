@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { Title } from 'src/ui/PageTitle';
 import { Types } from '@osu-wams/lib';
-import { User, useAffiliationEvents, useCampusEvents } from '@osu-wams/hooks';
+import { User } from '@osu-wams/hooks';
 import EventCard from './EventCard';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { arrayIncludes } from 'src/util/helpers';
 import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
+import useCampusEventsState from 'src/hooks/useCampusEventsState';
+import useAffiliationEventsState from 'src/hooks/useAffiliationEventsState';
 
 const { hasAudience, atCampus, CAMPUS_CODES, hasPrimaryAffiliation, AFFILIATIONS } = User;
 
@@ -66,9 +68,9 @@ const filterEmployeeEvents = (
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<(Types.LocalistEvent | Types.Announcement)[]>([]);
   const user = useRecoilValue(userState);
-  const studentExperienceEvents = useAffiliationEvents('student');
-  const employeeEvents = useAffiliationEvents('employee');
-  const bendEvents = useCampusEvents('bend');
+  const { events: studentExperienceEvents } = useAffiliationEventsState('student');
+  const { events: employeeEvents } = useAffiliationEventsState('employee');
+  const { events: bendEvents } = useCampusEventsState('bend');
   const { filtered, announcements } = useAnnouncementsState(page); // TODO: Promote to application-state for search
 
   useEffect(() => {
