@@ -68,8 +68,8 @@ const filterEmployeeEvents = (
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<(Types.LocalistEvent | Types.Announcement)[]>([]);
   const user = useRecoilValue(userState);
-  const { events: studentExperienceEvents } = useAffiliationEventsState('student');
-  const { events: employeeEvents } = useAffiliationEventsState('employee');
+  const { events: studentExperienceEvents } = useAffiliationEventsState(User.AFFILIATIONS.student);
+  const { events: employeeEvents } = useAffiliationEventsState(User.AFFILIATIONS.employee);
   const { events: bendEvents } = useCampusEventsState('bend');
   const { filtered, announcements } = useAnnouncementsState(page); // TODO: Promote to application-state for search
 
