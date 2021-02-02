@@ -25,16 +25,20 @@ const AcademicCalendar = () => {
         badge={
           <CardIcon
             icon={faCalendar}
-            count={calEvents.data.length < maxEvents ? calEvents.data.length : maxEvents}
+            count={
+              calEvents.data && calEvents.data.length < maxEvents
+                ? calEvents.data.length
+                : maxEvents
+            }
           />
         }
       />
       <CardContent>
         {/* Show upcoming calendar events if any exist, otherwise show empty state. */}
-        {calEvents.loading && <Loading lines={5} />}
-        {calEvents.data.length > 0 ? (
+        {calEvents.isLoading && <Loading lines={5} />}
+        {(calEvents.data ?? []).length > 0 ? (
           <List>
-            {calEvents.data.slice(0, maxEvents).map(({ title, link, pubDate }) => (
+            {(calEvents.data ?? []).slice(0, maxEvents).map(({ title, link, pubDate }) => (
               <ListItem key={title + pubDate}>
                 <ListItemContentLinkSVG
                   href={link ?? Url.events.academicCalendar}
@@ -53,7 +57,7 @@ const AcademicCalendar = () => {
             ))}
           </List>
         ) : (
-          !calEvents.loading && <EmptyState />
+          !calEvents.isLoading && <EmptyState />
         )}
       </CardContent>
       <CardFooter infoButtonId="academic-calendar">

@@ -38,7 +38,7 @@ const ScheduleCard = () => {
     );
   }
 
-  const selectedCalEvents = calEvents.data.filter((event) => {
+  const selectedCalEvents = (calEvents.data ?? []).filter((event) => {
     return event.pubDate ? isSameDay(Date.parse(event.pubDate), selectedDay) : '';
   });
 
@@ -49,7 +49,7 @@ const ScheduleCard = () => {
     () =>
       nextFiveDays.filter((day) => {
         const hasCourses = coursesOnDay(courses.data ?? [], day).length > 0;
-        const calendarEventsOnDay = calEvents.data.filter((event) => {
+        const calendarEventsOnDay = (calEvents.data ?? []).filter((event) => {
           return event.pubDate ? isSameDay(Date.parse(event.pubDate), day) : '';
         });
 
