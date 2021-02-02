@@ -1,19 +1,45 @@
-import { atom, selector, selectorFamily } from 'recoil';
+import { selector, selectorFamily } from 'recoil';
 import Fuse from 'fuse.js';
-import { Types } from '@osu-wams/lib';
+import { Types, User } from '@osu-wams/lib';
 import { announcementState, ANNOUNCEMENT_PAGES } from './announcements';
 import { resourceState } from './resources';
 import { trainingState } from './trainings';
+import { localistEventsState } from './events';
 
 interface SearchItem {
   type: string;
   id: string;
   attr: {
     announcement?: Types.Announcement;
+    event?: Types.LocalistEvent;
     training?: Types.Training;
     resource?: Types.Resource;
   };
 }
+
+const eventSearchItems = selector<SearchItem[]>({
+  key: 'eventSearchItems',
+  get: ({ get }) => {
+    const events = [
+      get(localistEventsState({ campus: 'bend' })),
+      get(localistEventsState({ affiliation: User.AFFILIATIONS.employee })),
+      get(localistEventsState({ affiliation: User.AFFILIATIONS.student })),
+    ];
+    const all = events
+      .map((a) =>
+        a.data.map((event) => ({
+          type: 'event',
+          id: event.id.toString(),
+          attr: {
+            event,
+          },
+        }))
+      )
+      .reduce((p, v) => p.concat(v), []);
+    // unique array of items based on thier item.id
+    return Array.from(new Map(all.map((item) => [item.id, item])).values());
+  },
+});
 
 const announcementSearchItems = selector<SearchItem[]>({
   key: 'announcementSearchItems',
@@ -76,6 +102,10 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
     'attr.announcement.action.title',
     'attr.announcement.body',
     'attr.announcement.title',
+    'attr.event.action.title',
+    'attr.event.body',
+    'attr.event.title',
+    'attr.event.city',
     'attr.resource.title',
     'attr.resource.synonyms',
     'attr.training.audiences',
@@ -101,7 +131,8 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
     const announcements = get(announcementSearchItems);
     const trainings = get(trainingSearchItems);
     const resources = get(resourceSearchItems);
-    const items: SearchItem[] = [...announcements, ...trainings, ...resources];
+    const events = get(eventSearchItems);
+    const items: SearchItem[] = [...announcements, ...trainings, ...resources, ...events];
     return new Fuse(items, fuseOptions);
   },
 });
