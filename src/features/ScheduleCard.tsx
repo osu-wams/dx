@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Loading } from 'src/ui/Loading';
-import { isSameDay, isWithinInterval, parseISO } from 'date-fns';
+import { isSameDay } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useAcademicCalendarEvents } from '@osu-wams/hooks';
 import { getNextFiveDays, coursesOnDay, startDate } from './schedule/schedule-utils';
