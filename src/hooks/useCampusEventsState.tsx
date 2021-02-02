@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
-import { useCampusEvents } from '@osu-wams/hooks';
+import { Constants, useCampusEvents } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
 import { localistEventsState } from 'src/state/events';
 
 export const useCampusEventsState = (campus: string) => {
-  const api = useCampusEvents(campus);
+  const api = useCampusEvents(campus, {
+    ...Constants.REACT_QUERY_DEFAULT_CONFIG,
+    staleTime: 1000 * 60 * 30,
+    cacheTime: 1000 * 60 * 30,
+  });
   const [events, setEvents] = useRecoilState(localistEventsState({ campus }));
 
   useEffect(() => {
