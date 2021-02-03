@@ -44,7 +44,6 @@ const filteredGradesBySearch = selector<Types.Grades[]>({
     const query = searchTerm?.toLowerCase() ?? '';
     const found = get(searchIndex(query));
     const foundIds = found.filter((i) => i.item.attr.grades).map((i) => i.item.id);
-    console.log(grades.data, found, foundIds);
     return grades.data.filter((r) => foundIds.includes(r.id));
   },
 });
