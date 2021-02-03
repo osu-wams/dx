@@ -112,7 +112,7 @@ const resourceSearchItems = selector<SearchItem[]>({
 const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
   includeScore: true,
   minMatchCharLength: 2,
-  threshold: 0.2,
+  threshold: 0.1, // the lower the number, the more exact the match, 0.2 seems too broad
   ignoreLocation: true,
   keys: [
     'attr.announcement.action.title',
