@@ -47,6 +47,11 @@ const GlobalStyle = createGlobalStyle`
       z-index: 11;
     }
   }
+  @media screen and (min-width: 768px) {
+    [data-reach-menu] {
+      z-index: 10;
+    }
+  }
 `;
 
 export default GlobalStyle;

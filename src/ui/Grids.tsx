@@ -15,12 +15,16 @@ const TwoCol = styled.div`
 
 const ThreeCol = styled.div`
   display: grid;
-  grid-gap: ${spacing.default};
+  grid-gap: ${spacing.large};
   word-break: break-word;
   @media (min-width: ${breakpoints.small}) {
     margin: 0 auto;
     max-width: ${breakpoints.xl};
     grid-template-columns: 250px 1fr 250px;
+    /**
+     * Based on 8 rows so that the third column can come up almost to the top when
+     * no search results are present, but there are people and/or places
+     */
     .col-1 {
       grid-column: 1/2;
       grid-row: 1/8;

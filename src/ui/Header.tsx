@@ -78,7 +78,7 @@ const HeaderSearchWrapper = styled.div`
   flex-grow: 1;
   padding-left: ${spacing.large};
   padding-right: ${spacing.large};
-  @media (min-width: ${breakpoints.xl}) {
+  @media (min-width: ${breakpoints.headerSearch}) {
     padding-right: 150px;
   }
   ${SearchWrapper} {
