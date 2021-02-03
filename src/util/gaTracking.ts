@@ -25,6 +25,8 @@ export type IComponents =
   | 'financial-transactions'
   | 'footer'
   | 'footer-menu-nav'
+  | 'grades-search'
+  | 'grades-search-failed'
   | 'header'
   | 'info-button'
   | 'it-system-status'
