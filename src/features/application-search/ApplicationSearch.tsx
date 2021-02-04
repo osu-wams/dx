@@ -32,15 +32,40 @@ const ApplicationSearch: React.FC<any> = () => {
     timeout: 250,
   });
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
+  const [onSearchPage, setOnSearchPage] = useState(false);
   const [input, setInput] = useState('');
   // const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);
   const match = useMatch('/search');
   const navigate = useNavigate();
 
+  /**
+   * Manage the search field state flow;
+   * - User visited search page directly, set local state to track that they are on the page
+   * - User clicked an internal link navigating them away from Search page, clear the search
+   *   field and reset local state.
+   */
+  useEffect(() => {
+    if (!match && input) {
+      setInput('');
+    } else if (match && !onSearchPage) {
+      setOnSearchPage(true);
+    }
+    if (!match) {
+      setOnSearchPage(false);
+    }
+  }, [match]);
+
+  /**
+   * User typing in the search field state flow;
+   * - In all cases, perform the query by setting local state for input
+   * - Navigate the user to the search page if they are not already there and are
+   *   typing in the search field.
+   */
   useEffect(() => {
     setInput(query);
-    if (!match && query) {
+    if (!onSearchPage && query) {
       navigate('/search');
+      setOnSearchPage(true);
     }
   }, [query]);
 
