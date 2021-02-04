@@ -1,7 +1,8 @@
 import React from 'react';
 import PageTitle from '../ui/PageTitle';
-import { MainGridWrapper, Masonry } from '../theme';
-import { ThreeCol, TwoColWide } from 'src/ui/Grids';
+import { MainGridWrapper } from '../theme';
+import { ThreeCol } from 'src/ui/Grids';
+import { SearchResultListItem } from 'src/features/application-search/SearchResultListItem';
 
 const Search = () => {
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
@@ -16,15 +17,7 @@ const Search = () => {
           <PageTitle title="Search Results" />
           {filteredItems.length > 0 &&
             filteredItems.map((i) => (
-              <ListItem key={`${i.item.type}-${i.item.id}`}>
-                <span>{i.score?.toFixed(3)} </span>
-                <span>{i.item.type}: </span>
-                <span>{i.item.attr.resource?.title}</span>
-                <span>{i.item.attr.event?.title}</span>
-                <span>{i.item.attr.announcement?.title}</span>
-                <span>{i.item.attr.training?.title}</span>
-                <span>{i.item.attr.grades?.courseTitle}</span>
-              </ListItem>
+              <SearchResultListItem key={`${i.item.type}-${i.item.id}`} searchResult={i} />
             ))}
         </div>
         <div className="col-3">
