@@ -2,17 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { breakpoints } from 'src/theme';
 import { SearchBar } from 'src/ui/SearchBar';
+import { Event } from 'src/util/gaTracking';
 import {
   selectedCategoryState,
   resourceSearchState,
   debouncedResourceSearchState,
+  filteredResourcesState,
 } from 'src/state';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
 
 const ResourcesSearch: React.FC<any> = () => {
-  const [query, setQuery] = useRecoilState(resourceSearchState);
+  const { debouncedQuery, query, setQuery, resetDebouncedSearch } = useDebouncedSearchState({
+    searchState: resourceSearchState,
+    debouncedSearchState: debouncedResourceSearchState,
+    timeout: 250,
+  });
+  const filteredResources = useRecoilValue(filteredResourcesState);
   const [input, setInput] = useState('');
-  const resetDebouncedQuery = useResetRecoilState(debouncedResourceSearchState);
   const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);
 
   const isDesktop = useMediaQuery({ query: `(min-width: ${breakpoints.small})` });
@@ -21,10 +28,24 @@ const ResourcesSearch: React.FC<any> = () => {
     setInput(query);
   }, [query]);
 
+  useEffect(() => {
+    if (debouncedQuery) {
+      // If a query has no results, emit a GA Event to track for improving resources and synonyms
+      if (filteredResources.length === 0) {
+        Event('resource-search-failed', debouncedQuery);
+      }
+
+      // Avoids sending single characters to Google Analytics
+      if (debouncedQuery.length >= 2 && filteredResources.length > 0) {
+        Event('resource-search', debouncedQuery);
+      }
+    }
+  }, [debouncedQuery, filteredResources]);
+
   const onChange = (event) => {
     const newValue = event.target.value;
     setInput(newValue);
-    if (!newValue.length) resetDebouncedQuery();
+    if (!newValue.length) resetDebouncedSearch();
     if (selectedCategory !== 'all') setSelectedCategory('all');
     // Expensive function, let it operate async, state updates will cause related values
     // to refresh and render to happen asap

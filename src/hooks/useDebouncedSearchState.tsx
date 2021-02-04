@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { RecoilState, useRecoilState } from 'recoil';
+import { RecoilState, useRecoilState, useResetRecoilState } from 'recoil';
 import { useDebounce } from 'use-debounce';
 
 interface DebouncedSearchStateParams {
@@ -16,12 +16,13 @@ export const useDebouncedSearchState = ({
   const [query, setQuery] = useRecoilState(searchState);
   const [debouncedValue] = useDebounce(query, timeout);
   const [debouncedQuery, setDebouncedQuery] = useRecoilState(debouncedSearchState);
+  const resetDebouncedSearch = useResetRecoilState(debouncedSearchState);
 
   useEffect(() => {
     setDebouncedQuery(debouncedValue);
   }, [debouncedValue]);
 
-  return { debouncedQuery, query, setQuery };
+  return { debouncedQuery, query, setQuery, resetDebouncedSearch };
 };
 
 export default useDebouncedSearchState;
