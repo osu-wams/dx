@@ -11,7 +11,9 @@ const Search = () => {
     <MainGridWrapper data-testid="search-page">
       <ThreeCol>
         <div className="col-1">
-          <Settings />
+          <div style={{ position: 'sticky', top: '30px' }}>
+            <Settings />
+          </div>
         </div>
         <div className="col-2">
           <PageTitle title="Search Results" />
@@ -21,7 +23,9 @@ const Search = () => {
             ))}
         </div>
         <div className="col-3">
-          <People /> <Places />
+          <div style={{ position: 'sticky', top: '30px' }}>
+            <People /> <Places />
+          </div>
         </div>
       </ThreeCol>
     </MainGridWrapper>
