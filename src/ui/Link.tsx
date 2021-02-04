@@ -60,11 +60,14 @@ const HighlightExternalLink = ({ children, ...props }) => {
   );
 };
 
-const SimpleExternalLink = ({ children, ...props }) => (
-  <LinkStyles {...props} target="_blank" css={{ padding: 0 }}>
-    {children}
-  </LinkStyles>
-);
+const SimpleExternalLink = ({ children, ...props }) => {
+  const css = { padding: 0, ...props.css };
+  return (
+    <LinkStyles {...props} target="_blank" css={css}>
+      {children}
+    </LinkStyles>
+  );
+};
 
 const InternalLink = ({ children, ...props }) => {
   const themeContext = useContext(ThemeContext);
@@ -77,4 +80,20 @@ const InternalLink = ({ children, ...props }) => {
   );
 };
 
-export { ExternalLink, InternalLink, SimpleExternalLink, HighlightExternalLink };
+const SimpleInternalLink = ({ children, ...props }) => {
+  const themeContext = useContext(ThemeContext);
+  const css = { padding: 0, ...props.css };
+  return (
+    <LinkStyles as={Link} to={props.to} {...props} css={css}>
+      {children}
+    </LinkStyles>
+  );
+};
+
+export {
+  ExternalLink,
+  InternalLink,
+  SimpleExternalLink,
+  SimpleInternalLink,
+  HighlightExternalLink,
+};
