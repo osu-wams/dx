@@ -18,6 +18,8 @@ export const HOLDS_API = stu + 'holds';
 
 export const GPA_API = stu + 'gpa';
 
+export const GRADES_API = stu + 'grades';
+
 export const ACADEMIC_STATUS_API = stu + 'academic-status';
 
 // class-schedule?term=current

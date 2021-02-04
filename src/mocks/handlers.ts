@@ -49,11 +49,13 @@ import {
   HEALTH_CHECK_API,
   APP_VERSION_API,
   USER_API,
+  GRADES_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus.data;
 export const mockCourseSchedule = Student.CourseSchedule.mockCourseSchedule.courseScheduleData;
+export const mockGrades = Student.Grades.mockGrades;
 const mockDegrees = Student.Degrees.mockDegrees.data;
 const { gpaHookData, gpaUndergraduateData } = Student.Gpa.mockGpa;
 const { mockAccountTransactions } = Student.AccountTransactions;
@@ -106,6 +108,10 @@ export const handlers = [
 
   rest.get(GPA_API, async (req, res, ctx) => {
     return res(ctx.json(mockGpa.data));
+  }),
+
+  rest.get(GRADES_API, async (req, res, ctx) => {
+    return res(ctx.json(mockGrades.data));
   }),
 
   rest.get(HOLDS_API, async (req, res, ctx) => {

@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { Loading } from 'src/ui/Loading';
-import { useDebounce } from 'use-debounce';
-import { useGrades } from '@osu-wams/hooks';
 import { fontSize, spacing, breakpoints, MainGridWrapper, MainGrid } from 'src/theme';
 import PageTitle from 'src/ui/PageTitle';
 import { Card, CardHeader, CardContent } from 'src/ui/Card';
@@ -10,33 +8,34 @@ import { Table, TableBody, TableRow, TableCell, TableHeader, TableHeaderCell } f
 import { singularPlural, titleCase } from 'src/util/helpers';
 import { Event } from 'src/util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
-import { Grades } from '@osu-wams/hooks/dist/api/student/grades';
 import { SearchBar } from 'src/ui/SearchBar';
+import useGradesState from 'src/hooks/useGradesState';
+import { useRecoilValue } from 'recoil';
+import { debouncedGradesSearchState, filteredGradesState, gradesSearchState } from 'src/state';
+import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
 
 const PastCourses = () => {
-  const grades = useGrades();
-  const [query, setQuery] = useState('');
-  const [debouncedQuery] = useDebounce(query, 300);
-  const [filteredGrades, setFilteredGrades] = useState<Grades[]>([]);
+  const { grades } = useGradesState();
+  const { debouncedQuery, query, setQuery } = useDebouncedSearchState({
+    searchState: gradesSearchState,
+    debouncedSearchState: debouncedGradesSearchState,
+    timeout: 250,
+  });
+  const filteredGrades = useRecoilValue(filteredGradesState);
 
   useEffect(() => {
-    if (!debouncedQuery) {
-      setFilteredGrades(grades.data);
-    } else {
-      const re = new RegExp(debouncedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-      const matchingGrades = grades.data.filter(
-        (e) =>
-          e.attributes.courseTitle.match(re) ||
-          `${e.attributes.courseSubject}${e.attributes.courseNumber}`.match(re) ||
-          `${e.attributes.courseSubject} ${e.attributes.courseNumber}`.match(re) ||
-          `${e.attributes.courseSubjectDescription}`.match(re) ||
-          `${e.attributes.courseReferenceNumber}`.match(re) ||
-          `${e.attributes.gradeFinal}`.match(re)
-      );
-      setFilteredGrades(matchingGrades);
-      Event('past-courses-search', debouncedQuery);
+    if (debouncedQuery) {
+      // If a query has no results, emit a GA Event to track for improving grades
+      if (filteredGrades.length === 0) {
+        Event('past-courses-search-failed', debouncedQuery);
+      }
+
+      // Avoids sending single characters to Google Analytics
+      if (debouncedQuery.length >= 2 && filteredGrades.length > 0) {
+        Event('past-courses-search', debouncedQuery);
+      }
     }
-  }, [debouncedQuery, grades.data]);
+  }, [debouncedQuery, filteredGrades]);
 
   const gradesByTerm = filteredGrades.reduce(
     (gradesSoFar, { attributes, attributes: { termDescription } }) => {
@@ -65,7 +64,7 @@ const PastCourses = () => {
           inputValue={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        {grades.loading && <Loading lines={5} />}
+        {grades.isLoading && <Loading lines={5} />}
         {grades.data.length > 0 ? (
           <HistoryGrid aria-live="polite" aria-atomic="true">
             <Count>
@@ -127,7 +126,7 @@ const PastCourses = () => {
             ))}
           </HistoryGrid>
         ) : (
-          !grades.loading && <div>No course history yet</div>
+          !grades.isLoading && <div>No course history yet</div>
         )}
       </MainGrid>
     </MainGridWrapper>

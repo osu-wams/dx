@@ -33,6 +33,7 @@ export type IComponents =
   | 'notifications'
   | 'notifications-menu'
   | 'past-courses-search'
+  | 'past-courses-search-failed'
   | 'planner-items'
   | 'profile'
   | 'program-of-study'

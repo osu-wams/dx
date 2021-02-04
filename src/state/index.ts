@@ -6,6 +6,12 @@ import {
   userState,
 } from './application';
 import { courseState } from './courses';
+import {
+  gradesState,
+  gradesSearchState,
+  debouncedGradesSearchState,
+  filteredGradesState,
+} from './grades';
 import { dynamicCardState, filteredCards } from './dynamicCards';
 import { filteredNotifications, userMessagesState } from './notifications';
 import { plannerItemState } from './plannerItems';
@@ -30,13 +36,17 @@ import {
 export {
   categoryState,
   courseState,
+  debouncedGradesSearchState,
   debouncedResourceSearchState,
   debouncedTrainingSearchState,
   dynamicCardState,
   filteredCards,
   filteredNotifications,
+  filteredGradesState,
   filteredResourcesState,
   filteredTrainingsState,
+  gradesState,
+  gradesSearchState,
   infoButtonState,
   plannerItemState,
   resourceSearchState,
