@@ -6,12 +6,17 @@ import { resourceState } from './resources';
 import { trainingState } from './trainings';
 import { localistEventsState } from './events';
 import { gradesState } from './grades';
+import { courseState } from './courses';
 
-interface SearchItem {
+export interface SearchItem {
   type: string;
   id: string;
+  title: string;
+  to?: string;
+  href?: string;
   attr: {
     announcement?: Types.Announcement;
+    courses?: Types.CourseScheduleAttributes;
     event?: Types.LocalistEvent;
     grades?: Types.GradesAttributes;
     training?: Types.Training;
@@ -30,8 +35,10 @@ const eventSearchItems = selector<SearchItem[]>({
     const all = events
       .map((a) =>
         a.data.map((event) => ({
-          type: 'event',
+          type: 'Event',
           id: event.id.toString(),
+          title: event.title,
+          href: event.action.link,
           attr: {
             event,
           },
@@ -54,8 +61,10 @@ const announcementSearchItems = selector<SearchItem[]>({
     const all = announcements
       .map((a) =>
         a.data.map((announcement) => ({
-          type: 'announcement',
+          type: 'Announcement',
           id: announcement.id,
+          title: announcement.title,
+          href: announcement.action?.link,
           attr: {
             announcement,
           },
@@ -72,10 +81,28 @@ const gradesSearchItems = selector<SearchItem[]>({
   get: ({ get }) => {
     const grades = get(gradesState);
     return grades.data.map((grade) => ({
-      type: 'grades',
+      type: 'Past Course',
       id: grade.id,
+      title: grade.attributes.courseTitle,
+      to: '/student/academics/past-courses',
       attr: {
         grades: { ...grade.attributes },
+      },
+    }));
+  },
+});
+
+const coursesSearchItems = selector<SearchItem[]>({
+  key: 'coursesSearchItems',
+  get: ({ get }) => {
+    const courses = get(courseState);
+    return courses.data.map((course) => ({
+      type: 'Current Course',
+      id: course.id,
+      title: course.attributes.courseTitle,
+      to: '/student/academics',
+      attr: {
+        courses: { ...course.attributes },
       },
     }));
   },
@@ -86,8 +113,10 @@ const trainingSearchItems = selector<SearchItem[]>({
   get: ({ get }) => {
     const trainings = get(trainingState);
     return trainings.data.map((training) => ({
-      type: 'training',
+      type: 'Training',
       id: training.id,
+      title: training.title,
+      to: '/employee/training',
       attr: {
         training,
       },
@@ -100,8 +129,10 @@ const resourceSearchItems = selector<SearchItem[]>({
   get: ({ get }) => {
     const resources = get(resourceState);
     return resources.data.map((resource) => ({
-      type: 'resource',
+      type: 'Resource',
       id: resource.id,
+      title: resource.title,
+      href: resource.link,
       attr: {
         resource,
       },
@@ -115,21 +146,29 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
   threshold: 0.1, // the lower the number, the more exact the match, 0.2 seems too broad
   ignoreLocation: true,
   keys: [
+    'title',
     'attr.announcement.action.title',
     'attr.announcement.body',
-    'attr.announcement.title',
+    'attr.courses.courseNumber',
+    'attr.courses.courseReferenceNumber',
+    'attr.courses.courseSubject',
+    'attr.courses.courseSubjectDescription',
+    'attr.courses.courseSubjectNumber',
+    'attr.courses.faculty.email',
+    'attr.courses.faculty.name',
+    'attr.courses.meetingTimes.building',
+    'attr.courses.meetingTimes.buildingDescription',
+    'attr.courses.meetingTimes.campus',
+    'attr.courses.termDescription',
     'attr.event.action.title',
     'attr.event.body',
-    'attr.event.title',
     'attr.event.city',
     'attr.grades.courseNumber',
     'attr.grades.courseReferenceNumber',
     'attr.grades.courseSubject',
     'attr.grades.courseSubjectDescription',
     'attr.grades.courseSubjectNumber',
-    'attr.grades.courseTitle',
     'attr.grades.gradeFinal',
-    'attr.resource.title',
     'attr.resource.synonyms',
     'attr.training.audiences',
     'attr.training.body',
@@ -141,7 +180,6 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
     'attr.training.frequency',
     'attr.training.prerequisites',
     'attr.training.tags',
-    'attr.training.title',
     'attr.training.type',
     'attr.training.websiteTitle',
     'attr.training.websiteUri',
@@ -156,12 +194,14 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
     const resources = get(resourceSearchItems);
     const events = get(eventSearchItems);
     const grades = get(gradesSearchItems);
+    const courses = get(coursesSearchItems);
     const items: SearchItem[] = [
       ...announcements,
       ...trainings,
       ...resources,
       ...events,
       ...grades,
+      ...courses,
     ];
     return new Fuse(items, fuseOptions);
   },
