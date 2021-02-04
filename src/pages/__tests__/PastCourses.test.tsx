@@ -1,27 +1,12 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { render } from 'src/util/test-utils';
+import { alterMock, render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
-import { Student } from '@osu-wams/hooks';
-
-const mockGrades = Student.Grades.mockGrades;
-const mockUseGrades = jest.fn();
-
-jest.mock('@osu-wams/hooks', () => {
-  return {
-    // @ts-ignore spread object
-    ...jest.requireActual('@osu-wams/hooks'),
-    useGrades: () => mockUseGrades(),
-  };
-});
+import { GRADES_API } from 'src/mocks/apis';
+import { gradesState } from 'src/state';
 
 describe('<PastCourses />', () => {
-  // Set mock function result before running any tests
-  beforeEach(() => {
-    mockUseGrades.mockReturnValue(mockGrades);
-  });
-
   it('renders without errors', async () => {
     render(<PastCourses />);
     expect(screen.getByTestId('past-courses')).toBeInTheDocument();
@@ -34,20 +19,31 @@ describe('<PastCourses />', () => {
 
   it('should find the course: "Test Course Title" and the CRN', async () => {
     render(<PastCourses />);
-    const Algebra = screen.getByText('Test Course Title');
+    const Algebra = await screen.findByText('Test Course Title');
     expect(Algebra).toBeInTheDocument();
     expect(await screen.findByText(/CRN: 15625/i)).toBeInTheDocument();
   });
 
   it('should find only one instace of a course excluded from GPA', async () => {
     render(<PastCourses />);
-    const excludedFromGPA = screen.getByText(/Excluded - GPA\/Credits/);
+    const excludedFromGPA = await screen.findByText(/Excluded - GPA\/Credits/);
     expect(excludedFromGPA).toBeInTheDocument();
   });
 
   it('should find the message: "No course history yet" if grades is an empty array', async () => {
-    mockUseGrades.mockReturnValue({ data: [], loading: false, error: false });
-    render(<PastCourses />);
+    render(<PastCourses />, {
+      initialStates: [
+        {
+          state: gradesState,
+          value: {
+            data: [],
+            isLoading: false,
+            isSuccess: true,
+            isError: false,
+          },
+        },
+      ],
+    });
 
     const NoGrades = await screen.findByText('No course history yet');
     expect(NoGrades).toBeInTheDocument();
@@ -57,8 +53,8 @@ describe('<PastCourses />', () => {
     it('should find "MTH 451" when typing and fire a google analytics event', async () => {
       render(<PastCourses />);
       const searchInput = screen.getByLabelText('Find past courses');
-      await userEvent.type(searchInput, 'Math 451');
-      const FinalGrade = screen.getByText(/MTH 451/i);
+      userEvent.type(searchInput, 'MTH 451');
+      const FinalGrade = await screen.findByText(/MTH 451/i);
 
       expect(FinalGrade).toBeInTheDocument();
     });
@@ -66,7 +62,7 @@ describe('<PastCourses />', () => {
     it('should not break when adding regex to the search and find the grade', async () => {
       render(<PastCourses />);
       const searchInput = screen.getByLabelText('Find past courses');
-      screen.getByText('Test Course Title');
+      await screen.findByText('Test Course Title');
       userEvent.type(searchInput, 'A=B-');
       const finalGrade = await screen.findByText('A=B-');
 
@@ -79,11 +75,15 @@ describe('<PastCourses />', () => {
       const searchInput = screen.getByLabelText('Find past courses');
       await userEvent.type(searchInput, 'Mathematics');
 
-      expect(await screen.findByText(/Found 7 courses/i)).toBeInTheDocument();
+      // Finds 7 Math classes and 1 Economics class "INTRO TO MATHEMATIC ECONOMICS"
+      expect(await screen.findByText(/Found 8 courses/i)).toBeInTheDocument();
 
       // Most "Mathematics" classes have the "MTH" abbreviation instead of "Mathematics"
-      const coursesFound = await screen.findAllByText(/MTH/);
-      expect(coursesFound).toHaveLength(7);
+      // Finds 7 MTH and 1 ECON
+      const mthCoursesFound = await screen.findAllByText(/MTH/);
+      expect(mthCoursesFound).toHaveLength(7);
+      const econCoursesFound = await screen.findAllByText(/MTH/);
+      expect(econCoursesFound).toHaveLength(7);
     });
 
     it('should not find any courses after searching something bogus', async () => {
