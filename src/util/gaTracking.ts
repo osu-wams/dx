@@ -8,6 +8,8 @@ export type IComponents =
   | 'account-balance'
   | 'admin'
   | 'anouncements'
+  | 'application-search'
+  | 'application-search-failed'
   | 'badge'
   | 'about'
   | 'about-info'
