@@ -4,6 +4,8 @@ import { MainGridWrapper, Masonry } from '../theme';
 import { ThreeCol, TwoColWide } from 'src/ui/Grids';
 
 const Search = () => {
+  const filteredItems = useRecoilValue(filteredApplicationSearchState);
+
   return (
     <MainGridWrapper data-testid="search-page">
       <ThreeCol>
@@ -12,33 +14,18 @@ const Search = () => {
         </div>
         <div className="col-2">
           <PageTitle title="Search Results" />
-          <ListItem>Search 1</ListItem>
-          <ListItem>Search 2</ListItem>
-          <p>
-            Toggle these settings to reveal different announcements, resources, events and features
-            based on who you are. By default, these settings are configured automatically based on
-            what we know about you.
-          </p>
-          <p>
-            Toggle these settings to reveal different announcements, resources, events and features
-            based on who you are. By default, these settings are configured automatically based on
-            what we know about you.
-          </p>
-          <p>
-            Toggle these settings to reveal different announcements, resources, events and features
-            based on who you are. By default, these settings are configured automatically based on
-            what we know about you.
-          </p>
-          <p>
-            Toggle these settings to reveal different announcements, resources, events and features
-            based on who you are. By default, these settings are configured automatically based on
-            what we know about you.
-          </p>
-          <p>
-            Toggle these settings to reveal different announcements, resources, events and features
-            based on who you are. By default, these settings are configured automatically based on
-            what we know about you.
-          </p>
+          {filteredItems.length > 0 &&
+            filteredItems.map((i) => (
+              <ListItem key={`${i.item.type}-${i.item.id}`}>
+                <span>{i.score?.toFixed(3)} </span>
+                <span>{i.item.type}: </span>
+                <span>{i.item.attr.resource?.title}</span>
+                <span>{i.item.attr.event?.title}</span>
+                <span>{i.item.attr.announcement?.title}</span>
+                <span>{i.item.attr.training?.title}</span>
+                <span>{i.item.attr.grades?.courseTitle}</span>
+              </ListItem>
+            ))}
         </div>
         <div className="col-3">
           <People /> <Places />
@@ -105,6 +92,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
+import { filteredApplicationSearchState } from 'src/state/search';
+import { useRecoilValue } from 'recoil';
 
 export const FilterByType = () => {
   // const classes = useStyles();
