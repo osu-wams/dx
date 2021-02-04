@@ -27,12 +27,12 @@ const PastCourses = () => {
     if (debouncedQuery) {
       // If a query has no results, emit a GA Event to track for improving grades
       if (filteredGrades.length === 0) {
-        Event('grades-search-failed', debouncedQuery);
+        Event('past-courses-search-failed', debouncedQuery);
       }
 
       // Avoids sending single characters to Google Analytics
       if (debouncedQuery.length >= 2 && filteredGrades.length > 0) {
-        Event('grades-search', debouncedQuery);
+        Event('past-courses-search', debouncedQuery);
       }
     }
   }, [debouncedQuery, filteredGrades]);
