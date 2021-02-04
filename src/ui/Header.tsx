@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styled from 'styled-components/macro';
-import { Link } from '@reach/router';
+import { LocationProvider, Link } from '@reach/router';
 import { Event } from 'src/util/gaTracking';
 import logo from 'src/assets/osu-logo.svg';
 import ecampusLogo from 'src/assets/osu-ecampus.svg';
@@ -19,9 +19,8 @@ import { Types } from '@osu-wams/lib';
 import { arrayIncludes } from 'src/util/helpers';
 import { userState, themeState } from 'src/state';
 import { useRecoilValue } from 'recoil';
-import { SearchBar } from './SearchBar';
 import { Desktop } from 'src/util/useMediaQuery';
-import { SearchWrapper } from 'src/ui/SearchBar';
+import ApplicationSearch from 'src/features/application-search/ApplicationSearch';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -74,18 +73,6 @@ const Logo = styled.img`
   }
 `;
 
-const HeaderSearchWrapper = styled.div`
-  flex-grow: 1;
-  padding-left: ${spacing.large};
-  padding-right: ${spacing.large};
-  @media (min-width: ${breakpoints.headerSearch}) {
-    padding-right: 150px;
-  }
-  ${SearchWrapper} {
-    margin: 0 auto;
-  }
-`;
-
 /**
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
@@ -129,15 +116,13 @@ const Header = () => {
   const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
 
   return (
-    <>
+    <LocationProvider>
       <HeaderWrapper>
         <Link to={dashboardLink} onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
           <Logo data-testid="app-header-logo" src={image} alt={alt} />
         </Link>
         <Desktop>
-          <HeaderSearchWrapper>
-            <SearchBar id="appSearch" labelText="Search" inputValue="" />
-          </HeaderSearchWrapper>
+          <ApplicationSearch />
         </Desktop>
         <HeaderNav />
       </HeaderWrapper>
@@ -147,7 +132,7 @@ const Header = () => {
           <MainNav />
         </NavHeaderWrapper>
       </Navigation>
-    </>
+    </LocationProvider>
   );
 };
 
