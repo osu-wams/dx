@@ -7,6 +7,8 @@ import { trainingState } from './trainings';
 import { localistEventsState } from './events';
 import { gradesState } from './grades';
 import { courseState } from './courses';
+import { plannerItemState } from './plannerItems';
+import { canvasUrl } from 'src/features/canvas/CanvasPlannerItems';
 
 export interface SearchItem {
   type: string;
@@ -20,6 +22,7 @@ export interface SearchItem {
     event?: Types.LocalistEvent;
     grades?: Types.GradesAttributes;
     training?: Types.Training;
+    plannerItem?: Types.PlannerItem;
     resource?: Types.Resource;
   };
 }
@@ -140,6 +143,22 @@ const resourceSearchItems = selector<SearchItem[]>({
   },
 });
 
+const plannerItemSearchItems = selector<SearchItem[]>({
+  key: 'plannerItemSearchItems',
+  get: ({ get }) => {
+    const plannerItems = get(plannerItemState);
+    return plannerItems.data.map((plannerItem) => ({
+      type: 'Canvas',
+      id: `${plannerItem.course_id}-${plannerItem.plannable_id}`,
+      title: plannerItem.plannable.title,
+      href: canvasUrl(plannerItem.html_url),
+      attr: {
+        plannerItem,
+      },
+    }));
+  },
+});
+
 const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
   includeScore: true,
   minMatchCharLength: 2,
@@ -169,6 +188,10 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
     'attr.grades.courseSubjectDescription',
     'attr.grades.courseSubjectNumber',
     'attr.grades.gradeFinal',
+    'attr.plannerItem.context_name',
+    'attr.plannerItem.context_type',
+    'attr.plannerItem.plannable.title',
+    'attr.plannerItem.plannable_type',
     'attr.resource.synonyms',
     'attr.training.audiences',
     'attr.training.body',
@@ -195,6 +218,7 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
     const events = get(eventSearchItems);
     const grades = get(gradesSearchItems);
     const courses = get(coursesSearchItems);
+    const plannerItems = get(plannerItemSearchItems);
     const items: SearchItem[] = [
       ...announcements,
       ...trainings,
@@ -202,6 +226,7 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
       ...events,
       ...grades,
       ...courses,
+      ...plannerItems,
     ];
     return new Fuse(items, fuseOptions);
   },
