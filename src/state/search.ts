@@ -1,4 +1,4 @@
-import { selector, selectorFamily } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 import Fuse from 'fuse.js';
 import { Types, User } from '@osu-wams/lib';
 import { announcementState, ANNOUNCEMENT_PAGES } from './announcements';
@@ -173,5 +173,43 @@ export const searchIndex = selectorFamily<Fuse.FuseResult<SearchItem>[], string>
     const index = get(fuseIndex);
     const results = index.search(query);
     return results;
+  },
+});
+
+/**
+ * The state of the application wide search bar value, this can change rapidly and
+ * is reflected by the value entered in the input field in the UI. This value
+ * is intended to be consumed by a useDebounce hook and useEffect to eventually set the value
+ * of debouncedApplicationSearchState with.
+ */
+export const applicationSearchState = atom<string>({
+  key: 'applicationSearchState',
+  default: '',
+});
+
+/**
+ * After an elapsed period of time specified in a useDebounce hook, a related
+ * useEffect would set the value of this state which is used by other selectors or hooks.
+ * This value is a search term after the user has stopped typing for a period of time, and it will
+ * initiate searching and filtering the application wide search items.
+ */
+export const debouncedApplicationSearchState = atom<string | undefined>({
+  key: 'debouncedApplicationSearchState',
+  default: undefined,
+});
+
+/**
+ * If debouncedQuery is reset to its default (undefined), then return
+ * nothing, otherwise return the items filtered by the search term entered.
+ */
+export const filteredApplicationSearchState = selector<Fuse.FuseResult<SearchItem>[]>({
+  key: 'filteredApplicationSearchState',
+  get: ({ get }) => {
+    const debouncedQuery = get(debouncedApplicationSearchState);
+    if (!debouncedQuery) {
+      return [];
+    } else {
+      return get(searchIndex(debouncedQuery));
+    }
   },
 });
