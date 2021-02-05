@@ -25,6 +25,15 @@ const HeaderSearchWrapper = styled.div`
   }
 `;
 
+const getSearchQuerystring = () => {
+  if (window.location.search.startsWith('?q=')) {
+    const terms = window.location.search.split('=');
+    if (terms.length === 2) {
+      return decodeURI(terms[1]);
+    }
+  }
+};
+
 const ApplicationSearch: React.FC<any> = () => {
   const { debouncedQuery, query, setQuery, resetDebouncedSearch } = useDebouncedSearchState({
     searchState: applicationSearchState,
@@ -37,6 +46,14 @@ const ApplicationSearch: React.FC<any> = () => {
   // const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);
   const match = useMatch('/search');
   const navigate = useNavigate();
+
+  // When a user visits the /search page directly, fetch an optionally provided query and set it
+  useEffect(() => {
+    const query = getSearchQuerystring();
+    if (match && query) {
+      setQuery(query);
+    }
+  }, []);
 
   /**
    * Manage the search field state flow;
@@ -59,14 +76,23 @@ const ApplicationSearch: React.FC<any> = () => {
    * User typing in the search field state flow;
    * - In all cases, perform the query by setting local state for input
    * - Navigate the user to the search page if they are not already there and are
-   *   typing in the search field.
+   *   typing in the search field
+   * - Update the location querystring without causing the browser to navigate (history.pushState)
+   *   to maintain bookmarkable searches, unless the effect is triggered by the user deleting the final
+   *   character from the search field (query becomes falsy)
    */
   useEffect(() => {
-    setInput(query);
+    const queryString = getSearchQuerystring();
+    if (query && query !== queryString) {
+      window.history.pushState({ q: query }, `MyOregonState Search ${query}`, `?q=${query}`);
+    } else if (!query && queryString) {
+      window.history.pushState({ q: query }, 'MyOregonState Search', '?');
+    }
     if (!onSearchPage && query) {
       navigate('/search');
       setOnSearchPage(true);
     }
+    setInput(query);
   }, [query]);
 
   useEffect(() => {
@@ -83,14 +109,35 @@ const ApplicationSearch: React.FC<any> = () => {
     }
   }, [debouncedQuery, filteredItems]);
 
+  const performSearch = () => {
+    if (!onSearchPage && input) {
+      // Google Custom Search isn't in scope when the user is not on the search page,
+      // so it isn't able to render through the application state. Sadly, the user
+      // has to be redirected to the search page for the results container to be rendered
+      // and managed by the Google JS.
+      window.location.assign(`/search?q=${input}`);
+    } else {
+      // While on the search page, set the query causing application state to operate and
+      // results to render.
+      setQuery(input);
+    }
+  };
+
+  const onKeyDown = (event) => {
+    if (event.code === 'Enter' && input) {
+      performSearch();
+    }
+  };
+
+  // Manage updating the state of the input field and reseting debounced search
+  // for the sake of consistency with how type-ahead searches work elsewhere, however
+  // application search will require an Enter key or a search click
   const onChange = (event) => {
     const newValue = event.target.value;
     setInput(newValue);
     if (!newValue.length) resetDebouncedSearch();
-    // if (selectedCategory !== 'all') setSelectedCategory('all');
-    // Expensive function, let it operate async, state updates will cause related values
-    // to refresh and render to happen asap
-    setTimeout(() => setQuery(newValue));
+    // Type-ahead could execute setQuery on change
+    // setTimeout(() => setQuery(newValue));
   };
 
   return (
@@ -100,6 +147,8 @@ const ApplicationSearch: React.FC<any> = () => {
         labelText=""
         inputValue={input}
         onChange={onChange}
+        onKeyDown={onKeyDown}
+        onClick={performSearch}
         // autoFocus={isDesktop ? true : false} // eslint-disable-line
       />
     </HeaderSearchWrapper>
