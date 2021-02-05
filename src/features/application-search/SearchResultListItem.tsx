@@ -36,6 +36,7 @@ const titleLink = (item: SearchItem) => {
     <SimpleExternalLink href={item.href}>{item.title}</SimpleExternalLink>
   );
 };
+
 const SearchResultListItem = ({
   searchResult: { item },
 }: {
@@ -49,4 +50,4 @@ const SearchResultListItem = ({
   );
 };
 
-export { SearchResultListItem };
+export default SearchResultListItem;
