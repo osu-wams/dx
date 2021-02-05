@@ -1,8 +1,11 @@
 import React from 'react';
-import PageTitle from '../ui/PageTitle';
+import PageTitle from 'src/ui/PageTitle';
 import { MainGridWrapper } from '../theme';
 import { ThreeCol } from 'src/ui/Grids';
-import { SearchResultListItem } from 'src/features/application-search/SearchResultListItem';
+import SearchResultListItem from 'src/features/application-search/SearchResultListItem';
+import GoogleSearchResults from 'src/features/application-search/GoogleSearchResults';
+import { filteredApplicationSearchState } from 'src/state/search';
+import { useRecoilValue } from 'recoil';
 
 const Search = () => {
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
@@ -21,6 +24,7 @@ const Search = () => {
             filteredItems.map((i) => (
               <SearchResultListItem key={`${i.item.type}-${i.item.id}`} searchResult={i} />
             ))}
+          <GoogleSearchResults />
         </div>
         <div className="col-3">
           <div style={{ position: 'sticky', top: '30px' }}>
@@ -89,8 +93,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
-import { filteredApplicationSearchState } from 'src/state/search';
-import { useRecoilValue } from 'recoil';
 
 export const FilterByType = () => {
   // const classes = useStyles();
