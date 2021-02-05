@@ -20,7 +20,7 @@ import { arrayIncludes } from 'src/util/helpers';
 import { userState, themeState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { Desktop } from 'src/util/useMediaQuery';
-import ApplicationSearch from 'src/features/application-search/ApplicationSearch';
+import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -122,7 +122,7 @@ const Header = () => {
           <Logo data-testid="app-header-logo" src={image} alt={alt} />
         </Link>
         <Desktop>
-          <ApplicationSearch />
+          <ApplicationSearchBar />
         </Desktop>
         <HeaderNav />
       </HeaderWrapper>

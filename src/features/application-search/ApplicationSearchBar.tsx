@@ -34,7 +34,7 @@ const getSearchQuerystring = () => {
   }
 };
 
-const ApplicationSearch: React.FC<any> = () => {
+const ApplicationSearchBar: React.FC<any> = () => {
   const { debouncedQuery, query, setQuery, resetDebouncedSearch } = useDebouncedSearchState({
     searchState: applicationSearchState,
     debouncedSearchState: debouncedApplicationSearchState,
@@ -155,4 +155,4 @@ const ApplicationSearch: React.FC<any> = () => {
   );
 };
 
-export default ApplicationSearch;
+export default ApplicationSearchBar;
