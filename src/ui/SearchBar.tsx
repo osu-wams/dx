@@ -31,7 +31,11 @@ const SearchBar = ({ id, labelText, inputValue, ...props }) => {
 
   return (
     <SearchWrapper>
-      <Icon icon={faSearch} color={themeContext.ui.search.icon.color} />
+      <Icon
+        icon={faSearch}
+        color={themeContext.ui.search.icon.color}
+        onClick={props.onClick ?? null}
+      />
       <VisuallyHidden>
         <label htmlFor={id}>{labelText}</label>
       </VisuallyHidden>
