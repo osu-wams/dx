@@ -2,10 +2,45 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-
     <script type="application/javascript">
+      // Old IE browsers should be told to get a real browser.. so we redirect them.
       if (/MSIE|Trident/.test(window.navigator.userAgent)) window.location.href = '/ie.html';
-    </script> 
+
+      /**
+       * Patching JS so that Google Custom Search will work properly with React. This could
+       * end up having side-effects that are unintentional down the road, but there isn't
+       * a solution at the moment (this dates back to 2018 even).
+       * https://github.com/facebook/react/issues/11538#issuecomment-417504600
+       */
+      if (typeof Node === 'function' && Node.prototype) {
+        const originalRemoveChild = Node.prototype.removeChild;
+        Node.prototype.removeChild = function (child) {
+          if (child.parentNode !== this) {
+            if (console) {
+              console.error('Cannot remove a child from a different parent', child, this);
+            }
+            return child;
+          }
+          return originalRemoveChild.apply(this, arguments);
+        };
+
+        const originalInsertBefore = Node.prototype.insertBefore;
+        Node.prototype.insertBefore = function (newNode, referenceNode) {
+          if (referenceNode && referenceNode.parentNode !== this) {
+            if (console) {
+              console.error(
+                'Cannot insert before a reference node from a different parent',
+                referenceNode,
+                this
+              );
+            }
+            return newNode;
+          }
+          return originalInsertBefore.apply(this, arguments);
+        };
+      }
+    </script>
+    <script async src="https://cse.google.com/cse.js?cx=001157565620839607635:f_5ovr-jasm"></script>
 
     <meta
       name="viewport"
@@ -35,10 +70,8 @@
     />
   </head>
   <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root" style="opacity: 0;"></div>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <div id="root" style="opacity: 0"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
