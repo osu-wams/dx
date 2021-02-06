@@ -3,13 +3,11 @@ import styled from 'styled-components/macro';
 import { breakpoints, spacing } from 'src/theme';
 import { SearchBar } from 'src/ui/SearchBar';
 import { Event } from 'src/util/gaTracking';
-import { useRecoilValue } from 'recoil';
-import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   applicationSearchState,
-  debouncedApplicationSearchState,
   filteredApplicationSearchState,
-} from 'src/state/search';
+} from 'src/state/applicationSearch';
 import { SearchWrapper } from 'src/ui/SearchBar';
 import { useNavigate, useMatch } from '@reach/router';
 
@@ -35,11 +33,7 @@ const getSearchQuerystring = () => {
 };
 
 const ApplicationSearchBar: React.FC<any> = () => {
-  const { debouncedQuery, query, setQuery, resetDebouncedSearch } = useDebouncedSearchState({
-    searchState: applicationSearchState,
-    debouncedSearchState: debouncedApplicationSearchState,
-    timeout: 250,
-  });
+  const [query, setQuery] = useRecoilState(applicationSearchState);
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
   const [onSearchPage, setOnSearchPage] = useState(false);
   const [input, setInput] = useState('');
@@ -96,18 +90,18 @@ const ApplicationSearchBar: React.FC<any> = () => {
   }, [query]);
 
   useEffect(() => {
-    if (debouncedQuery) {
+    if (query) {
       // If a query has no results, emit a GA Event to track for improving items search
       if (filteredItems.length === 0) {
-        Event('application-search-failed', debouncedQuery);
+        Event('application-search-failed', query);
       }
 
       // Avoids sending single characters to Google Analytics
-      if (debouncedQuery.length >= 2 && filteredItems.length > 0) {
-        Event('application-search', debouncedQuery);
+      if (query.length >= 2 && filteredItems.length > 0) {
+        Event('application-search', query);
       }
     }
-  }, [debouncedQuery, filteredItems]);
+  }, [query, filteredItems]);
 
   const performSearch = () => {
     if (!onSearchPage && input) {
@@ -129,15 +123,9 @@ const ApplicationSearchBar: React.FC<any> = () => {
     }
   };
 
-  // Manage updating the state of the input field and reseting debounced search
-  // for the sake of consistency with how type-ahead searches work elsewhere, however
-  // application search will require an Enter key or a search click
   const onChange = (event) => {
     const newValue = event.target.value;
     setInput(newValue);
-    if (!newValue.length) resetDebouncedSearch();
-    // Type-ahead could execute setQuery on change
-    // setTimeout(() => setQuery(newValue));
   };
 
   return (
