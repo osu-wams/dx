@@ -4,7 +4,7 @@ import { MainGridWrapper } from '../theme';
 import { ThreeCol } from 'src/ui/Grids';
 import SearchResultListItem from 'src/features/application-search/SearchResultListItem';
 import GoogleSearchResults from 'src/features/application-search/GoogleSearchResults';
-import { filteredApplicationSearchState } from 'src/state/search';
+import { filteredApplicationSearchState } from 'src/state/applicationSearch';
 import { useRecoilValue } from 'recoil';
 
 const Search = () => {
