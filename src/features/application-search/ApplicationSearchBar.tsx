@@ -32,94 +32,95 @@ const getSearchQuerystring = () => {
   }
 };
 
+/**
+ * !Important side-effect noted
+ * Updates the history (updates browser location) to help establish bookmarkable/sharable urls.
+ * ! Also sets ?q= prior to the GoogleSearchResults component coming into scope the first time, which
+ * ! provides the term for the GCSE javascript to establish the first rendering of search results. Removing
+ * ! this functionality will cause the first visit to the Search page (aside from direct visit to /search) to
+ * ! not automatically use the search term for results
+ * @param search the search term to use
+ */
+const updateHistory = (search: string) => {
+  const queryString = getSearchQuerystring();
+  if (search && search !== queryString) {
+    window.history.pushState({ q: search }, `MyOregonState Search ${search}`, `?q=${search}`);
+  } else if (!search && queryString) {
+    window.history.pushState({ q: search }, 'MyOregonState Search', '?');
+  }
+};
+
 const ApplicationSearchBar: React.FC<any> = () => {
-  const [query, setQuery] = useRecoilState(applicationSearchState);
+  const [search, setSearch] = useRecoilState(applicationSearchState);
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
   const [onSearchPage, setOnSearchPage] = useState(false);
   const [input, setInput] = useState('');
-  // const [selectedCategory, setSelectedCategory] = useRecoilState(selectedCategoryState);
-  const match = useMatch('/search');
+  const navigatedToSearch = useMatch('/search');
   const navigate = useNavigate();
 
-  // When a user visits the /search page directly, fetch an optionally provided query and set it
+  // When a user visits the /search page directly, fetch optionally provided query and set it
   useEffect(() => {
     const query = getSearchQuerystring();
-    if (match && query) {
-      setQuery(query);
+    if (navigatedToSearch && query) {
+      setSearch(query);
     }
   }, []);
 
-  /**
-   * Manage the search field state flow;
-   * - User visited search page directly, set local state to track that they are on the page
-   * - User clicked an internal link navigating them away from Search page, clear the search
-   *   field and reset local state.
-   */
+  // Side effects when browser is navigating to/from the /search page
   useEffect(() => {
-    if (!match && input) {
+    if (!navigatedToSearch && input) {
+      // User has navigate away from /search, clear the input field
       setInput('');
-    } else if (match && !onSearchPage) {
+    } else if (navigatedToSearch && !onSearchPage) {
+      // User has navigated to /search, set onSearchPage to true
       setOnSearchPage(true);
     }
-    if (!match) {
+    if (!navigatedToSearch) {
+      // User has navigated away from /search, set onSearchPage to false
       setOnSearchPage(false);
     }
-  }, [match]);
+  }, [navigatedToSearch]);
 
-  /**
-   * User typing in the search field state flow;
-   * - In all cases, perform the query by setting local state for input
-   * - Navigate the user to the search page if they are not already there and are
-   *   typing in the search field
-   * - Update the location querystring without causing the browser to navigate (history.pushState)
-   *   to maintain bookmarkable searches, unless the effect is triggered by the user deleting the final
-   *   character from the search field (query becomes falsy)
-   */
+  // Side effects when search term is changed
   useEffect(() => {
-    const queryString = getSearchQuerystring();
-    if (query && query !== queryString) {
-      window.history.pushState({ q: query }, `MyOregonState Search ${query}`, `?q=${query}`);
-    } else if (!query && queryString) {
-      window.history.pushState({ q: query }, 'MyOregonState Search', '?');
-    }
-    if (!onSearchPage && query) {
-      navigate('/search');
-      setOnSearchPage(true);
-    }
-    setInput(query);
-  }, [query]);
+    updateHistory(search);
+    setInput(search);
 
+    // Navigate to search page then set shared state to initiate a search
+    if (!onSearchPage && search) {
+      navigate('/search').then((_v) => setSearch(search));
+    }
+  }, [search]);
+
+  // Track events in GA when search term is updated and items are filtered
   useEffect(() => {
-    if (query) {
+    if (search) {
       // If a query has no results, emit a GA Event to track for improving items search
       if (filteredItems.length === 0) {
-        Event('application-search-failed', query);
+        Event('application-search-failed', search);
       }
 
       // Avoids sending single characters to Google Analytics
-      if (query.length >= 2 && filteredItems.length > 0) {
-        Event('application-search', query);
+      if (search.length >= 2 && filteredItems.length > 0) {
+        Event('application-search', search);
       }
     }
-  }, [query, filteredItems]);
+  }, [search, filteredItems]);
 
-  const performSearch = () => {
+  const searchHandler = () => {
     if (!onSearchPage && input) {
-      // Google Custom Search isn't in scope when the user is not on the search page,
-      // so it isn't able to render through the application state. Sadly, the user
-      // has to be redirected to the search page for the results container to be rendered
-      // and managed by the Google JS.
-      navigate('/search', { state: { query: input } });
+      // Navigate to search page then set shared state to initiate a search
+      navigate('/search').then((_v) => setSearch(input));
     } else {
       // While on the search page, set the query causing application state to operate and
       // results to render.
-      setQuery(input);
+      setSearch(input);
     }
   };
 
   const onKeyDown = (event) => {
     if (event.code === 'Enter' && input) {
-      performSearch();
+      searchHandler();
     }
   };
 
@@ -136,7 +137,7 @@ const ApplicationSearchBar: React.FC<any> = () => {
         inputValue={input}
         onChange={onChange}
         onKeyDown={onKeyDown}
-        onClick={performSearch}
+        onClick={searchHandler}
         // autoFocus={isDesktop ? true : false} // eslint-disable-line
       />
     </HeaderSearchWrapper>
