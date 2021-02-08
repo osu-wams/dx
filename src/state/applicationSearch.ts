@@ -2,22 +2,29 @@ import Fuse from 'fuse.js';
 import { atom, selector } from 'recoil';
 import { SearchItem, searchIndex } from './search';
 
+export interface FilterState {
+  checked: boolean;
+  type?: string;
+  audience?: string;
+  campus?: string;
+}
+
 export const applicationSearchState = atom<string>({
   key: 'applicationSearchState',
   default: '',
 });
 
-export const applicationTypeFilterState = atom<string[]>({
+export const applicationTypeFilterState = atom<FilterState[]>({
   key: 'applicationTypeFilterState',
   default: [],
 });
 
-export const applicationAudienceFilterState = atom<string[]>({
+export const applicationAudienceFilterState = atom<FilterState[]>({
   key: 'applicationAudienceFilterState',
   default: [],
 });
 
-export const applicationCampusFilterState = atom<string[]>({
+export const applicationCampusFilterState = atom<FilterState[]>({
   key: 'applicationCampusFilterState',
   default: [],
 });
@@ -37,7 +44,7 @@ export const filteredApplicationSearchState = selector<Fuse.FuseResult<SearchIte
       if (!types.length) {
         return found;
       }
-      return found.filter((i) => types.includes(i.item.type));
+      return found.filter((i) => types.map((t) => t.type).includes(i.item.type));
     }
   },
 });
