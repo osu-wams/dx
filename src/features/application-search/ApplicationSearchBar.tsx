@@ -109,7 +109,7 @@ const ApplicationSearchBar: React.FC<any> = () => {
       // so it isn't able to render through the application state. Sadly, the user
       // has to be redirected to the search page for the results container to be rendered
       // and managed by the Google JS.
-      window.location.assign(`/search?q=${input}`);
+      navigate('/search', { state: { query: input } });
     } else {
       // While on the search page, set the query causing application state to operate and
       // results to render.
