@@ -34,6 +34,9 @@ export const filteredApplicationSearchState = selector<Fuse.FuseResult<SearchIte
     } else {
       const found = get(searchIndex(query));
       // TODO: filter by audience and campus as well, do these fields need to be at the item level?
+      if (!types.length) {
+        return found;
+      }
       return found.filter((i) => types.includes(i.item.type));
     }
   },
