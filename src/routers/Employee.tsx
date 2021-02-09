@@ -14,9 +14,7 @@ export const Employee = () => {
       <RouterPage default pageComponent={<PageNotFound />} />
       <RouterPage path="/" pageComponent={<Dashboard />} />
       <RouterPage path="resources" pageComponent={<Resources />} />
-      {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-        <RouterPage path="training" pageComponent={<Training />} />
-      )}
+      <RouterPage path="training" pageComponent={<Training />} />
     </Router>
   );
 };
