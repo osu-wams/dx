@@ -27,7 +27,7 @@ const EmployeeDashboard = () => {
           <ITSystemStatus />
           <ResourcesCard categ="employee_featured" icon={faStars} />
           <TrendingResources />
-          {process.env.REACT_APP_EXPERIMENTAL === 'true' && <FeaturedTrainingsCard />}
+          <FeaturedTrainingsCard />
           {cards.map((c) => (
             <DynamicCard key={c.id} data={c} />
           ))}
