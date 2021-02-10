@@ -19,7 +19,7 @@ import { ApplicationMessages } from 'src/ui/ApplicationMessages';
 import { RouterPage } from './routers';
 import Profile from './pages/Profile';
 import About from './pages/About';
-import { Search } from './pages/Search';
+import Search from './pages/Search';
 import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
