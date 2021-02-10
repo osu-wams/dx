@@ -29,6 +29,7 @@ const PageNotFound = () => {
           <p>
             We couldn’t find the page you were looking for. <br />
             <InternalLink
+              data-testid="nav-link"
               to={dashboardLink}
               bg={themeContext.pageNotFound.link.background}
               fg={themeContext.pageNotFound.link.color}
