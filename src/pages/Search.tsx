@@ -2,13 +2,8 @@ import React from 'react';
 import PageTitle from 'src/ui/PageTitle';
 import { MainGridWrapper } from '../theme';
 import { ThreeCol } from 'src/ui/Grids';
-import {
-  Filters,
-  GoogleSearchResults,
-  People,
-  Places,
-  SearchResultListItem,
-} from 'src/features/application-search';
+import { Filters, GoogleSearchResults, People, Places } from 'src/features/application-search';
+import SearchResultListItem from 'src/ui/ApplicationSearch/SearchResultListItem';
 import { filteredApplicationSearchState } from 'src/state/applicationSearch';
 import { useRecoilValue } from 'recoil';
 import useAnnouncementsState from 'src/hooks/useAnnouncementsState';

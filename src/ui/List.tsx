@@ -5,6 +5,7 @@ import { spacing, fontSize, borderRadius } from 'src/theme';
 
 type SpacedList = {
   spaced?: boolean;
+  compact?: boolean;
 };
 
 const List = styled.ul`
@@ -53,7 +54,11 @@ const ListItemContent = styled.div<SpacedList>`
   border: 1px solid transparent;
   border-radius: ${borderRadius[8]};
   transition: all 150ms ease-in-out 0s;
-  padding: ${(props) => (props.spaced ? spacing.default : spacing.xm)};
+  padding: ${(props) => {
+    if (props.spaced && !props.compact) return spacing.default;
+    if (props.compact) return `${spacing.medium} ${spacing.xm}`;
+    return spacing.xm;
+  }};
   svg,
   img {
     height: 3rem;
