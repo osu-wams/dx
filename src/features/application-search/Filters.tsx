@@ -1,18 +1,39 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components/macro';
 import { faUserCog } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
+import { Card, CardHeader, CardIcon, CardFooter, CardContent } from 'src/ui/Card';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import { Checkbox } from '@material-ui/core';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
-import { useRecoilState } from 'recoil';
+import getMUITheme from 'src/ui/MUITheme';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   applicationTypeFilterState,
   applicationAudienceFilterState,
   applicationCampusFilterState,
   FilterState,
 } from 'src/state/applicationSearch';
+import { themeState } from 'src/state';
+import { spacing } from 'src/theme/theme-settings';
+
+const FieldsetList = styled.div`
+  > fieldset:last-child {
+    border: none;
+  }
+`;
+
+const StyledFieldset = styled(Fieldset)`
+  margin: ${spacing.xm} 0 0 0;
+  border: none;
+  border-bottom: solid 1px ${({ theme }) => theme.body.background};
+  > legend {
+    font-weight: 400;
+  }
+`;
 
 export const FilterByType = () => {
+  const theme = useRecoilValue(themeState);
   const [types, setTypes] = useRecoilState(applicationTypeFilterState);
   const [audiences, setAudiences] = useRecoilState(applicationAudienceFilterState);
   const [campuses, setCampuses] = useRecoilState(applicationCampusFilterState);
@@ -71,93 +92,103 @@ export const FilterByType = () => {
   } = state;
 
   return (
-    <div className="">
-      <Fieldset>
-        <Legend>Type</Legend>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox checked={resources.checked} onChange={handleChange} name="resources" />
-            }
-            label="Resources"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={events.checked} onChange={handleChange} name="events" />}
-            label="Events"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={announcements.checked}
-                onChange={handleChange}
-                name="announcements"
-              />
-            }
-            label="Announcements"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={courses.checked} onChange={handleChange} name="courses" />}
-            label="Current Courses"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={pastCourses.checked} onChange={handleChange} name="pastCourses" />
-            }
-            label="Past Courses"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={canvas.checked} onChange={handleChange} name="canvas" />}
-            label="Canvas"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={notifications.checked}
-                onChange={handleChange}
-                name="notifications"
-              />
-            }
-            label="Notifications"
-          />
-        </FormGroup>
-      </Fieldset>
-      <Fieldset>
-        <Legend>Audience</Legend>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox checked={students.checked} onChange={handleChange} name="students" />
-            }
-            label="Students"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox checked={employees.checked} onChange={handleChange} name="employees" />
-            }
-            label="Employees"
-          />
-        </FormGroup>
-      </Fieldset>
-      <Fieldset>
-        <Legend>Campus</Legend>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox checked={corvallis.checked} onChange={handleChange} name="corvallis" />
-            }
-            label="Corvallis"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={bend.checked} onChange={handleChange} name="bend" />}
-            label="Bend"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={ecampus.checked} onChange={handleChange} name="ecampus" />}
-            label="Ecampus"
-          />
-        </FormGroup>
-      </Fieldset>
-    </div>
+    <ThemeProvider theme={getMUITheme(theme)}>
+      <FieldsetList>
+        <StyledFieldset>
+          <Legend>Type</Legend>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox checked={resources.checked} onChange={handleChange} name="resources" />
+              }
+              label="Resources"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={events.checked} onChange={handleChange} name="events" />}
+              label="Events"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={announcements.checked}
+                  onChange={handleChange}
+                  name="announcements"
+                />
+              }
+              label="Announcements"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={courses.checked} onChange={handleChange} name="courses" />
+              }
+              label="Current Courses"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={pastCourses.checked}
+                  onChange={handleChange}
+                  name="pastCourses"
+                />
+              }
+              label="Past Courses"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={canvas.checked} onChange={handleChange} name="canvas" />}
+              label="Canvas"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={notifications.checked}
+                  onChange={handleChange}
+                  name="notifications"
+                />
+              }
+              label="Notifications"
+            />
+          </FormGroup>
+        </StyledFieldset>
+        <StyledFieldset>
+          <Legend>Audience</Legend>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox checked={students.checked} onChange={handleChange} name="students" />
+              }
+              label="Students"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={employees.checked} onChange={handleChange} name="employees" />
+              }
+              label="Employees"
+            />
+          </FormGroup>
+        </StyledFieldset>
+        <StyledFieldset>
+          <Legend>Campus</Legend>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox checked={corvallis.checked} onChange={handleChange} name="corvallis" />
+              }
+              label="Corvallis"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={bend.checked} onChange={handleChange} name="bend" />}
+              label="Bend"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={ecampus.checked} onChange={handleChange} name="ecampus" />
+              }
+              label="Ecampus"
+            />
+          </FormGroup>
+        </StyledFieldset>
+      </FieldsetList>
+    </ThemeProvider>
   );
 };
 
@@ -165,7 +196,7 @@ const Filters: React.FC = () => {
   return (
     <Card>
       <CardHeader title="Filter Results" badge={<CardIcon icon={faUserCog} />} />
-      <CardContent>
+      <CardContent flush>
         <FilterByType />
       </CardContent>
       <CardFooter></CardFooter>
