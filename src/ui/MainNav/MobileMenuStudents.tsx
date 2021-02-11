@@ -1,5 +1,11 @@
 import React from 'react';
-import { faHome, faGraduationCap, faHandsUsd, faList } from '@fortawesome/pro-light-svg-icons';
+import {
+  faHome,
+  faGraduationCap,
+  faHandsUsd,
+  faList,
+  faSearch,
+} from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { MobileMainNav, MobileNavLink } from './MainNavStyles';
@@ -24,6 +30,10 @@ const MobileMenuStudents = ({ toggleFullMenu, ...props }) => {
       <MobileNavLink to="student/finances" onClick={() => ClickEvents('Finances')}>
         <Icon icon={faHandsUsd} />
         Finances
+      </MobileNavLink>
+      <MobileNavLink to="search" onClick={() => ClickEvents('Search')}>
+        <Icon icon={faSearch} />
+        Search
       </MobileNavLink>
       <MobileNavLink to="student/resources" onClick={() => ClickEvents('Resources')}>
         <Icon icon={faList} />
