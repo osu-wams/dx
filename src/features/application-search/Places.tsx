@@ -2,7 +2,12 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardIcon, CardFooter } from 'src/ui/Card';
-import { ListItemContentLink, ListItemText, ListItemContent } from 'src/ui/List';
+import {
+  ListItemContentLink,
+  ListItemContentLinkName,
+  ListItemText,
+  ListItemContent,
+} from 'src/ui/List';
 import placeholderImage from 'src/assets/location-placeholder.png';
 import { ExternalLink } from 'src/ui/Link';
 import { Constants, useLocations } from '@osu-wams/hooks';
@@ -28,12 +33,15 @@ const renderItems = (count: number, data: Types.Location[]) => {
   return data.slice(0, count).map(({ id, name, link, image }) => (
     <ListItemContentLink
       key={id}
-      href={link || ''}
+      href={link!}
+      target="_blank"
       onClick={() => Event('application-search-place', 'Individual place search link')}
       compact
     >
       <LocationImage src={image ? image : placeholderImage} alt={name} />
-      <ListItemText>{name}</ListItemText>
+      <ListItemText>
+        <ListItemContentLinkName noPadding>{name}</ListItemContentLinkName>
+      </ListItemText>
     </ListItemContentLink>
   ));
 };

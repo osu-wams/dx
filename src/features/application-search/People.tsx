@@ -6,6 +6,7 @@ import {
   ListItemText,
   ListItemDescription,
   ListItemContent,
+  ListItemContentLinkName,
 } from 'src/ui/List';
 import { usePeople, Constants } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
@@ -28,11 +29,14 @@ const renderItems = (count: number, data: Types.Directory[]) => {
     <ListItemContentLink
       key={id}
       href={Url.osuDirectory.person + id}
+      target="_blank"
       onClick={() => Event('application-search-person', 'Individual person search link')}
       compact
     >
       <ListItemText>
-        {firstName} {lastName}
+        <ListItemContentLinkName noPadding>
+          {firstName} {lastName}
+        </ListItemContentLinkName>
         <ListItemDescription>{department}</ListItemDescription>
       </ListItemText>
     </ListItemContentLink>

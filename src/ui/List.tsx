@@ -8,6 +8,10 @@ type SpacedList = {
   compact?: boolean;
 };
 
+type Padded = {
+  noPadding?: boolean;
+};
+
 const List = styled.ul`
   color: ${({ theme }) => theme.ui.list.color};
   text-decoration: none;
@@ -38,10 +42,10 @@ const ListItemHeader = styled.h4`
   font-weight: normal;
 `;
 
-const ListItemContentLinkName = styled.div`
+const ListItemContentLinkName = styled.div<Padded>`
   font-size: ${fontSize[18]};
   color: ${({ theme }) => theme.ui.list.item.link.color};
-  padding-left: ${spacing.default};
+  padding-left: ${(props) => (props.noPadding ? 0 : spacing.default)};
 `;
 
 const ListItemContent = styled.div<SpacedList>`
