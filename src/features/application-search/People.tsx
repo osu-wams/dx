@@ -1,6 +1,6 @@
 import React from 'react';
 import { faUserCircle } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardIcon, CardFooter } from 'src/ui/Card';
+import { Card, CardContent, CardHeader, CardIcon, CardFooter } from 'src/ui/Card';
 import {
   ListItemContentLink,
   ListItemText,
@@ -53,9 +53,11 @@ const People: React.FC = () => {
   return (
     <Card>
       <CardHeader title="People" badge={<CardIcon icon={faUserCircle} />} />
-      {error && ListErrorMessage('Failed searching for People.', error)}
-      {data && renderItems(5, data)}
-      {data && ListCount(5, data)}
+      <CardContent flush>
+        {error && ListErrorMessage('Failed searching for People.', error)}
+        {data && renderItems(5, data)}
+        {data && ListCount(5, data)}
+      </CardContent>
       <CardFooter>
         {search && (
           <ExternalLink

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { Card, CardHeader, CardIcon, CardFooter } from 'src/ui/Card';
+import { Card, CardContent, CardHeader, CardIcon, CardFooter } from 'src/ui/Card';
 import {
   ListItemContentLink,
   ListItemContentLinkName,
@@ -56,9 +56,11 @@ const Places: React.FC = () => {
   return (
     <Card>
       <CardHeader title="Places" badge={<CardIcon icon={faMapMarkerAlt} />} />
-      {error && ListErrorMessage('Failed searching for Places.', error)}
-      {data && renderItems(5, data)}
-      {data && ListCount(5, data)}
+      <CardContent flush>
+        {error && ListErrorMessage('Failed searching for Places.', error)}
+        {data && renderItems(5, data)}
+        {data && ListCount(5, data)}
+      </CardContent>
       <CardFooter>
         {search && (
           <ExternalLink
