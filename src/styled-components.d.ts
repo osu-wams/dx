@@ -409,6 +409,14 @@ declare module 'styled-components/macro' {
       bubble: {
         background: string;
         color: string;
+        internalLink: {
+          background: string;
+          color: string;
+        };
+        externalLink: {
+          background: string;
+          color: string;
+        };
       };
       button: {
         background: string;

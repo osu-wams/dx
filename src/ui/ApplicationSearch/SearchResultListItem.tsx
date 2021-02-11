@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { faExternalLink } from '@fortawesome/pro-solid-svg-icons';
 import { ListItemFlex } from 'src/ui/List';
 import { SimpleInternalLink, SimpleExternalLink } from 'src/ui/Link';
 import { SearchItem } from 'src/state/search';
 import Fuse from 'fuse.js';
-import { Bubble } from 'src/ui/Bubble';
+import { BubbleExternalLink, BubbleInternalLink } from 'src/ui/Bubble';
 import { borderRadius, spacing, breakpoints, fontSize } from 'src/theme';
+import Icon from '../Icon';
 
 const StyledListItem = styled(ListItemFlex)`
   border-radius: ${borderRadius[16]};
@@ -45,7 +47,14 @@ const SearchResultListItem = ({
   return (
     <StyledListItem>
       {titleLink(item)}
-      <Bubble>{item.type}</Bubble>
+      {item.href ? (
+        <BubbleExternalLink>
+          {item.type}
+          <Icon icon={faExternalLink} />
+        </BubbleExternalLink>
+      ) : (
+        <BubbleInternalLink>{item.type}</BubbleInternalLink>
+      )}
     </StyledListItem>
   );
 };

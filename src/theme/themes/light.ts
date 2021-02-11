@@ -441,6 +441,14 @@ export const light: ThemeConfiguration = {
     bubble: {
       background: Color['neutral-200'],
       color: Color['neutral-800'],
+      internalLink: {
+        background: Color['roguewave-100'],
+        color: Color['roguewave-500'],
+      },
+      externalLink: {
+        background: Color['luminance-100'],
+        color: Color['luminance-700'],
+      },
     },
     button: {
       background: primary,
