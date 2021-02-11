@@ -1,13 +1,20 @@
 import React from 'react';
 import PageTitle from 'src/ui/PageTitle';
-import { MainGridWrapper } from '../theme';
+import { MainGridWrapper, spacing } from '../theme';
 import { ThreeCol } from 'src/ui/Grids';
-import { Filters, GoogleSearchResults, People, Places } from 'src/features/application-search';
+import {
+  ApplicationSearchBar,
+  Filters,
+  GoogleSearchResults,
+  People,
+  Places,
+} from 'src/features/application-search';
 import SearchResultListItem from 'src/ui/ApplicationSearch/SearchResultListItem';
 import { filteredApplicationSearchState } from 'src/state/applicationSearch';
 import { useRecoilValue } from 'recoil';
 import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
 import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
+import { Desktop, Mobile } from 'src/util/useMediaQuery';
 
 const Search = () => {
   useAnnouncementsState(ANNOUNCEMENT_PAGES.academics);
@@ -17,27 +24,43 @@ const Search = () => {
 
   return (
     <MainGridWrapper data-testid="search-page">
-      <ThreeCol>
-        <div className="col-1">
-          <div style={{ position: 'sticky', top: '30px' }}>
-            <Filters />
+      <Desktop>
+        <ThreeCol>
+          <div className="col-1">
+            <div style={{ position: 'sticky', top: spacing.xl }}>
+              <Filters />
+            </div>
           </div>
-        </div>
-        <div className="col-2">
-          <PageTitle title="Search Results" />
-          {filteredItems.length > 0 &&
-            filteredItems.map((i) => (
-              <SearchResultListItem key={`${i.item.type}-${i.item.id}`} searchResult={i} />
-            ))}
-          <GoogleSearchResults />
-        </div>
-        <div className="col-3">
-          <div style={{ position: 'sticky', top: '30px' }}>
-            <People />
-            <Places />
+          <div className="col-2">
+            <PageTitle title="Search Results" />
+            {filteredItems.length > 0 &&
+              filteredItems.map((i) => (
+                <SearchResultListItem key={`${i.item.type}-${i.item.id}`} searchResult={i} />
+              ))}
+            <GoogleSearchResults />
           </div>
+          <div className="col-3">
+            <div style={{ position: 'sticky', top: spacing.xl }}>
+              <People />
+              <Places />
+            </div>
+          </div>
+        </ThreeCol>
+      </Desktop>
+      <Mobile>
+        <div style={{ marginBottom: spacing.large }}>
+          <ApplicationSearchBar />
         </div>
-      </ThreeCol>
+        <Filters />
+        <PageTitle title="Search Results" />
+        {filteredItems.length > 0 &&
+          filteredItems.map((i) => (
+            <SearchResultListItem key={`${i.item.type}-${i.item.id}`} searchResult={i} />
+          ))}
+        <People />
+        <Places />
+        <GoogleSearchResults />
+      </Mobile>
     </MainGridWrapper>
   );
 };
