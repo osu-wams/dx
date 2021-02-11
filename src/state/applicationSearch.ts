@@ -4,9 +4,12 @@ import { SearchItem, searchIndex } from './search';
 
 export interface FilterState {
   checked: boolean;
+  label: string;
+  name: string;
   type?: string;
   audience?: string;
   campus?: string;
+  hiddenFrom?: string[];
 }
 
 export const applicationSearchState = atom<string>({

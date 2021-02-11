@@ -16,6 +16,8 @@ import {
 } from 'src/state/applicationSearch';
 import { themeState } from 'src/state';
 import { spacing } from 'src/theme/theme-settings';
+import { userState } from 'src/state';
+import { User } from '@osu-wams/hooks';
 
 const FieldsetList = styled.div`
   > fieldset:last-child {
@@ -33,24 +35,46 @@ const StyledFieldset = styled(Fieldset)`
 `;
 
 export const FilterByType = () => {
+  const user = useRecoilValue(userState);
   const theme = useRecoilValue(themeState);
   const [types, setTypes] = useRecoilState(applicationTypeFilterState);
   const [audiences, setAudiences] = useRecoilState(applicationAudienceFilterState);
   const [campuses, setCampuses] = useRecoilState(applicationCampusFilterState);
   const [state, setState] = React.useState<{ [key: string]: FilterState }>({
-    resources: { checked: false, type: 'Resource' },
-    announcements: { checked: false, type: 'Announcement' },
-    events: { checked: false, type: 'Event' },
-    courses: { checked: false, type: 'Current Course' },
-    pastCourses: { checked: false, type: 'Past Course' },
-    canvas: { checked: false, type: 'Canvas' },
-    notifications: { checked: false, type: 'Notification' },
-    trainings: { checked: false, type: 'Training' },
-    students: { checked: false, audience: 'student' },
-    employees: { checked: false, audience: 'employee' },
-    corvallis: { checked: false, campus: 'corvallis' },
-    bend: { checked: false, campus: 'bend' },
-    ecampus: { checked: false, campus: 'ecampus' },
+    resources: { checked: false, label: 'Resources', name: 'resources', type: 'Resource' },
+    announcements: {
+      checked: false,
+      label: 'Announcements',
+      name: 'announcements',
+      type: 'Announcement',
+    },
+    events: { checked: false, label: 'Events', name: 'events', type: 'Event' },
+    courses: { checked: false, label: 'Current Courses', name: 'courses', type: 'Current Course' },
+    pastCourses: {
+      checked: false,
+      label: 'Past Courses',
+      name: 'pastCourses',
+      type: 'Past Course',
+    },
+    canvas: { checked: false, label: 'Canvas', name: 'canvas', type: 'Canvas' },
+    notifications: {
+      checked: false,
+      label: 'Notifications',
+      name: 'notifications',
+      type: 'Notification',
+    },
+    trainings: {
+      checked: false,
+      label: 'Trainings',
+      name: 'trainings',
+      type: 'Training',
+      hiddenFrom: ['student'],
+    },
+    students: { checked: false, label: 'Students', name: 'students', audience: 'student' },
+    employees: { checked: false, label: 'Employees', name: 'employees', audience: 'employee' },
+    corvallis: { checked: false, label: 'Corvallis', name: 'corvallis', campus: 'corvallis' },
+    bend: { checked: false, label: 'Bend', name: 'bend', campus: 'bend' },
+    ecampus: { checked: false, label: 'Ecampus', name: 'ecampus', campus: 'ecampus' },
   });
 
   useEffect(() => {
@@ -78,122 +102,71 @@ export const FilterByType = () => {
     });
   };
 
-  const {
-    resources,
-    events,
-    announcements,
-    courses,
-    pastCourses,
-    canvas,
-    notifications,
-    trainings,
-    students,
-    employees,
-    corvallis,
-    bend,
-    ecampus,
-  } = state;
-
   return (
     <ThemeProvider theme={getMUITheme(theme)}>
       <FieldsetList>
         <StyledFieldset>
           <Legend>Type</Legend>
           <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox checked={resources.checked} onChange={handleChange} name="resources" />
-              }
-              label="Resources"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={events.checked} onChange={handleChange} name="events" />}
-              label="Events"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={announcements.checked}
-                  onChange={handleChange}
-                  name="announcements"
-                />
-              }
-              label="Announcements"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox checked={courses.checked} onChange={handleChange} name="courses" />
-              }
-              label="Current Courses"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={pastCourses.checked}
-                  onChange={handleChange}
-                  name="pastCourses"
-                />
-              }
-              label="Past Courses"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={canvas.checked} onChange={handleChange} name="canvas" />}
-              label="Canvas"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={notifications.checked}
-                  onChange={handleChange}
-                  name="notifications"
-                />
-              }
-              label="Notifications"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox checked={trainings.checked} onChange={handleChange} name="trainings" />
-              }
-              label="Trainings"
-            />
+            {[
+              state.resources,
+              state.announcements,
+              state.events,
+              state.courses,
+              state.pastCourses,
+              state.canvas,
+              state.notifications,
+              state.trainings,
+            ]
+              .filter(
+                ({ hiddenFrom }) =>
+                  !hiddenFrom || !User.hasPrimaryAffiliation(user.data, hiddenFrom)
+              )
+              .map(({ checked, name, label }, index) => {
+                return (
+                  <FormControlLabel
+                    key={`type-${index}`}
+                    control={<Checkbox checked={checked} onChange={handleChange} name={name} />}
+                    label={label}
+                  />
+                );
+              })}
           </FormGroup>
         </StyledFieldset>
-        <StyledFieldset>
-          <Legend>Audience</Legend>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox checked={students.checked} onChange={handleChange} name="students" />
-              }
-              label="Students"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox checked={employees.checked} onChange={handleChange} name="employees" />
-              }
-              label="Employees"
-            />
-          </FormGroup>
-        </StyledFieldset>
+        {!User.hasPrimaryAffiliation(user.data, ['student']) && (
+          <StyledFieldset>
+            <Legend>Audience</Legend>
+            <FormGroup>
+              {[state.students, state.employees]
+                .filter(
+                  ({ hiddenFrom }) =>
+                    !hiddenFrom || !User.hasPrimaryAffiliation(user.data, hiddenFrom)
+                )
+                .map(({ checked, name, label }, index) => (
+                  <FormControlLabel
+                    key={`audience-${index}`}
+                    control={<Checkbox checked={checked} onChange={handleChange} name={name} />}
+                    label={label}
+                  />
+                ))}
+            </FormGroup>
+          </StyledFieldset>
+        )}
         <StyledFieldset>
           <Legend>Campus</Legend>
           <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox checked={corvallis.checked} onChange={handleChange} name="corvallis" />
-              }
-              label="Corvallis"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={bend.checked} onChange={handleChange} name="bend" />}
-              label="Bend"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox checked={ecampus.checked} onChange={handleChange} name="ecampus" />
-              }
-              label="Ecampus"
-            />
+            {[state.corvallis, state.bend, state.ecampus]
+              .filter(
+                ({ hiddenFrom }) =>
+                  !hiddenFrom || !User.hasPrimaryAffiliation(user.data, hiddenFrom)
+              )
+              .map(({ checked, name, label }, index) => (
+                <FormControlLabel
+                  key={`campus-${index}`}
+                  control={<Checkbox checked={checked} onChange={handleChange} name={name} />}
+                  label={label}
+                />
+              ))}
           </FormGroup>
         </StyledFieldset>
       </FieldsetList>
