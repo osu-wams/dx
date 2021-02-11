@@ -45,6 +45,7 @@ export const FilterByType = () => {
     pastCourses: { checked: false, type: 'Past Course' },
     canvas: { checked: false, type: 'Canvas' },
     notifications: { checked: false, type: 'Notification' },
+    trainings: { checked: false, type: 'Training' },
     students: { checked: false, audience: 'student' },
     employees: { checked: false, audience: 'employee' },
     corvallis: { checked: false, campus: 'corvallis' },
@@ -64,6 +65,7 @@ export const FilterByType = () => {
         state.pastCourses,
         state.canvas,
         state.notifications,
+        state.trainings,
       ].filter((t) => t.checked)
     );
   }, [state]);
@@ -84,6 +86,7 @@ export const FilterByType = () => {
     pastCourses,
     canvas,
     notifications,
+    trainings,
     students,
     employees,
     corvallis,
@@ -146,6 +149,12 @@ export const FilterByType = () => {
                 />
               }
               label="Notifications"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox checked={trainings.checked} onChange={handleChange} name="trainings" />
+              }
+              label="Trainings"
             />
           </FormGroup>
         </StyledFieldset>
