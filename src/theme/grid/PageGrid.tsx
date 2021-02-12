@@ -7,6 +7,10 @@ import { motion } from 'framer-motion';
  * Single column for mobile. 2 column for Desktop
  * Grid specific code is now mostly in the Masonry file
  * SecondGrid wrapper used for Announcements and Events
+ *
+ * In mobile views make the top border transparent because
+ * ApplicationSearchBar is capable of styling the border between header
+ * and the main grid.
  */
 const MainGridWrapperStyles = styled(motion.div)`
   border-top: 1px solid ${({ theme }) => theme.mainGrid.borderTop};
@@ -14,6 +18,9 @@ const MainGridWrapperStyles = styled(motion.div)`
   padding: 1rem ${spacing.mobile} 2rem;
   @media (min-width: ${breakpoints.small}) {
     padding: ${spacing.desktop};
+  }
+  @media (max-width: ${breakpoints.medium}) {
+    border-top: 1px solid transparent;
   }
 `;
 
