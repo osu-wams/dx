@@ -2,13 +2,7 @@ import React from 'react';
 import PageTitle from 'src/ui/PageTitle';
 import { MainGridWrapper, spacing } from '../theme';
 import { ThreeCol } from 'src/ui/Grids';
-import {
-  ApplicationSearchBar,
-  Filters,
-  GoogleSearchResults,
-  People,
-  Places,
-} from 'src/features/application-search';
+import { Filters, GoogleSearchResults, People, Places } from 'src/features/application-search';
 import SearchResultListItem from 'src/ui/ApplicationSearch/SearchResultListItem';
 import { filteredApplicationSearchState } from 'src/state/applicationSearch';
 import { useRecoilValue } from 'recoil';
@@ -48,9 +42,6 @@ const Search = () => {
         </ThreeCol>
       </Desktop>
       <Mobile>
-        <div style={{ marginBottom: spacing.large }}>
-          <ApplicationSearchBar />
-        </div>
         <Filters />
         <PageTitle title="Search Results" />
         {filteredItems.length > 0 &&
