@@ -19,10 +19,20 @@ import { Types } from '@osu-wams/lib';
 import { arrayIncludes } from 'src/util/helpers';
 import { userState, themeState } from 'src/state';
 import { useRecoilValue } from 'recoil';
-import { Desktop } from 'src/util/useMediaQuery';
+import { Desktop, Mobile } from 'src/util/useMediaQuery';
 import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
 
 const { usersCampus, CAMPUS_CODES } = User;
+
+const MobileApplicationSearchWrapper = styled.div`
+  height: 65px;
+  background: linear-gradient(
+    0deg,
+    ${({ theme }) => theme.mainGrid.background} 50%,
+    ${({ theme }) => theme.mainGrid.borderTop} calc(50% + 2px),
+    ${({ theme }) => theme.header.background} 50%
+  );
+`;
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -132,6 +142,11 @@ const Header = () => {
           <MainNav />
         </NavHeaderWrapper>
       </Navigation>
+      <Mobile>
+        <MobileApplicationSearchWrapper>
+          <ApplicationSearchBar fontSize={fontSize[20]} />
+        </MobileApplicationSearchWrapper>
+      </Mobile>
     </LocationProvider>
   );
 };

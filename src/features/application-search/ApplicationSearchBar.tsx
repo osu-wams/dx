@@ -50,7 +50,7 @@ const updateHistory = (search: string) => {
   }
 };
 
-const ApplicationSearchBar: React.FC<any> = () => {
+const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   const [search, setSearch] = useRecoilState(applicationSearchState);
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
   const [onSearchPage, setOnSearchPage] = useState(false);
@@ -138,6 +138,7 @@ const ApplicationSearchBar: React.FC<any> = () => {
         onChange={onChange}
         onKeyDown={onKeyDown}
         onClick={searchHandler}
+        fontSize={fontSize}
         // autoFocus={isDesktop ? true : false} // eslint-disable-line
       />
     </HeaderSearchWrapper>

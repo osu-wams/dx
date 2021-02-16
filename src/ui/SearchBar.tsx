@@ -6,35 +6,52 @@ import Icon from 'src/ui/Icon';
 import { breakpoints, fontSize } from 'src/theme';
 import Input from 'src/ui/Input';
 
-const SearchWrapper = styled.div`
+interface IFontSize {
+  fontSize?: string;
+}
+
+const SearchWrapper = styled.div<IFontSize>`
   position: relative;
   max-width: ${breakpoints.large};
   svg {
     position: absolute;
     top: 2rem;
     right: 1.6rem;
-    font-size: ${fontSize[24]};
+    font-size: ${(props) => (props.fontSize ? props.fontSize : fontSize[24])};
   }
   margin-bottom: 2rem;
 `;
-const FilterInput = styled(Input)`
+const FilterInput = styled(Input)<IFontSize>`
   color: ${({ theme }) => theme.ui.search.input.color};
   background-color: ${({ theme }) => theme.ui.search.input.background};
   width: 100%;
   padding: 1.6rem;
-  font-size: ${fontSize[24]};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : fontSize[24])};
   border-color: ${({ theme }) => theme.ui.search.input.border.color};
 `;
 
-const SearchBar = ({ id, labelText, inputValue, ...props }) => {
+const SearchBar = ({
+  id,
+  labelText,
+  inputValue,
+  fontSize,
+  ...props
+}: {
+  [x: string]: any;
+  id: string;
+  labelText: string;
+  inputValue: string;
+  fontSize?: string;
+}) => {
   const themeContext = useContext(ThemeContext);
 
   return (
-    <SearchWrapper>
+    <SearchWrapper fontSize={fontSize}>
       <Icon
         icon={faSearch}
         color={themeContext.ui.search.icon.color}
-        onClick={props.onClick ?? null}
+        onClick={props.onClick ?? undefined}
+        fontSize={fontSize}
       />
       <VisuallyHidden>
         <label htmlFor={id}>{labelText}</label>
