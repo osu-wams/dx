@@ -5,12 +5,17 @@ import image404 from 'src/assets/404.svg';
 import { InternalLink } from '../ui/Link';
 import { Event } from 'src/util/gaTracking';
 import { MainGridWrapper, MainGrid } from 'src/theme';
+import { User } from '@osu-wams/hooks';
+import { userState } from 'src/state';
+import { useRecoilValue } from 'recoil';
 
 const Content = styled.div`
   text-align: center;
 `;
 const PageNotFound = () => {
   const themeContext = useContext(ThemeContext);
+  const user = useRecoilValue(userState);
+  const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
 
   return (
     <MainGridWrapper data-testid="404-page">
@@ -24,7 +29,8 @@ const PageNotFound = () => {
           <p>
             We couldn’t find the page you were looking for. <br />
             <InternalLink
-              to="/"
+              data-testid="nav-link"
+              to={dashboardLink}
               bg={themeContext.pageNotFound.link.background}
               fg={themeContext.pageNotFound.link.color}
               onClick={() => Event('404', 'main dashboard')}
