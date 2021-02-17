@@ -22,6 +22,9 @@ const HeaderSearchWrapper = styled.div`
   flex-grow: 1;
   padding-left: ${spacing.large};
   padding-right: ${spacing.large};
+  @media (max-width: ${breakpoints.small}) {
+    padding: 0 0 2rem 0;
+  }
   @media (min-width: ${breakpoints.headerSearch}) {
     padding-right: 150px;
   }
@@ -77,26 +80,31 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   const navigatedToSearch = useMatch('/search');
   const navigate = useNavigate();
 
+  const resetSearch = () => {
+    setOnSearchPage(false);
+    setSearch('');
+    setInput('');
+  };
+
   // When a user visits the /search page directly, fetch optionally provided query and set it
   useEffect(() => {
     const query = getSearchQuerystring();
     if (navigatedToSearch && query) {
       setSearch(query);
     }
+
+    // ApplicationSearchBar fell out of scope (mobile), so reset search
+    return () => resetSearch();
   }, []);
 
   // Side effects when browser is navigating to/from the /search page
   useEffect(() => {
-    if (!navigatedToSearch && input) {
-      // User has navigate away from /search, clear the input field
-      setInput('');
-    } else if (navigatedToSearch && !onSearchPage) {
+    if (!navigatedToSearch) {
+      // User has navigated away from /search, reset search
+      resetSearch();
+    } else {
       // User has navigated to /search, set onSearchPage to true
       setOnSearchPage(true);
-    }
-    if (!navigatedToSearch) {
-      // User has navigated away from /search, set onSearchPage to false
-      setOnSearchPage(false);
     }
   }, [navigatedToSearch]);
 
@@ -106,7 +114,7 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
     setInput(search);
 
     // Navigate to search page then set shared state to initiate a search
-    if (!onSearchPage && search) {
+    if (!onSearchPage && !navigatedToSearch && search) {
       navigate('/search').then((_v) => setSearch(search));
     }
   }, [search]);
