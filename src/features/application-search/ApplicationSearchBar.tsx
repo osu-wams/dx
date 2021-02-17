@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components/macro';
-import { breakpoints, spacing } from 'src/theme';
+import React, { useState, useEffect, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
+import { faFilter } from '@fortawesome/pro-light-svg-icons';
+import { breakpoints, spacing, fontSize as themeFontSize, borderRadius } from 'src/theme';
 import { SearchBar } from 'src/ui/SearchBar';
 import { Event } from 'src/util/gaTracking';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
+  applicationSearchMobileFilterState,
   applicationSearchState,
   filteredApplicationSearchState,
 } from 'src/state/applicationSearch';
 import { SearchWrapper } from 'src/ui/SearchBar';
 import { useNavigate, useMatch } from '@reach/router';
+import Icon from 'src/ui/Icon';
+import { Mobile } from 'src/util/useMediaQuery';
 
 const HeaderSearchWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-grow: 1;
   padding-left: ${spacing.large};
   padding-right: ${spacing.large};
@@ -19,8 +26,18 @@ const HeaderSearchWrapper = styled.div`
     padding-right: 150px;
   }
   ${SearchWrapper} {
+    flex: 1;
     margin: 0 auto;
   }
+`;
+
+const SearchFilter = styled.div`
+  background-color: ${({ theme }) => theme.ui.search.input.background};
+  color: ${({ theme }) => theme.ui.input.default.color};
+  padding: ${spacing.default};
+  margin-left: ${spacing.medium};
+  border-radius: ${borderRadius[8]};
+  border: 1px solid ${({ theme }) => theme.ui.search.input.border.color};
 `;
 
 const getSearchQuerystring = () => {
@@ -51,7 +68,9 @@ const updateHistory = (search: string) => {
 };
 
 const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
+  const themeContext = useContext(ThemeContext);
   const [search, setSearch] = useRecoilState(applicationSearchState);
+  const setShowMobileFilter = useSetRecoilState(applicationSearchMobileFilterState);
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
   const [onSearchPage, setOnSearchPage] = useState(false);
   const [input, setInput] = useState('');
@@ -141,6 +160,18 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
         fontSize={fontSize}
         // autoFocus={isDesktop ? true : false} // eslint-disable-line
       />
+      <Mobile>
+        <SearchFilter>
+          <Icon
+            icon={faFilter}
+            color={themeContext.ui.search.icon.color}
+            onClick={(e) => {
+              setShowMobileFilter((v) => !v);
+            }}
+            fontSize={themeFontSize[24]}
+          />
+        </SearchFilter>
+      </Mobile>
     </HeaderSearchWrapper>
   );
 };

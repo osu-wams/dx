@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil';
 import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
 import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
 import { Desktop, Mobile } from 'src/util/useMediaQuery';
+import { FiltersMobile } from 'src/features/application-search/FiltersMobile';
 
 const Search = () => {
   useAnnouncementsState(ANNOUNCEMENT_PAGES.academics);
@@ -42,7 +43,6 @@ const Search = () => {
         </ThreeCol>
       </Desktop>
       <Mobile>
-        <Filters />
         <PageTitle title="Search Results" />
         {filteredItems.length > 0 &&
           filteredItems.map((i) => (
@@ -51,6 +51,7 @@ const Search = () => {
         <People />
         <Places />
         <GoogleSearchResults />
+        <FiltersMobile />
       </Mobile>
     </MainGridWrapper>
   );

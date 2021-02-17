@@ -12,6 +12,11 @@ export interface FilterState {
   hiddenFrom?: string[];
 }
 
+export const applicationSearchMobileFilterState = atom<boolean>({
+  key: 'applicationSearchMobileFilterState',
+  default: false,
+});
+
 export const applicationSearchState = atom<string>({
   key: 'applicationSearchState',
   default: '',
