@@ -12,7 +12,7 @@ import {
   applicationTypeFilterState,
   applicationAudienceFilterState,
   applicationCampusFilterState,
-  FilterState,
+  applicationFilterState,
 } from 'src/state/applicationSearch';
 import { themeState } from 'src/state';
 import { spacing } from 'src/theme/theme-settings';
@@ -40,42 +40,7 @@ export const FilterByType = () => {
   const [types, setTypes] = useRecoilState(applicationTypeFilterState);
   const [audiences, setAudiences] = useRecoilState(applicationAudienceFilterState);
   const [campuses, setCampuses] = useRecoilState(applicationCampusFilterState);
-  const [state, setState] = React.useState<{ [key: string]: FilterState }>({
-    resources: { checked: false, label: 'Resources', name: 'resources', type: 'Resource' },
-    announcements: {
-      checked: false,
-      label: 'Announcements',
-      name: 'announcements',
-      type: 'Announcement',
-    },
-    events: { checked: false, label: 'Events', name: 'events', type: 'Event' },
-    courses: { checked: false, label: 'Current Courses', name: 'courses', type: 'Current Course' },
-    pastCourses: {
-      checked: false,
-      label: 'Past Courses',
-      name: 'pastCourses',
-      type: 'Past Course',
-    },
-    canvas: { checked: false, label: 'Canvas', name: 'canvas', type: 'Canvas' },
-    notifications: {
-      checked: false,
-      label: 'Notifications',
-      name: 'notifications',
-      type: 'Notification',
-    },
-    trainings: {
-      checked: false,
-      label: 'Trainings',
-      name: 'trainings',
-      type: 'Training',
-      hiddenFrom: ['student'],
-    },
-    students: { checked: false, label: 'Students', name: 'students', audience: 'student' },
-    employees: { checked: false, label: 'Employees', name: 'employees', audience: 'employee' },
-    corvallis: { checked: false, label: 'Corvallis', name: 'corvallis', campus: 'corvallis' },
-    bend: { checked: false, label: 'Bend', name: 'bend', campus: 'bend' },
-    ecampus: { checked: false, label: 'Ecampus', name: 'ecampus', campus: 'ecampus' },
-  });
+  const [state, setState] = useRecoilState(applicationFilterState);
 
   useEffect(() => {
     setAudiences([state.students, state.employees].filter((a) => a.checked));
