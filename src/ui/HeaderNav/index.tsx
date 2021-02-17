@@ -4,11 +4,14 @@ import { ProfileMenu } from './ProfileMenu';
 import { HelpMenu } from './HelpMenu';
 import { NotificationsMenu } from './NotificationsMenu';
 import { SearchButton } from './SearchButton';
+import { Mobile } from 'src/util/useMediaQuery';
 
 const HeaderNav = () => {
   return (
     <HeaderNavWrapper>
-      <SearchButton />
+      <Mobile>
+        <SearchButton />
+      </Mobile>
       <HelpMenu />
       <NotificationsMenu />
       <ProfileMenu />
