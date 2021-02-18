@@ -67,16 +67,29 @@ export const filteredApplicationSearchState = selector<Fuse.FuseResult<SearchIte
     const query = get(applicationSearchState);
     const types = get(applicationTypeFilterState);
     // const audiences = get(applicationAudienceFilterState);
-    // const campuses = get(applicationCampusFilterState);
+    const campuses = get(applicationCampusFilterState);
     if (!query) {
       return [];
     } else {
       const found = get(searchIndex(query));
-      // TODO: filter by audience and campus as well, do these fields need to be at the item level?
-      if (!types.length) {
-        return found;
-      }
-      return found.filter((i) => types.map((t) => t.type).includes(i.item.type));
+      const filtered = found
+        // Return items to match type filters set or all items if no filters are set
+        .filter((i) => {
+          if (!types.length) return true;
+          return types.map((t) => t.type).includes(i.item.type);
+        })
+        // Return items to match campus filters set or all items if no filters are set
+        .filter((i) => {
+          if (!campuses.length || !i.item.campuses?.length) return true;
+          return i.item.campuses.filter(
+            (itemCampus) =>
+              campuses
+                .map((c) => c.campus)
+                .filter(Boolean)
+                .indexOf(itemCampus) > -1
+          ).length;
+        });
+      return filtered;
     }
   },
 });
