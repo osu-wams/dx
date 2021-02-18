@@ -16,6 +16,7 @@ export interface SearchItem {
   title: string;
   to?: string;
   href?: string;
+  campuses?: string[];
   attr: {
     announcement?: Types.Announcement;
     courses?: Types.CourseScheduleAttributes;
@@ -42,6 +43,7 @@ const eventSearchItems = selector<SearchItem[]>({
           id: event.id.toString(),
           title: event.title,
           href: event.action.link,
+          campuses: event.campus_name ? [event.campus_name.toLowerCase()] : [],
           attr: {
             event,
           },
@@ -68,6 +70,7 @@ const announcementSearchItems = selector<SearchItem[]>({
           id: announcement.id,
           title: announcement.title,
           href: announcement.action?.link,
+          campuses: announcement.locations.map((a) => a.toLowerCase()),
           attr: {
             announcement,
           },
@@ -136,6 +139,7 @@ const resourceSearchItems = selector<SearchItem[]>({
       id: resource.id,
       title: resource.title,
       href: resource.link,
+      campuses: resource.locations.map((l) => l.toLowerCase()),
       attr: {
         resource,
       },
