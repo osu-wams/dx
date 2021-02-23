@@ -73,7 +73,7 @@ jobs:
         run: |
           COMMIT_LINK=https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA
           COMMIT_MESSAGE=$(git log --format=%B -n 1 $GITHUB_SHA | cat -)
-          POST_DATA="{\"@type\": \"MessageCard\", \"@context\": \"http://schema.org/extensions\", \"themeColor\": \"D600D2\", \"summary\": \"DX Development FrontEnd Deployment\", \"sections\": [{ \"activityTitle\": \"FrontEnd: development", \"activitySubtitle\": \"Status: DEPLOYMENT_STARTED, Message: $COMMIT_MESSAGE $COMMIT_LINK\", \"markdown\": false }] }"
+          POST_DATA="{\"@type\": \"MessageCard\", \"@context\": \"http://schema.org/extensions\", \"themeColor\": \"D600D2\", \"summary\": \"DX Development FrontEnd Deployment\", \"sections\": [{ \"activityTitle\": \"FrontEnd: development\", \"activitySubtitle\": \"Status: DEPLOYMENT_STARTED, Message: $COMMIT_MESSAGE $COMMIT_LINK\", \"markdown\": false }] }"
           curl -d "${POST_DATA}" -H "Content-Type: application/json" -X POST ${{ secrets.TEAMS_WAMS_CICD_HOOK_URL }}
           s3_bucket_url=s3://${{ secrets.AWS_S3_BUCKET_URL_PREFIX }}-development
           aws s3 sync build ${s3_bucket_url}
