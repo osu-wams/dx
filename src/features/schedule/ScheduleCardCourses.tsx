@@ -29,6 +29,7 @@ import {
   exceptMeetingTypes,
   examName,
   coursesOnDay,
+  getDayShortcode,
 } from './schedule-utils';
 import { courseItemLeadText } from '../Courses';
 import Course from '../Course';
@@ -64,11 +65,12 @@ const meetingTimeCampusMap = (
 );
 
 const meetingTimesOnDay = (meetingTimes: Types.CourseScheduleMeetingTime[], day: Date) =>
-  meetingTimes.filter(({ beginDate, endDate }) =>
-    isWithinInterval(day, {
-      start: parseISO(beginDate),
-      end: parseISO(endDate),
-    })
+  meetingTimes.filter(
+    ({ beginDate, endDate, weeklySchedule }) =>
+      isWithinInterval(day, {
+        start: parseISO(beginDate),
+        end: parseISO(endDate),
+      }) && weeklySchedule.includes(getDayShortcode(day))
   );
 
 // Return courses from array which are found to have meeting time(s) scheduled on the day provided
