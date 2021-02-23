@@ -9,6 +9,7 @@ import { gradesState } from './grades';
 import { courseState } from './courses';
 import { plannerItemState } from './plannerItems';
 import { canvasUrl } from 'src/features/canvas/CanvasPlannerItems';
+import { userMessagesState } from './notifications';
 
 export interface SearchItem {
   type: string;
@@ -23,6 +24,7 @@ export interface SearchItem {
     event?: Types.LocalistEvent;
     grades?: Types.GradesAttributes;
     training?: Types.Training;
+    notification?: Types.UserMessage;
     plannerItem?: Types.PlannerItem;
     resource?: Types.Resource;
   };
@@ -147,6 +149,21 @@ const resourceSearchItems = selector<SearchItem[]>({
   },
 });
 
+const notificationSearchItems = selector<SearchItem[]>({
+  key: 'notificationSearchItems',
+  get: ({ get }) => {
+    const notifications = get(userMessagesState);
+    return notifications.data.map((notification) => ({
+      type: 'Notification',
+      id: notification.messageId,
+      title: notification.title,
+      attr: {
+        notification,
+      },
+    }));
+  },
+});
+
 const plannerItemSearchItems = selector<SearchItem[]>({
   key: 'plannerItemSearchItems',
   get: ({ get }) => {
@@ -192,6 +209,7 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
     'attr.grades.courseSubjectDescription',
     'attr.grades.courseSubjectNumber',
     'attr.grades.gradeFinal',
+    'attr.notification.content',
     'attr.plannerItem.context_name',
     'attr.plannerItem.context_type',
     'attr.plannerItem.plannable.title',
@@ -223,6 +241,7 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
     const grades = get(gradesSearchItems);
     const courses = get(coursesSearchItems);
     const plannerItems = get(plannerItemSearchItems);
+    const notifications = get(notificationSearchItems);
     const items: SearchItem[] = [
       ...announcements,
       ...trainings,
@@ -231,6 +250,7 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
       ...grades,
       ...courses,
       ...plannerItems,
+      ...notifications,
     ];
     return new Fuse(items, fuseOptions);
   },
