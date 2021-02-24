@@ -18,6 +18,7 @@ export interface SearchItem {
   to?: string;
   href?: string;
   campuses?: string[];
+  audience?: string[];
   attr: {
     announcement?: Types.Announcement;
     courses?: Types.CourseScheduleAttributes;
@@ -33,19 +34,25 @@ export interface SearchItem {
 const eventSearchItems = selector<SearchItem[]>({
   key: 'eventSearchItems',
   get: ({ get }) => {
+    const bendEvents = get(localistEventsState({ campus: 'bend' }));
+    const studentEvents = get(localistEventsState({ affiliation: User.AFFILIATIONS.student }));
+    const employeeEvents = get(localistEventsState({ affiliation: User.AFFILIATIONS.employee }));
+
     const events = [
-      get(localistEventsState({ campus: 'bend' })),
-      get(localistEventsState({ affiliation: User.AFFILIATIONS.employee })),
-      get(localistEventsState({ affiliation: User.AFFILIATIONS.student })),
+      { audience: undefined, items: bendEvents },
+      { audience: [User.AFFILIATIONS.student], items: studentEvents },
+      { audience: [User.AFFILIATIONS.employee], items: employeeEvents },
     ];
+
     const all = events
-      .map((a) =>
-        a.data.map((event) => ({
+      .map(({ audience, items: { data } }) =>
+        data.map((event) => ({
           type: 'Event',
           id: event.id.toString(),
           title: event.title,
           href: event.action.link,
           campuses: event.campus_name ? [event.campus_name.toLowerCase()] : [],
+          audience,
           attr: {
             event,
           },
@@ -73,6 +80,7 @@ const announcementSearchItems = selector<SearchItem[]>({
           title: announcement.title,
           href: announcement.action?.link,
           campuses: announcement.locations.map((a) => a.toLowerCase()),
+          audience: announcement.affiliation.map((a) => a.toLowerCase()),
           attr: {
             announcement,
           },
@@ -125,6 +133,7 @@ const trainingSearchItems = selector<SearchItem[]>({
       id: training.id,
       title: training.title,
       to: '/employee/training',
+      audience: [User.AFFILIATIONS.employee],
       attr: {
         training,
       },
@@ -142,6 +151,7 @@ const resourceSearchItems = selector<SearchItem[]>({
       title: resource.title,
       href: resource.link,
       campuses: resource.locations.map((l) => l.toLowerCase()),
+      audience: resource.affiliation.map((a) => a.toLowerCase()),
       attr: {
         resource,
       },
