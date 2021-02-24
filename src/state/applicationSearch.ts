@@ -65,29 +65,33 @@ export const filteredApplicationSearchState = selector<Fuse.FuseResult<SearchIte
   key: 'filteredApplicationSearchState',
   get: ({ get }) => {
     const query = get(applicationSearchState);
-    const types = get(applicationTypeFilterState);
-    // const audiences = get(applicationAudienceFilterState);
-    const campuses = get(applicationCampusFilterState);
+    const typesFilter = get(applicationTypeFilterState);
+    const audienceFilter = get(applicationAudienceFilterState);
+    const campusesFilter = get(applicationCampusFilterState);
+
+    const selectedTypes = typesFilter.map((t) => t.type);
+    const selectedAudience = audienceFilter.map((a) => a.audience).filter(Boolean);
+    const selectedCampuses = campusesFilter.map((c) => c.campus).filter(Boolean);
+
     if (!query) {
       return [];
     } else {
       const found = get(searchIndex(query));
       const filtered = found
         // Return items to match type filters set or all items if no filters are set
-        .filter((i) => {
-          if (!types.length) return true;
-          return types.map((t) => t.type).includes(i.item.type);
+        .filter(({ item: { type } }) => {
+          if (!selectedTypes.length) return true;
+          return selectedTypes.includes(type);
         })
         // Return items to match campus filters set or all items if no filters are set
-        .filter((i) => {
-          if (!campuses.length || !i.item.campuses?.length) return true;
-          return i.item.campuses.filter(
-            (itemCampus) =>
-              campuses
-                .map((c) => c.campus)
-                .filter(Boolean)
-                .indexOf(itemCampus) > -1
-          ).length;
+        .filter(({ item: { campuses } }) => {
+          if (!selectedCampuses.length || !campuses?.length) return true;
+          return campuses.some((itemCampus) => selectedCampuses.indexOf(itemCampus) > -1);
+        })
+        // Return items to match audience filters set or all items if no filters are set
+        .filter(({ item: { audience } }) => {
+          if (!selectedAudience.length || !audience?.length) return true;
+          return audience.some((itemAudience) => selectedAudience.indexOf(itemAudience) > -1);
         });
       return filtered;
     }
