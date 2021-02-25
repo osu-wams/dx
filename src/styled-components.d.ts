@@ -630,6 +630,14 @@ declare module 'styled-components/macro' {
           color: string;
         };
       };
+      searchResult: {
+        title: {
+          color: string;
+        };
+        subText: {
+          color: string;
+        };
+      };
       skeleton: {
         color: string;
         highlight: string;

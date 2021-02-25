@@ -662,6 +662,12 @@ export const light: ThemeConfiguration = {
         color: neutral550,
       },
     },
+    searchResult: {
+      title: {
+        color: neutral700,
+      },
+      subText: { color: neutral550 },
+    },
     skeleton: {
       color: neutral300,
       highlight: neutral200,

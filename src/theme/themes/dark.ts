@@ -663,6 +663,12 @@ export const dark: ThemeConfiguration = {
         color: neutral400,
       },
     },
+    searchResult: {
+      title: {
+        color: neutral700,
+      },
+      subText: { color: neutral550 },
+    },
     skeleton: {
       color: Color['neutral-800'],
       highlight: Color['neutral-700'],
