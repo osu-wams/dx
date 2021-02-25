@@ -9,7 +9,7 @@ import { BubbleExternalLink, BubbleInternalLink } from 'src/ui/Bubble';
 import { borderRadius, spacing, breakpoints, fontSize } from 'src/theme';
 import Icon from '../Icon';
 
-const StyledListItem = styled(ListItemFlex)`
+const SearchResultStyles = styled(ListItemFlex)`
   border-radius: ${borderRadius[16]};
   box-shadow: ${({ theme }) => theme.ui.card.boxShadow};
   background-color: ${({ theme }) => theme.ui.card.background};
@@ -19,16 +19,29 @@ const StyledListItem = styled(ListItemFlex)`
   @media (min-width: ${breakpoints.small}) {
     margin-bottom: ${spacing.large};
   }
+  flex-direction: column;
+  align-items: stretch;
+`;
+
+const Header = styled.div`
+  display: flex;
   > a {
     flex: 1;
     font-size: ${fontSize[18]};
     margin: 0;
-    padding: ${spacing.medium} ${spacing.small};
-    color: inherit;
+    padding: ${spacing.medium} ${spacing.small} 0 ${spacing.small};
+    color: ${({ theme }) => theme.ui.searchResult.title.color};
   }
   > span {
-    margin: ${spacing.xm} ${spacing.small};
+    margin: ${spacing.medium} ${spacing.small};
   }
+`;
+
+const SubText = styled.div`
+  font-size: ${fontSize[14]};
+  font-weight: 300;
+  padding: 0 ${spacing.small};
+  color: ${({ theme }) => theme.ui.searchResult.subText.color};
 `;
 
 const titleLink = (item: SearchItem) => {
@@ -41,21 +54,31 @@ const titleLink = (item: SearchItem) => {
 
 const SearchResultListItem = ({
   searchResult: { item },
+  onClick,
 }: {
   searchResult: Fuse.FuseResult<SearchItem>;
+  onClick?: () => void;
 }) => {
   return (
-    <StyledListItem>
-      {titleLink(item)}
-      {item.href ? (
-        <BubbleExternalLink>
-          {item.type}
-          <Icon icon={faExternalLink} />
-        </BubbleExternalLink>
-      ) : (
-        <BubbleInternalLink>{item.type}</BubbleInternalLink>
-      )}
-    </StyledListItem>
+    <SearchResultStyles>
+      <Header>
+        {titleLink(item)}
+        {item.href ? (
+          <BubbleExternalLink>
+            {item.type}
+            <Icon icon={faExternalLink} />
+          </BubbleExternalLink>
+        ) : (
+          <BubbleInternalLink>{item.type}</BubbleInternalLink>
+        )}
+      </Header>
+      {item.subText &&
+        (item.subText.html ? (
+          <SubText dangerouslySetInnerHTML={{ __html: item.subText.html ?? '' }} />
+        ) : (
+          <SubText>{item.subText.value ?? ''}</SubText>
+        ))}
+    </SearchResultStyles>
   );
 };
 

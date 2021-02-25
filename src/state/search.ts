@@ -1,6 +1,7 @@
 import { selector, selectorFamily } from 'recoil';
 import Fuse from 'fuse.js';
 import { Types, User } from '@osu-wams/lib';
+import { format } from 'src/util/helpers';
 import { announcementState, ANNOUNCEMENT_PAGES } from './announcements';
 import { resourceState } from './resources';
 import { trainingState } from './trainings';
@@ -10,11 +11,16 @@ import { courseState } from './courses';
 import { plannerItemState } from './plannerItems';
 import { canvasUrl } from 'src/features/canvas/CanvasPlannerItems';
 import { userMessagesState } from './notifications';
+import { matchedCourseContext, plannerItemDate } from 'src/features/course-utils';
 
 export interface SearchItem {
   type: string;
   id: string;
   title: string;
+  subText?: {
+    html?: string;
+    value?: string;
+  };
   to?: string;
   href?: string;
   campuses?: string[];
@@ -50,6 +56,9 @@ const eventSearchItems = selector<SearchItem[]>({
           type: 'Event',
           id: event.id.toString(),
           title: event.title,
+          subText: {
+            value: format(event.date, 'EEEE, MMMM d, yyyy'),
+          },
           href: event.action.link,
           campuses: event.campus_name ? [event.campus_name.toLowerCase()] : [],
           audience,
@@ -78,6 +87,9 @@ const announcementSearchItems = selector<SearchItem[]>({
           type: 'Announcement',
           id: announcement.id,
           title: announcement.title,
+          subText: {
+            value: announcement.date ? format(announcement.date, 'EEEE, MMMM d, yyyy') : '',
+          },
           href: announcement.action?.link,
           campuses: announcement.locations.map((a) => a.toLowerCase()),
           audience: announcement.affiliation.map((a) => a.toLowerCase()),
@@ -99,7 +111,10 @@ const gradesSearchItems = selector<SearchItem[]>({
     return grades.data.map((grade) => ({
       type: 'Past Course',
       id: grade.id,
-      title: grade.attributes.courseTitle,
+      title: grade.attributes.courseSubjectNumber,
+      subText: {
+        html: `${grade.attributes.termDescription} &bull; ${grade.attributes.gradeFinal} &bull; ${grade.attributes.courseTitle}`,
+      },
       to: '/student/academics/past-courses',
       attr: {
         grades: { ...grade.attributes },
@@ -115,7 +130,8 @@ const coursesSearchItems = selector<SearchItem[]>({
     return courses.data.map((course) => ({
       type: 'Current Course',
       id: course.id,
-      title: course.attributes.courseTitle,
+      title: course.attributes.courseSubjectNumber,
+      subText: { value: course.attributes.courseTitle },
       to: '/student/academics',
       attr: {
         courses: { ...course.attributes },
@@ -132,6 +148,7 @@ const trainingSearchItems = selector<SearchItem[]>({
       type: 'Training',
       id: training.id,
       title: training.title,
+      subText: { html: training.tags.join(' &bull; ') },
       to: '/employee/training',
       audience: [User.AFFILIATIONS.employee],
       attr: {
@@ -149,6 +166,7 @@ const resourceSearchItems = selector<SearchItem[]>({
       type: 'Resource',
       id: resource.id,
       title: resource.title,
+      subText: { html: resource.categories.join(' &bull; ') },
       href: resource.link,
       campuses: resource.locations.map((l) => l.toLowerCase()),
       audience: resource.affiliation.map((a) => a.toLowerCase()),
@@ -167,6 +185,11 @@ const notificationSearchItems = selector<SearchItem[]>({
       type: 'Notification',
       id: notification.messageId,
       title: notification.title,
+      subText: {
+        value: notification.deliveredAt
+          ? `Received ${format(notification.deliveredAt, "EEEE, MMMM d'th at ' h:mm a")}`
+          : '',
+      },
       attr: {
         notification,
       },
@@ -178,15 +201,32 @@ const plannerItemSearchItems = selector<SearchItem[]>({
   key: 'plannerItemSearchItems',
   get: ({ get }) => {
     const plannerItems = get(plannerItemState);
-    return plannerItems.data.map((plannerItem) => ({
-      type: 'Canvas',
-      id: `${plannerItem.course_id}-${plannerItem.plannable_id}`,
-      title: plannerItem.plannable.title,
-      href: canvasUrl(plannerItem.html_url),
-      attr: {
-        plannerItem,
-      },
-    }));
+    const courses = get(courseState);
+
+    return plannerItems.data.map((plannerItem) => {
+      const matched = matchedCourseContext(courses.data, plannerItem.context_name);
+      const subTextItems: string[] = [];
+      if (matched) {
+        subTextItems.push(`${matched.courseSubject} ${matched.courseNumber}`);
+      }
+      const date = plannerItemDate(plannerItem.context_type, plannerItem.plannable_date);
+      if (date) {
+        subTextItems.push(date);
+      }
+
+      return {
+        type: 'Canvas',
+        id: `${plannerItem.course_id}-${plannerItem.plannable_id}`,
+        title: plannerItem.plannable.title,
+        subText: {
+          html: subTextItems.join(' &bull; '),
+        },
+        href: canvasUrl(plannerItem.html_url),
+        attr: {
+          plannerItem,
+        },
+      };
+    });
   },
 });
 
@@ -204,6 +244,7 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
     'attr.courses.courseSubject',
     'attr.courses.courseSubjectDescription',
     'attr.courses.courseSubjectNumber',
+    'attr.courses.courseTitle',
     'attr.courses.faculty.email',
     'attr.courses.faculty.name',
     'attr.courses.meetingTimes.building',
@@ -218,6 +259,7 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
     'attr.grades.courseSubject',
     'attr.grades.courseSubjectDescription',
     'attr.grades.courseSubjectNumber',
+    'attr.grades.courseTitle',
     'attr.grades.gradeFinal',
     'attr.notification.content',
     'attr.plannerItem.context_name',
