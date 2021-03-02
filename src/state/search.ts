@@ -21,13 +21,16 @@ export interface SearchItem {
     html?: string;
     value?: string;
   };
-  to?: string;
-  href?: string;
+  link?: {
+    modal?: boolean;
+    to?: string;
+    href?: string;
+  };
   campuses?: string[];
   audience?: string[];
   attr: {
     announcement?: Types.Announcement;
-    courses?: Types.CourseScheduleAttributes;
+    courses?: Types.CourseSchedule;
     event?: Types.LocalistEvent;
     grades?: Types.GradesAttributes;
     training?: Types.Training;
@@ -59,7 +62,7 @@ const eventSearchItems = selector<SearchItem[]>({
           subText: {
             value: format(event.date, 'EEEE, MMMM d, yyyy'),
           },
-          href: event.action.link,
+          link: { href: event.action.link },
           campuses: event.campus_name ? [event.campus_name.toLowerCase()] : [],
           audience,
           attr: {
@@ -90,7 +93,7 @@ const announcementSearchItems = selector<SearchItem[]>({
           subText: {
             value: announcement.date ? format(announcement.date, 'EEEE, MMMM d, yyyy') : '',
           },
-          href: announcement.action?.link,
+          link: { href: announcement.action?.link },
           campuses: announcement.locations.map((a) => a.toLowerCase()),
           audience: announcement.affiliation.map((a) => a.toLowerCase()),
           attr: {
@@ -115,7 +118,7 @@ const gradesSearchItems = selector<SearchItem[]>({
       subText: {
         html: `${grade.attributes.termDescription} &bull; ${grade.attributes.gradeFinal} &bull; ${grade.attributes.courseTitle}`,
       },
-      to: '/student/academics/past-courses',
+      link: { to: '/student/academics/past-courses' },
       attr: {
         grades: { ...grade.attributes },
       },
@@ -132,9 +135,9 @@ const coursesSearchItems = selector<SearchItem[]>({
       id: course.id,
       title: course.attributes.courseSubjectNumber,
       subText: { value: course.attributes.courseTitle },
-      to: '/student/academics',
+      link: { modal: true },
       attr: {
-        courses: { ...course.attributes },
+        courses: { ...course },
       },
     }));
   },
@@ -149,7 +152,7 @@ const trainingSearchItems = selector<SearchItem[]>({
       id: training.id,
       title: training.title,
       subText: { html: training.tags.join(' &bull; ') },
-      to: '/employee/training',
+      link: { modal: true },
       audience: [User.AFFILIATIONS.employee],
       attr: {
         training,
@@ -167,7 +170,7 @@ const resourceSearchItems = selector<SearchItem[]>({
       id: resource.id,
       title: resource.title,
       subText: { html: resource.categories.join(' &bull; ') },
-      href: resource.link,
+      link: { href: resource.link },
       campuses: resource.locations.map((l) => l.toLowerCase()),
       audience: resource.affiliation.map((a) => a.toLowerCase()),
       attr: {
@@ -190,6 +193,7 @@ const notificationSearchItems = selector<SearchItem[]>({
           ? `Received ${format(notification.deliveredAt, "EEEE, MMMM d'th at ' h:mm a")}`
           : '',
       },
+      link: { modal: true },
       attr: {
         notification,
       },
@@ -221,7 +225,7 @@ const plannerItemSearchItems = selector<SearchItem[]>({
         subText: {
           html: subTextItems.join(' &bull; '),
         },
-        href: canvasUrl(plannerItem.html_url),
+        link: { href: canvasUrl(plannerItem.html_url) },
         attr: {
           plannerItem,
         },
@@ -239,18 +243,18 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
     'title',
     'attr.announcement.action.title',
     'attr.announcement.body',
-    'attr.courses.courseNumber',
-    'attr.courses.courseReferenceNumber',
-    'attr.courses.courseSubject',
-    'attr.courses.courseSubjectDescription',
-    'attr.courses.courseSubjectNumber',
-    'attr.courses.courseTitle',
-    'attr.courses.faculty.email',
-    'attr.courses.faculty.name',
-    'attr.courses.meetingTimes.building',
-    'attr.courses.meetingTimes.buildingDescription',
-    'attr.courses.meetingTimes.campus',
-    'attr.courses.termDescription',
+    'attr.courses.course.attributes.courseNumber',
+    'attr.courses.course.attributes.courseReferenceNumber',
+    'attr.courses.course.attributes.courseSubject',
+    'attr.courses.course.attributes.courseSubjectDescription',
+    'attr.courses.course.attributes.courseSubjectNumber',
+    'attr.courses.course.attributes.courseTitle',
+    'attr.courses.course.attributes.faculty.email',
+    'attr.courses.course.attributes.faculty.name',
+    'attr.courses.course.attributes.meetingTimes.building',
+    'attr.courses.course.attributes.meetingTimes.buildingDescription',
+    'attr.courses.course.attributes.meetingTimes.campus',
+    'attr.courses.course.attributes.termDescription',
     'attr.event.action.title',
     'attr.event.body',
     'attr.event.city',

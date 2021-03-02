@@ -54,6 +54,43 @@ const FooterLinks = styled.div`
   align-items: baseline;
 `;
 
+const NotificationModal = ({
+  notification,
+  isOpen,
+  close,
+}: {
+  notification: Types.UserMessage;
+  isOpen: boolean;
+  close: () => void;
+}) => {
+  const themeContext = React.useContext(ThemeContext);
+
+  return (
+    <MyDialog isOpen={isOpen} onDismiss={close} aria-labelledby="message-title">
+      <CloseButton onClick={close} />
+      <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
+        {notification.title}
+      </h2>
+      <RichTextContent dangerouslySetInnerHTML={{ __html: notification.content }}></RichTextContent>
+      <FooterLinks>
+        {notification.deliveredAt && (
+          <Date>Received {format(notification.deliveredAt, "MMM do 'at' h a")}</Date>
+        )}
+        <InternalLink
+          to={'/notifications'}
+          onClick={() => {
+            Event('notifications-menu', 'modal link: See all notifications page link');
+            close();
+          }}
+          fg={themeContext.ui.link.icon.internal.color}
+        >
+          See all notifications
+        </InternalLink>
+      </FooterLinks>
+    </MyDialog>
+  );
+};
+
 const NotificationsMenu = () => {
   const notifications = useRecoilValue<Types.UserMessagesState>(filteredNotifications('unread'));
   const notificationsHook = useMessages({
@@ -62,11 +99,11 @@ const NotificationsMenu = () => {
     staleTime: 1000 * 30,
   });
   const setNotifications = useSetRecoilState(userMessagesState);
-  const [showDialog, setShowDialog] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const [selectedNotification, setSelectedNotification] = useState<Types.UserMessage | null>(null);
 
-  const open = () => setShowDialog(true);
-  const close = () => setShowDialog(false);
+  const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
   const themeContext = React.useContext(ThemeContext);
 
   useEffect(() => {
@@ -180,33 +217,8 @@ const NotificationsMenu = () => {
               </MenuItem>
             </div>
           ))}
-          {showDialog && selectedNotification && (
-            <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
-              <CloseButton onClick={close} />
-              <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
-                {selectedNotification.title}
-              </h2>
-              <RichTextContent
-                dangerouslySetInnerHTML={{ __html: selectedNotification.content }}
-              ></RichTextContent>
-              <FooterLinks>
-                {selectedNotification.deliveredAt && (
-                  <Date>
-                    Received {format(selectedNotification.deliveredAt, "MMM do 'at' h a")}
-                  </Date>
-                )}
-                <InternalLink
-                  to={'notifications'}
-                  onClick={() => {
-                    Event('notifications-menu', 'modal link: See all notifications page link');
-                    close();
-                  }}
-                  fg={themeContext.ui.link.icon.internal.color}
-                >
-                  See all notifications
-                </InternalLink>
-              </FooterLinks>
-            </MyDialog>
+          {isOpen && selectedNotification && (
+            <NotificationModal notification={selectedNotification} isOpen={isOpen} close={close} />
           )}
           {notifications.data.length > 0 && (
             <MenuItem
@@ -226,4 +238,4 @@ const NotificationsMenu = () => {
   );
 };
 
-export { NotificationsMenu };
+export { NotificationsMenu, NotificationModal };
