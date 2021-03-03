@@ -662,6 +662,11 @@ export const dark: ThemeConfiguration = {
       icon: {
         color: neutral400,
       },
+      filter: {
+        apply: {
+          background: Color['pine-300'],
+        },
+      },
     },
     searchResult: {
       title: {

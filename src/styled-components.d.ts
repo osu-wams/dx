@@ -629,6 +629,11 @@ declare module 'styled-components/macro' {
         icon: {
           color: string;
         };
+        filter: {
+          apply: {
+            background: string;
+          };
+        };
       };
       searchResult: {
         title: {

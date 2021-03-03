@@ -661,6 +661,11 @@ export const light: ThemeConfiguration = {
       icon: {
         color: neutral550,
       },
+      filter: {
+        apply: {
+          background: Color['orange-400'],
+        },
+      },
     },
     searchResult: {
       title: {
