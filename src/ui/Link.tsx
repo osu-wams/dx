@@ -3,15 +3,30 @@ import { Link } from '@reach/router';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { faLongArrowRight, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { borderRadius, spacing, fontSize } from 'src/theme';
+import { borderRadius, spacing, fontSize, Color } from 'src/theme';
+interface LinkProps {
+  children: any;
+  to?: string;
+  fg?: string;
+  hideIcon?: boolean;
+  [x: string]: any;
+}
 
 type StyleProps = {
   fg?: string;
   bg?: string;
+  padding?: string;
 };
 
+export const LinkDivider = styled.span`
+  :before {
+    content: '|';
+    color: ${Color['neutral-300']};
+  }
+`;
+
 const LinkStyles = styled.a<StyleProps>(
-  ({ theme, fg }) => ({
+  ({ theme, fg, padding }) => ({
     ':hover, :active, :focus': {
       textDecoration: 'underline',
     },
@@ -22,7 +37,7 @@ const LinkStyles = styled.a<StyleProps>(
       marginLeft: '1.2rem',
     },
     display: 'inline-block',
-    padding: spacing.small + ' ' + spacing.medium,
+    padding: padding ?? `${spacing.small} ${spacing.medium}`,
   }),
   ({ bg }) =>
     bg && {
@@ -38,53 +53,69 @@ const HighlightExternalLinkStyles = styled(LinkStyles)<StyleProps>(() => ({
   fontSize: fontSize[24],
 }));
 
-const ExternalLink = ({ children, ...props }) => {
+const ExternalLink = (props: LinkProps) => {
   const themeContext = useContext(ThemeContext);
-
+  const { children, fg, hideIcon } = props;
   return (
     <LinkStyles {...props} target="_blank">
       {children}
-      <Icon icon={faLongArrowRight} color={props.fg ?? themeContext.ui.link.icon.external.color} />
+      {!hideIcon && (
+        <Icon icon={faLongArrowRight} color={fg ?? themeContext.ui.link.icon.external.color} />
+      )}
     </LinkStyles>
   );
 };
 
-const HighlightExternalLink = ({ children, ...props }) => {
+const HighlightExternalLink = (props: LinkProps) => {
   const themeContext = useContext(ThemeContext);
-
+  const { children, fg, hideIcon, ...rest } = props;
   return (
-    <HighlightExternalLinkStyles {...props} target="_blank">
+    <HighlightExternalLinkStyles {...rest} target="_blank">
       {children}
-      <Icon icon={faExternalLink} color={props.fg ?? themeContext.ui.link.icon.external.color} />
+      {!hideIcon && (
+        <Icon icon={faExternalLink} color={props.fg ?? themeContext.ui.link.icon.external.color} />
+      )}
     </HighlightExternalLinkStyles>
   );
 };
 
-const SimpleExternalLink = ({ children, ...props }) => {
-  const css = { padding: 0, ...props.css };
+const SimpleExternalLink = (props: LinkProps) => {
+  const { children, ...rest } = props;
   return (
-    <LinkStyles {...props} target="_blank" css={css}>
+    <LinkStyles {...rest} target="_blank" padding={'0'}>
       {children}
     </LinkStyles>
   );
 };
 
-const InternalLink = ({ children, ...props }) => {
+const InternalLink = (props: LinkProps) => {
+  const { children, to, fg, hideIcon, ...rest } = props;
   const themeContext = useContext(ThemeContext);
-
   return (
-    <LinkStyles as={Link} to={props.to} {...props}>
+    <LinkStyles as={Link} to={to!} {...rest}>
       {children}
-      <Icon icon={faLongArrowRight} color={props.fg ?? themeContext.ui.link.icon.internal.color} />
+      {!hideIcon && (
+        <Icon icon={faLongArrowRight} color={fg ?? themeContext.ui.link.icon.internal.color} />
+      )}
     </LinkStyles>
   );
 };
 
-const SimpleInternalLink = ({ children, ...props }) => {
-  const themeContext = useContext(ThemeContext);
-  const css = { padding: 0, ...props.css };
+const SimpleInternalLink = (props: LinkProps) => {
+  useContext(ThemeContext);
+  const { children, to, ...rest } = props;
   return (
-    <LinkStyles as={Link} to={props.to} {...props} css={css}>
+    <LinkStyles as={Link} {...rest} to={to!} padding={'0'}>
+      {children}
+    </LinkStyles>
+  );
+};
+
+const SimpleModalLink = (props: LinkProps) => {
+  useContext(ThemeContext);
+  const { children, ...rest } = props;
+  return (
+    <LinkStyles {...rest} padding={'0'}>
       {children}
     </LinkStyles>
   );
@@ -95,5 +126,6 @@ export {
   InternalLink,
   SimpleExternalLink,
   SimpleInternalLink,
+  SimpleModalLink,
   HighlightExternalLink,
 };
