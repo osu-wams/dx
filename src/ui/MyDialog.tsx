@@ -54,8 +54,11 @@ const MyDialog = styled(Dialog)<{ padding?: string }>`
 const MyDialogFooter = styled.div`
   margin: 2.5rem 1.5rem 0;
   display: flex;
-  a {
-    margin-left: auto;
+  justify-content: flex-end;
+  align-items: center;
+  @media (max-width: ${breakpoints.xs}) {
+    flex-direction: column;
+    align-items: flex-end;
   }
 `;
 
