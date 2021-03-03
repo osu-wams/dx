@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components/macro';
-import { fontSize } from 'src/theme';
+import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
+import { borderRadius, fontSize, spacing } from 'src/theme';
 import MyDialog from 'src/ui/MyDialog';
-import { CloseButton } from 'src/ui/Button';
+import Button, { CloseButton } from 'src/ui/Button';
 import { FilterByType } from './Filters';
 import { applicationSearchMobileFilterState } from 'src/state/applicationSearch';
 import { useRecoilState } from 'recoil';
+import { Event } from 'src/util/gaTracking';
 
 const MobileMenuHeader = styled.div`
   display: flex;
@@ -24,9 +25,26 @@ const MobileMenuTitle = styled.h2`
 
 const MobileMenuContent = styled.div`
   font-size: ${fontSize['14']};
+  padding-bottom: 50px;
+`;
+
+const ApplyFilterStyle = styled.div`
+  position: fixed;
+  bottom: ${spacing.default};
+  left: 0;
+  text-align: center;
+  width: 100%;
+  > button {
+    width: 90%;
+    margin: 0 auto;
+    padding: ${spacing.default};
+    font-size: ${fontSize['18']};
+    border-radius: ${borderRadius[8]};
+  }
 `;
 
 const FiltersMobile = () => {
+  const themeContext = useContext(ThemeContext);
   const [visible, setVisible] = useRecoilState(applicationSearchMobileFilterState);
   const title = 'Filters';
   return (
@@ -41,6 +59,15 @@ const FiltersMobile = () => {
       </MobileMenuHeader>
       <MobileMenuContent>
         <FilterByType />
+        <ApplyFilterStyle
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
+            console.log('clic');
+            Event('application-search', 'Clicked apply filter');
+            setVisible(false);
+          }}
+        >
+          <Button bg={themeContext.ui.search.filter.apply.background}>Apply Filters</Button>
+        </ApplyFilterStyle>
       </MobileMenuContent>
     </MyDialog>
   );
