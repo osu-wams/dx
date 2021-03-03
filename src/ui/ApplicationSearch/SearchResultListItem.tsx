@@ -80,7 +80,12 @@ const itemModal = (selected: SearchItem, toggleModal: () => void) => {
   switch (selected?.type) {
     case 'Training':
       return (
-        <TrainingDetails training={selected?.attr.training!} isOpen toggleTraining={toggleModal} />
+        <TrainingDetails
+          training={selected?.attr.training!}
+          isOpen
+          includeShowAll
+          toggleTraining={toggleModal}
+        />
       );
     case 'Current Course':
       const course = selected.attr.courses;
