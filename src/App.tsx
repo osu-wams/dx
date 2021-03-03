@@ -26,7 +26,9 @@ import MobileCovid from './pages/mobile-app/MobileCovid';
 import { useApplicationMessages } from './util/useApplicationMessages';
 import { changeAffiliation } from './util/user';
 import { WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD } from './state/messages';
-import usePlannerItemsState from './hooks/usePlannerItemsState';
+import useGradesState from 'src/hooks/useGradesState';
+import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
+import usePlannerItemsState from 'src/hooks/usePlannerItemsState';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -88,7 +90,8 @@ const App = (props: AppProps) => {
   const resources = useResources();
   const userHook = useUser();
   const infoButtons = useInfoButtons();
-
+  useGradesState();
+  useCourseScheduleState();
   usePlannerItemsState();
 
   /* eslint-disable react-hooks/exhaustive-deps  */

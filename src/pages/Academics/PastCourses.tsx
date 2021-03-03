@@ -9,13 +9,17 @@ import { singularPlural, titleCase } from 'src/util/helpers';
 import { Event } from 'src/util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { SearchBar } from 'src/ui/SearchBar';
-import useGradesState from 'src/hooks/useGradesState';
 import { useRecoilValue } from 'recoil';
-import { debouncedGradesSearchState, filteredGradesState, gradesSearchState } from 'src/state';
+import {
+  debouncedGradesSearchState,
+  filteredGradesState,
+  gradesSearchState,
+  gradesState,
+} from 'src/state';
 import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
 
 const PastCourses = () => {
-  const { grades } = useGradesState();
+  const grades = useRecoilValue(gradesState);
   const { debouncedQuery, query, setQuery } = useDebouncedSearchState({
     searchState: gradesSearchState,
     debouncedSearchState: debouncedGradesSearchState,
