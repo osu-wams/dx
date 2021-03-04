@@ -111,16 +111,18 @@ const gradesSearchItems = selector<SearchItem[]>({
   key: 'gradesSearchItems',
   get: ({ get }) => {
     const grades = get(gradesState);
-    return grades.data.map((grade) => ({
+    return grades.data.map(({ id, attributes }) => ({
       type: 'Past Course',
-      id: grade.id,
-      title: grade.attributes.courseSubjectNumber,
+      id,
+      title: attributes.courseSubjectNumber,
       subText: {
-        html: `${grade.attributes.termDescription} &bull; ${grade.attributes.gradeFinal} &bull; ${grade.attributes.courseTitle}`,
+        html: `${attributes.termDescription} &bull; ${attributes.gradeFinal} &bull; ${attributes.courseTitle}`,
       },
-      link: { to: '/student/academics/past-courses' },
+      link: {
+        to: `/student/academics/past-courses?c=${attributes.courseSubject}+${attributes.courseNumber}`,
+      },
       attr: {
-        grades: { ...grade.attributes },
+        grades: { ...attributes },
       },
     }));
   },

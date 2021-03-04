@@ -18,6 +18,15 @@ import {
 } from 'src/state';
 import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
 
+const getSearchQuerystring = () => {
+  if (window.location.search.startsWith('?c=')) {
+    const parts = window.location.search.split('=');
+    if (parts.length === 2) {
+      return decodeURI(parts[1]).replace(/\+/g, ' ');
+    }
+  }
+};
+
 const PastCourses = () => {
   const grades = useRecoilValue(gradesState);
   const { debouncedQuery, query, setQuery } = useDebouncedSearchState({
@@ -26,6 +35,14 @@ const PastCourses = () => {
     timeout: 250,
   });
   const filteredGrades = useRecoilValue(filteredGradesState);
+
+  useEffect(() => {
+    const query = getSearchQuerystring();
+    if (query) {
+      setQuery(query);
+    }
+    return () => setQuery('');
+  }, []);
 
   useEffect(() => {
     if (debouncedQuery) {

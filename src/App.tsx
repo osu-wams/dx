@@ -210,7 +210,7 @@ const App = (props: AppProps) => {
     //   - Listen for keyboard navigation to start.
     window.addEventListener('keydown', handleTabOnce);
 
-    setInitialRoute(window.location.pathname);
+    setInitialRoute(`${window.location.pathname}${window.location.search}`);
   }, []);
 
   // If logged in through mobile app, this is true
