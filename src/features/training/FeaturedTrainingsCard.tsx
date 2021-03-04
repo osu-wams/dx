@@ -72,7 +72,7 @@ const FeaturedTrainingsCard = () => {
       </CardContent>
       <CardFooter>
         <InternalLink
-          to="/training"
+          to="/employee/training"
           onClick={() => Event('training-featured', 'View more trainings')}
         >
           View more trainings
