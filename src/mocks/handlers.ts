@@ -37,6 +37,8 @@ import {
   TRAININGS_AUDIENCES_API,
   PERSONS_ADDRESSES_API,
   PERSONS_API,
+  PERSONS_EMAIL_API,
+  PERSONS_PHONE_API,
   PERSONS_MEALPLAN_API,
   USER_MESSAGES_API,
   IT_STATUS_API,
@@ -73,7 +75,7 @@ const { mockInfoButtons } = InfoButtons;
 const mockAccountBalance = Student.AccountBalance.mockAccountBalance.data;
 const { raveAlerts, dxAlerts } = Alerts.mockAlerts;
 const { personsMailingAddressData } = Person.Addresses.mockAddresses;
-const { personsData } = Person.Persons.mockPersons;
+const { personsData, emailsData, phonesData } = Person.Persons.mockPersons;
 const { mockMealPlans } = Person.MealPlans;
 const mockUser = User.mockUser.user;
 const mockUserMessages = User.mockUser.userMessageItems;
@@ -178,6 +180,14 @@ export const handlers = [
   // Persons
   rest.get(PERSONS_API, async (req, res, ctx) => {
     return res(ctx.json(personsData.data));
+  }),
+
+  rest.get(PERSONS_EMAIL_API, async (req, res, ctx) => {
+    return res(ctx.json(emailsData.data));
+  }),
+
+  rest.get(PERSONS_PHONE_API, async (req, res, ctx) => {
+    return res(ctx.json(phonesData.data));
   }),
 
   rest.get(PERSONS_MEALPLAN_API, async (req, res, ctx) => {

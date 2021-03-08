@@ -20,14 +20,14 @@ const ProfileAddress = () => {
 
 const renderAddress = (
   {
-    attributes: { addressTypeDescription, addressLine1, city, stateCode, postalCode },
+    attributes: { addressType, addressLine1, city, stateCode, postalCode },
   }: MailingAddress,
   color
 ) => (
   <div>
     <dt>
       <Icon icon={faMapMarkerAlt} color={color} />{' '}
-      <VisuallyHidden>{addressTypeDescription ?? 'No address description'}</VisuallyHidden>
+      <VisuallyHidden>{addressType.description ?? 'No address description'}</VisuallyHidden>
     </dt>
     <dd>
       {addressLine1 && addressLine1}
