@@ -49,7 +49,7 @@ const renderProfile = (p: Types.PersonsAttributes, e: Types.Email[], phone: Type
   })[0];
   const {emailAddress} = preferredEmail.attributes;
   const preferredPhone = phone.filter(obj => {
-    return obj.attributes.primaryInd == true;
+    return obj.attributes.primaryInd == true && obj.attributes.phoneType.code == "CM";
   })[0];
   const mobilePhone = phone.filter(obj => {
     return obj.attributes.phoneType.code == "MP";
