@@ -134,7 +134,8 @@ const App = (props: AppProps) => {
     }
     if (!userHook.loading && !userHook.error && userHook.data.osuId) {
       const userSetDashboard = User.getAffiliation(userHook.data).toLowerCase();
-      const { pathname } = window.location;
+      const { pathname, search } = window.location;
+
       // Visiting root of the application which should be a dashboard overview (/student or /employee), redirect
       // user to the dashboard they were last one or what matches their primaryAffiliation, set application loaded to
       // make it visible
@@ -157,9 +158,9 @@ const App = (props: AppProps) => {
             // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to re-run
             // and finally be handled the by the last else-statement to setIsLoaded(true)
             if (userSetDashboard !== 'student' && onStudentDashboard) {
-              setDashboard({ affiliation: 'student', navigateTo: '/student' });
+              setDashboard({ affiliation: 'student', navigateTo: `${pathname}${search}` });
             } else if (userSetDashboard !== 'employee' && onEmployeeDashboard) {
-              setDashboard({ affiliation: 'employee', navigateTo: '/employee' });
+              setDashboard({ affiliation: 'employee', navigateTo: `${pathname}${search}` });
             } else {
               // The user is visiting the dashboard matching thier setting, the application is ready for rendering
               if (initialRoute && initialRoute !== '/') {
