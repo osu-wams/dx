@@ -3,6 +3,11 @@ import { User } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { defaultTheme } from 'src/theme/themes';
 
+export const dashboardState = atom<{ affiliation: string; navigateTo: string }>({
+  key: 'dashboardState',
+  default: { affiliation: User.AFFILIATIONS.student, navigateTo: `/${User.AFFILIATIONS.student}` },
+});
+
 export const userState = atom<Types.UserState>({
   key: 'userState',
   default: { data: User.INITIAL_USER, loading: true, error: false },

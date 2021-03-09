@@ -24,11 +24,11 @@ import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
 import { useApplicationMessages } from './util/useApplicationMessages';
-import { changeAffiliation } from './util/user';
 import { WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD } from './state/messages';
 import useGradesState from 'src/hooks/useGradesState';
 import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
 import usePlannerItemsState from 'src/hooks/usePlannerItemsState';
+import useDashboardState from './hooks/useDashboardState';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -90,6 +90,7 @@ const App = (props: AppProps) => {
   const resources = useResources();
   const userHook = useUser();
   const infoButtons = useInfoButtons();
+  const { setDashboard } = useDashboardState();
   useGradesState();
   useCourseScheduleState();
   usePlannerItemsState();
@@ -156,9 +157,9 @@ const App = (props: AppProps) => {
             // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to re-run
             // and finally be handled the by the last else-statement to setIsLoaded(true)
             if (userSetDashboard !== 'student' && onStudentDashboard) {
-              changeAffiliation('student', userHook);
+              setDashboard({ affiliation: 'student', navigateTo: '/student' });
             } else if (userSetDashboard !== 'employee' && onEmployeeDashboard) {
-              changeAffiliation('employee', userHook);
+              setDashboard({ affiliation: 'employee', navigateTo: '/employee' });
             } else {
               // The user is visiting the dashboard matching thier setting, the application is ready for rendering
               if (initialRoute && initialRoute !== '/') {

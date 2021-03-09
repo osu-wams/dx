@@ -17,6 +17,7 @@ import {
   gradesState,
 } from 'src/state';
 import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
+import useDashboardState from 'src/hooks/useDashboardState';
 
 const getSearchQuerystring = () => {
   if (window.location.search.startsWith('?c=')) {
@@ -28,6 +29,7 @@ const getSearchQuerystring = () => {
 };
 
 const PastCourses = () => {
+  const { setDashboard } = useDashboardState();
   const grades = useRecoilValue(gradesState);
   const { debouncedQuery, query, setQuery } = useDebouncedSearchState({
     searchState: gradesSearchState,
@@ -41,6 +43,9 @@ const PastCourses = () => {
     if (query) {
       setQuery(query);
     }
+    let url = '/student/past-courses';
+    if (window.location.search.length) url += window.location.search;
+    setDashboard({ affiliation: 'student', navigateTo: url });
     return () => setQuery('');
   }, []);
 

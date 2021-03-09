@@ -80,7 +80,7 @@ const ProfileMenu = () => {
         as="button"
         onClick={() => {
           Event('header', 'user-button-menu', `Switch to ${description} link clicked`);
-          changeAffiliation(affiliationOverride, user);
+          changeAffiliation(affiliationOverride, user, `/${affiliationOverride}`);
         }}
       >
         <Icon icon={toggleIcon} /> {description}
