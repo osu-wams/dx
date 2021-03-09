@@ -1,19 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { Router, Location, navigate, RouteComponentProps } from '@reach/router';
+import { Router, Location, RouteComponentProps } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
 import Header from './ui/Header';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useInfoButtons, useUser, useCards, useResources } from '@osu-wams/hooks';
+import { useInfoButtons, useCards, useResources } from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
 import { userState, themeState, infoButtonState, dynamicCardState, resourceState } from './state';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { User, Types } from '@osu-wams/lib';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
 import { RouterPage } from './routers';
@@ -23,12 +23,11 @@ import Search from './pages/Search';
 import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
-import { useApplicationMessages } from './util/useApplicationMessages';
-import { WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD } from './state/messages';
 import useGradesState from 'src/hooks/useGradesState';
 import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
 import usePlannerItemsState from 'src/hooks/usePlannerItemsState';
-import useDashboardState from './hooks/useDashboardState';
+import useUserState from './hooks/useUserState';
+import { initialRouteState, isLoadedState } from './state/application';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -77,20 +76,18 @@ const StudentRouter = Loadable({
 }) as React.FunctionComponent<RouteComponentProps> & LoadableComponent;
 
 const App = (props: AppProps) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [initialRoute, setInitialRoute] = useState<string | undefined>();
-  const [user, setUser] = useRecoilState<Types.UserState>(userState);
+  const isLoaded = useRecoilValue(isLoadedState);
+  const setInitialRoute = useSetRecoilState(initialRouteState);
+  const user = useRecoilValue<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
   const setCards = useSetRecoilState(dynamicCardState);
   const [resourcesState, setResources] = useRecoilState(resourceState);
   const containerElementRef = useRef(props.containerElement);
-  const { addMessage } = useApplicationMessages();
   const cardsHook = useCards();
   const resources = useResources();
-  const userHook = useUser();
   const infoButtons = useInfoButtons();
-  const { setDashboard } = useDashboardState();
+  useUserState();
   useGradesState();
   useCourseScheduleState();
   usePlannerItemsState();
@@ -125,60 +122,11 @@ const App = (props: AppProps) => {
     }
   }, [resources.data, resources.isSuccess]);
 
-  /**
-   * User Bootstrap for User setup
-   */
-  useEffect(() => {
-    if (!userHook.loading && userHook.data !== user.data) {
-      setUser(userHook);
-    }
-    if (!userHook.loading && !userHook.error && userHook.data.osuId) {
-      const userSetDashboard = User.getAffiliation(userHook.data).toLowerCase();
-      const { pathname, search } = window.location;
-
-      // Visiting root of the application which should be a dashboard overview (/student or /employee), redirect
-      // user to the dashboard they were last one or what matches their primaryAffiliation, set application loaded to
-      // make it visible
-      if (pathname === '/') {
-        navigate(`/${userSetDashboard}`);
-        setIsLoaded(true);
-      } else {
-        const onStudentDashboard = pathname.toLowerCase().startsWith('/student');
-        const onEmployeeDashboard = pathname.toLowerCase().startsWith('/employee');
-        // Visiting any route that doesn't start with /student or /employee just loads the application
-        if (!onStudentDashboard && !onEmployeeDashboard) {
-          setIsLoaded(true);
-        } else {
-          // User is a student (non-employee type) visiting an employee dashboard link, redirect them to the student dashboard
-          if (!User.isEmployee(userHook.data) && onEmployeeDashboard) {
-            addMessage(WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD);
-            navigate('/student');
-            setIsLoaded(true);
-          } else {
-            // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to re-run
-            // and finally be handled the by the last else-statement to setIsLoaded(true)
-            if (userSetDashboard !== 'student' && onStudentDashboard) {
-              setDashboard({ affiliation: 'student', navigateTo: `${pathname}${search}` });
-            } else if (userSetDashboard !== 'employee' && onEmployeeDashboard) {
-              setDashboard({ affiliation: 'employee', navigateTo: `${pathname}${search}` });
-            } else {
-              // The user is visiting the dashboard matching thier setting, the application is ready for rendering
-              if (initialRoute && initialRoute !== '/') {
-                navigate(initialRoute);
-              }
-              setIsLoaded(true);
-            }
-          }
-        }
-      }
-    }
-  }, [userHook.data, userHook.loading, userHook.error, initialRoute]);
-
   // After userHook useEffect resolves the user and dashboard context, it tells the app to become visible
   useEffect(() => {
     if (isLoaded) {
       containerElementRef.current.style.opacity = '1';
-      setInitialRoute(undefined);
+      setInitialRoute('');
     }
   }, [isLoaded]);
 
