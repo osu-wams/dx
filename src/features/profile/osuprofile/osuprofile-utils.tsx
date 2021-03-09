@@ -5,7 +5,7 @@ import { formatPhone } from 'src/util/helpers';
 import Icon from 'src/ui/Icon';
 import { fontSize } from 'src/theme';
 
-const renderPhone = (title: string, field: string | null, icon: any, color: string) => {
+const renderListItem = (title: string, field: string | null, icon: any, color: string) => {
   if (field && title && icon) {
     return (
       <div>
@@ -46,4 +46,4 @@ const ContactInfo = styled.dl`
   }
 `;
 
-export { ContactInfo, PairData, renderPhone };
+export { ContactInfo, PairData, renderListItem };

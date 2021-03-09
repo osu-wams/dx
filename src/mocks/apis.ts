@@ -79,6 +79,10 @@ export const TRAININGS_AUDIENCES_API = train + 'audiences';
  */
 export const PERSONS_API = persons;
 
+export const PERSONS_EMAIL_API = persons + '/emails';
+
+export const PERSONS_PHONE_API = persons + '/phones';
+
 export const PERSONS_MEALPLAN_API = persons + '/meal-plans';
 
 export const PERSONS_ADDRESSES_API = persons + '/addresses';

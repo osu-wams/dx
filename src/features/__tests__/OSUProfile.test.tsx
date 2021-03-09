@@ -6,10 +6,10 @@ import OSUProfile from '../profile/OSUProfile';
 import { Person } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
 import { alterMock } from 'src/util/test-utils';
-import { PERSONS_ADDRESSES_API, PERSONS_API } from 'src/mocks/apis';
+import { PERSONS_ADDRESSES_API, PERSONS_API, PERSONS_PHONE_API } from 'src/mocks/apis';
 
 const { personsMinimalAddressData } = Person.Addresses.mockAddresses;
-const { preferredName, nullName, preferredFirstName } = Person.Persons.mockPersons;
+const { preferredName, nullName, preferredFirstName, multiplePhonesData } = Person.Persons.mockPersons;
 
 describe('<OSUProfile />', () => {
   // Default Data
@@ -44,6 +44,7 @@ describe('<OSUProfile />', () => {
   describe('nullName data', () => {
     beforeEach(() => {
       alterMock(PERSONS_API, nullName.data);
+      alterMock(PERSONS_PHONE_API, multiplePhonesData.data);
       render(<OSUProfile />);
     });
 
@@ -77,12 +78,6 @@ describe('<OSUProfile />', () => {
         await screen.findByText('displayFirstName displayMiddleName displayLastName')
       ).toBeInTheDocument();
       expect(screen.queryByText('FirstName Testo')).not.toBeInTheDocument();
-    });
-
-    it('should find 2 phones, mobile and home and not a primary phone', async () => {
-      expect(await screen.findByText('Home phone')).toBeInTheDocument();
-      expect(await screen.findByText('Mobile phone')).toBeInTheDocument();
-      expect(screen.queryByText('Primary phone')).not.toBeInTheDocument();
     });
   });
 

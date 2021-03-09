@@ -1603,21 +1603,21 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@^1.0.96":
-  version "1.0.96"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.96/d80d2f76e140b17f13920ff80cb3424599904b3cb48a7708b71d977b78f85e47#4abf904cbe9f81f22fa573b76bd4ac5c5e30c812"
-  integrity sha512-MI1SJuoB3Nt1ToxYNLeJoUEiGeYzKe7/tq3uB7Yz26rMQOFeFFCi/Cuai15uEV6A/wzY+ACV5ZwAflQaKtqtSw==
+"@osu-wams/hooks@^1.0.100":
+  version "1.0.100"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.100/6e5d523e9c7bedf40107cc64feadcd1109275b062ae22e14f151cac2a89bb2d4#d18de20c98492774d7c2ef344031018c0e8895b1"
+  integrity sha512-yx7NbIXOMYoJwHW+fgvfWu4RN90pu3JDgluBx272YPnwFO4/7kk3fNXp7PhdVoJjuKpVAG9riqAp7A84DoKezQ==
   dependencies:
-    "@osu-wams/lib" "^0.1.67"
+    "@osu-wams/lib" "^0.1.71"
     "@osu-wams/utils" "^0.0.8"
     axios "^0.21.1"
     react-query "2.23.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@^0.1.67":
-  version "0.1.67"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.67/12b1fe6cd33c422146327e24b3a64bccbe4fe70bed6291ba1945567d5ff2a5d1#ca1fac7a64df7ea176039acde2c80a241eac5dac"
-  integrity sha512-N2pHVNNFpyKOGZzOH38eOYMoGlSHp5OfBBHKV8Lr1PgoiGhYfk57tQUWW+Hhbhhx+gyI9VcOBHp6us+6OdYekw==
+"@osu-wams/lib@^0.1.71":
+  version "0.1.71"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.71/7304651a9c72e0720bdc6e7c55f6f0f17bf121cb7f88c5689f0217dc8de5fec2#2dc70aba788bd339c765a5addaec58df78018cc0"
+  integrity sha512-iA8xIAjCvDkUzPVD0W0KmYaqX7OAifwkXP9OiBmkaXUIp0OMlDktkNcWK/KZoRYjoeljvCfrEuCnxXv9vSmXyA==
 
 "@osu-wams/utils@^0.0.8":
   version "0.0.8"
