@@ -9,7 +9,7 @@ import { singularPlural, titleCase } from 'src/util/helpers';
 import { Event } from 'src/util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { SearchBar } from 'src/ui/SearchBar';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import {
   debouncedGradesSearchState,
   filteredGradesState,
@@ -29,7 +29,7 @@ const getSearchQuerystring = () => {
 };
 
 const PastCourses = () => {
-  const setDashboardState = useSetRecoilState(dashboardState);
+  const [dashboard, setDashboardState] = useRecoilState(dashboardState);
   const grades = useRecoilValue(gradesState);
   const { debouncedQuery, query, setQuery } = useDebouncedSearchState({
     searchState: gradesSearchState,
@@ -43,10 +43,12 @@ const PastCourses = () => {
     if (query) {
       setQuery(query);
     }
-    setDashboardState({
-      affiliation: 'student',
-      navigateTo: `/student/academics/past-courses${window.location.search}`,
-    });
+    if (dashboard.affiliation !== 'student') {
+      setDashboardState({
+        affiliation: 'student',
+        navigateTo: `/student/academics/past-courses${window.location.search}`,
+      });
+    }
     return () => setQuery('');
   }, []);
 
