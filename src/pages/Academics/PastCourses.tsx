@@ -9,7 +9,7 @@ import { singularPlural, titleCase } from 'src/util/helpers';
 import { Event } from 'src/util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { SearchBar } from 'src/ui/SearchBar';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   debouncedGradesSearchState,
   filteredGradesState,
@@ -17,7 +17,7 @@ import {
   gradesState,
 } from 'src/state';
 import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
-import useDashboardState from 'src/hooks/useDashboardState';
+import { dashboardState } from 'src/state/application';
 
 const getSearchQuerystring = () => {
   if (window.location.search.startsWith('?c=')) {
@@ -29,7 +29,7 @@ const getSearchQuerystring = () => {
 };
 
 const PastCourses = () => {
-  const { setDashboard } = useDashboardState();
+  const setDashboardState = useSetRecoilState(dashboardState);
   const grades = useRecoilValue(gradesState);
   const { debouncedQuery, query, setQuery } = useDebouncedSearchState({
     searchState: gradesSearchState,
@@ -43,9 +43,10 @@ const PastCourses = () => {
     if (query) {
       setQuery(query);
     }
-    let url = '/student/past-courses';
-    if (window.location.search.length) url += window.location.search;
-    setDashboard({ affiliation: 'student', navigateTo: url });
+    setDashboardState({
+      affiliation: 'student',
+      navigateTo: `/student/academics/past-courses${window.location.search}`,
+    });
     return () => setQuery('');
   }, []);
 
