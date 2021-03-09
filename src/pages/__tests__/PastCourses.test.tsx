@@ -5,6 +5,8 @@ import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
 import { GRADES_API } from 'src/mocks/apis';
 import { gradesState } from 'src/state';
+import { dashboardState } from 'src/state/application';
+import { Student } from '@osu-wams/hooks';
 
 describe('<PastCourses />', () => {
   it('renders without errors', async () => {
@@ -18,14 +20,28 @@ describe('<PastCourses />', () => {
   });
 
   it('should find the course: "Test Course Title" and the CRN', async () => {
-    render(<PastCourses />);
+    render(<PastCourses />, {
+      initialStates: [
+        {
+          state: gradesState,
+          value: Student.Grades.mockGrades,
+        },
+      ],
+    });
     const Algebra = await screen.findByText('Test Course Title');
     expect(Algebra).toBeInTheDocument();
     expect(await screen.findByText(/CRN: 15625/i)).toBeInTheDocument();
   });
 
   it('should find only one instace of a course excluded from GPA', async () => {
-    render(<PastCourses />);
+    render(<PastCourses />, {
+      initialStates: [
+        {
+          state: gradesState,
+          value: Student.Grades.mockGrades,
+        },
+      ],
+    });
     const excludedFromGPA = await screen.findByText(/Excluded - GPA\/Credits/);
     expect(excludedFromGPA).toBeInTheDocument();
   });
@@ -51,7 +67,14 @@ describe('<PastCourses />', () => {
 
   describe('User searches', () => {
     it('should find "MTH 451" when typing and fire a google analytics event', async () => {
-      render(<PastCourses />);
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
       const searchInput = screen.getByLabelText('Find past courses');
       userEvent.type(searchInput, 'MTH 451');
       const FinalGrade = await screen.findByText(/MTH 451/i);
@@ -60,7 +83,14 @@ describe('<PastCourses />', () => {
     });
 
     it('should not break when adding regex to the search and find the grade', async () => {
-      render(<PastCourses />);
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
       const searchInput = screen.getByLabelText('Find past courses');
       await screen.findByText('Test Course Title');
       userEvent.type(searchInput, 'A=B-');
@@ -70,7 +100,14 @@ describe('<PastCourses />', () => {
     });
 
     it('should find all 7 of the mathematics (MTH) classes', async () => {
-      render(<PastCourses />);
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
 
       const searchInput = screen.getByLabelText('Find past courses');
       await userEvent.type(searchInput, 'Mathematics');
@@ -87,7 +124,14 @@ describe('<PastCourses />', () => {
     });
 
     it('should not find any courses after searching something bogus', async () => {
-      render(<PastCourses />);
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
 
       const searchInput = screen.getByLabelText('Find past courses');
       await userEvent.type(searchInput, 'bogusBogus');
