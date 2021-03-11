@@ -43,7 +43,7 @@ const PastCourses = () => {
     if (query) {
       setQuery(query);
     }
-    if (dashboard.affiliation !== 'student') {
+    if (dashboard.affiliation !== 'student' || dashboard.navigateTo.indexOf('past-courses') < 0) {
       setDashboardState({
         affiliation: 'student',
         navigateTo: `/student/academics/past-courses${window.location.search}`,

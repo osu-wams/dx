@@ -30,6 +30,7 @@ import {
 import TrainingsSearch from 'src/features/training/TrainingsSearch';
 import TrainingsFilters from 'src/features/training/TrainingsFilters';
 import { TrainingSubHeader } from 'src/features/training/TrainingStyles';
+import { dashboardState } from 'src/state/application';
 
 const Training = () => {
   useResetScroll();
@@ -46,6 +47,16 @@ const Training = () => {
   const setTrainingAudiences = useSetRecoilState(trainingAudienceState);
   const trainings = useTrainings();
   const [trainingsState, setTrainings] = useRecoilState(trainingState);
+  const [dashboard, setDashboardState] = useRecoilState(dashboardState);
+
+  useEffect(() => {
+    if (dashboard.affiliation !== 'employee' || dashboard.navigateTo.indexOf('training') < 0) {
+      setDashboardState({
+        affiliation: 'employee',
+        navigateTo: '/employee/training',
+      });
+    }
+  }, []);
 
   // Hides or shows course details
   const toggleTraining = (t?) => {
