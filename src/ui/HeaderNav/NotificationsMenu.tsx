@@ -66,7 +66,12 @@ const NotificationModal = ({
   const themeContext = React.useContext(ThemeContext);
 
   return (
-    <MyDialog isOpen={isOpen} onDismiss={close} aria-labelledby="message-title">
+    <MyDialog
+      data-testid="notification-modal"
+      isOpen={isOpen}
+      onDismiss={close}
+      aria-labelledby="message-title"
+    >
       <CloseButton onClick={close} />
       <h2 id="message-title" style={{ fontSize: fontSize[18] }}>
         {notification.title}

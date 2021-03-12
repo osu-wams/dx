@@ -38,6 +38,7 @@ const TrainingDetails: React.FC<any> = ({
 
   return (
     <MyDialog
+      data-testid="training-modal"
       padding="false"
       isOpen={isOpen}
       onDismiss={() => toggleTraining()}
