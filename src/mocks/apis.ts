@@ -128,3 +128,13 @@ export const HEALTH_CHECK_API = '*/healthcheck';
  * App Version API
  */
 export const APP_VERSION_API = '*/app_version';
+
+/**
+ * People Search
+ */
+export const PEOPLE_API = '*/api/people/*';
+
+/**
+ * Locations Search
+ */
+export const LOCATIONS_API = '*/api/locations/*';

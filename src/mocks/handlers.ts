@@ -13,6 +13,8 @@ import {
   PageContents,
   ReleaseNotes,
   InfoButtons,
+  People,
+  Locations,
 } from '@osu-wams/hooks';
 import {
   HOLDS_API,
@@ -52,6 +54,8 @@ import {
   APP_VERSION_API,
   USER_API,
   GRADES_API,
+  PEOPLE_API,
+  LOCATIONS_API,
 } from './apis';
 
 const mockHolds = Student.Holds.mockHolds.data;
@@ -84,6 +88,8 @@ const mockStatus = Status.mockStatus.statusData;
 const mockCards = Cards.mockCards.cardsArray;
 const mockPageContent = PageContents.mockPageContents.pageContentData;
 const mockReleaseNotes = ReleaseNotes.mockReleaseNotes.releaseNotesData;
+const mockPeople = People.mockPeople;
+const mockLocations = Locations.mockLocations;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -264,5 +270,15 @@ export const handlers = [
   // App Version
   rest.get(APP_VERSION_API, async (req, res, ctx) => {
     return res(ctx.body('client-test-123'));
+  }),
+
+  // People Search
+  rest.get(PEOPLE_API, async (req, res, ctx) => {
+    return res(ctx.json(mockPeople.data));
+  }),
+
+  // Locations Search
+  rest.get(LOCATIONS_API, async (req, res, ctx) => {
+    return res(ctx.json(mockLocations.data));
   }),
 ];
