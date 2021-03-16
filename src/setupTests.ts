@@ -5,6 +5,7 @@ import * as cache from './util/cache';
 import { queryCache } from 'react-query';
 import { server } from 'src/mocks/server';
 import axios from 'axios';
+import { IComponents } from './util/gaTracking';
 
 ReactGA.initialize('UA-48705802-13', {
   testMode: true,
@@ -58,8 +59,9 @@ afterAll(() => server.close());
  * Google Analytics setup
  */
 jest.mock('../src/util/gaTracking', () => ({
-  Event: () => {
-    return mockGAEvent();
+  Event: (category: any = 'mockedCategory', action: string = 'mockedAction', label?: string) => {
+    if (label) return mockGAEvent(category, action, label);
+    return mockGAEvent(category, action);
   },
 }));
 
