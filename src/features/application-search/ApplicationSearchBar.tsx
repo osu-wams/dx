@@ -145,8 +145,8 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
     }
   };
 
-  const onKeyDown = (event) => {
-    if (event.code === 'Enter' && input) {
+  const onKeyUp = (event) => {
+    if (event.key === 'Enter' && input) {
       searchHandler();
     }
   };
@@ -160,10 +160,11 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
     <HeaderSearchWrapper>
       <SearchBar
         id="applicationSearch"
+        data-testid="applicationSearch"
         labelText=""
         inputValue={input}
         onChange={onChange}
-        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
         onClick={searchHandler}
         fontSize={fontSize}
         // autoFocus={isDesktop ? true : false} // eslint-disable-line
