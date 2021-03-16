@@ -13,7 +13,11 @@ interface IFontSize {
 const SearchWrapper = styled.div<IFontSize>`
   position: relative;
   max-width: ${breakpoints.large};
-  svg {
+  > button {
+    cursor: pointer;
+  }
+  > svg,
+  > button {
     position: absolute;
     top: 2rem;
     right: 1.6rem;
@@ -30,6 +34,32 @@ const FilterInput = styled(Input)<IFontSize>`
   border-color: ${({ theme }) => theme.ui.search.input.border.color};
 `;
 
+const StyledBtn = styled.button`
+  border: 0;
+  background: none;
+  /* iOS adds large paddings around buttons, we are reducing it */
+  padding: 0 0.4rem 0.4rem;
+`;
+
+const SearchBarButton = ({ fontSize, ...props }) => {
+  const themeContext = useContext(ThemeContext);
+  return props.onClick ? (
+    <StyledBtn role="button" onClick={props.onClick ?? undefined}>
+      <Icon
+        id="searchButton"
+        icon={faSearch}
+        color={themeContext.ui.search.icon.color}
+        fontSize={fontSize}
+      />
+      <VisuallyHidden>
+        <label htmlFor="searchButton">Search Button</label>
+      </VisuallyHidden>
+    </StyledBtn>
+  ) : (
+    <Icon icon={faSearch} color={themeContext.ui.search.icon.color} fontSize={fontSize} />
+  );
+};
+
 const SearchBar = ({
   id,
   labelText,
@@ -43,16 +73,9 @@ const SearchBar = ({
   inputValue: string;
   fontSize?: string;
 }) => {
-  const themeContext = useContext(ThemeContext);
-
   return (
     <SearchWrapper fontSize={fontSize}>
-      <Icon
-        icon={faSearch}
-        color={themeContext.ui.search.icon.color}
-        onClick={props.onClick ?? undefined}
-        fontSize={fontSize}
-      />
+      <SearchBarButton fontSize={fontSize} {...props} />
       <VisuallyHidden>
         <label htmlFor={id}>{labelText}</label>
       </VisuallyHidden>
