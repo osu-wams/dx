@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { LocationProvider } from '@reach/router';
+import { createHistory, createMemorySource, LocationProvider } from '@reach/router';
 import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
@@ -103,7 +103,14 @@ const renderWithAppContext = (ui, { initialStates = new Array(), ...options } = 
 
 const renderWithAllContexts = (
   ui,
-  { user = authUser, isDesktop = false, initialStates = new Array(), ...options } = {}
+  {
+    user = authUser,
+    isDesktop = false,
+    initialStates = new Array(),
+    route = '/',
+    history = createHistory(createMemorySource(route)),
+    ...options
+  } = {}
 ) => {
   const Wrapper = (props) => {
     return (
@@ -113,7 +120,7 @@ const renderWithAllContexts = (
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
-        <LocationProvider>
+        <LocationProvider history={history}>
           <HelmetProvider>
             <ThemeProvider theme={themesLookup[defaultTheme]}>
               <ResponsiveContext.Provider
@@ -126,7 +133,7 @@ const renderWithAllContexts = (
       </RecoilRoot>
     );
   };
-  return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
+  return { ...testingLibraryRender(ui, { wrapper: Wrapper, ...options }), history };
 };
 
 const render = renderWithAllContexts;
