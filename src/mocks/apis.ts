@@ -14,6 +14,8 @@ const train = '*/api/trainings/';
 /**
  * Student API paths
  */
+export const PLANNER_ITEMS_API = stu + 'planner-items';
+
 export const HOLDS_API = stu + 'holds';
 
 export const GPA_API = stu + 'gpa';
