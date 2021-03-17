@@ -4,7 +4,7 @@ import { ProfileMenu } from './ProfileMenu';
 import { HelpMenu } from './HelpMenu';
 import { NotificationsMenu } from './NotificationsMenu';
 import { SearchButton } from './SearchButton';
-import { Mobile } from 'src/util/useMediaQuery';
+import { Mobile } from 'src/hooks/useMediaQuery';
 
 const HeaderNav = () => {
   return (

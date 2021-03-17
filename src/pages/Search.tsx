@@ -18,7 +18,7 @@ import {
 import { useRecoilValue } from 'recoil';
 import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
 import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
-import { Desktop, Mobile } from 'src/util/useMediaQuery';
+import { Desktop, Mobile } from 'src/hooks/useMediaQuery';
 import { FiltersMobile } from 'src/features/application-search/FiltersMobile';
 import emptySearch from 'src/assets/empty-search.svg';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';

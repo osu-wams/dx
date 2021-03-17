@@ -4,7 +4,7 @@ import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
-import { Mobile, Desktop } from 'src/util/useMediaQuery';
+import { Mobile, Desktop } from 'src/hooks/useMediaQuery';
 
 const MainNavStudent = (...props) => {
   return (

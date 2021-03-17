@@ -13,7 +13,7 @@ import {
 import { SearchWrapper } from 'src/ui/SearchBar';
 import { useNavigate, useMatch } from '@reach/router';
 import Icon from 'src/ui/Icon';
-import { Mobile } from 'src/util/useMediaQuery';
+import { Mobile } from 'src/hooks/useMediaQuery';
 import { StyledBtn } from 'src/ui/CustomBtn';
 
 const HeaderSearchWrapper = styled.div`

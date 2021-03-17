@@ -5,7 +5,7 @@ import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/lib';
-import { mobile, desktop } from 'src/util/useMediaQuery';
+import { mobile, desktop } from 'src/hooks/useMediaQuery';
 import { RecoilRoot } from 'recoil';
 import { userState } from 'src/state';
 import { rest } from 'msw';
