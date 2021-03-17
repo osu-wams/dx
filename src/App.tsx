@@ -8,10 +8,10 @@ import ReactGA from 'react-ga';
 import Header from './ui/Header';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useInfoButtons, useCards, useResources } from '@osu-wams/hooks';
+import { useInfoButtons, useCards } from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
-import { userState, themeState, infoButtonState, dynamicCardState, resourceState } from './state';
+import { userState, themeState, infoButtonState, dynamicCardState } from './state';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
@@ -27,6 +27,7 @@ import useGradesState from 'src/hooks/useGradesState';
 import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
 import usePlannerItemsState from 'src/hooks/usePlannerItemsState';
 import useUserState from './hooks/useUserState';
+import useResourcesState from './hooks/useResourcesState';
 import { initialRouteState, isLoadedState } from './state/application';
 
 const ContentWrapper = styled.main`
@@ -82,15 +83,14 @@ const App = (props: AppProps) => {
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
   const setCards = useSetRecoilState(dynamicCardState);
-  const [resourcesState, setResources] = useRecoilState(resourceState);
   const containerElementRef = useRef(props.containerElement);
   const cardsHook = useCards();
-  const resources = useResources();
   const infoButtons = useInfoButtons();
   useUserState();
   useGradesState();
   useCourseScheduleState();
   usePlannerItemsState();
+  useResourcesState();
 
   /* eslint-disable react-hooks/exhaustive-deps  */
 
@@ -109,18 +109,6 @@ const App = (props: AppProps) => {
       });
     }
   }, [cardsHook.data, cardsHook.isSuccess]);
-
-  useEffect(() => {
-    // Only reset resourceState when the hook has returned new data that isn't already set
-    if (resources.isSuccess && resources.data && resources.data !== resourcesState.data) {
-      setResources({
-        data: resources.data,
-        isLoading: resources.isLoading,
-        isSuccess: resources.isSuccess,
-        isError: resources.isError,
-      });
-    }
-  }, [resources.data, resources.isSuccess]);
 
   // After userHook useEffect resolves the user and dashboard context, it tells the app to become visible
   useEffect(() => {
