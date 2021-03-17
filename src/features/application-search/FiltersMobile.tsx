@@ -61,7 +61,6 @@ const FiltersMobile = () => {
         <FilterByType />
         <ApplyFilterStyle
           onClick={(e: React.MouseEvent<HTMLElement>) => {
-            console.log('clic');
             Event('application-search', 'Clicked apply filter');
             setVisible(false);
           }}
