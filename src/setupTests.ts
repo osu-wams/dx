@@ -5,7 +5,6 @@ import * as cache from './util/cache';
 import { queryCache } from 'react-query';
 import { server } from 'src/mocks/server';
 import axios from 'axios';
-import { IComponents } from './util/gaTracking';
 
 ReactGA.initialize('UA-48705802-13', {
   testMode: true,
@@ -73,6 +72,7 @@ jest.mock('../src/features/resources/GATrendingResource', () => ({
 
 // Supress missing CSS warnings in tests from @reach ui components
 jest.mock('@reach/utils', () => ({
+  // @ts-ignore spread object
   ...jest.requireActual('@reach/utils'),
   checkStyles: jest.fn(),
 }));
