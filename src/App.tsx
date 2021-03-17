@@ -8,10 +8,9 @@ import ReactGA from 'react-ga';
 import Header from './ui/Header';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { useInfoButtons, useCards } from '@osu-wams/hooks';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
-import { userState, themeState, infoButtonState, dynamicCardState } from './state';
+import { userState, themeState } from './state';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
@@ -23,14 +22,16 @@ import Search from './pages/Search';
 import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
-import useGradesState from 'src/hooks/useGradesState';
-import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
-import usePlannerItemsState from 'src/hooks/usePlannerItemsState';
-import useUserState from './hooks/useUserState';
-import useResourcesState from './hooks/useResourcesState';
+import {
+  useCardsState,
+  useCourseScheduleState,
+  useGradesState,
+  useInfoButtonsState,
+  usePlannerItemsState,
+  useResourcesState,
+  useUserState,
+} from 'src/hooks';
 import { initialRouteState, isLoadedState } from './state/application';
-import useCardsState from './hooks/useCardsState';
-import useInfoButtonsState from './hooks/useInfoButtonsState';
 
 const ContentWrapper = styled.main`
   display: flex;

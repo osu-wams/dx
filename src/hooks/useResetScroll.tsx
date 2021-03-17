@@ -20,3 +20,5 @@ export const useResetScroll = () => {
     }
   }, [state, updateState]);
 };
+
+export default useResetScroll;
