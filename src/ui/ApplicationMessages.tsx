@@ -11,7 +11,7 @@ import { Types } from '@osu-wams/lib';
 import { fontSize, borderRadius, spacing, shadows } from 'src/theme';
 import Icon from './Icon';
 import { CloseButton } from './Button';
-import { useApplicationMessages } from 'src/util/useApplicationMessages';
+import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 
 const ApplicationMessages = () => {
   const themeContext = React.useContext(ThemeContext);

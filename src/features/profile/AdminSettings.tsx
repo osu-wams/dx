@@ -9,7 +9,7 @@ import { userState } from 'src/state';
 import { User, Admin } from '@osu-wams/hooks';
 import Button from 'src/ui/Button';
 import { Event } from 'src/util/gaTracking';
-import { useApplicationMessages } from 'src/util/useApplicationMessages';
+import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 
 const { postSettings, usersSettings } = User;
 

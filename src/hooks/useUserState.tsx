@@ -4,7 +4,7 @@ import { User } from '@osu-wams/lib';
 import { useUser } from '@osu-wams/hooks';
 import { dashboardState, initialRouteState, isLoadedState, userState } from 'src/state/application';
 import { changeAffiliation } from 'src/util/user';
-import { useApplicationMessages } from 'src/util/useApplicationMessages';
+import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 import { navigate } from '@reach/router';
 import { WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD } from 'src/state/messages';
 

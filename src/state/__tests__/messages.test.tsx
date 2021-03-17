@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Message } from '@osu-wams/lib';
 import { messagesState } from '../messages';
-import { useApplicationMessages } from '../../util/useApplicationMessages';
+import { useApplicationMessages } from '../../hooks/useApplicationMessages';
 
 jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
 
