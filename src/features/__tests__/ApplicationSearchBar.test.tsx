@@ -104,8 +104,8 @@ describe('<ApplicationSearchBar />', () => {
     it('performs a search when the search button is clicked', async () => {
       userEvent.type(searchBar, `${foundSearchTerm}`);
       expect(history.location.pathname).toBe('/');
-      const button = await screen.findByRole('button');
-      userEvent.click(button);
+      const button = await screen.findAllByRole('button');
+      userEvent.click(button[0]);
       expect(history.location.pathname).toBe('/search');
       await waitFor(() => {
         expect(mockGAEvent).toBeCalledWith('application-search', foundSearchTerm);
