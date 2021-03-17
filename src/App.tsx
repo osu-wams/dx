@@ -29,6 +29,8 @@ import usePlannerItemsState from 'src/hooks/usePlannerItemsState';
 import useUserState from './hooks/useUserState';
 import useResourcesState from './hooks/useResourcesState';
 import { initialRouteState, isLoadedState } from './state/application';
+import useCardsState from './hooks/useCardsState';
+import useInfoButtonsState from './hooks/useInfoButtonsState';
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -81,34 +83,16 @@ const App = (props: AppProps) => {
   const setInitialRoute = useSetRecoilState(initialRouteState);
   const user = useRecoilValue<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
-  const [infoButtonData, setInfoButtonData] = useRecoilState(infoButtonState);
-  const setCards = useSetRecoilState(dynamicCardState);
   const containerElementRef = useRef(props.containerElement);
-  const cardsHook = useCards();
-  const infoButtons = useInfoButtons();
   useUserState();
   useGradesState();
   useCourseScheduleState();
   usePlannerItemsState();
   useResourcesState();
+  useCardsState();
+  useInfoButtonsState();
 
   /* eslint-disable react-hooks/exhaustive-deps  */
-
-  useEffect(() => {
-    if (infoButtons.data !== infoButtonData) {
-      setInfoButtonData(infoButtons.data);
-    }
-  }, [infoButtons.data]);
-
-  useEffect(() => {
-    if (cardsHook.isSuccess && cardsHook.data) {
-      setCards({
-        data: cardsHook.data,
-        isLoading: cardsHook.isLoading,
-        isSuccess: cardsHook.isSuccess,
-      });
-    }
-  }, [cardsHook.data, cardsHook.isSuccess]);
 
   // After userHook useEffect resolves the user and dashboard context, it tells the app to become visible
   useEffect(() => {
