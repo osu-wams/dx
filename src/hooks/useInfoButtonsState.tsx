@@ -10,8 +10,8 @@ export const useInfoButtonsState = () => {
   useEffect(() => {
     const { data } = api;
     // Only reset application state when the api has returned new data that isn't already set
-    if (data && data !== infoButtons.data) {
-      setInfoButtons({ data });
+    if (data && data !== infoButtons) {
+      setInfoButtons(data);
     }
   }, [api.data]);
 
