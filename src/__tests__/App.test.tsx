@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { navigate } from '@reach/router';
 import { screen, waitFor } from '@testing-library/react';
-import { alterMock, render } from 'src/util/test-utils';
+import { alterMock, mockEmployeeUser, render } from 'src/util/test-utils';
 import { LocationProvider, createHistory, createMemorySource } from '@reach/router';
 import App from '../App';
 import { RecoilRoot } from 'recoil';
@@ -71,4 +71,20 @@ it('navigates to an initial route', async () => {
     ],
   });
   expect(mockNavigate).toBeCalledWith('/about');
+});
+
+it('navigates to root and redirects to student (default user) dashboard', async () => {
+  window.location.pathname = '/';
+  mockNavigate.mockResolvedValue(true);
+  const div = document.createElement('div');
+  render(<App containerElement={div} />);
+  expect(mockNavigate).toBeCalledWith('/student');
+});
+
+it('navigates to root and redirects to student (default user) dashboard with warning', async () => {
+  window.location.pathname = '/employee';
+  mockNavigate.mockResolvedValue(true);
+  const div = document.createElement('div');
+  render(<App containerElement={div} />);
+  expect(mockNavigate).toBeCalledWith('/student');
 });

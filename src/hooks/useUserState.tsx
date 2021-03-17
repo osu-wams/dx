@@ -45,8 +45,7 @@ export const useUserState = () => {
       // user to the dashboard they were last one or what matches their primaryAffiliation, set application loaded to
       // make it visible
       if (pathname === '/') {
-        navigate(`/${userSetDashboard}`);
-        setIsLoaded(true);
+        navigate(`/${userSetDashboard}`).then((v) => setIsLoaded(true));
       } else {
         const onStudentDashboard = pathname.toLowerCase().startsWith('/student');
         const onEmployeeDashboard = pathname.toLowerCase().startsWith('/employee');
@@ -59,7 +58,7 @@ export const useUserState = () => {
           }
         } else {
           // User is a student (non-employee type) visiting an employee dashboard link, redirect them to the student dashboard
-          if (!User.isEmployee(userHook.data) && onEmployeeDashboard) {
+          if (!User.isEmployee(data) && onEmployeeDashboard) {
             addMessage(WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD);
             navigate('/student').then((v) => setIsLoaded(true));
           } else {
