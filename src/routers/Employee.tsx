@@ -3,7 +3,7 @@ import React from 'react';
 import Dashboard from '../pages/Dashboard';
 import Training from '../pages/Training';
 import Resources from '../pages/Resources';
-import { useResetScroll } from 'src/util/useResetScroll';
+import { useResetScroll } from 'src/hooks/useResetScroll';
 import { RouterPage } from '.';
 import PageNotFound from 'src/pages/PageNotFound';
 

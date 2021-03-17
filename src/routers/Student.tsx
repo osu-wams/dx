@@ -5,7 +5,7 @@ import Profile from '../pages/Profile';
 import Academics from '../pages/Academics';
 import Finances from '../pages/Finances';
 import Resources from '../pages/Resources';
-import { useResetScroll } from 'src/util/useResetScroll';
+import { useResetScroll } from 'src/hooks/useResetScroll';
 import { RouterPage } from '.';
 import PageNotFound from 'src/pages/PageNotFound';
 

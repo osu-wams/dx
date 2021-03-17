@@ -16,7 +16,7 @@ import {
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
 import { singularPlural } from 'src/util/helpers';
 import placeholderImage from 'src/assets/training-placeholder.png';
-import { useResetScroll } from 'src/util/useResetScroll';
+import { useResetScroll } from 'src/hooks/useResetScroll';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   trainingState,
