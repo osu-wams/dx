@@ -33,8 +33,12 @@ export const useUserState = () => {
     if (!userHook.loading && userHook.data !== user.data) {
       setUser(userHook);
     }
-    if (!userHook.loading && !userHook.error && userHook.data.osuId) {
-      const userSetDashboard = User.getAffiliation(userHook.data).toLowerCase();
+  }, [userHook.data, userHook.loading, userHook.error]);
+
+  useEffect(() => {
+    const { loading, error, data } = user;
+    if (!loading && !error && data.osuId) {
+      const userSetDashboard = User.getAffiliation(data).toLowerCase();
       const { pathname, search } = window.location;
 
       // Visiting root of the application which should be a dashboard overview (/student or /employee), redirect
@@ -48,13 +52,16 @@ export const useUserState = () => {
         const onEmployeeDashboard = pathname.toLowerCase().startsWith('/employee');
         // Visiting any route that doesn't start with /student or /employee just loads the application
         if (!onStudentDashboard && !onEmployeeDashboard) {
-          setIsLoaded(true);
+          if (initialRoute && initialRoute !== '/') {
+            navigate(initialRoute).then((v) => setIsLoaded(true));
+          } else {
+            setIsLoaded(true);
+          }
         } else {
           // User is a student (non-employee type) visiting an employee dashboard link, redirect them to the student dashboard
           if (!User.isEmployee(userHook.data) && onEmployeeDashboard) {
             addMessage(WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD);
-            navigate('/student');
-            setIsLoaded(true);
+            navigate('/student').then((v) => setIsLoaded(true));
           } else {
             // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to re-run
             // and finally be handled the by the last else-statement to setIsLoaded(true)
@@ -65,15 +72,16 @@ export const useUserState = () => {
             } else {
               // The user is visiting the dashboard matching thier setting, the application is ready for rendering
               if (initialRoute && initialRoute !== '/') {
-                navigate(initialRoute);
+                navigate(initialRoute).then((v) => setIsLoaded(true));
+              } else {
+                setIsLoaded(true);
               }
-              setIsLoaded(true);
             }
           }
         }
       }
     }
-  }, [userHook.data, userHook.loading, userHook.error, initialRoute]);
+  }, [user.data, user.loading, user.error, initialRoute]);
 };
 
 export default useUserState;
