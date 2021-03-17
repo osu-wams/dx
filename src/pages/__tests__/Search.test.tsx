@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
-import { mockGAEvent, mockInitialState } from 'src/setupTests';
+import { mockInitialState } from 'src/setupTests';
 import { applicationSearchState } from 'src/state/applicationSearch';
 import { resourceState } from 'src/state';
 import { Resources } from '@osu-wams/hooks';
