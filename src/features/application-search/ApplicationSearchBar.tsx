@@ -14,6 +14,7 @@ import { SearchWrapper } from 'src/ui/SearchBar';
 import { useNavigate, useMatch } from '@reach/router';
 import Icon from 'src/ui/Icon';
 import { Mobile } from 'src/util/useMediaQuery';
+import { StyledBtn } from 'src/ui/CustomBtn';
 
 const HeaderSearchWrapper = styled.div`
   display: flex;
@@ -171,14 +172,17 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
       />
       <Mobile>
         <SearchFilter>
-          <Icon
-            icon={faFilter}
-            color={themeContext.ui.search.icon.color}
-            onClick={(e) => {
-              setShowMobileFilter((v) => !v);
-            }}
-            fontSize={themeFontSize[24]}
-          />
+          <StyledBtn>
+            <Icon
+              data-testid="search-filter"
+              icon={faFilter}
+              color={themeContext.ui.search.icon.color}
+              onClick={(e) => {
+                setShowMobileFilter((v) => !v);
+              }}
+              fontSize={themeFontSize[24]}
+            />
+          </StyledBtn>
         </SearchFilter>
       </Mobile>
     </HeaderSearchWrapper>

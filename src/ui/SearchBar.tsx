@@ -5,6 +5,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import Icon from 'src/ui/Icon';
 import { breakpoints, fontSize } from 'src/theme';
 import Input from 'src/ui/Input';
+import { StyledBtn } from './CustomBtn';
 
 interface IFontSize {
   fontSize?: string;
@@ -32,13 +33,6 @@ const FilterInput = styled(Input)<IFontSize>`
   padding: 1.6rem;
   font-size: ${(props) => (props.fontSize ? props.fontSize : fontSize[24])};
   border-color: ${({ theme }) => theme.ui.search.input.border.color};
-`;
-
-const StyledBtn = styled.button`
-  border: 0;
-  background: none;
-  /* iOS adds large paddings around buttons, we are reducing it */
-  padding: 0 0.4rem 0.4rem;
 `;
 
 const SearchBarButton = ({ fontSize, ...props }) => {

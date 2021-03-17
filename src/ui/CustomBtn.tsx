@@ -43,7 +43,7 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
   );
 };
 
-const StyledBtn = styled.button`
+export const StyledBtn = styled.button`
   border: 0;
   background: none;
   /* iOS adds large paddings around buttons, we are reducing it */
