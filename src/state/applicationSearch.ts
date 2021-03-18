@@ -61,17 +61,37 @@ export const applicationCampusFilterState = atom<FilterState[]>({
   default: [],
 });
 
+export const selectedTypeFilters = selector<string[]>({
+  key: 'selectedTypeFilters',
+  get: ({ get }) => {
+    const typesFilter = get(applicationTypeFilterState);
+    return typesFilter.filter((t) => t.type && t.checked).map((t) => t.type!);
+  },
+});
+
+export const selectedAudienceFilters = selector<string[]>({
+  key: 'selectedAudienceFilters',
+  get: ({ get }) => {
+    const audienceFilter = get(applicationAudienceFilterState);
+    return audienceFilter.filter((a) => a.audience && a.checked).map((a) => a.audience!);
+  },
+});
+
+export const selectedCampusFilters = selector<string[]>({
+  key: 'selectedCampusFilters',
+  get: ({ get }) => {
+    const campusFilter = get(applicationCampusFilterState);
+    return campusFilter.filter((c) => c.campus && c.checked).map((c) => c.campus!);
+  },
+});
+
 export const filteredApplicationSearchState = selector<Fuse.FuseResult<SearchItem>[]>({
   key: 'filteredApplicationSearchState',
   get: ({ get }) => {
     const query = get(applicationSearchState);
-    const typesFilter = get(applicationTypeFilterState);
-    const audienceFilter = get(applicationAudienceFilterState);
-    const campusesFilter = get(applicationCampusFilterState);
-
-    const selectedTypes = typesFilter.map((t) => t.type);
-    const selectedAudience = audienceFilter.map((a) => a.audience).filter(Boolean);
-    const selectedCampuses = campusesFilter.map((c) => c.campus).filter(Boolean);
+    const selectedTypes = get(selectedTypeFilters);
+    const selectedAudience = get(selectedAudienceFilters);
+    const selectedCampuses = get(selectedCampusFilters);
 
     if (!query) {
       return [];
