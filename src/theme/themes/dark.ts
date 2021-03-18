@@ -661,6 +661,7 @@ export const dark: ThemeConfiguration = {
       },
       icon: {
         color: neutral400,
+        selectedColor: primary,
       },
       filter: {
         apply: {

@@ -660,6 +660,7 @@ export const light: ThemeConfiguration = {
       },
       icon: {
         color: neutral550,
+        selectedColor: primary,
       },
       filter: {
         apply: {

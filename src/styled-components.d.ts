@@ -628,6 +628,7 @@ declare module 'styled-components/macro' {
         };
         icon: {
           color: string;
+          selectedColor: string;
         };
         filter: {
           apply: {
