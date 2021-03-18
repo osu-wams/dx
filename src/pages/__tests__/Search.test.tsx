@@ -2,7 +2,11 @@ import React from 'react';
 import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import { mockInitialState } from 'src/setupTests';
-import { applicationSearchState } from 'src/state/applicationSearch';
+import {
+  applicationSearchState,
+  applicationTypeFilterState,
+  selectedTypeFilters,
+} from 'src/state/applicationSearch';
 import { resourceState } from 'src/state';
 import { Resources } from '@osu-wams/hooks';
 import Search from '../Search';
@@ -74,6 +78,55 @@ describe('<Search/>', () => {
     it('renders a search page with results found', async () => {
       render(<Search />, { initialStates: mockInitialState() });
       expect(await screen.findByText(/Bend Testo Success Center/)).toBeInTheDocument();
+      expect(await screen.findByText(/OSU Search Results/)).toBeInTheDocument();
+    });
+
+    it('renders a search page with results filtered out by 1 filter', async () => {
+      render(<Search />, {
+        initialStates: [
+          ...mockInitialState(),
+          {
+            state: applicationTypeFilterState,
+            value: [
+              {
+                checked: true,
+                label: 'Events',
+                name: 'events',
+                type: 'Event',
+              },
+            ],
+          },
+        ],
+      });
+      expect(screen.queryByText(/Bend Testo Success Center/)).not.toBeInTheDocument();
+      expect(await screen.findByText(/with 1 filter set/)).toBeInTheDocument();
+      expect(await screen.findByText(/OSU Search Results/)).toBeInTheDocument();
+    });
+    it('renders a search page with results filtered out by more than 1 filter', async () => {
+      render(<Search />, {
+        initialStates: [
+          ...mockInitialState(),
+          {
+            state: applicationTypeFilterState,
+            value: [
+              {
+                checked: true,
+                label: 'Events',
+                name: 'events',
+                type: 'Event',
+              },
+              {
+                checked: true,
+                label: 'Announcements',
+                name: 'announcements',
+                type: 'Annoucement',
+              },
+            ],
+          },
+        ],
+      });
+      expect(screen.queryByText(/Bend Testo Success Center/)).not.toBeInTheDocument();
+      expect(await screen.findByText(/with 2 filters set/)).toBeInTheDocument();
       expect(await screen.findByText(/OSU Search Results/)).toBeInTheDocument();
     });
   });
