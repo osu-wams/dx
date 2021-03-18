@@ -67,12 +67,14 @@ const Loading = (props) => {
   }
 };
 
+/* istanbul ignore next */
 const EmployeeRouter = Loadable({
   loader: () => import('./routers/Employee'),
   loading: Loading,
   delay: 200,
 }) as React.FunctionComponent<RouteComponentProps> & LoadableComponent;
 
+/* istanbul ignore next */
 const StudentRouter = Loadable({
   loader: () => import('./routers/Student'),
   loading: Loading,
@@ -113,6 +115,7 @@ const App = (props: AppProps) => {
     // Manage focus styles on keyboard navigable elements.
     //   - Add focus styles if tab used to navigate.
     //   - Start listening for clicks to remove focus styles.
+    /* istanbul ignore next */
     const handleTabOnce = (e) => {
       if (e.key === 'Tab') {
         document.body.classList.add('user-is-tabbing');
@@ -123,6 +126,7 @@ const App = (props: AppProps) => {
 
     //   - Remove focus styles if mouse used to navigate.
     //   - Start listening for keydown to add focus styles.
+    /* istanbul ignore next */
     const handleMouseDownOnce = () => {
       document.body.classList.remove('user-is-tabbing');
       window.removeEventListener('mousedown', handleMouseDownOnce);

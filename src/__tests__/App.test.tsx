@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { navigate } from '@reach/router';
-import { screen, waitFor } from '@testing-library/react';
-import { alterMock, mockEmployeeUser, render } from 'src/util/test-utils';
+import { waitFor } from '@testing-library/react';
+import { mockEmployeeUser, mockStudentEmployeeUser, render } from 'src/util/test-utils';
 import { LocationProvider, createHistory, createMemorySource } from '@reach/router';
 import App from '../App';
 import { RecoilRoot } from 'recoil';
@@ -81,10 +80,52 @@ it('navigates to root and redirects to student (default user) dashboard', async 
   expect(mockNavigate).toBeCalledWith('/student');
 });
 
-it('navigates to root and redirects to student (default user) dashboard with warning', async () => {
+it('visiting employee dashboard redirects to student (default user) dashboard with warning', async () => {
   window.location.pathname = '/employee';
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
   render(<App containerElement={div} />);
   expect(mockNavigate).toBeCalledWith('/student');
+});
+
+it('employee (previously on employee dashboard) visiting student dashboard changes the dashboard context', async () => {
+  window.location.pathname = '/student';
+  mockNavigate.mockResolvedValue(true);
+  mockPostSettings.mockResolvedValue(true);
+  const div = document.createElement('div');
+  render(<App containerElement={div} />, {
+    user: mockEmployeeUser,
+  });
+  expect(mockPostSettings).toBeCalledWith({ primaryAffiliationOverride: 'student' });
+  await waitFor(() => {
+    expect(mockNavigate).toBeCalledWith('/student');
+  });
+});
+
+it('student employee (previously on student dashboard) visiting employee dashboard changes the dashboard context', async () => {
+  window.location.pathname = '/employee';
+  mockNavigate.mockResolvedValue(true);
+  mockPostSettings.mockResolvedValue(true);
+  const div = document.createElement('div');
+  render(<App containerElement={div} />, {
+    user: mockStudentEmployeeUser,
+  });
+  expect(mockPostSettings).toBeCalledWith({ primaryAffiliationOverride: 'employee' });
+  await waitFor(() => {
+    expect(mockNavigate).toBeCalledWith('/employee');
+  });
+});
+
+it('student employee visiting student dashboard', async () => {
+  window.location.pathname = '/student';
+  mockNavigate.mockResolvedValue(true);
+  mockPostSettings.mockResolvedValue(true);
+  const div = document.createElement('div');
+  render(<App containerElement={div} />, {
+    user: mockStudentEmployeeUser,
+  });
+  expect(mockPostSettings).not.toBeCalled();
+  await waitFor(() => {
+    expect(mockNavigate).toBeCalledWith('/student');
+  });
 });
