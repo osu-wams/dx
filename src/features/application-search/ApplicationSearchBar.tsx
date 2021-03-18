@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { faFilter } from '@fortawesome/pro-light-svg-icons';
+import { faFilter as solidFaFilter } from '@fortawesome/pro-solid-svg-icons';
 import { breakpoints, spacing, fontSize as themeFontSize, borderRadius } from 'src/theme';
 import { SearchBar } from 'src/ui/SearchBar';
 import { Event } from 'src/util/gaTracking';
@@ -9,6 +10,9 @@ import {
   applicationSearchMobileFilterState,
   applicationSearchState,
   filteredApplicationSearchState,
+  selectedTypeFilters,
+  selectedAudienceFilters,
+  selectedCampusFilters,
 } from 'src/state/applicationSearch';
 import { SearchWrapper } from 'src/ui/SearchBar';
 import { useNavigate, useMatch } from '@reach/router';
@@ -76,6 +80,9 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   const [search, setSearch] = useRecoilState(applicationSearchState);
   const setShowMobileFilter = useSetRecoilState(applicationSearchMobileFilterState);
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
+  const selectedTypes = useRecoilValue(selectedTypeFilters);
+  const selectedAudiences = useRecoilValue(selectedAudienceFilters);
+  const selectedCampuses = useRecoilValue(selectedCampusFilters);
   const [onSearchPage, setOnSearchPage] = useState(false);
   const [input, setInput] = useState('');
   const navigatedToSearch = useMatch('/search');
@@ -157,6 +164,7 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
     setInput(newValue);
   };
 
+  const filterCount = selectedAudiences.length + selectedCampuses.length + selectedTypes.length;
   return (
     <HeaderSearchWrapper>
       <SearchBar
@@ -175,8 +183,12 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
           <StyledBtn>
             <Icon
               data-testid="search-filter"
-              icon={faFilter}
-              color={themeContext.ui.search.icon.color}
+              color={
+                filterCount
+                  ? themeContext.ui.search.icon.selectedColor
+                  : themeContext.ui.search.icon.color
+              }
+              icon={filterCount ? solidFaFilter : faFilter}
               onClick={(e) => {
                 setShowMobileFilter((v) => !v);
               }}

@@ -14,6 +14,9 @@ import SearchResultListItem from 'src/ui/ApplicationSearch/SearchResultListItem'
 import {
   applicationSearchState,
   filteredApplicationSearchState,
+  selectedTypeFilters,
+  selectedAudienceFilters,
+  selectedCampusFilters,
 } from 'src/state/applicationSearch';
 import { useRecoilValue } from 'recoil';
 import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
@@ -22,21 +25,38 @@ import { Desktop, Mobile } from 'src/hooks/useMediaQuery';
 import { FiltersMobile } from 'src/features/application-search/FiltersMobile';
 import emptySearch from 'src/assets/empty-search.svg';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
+import { singularPlural } from 'src/util/helpers';
 
 const EmptyStateStyle = styled(EmptyState)({
   padding: `0 0 ${spacing.default} 0`,
 });
 
-const EmptySearchState = (query?: string) => (
-  <EmptyStateStyle>
-    <EmptyStateImage src={emptySearch} alt="Search Icon" />
-    {query ? (
-      <EmptyStateText>{`Your search for "${query}" did not return any results from within MyOregonState. See the results from an OSU web search below for possible matches.`}</EmptyStateText>
-    ) : (
-      <EmptyStateText>Perform a search using the search box at the top of the page.</EmptyStateText>
-    )}
-  </EmptyStateStyle>
-);
+const EmptySearchState = ({
+  query,
+  selectedTypes,
+  selectedAudiences,
+  selectedCampuses,
+}: {
+  query?: string;
+  selectedTypes: string[];
+  selectedAudiences: string[];
+  selectedCampuses: string[];
+}) => {
+  const count = selectedTypes.length + selectedAudiences.length + selectedCampuses.length;
+  const filtersSet = count ? `, with ${count} ${singularPlural(count, 'filter')} set,` : '';
+  return (
+    <EmptyStateStyle>
+      <EmptyStateImage src={emptySearch} alt="Search Icon" />
+      {query ? (
+        <EmptyStateText>{`Your search for "${query}"${filtersSet} did not return any results from within MyOregonState. See the results from an OSU web search below for possible matches.`}</EmptyStateText>
+      ) : (
+        <EmptyStateText>
+          Perform a search using the search box at the top of the page.
+        </EmptyStateText>
+      )}
+    </EmptyStateStyle>
+  );
+};
 
 const Search = () => {
   useAnnouncementsState(ANNOUNCEMENT_PAGES.academics);
@@ -44,6 +64,9 @@ const Search = () => {
   useAnnouncementsState(ANNOUNCEMENT_PAGES.finances);
   const filteredItems = useRecoilValue(filteredApplicationSearchState);
   const query = useRecoilValue(applicationSearchState);
+  const selectedTypes = useRecoilValue(selectedTypeFilters);
+  const selectedAudiences = useRecoilValue(selectedAudienceFilters);
+  const selectedCampuses = useRecoilValue(selectedCampusFilters);
 
   return (
     <MainGridWrapper data-testid="search-page">
@@ -60,7 +83,8 @@ const Search = () => {
               filteredItems.map((i) => (
                 <SearchResultListItem key={`${i.item.type}-${i.item.id}`} searchResult={i} />
               ))}
-            {(filteredItems.length === 0 || !query) && EmptySearchState(query)}
+            {(filteredItems.length === 0 || !query) &&
+              EmptySearchState({ query, selectedAudiences, selectedCampuses, selectedTypes })}
             <GoogleSearchResults />
           </div>
           <div className="col-3">
@@ -78,7 +102,8 @@ const Search = () => {
           filteredItems.map((i) => (
             <SearchResultListItem key={`${i.item.type}-${i.item.id}`} searchResult={i} />
           ))}
-        {(filteredItems.length === 0 || !query) && EmptySearchState(query)}
+        {(filteredItems.length === 0 || !query) &&
+          EmptySearchState({ query, selectedAudiences, selectedCampuses, selectedTypes })}
         <People />
         <Places />
         <GoogleSearchResults />
