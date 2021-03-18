@@ -101,6 +101,7 @@ const App = (props: AppProps) => {
   useEffect(() => {
     if (isLoaded) {
       containerElementRef.current.style.opacity = '1';
+      setInitialRoute('');
     }
   }, [isLoaded]);
 
