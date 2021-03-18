@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { mockEmployeeUser, mockStudentEmployeeUser, render } from 'src/util/test-utils';
 import { LocationProvider, createHistory, createMemorySource } from '@reach/router';
 import App from '../App';
@@ -86,6 +86,9 @@ it('visiting employee dashboard redirects to student (default user) dashboard wi
   const div = document.createElement('div');
   render(<App containerElement={div} />);
   expect(mockNavigate).toBeCalledWith('/student');
+  expect(
+    await screen.findByText(/You do not have permission to access this page/)
+  ).toBeInTheDocument();
 });
 
 it('employee (previously on employee dashboard) visiting student dashboard changes the dashboard context', async () => {
