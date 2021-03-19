@@ -29,6 +29,7 @@ import {
   useInfoButtonsState,
   usePlannerItemsState,
   useResourcesState,
+  useTrainingsState,
   useUserState,
 } from 'src/hooks';
 import { initialRouteState, isLoadedState } from './state/application';
@@ -94,6 +95,7 @@ const App = (props: AppProps) => {
   useResourcesState();
   useCardsState();
   useInfoButtonsState();
+  useTrainingsState();
 
   /* eslint-disable react-hooks/exhaustive-deps  */
 

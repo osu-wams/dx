@@ -11,6 +11,7 @@ import * as useMediaQuery from './useMediaQuery';
 import usePlannerItemsState from './usePlannerItemsState';
 import useResetScroll from './useResetScroll';
 import useResourcesState from './useResourcesState';
+import useTrainingsState from './useTrainingsState';
 import useUserState from './useUserState';
 
 export {
@@ -27,5 +28,6 @@ export {
   usePlannerItemsState,
   useResetScroll,
   useResourcesState,
+  useTrainingsState,
   useUserState,
 };
