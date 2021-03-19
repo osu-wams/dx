@@ -7,7 +7,7 @@ import { Checkbox } from '@material-ui/core';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import getMUITheme from 'src/ui/MUITheme';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   applicationTypeFilterState,
   applicationAudienceFilterState,
@@ -18,6 +18,7 @@ import { themeState } from 'src/state';
 import { spacing } from 'src/theme/theme-settings';
 import { userState } from 'src/state';
 import { User } from '@osu-wams/hooks';
+import { isEmployeeState } from 'src/state/application';
 
 const FieldsetList = styled.div`
   > fieldset:last-child {
@@ -37,10 +38,11 @@ const StyledFieldset = styled(Fieldset)`
 export const FilterByType = () => {
   const user = useRecoilValue(userState);
   const theme = useRecoilValue(themeState);
-  const [types, setTypes] = useRecoilState(applicationTypeFilterState);
-  const [audiences, setAudiences] = useRecoilState(applicationAudienceFilterState);
-  const [campuses, setCampuses] = useRecoilState(applicationCampusFilterState);
+  const setTypes = useSetRecoilState(applicationTypeFilterState);
+  const setAudiences = useSetRecoilState(applicationAudienceFilterState);
+  const setCampuses = useSetRecoilState(applicationCampusFilterState);
   const [state, setState] = useRecoilState(applicationFilterState);
+  const isEmployee = useRecoilValue(isEmployeeState);
 
   useEffect(() => {
     setAudiences([state.students, state.employees].filter((a) => a.checked));
@@ -83,10 +85,7 @@ export const FilterByType = () => {
               state.notifications,
               state.trainings,
             ]
-              .filter(
-                ({ hiddenFrom }) =>
-                  !hiddenFrom || !User.hasPrimaryAffiliation(user.data, hiddenFrom)
-              )
+              .filter(({ employeeOnly }) => !employeeOnly || (isEmployee && employeeOnly))
               .map(({ checked, name, label }, index) => {
                 return (
                   <FormControlLabel
@@ -98,40 +97,30 @@ export const FilterByType = () => {
               })}
           </FormGroup>
         </StyledFieldset>
-        {!User.hasPrimaryAffiliation(user.data, ['student']) && (
+        {isEmployee && (
           <StyledFieldset>
             <Legend>Audience</Legend>
             <FormGroup>
-              {[state.students, state.employees]
-                .filter(
-                  ({ hiddenFrom }) =>
-                    !hiddenFrom || !User.hasPrimaryAffiliation(user.data, hiddenFrom)
-                )
-                .map(({ checked, name, label }, index) => (
-                  <FormControlLabel
-                    key={`audience-${index}`}
-                    control={<Checkbox checked={checked} onChange={handleChange} name={name} />}
-                    label={label}
-                  />
-                ))}
+              {[state.students, state.employees].map(({ checked, name, label }, index) => (
+                <FormControlLabel
+                  key={`audience-${index}`}
+                  control={<Checkbox checked={checked} onChange={handleChange} name={name} />}
+                  label={label}
+                />
+              ))}
             </FormGroup>
           </StyledFieldset>
         )}
         <StyledFieldset>
           <Legend>Campus</Legend>
           <FormGroup>
-            {[state.corvallis, state.bend, state.ecampus]
-              .filter(
-                ({ hiddenFrom }) =>
-                  !hiddenFrom || !User.hasPrimaryAffiliation(user.data, hiddenFrom)
-              )
-              .map(({ checked, name, label }, index) => (
-                <FormControlLabel
-                  key={`campus-${index}`}
-                  control={<Checkbox checked={checked} onChange={handleChange} name={name} />}
-                  label={label}
-                />
-              ))}
+            {[state.corvallis, state.bend, state.ecampus].map(({ checked, name, label }, index) => (
+              <FormControlLabel
+                key={`campus-${index}`}
+                control={<Checkbox checked={checked} onChange={handleChange} name={name} />}
+                label={label}
+              />
+            ))}
           </FormGroup>
         </StyledFieldset>
       </FieldsetList>
