@@ -12,6 +12,7 @@ import { plannerItemState } from './plannerItems';
 import { canvasUrl } from 'src/features/canvas/CanvasPlannerItems';
 import { userMessagesState } from './notifications';
 import { matchedCourseContext, plannerItemDate } from 'src/features/course-utils';
+import { isEmployeeState } from './application';
 
 export interface SearchItem {
   type: string;
@@ -149,6 +150,8 @@ const trainingSearchItems = selector<SearchItem[]>({
   key: 'trainingSearchItems',
   get: ({ get }) => {
     const trainings = get(trainingState);
+    const isEmployee = get(isEmployeeState);
+    if (!isEmployee) return [];
     return trainings.data.map((training) => ({
       type: 'Training',
       id: training.id,

@@ -9,7 +9,7 @@ export interface FilterState {
   type?: string;
   audience?: string;
   campus?: string;
-  hiddenFrom?: string[];
+  employeeOnly?: boolean;
 }
 
 // Keep my sweet formatting for readability
@@ -25,7 +25,7 @@ export const applicationFilterState = atom<{ [key: string]: FilterState }>({
     notifications:  { checked: false, label: 'Notifications',   name: 'notifications',  type: 'Notification', },
     pastCourses:    { checked: false, label: 'Past Courses',    name: 'pastCourses',    type: 'Past Course', },
     resources:      { checked: false, label: 'Resources',       name: 'resources',      type: 'Resource' },
-    trainings:      { checked: false, label: 'Trainings',       name: 'trainings',      type: 'Training', hiddenFrom: ['student'], },
+    trainings:      { checked: false, label: 'Trainings',       name: 'trainings',      type: 'Training', employeeOnly: true, },
     // Audience Filters
     employees:  { checked: false, label: 'Employees', name: 'employees',  audience: 'employee' },
     students:   { checked: false, label: 'Students',  name: 'students',   audience: 'student' },
