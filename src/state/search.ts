@@ -14,7 +14,7 @@ import { pageSearchIndexState} from './searchIndex'
 import { userMessagesState } from './notifications';
 import { matchedCourseContext, plannerItemDate } from 'src/features/course-utils';
 import { isEmployeeState, dashboardState } from './application';
-
+import { Routes } from 'src/routers/routes';
 export interface SearchItem {
   type: string;
   id: string;
@@ -169,51 +169,15 @@ const trainingSearchItems = selector<SearchItem[]>({
 });
 
 /**
- * The pageName match the names coming from Drupal
+ *
+ * @param page name of the page we want to route to
+ * @param dashboard current user dashboard (employee, student, etc.)
+ * Creates the appropriate route based on the page in the search result
  */
-const Routes = {
-  profile: {
-    pageName: "Profile",
-    path: "profile", // no prefix
-  },
-  about: {
-    pageName: "About",
-    path: "about", // no prefix
-  },
-  search: {
-    pageName: "Search",
-    path: "search", // no prefix
-  },
-  notifications: {
-    pageName: "Notifications",
-    path: "notifications", // no prefix
-  },
-  resources: {
-    pageName: "Resources",
-    path: "resources", // either student/ or /employee
-  },
-  academics: {
-    pageName: "Academics",
-    path: "academics", // student
-  },
-  pastcourses: {
-    pageName: "PastCourses",
-    path: "past-courses", // student
-  },
-  finances: {
-    pageName: "Finances", // student
-    path: "finances"
-  },
-  trainings: {
-    pageName: "Trainings", // employee
-    path: "training"
-  }
-
-}
-
 const pageToRoute = (page: string, dashboard: string ) => {
 
   let url = '/';
+  // Checks to make sure the route is present
   if (Routes[page.toLowerCase()]) {
     const {path, pageName} = Routes[page.toLowerCase()];
 
@@ -243,8 +207,6 @@ const pageToRoute = (page: string, dashboard: string ) => {
   } else {
     console.error('Problem with routes: '+ page)
   }
-
-
   return url;
 }
 

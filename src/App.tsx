@@ -15,7 +15,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
-import { RouterPage } from './routers';
+import { RouterPage, Routes } from './routers';
 import Profile from './pages/Profile';
 import About from './pages/About';
 import Search from './pages/Search';
@@ -31,7 +31,7 @@ import {
   useResourcesState,
   useTrainingsState,
   useUserState,
-  useSearchIndexState
+  useSearchIndexState,
 } from 'src/hooks';
 import { initialRouteState, isLoadedState } from './state/application';
 
@@ -165,11 +165,13 @@ const App = (props: AppProps) => {
                     <RouterPage default pageComponent={<PageNotFound />} />
                     <EmployeeRouter path="employee/*" />
                     <StudentRouter path="student/*" />
-                    <RouterPage path="profile" pageComponent={<Profile />} />
-                    <RouterPage path="about" pageComponent={<About />} />
-                    <RouterPage path="search" pageComponent={<Search />} />
-
-                    <RouterPage path="notifications" pageComponent={<Notifications />} />
+                    <RouterPage path={Routes.profile.path} pageComponent={<Profile />} />
+                    <RouterPage path={Routes.about.path} pageComponent={<About />} />
+                    <RouterPage path={Routes.search.path} pageComponent={<Search />} />
+                    <RouterPage
+                      path={Routes.notifications.path}
+                      pageComponent={<Notifications />}
+                    />
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
                       <RouterPage path="covid" pageComponent={<MobileCovid />} />
                     )}

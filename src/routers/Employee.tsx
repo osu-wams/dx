@@ -4,7 +4,7 @@ import Dashboard from '../pages/Dashboard';
 import Training from '../pages/Training';
 import Resources from '../pages/Resources';
 import { useResetScroll } from 'src/hooks/useResetScroll';
-import { RouterPage } from '.';
+import { RouterPage, Routes } from '.';
 import PageNotFound from 'src/pages/PageNotFound';
 
 export const Employee = () => {
@@ -13,8 +13,8 @@ export const Employee = () => {
     <Router basepath="/employee" key="employee-dashboard" className="router-styles">
       <RouterPage default pageComponent={<PageNotFound />} />
       <RouterPage path="/" pageComponent={<Dashboard />} />
-      <RouterPage path="resources" pageComponent={<Resources />} />
-      <RouterPage path="training" pageComponent={<Training />} />
+      <RouterPage path={Routes.resources.path} pageComponent={<Resources />} />
+      <RouterPage path={Routes.trainings.path} pageComponent={<Training />} />
     </Router>
   );
 };
