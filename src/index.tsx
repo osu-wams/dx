@@ -15,14 +15,12 @@ const { postError, IGNORED_ERRORS } = Errors;
 
 // Initialize Google Analytics
 const isDevelopment = process.env.NODE_ENV === 'development';
+const isProduction = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 const isGADebug = process.env.REACT_APP_GA_DEBUG === 'true';
 
 // Ready Education authentication flow as described in DD-1103
-if (
-  process.env.REACT_APP_EXPERIMENTAL === 'true' &&
-  window.location.pathname.endsWith('/ready-education-auth')
-) {
+if (!isProduction && window.location.pathname.endsWith('/ready-education-auth')) {
   let token = ReadyIntegration.getUserToken();
   if (token) {
     // Retain previous query string params, such as ?returnUrl=page_name
