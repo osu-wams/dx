@@ -10,9 +10,10 @@ import { gradesState } from './grades';
 import { courseState } from './courses';
 import { plannerItemState } from './plannerItems';
 import { canvasUrl } from 'src/features/canvas/CanvasPlannerItems';
+import { pageSearchIndexState} from './searchIndex'
 import { userMessagesState } from './notifications';
 import { matchedCourseContext, plannerItemDate } from 'src/features/course-utils';
-import { isEmployeeState } from './application';
+import { isEmployeeState, dashboardState } from './application';
 
 export interface SearchItem {
   type: string;
@@ -38,6 +39,7 @@ export interface SearchItem {
     notification?: Types.UserMessage;
     plannerItem?: Types.PlannerItem;
     resource?: Types.Resource;
+    pageSearchIndex?: Types.PageSearchIndex;
   };
 }
 
@@ -166,6 +168,111 @@ const trainingSearchItems = selector<SearchItem[]>({
   },
 });
 
+/**
+ * The pageName match the names coming from Drupal
+ */
+const Routes = {
+  profile: {
+    pageName: "Profile",
+    path: "profile", // no prefix
+  },
+  about: {
+    pageName: "About",
+    path: "about", // no prefix
+  },
+  search: {
+    pageName: "Search",
+    path: "search", // no prefix
+  },
+  notifications: {
+    pageName: "Notifications",
+    path: "notifications", // no prefix
+  },
+  resources: {
+    pageName: "Resources",
+    path: "resources", // either student/ or /employee
+  },
+  academics: {
+    pageName: "Academics",
+    path: "academics", // student
+  },
+  pastcourses: {
+    pageName: "PastCourses",
+    path: "past-courses", // student
+  },
+  finances: {
+    pageName: "Finances", // student
+    path: "finances"
+  },
+  trainings: {
+    pageName: "Trainings", // employee
+    path: "training"
+  }
+
+}
+
+const pageToRoute = (page: string, dashboard: string ) => {
+
+  let url = '/';
+  if (Routes[page.toLowerCase()]) {
+    const {path, pageName} = Routes[page.toLowerCase()];
+
+    switch (pageName) {
+      case Routes.profile.pageName:
+      case Routes.about.pageName:
+      case Routes.search.pageName:
+      case Routes.notifications.pageName:
+        url += path;
+        break;
+      case Routes.resources.pageName:
+        url += `${dashboard}/${path}`;
+        break;
+      case Routes.trainings.pageName:
+        url += `${User.AFFILIATIONS.employee}/${path}`;
+        break;
+      case Routes.academics.pageName:
+      case Routes.finances.pageName:
+        url += `${User.AFFILIATIONS.student}/${path}`;
+        break;
+      case Routes.pastcourses.pageName:
+        url += `${User.AFFILIATIONS.student}/${Routes.academics.path}/${path}`;
+        break;
+      default:
+        url += 'pageNotFound'
+    }
+  } else {
+    console.error('Problem with routes: '+ page)
+  }
+
+
+  return url;
+}
+
+const pageSearchIndexSearchItems = selector<SearchItem[]>({
+  key: 'pageSearchIndexSearchItems',
+  get: ({ get }) => {
+    const pageSearchIndexes = get(pageSearchIndexState);
+    const dashboard = get(dashboardState)
+    return pageSearchIndexes.data.map((pageSearchIndex) => ({
+      type: 'Page',
+      id: pageSearchIndex.id,
+      title: pageSearchIndex.page,
+      subText: { value: pageSearchIndex.description },
+      link: { to: pageToRoute(pageSearchIndex.page, dashboard.affiliation) },
+      audience: (() => {
+        if (pageSearchIndex.page === 'Training') {
+          return [User.AFFILIATIONS.employee]
+        } else {
+          return [User.AFFILIATIONS.employee, User.AFFILIATIONS.student]
+        }
+      })(),
+      attr: {
+        pageSearchIndex,
+      },
+    }));
+  },
+});
+
 const resourceSearchItems = selector<SearchItem[]>({
   key: 'resourceSearchItems',
   get: ({ get }) => {
@@ -271,6 +378,7 @@ const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
     'attr.grades.courseTitle',
     'attr.grades.gradeFinal',
     'attr.notification.content',
+    'attr.pageSearchIndex.searchTerms',
     'attr.plannerItem.context_name',
     'attr.plannerItem.context_type',
     'attr.plannerItem.plannable.title',
@@ -303,6 +411,7 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
     const courses = get(coursesSearchItems);
     const plannerItems = get(plannerItemSearchItems);
     const notifications = get(notificationSearchItems);
+    const pageSearchIndex = get(pageSearchIndexSearchItems);
     const items: SearchItem[] = [
       ...announcements,
       ...trainings,
@@ -312,6 +421,7 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
       ...courses,
       ...plannerItems,
       ...notifications,
+      ...pageSearchIndex
     ];
     return new Fuse(items, fuseOptions);
   },
@@ -322,6 +432,8 @@ export const searchIndex = selectorFamily<Fuse.FuseResult<SearchItem>[], string>
   get: (query) => ({ get }) => {
     const index = get(fuseIndex);
     const results = index.search(query);
+    console.log(results);
+    console.log(index);
     return results;
   },
 });

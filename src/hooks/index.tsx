@@ -13,6 +13,7 @@ import useResetScroll from './useResetScroll';
 import useResourcesState from './useResourcesState';
 import useTrainingsState from './useTrainingsState';
 import useUserState from './useUserState';
+import useSearchIndexState from './useSearchIndexState';
 
 export {
   useAffiliationEventsState,
@@ -30,4 +31,5 @@ export {
   useResourcesState,
   useTrainingsState,
   useUserState,
+  useSearchIndexState
 };
