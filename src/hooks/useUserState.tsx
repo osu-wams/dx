@@ -52,10 +52,9 @@ export const useUserState = () => {
         // Visiting any route that doesn't start with /student or /employee just loads the application
         if (!onStudentDashboard && !onEmployeeDashboard) {
           if (initialRoute && initialRoute !== '/') {
-            navigate(initialRoute).then((v) => setIsLoaded(true));
-          } else {
-            setIsLoaded(true);
+            setDashboard({ affiliation: userSetDashboard, navigateTo: `${pathname}${search}` });
           }
+          setIsLoaded(true);
         } else {
           // User is a student (non-employee type) visiting an employee dashboard link, redirect them to the student dashboard
           if (!User.isEmployee(data) && onEmployeeDashboard) {
