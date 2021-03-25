@@ -15,7 +15,7 @@ const { postError, IGNORED_ERRORS } = Errors;
 
 // Initialize Google Analytics
 const isDevelopment = process.env.NODE_ENV === 'development';
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.REACT_APP_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 const isGADebug = process.env.REACT_APP_GA_DEBUG === 'true';
 
