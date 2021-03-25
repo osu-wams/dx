@@ -61,6 +61,7 @@ jobs:
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
           GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          REACT_APP_ENV: development
       - name: Copy client to S3 and flush Cloudfront cache for DEVELOPMENT
         run: |
           COMMIT_LINK=https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA
