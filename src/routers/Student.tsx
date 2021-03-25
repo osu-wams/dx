@@ -12,13 +12,13 @@ import PageNotFound from 'src/pages/PageNotFound';
 export const Student = () => {
   useResetScroll();
   return (
-    <Router basepath="/student" key="student-dashboard" className="router-styles">
+    <Router basepath={Routes().student.fullPath} key="student-dashboard" className="router-styles">
       <RouterPage default pageComponent={<PageNotFound />} />
       <RouterPage path="/" pageComponent={<Dashboard />} />
-      <RouterPage path={Routes.profile.path} pageComponent={<Profile />} />
-      <RouterPage path={Routes.academics.path + '/*'} pageComponent={<Academics />} />
-      <RouterPage path={Routes.finances.path} pageComponent={<Finances />} />
-      <RouterPage path={Routes.resources.path} pageComponent={<Resources />} />
+      <RouterPage path={Routes().profile.path} pageComponent={<Profile />} />
+      <RouterPage path={Routes().academics.path + '/*'} pageComponent={<Academics />} />
+      <RouterPage path={Routes().finances.path} pageComponent={<Finances />} />
+      <RouterPage path={Routes().resources.path} pageComponent={<Resources />} />
     </Router>
   );
 };

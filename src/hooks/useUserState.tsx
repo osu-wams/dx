@@ -7,6 +7,7 @@ import { changeAffiliation } from 'src/util/user';
 import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 import { navigate } from '@reach/router';
 import { WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD } from 'src/state/messages';
+import { Routes } from 'src/routers';
 
 export const useUserState = () => {
   const userHook = useUser();
@@ -47,8 +48,8 @@ export const useUserState = () => {
       if (pathname === '/') {
         navigate(`/${userSetDashboard}`).then((v) => setIsLoaded(true));
       } else {
-        const onStudentDashboard = pathname.toLowerCase().startsWith('/student');
-        const onEmployeeDashboard = pathname.toLowerCase().startsWith('/employee');
+        const onStudentDashboard = pathname.toLowerCase().startsWith(Routes().student.fullPath);
+        const onEmployeeDashboard = pathname.toLowerCase().startsWith(Routes().employee.fullPath);
         // Visiting any route that doesn't start with /student or /employee just loads the application
         if (!onStudentDashboard && !onEmployeeDashboard) {
           if (initialRoute && initialRoute !== '/') {
@@ -59,7 +60,7 @@ export const useUserState = () => {
           // User is a student (non-employee type) visiting an employee dashboard link, redirect them to the student dashboard
           if (!User.isEmployee(data) && onEmployeeDashboard) {
             addMessage(WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD);
-            navigate('/student').then((v) => setIsLoaded(true));
+            navigate(Routes().student.fullPath).then((v) => setIsLoaded(true));
           } else {
             // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to re-run
             // and finally be handled the by the last else-statement to setIsLoaded(true)

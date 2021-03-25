@@ -14,6 +14,7 @@ import {
 } from 'src/ui/Card/variants/FeatureCard';
 import { useRecoilValue } from 'recoil';
 import { trainingState } from 'src/state';
+import { Routes } from 'src/routers';
 
 const FeaturedTrainingsCard = () => {
   const { data, isSuccess, isLoading } = useRecoilValue(trainingState);
@@ -73,7 +74,7 @@ const FeaturedTrainingsCard = () => {
       </CardContent>
       <CardFooter>
         <InternalLink
-          to="/employee/training"
+          to={Routes().trainings.fullPath}
           onClick={() => Event('training-featured', 'View more trainings')}
         >
           View more trainings

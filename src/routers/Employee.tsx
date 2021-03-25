@@ -10,11 +10,15 @@ import PageNotFound from 'src/pages/PageNotFound';
 export const Employee = () => {
   useResetScroll();
   return (
-    <Router basepath="/employee" key="employee-dashboard" className="router-styles">
+    <Router
+      basepath={Routes().employee.fullPath}
+      key="employee-dashboard"
+      className="router-styles"
+    >
       <RouterPage default pageComponent={<PageNotFound />} />
       <RouterPage path="/" pageComponent={<Dashboard />} />
-      <RouterPage path={Routes.resources.path} pageComponent={<Resources />} />
-      <RouterPage path={Routes.trainings.path} pageComponent={<Training />} />
+      <RouterPage path={Routes().resources.path} pageComponent={<Resources />} />
+      <RouterPage path={Routes().trainings.path} pageComponent={<Training />} />
     </Router>
   );
 };

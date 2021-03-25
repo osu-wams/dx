@@ -6,6 +6,7 @@ import { LocationProvider, createHistory, createMemorySource } from '@reach/rout
 import App from '../App';
 import { RecoilRoot } from 'recoil';
 import { dashboardState, initialRouteState } from 'src/state/application';
+import { Routes } from 'src/routers';
 
 const mockPostSettings = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
@@ -65,7 +66,7 @@ it('navigates to an initial route', async () => {
     initialStates: [
       {
         state: initialRouteState,
-        value: '/about',
+        value: Routes().about.fullPath,
       },
     ],
   });

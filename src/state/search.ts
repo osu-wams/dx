@@ -10,7 +10,7 @@ import { gradesState } from './grades';
 import { courseState } from './courses';
 import { plannerItemState } from './plannerItems';
 import { canvasUrl } from 'src/features/canvas/CanvasPlannerItems';
-import { pageSearchIndexState} from './searchIndex'
+import { pageSearchIndexState } from './searchIndex';
 import { userMessagesState } from './notifications';
 import { matchedCourseContext, plannerItemDate } from 'src/features/course-utils';
 import { isEmployeeState, dashboardState } from './application';
@@ -122,7 +122,9 @@ const gradesSearchItems = selector<SearchItem[]>({
         html: `${attributes.termDescription} &bull; ${attributes.gradeFinal} &bull; ${attributes.courseTitle}`,
       },
       link: {
-        to: `/student/academics/past-courses?c=${attributes.courseSubject}+${attributes.courseNumber}`,
+        to: `${Routes().pastcourses.fullPath}?c=${attributes.courseSubject}+${
+          attributes.courseNumber
+        }`,
       },
       attr: {
         grades: { ...attributes },
@@ -174,47 +176,22 @@ const trainingSearchItems = selector<SearchItem[]>({
  * @param dashboard current user dashboard (employee, student, etc.)
  * Creates the appropriate route based on the page in the search result
  */
-const pageToRoute = (page: string, dashboard: string ) => {
-
-  let url = '/';
+const pageToRoute = (page: string, dashboard?: string) => {
   // Checks to make sure the route is present
-  if (Routes[page.toLowerCase()]) {
-    const {path, pageName} = Routes[page.toLowerCase()];
-
-    switch (pageName) {
-      case Routes.profile.pageName:
-      case Routes.about.pageName:
-      case Routes.search.pageName:
-      case Routes.notifications.pageName:
-        url += path;
-        break;
-      case Routes.resources.pageName:
-        url += `${dashboard}/${path}`;
-        break;
-      case Routes.trainings.pageName:
-        url += `${User.AFFILIATIONS.employee}/${path}`;
-        break;
-      case Routes.academics.pageName:
-      case Routes.finances.pageName:
-        url += `${User.AFFILIATIONS.student}/${path}`;
-        break;
-      case Routes.pastcourses.pageName:
-        url += `${User.AFFILIATIONS.student}/${Routes.academics.path}/${path}`;
-        break;
-      default:
-        url += 'pageNotFound'
-    }
+  if (Routes(dashboard)[page.toLowerCase()]) {
+    const { fullPath } = Routes(dashboard)[page.toLowerCase()];
+    return fullPath;
   } else {
-    console.error('Problem with routes: '+ page)
+    console.error('Route pageName not defined: ' + page);
+    return '/pageNotFound';
   }
-  return url;
-}
+};
 
 const pageSearchIndexSearchItems = selector<SearchItem[]>({
   key: 'pageSearchIndexSearchItems',
   get: ({ get }) => {
     const pageSearchIndexes = get(pageSearchIndexState);
-    const dashboard = get(dashboardState)
+    const dashboard = get(dashboardState);
     return pageSearchIndexes.data.map((pageSearchIndex) => ({
       type: 'Page',
       id: pageSearchIndex.id,
@@ -223,9 +200,9 @@ const pageSearchIndexSearchItems = selector<SearchItem[]>({
       link: { to: pageToRoute(pageSearchIndex.page, dashboard.affiliation) },
       audience: (() => {
         if (pageSearchIndex.page === 'Training') {
-          return [User.AFFILIATIONS.employee]
+          return [User.AFFILIATIONS.employee];
         } else {
-          return [User.AFFILIATIONS.employee, User.AFFILIATIONS.student]
+          return [User.AFFILIATIONS.employee, User.AFFILIATIONS.student];
         }
       })(),
       attr: {
@@ -383,7 +360,7 @@ export const fuseIndex = selector<Fuse<SearchItem>>({
       ...courses,
       ...plannerItems,
       ...notifications,
-      ...pageSearchIndex
+      ...pageSearchIndex,
     ];
     return new Fuse(items, fuseOptions);
   },
@@ -394,8 +371,6 @@ export const searchIndex = selectorFamily<Fuse.FuseResult<SearchItem>[], string>
   get: (query) => ({ get }) => {
     const index = get(fuseIndex);
     const results = index.search(query);
-    console.log(results);
-    console.log(index);
     return results;
   },
 });

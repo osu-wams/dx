@@ -3,26 +3,27 @@ import { faHome, faToolbox, faUsersClass } from '@fortawesome/pro-light-svg-icon
 import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { Nav, NavLink } from './MainNavStyles';
+import { Routes, Dashboards } from 'src/routers';
 
 const MainNavEmployee = (...props) => {
   return (
     <Nav {...props}>
       <NavLink
-        to="/employee"
+        to={Routes().employee.fullPath}
         onClick={() => Event('employee-navigation-main', 'Overview link clicked')}
       >
         <Icon icon={faHome} />
         Overview
       </NavLink>
       <NavLink
-        to="employee/resources"
+        to={Routes(Dashboards.employee).employee.fullPath}
         onClick={() => Event('employee-navigation-main', 'Resources link clicked')}
       >
         <Icon icon={faToolbox} />
         Resources
       </NavLink>
       <NavLink
-        to="employee/training"
+        to={Routes().trainings.fullPath}
         onClick={() => Event('employee-navigation-main', 'Training link clicked')}
       >
         <Icon icon={faUsersClass} />

@@ -18,6 +18,7 @@ import {
 } from 'src/state';
 import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
 import { dashboardState } from 'src/state/application';
+import { Routes } from 'src/routers';
 
 const getSearchQuerystring = () => {
   if (window.location.search.startsWith('?c=')) {
@@ -46,7 +47,7 @@ const PastCourses = () => {
     if (dashboard.affiliation !== 'student' || dashboard.navigateTo.indexOf('past-courses') < 0) {
       setDashboardState({
         affiliation: 'student',
-        navigateTo: `/student/academics/past-courses${window.location.search}`,
+        navigateTo: `${Routes().pastcourses.fullPath}${window.location.search}`,
       });
     }
     return () => setQuery('');

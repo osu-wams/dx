@@ -19,6 +19,7 @@ import { filteredNotifications, userMessagesState } from 'src/state';
 import { dismissAll, markNotificationRead } from 'src/features/notifications/notifications-utils';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { RichTextContent } from '../RichText';
+import { Routes } from 'src/routers';
 
 const Date = styled.div`
   margin-top: ${spacing.xs};
@@ -82,7 +83,7 @@ const NotificationModal = ({
           <Date>Received {format(notification.deliveredAt, "MMM do 'at' h a")}</Date>
         )}
         <InternalLink
-          to={'/notifications'}
+          to={Routes().notifications.fullPath}
           onClick={() => {
             Event('notifications-menu', 'modal link: See all notifications page link');
             close();
@@ -156,7 +157,7 @@ const NotificationsMenu = () => {
             </h2>
             <MenuLink
               as={Link}
-              to="/notifications"
+              to={Routes().notifications.fullPath}
               onClick={() => {
                 Event('notifications-menu', `See all notifications page`);
               }}

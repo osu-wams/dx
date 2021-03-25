@@ -163,13 +163,13 @@ const App = (props: AppProps) => {
                 <AnimatePresence exitBeforeEnter>
                   <Router>
                     <RouterPage default pageComponent={<PageNotFound />} />
-                    <EmployeeRouter path="employee/*" />
-                    <StudentRouter path="student/*" />
-                    <RouterPage path={Routes.profile.path} pageComponent={<Profile />} />
-                    <RouterPage path={Routes.about.path} pageComponent={<About />} />
-                    <RouterPage path={Routes.search.path} pageComponent={<Search />} />
+                    <EmployeeRouter path={Routes().employee.path + '/*'} />
+                    <StudentRouter path={Routes().student.path + '/*'} />
+                    <RouterPage path={Routes().profile.path} pageComponent={<Profile />} />
+                    <RouterPage path={Routes().about.path} pageComponent={<About />} />
+                    <RouterPage path={Routes().search.path} pageComponent={<Search />} />
                     <RouterPage
-                      path={Routes.notifications.path}
+                      path={Routes().notifications.path}
                       pageComponent={<Notifications />}
                     />
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (

@@ -1,7 +1,7 @@
 import { RouteComponentProps } from '@reach/router';
-import { Routes } from './routes';
+import { Routes, Dashboards } from './routes';
 
 export const RouterPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) =>
   props.pageComponent;
 
-export { Routes };
+export { Routes, Dashboards };

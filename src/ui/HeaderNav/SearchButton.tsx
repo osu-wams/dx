@@ -6,6 +6,7 @@ import { HeaderNavButton } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import Icon from 'src/ui/Icon';
 import { useNavigate } from '@reach/router';
+import { Routes } from 'src/routers';
 
 const SearchButton = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const SearchButton = () => {
       <HeaderNavButton
         onClick={() => {
           Event('header', 'search-button', 'Search button clicked');
-          navigate('/search');
+          navigate(Routes().search.fullPath);
         }}
       >
         <Icon icon={faSearch} size="lg" />

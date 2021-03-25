@@ -19,6 +19,7 @@ import { useNavigate, useMatch } from '@reach/router';
 import Icon from 'src/ui/Icon';
 import { Mobile } from 'src/hooks/useMediaQuery';
 import { StyledBtn } from 'src/ui/CustomBtn';
+import { Routes } from 'src/routers';
 
 const HeaderSearchWrapper = styled.div`
   display: flex;
@@ -85,7 +86,7 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   const selectedCampuses = useRecoilValue(selectedCampusFilters);
   const [onSearchPage, setOnSearchPage] = useState(false);
   const [input, setInput] = useState('');
-  const navigatedToSearch = useMatch('/search');
+  const navigatedToSearch = useMatch(Routes().search.fullPath);
   const navigate = useNavigate();
 
   const resetSearch = () => {
@@ -123,7 +124,7 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
 
     // Navigate to search page then set shared state to initiate a search
     if (!onSearchPage && !navigatedToSearch && search) {
-      navigate('/search').then((_v) => setSearch(search));
+      navigate(Routes().search.fullPath).then((_v) => setSearch(search));
     }
   }, [search]);
 
@@ -145,7 +146,7 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   const searchHandler = () => {
     if (!onSearchPage && input) {
       // Navigate to search page then set shared state to initiate a search
-      navigate('/search').then((_v) => setSearch(input));
+      navigate(Routes().search.fullPath).then((_v) => setSearch(input));
     } else {
       // While on the search page, set the query causing application state to operate and
       // results to render.

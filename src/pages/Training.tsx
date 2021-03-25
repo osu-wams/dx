@@ -31,6 +31,7 @@ import TrainingsSearch from 'src/features/training/TrainingsSearch';
 import TrainingsFilters from 'src/features/training/TrainingsFilters';
 import { TrainingSubHeader } from 'src/features/training/TrainingStyles';
 import { dashboardState } from 'src/state/application';
+import { Routes } from 'src/routers';
 
 const Training = () => {
   useResetScroll();
@@ -52,7 +53,7 @@ const Training = () => {
     if (dashboard.affiliation !== 'employee' || dashboard.navigateTo.indexOf('training') < 0) {
       setDashboardState({
         affiliation: 'employee',
-        navigateTo: '/employee/training',
+        navigateTo: Routes().trainings.fullPath,
       });
     }
   }, []);

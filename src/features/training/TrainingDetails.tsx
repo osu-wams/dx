@@ -16,6 +16,7 @@ import { commaList } from 'src/util/helpers';
 import { ThemeContext } from 'styled-components/macro';
 import { useMediaQuery } from 'react-responsive';
 import { breakpoints } from 'src/theme';
+import { Routes } from 'src/routers';
 
 const TrainingDetails: React.FC<any> = ({
   training,
@@ -96,7 +97,7 @@ const TrainingDetails: React.FC<any> = ({
         {!!includeShowAll && (
           <>
             <InternalLink
-              to={'/employee/training'}
+              to={Routes().trainings.fullPath}
               onClick={() => {
                 Event('training', 'modal link: See all trainings page link');
                 close();

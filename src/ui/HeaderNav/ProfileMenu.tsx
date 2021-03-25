@@ -16,6 +16,7 @@ import { userState } from 'src/state';
 import Icon from 'src/ui/Icon';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { dashboardState } from 'src/state/application';
+import { Routes } from 'src/routers';
 
 const { AFFILIATIONS } = User;
 
@@ -104,7 +105,7 @@ const ProfileMenu = () => {
         <HeaderNavList>
           <MenuLink
             as={Link}
-            to="profile"
+            to={Routes().profile.fullPath}
             data-testid="profile-link"
             onClick={() =>
               Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
