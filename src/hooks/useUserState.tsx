@@ -23,6 +23,8 @@ export const useUserState = () => {
       const { affiliation, navigateTo } = dashboard;
       if (currentAffiliation !== affiliation) {
         changeAffiliation(affiliation, user, navigateTo);
+      } else if (navigateTo) {
+        navigate(navigateTo);
       }
     }
   }, [dashboard]);
@@ -53,7 +55,7 @@ export const useUserState = () => {
         // Visiting any route that doesn't start with /student or /employee just loads the application
         if (!onStudentDashboard && !onEmployeeDashboard) {
           if (initialRoute && initialRoute !== '/') {
-            setDashboard({ affiliation: userSetDashboard, navigateTo: `${pathname}${search}` });
+            setDashboard({ affiliation: userSetDashboard, navigateTo: initialRoute });
           }
           setIsLoaded(true);
         } else {
