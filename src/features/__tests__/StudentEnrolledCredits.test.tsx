@@ -21,7 +21,7 @@ describe('<StudentEnrolledCredits />', () => {
       },
     ]);
     render(<StudentEnrolledCredits />, { initialStates: mockInitialState() });
-    const element = await screen.findByText('21');
+    const element = await screen.findByText('22');
     expect(element).toBeInTheDocument();
   });
 
