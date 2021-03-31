@@ -8,6 +8,7 @@ const HeaderNavButton = styled(MenuButton)`
   border: none;
   cursor: pointer;
   margin-left: 6px;
+  padding: 2px 5px;
   > svg.fa-lg {
     font-size: ${fontSize[24]};
   }
