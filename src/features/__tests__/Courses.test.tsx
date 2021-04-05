@@ -24,8 +24,8 @@ describe('<Courses />', () => {
     expect(courseTitle).toBeInTheDocument();
   });
 
-  it('Finds "8" as the course count in the Badge', async () => {
-    const NumCourses = screen.getByText('8');
+  it('Finds "9" as the course count in the Badge', async () => {
+    const NumCourses = screen.getByText('9');
 
     expect(NumCourses).toBeInTheDocument();
   });
@@ -37,6 +37,7 @@ describe('<Courses />', () => {
       'CS262',
       'CS290',
       'ED408',
+      'GP100',
       'PH212',
       'PH222',
       'RL100',

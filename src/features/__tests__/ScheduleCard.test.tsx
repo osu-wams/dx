@@ -100,6 +100,14 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
     expect(screen.queryByText('View RL 100 location on map')).not.toBeInTheDocument();
   });
 
+  it('should find a course without a clickable map link because it is a group event', async () => {
+    render(<ScheduleCard />, { initialStates: mockInitialState() });
+    const courses = screen.getAllByTestId('course-list-item-header');
+    expect(courses[3]).toHaveTextContent('GP100');
+
+    expect(screen.queryByText('View GP 100 location on map')).not.toBeInTheDocument();
+  });
+
   it('should find a course but no MID term associated', async () => {
     render(<ScheduleCard />, { initialStates: mockInitialState() });
     screen.getAllByText(/PH 212/);

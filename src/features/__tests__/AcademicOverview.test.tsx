@@ -26,7 +26,7 @@ describe('<Academic Overview />', () => {
     expect(await screen.findByText('Academic Standing')).toBeInTheDocument();
     expect(await screen.findByText(/Good Standing/i)).toBeInTheDocument();
     expect(await screen.findByText(/3.1/i)).toBeInTheDocument(); // GPA
-    expect(await screen.findByText(/21/i)).toBeInTheDocument(); // Credits
+    expect(await screen.findByText(/22/i)).toBeInTheDocument(); // Credits
     expect(await screen.findByText(/bill is overdue/i)).toBeInTheDocument();
   });
 

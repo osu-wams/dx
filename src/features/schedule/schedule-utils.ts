@@ -173,7 +173,11 @@ export const courseOnCorvallisCampus = (
 
 export const meetingTimeOnCorvallisCampus = (m: Types.CourseScheduleMeetingTime): boolean => {
   if (m.campus && m.building) {
-    return m.campus.toLowerCase().includes('corvallis') && m.building.toLowerCase() !== 'rem';
+    return (
+      m.campus.toLowerCase().includes('corvallis') &&
+      m.building.toLowerCase() !== 'rem' &&
+      m.building.toLowerCase() !== 'grp'
+    );
   } else {
     return false;
   }
