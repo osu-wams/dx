@@ -25,6 +25,7 @@ import {
   faLaptop,
 } from '@fortawesome/pro-light-svg-icons';
 import { Types } from '@osu-wams/lib';
+import { format } from 'src/util/helpers';
 
 // You can get the icon for a course type (Lecture, Lab, Final exam, etc.)
 // You need the scheduleType value from the API.
@@ -98,4 +99,23 @@ export const matchedCourseContext = (
     }
   }
   return undefined;
+};
+
+/**
+ * Optionally return a formatted data for Canvas planner items depending on type
+ * @param contextType the canvas planner item context type
+ * @param date an optional date provided for the plannable item
+ */
+export const plannerItemDate = (contextType: string, date?: any) => {
+  if (!date || contextType === 'announcement') {
+    return;
+  }
+
+  if (contextType && date) {
+    if (contextType === 'calendar_event') {
+      return format(date);
+    } else {
+      return `Due ${format(date, 'dueAt')}`;
+    }
+  }
 };

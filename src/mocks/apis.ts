@@ -14,6 +14,8 @@ const train = '*/api/trainings/';
 /**
  * Student API paths
  */
+export const PLANNER_ITEMS_API = stu + 'planner-items';
+
 export const HOLDS_API = stu + 'holds';
 
 export const GPA_API = stu + 'gpa';
@@ -128,3 +130,13 @@ export const HEALTH_CHECK_API = '*/healthcheck';
  * App Version API
  */
 export const APP_VERSION_API = '*/app_version';
+
+/**
+ * People Search
+ */
+export const PEOPLE_API = '*/api/people/*';
+
+/**
+ * Locations Search
+ */
+export const LOCATIONS_API = '*/api/locations/*';

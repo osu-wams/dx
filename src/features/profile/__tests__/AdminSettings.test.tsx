@@ -8,7 +8,7 @@ import { mockGAEvent } from 'src/setupTests';
 jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
 
 const mockAddMessage = jest.fn();
-jest.mock('../../../util/useApplicationMessages.ts', () => ({
+jest.mock('../../../hooks/useApplicationMessages.tsx', () => ({
   useApplicationMessages: () => ({
     addMessage: mockAddMessage,
   }),

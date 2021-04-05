@@ -24,13 +24,11 @@ const Nav = styled.nav`
   justify-content: space-evenly;
   z-index: 10;
   @media (min-width: ${breakpoints.small}) {
-    width: auto;
-    justify-content: left;
     position: static;
+    margin-left: auto;
     box-shadow: none;
-    max-width: 1200px;
-    margin: 0 auto;
     border-top: none; /* only on mobile dark mode we currently have this border */
+    width: auto;
   }
   @media (min-width: ${breakpoints.large}) {
     padding: 0;

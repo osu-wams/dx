@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { fontSize } from 'src/theme';
+import { fontSize, spacing } from 'src/theme';
 
 export const Bubble = styled.span`
   background: ${({ theme }) => theme.ui.bubble.background};
@@ -11,4 +11,23 @@ export const Bubble = styled.span`
   margin-top: 4px;
   text-align: center;
   white-space: nowrap;
+`;
+
+export const BubbleInternalLink = styled(Bubble)`
+  background: ${({ theme }) => theme.ui.bubble.internalLink.background};
+  color: ${({ theme }) => theme.ui.bubble.internalLink.color};
+  font-size: ${fontSize[12]};
+  font-weight: bold;
+`;
+
+export const BubbleExternalLink = styled(Bubble)`
+  background: ${({ theme }) => theme.ui.bubble.externalLink.background};
+  color: ${({ theme }) => theme.ui.bubble.externalLink.color};
+  font-size: ${fontSize[12]};
+  font-weight: bold;
+  > svg {
+    margin-left: ${spacing.small};
+    font-size: ${fontSize[10]};
+    color: ${({ theme }) => theme.ui.bubble.externalLink.color};
+  }
 `;

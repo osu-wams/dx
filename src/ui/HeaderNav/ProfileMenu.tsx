@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, navigate } from '@reach/router';
+import { Link } from '@reach/router';
 import {
   faUserCircle,
   faUser,
@@ -14,10 +14,11 @@ import { User } from '@osu-wams/hooks';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { userState } from 'src/state';
 import Icon from 'src/ui/Icon';
-import { useRecoilValue } from 'recoil';
-import { changeAffiliation } from 'src/util/user';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { dashboardState } from 'src/state/application';
+import { Routes } from 'src/routers';
 
-const { postSettings, usersSettings, AFFILIATIONS } = User;
+const { AFFILIATIONS } = User;
 
 const ProfileMenu = () => {
   const user = useRecoilValue(userState);
@@ -25,6 +26,7 @@ const ProfileMenu = () => {
     user.data?.primaryAffiliationOverride ?? ''
   );
   const [studentEmployee, setStudentEmployee] = useState(false);
+  const setDashboardState = useSetRecoilState(dashboardState);
 
   useEffect(() => {
     if (user.data?.primaryAffiliationOverride) {
@@ -80,7 +82,10 @@ const ProfileMenu = () => {
         as="button"
         onClick={() => {
           Event('header', 'user-button-menu', `Switch to ${description} link clicked`);
-          changeAffiliation(affiliationOverride, user);
+          setDashboardState({
+            affiliation: affiliationOverride,
+            navigateTo: `/${affiliationOverride}`,
+          });
         }}
       >
         <Icon icon={toggleIcon} /> {description}
@@ -100,7 +105,7 @@ const ProfileMenu = () => {
         <HeaderNavList>
           <MenuLink
             as={Link}
-            to="profile"
+            to={Routes().profile.fullPath}
             data-testid="profile-link"
             onClick={() =>
               Event('header', 'user-button-menu', 'Profile link from User Button dropdown')

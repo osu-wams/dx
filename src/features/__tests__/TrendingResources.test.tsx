@@ -5,6 +5,7 @@ import { TrendingResources } from 'src/features/TrendingResources';
 import { mockGAEvent } from 'src/setupTests';
 import { Resources } from '@osu-wams/hooks';
 import { resourceState } from 'src/state';
+import { Routes } from 'src/routers';
 
 const mockInitialState = jest.fn();
 
@@ -71,7 +72,7 @@ describe('Trending Resources Card', () => {
     expect(resource).toBeInTheDocument();
     userEvent.click(resource);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
-    var el = document.querySelector('a[href="/student/resources"]');
+    var el = document.querySelector(`a[href="${Routes('student').resources.fullPath}"]`);
     if (el) {
       userEvent.click(el);
     }

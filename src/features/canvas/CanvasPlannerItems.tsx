@@ -12,10 +12,10 @@ import {
   ListItemFlex,
 } from 'src/ui/List';
 import { courseCodeOrIcon } from 'src/features/Courses';
-import { format } from 'src/util/helpers';
 import Url from 'src/util/externalUrls.data';
 import { Event } from 'src/util/gaTracking';
 import { Bubble } from 'src/ui/Bubble';
+import { plannerItemDate } from '../course-utils';
 
 /**
  * Some Canvas link include the full path including https://instructure...
@@ -48,21 +48,6 @@ const replaceUnderScore = (val: string) => {
   return val.replace('_', ' ');
 };
 
-/* Announcements from Canvas should not display a due date */
-const dateItem = (type, date) => {
-  if (!date || type === 'announcement') {
-    return;
-  }
-
-  if (type && date) {
-    if (type === 'calendar_event') {
-      return format(date);
-    } else {
-      return `Due ${format(date, 'dueAt')}`;
-    }
-  }
-};
-
 export const CanvasPlannerItems = ({
   data,
   courses,
@@ -75,7 +60,7 @@ export const CanvasPlannerItems = ({
   const PlannerText = ({ title, plannable_type, plannable_date }) => (
     <ListItemText>
       <ListItemHeader>{title}</ListItemHeader>
-      <ListItemDescription>{dateItem(plannable_type, plannable_date)}</ListItemDescription>
+      <ListItemDescription>{plannerItemDate(plannable_type, plannable_date)}</ListItemDescription>
     </ListItemText>
   );
 

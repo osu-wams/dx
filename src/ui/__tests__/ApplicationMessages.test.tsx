@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Message } from '@osu-wams/lib';
 import { messagesState } from 'src/state/messages';
-import { useApplicationMessages } from 'src/util/useApplicationMessages';
+import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 import { ApplicationMessages } from '../ApplicationMessages';
 
 jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
@@ -171,4 +171,37 @@ it('close button dismisses a visible message', async () => {
   userEvent.click(dismissButton);
   expect(screen.queryByText(title)).not.toBeInTheDocument();
   expect(screen.queryByText(body)).not.toBeInTheDocument();
+});
+
+it('close button dismisses each message on the stack one at a time', async () => {
+  const secondMockMessage = {
+    ...mockMessage,
+    id: 'second-mock-id',
+    title: 'Second mock title',
+    body: 'Second mock body',
+  };
+  render(<ApplicationMessages />, {
+    initialStates: [
+      {
+        state: messagesState,
+        value: [mockMessage, secondMockMessage],
+      },
+    ],
+  });
+
+  expect(screen.getByText(title)).toBeInTheDocument();
+  expect(screen.getByText(body)).toBeInTheDocument();
+
+  const dismissButton = screen.getByRole('button', { name: /close/i });
+  userEvent.click(dismissButton);
+  expect(screen.queryByText(title)).not.toBeInTheDocument();
+  expect(screen.queryByText(body)).not.toBeInTheDocument();
+
+  expect(screen.getByText(secondMockMessage.title)).toBeInTheDocument();
+  expect(screen.getByText(secondMockMessage.body)).toBeInTheDocument();
+
+  const secondDismissButton = screen.getByRole('button', { name: /close/i });
+  userEvent.click(secondDismissButton);
+  expect(screen.queryByText(secondMockMessage.title)).not.toBeInTheDocument();
+  expect(screen.queryByText(secondMockMessage.body)).not.toBeInTheDocument();
 });

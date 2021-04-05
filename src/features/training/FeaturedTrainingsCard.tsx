@@ -4,7 +4,6 @@ import { Types } from '@osu-wams/lib';
 import { Loading } from 'src/ui/Loading';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
 import { InternalLink } from 'src/ui/Link';
-import { useTrainings } from '@osu-wams/hooks';
 import { TrainingDetails } from './TrainingDetails';
 import { Event } from 'src/util/gaTracking';
 
@@ -13,9 +12,12 @@ import {
   FeatureCardHeader,
   FeatureCardContent,
 } from 'src/ui/Card/variants/FeatureCard';
+import { useRecoilValue } from 'recoil';
+import { trainingState } from 'src/state';
+import { Routes } from 'src/routers';
 
 const FeaturedTrainingsCard = () => {
-  const trainings = useTrainings();
+  const { data, isSuccess, isLoading } = useRecoilValue(trainingState);
   const [isOpen, setOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState(null);
   const [featuredTrainings, setFeaturedTrainings] = useState<Types.Training[]>([]);
@@ -29,23 +31,23 @@ const FeaturedTrainingsCard = () => {
   };
 
   useEffect(() => {
-    if (trainings.isSuccess && trainings.data && trainings.data.length > 0) {
+    if (isSuccess && data && data.length > 0) {
       // Just return the Featured Trainings
-      const featured = trainings.data.filter((t) => {
+      const featured = data.filter((t) => {
         return t.featured === true;
       });
 
       featured.length && setFeaturedTrainings(featured);
     }
-  }, [trainings.data, trainings.isSuccess]);
+  }, [data, isSuccess]);
 
   return (
     <Card>
       <CardHeader title="Featured Trainings" badge={<CardIcon icon={faUsersClass} />} />
       <CardContent>
-        {trainings.isLoading && <Loading lines={5} />}
+        {isLoading && <Loading lines={5} />}
 
-        {trainings.isSuccess && featuredTrainings.length > 0 ? (
+        {isSuccess && featuredTrainings.length > 0 ? (
           <>
             {featuredTrainings.map((t) => (
               <FeatureCardCompact
@@ -67,12 +69,12 @@ const FeaturedTrainingsCard = () => {
             )}
           </>
         ) : (
-          !trainings.isLoading && <div>No featured resources available</div>
+          isLoading && <div>No featured resources available</div>
         )}
       </CardContent>
       <CardFooter>
         <InternalLink
-          to="/employee/training"
+          to={Routes().trainings.fullPath}
           onClick={() => Event('training-featured', 'View more trainings')}
         >
           View more trainings

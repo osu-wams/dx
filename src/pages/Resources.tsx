@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
-import { useDebounce } from 'use-debounce';
 import { CardBase } from 'src/ui/Card';
 import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
 import ResourcesCategories from 'src/features/resources/ResourcesCategories';
@@ -10,14 +9,11 @@ import ResourcesList from 'src/features/resources/ResourcesList';
 import { useCategories, User, Resources as HooksResources } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
-import { Event } from 'src/util/gaTracking';
 import {
   userState,
-  resourceSearchState,
   resourceState,
   selectedCategoryState,
   categoryState,
-  debouncedResourceSearchState,
   filteredResourcesState,
 } from 'src/state';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -37,9 +33,6 @@ const getInitialCategory = () => {
 // Resources Page with components to filter, search and favorite resources
 const Resources = () => {
   const user = useRecoilValue(userState);
-  const query = useRecoilValue(resourceSearchState);
-  const [debouncedValue] = useDebounce(query, 250);
-  const [debouncedQuery, setDebouncedQuery] = useRecoilState(debouncedResourceSearchState);
   const filteredResources = useRecoilValue(filteredResourcesState);
   const catHook = useCategories();
   const [categories, setCategories] = useRecoilState(categoryState);
@@ -68,30 +61,6 @@ const Resources = () => {
     }
   }, [catHook.data, user.data]);
   /* eslint-enable react-hooks/exhaustive-deps */
-
-  /**
-   * When useDebounce triggers a change in debouncedValue, propagate that value
-   * to the debounced resource search term state.
-   */
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    setDebouncedQuery(debouncedValue);
-  }, [debouncedValue]);
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  useEffect(() => {
-    if (debouncedQuery) {
-      // If a query has no results, emit a GA Event to track for improving resources and synonyms
-      if (filteredResources.length === 0) {
-        Event('resource-search-failed', debouncedQuery);
-      }
-
-      // Avoids sending single characters to Google Analytics
-      if (debouncedQuery.length >= 2 && filteredResources.length > 0) {
-        Event('resource-search', debouncedQuery);
-      }
-    }
-  }, [debouncedQuery, filteredResources]);
 
   /* eslint-disable no-restricted-globals */
   /**

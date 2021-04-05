@@ -409,6 +409,14 @@ declare module 'styled-components/macro' {
       bubble: {
         background: string;
         color: string;
+        internalLink: {
+          background: string;
+          color: string;
+        };
+        externalLink: {
+          background: string;
+          color: string;
+        };
       };
       button: {
         background: string;
@@ -619,6 +627,20 @@ declare module 'styled-components/macro' {
           };
         };
         icon: {
+          color: string;
+          selectedColor: string;
+        };
+        filter: {
+          apply: {
+            background: string;
+          };
+        };
+      };
+      searchResult: {
+        title: {
+          color: string;
+        };
+        subText: {
           color: string;
         };
       };

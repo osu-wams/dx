@@ -13,8 +13,11 @@ import {
   PageContents,
   ReleaseNotes,
   InfoButtons,
+  People,
+  Locations,
 } from '@osu-wams/hooks';
 import {
+  PLANNER_ITEMS_API,
   HOLDS_API,
   INFO_BUTTON_API,
   GPA_API,
@@ -52,7 +55,10 @@ import {
   APP_VERSION_API,
   USER_API,
   GRADES_API,
+  PEOPLE_API,
+  LOCATIONS_API,
 } from './apis';
+import { authUser } from 'src/util/test-utils';
 
 const mockHolds = Student.Holds.mockHolds.data;
 const mockAcademicStatus = Student.AcademicStatus.mockAcademicStatus.data;
@@ -84,6 +90,9 @@ const mockStatus = Status.mockStatus.statusData;
 const mockCards = Cards.mockCards.cardsArray;
 const mockPageContent = PageContents.mockPageContents.pageContentData;
 const mockReleaseNotes = ReleaseNotes.mockReleaseNotes.releaseNotesData;
+const mockPeople = People.mockPeople;
+const mockLocations = Locations.mockLocations;
+const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 
 // Mock API Data for our Endpoints
 export const handlers = [
@@ -118,6 +127,10 @@ export const handlers = [
 
   rest.get(HOLDS_API, async (req, res, ctx) => {
     return res(ctx.json(mockHolds));
+  }),
+
+  rest.get(PLANNER_ITEMS_API, async (req, res, ctx) => {
+    return res(ctx.json(mockPlannerItems.data));
   }),
 
   rest.get(ACCOUNT_TRANSACTION_API, async (req, res, ctx) => {
@@ -200,7 +213,7 @@ export const handlers = [
 
   // User
   rest.get(USER_API, async (req, res, ctx) => {
-    return res(ctx.json(mockUser));
+    return res(ctx.json(authUser));
   }),
 
   rest.get(USER_MESSAGES_API, async (req, res, ctx) => {
@@ -264,5 +277,15 @@ export const handlers = [
   // App Version
   rest.get(APP_VERSION_API, async (req, res, ctx) => {
     return res(ctx.body('client-test-123'));
+  }),
+
+  // People Search
+  rest.get(PEOPLE_API, async (req, res, ctx) => {
+    return res(ctx.json(mockPeople.data));
+  }),
+
+  // Locations Search
+  rest.get(LOCATIONS_API, async (req, res, ctx) => {
+    return res(ctx.json(mockLocations.data));
   }),
 ];

@@ -1,14 +1,24 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { render } from 'src/util/test-utils';
+import { mockEmployeeUser, render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
 import { mockGAEvent } from 'src/setupTests';
+import { trainingState } from 'src/state';
+import { Trainings } from '@osu-wams/hooks';
 
 describe('<FeaturedTrainingsCard />', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
-    render(<FeaturedTrainingsCard />);
+    render(<FeaturedTrainingsCard />, {
+      user: mockEmployeeUser,
+      initialStates: [
+        {
+          state: trainingState,
+          value: Trainings.mockTrainings,
+        },
+      ],
+    });
   });
 
   describe('Main components', () => {

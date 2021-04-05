@@ -15,8 +15,10 @@ export const useResetScroll = () => {
 
   React.useLayoutEffect(() => {
     // @ts-ignore type unknown
-    if (!state?.scrolled) {
+    if (state && !state?.scrolled) {
       updateState();
     }
   }, [state, updateState]);
 };
+
+export default useResetScroll;

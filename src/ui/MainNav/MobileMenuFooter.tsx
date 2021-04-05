@@ -4,6 +4,7 @@ import Icon from '../Icon';
 import { MobileFooter, MobileFooterLink } from './MainNavStyles';
 import { Event } from 'src/util/gaTracking';
 import Url from 'src/util/externalUrls.data';
+import { Routes } from 'src/routers';
 
 const MobileMenuFooter = ({ toggleFullMenu, ...props }) => {
   return (
@@ -31,7 +32,7 @@ const MobileMenuFooter = ({ toggleFullMenu, ...props }) => {
         Feedback
       </MobileFooterLink>
       <MobileFooterLink
-        to="about"
+        to={Routes().about.fullPath}
         onClick={() => {
           toggleFullMenu(false);
           Event('footer-menu-nav', 'About link clicked');

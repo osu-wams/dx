@@ -10,19 +10,27 @@ import MyDialog, {
   MyDialogImage,
 } from 'src/ui/MyDialog';
 import { Event } from 'src/util/gaTracking';
-import { ExternalLink } from 'src/ui/Link';
+import { ExternalLink, InternalLink, LinkDivider } from 'src/ui/Link';
 import { TwoCol } from 'src/ui/Grids';
 import { commaList } from 'src/util/helpers';
+import { ThemeContext } from 'styled-components/macro';
+import { useMediaQuery } from 'react-responsive';
+import { breakpoints } from 'src/theme';
+import { Routes } from 'src/routers';
 
 const TrainingDetails: React.FC<any> = ({
   training,
   isOpen,
   toggleTraining,
+  includeShowAll,
 }: {
   training: Types.Training;
   isOpen: boolean;
   toggleTraining: any;
+  includeShowAll?: boolean;
 }) => {
+  const themeContext = React.useContext(ThemeContext);
+  const isSmallMobile = useMediaQuery({ maxWidth: parseInt(breakpoints.xs, 10) });
   const empty = 'Not available';
 
   // Images are flush with the top of the DialogHeader
@@ -31,6 +39,7 @@ const TrainingDetails: React.FC<any> = ({
 
   return (
     <MyDialog
+      data-testid="training-modal"
       padding="false"
       isOpen={isOpen}
       onDismiss={() => toggleTraining()}
@@ -85,6 +94,22 @@ const TrainingDetails: React.FC<any> = ({
         </TwoCol>
       </MyDialogContent>
       <MyDialogFooter>
+        {!!includeShowAll && (
+          <>
+            <InternalLink
+              to={Routes().trainings.fullPath}
+              onClick={() => {
+                Event('training', 'modal link: See all trainings page link');
+                close();
+              }}
+              fg={themeContext.ui.link.icon.internal.color}
+              hideIcon={!isSmallMobile}
+            >
+              See all trainings
+            </InternalLink>
+            {!isSmallMobile && <LinkDivider />}
+          </>
+        )}
         {training.websiteUri ? (
           <ExternalLink
             href={training.websiteUri}

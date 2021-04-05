@@ -14,6 +14,8 @@ export const breakpoints = {
   small: '768px',
   medium: '992px',
   large: '1200px',
+  headerSearch: '1500px',
+  xl: '1800px',
 };
 
 export const mq = {
@@ -47,6 +49,7 @@ export const borderRadius = {
 };
 
 export const fontSize = {
+  '10': '1rem',
   '12': '1.2rem',
   '14': '1.4rem',
   '15': '1.5rem',

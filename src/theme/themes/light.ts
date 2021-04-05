@@ -441,6 +441,14 @@ export const light: ThemeConfiguration = {
     bubble: {
       background: Color['neutral-200'],
       color: Color['neutral-800'],
+      internalLink: {
+        background: Color['roguewave-100'],
+        color: Color['roguewave-500'],
+      },
+      externalLink: {
+        background: Color['luminance-100'],
+        color: Color['luminance-700'],
+      },
     },
     button: {
       background: primary,
@@ -652,7 +660,19 @@ export const light: ThemeConfiguration = {
       },
       icon: {
         color: neutral550,
+        selectedColor: primary,
       },
+      filter: {
+        apply: {
+          background: Color['orange-400'],
+        },
+      },
+    },
+    searchResult: {
+      title: {
+        color: neutral700,
+      },
+      subText: { color: neutral550 },
     },
     skeleton: {
       color: neutral300,

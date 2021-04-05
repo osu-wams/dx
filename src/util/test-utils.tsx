@@ -1,11 +1,11 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { LocationProvider } from '@reach/router';
+import { createHistory, createMemorySource, LocationProvider } from '@reach/router';
 import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/lib';
-import { mobile, desktop } from 'src/util/useMediaQuery';
+import { mobile, desktop } from 'src/hooks/useMediaQuery';
 import { RecoilRoot } from 'recoil';
 import { userState } from 'src/state';
 import { rest } from 'msw';
@@ -13,10 +13,10 @@ import { server } from 'src/mocks/server';
 import { HelmetProvider } from 'react-helmet-async';
 
 // Helper method to change the mock responses by MSW
-export const alterMock = (api: string, mock: any) => {
+export const alterMock = (api: string, mock: any, status: number = 200) => {
   server.use(
     rest.get('*' + api, async (req, res, ctx) => {
-      return res(ctx.json(mock));
+      return res(ctx.status(status), ctx.json(mock));
     })
   );
 };
@@ -103,7 +103,14 @@ const renderWithAppContext = (ui, { initialStates = new Array(), ...options } = 
 
 const renderWithAllContexts = (
   ui,
-  { user = authUser, isDesktop = false, initialStates = new Array(), ...options } = {}
+  {
+    user = authUser,
+    isDesktop = false,
+    initialStates = new Array(),
+    route = '/',
+    history = createHistory(createMemorySource(route)),
+    ...options
+  } = {}
 ) => {
   const Wrapper = (props) => {
     return (
@@ -113,7 +120,7 @@ const renderWithAllContexts = (
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
-        <LocationProvider>
+        <LocationProvider history={history}>
           <HelmetProvider>
             <ThemeProvider theme={themesLookup[defaultTheme]}>
               <ResponsiveContext.Provider
@@ -126,7 +133,7 @@ const renderWithAllContexts = (
       </RecoilRoot>
     );
   };
-  return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
+  return { ...testingLibraryRender(ui, { wrapper: Wrapper, ...options }), history };
 };
 
 const render = renderWithAllContexts;

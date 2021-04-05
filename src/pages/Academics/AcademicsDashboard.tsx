@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { faGraduationCap } from '@fortawesome/pro-light-svg-icons';
 import Courses from 'src/features/Courses';
 import AnnouncementContainer from 'src/ui/AnnouncementContainer';
@@ -11,14 +11,27 @@ import ResourcesCard from 'src/features/ResourcesCard';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { AcademicProgram } from 'src/features/AcademicProgram';
 import { filteredCards } from 'src/state';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
-import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
 import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
+import { dashboardState } from 'src/state/application';
+import { Routes, Dashboards } from 'src/routers';
 
 const AcademicsDashboard = () => {
   const cards = useRecoilValue(filteredCards('Academics'));
-  useCourseScheduleState();
+  const [dashboard, setDashboardState] = useRecoilState(dashboardState);
+
+  useEffect(() => {
+    if (
+      dashboard.affiliation !== Dashboards.student ||
+      dashboard.navigateTo.indexOf(Routes().academics.path) < 0
+    ) {
+      setDashboardState({
+        affiliation: Dashboards.student,
+        navigateTo: Routes().academics.fullPath,
+      });
+    }
+  }, []);
 
   return (
     <>

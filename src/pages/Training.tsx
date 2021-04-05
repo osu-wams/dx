@@ -3,7 +3,7 @@ import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
 import { MainGridWrapper, MainGrid } from 'src/theme';
-import { useTrainings, useTrainingAudiences, useTrainingTags } from '@osu-wams/hooks';
+import { useTrainingAudiences, useTrainingTags } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { Event } from 'src/util/gaTracking';
@@ -16,7 +16,7 @@ import {
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
 import { singularPlural } from 'src/util/helpers';
 import placeholderImage from 'src/assets/training-placeholder.png';
-import { useResetScroll } from 'src/util/useResetScroll';
+import { useResetScroll } from 'src/hooks/useResetScroll';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   trainingState,
@@ -30,6 +30,8 @@ import {
 import TrainingsSearch from 'src/features/training/TrainingsSearch';
 import TrainingsFilters from 'src/features/training/TrainingsFilters';
 import { TrainingSubHeader } from 'src/features/training/TrainingStyles';
+import { dashboardState } from 'src/state/application';
+import { Routes } from 'src/routers';
 
 const Training = () => {
   useResetScroll();
@@ -44,8 +46,17 @@ const Training = () => {
   const setTrainingTags = useSetRecoilState(trainingTagState);
   const trainingAudiences = useTrainingAudiences();
   const setTrainingAudiences = useSetRecoilState(trainingAudienceState);
-  const trainings = useTrainings();
-  const [trainingsState, setTrainings] = useRecoilState(trainingState);
+  const [dashboard, setDashboardState] = useRecoilState(dashboardState);
+  const trainings = useRecoilValue(trainingState);
+
+  useEffect(() => {
+    if (dashboard.affiliation !== 'employee' || dashboard.navigateTo.indexOf('training') < 0) {
+      setDashboardState({
+        affiliation: 'employee',
+        navigateTo: Routes().trainings.fullPath,
+      });
+    }
+  }, []);
 
   // Hides or shows course details
   const toggleTraining = (t?) => {
@@ -54,18 +65,6 @@ const Training = () => {
       setSelectedTraining(t);
     }
   };
-
-  useEffect(() => {
-    // Only reset trainingState when the hook has returned new data that isn't already set
-    if (trainings.isSuccess && trainings.data && trainings.data !== trainingsState.data) {
-      setTrainings({
-        data: trainings.data,
-        isLoading: trainings.isLoading,
-        isSuccess: trainings.isSuccess,
-        isError: trainings.isError,
-      });
-    }
-  }, [trainings.data, trainings.isSuccess]);
 
   useEffect(() => {
     if (trainingTags.isSuccess && trainingTags.data) {

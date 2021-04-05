@@ -7,6 +7,7 @@ import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import Icon from 'src/ui/Icon';
 import { Link } from '@reach/router';
+import { Routes } from 'src/routers';
 
 const HelpMenu = () => {
   return (
@@ -21,7 +22,7 @@ const HelpMenu = () => {
         <HeaderNavList>
           <MenuLink
             as={Link}
-            to="about"
+            to={Routes().about.fullPath}
             onClick={() => Event('header', 'help-button-menu', 'About MyOregonState link clicked')}
           >
             <Icon icon={faInfoCircle} />

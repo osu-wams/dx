@@ -1,8 +1,15 @@
 import React from 'react';
-import { faHome, faGraduationCap, faHandsUsd, faList } from '@fortawesome/pro-light-svg-icons';
+import {
+  faHome,
+  faGraduationCap,
+  faHandsUsd,
+  faList,
+  faSearch,
+} from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { MobileMainNav, MobileNavLink } from './MainNavStyles';
+import { Routes, Dashboards } from 'src/routers';
 
 const MobileMenuStudents = ({ toggleFullMenu, ...props }) => {
   // Simplify closing of modal and adding the GA event data
@@ -13,19 +20,26 @@ const MobileMenuStudents = ({ toggleFullMenu, ...props }) => {
 
   return (
     <MobileMainNav {...props}>
-      <MobileNavLink to="/student" onClick={() => ClickEvents('Overview')}>
+      <MobileNavLink to={Routes().student.fullPath} onClick={() => ClickEvents('Overview')}>
         <Icon icon={faHome} />
         Overview
       </MobileNavLink>
-      <MobileNavLink to="student/academics" onClick={() => ClickEvents('Academics')}>
+      <MobileNavLink to={Routes().academics.fullPath} onClick={() => ClickEvents('Academics')}>
         <Icon icon={faGraduationCap} />
         Academics
       </MobileNavLink>
-      <MobileNavLink to="student/finances" onClick={() => ClickEvents('Finances')}>
+      <MobileNavLink to={Routes().finances.fullPath} onClick={() => ClickEvents('Finances')}>
         <Icon icon={faHandsUsd} />
         Finances
       </MobileNavLink>
-      <MobileNavLink to="student/resources" onClick={() => ClickEvents('Resources')}>
+      <MobileNavLink to={Routes().search.fullPath} onClick={() => ClickEvents('Search')}>
+        <Icon icon={faSearch} />
+        Search
+      </MobileNavLink>
+      <MobileNavLink
+        to={Routes(Dashboards.student).academics.fullPath}
+        onClick={() => ClickEvents('Resources')}
+      >
         <Icon icon={faList} />
         Resources
       </MobileNavLink>

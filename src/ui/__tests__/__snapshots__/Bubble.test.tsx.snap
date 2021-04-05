@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders default bubble 1`] = `
+.c0 {
+  background: #E9E5E4;
+  border-radius: 4px;
+  color: #2E2B2A;
+  font-size: 1.2rem;
+  padding: 2px 4px;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  margin-top: 4px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+<div>
+  <span
+    class="c0"
+  >
+    Bubble text here
+  </span>
+</div>
+`;
+
+exports[`Renders external link bubble 1`] = `
+.c0 {
+  background: #E9E5E4;
+  border-radius: 4px;
+  color: #2E2B2A;
+  font-size: 1.2rem;
+  padding: 2px 4px;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  margin-top: 4px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.c1 {
+  background: #FFF2D5;
+  color: #915513;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.c1 > svg {
+  margin-left: 4px;
+  font-size: 1rem;
+  color: #915513;
+}
+
+<div>
+  <span
+    class="c0 c1"
+  >
+    Bubble external link text here
+  </span>
+</div>
+`;
+
+exports[`Renders internal link bubble 1`] = `
+.c0 {
+  background: #E9E5E4;
+  border-radius: 4px;
+  color: #2E2B2A;
+  font-size: 1.2rem;
+  padding: 2px 4px;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  margin-top: 4px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.c1 {
+  background: #ECF5F6;
+  color: #007082;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+<div>
+  <span
+    class="c0 c1"
+  >
+    Bubble internal link text here
+  </span>
+</div>
+`;

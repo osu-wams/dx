@@ -4,27 +4,28 @@ import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
-import { Mobile, Desktop } from 'src/util/useMediaQuery';
+import { Mobile, Desktop } from 'src/hooks/useMediaQuery';
+import { Routes, Dashboards } from 'src/routers';
 
 const MainNavStudent = (...props) => {
   return (
     <Nav {...props}>
       <NavLink
-        to="/student"
+        to={Routes().student.fullPath}
         onClick={() => Event('student-navigation-main', 'Overview link clicked')}
       >
         <Icon icon={faHome} />
         Overview
       </NavLink>
       <NavLink
-        to="student/academics"
+        to={Routes().academics.fullPath}
         onClick={() => Event('student-navigation-main', 'Academics link clicked')}
       >
         <Icon icon={faGraduationCap} />
         Academics
       </NavLink>
       <NavLink
-        to="student/finances"
+        to={Routes().finances.fullPath}
         onClick={() => Event('student-navigation-main', 'Finances link clicked')}
       >
         <Icon icon={faHandsUsd} />
@@ -46,7 +47,7 @@ const DesktopLinks = () => {
   return (
     <>
       <NavLink
-        to="student/resources"
+        to={Routes(Dashboards.student).resources.fullPath}
         onClick={() => Event('student-navigation-main', 'Resource link clicked')}
       >
         <Icon icon={faList} />

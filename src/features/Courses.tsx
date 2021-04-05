@@ -23,6 +23,7 @@ import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { Types } from '@osu-wams/lib';
 import { useRecoilValue } from 'recoil';
 import { courseState } from 'src/state';
+import { Routes } from 'src/routers';
 
 /**
  * Get the course item lead text or the icon
@@ -111,7 +112,7 @@ const Courses = () => {
 
   const NoCoursesFooterLink = () => (
     <InternalLink
-      to="/student/academics/past-courses"
+      to={Routes().pastcourses.fullPath}
       onClick={() => Event('courses', 'Empty state card footer link to Past Courses clicked')}
     >
       See past courses and grades

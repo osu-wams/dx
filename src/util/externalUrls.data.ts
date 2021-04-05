@@ -1,4 +1,11 @@
 const Url = {
+  osuMap: {
+    main: 'http://map.oregonstate.edu',
+  },
+  osuDirectory: {
+    main: 'http://directory.oregonstate.edu/?type=search&cn=',
+    person: 'http://directory.oregonstate.edu/?type=showfull&osuUid=',
+  },
   myDegrees: {
     main: 'https://mydegrees.oregonstate.edu:7447/dashboard/',
   },

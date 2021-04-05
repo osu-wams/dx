@@ -2,7 +2,7 @@ import { User as UserHooks } from '@osu-wams/hooks';
 import { User, Types } from '@osu-wams/lib';
 import { navigate } from '@reach/router';
 
-export const changeAffiliation = (affiliationType: string, user: Types.UserState) => {
+export const changeAffiliation = (affiliationType: string, user: Types.UserState, to: string) => {
   const settings = User.usersSettings(user.data);
   settings.primaryAffiliationOverride = affiliationType;
 
@@ -12,7 +12,7 @@ export const changeAffiliation = (affiliationType: string, user: Types.UserState
       // setter on the user object rather than the `setUser` on the
       // recoil state itself.
       user.setUser!((prevUser) => ({ ...prevUser, data: { ...prevUser.data, ...settings } }));
-      navigate(`/${affiliationType}`);
+      navigate(to);
     }
   );
 };

@@ -442,6 +442,14 @@ export const dark: ThemeConfiguration = {
     bubble: {
       background: Color['neutral-550'],
       color: Color.white,
+      internalLink: {
+        background: Color['roguewave-100'],
+        color: Color['roguewave-500'],
+      },
+      externalLink: {
+        background: Color['luminance-100'],
+        color: Color['luminance-700'],
+      },
     },
     button: {
       background: primary,
@@ -653,7 +661,19 @@ export const dark: ThemeConfiguration = {
       },
       icon: {
         color: neutral400,
+        selectedColor: primary,
       },
+      filter: {
+        apply: {
+          background: Color['pine-300'],
+        },
+      },
+    },
+    searchResult: {
+      title: {
+        color: neutral700,
+      },
+      subText: { color: neutral550 },
     },
     skeleton: {
       color: Color['neutral-800'],

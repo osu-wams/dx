@@ -41,11 +41,22 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     flex-direction: column;
   }
+  [data-reach-dialog-overlay] {
+    z-index: 100;
+  }
   @media screen and (max-width: 767px) {
     [data-reach-dialog-overlay] {
       background: ${({ theme }) => theme.ui.myDialog.background} !important;
-      z-index: 11;
     }
+  }
+  @media screen and (min-width: 768px) {
+    [data-reach-menu] {
+      z-index: 10;
+    }
+  }
+  .gsc-selected-option-container {
+    /* default is 90% and causes a weird wrapping effect */
+    max-width: 100% !important;
   }
 `;
 

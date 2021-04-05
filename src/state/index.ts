@@ -16,6 +16,7 @@ import { dynamicCardState, filteredCards } from './dynamicCards';
 import { filteredNotifications, userMessagesState } from './notifications';
 import { plannerItemState } from './plannerItems';
 import { announcementState } from './announcements';
+import { pageSearchIndexState } from './searchIndex';
 import {
   debouncedResourceSearchState,
   filteredResourcesState,
@@ -61,5 +62,6 @@ export {
   trainingTagState,
   userState,
   userMessagesState,
+  pageSearchIndexState,
   announcementState,
 };

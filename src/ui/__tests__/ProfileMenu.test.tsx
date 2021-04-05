@@ -5,21 +5,8 @@ import { ProfileMenu } from '../HeaderNav/ProfileMenu';
 import { mockGAEvent } from 'src/setupTests';
 import { act, screen } from '@testing-library/react';
 
-const mockPostSettings = jest.fn(async (args) => Promise.resolve(args));
-jest.mock('@osu-wams/hooks', () => {
-  const original = jest.requireActual('@osu-wams/hooks');
-  return {
-    ...original,
-    User: {
-      ...original.User,
-      postSettings: (args) => mockPostSettings(args),
-    },
-  };
-});
-
 it('Employees can toggle between Student and Employee dashboards', async () => {
   act(() => {
-    mockPostSettings.mockReturnValue(Promise.resolve());
     render(<ProfileMenu />, {
       user: mockEmployeeUser,
     });
@@ -31,8 +18,6 @@ it('Employees can toggle between Student and Employee dashboards', async () => {
   await act(async () => {
     userEvent.click(studentDashboard);
   });
-  expect(mockPostSettings).toHaveBeenCalledTimes(1);
-  expect(mockPostSettings).toHaveBeenCalledWith({ primaryAffiliationOverride: 'student' });
 });
 
 it('has a logout link in the menu', async () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styled from 'styled-components/macro';
-import { Link } from '@reach/router';
+import { LocationProvider, Link } from '@reach/router';
 import { Event } from 'src/util/gaTracking';
 import logo from 'src/assets/osu-logo.svg';
 import ecampusLogo from 'src/assets/osu-ecampus.svg';
@@ -19,6 +19,8 @@ import { Types } from '@osu-wams/lib';
 import { arrayIncludes } from 'src/util/helpers';
 import { userState, themeState } from 'src/state';
 import { useRecoilValue } from 'recoil';
+import { Desktop } from 'src/hooks/useMediaQuery';
+import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
 
 const { usersCampus, CAMPUS_CODES } = User;
 
@@ -31,7 +33,6 @@ const HeaderWrapper = styled.div`
   padding: ${spacing.medium} ${spacing.medium} ${spacing.unit * 1.5}px;
   align-items: center;
   @media (min-width: ${breakpoints.small}) {
-    display: block;
     height: 100px;
   }
 `;
@@ -46,22 +47,21 @@ const Navigation = styled.div`
   }
 `;
 
+const NavHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  max-width: ${breakpoints.large};
+  margin: 0 auto;
+`;
+
 const SiteTitle = styled.header`
   display: none;
   @media (min-width: ${breakpoints.small}) {
     display: block;
-    font-size: ${fontSize[20]};
-    font-weight: 300;
-    margin: 0 auto;
-    text-align: center;
+    font-size: ${fontSize[18]};
+    font-weight: 500;
     max-width: ${breakpoints.large};
-    margin-top: 20px;
-  }
-  @media (min-width: ${breakpoints.medium}) {
-    font-size: ${fontSize[26]};
-  }
-  @media (min-width: 1750px) {
-    text-align: left;
   }
 `;
 
@@ -70,9 +70,6 @@ const Logo = styled.img`
   height: 60px;
   @media (min-width: ${breakpoints.small}) {
     height: 80px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
   }
 `;
 
@@ -119,18 +116,23 @@ const Header = () => {
   const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
 
   return (
-    <>
+    <LocationProvider>
       <HeaderWrapper>
         <Link to={dashboardLink} onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
           <Logo data-testid="app-header-logo" src={image} alt={alt} />
         </Link>
-        <SiteTitle>{title}</SiteTitle>
+        <Desktop>
+          <ApplicationSearchBar />
+        </Desktop>
         <HeaderNav />
       </HeaderWrapper>
       <Navigation>
-        <MainNav />
+        <NavHeaderWrapper>
+          <SiteTitle>{title}</SiteTitle>
+          <MainNav />
+        </NavHeaderWrapper>
       </Navigation>
-    </>
+    </LocationProvider>
   );
 };
 

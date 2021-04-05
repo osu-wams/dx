@@ -9,19 +9,49 @@ import { singularPlural, titleCase } from 'src/util/helpers';
 import { Event } from 'src/util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { SearchBar } from 'src/ui/SearchBar';
-import useGradesState from 'src/hooks/useGradesState';
-import { useRecoilValue } from 'recoil';
-import { debouncedGradesSearchState, filteredGradesState, gradesSearchState } from 'src/state';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import {
+  debouncedGradesSearchState,
+  filteredGradesState,
+  gradesSearchState,
+  gradesState,
+} from 'src/state';
 import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
+import { dashboardState } from 'src/state/application';
+import { Routes } from 'src/routers';
+
+const getSearchQuerystring = () => {
+  if (window.location.search.startsWith('?c=')) {
+    const parts = window.location.search.split('=');
+    if (parts.length === 2) {
+      return decodeURI(parts[1]).replace(/\+/g, ' ');
+    }
+  }
+};
 
 const PastCourses = () => {
-  const { grades } = useGradesState();
+  const [dashboard, setDashboardState] = useRecoilState(dashboardState);
+  const grades = useRecoilValue(gradesState);
   const { debouncedQuery, query, setQuery } = useDebouncedSearchState({
     searchState: gradesSearchState,
     debouncedSearchState: debouncedGradesSearchState,
     timeout: 250,
   });
   const filteredGrades = useRecoilValue(filteredGradesState);
+
+  useEffect(() => {
+    const query = getSearchQuerystring();
+    if (query) {
+      setQuery(query);
+    }
+    if (dashboard.affiliation !== 'student' || dashboard.navigateTo.indexOf('past-courses') < 0) {
+      setDashboardState({
+        affiliation: 'student',
+        navigateTo: `${Routes().pastcourses.fullPath}${window.location.search}`,
+      });
+    }
+    return () => setQuery('');
+  }, []);
 
   useEffect(() => {
     if (debouncedQuery) {

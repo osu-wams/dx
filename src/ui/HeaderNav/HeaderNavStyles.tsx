@@ -8,6 +8,7 @@ const HeaderNavButton = styled(MenuButton)`
   border: none;
   cursor: pointer;
   margin-left: 6px;
+  padding: 2px 5px;
   > svg.fa-lg {
     font-size: ${fontSize[24]};
   }
@@ -20,11 +21,7 @@ const HeaderNavButton = styled(MenuButton)`
 `;
 
 const HeaderNavWrapper = styled.div`
-  @media (min-width: ${breakpoints.small}) {
-    position: absolute;
-    top: 35px;
-    right: 10px;
-  }
+  width: auto;
 `;
 
 const HeaderNavList = styled(MenuList)`
