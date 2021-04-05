@@ -112,7 +112,7 @@ const Courses = () => {
 
   const NoCoursesFooterLink = () => (
     <InternalLink
-      to={Routes().pastcourses.fullPath}
+      to={Routes()['past courses'].fullPath}
       onClick={() => Event('courses', 'Empty state card footer link to Past Courses clicked')}
     >
       See past courses and grades
