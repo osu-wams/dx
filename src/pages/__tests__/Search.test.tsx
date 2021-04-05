@@ -7,8 +7,9 @@ import {
   applicationTypeFilterState,
   selectedTypeFilters,
 } from 'src/state/applicationSearch';
-import { resourceState } from 'src/state';
-import { Resources } from '@osu-wams/hooks';
+import { pageSearchIndexState, resourceState } from 'src/state';
+import userEvent from '@testing-library/user-event';
+import { Resources, SearchIndex } from '@osu-wams/hooks';
 import Search from '../Search';
 
 const notFoundSearchTerm = 'bobross';
@@ -73,8 +74,30 @@ describe('<Search/>', () => {
             isError: false,
           },
         },
+        {
+          state: pageSearchIndexState,
+          value: {
+            data: SearchIndex.mockPageSearchIndex.pageSearchIndexData,
+            isLoading: false,
+            isSuccess: false,
+            isError: false,
+          },
+        },
       ]);
     });
+    it('renders a search page with the About page as a result', async () => {
+      render(<Search />, { initialStates: mockInitialState() });
+      const searchBar = screen.getByTestId('applicationSearch');
+
+      // Search input value changed to "noResults"
+      await userEvent.type(searchBar, 'noResults{enter}');
+      expect(screen.queryByText(/About page description/)).not.toBeInTheDocument();
+      userEvent.clear(searchBar);
+
+      await userEvent.type(searchBar, 'About{enter}');
+      expect(await screen.findByText(/About page description/)).toBeInTheDocument();
+    });
+
     it('renders a search page with results found', async () => {
       render(<Search />, { initialStates: mockInitialState() });
       expect(await screen.findByText(/Bend Testo Success Center/)).toBeInTheDocument();
