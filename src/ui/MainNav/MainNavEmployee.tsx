@@ -16,7 +16,7 @@ const MainNavEmployee = (...props) => {
         Overview
       </NavLink>
       <NavLink
-        to={Routes(Dashboards.employee).employee.fullPath}
+        to={Routes(Dashboards.employee).resources.fullPath}
         onClick={() => Event('employee-navigation-main', 'Resources link clicked')}
       >
         <Icon icon={faToolbox} />

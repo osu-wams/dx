@@ -10,7 +10,7 @@ const AcademicSubNav = () => {
       <SubNavLink to={Routes().academics.fullPath}>
         <Icon icon={faThLarge} /> Dashboard
       </SubNavLink>
-      <SubNavLink to={Routes().pastcourses.fullPath}>
+      <SubNavLink to={Routes()['past courses'].fullPath}>
         <Icon icon={faClock} />
         Past Courses
       </SubNavLink>

@@ -12,7 +12,7 @@ const Academics = () => {
   return (
     <Router className="router-styles">
       <RouterPage pageComponent={<AcademicsDashboard />} path="/" />
-      <RouterPage pageComponent={<PastCourses />} path={Routes().pastcourses.path} />
+      <RouterPage pageComponent={<PastCourses />} path={Routes()['past courses'].path} />
       <RouterPage default pageComponent={<PageNotFound />} />
     </Router>
   );

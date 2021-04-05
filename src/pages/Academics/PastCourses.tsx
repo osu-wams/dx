@@ -47,7 +47,7 @@ const PastCourses = () => {
     if (dashboard.affiliation !== 'student' || dashboard.navigateTo.indexOf('past-courses') < 0) {
       setDashboardState({
         affiliation: 'student',
-        navigateTo: `${Routes().pastcourses.fullPath}${window.location.search}`,
+        navigateTo: `${Routes()['past courses'].fullPath}${window.location.search}`,
       });
     }
     return () => setQuery('');

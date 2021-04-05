@@ -122,7 +122,7 @@ const gradesSearchItems = selector<SearchItem[]>({
         html: `${attributes.termDescription} &bull; ${attributes.gradeFinal} &bull; ${attributes.courseTitle}`,
       },
       link: {
-        to: `${Routes().pastcourses.fullPath}?c=${attributes.courseSubject}+${
+        to: `${Routes()['past courses'].fullPath}?c=${attributes.courseSubject}+${
           attributes.courseNumber
         }`,
       },

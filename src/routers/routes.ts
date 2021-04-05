@@ -53,8 +53,8 @@ const Routes = (dashboard?: string) => ({
     path: ACA, // student
     fullPath: makePath(ACA, STU),
   },
-  pastcourses: {
-    pageName: 'PastCourses',
+  'past courses': {
+    pageName: 'Past Courses',
     path: PAST, // student
     fullPath: makePath(`${ACA}/${PAST}`, STU),
   },
