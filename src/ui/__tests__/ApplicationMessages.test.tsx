@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Message } from '@osu-wams/lib';
+import { Message, Types } from '@osu-wams/lib';
 import { messagesState } from 'src/state/messages';
 import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 import { ApplicationMessages } from '../ApplicationMessages';
@@ -10,6 +10,17 @@ import { ApplicationMessages } from '../ApplicationMessages';
 jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
 
 const newMessage = jest.fn();
+const mockPostAppMessageError = jest.fn();
+jest.mock('@osu-wams/hooks', () => {
+  const original = jest.requireActual('@osu-wams/hooks');
+  return {
+    ...original,
+    Errors: {
+      ...original.Errors,
+      postAppMessageError: (o: Types.Message) => mockPostAppMessageError(o),
+    },
+  };
+});
 
 // Simple Component to test Adding a message
 const TestComponent = () => {
@@ -157,6 +168,7 @@ it('adds and displays a new message', async () => {
   userEvent.click(screen.getByText(/Add/i));
   expect(await screen.findByText(title)).toBeInTheDocument();
   expect(await screen.findByText(body)).toBeInTheDocument();
+  expect(mockPostAppMessageError).toHaveBeenCalledWith(mockMessage);
 });
 
 it('close button dismisses a visible message', async () => {
