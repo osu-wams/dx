@@ -161,14 +161,13 @@ it('does not render if visibility is false', async () => {
 });
 
 it('adds and displays a new message', async () => {
-  newMessage.mockReturnValueOnce({
-    ...mockMessage,
-  });
+  const errorApplicationMessage = { ...mockMessage, type: 'error' };
+  newMessage.mockReturnValueOnce({ ...errorApplicationMessage });
   render(<TestComponent />);
   userEvent.click(screen.getByText(/Add/i));
   expect(await screen.findByText(title)).toBeInTheDocument();
   expect(await screen.findByText(body)).toBeInTheDocument();
-  expect(mockPostAppMessageError).toHaveBeenCalledWith(mockMessage);
+  expect(mockPostAppMessageError).toHaveBeenCalledWith(errorApplicationMessage);
 });
 
 it('close button dismisses a visible message', async () => {
