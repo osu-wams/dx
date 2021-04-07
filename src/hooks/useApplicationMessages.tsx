@@ -2,6 +2,7 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { messagesState, showMessage } from 'src/state/messages';
 import { Types } from '@osu-wams/lib';
 import nanoid from 'nanoid';
+import { Errors } from '@osu-wams/hooks';
 
 export const useApplicationMessages = () => {
   const setMessages = useSetRecoilState(messagesState);
@@ -36,10 +37,12 @@ export const useApplicationMessages = () => {
   /**
    * Update messagesState to include a new visible message with a unique ID, this causes
    * the showMessage selector to return this message as being visible.
-   * TODO: Consider conditionally (error only?) serializing the message and posting to the server for logging/analysis
    * @param message the message to add to the top of the stack
    */
   const addMessage = (message: Types.Message) => {
+    if (message.type !== 'success' && message.type !== 'info') {
+      Errors.postAppMessageError(message);
+    }
     setMessages((messages) => [
       {
         ...message,

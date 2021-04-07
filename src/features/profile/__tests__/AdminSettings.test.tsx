@@ -16,6 +16,7 @@ jest.mock('../../../hooks/useApplicationMessages.tsx', () => ({
 
 const mockPostSettings = jest.fn();
 const mockApiCache = jest.fn();
+const mockPostAppMessageError = jest.fn();
 jest.mock('@osu-wams/hooks', () => {
   const original = jest.requireActual('@osu-wams/hooks');
   return {
@@ -27,6 +28,10 @@ jest.mock('@osu-wams/hooks', () => {
     Admin: {
       ...original.Admin,
       getResetApiCache: () => mockApiCache(),
+    },
+    Errors: {
+      ...original.Errors,
+      postAppMessageError: () => mockPostAppMessageError(),
     },
   };
 });
@@ -76,6 +81,7 @@ describe('<AdminSettings />', () => {
         type: 'success',
         visible: true,
       });
+      expect(mockPostAppMessageError).not.toHaveBeenCalled();
     });
   });
 });
