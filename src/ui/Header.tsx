@@ -12,17 +12,36 @@ import cascadesLogoDark from 'src/assets/osu-cascades-dark.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { HeaderNav } from './HeaderNav';
-import { breakpoints, fontSize, spacing } from 'src/theme';
+import { breakpoints, Color, fontSize, spacing } from 'src/theme';
 import { User } from '@osu-wams/hooks';
 import { User as UserUtil } from '@osu-wams/lib';
 import { Types } from '@osu-wams/lib';
-import { arrayIncludes } from 'src/util/helpers';
+import { arrayIncludes, titleCase } from 'src/util/helpers';
 import { userState, themeState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { Desktop } from 'src/hooks/useMediaQuery';
 import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
+import Icon from './Icon';
+import { faMask } from '@fortawesome/pro-light-svg-icons';
 
 const { usersCampus, CAMPUS_CODES } = User;
+
+const MasqueradeBanner = styled.div`
+  display: flex;
+  width: 100%;
+  height: auto;
+  background-color: ${Color['roguewave-400']};
+  color: ${Color.white};
+  font-weight: 200;
+  font-size: ${fontSize['14']};
+  flex-flow: row;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  > svg {
+    margin-left: ${spacing.medium};
+  }
+`;
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -117,6 +136,13 @@ const Header = () => {
 
   return (
     <LocationProvider>
+      {user.data.isMasquerade && (
+        <MasqueradeBanner data-testid="masquerade-banner">
+          Masqueraded as{' '}
+          {titleCase(user.data.primaryAffiliation ?? user.data.primaryAffiliationOverride)}
+          <Icon icon={faMask} color={Color.white} />
+        </MasqueradeBanner>
+      )}
       <HeaderWrapper>
         <Link to={dashboardLink} onClick={() => Event('header', 'Logo Clicked', `type: ${alt}`)}>
           <Logo data-testid="app-header-logo" src={image} alt={alt} />
