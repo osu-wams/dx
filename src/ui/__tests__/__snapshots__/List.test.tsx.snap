@@ -79,6 +79,12 @@ exports[`An icon on the right 1`] = `
   padding-left: 1.5rem;
 }
 
+.c2 div + svg {
+  font-size: 14px;
+  width: 14px !important;
+  margin-top: -10px;
+}
+
 .c6 {
   color: #7B746F;
   font-size: 1.4rem;
@@ -208,6 +214,12 @@ exports[`Default style with icon on left 1`] = `
   padding-left: 1.5rem;
 }
 
+.c2 div + svg {
+  font-size: 14px;
+  width: 14px !important;
+  margin-top: -10px;
+}
+
 .c7 {
   color: #7B746F;
   font-size: 1.4rem;
@@ -334,6 +346,12 @@ exports[`Icon on both left and right 1`] = `
 .c2 svg + .c4,
 .c2 img + .c4 {
   padding-left: 1.5rem;
+}
+
+.c2 div + svg {
+  font-size: 14px;
+  width: 14px !important;
+  margin-top: -10px;
 }
 
 .c7 {

@@ -72,6 +72,11 @@ const ListItemContent = styled.div<SpacedList>`
       padding-left: 1.5rem;
     }
   }
+  div + svg {
+    font-size: 14px;
+    width: 14px !important;
+    margin-top: -10px;
+  }
   text-decoration: none;
 `;
 

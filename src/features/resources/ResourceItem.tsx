@@ -83,8 +83,10 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
         var result = data.find((system) => system.name === resource.itSystem);
         // if resource HAS an IT system and its status isn't 1, alert user
         // if (resource.itSystem && result && result[0].status !== 1) {
-        // CHANGE THIS LATER!
+
         if (resource.itSystem && result !== undefined && result.status === 1) {
+          //if (resource.itSystem) {
+          // use this version for testing; first need to add stuff into mock data so that we can test clicking on Box
           setItSystemError(true);
         }
         // update date checked time
@@ -116,14 +118,13 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
           {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
           <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
           {itSystemError && (
-            <>
-              <Icon
-                fontSize={fontSize[24]}
-                icon={faExclamationCircleSolid}
-                color={themeContext.features.itStatus.item.icon.partialOutage}
-                style={{ display: 'inline-block', paddingLeft: '5px', float: 'left' }}
-              />{' '}
-            </>
+            <Icon
+              fontSize={fontSize[18]}
+              icon={faExclamationCircleSolid}
+              color={themeContext.features.itStatus.item.icon.partialOutage}
+              style={{ marginLeft: '5px', fontSize: '18px!important' }}
+              data-testid="warning-icon"
+            />
           )}
         </ListItemResourceLink>
 
