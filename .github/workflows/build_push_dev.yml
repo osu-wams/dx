@@ -24,7 +24,7 @@ jobs:
         env:
           CI: true
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
-          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -33,9 +33,9 @@ jobs:
         if: matrix.node-version == '14.x'
         env:
           CI: true
-          FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
-          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          FONTAWESOME_TOKEN: not-actually-used-but-necessary-here
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          GITHUB_NPM_TOKEN: not-actually-used-but-necessary-here
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
         env:
           CI: true
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
-          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           REACT_APP_ENV: development
       - name: Copy client to S3 and flush Cloudfront cache for DEVELOPMENT
@@ -75,7 +75,7 @@ jobs:
           curl -d "${POST_DATA}" -H "Content-Type: application/json" -X POST ${{ secrets.TEAMS_WAMS_CICD_HOOK_URL }}
         env:
           FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
-          GITHUB_NPM_TOKEN: ${{ secrets.GITHUB_NPM_TOKEN }}
+          GITHUB_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
