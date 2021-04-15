@@ -30,4 +30,6 @@ jobs:
         if: matrix.node-version == '14.x'
         env:
           CI: true
+          FONTAWESOME_TOKEN: not-actually-used-but-necessary-here
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          GITHUB_NPM_TOKEN: not-actually-used-but-necessary-here
