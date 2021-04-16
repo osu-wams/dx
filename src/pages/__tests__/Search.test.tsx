@@ -98,6 +98,64 @@ describe('<Search/>', () => {
       expect(await screen.findByText(/About page description/)).toBeInTheDocument();
     });
 
+    it('renders a search result to pageNotFound for an undefined page index result', async () => {
+      render(<Search />, {
+        initialStates: [
+          ...mockInitialState(),
+          {
+            state: pageSearchIndexState,
+            value: {
+              data: [
+                {
+                  ...SearchIndex.mockPageSearchIndex.pageSearchIndexData[0],
+                  page: null,
+                },
+              ],
+              isLoading: false,
+              isSuccess: false,
+              isError: false,
+            },
+          },
+        ],
+      });
+      const searchBar = screen.getByTestId('applicationSearch');
+
+      await userEvent.type(searchBar, 'About{enter}');
+      expect(await screen.findByTestId('simple-internal-link')).toHaveAttribute(
+        'href',
+        '/pageNotFound'
+      );
+    });
+
+    it('renders a search result to pageNotFound for a page index not defined in Routes', async () => {
+      render(<Search />, {
+        initialStates: [
+          ...mockInitialState(),
+          {
+            state: pageSearchIndexState,
+            value: {
+              data: [
+                {
+                  ...SearchIndex.mockPageSearchIndex.pageSearchIndexData[0],
+                  page: 'BobRoss',
+                },
+              ],
+              isLoading: false,
+              isSuccess: false,
+              isError: false,
+            },
+          },
+        ],
+      });
+      const searchBar = screen.getByTestId('applicationSearch');
+
+      await userEvent.type(searchBar, 'About{enter}');
+      expect(await screen.findByTestId('simple-internal-link')).toHaveAttribute(
+        'href',
+        '/pageNotFound'
+      );
+    });
+
     it('renders a search page with results found', async () => {
       render(<Search />, { initialStates: mockInitialState() });
       expect(await screen.findByText(/Bend Testo Success Center/)).toBeInTheDocument();
