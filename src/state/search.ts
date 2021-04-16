@@ -172,17 +172,21 @@ const trainingSearchItems = selector<SearchItem[]>({
 
 /**
  *
- * @param page name of the page we want to route to
+ * @param p name of the page we want to route to
  * @param dashboard current user dashboard (employee, student, etc.)
  * Creates the appropriate route based on the page in the search result
  */
-const pageToRoute = (page: string, dashboard?: string) => {
+const pageToRoute = (p: string, dashboard?: string) => {
+  const page = p?.toLowerCase();
+  if (!page) {
+    console.error(`pageToRoute not supplied with a valid page name: '${p}'`);
+    return '/pageNotFound';
+  }
   // Checks to make sure the route is present
-  if (Routes(dashboard)[page.toLowerCase()]) {
-    const { fullPath } = Routes(dashboard)[page.toLowerCase()];
-    return fullPath;
+  if (Routes(dashboard)[page]) {
+    return Routes(dashboard)[page].fullPath;
   } else {
-    console.error('Route pageName not defined: ' + page);
+    console.error(`Route pageName not defined: ${page}`);
     return '/pageNotFound';
   }
 };
