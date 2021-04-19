@@ -58,10 +58,13 @@ const activeFavoriteResources = (
   favoriteResources: Types.FavoriteResource[],
   resourcesList: Types.Resource[]
 ) => {
-  const hasActiveFavorite = (resourceId) =>
-    favoriteResources.some((f) => f.active && f.resourceId === resourceId);
-
-  return resourcesList.filter((f) => f !== undefined && hasActiveFavorite(f.id));
+  // const hasActiveFavorite = (resourceId) =>
+  //   favoriteResources.some((f) => f.active && f.resourceId === resourceId);
+  // console.log(favoriteResources);
+  // return resourcesList.filter((f) => f !== undefined && hasActiveFavorite(f.id)).map(r => {resource: r, });
+  return favoriteResources
+    .filter((f) => resourcesList.some((r) => f.resourceId === r.id) && f.active)
+    .map((f) => ({ ...f, resource: resourcesList.find((r) => f.resourceId === r.id)! }));
 };
 
 /**
@@ -117,7 +120,7 @@ const filterByCategory = (
 
   // Skips categories and filters based on user favorite preferences
   if (name === 'favorites' && user.favoriteResources) {
-    return activeFavoriteResources(user.favoriteResources, resources);
+    return activeFavoriteResources(user.favoriteResources, resources).map((f) => f.resource);
   }
 
   return resources.filter(
