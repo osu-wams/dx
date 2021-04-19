@@ -9,17 +9,29 @@ import { act, screen } from '@testing-library/react';
 describe('Dashboard Headers', () => {
   it('Student has "Student Dashboard" title', async () => {
     render(<Header />);
-    // !todo change to this line in the near future
-    // const title = screen.getByRole('banner', { name: /Student Dashboard/i });
-    const title = await screen.findByText('Student Dashboard');
-
-    expect(title).toBeInTheDocument();
+    expect(await screen.findByText('Student Dashboard')).toBeInTheDocument();
+    expect(screen.queryByTestId('masquerade-banner')).not.toBeInTheDocument();
   });
 
   it('Employee has "Employee Dashboard" title', async () => {
     render(<Header />, { user: mockEmployeeUser });
-    const title = await screen.findByText('Employee Dashboard');
-    expect(title).toBeInTheDocument();
+    expect(await screen.findByText('Employee Dashboard')).toBeInTheDocument();
+    expect(screen.queryByTestId('masquerade-banner')).not.toBeInTheDocument();
+  });
+
+  it('Employee has a masquerade banner when masquerading', async () => {
+    render(<Header />, {
+      user: {
+        ...mockEmployeeUser,
+        data: {
+          ...mockEmployeeUser.data,
+          isMasquerade: true,
+        },
+      },
+    });
+    expect(await screen.findByText('Employee Dashboard')).toBeInTheDocument();
+    expect(await screen.findByText('Masqueraded as Employee')).toBeInTheDocument();
+    expect(await screen.findByTestId('masquerade-banner')).toBeInTheDocument();
   });
 });
 

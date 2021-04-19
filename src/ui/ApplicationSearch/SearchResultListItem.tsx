@@ -58,7 +58,9 @@ const titleLink = (item: SearchItem, toggleModal?: () => void) => {
     );
   }
   return link?.to ? (
-    <SimpleInternalLink to={link.to}>{title}</SimpleInternalLink>
+    <SimpleInternalLink data-testid="simple-internal-link" to={link.to}>
+      {title}
+    </SimpleInternalLink>
   ) : (
     <SimpleExternalLink href={link?.href}>{title}</SimpleExternalLink>
   );
