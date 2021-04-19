@@ -84,7 +84,7 @@ const Alerts = () => {
       />
       <AlertContent>
         <p>
-          {format(alert.date)}: {alert.content ?? ''}
+          {format(alert.updated)}: {alert.content ?? ''}
         </p>
       </AlertContent>
     </AlertCardWrapper>
@@ -121,11 +121,14 @@ const Alerts = () => {
     }
   };
 
-  if (raveAlerts.data.length || dxAlerts.data.length) {
+  if (
+    (raveAlerts.isSuccess && raveAlerts.data && raveAlerts.data.length) ||
+    (dxAlerts.isSuccess && dxAlerts.data && dxAlerts.data.length)
+  ) {
     return (
       <AlertWrapper>
-        {raveAlerts.data[0] && alertCard(raveAlerts.data[0])}
-        {dxAlerts.data[0] && alertCard(dxAlerts.data[0])}
+        {raveAlerts.data && raveAlerts.data[0] && alertCard(raveAlerts.data[0])}
+        {dxAlerts.data && dxAlerts.data[0] && alertCard(dxAlerts.data[0])}
       </AlertWrapper>
     );
   } else {
