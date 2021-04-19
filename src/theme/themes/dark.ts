@@ -653,10 +653,10 @@ export const dark: ThemeConfiguration = {
     },
     search: {
       input: {
-        color: neutral550,
-        background: componentBackground,
+        color: neutral600,
+        background: neutral200,
         border: {
-          color: neutral200,
+          color: neutral400,
         },
       },
       icon: {
