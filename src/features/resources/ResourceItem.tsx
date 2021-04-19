@@ -19,7 +19,7 @@ import { RichTextContent } from '../../ui/RichText';
 import MyDialog from '../../ui/MyDialog';
 import { faExclamationCircle as faExclamationCircleHollow } from '@fortawesome/pro-light-svg-icons';
 import { faExclamationCircle as faExclamationCircleSolid } from '@fortawesome/pro-solid-svg-icons';
-import { fontSize } from 'src/theme';
+import { fontSize, spacing } from 'src/theme';
 import { format } from 'src/util/helpers';
 
 // Adds all font awesome icons so we can call them by name (coming from Drupal API)
@@ -30,6 +30,13 @@ const FooterLinks = styled.div`
   justify-content: space-between;
   margin-top: 20px;
   align-items: baseline;
+`;
+
+const DateContainer = styled.div`
+  margin-top: ${spacing.medium};
+  margin-bottom: ${spacing.medium};
+  font-size: ${fontSize[14]};
+  color: ${({ theme }) => theme.notification.date};
 `;
 
 const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: any }) => {
@@ -81,12 +88,8 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
       // look for the resource's corresponding IT system
       if (resource.hasOwnProperty('itSystem') && data !== undefined) {
         var result = data.find((system) => system.name === resource.itSystem);
-        // if resource HAS an IT system and its status isn't 1, alert user
-        // if (resource.itSystem && result && result[0].status !== 1) {
 
-        if (resource.itSystem && result !== undefined && result.status === 1) {
-          //if (resource.itSystem) {
-          // use this version for testing; first need to add stuff into mock data so that we can test clicking on Box
+        if (resource.itSystem && result !== undefined && result.status !== 1) {
           setItSystemError(true);
         }
         // update date checked time
@@ -145,7 +148,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
           <CloseButton onClick={close} />
           <div>
             <Icon
-              fontSize={fontSize[24]}
+              fontSize={fontSize[26]}
               icon={faExclamationCircleHollow}
               color={themeContext.features.itStatus.item.icon.partialOutage}
               style={{ display: 'inline-block', paddingRight: '5px' }}
@@ -154,7 +157,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
               This resource may be unavailable.
             </h2>
           </div>
-          <div>
+          <DateContainer>
             {resource.title} •{' '}
             {systemCheckedAt.toLocaleString('en-US', {
               hour: 'numeric',
@@ -163,7 +166,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
             }) +
               ' at ' +
               format(systemCheckedAt)}
-          </div>
+          </DateContainer>
           <RichTextContent
             dangerouslySetInnerHTML={{
               __html: 'We think there might be something wrong with this link. Open anyways?',
