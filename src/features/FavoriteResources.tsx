@@ -13,7 +13,8 @@ import { activeFavoriteResources } from './resources/resources-utils';
 import favoritesImg from 'src/assets/favorites.svg';
 import { resourceState, userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Resources } from '@osu-wams/hooks';
 
 /**
  * Filters all resources to display a card with individuals FavoriteResources
@@ -43,14 +44,6 @@ export const FavoriteResources = () => {
     </EmptyState>
   );
 
-  // const onDragEnd = (result) => {
-  //   const { destination, source, draggableId } = result;
-  //   // console.log(destination, source, draggableId);
-  //   console.log(result);
-  //   // Comes from backend sorted by order.
-  //   // here: we tie the index
-  // };
-
   const [fieldComponents, setFieldComponents] = useState<any[]>([]);
   const swapArrayElements = (elementsArray, startIndex, endIndex) => {
     const result = Array.from(elementsArray);
@@ -66,23 +59,29 @@ export const FavoriteResources = () => {
     }
 
     const sourceIndex = draggableItem.source.index;
-    console.log(sourceIndex);
     const destinationIndex = draggableItem.destination.index;
     const reorderedComponentsList = swapArrayElements(
       fieldComponents,
       sourceIndex,
       destinationIndex
     );
-    // console.log(reorderedComponentsList);
-    // postReorderedFavorites(reorderedComponentsList).catch(() => error message... );
-    // use the new application message error...
-    console.log('hi');
+
     setFieldComponents(reorderedComponentsList);
   };
 
   useEffect(() => {
-    console.log(fieldComponents);
-    // const prevArray = fieldC;
+    const resources = fieldComponents.map(({ resource, active }, index) => ({
+      resourceId: resource.id,
+      active: active,
+      order: index,
+    }));
+
+    if (resources.length > 1) {
+      const fetchData = async () => {
+        await Resources.postFavorite(resources);
+      };
+      fetchData();
+    }
   }, [fieldComponents]);
 
   return (
@@ -93,7 +92,6 @@ export const FavoriteResources = () => {
 
         {!res.isLoading && favoriteResources?.length > 0 && (
           <DragDropContext onDragEnd={onDragEnd}>
-            {/* {console.log(favoriteResources)} */}
             <Droppable droppableId={favoriteResources[0].resourceId}>
               {(provided) => (
                 <List
@@ -104,20 +102,13 @@ export const FavoriteResources = () => {
                   {fieldComponents.map(
                     ({ resource }, index) =>
                       resource && (
-                        <Draggable key={resource.id} draggableId={resource.id} index={index}>
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              <ResourceItem
-                                resource={resource}
-                                event={() => Event('favorite-resources-card', resource.title)}
-                              />
-                            </div>
-                          )}
-                        </Draggable>
+                        <ResourceItem
+                          resource={resource}
+                          event={() => Event('favorite-resources-card', resource.title)}
+                          draggable
+                          index={index}
+                          key={resource.id}
+                        />
                       )
                   )}
                   {provided.placeholder}
