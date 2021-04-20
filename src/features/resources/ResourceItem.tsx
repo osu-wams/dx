@@ -28,7 +28,7 @@ library.add(fal, fab);
 const FooterLinks = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 5px;
   align-items: baseline;
 `;
 
@@ -109,7 +109,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
             }
             // else, open link
             else {
-              window.open(resource.link); // should I change this? - kristina 4/6/21
+              window.open(resource.link);
               close();
             }
             event();
@@ -144,7 +144,12 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
       </ListItemFlex>
 
       {showDialog && (
-        <MyDialog isOpen={showDialog} onDismiss={close} aria-labelledby="message-title">
+        <MyDialog
+          isOpen={showDialog}
+          onDismiss={close}
+          aria-labelledby="message-title"
+          style={{ marginTop: '30vh' }}
+        >
           <CloseButton onClick={close} />
           <div>
             <Icon
