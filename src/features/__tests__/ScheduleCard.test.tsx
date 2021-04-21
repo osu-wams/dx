@@ -393,3 +393,35 @@ describe('<ScheduleCard /> with a simple schedule', () => {
     });
   });
 });
+
+describe('<ScheduleCard /> while OSU API is failing', () => {
+  beforeEach(() => {
+    mockGetStartDate.mockReturnValue(getThisDate());
+  });
+  it('should render planner items with default icon instead of course-subject', async () => {
+    mockUseAcademicCalendarEvents.mockReturnValue(mockNoData);
+    mockInitialState.mockReturnValue([
+      {
+        state: plannerItemState,
+        value: {
+          data: mockPlannerItems.data,
+          isLoading: false,
+          error: null,
+          isSuccess: true,
+        },
+      },
+      {
+        state: courseState,
+        value: {
+          isLoading: false,
+          isError: true,
+          isSuccess: false,
+          data: [],
+        },
+      },
+    ]);
+    render(<ScheduleCard />, { initialStates: mockInitialState() });
+
+    expect(screen.queryAllByTestId('planner-icon')).toHaveLength(2);
+  });
+});
