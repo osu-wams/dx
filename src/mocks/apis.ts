@@ -55,7 +55,7 @@ export const ANNOUNCEMENTS_API = an + '*';
  */
 
 export const RESOURCES_API = res;
-export const RESOURCES_BY_QUEUE_API = res + 'category/*';
+export const RESOURCES_BY_QUEUE_API = res + 'category/:category';
 export const CATEGORIES_API = res + 'categories/';
 export const TRENDING_RESOURCES_API = res + 'trending/*';
 export const FAVORITE_RESOURCES_API = res + 'favorites/';

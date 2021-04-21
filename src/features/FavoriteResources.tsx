@@ -52,6 +52,13 @@ export const FavoriteResources = () => {
 
     return result;
   };
+
+  /**
+   * Runs when the user uses the up/down key to move an element or dragged via mouse
+   * Sets the state
+   * @param draggableItem
+   * @returns local state of arranged items
+   */
   const onDragEnd = (draggableItem) => {
     const droppedOutsideContainer = !draggableItem.destination;
     if (droppedOutsideContainer) {
@@ -65,10 +72,12 @@ export const FavoriteResources = () => {
       sourceIndex,
       destinationIndex
     );
-
     setFieldComponents(reorderedComponentsList);
   };
 
+  /**
+   * We update and post favorite resources after they have been reordered or one is removed
+   */
   useEffect(() => {
     const resources = fieldComponents.map(({ resource, active }, index) => ({
       resourceId: resource.id,
