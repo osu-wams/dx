@@ -326,6 +326,7 @@ exports[`<PlannerItems /> should have a "Week 5 Lab Discussion" assignment on ou
       color="#D73F09"
       data-icon="file-edit"
       data-prefix="fal"
+      data-testid="planner-icon"
       focusable="false"
       role="img"
       viewBox="0 0 384 512"
