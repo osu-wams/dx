@@ -66,6 +66,7 @@ export const CanvasPlannerItems = ({
 
   const PlannerIcon = () => (
     <Icon
+      data-testid="planner-icon"
       icon={faFileEdit}
       color={themeContext.features.academics.courses.plannerItems.list.icon.color}
     />
