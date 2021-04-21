@@ -37,7 +37,7 @@ const MobileMenuStudents = ({ toggleFullMenu, ...props }) => {
         Search
       </MobileNavLink>
       <MobileNavLink
-        to={Routes(Dashboards.student).academics.fullPath}
+        to={Routes(Dashboards.student).resources.fullPath}
         onClick={() => ClickEvents('Resources')}
       >
         <Icon icon={faList} />
