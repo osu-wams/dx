@@ -19,7 +19,7 @@ import { RichTextContent } from '../../ui/RichText';
 import MyDialog from '../../ui/MyDialog';
 import { faExclamationCircle as faExclamationCircleHollow } from '@fortawesome/pro-light-svg-icons';
 import { faExclamationCircle as faExclamationCircleSolid } from '@fortawesome/pro-solid-svg-icons';
-import { fontSize, spacing } from 'src/theme';
+import { fontSize, spacing, Color } from 'src/theme';
 import { format } from 'src/util/helpers';
 
 // Adds all font awesome icons so we can call them by name (coming from Drupal API)
@@ -86,10 +86,10 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
   useEffect(() => {
     if (isSuccess) {
       // look for the resource's corresponding IT system
-      if (resource.hasOwnProperty('itSystem') && data !== undefined) {
+      if (resource.hasOwnProperty('itSystem') && data) {
         var result = data.find((system) => system.name === resource.itSystem);
 
-        if (resource.itSystem && result !== undefined && result.status !== 1) {
+        if (resource.itSystem && result && result.status !== 1) {
           setItSystemError(true);
         }
         // update date checked time
@@ -125,7 +125,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
               fontSize={fontSize[18]}
               icon={faExclamationCircleSolid}
               color={themeContext.features.itStatus.item.icon.partialOutage}
-              style={{ marginLeft: '5px', fontSize: '18px!important' }}
+              style={{ marginLeft: '5px' }}
               data-testid="warning-icon"
             />
           )}
@@ -133,7 +133,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
 
         <Checkbox
           icon={<Icon icon={faHeart} />}
-          checkedIcon={<Icon icon={faHeart} color="#d73f09" />}
+          checkedIcon={<Icon icon={faHeart} color={Color['orange-400']} />}
           value={resource.id}
           checked={favs}
           onChange={handleChange}
@@ -169,7 +169,7 @@ const ResourceItem = ({ resource, event }: { resource: Types.Resource; event: an
               minute: 'numeric',
               hour12: true,
             }) +
-              ' at ' +
+              ' on ' +
               format(systemCheckedAt)}
           </DateContainer>
           <RichTextContent
