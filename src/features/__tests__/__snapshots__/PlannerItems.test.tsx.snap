@@ -66,6 +66,12 @@ exports[`<PlannerItems /> should have a "My Awesome Planner Note" note on our mo
   padding-left: 1.5rem;
 }
 
+.c2 div + svg {
+  font-size: 14px;
+  width: 14px !important;
+  margin-top: -10px;
+}
+
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -237,6 +243,12 @@ exports[`<PlannerItems /> should have a "Week 5 Lab Discussion" assignment on ou
 .c3 svg + .c6,
 .c3 img + .c6 {
   padding-left: 1.5rem;
+}
+
+.c3 div + svg {
+  font-size: 14px;
+  width: 14px !important;
+  margin-top: -10px;
 }
 
 .c4 {

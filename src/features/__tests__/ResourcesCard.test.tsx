@@ -1,11 +1,14 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, alterMock } from 'src/util/test-utils';
-import { faCube } from '@fortawesome/pro-light-svg-icons';
+import { faCube, faStars } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
+import { ITSystemStatus } from '../it-systems-status/ITSystemStatus';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { infoButtonState } from 'src/state';
 import { RESOURCES_BY_QUEUE_API } from 'src/mocks/apis';
+
+window.open = jest.fn();
 
 const mockInitialState = jest.fn();
 describe('<ResourcesCard />', () => {
@@ -23,7 +26,7 @@ describe('<ResourcesCard />', () => {
   it('should have two items', async () => {
     const { findByText, getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />);
     await findByText('Student Jobs');
-    expect(getByTestId('resource-container').children).toHaveLength(3);
+    expect(getByTestId('resource-container').children).toHaveLength(4);
   });
 
   it('should have a clickable resource that fires GooglaAnalytics', async () => {
@@ -52,11 +55,32 @@ describe('<ResourcesCard />', () => {
 
   it('should return "No resources available" when Resources data is empty', async () => {
     alterMock(RESOURCES_BY_QUEUE_API, {
-      entityQueueTitle: "Foo Bar",
-      items: []
+      entityQueueTitle: 'Foo Bar',
+      items: [],
     });
     const { findByText } = render(<ResourcesCard categ="financial" icon={faCube} />);
     expect(await findByText('No resources available.')).toBeInTheDocument();
+  });
+
+  it('should not open new window when clicking resource with IT System down', async () => {
+    render(<ITSystemStatus />);
+    const { findByText } = render(<ResourcesCard categ="featured" icon={faStars} />);
+
+    global.open = jest.fn();
+
+    const BoxResource = await findByText('Box');
+    expect(BoxResource).toBeInTheDocument();
+
+    userEvent.click(BoxResource);
+    expect(global.open).not.toHaveBeenCalled();
+  });
+
+  it('should have warning icon on resource if IT system is down', async () => {
+    render(<ITSystemStatus />);
+    const { findByTestId, findByText } = render(<ResourcesCard categ="featured" icon={faStars} />);
+    const BoxResource = await findByText('Box');
+
+    expect(await findByTestId('warning-icon')).toBeInTheDocument();
   });
 });
 

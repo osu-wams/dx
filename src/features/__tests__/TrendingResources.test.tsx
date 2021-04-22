@@ -8,6 +8,7 @@ import { resourceState } from 'src/state';
 import { Routes } from 'src/routers';
 
 const mockInitialState = jest.fn();
+window.open = jest.fn();
 
 const { resourcesData } = Resources.mockResources;
 

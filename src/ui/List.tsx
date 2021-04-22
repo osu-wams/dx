@@ -72,6 +72,12 @@ const ListItemContent = styled.div<SpacedList>`
       padding-left: 1.5rem;
     }
   }
+  /* Targets div's with adjacent an svg, specifically the warning icon next to a Resource */
+  div + svg {
+    font-size: 14px;
+    width: 14px !important;
+    margin-top: -10px;
+  }
   text-decoration: none;
 `;
 

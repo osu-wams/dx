@@ -20,6 +20,7 @@ const mockInitialState = jest.fn();
 const mockDefaultCategory = jest.fn();
 const mockPostFavorite = jest.fn();
 const { resourcesData, defaultCategory } = Resources.mockResources;
+window.open = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   const original = jest.requireActual('@osu-wams/hooks');
@@ -358,8 +359,8 @@ describe('<Resources />', () => {
       userEvent.click(all);
     });
 
-    it('finds 3 total results that apply to them', async () => {
-      expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
+    it('finds 4 total results that apply to them', async () => {
+      expect(await screen.findByText(/found 4 results/i)).toBeInTheDocument();
     });
 
     it('finds "Graduate Student Only" item but not "Student Jobs" since that is tagged undegraduate', async () => {
@@ -386,8 +387,8 @@ describe('<Resources />', () => {
       userEvent.click(all);
     });
 
-    it('finds 3 total results that apply to them', async () => {
-      expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
+    it('finds 4 total results that apply to them', async () => {
+      expect(await screen.findByText(/found 4 results/i)).toBeInTheDocument();
     });
 
     it('finds "Graduate Student Only" item but not "Student Jobs" since that is tagged undegraduate', async () => {
@@ -421,11 +422,12 @@ describe('<Resources />', () => {
       const { all } = await renderResources(mockEmployeeUser);
       userEvent.click(all);
 
-      expect(await screen.findByText(/found 4 results/)).toBeInTheDocument();
+      expect(await screen.findByText(/found 5 results/)).toBeInTheDocument();
 
       // employee and student tagged events
       expect(screen.getByText(/Academics for Student Athletes/)).toBeInTheDocument();
       expect(screen.getByText(/Billing Information/)).toBeInTheDocument();
+      expect(screen.getByText(/Box/)).toBeInTheDocument();
 
       // employee only events
       expect(screen.getByText(/Listservs/)).toBeInTheDocument();
@@ -484,11 +486,10 @@ describe('<Resources />', () => {
       expect(financial).toHaveClass('selected');
     });
 
-    it('finds the 3 student resources and cannot find Listservs employee resource', async () => {
+    it('finds the 4 student resources and cannot find Listservs employee resource', async () => {
       const { all } = await renderResources();
       userEvent.click(all);
-
-      expect(await screen.findByText(/found 3 results/i)).toBeInTheDocument();
+      expect(await screen.findByText(/found 4 results/i)).toBeInTheDocument();
       expect(await screen.findByText(/Student Jobs/i)).toBeInTheDocument();
       expect(screen.queryByText(/Listservs/i)).not.toBeInTheDocument();
       expect(all).toHaveClass('selected');
