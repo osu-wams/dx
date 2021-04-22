@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { fal, faHeart, faGripLines } from '@fortawesome/pro-light-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -54,7 +54,7 @@ const ResourceItem = ({
   const themeContext = useContext(ThemeContext);
   const user = useRecoilValue(userState);
   const [favs, setFav] = useState(false);
-  const { data, isLoading, isSuccess } = useStatus();
+  const { data, isSuccess } = useStatus();
   const [showDialog, setShowDialog] = useState(false);
   const [itSystemError, setItSystemError] = useState(false);
   const [systemCheckedAt, setSystemCheckedAt] = useState(new Date());
@@ -126,7 +126,7 @@ const ResourceItem = ({
     <ListItemResourceLink
       onClick={() => {
         // if resource's IT system has an error, open the dialog box
-        if (!itSystemError) {
+        if (itSystemError) {
           open();
         }
         // else, open link
@@ -142,7 +142,7 @@ const ResourceItem = ({
     >
       {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
       <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
-      {!itSystemError && (
+      {itSystemError && (
         <Icon
           fontSize={fontSize[18]}
           icon={faExclamationCircleSolid}
