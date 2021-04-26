@@ -73,6 +73,7 @@ export const FavoriteResources = () => {
       destinationIndex
     );
     setFieldComponents(reorderedComponentsList);
+    Event('favorite-resource', 'Dragged or Reordered');
   };
 
   /**
