@@ -70,6 +70,7 @@ exports[`<PlannerItems /> should have a "My Awesome Planner Note" note on our mo
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
+  margin-left: 5px;
 }
 
 .c1 {
@@ -249,6 +250,7 @@ exports[`<PlannerItems /> should have a "Week 5 Lab Discussion" assignment on ou
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
+  margin-left: 5px;
 }
 
 .c4 {

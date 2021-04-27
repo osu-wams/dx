@@ -15,28 +15,17 @@ import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { ExternalLink } from '../../ui/Link';
 import { CloseButton } from '../../ui/Button';
-import { RichTextContent } from '../../ui/RichText';
-import MyDialog from '../../ui/MyDialog';
+import MyDialog, { MyDialogContent, MyDialogFooter } from '../../ui/MyDialog';
 import { faExclamationCircle as faExclamationCircleHollow } from '@fortawesome/pro-light-svg-icons';
 import { faExclamationCircle as faExclamationCircleSolid } from '@fortawesome/pro-solid-svg-icons';
-import { fontSize, spacing, Color } from 'src/theme';
+import { fontSize, Color } from 'src/theme';
 import { format } from 'src/util/helpers';
 import { Draggable } from 'react-beautiful-dnd';
 
 // Adds all font awesome icons so we can call them by name (coming from Drupal API)
 library.add(fal, fab);
 
-const FooterLinks = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
-  align-items: baseline;
-`;
-
 const DateContainer = styled.div`
-  margin-top: ${spacing.medium};
-  margin-bottom: ${spacing.medium};
-  font-size: ${fontSize[14]};
   color: ${({ theme }) => theme.notification.date};
 `;
 
@@ -147,7 +136,6 @@ const ResourceItem = ({
           fontSize={fontSize[18]}
           icon={faExclamationCircleSolid}
           color={themeContext.features.itStatus.item.icon.partialOutage}
-          style={{ marginLeft: '5px' }}
           data-testid="warning-icon"
         />
       )}
@@ -168,32 +156,38 @@ const ResourceItem = ({
           icon={faExclamationCircleHollow}
           color={themeContext.features.itStatus.item.icon.partialOutage}
           style={{ display: 'inline-block', paddingRight: '5px' }}
-        />{' '}
-        <h2 id="message-title" style={{ fontSize: fontSize[18], display: 'inline-block' }}>
+        />
+        <h2
+          id="message-title"
+          style={{
+            fontSize: fontSize[18],
+            marginTop: '0',
+            marginLeft: '5px',
+            display: 'inline-block',
+          }}
+        >
           This resource may be unavailable.
         </h2>
       </div>
-      <DateContainer>
-        {resource.title} •{' '}
-        {systemCheckedAt.toLocaleString('en-US', {
-          hour: 'numeric',
-          minute: 'numeric',
-          hour12: true,
-        }) +
-          ' on ' +
-          format(systemCheckedAt)}
-      </DateContainer>
-      <RichTextContent
-        dangerouslySetInnerHTML={{
-          __html: 'We think there might be something wrong with this link. Open anyways?',
-        }}
-      ></RichTextContent>
-      <FooterLinks>
-        <div></div>
+
+      <MyDialogContent column>
+        <DateContainer>
+          {resource.title} •{' '}
+          {systemCheckedAt.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          }) +
+            ' on ' +
+            format(systemCheckedAt)}
+        </DateContainer>
+        <p>We think there might be something wrong with this link. Open anyways?</p>
+      </MyDialogContent>
+      <MyDialogFooter style={{ marginTop: '0' }}>
         <ExternalLink href={resource.link} onClick={close}>
           Continue to resource
         </ExternalLink>
-      </FooterLinks>
+      </MyDialogFooter>
     </MyDialog>
   );
 
@@ -204,7 +198,6 @@ const ResourceItem = ({
           <Resource />
           <FaveHeart />
         </ListItemFlex>
-
         {showDialog && <OutageDialog />}
       </>
     );
@@ -222,7 +215,11 @@ const ResourceItem = ({
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <Icon icon={faGripLines} color={themeContext.features.resources.dragIcon.color} />
+              <Icon
+                icon={faGripLines}
+                color={themeContext.features.resources.dragIcon.color}
+                style={{ marginLeft: '5px' }}
+              />
               <Resource />
               <FaveHeart />
             </ListItemFlex>

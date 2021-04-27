@@ -58,10 +58,6 @@ const activeFavoriteResources = (
   favoriteResources: Types.FavoriteResource[],
   resourcesList: Types.Resource[]
 ) => {
-  // const hasActiveFavorite = (resourceId) =>
-  //   favoriteResources.some((f) => f.active && f.resourceId === resourceId);
-  // console.log(favoriteResources);
-  // return resourcesList.filter((f) => f !== undefined && hasActiveFavorite(f.id)).map(r => {resource: r, });
   return favoriteResources
     .filter((f) => resourcesList.some((r) => f.resourceId === r.id) && f.active)
     .map((f) => ({ ...f, resource: resourcesList.find((r) => f.resourceId === r.id)! }));

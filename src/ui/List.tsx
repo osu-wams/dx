@@ -77,6 +77,7 @@ const ListItemContent = styled.div<SpacedList>`
     font-size: 14px;
     width: 14px !important;
     margin-top: -10px;
+    margin-left: 5px;
   }
   text-decoration: none;
 `;

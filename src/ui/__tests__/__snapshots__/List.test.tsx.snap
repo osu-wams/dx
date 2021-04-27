@@ -83,6 +83,7 @@ exports[`An icon on the right 1`] = `
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
+  margin-left: 5px;
 }
 
 .c6 {
@@ -218,6 +219,7 @@ exports[`Default style with icon on left 1`] = `
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
+  margin-left: 5px;
 }
 
 .c7 {
@@ -352,6 +354,7 @@ exports[`Icon on both left and right 1`] = `
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
+  margin-left: 5px;
 }
 
 .c7 {

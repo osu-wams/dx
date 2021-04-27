@@ -70,9 +70,9 @@ const MyDialogImage = styled.img`
   }
 `;
 
-const MyDialogContent = styled.main`
+const MyDialogContent = styled.main<{ column?: boolean }>`
   display: flex;
-  flex-direction: row;
+  ${(props) => props.column && 'flex-direction: column'};
   padding: 2rem;
 `;
 
