@@ -411,7 +411,7 @@ export const dark: ThemeConfiguration = {
         color: iconPrimary,
       },
       dragIcon: {
-        color: neutral200,
+        color: neutral400,
       },
     },
     trainings: {

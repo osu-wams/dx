@@ -63,4 +63,18 @@ describe('Favorite Resources Card', () => {
     expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
+
+  it('Finds "draggable" attribute, present when we can re-order resources', async () => {
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
+    expect(screen.getByText('Favorites')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Academics for Student Athletes/i })).toHaveAttribute(
+      'draggable'
+    );
+  });
+
+  it('Finds re-ordering explanation for keyboard or screen reader users', async () => {
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
+    expect(screen.getByText('Favorites')).toBeInTheDocument();
+    expect(screen.getByText(/allow re-ordering with the up and down keys/i)).toBeInTheDocument();
+  });
 });

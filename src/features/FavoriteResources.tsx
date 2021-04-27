@@ -15,6 +15,7 @@ import { resourceState, userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Resources } from '@osu-wams/hooks';
+import VisuallyHidden from '@reach/visually-hidden';
 
 /**
  * Filters all resources to display a card with individuals FavoriteResources
@@ -97,6 +98,9 @@ export const FavoriteResources = () => {
   return (
     <Card>
       <CardHeader title="Favorites" badge={<CardIcon icon={faHeart} />} />
+      <VisuallyHidden>
+        <h3>Press spacebar on a resource to allow re-ordering with the up and down keys</h3>
+      </VisuallyHidden>
       <CardContent>
         {res.isLoading && <Loading lines={5} />}
 
