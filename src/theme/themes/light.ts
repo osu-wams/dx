@@ -409,6 +409,9 @@ export const light: ThemeConfiguration = {
       icon: {
         color: iconSecondary,
       },
+      dragIcon: {
+        color: neutral300,
+      },
     },
     trainings: {
       filter: {

@@ -13,6 +13,9 @@ import { activeFavoriteResources } from './resources/resources-utils';
 import favoritesImg from 'src/assets/favorites.svg';
 import { resourceState, userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Resources } from '@osu-wams/hooks';
+import VisuallyHidden from '@reach/visually-hidden';
 
 /**
  * Filters all resources to display a card with individuals FavoriteResources
@@ -20,12 +23,15 @@ import { useRecoilValue } from 'recoil';
 export const FavoriteResources = () => {
   const user = useRecoilValue(userState);
   const res = useRecoilValue(resourceState);
-  const [favoriteResources, setFavoriteResources] = useState<Types.Resource[]>([]);
+  const [favoriteResources, setFavoriteResources] = useState<
+    (Types.FavoriteResource & { resource?: Types.Resource })[]
+  >([]);
   const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
 
   useEffect(() => {
     if (user.data.favoriteResources && res.data && res.data.length > 0) {
       setFavoriteResources(activeFavoriteResources(user.data.favoriteResources, res.data));
+      setFieldComponents(activeFavoriteResources(user.data.favoriteResources, res.data));
     }
   }, [res.data, user.data.favoriteResources]);
 
@@ -39,22 +45,91 @@ export const FavoriteResources = () => {
     </EmptyState>
   );
 
+  const [fieldComponents, setFieldComponents] = useState<any[]>([]);
+  const swapArrayElements = (elementsArray, startIndex, endIndex) => {
+    const result = Array.from(elementsArray);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
+  /**
+   * Runs when the user uses the up/down key to move an element or dragged via mouse
+   * Sets the state
+   * @param draggableItem
+   * @returns local state of arranged items
+   */
+  const onDragEnd = (draggableItem) => {
+    const droppedOutsideContainer = !draggableItem.destination;
+    if (droppedOutsideContainer) {
+      return;
+    }
+
+    const sourceIndex = draggableItem.source.index;
+    const destinationIndex = draggableItem.destination.index;
+    const reorderedComponentsList = swapArrayElements(
+      fieldComponents,
+      sourceIndex,
+      destinationIndex
+    );
+    setFieldComponents(reorderedComponentsList);
+    Event('favorite-resource', 'Dragged or Reordered');
+  };
+
+  /**
+   * We update and post favorite resources after they have been reordered or one is removed
+   */
+  useEffect(() => {
+    const resources = fieldComponents.map(({ resource, active }, index) => ({
+      resourceId: resource.id,
+      active: active,
+      order: index,
+    }));
+
+    if (resources.length > 1) {
+      const fetchData = async () => {
+        await Resources.postFavorite(resources);
+      };
+      fetchData();
+    }
+  }, [fieldComponents]);
+
   return (
     <Card>
       <CardHeader title="Favorites" badge={<CardIcon icon={faHeart} />} />
+      <VisuallyHidden>
+        <h3>Press spacebar on a resource to allow re-ordering with the up and down keys</h3>
+      </VisuallyHidden>
       <CardContent>
         {res.isLoading && <Loading lines={5} />}
 
         {!res.isLoading && favoriteResources?.length > 0 && (
-          <List data-testid="resource-container">
-            {favoriteResources.map((resource) => (
-              <ResourceItem
-                key={resource.id}
-                resource={resource}
-                event={() => Event('favorite-resources-card', resource.title)}
-              />
-            ))}
-          </List>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId={favoriteResources[0].resourceId}>
+              {(provided) => (
+                <List
+                  data-testid="resource-container"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {fieldComponents.map(
+                    ({ resource }, index) =>
+                      resource && (
+                        <ResourceItem
+                          resource={resource}
+                          event={() => Event('favorite-resources-card', resource.title)}
+                          draggable
+                          index={index}
+                          key={resource.id}
+                        />
+                      )
+                  )}
+                  {provided.placeholder}
+                </List>
+              )}
+            </Droppable>
+          </DragDropContext>
         )}
         {!res.isLoading && !res.isError && favoriteResources?.length === 0 && <NoFavorites />}
 

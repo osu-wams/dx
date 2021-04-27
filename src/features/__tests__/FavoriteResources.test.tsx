@@ -41,25 +41,40 @@ describe('Favorite Resources Card', () => {
   });
 
   it('Renders Favorite Resources Card Title and the 2 active favorite resources', async () => {
-    const { findByText } = render(<FavoriteResources />, { initialStates: mockInitialState() });
-    expect(await findByText('Favorites')).toBeInTheDocument();
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
+    expect(screen.getByText('Favorites')).toBeInTheDocument();
 
-    expect(await findByText('Academics for Student Athletes')).toBeInTheDocument();
+    expect(screen.getByText('Academics for Student Athletes')).toBeInTheDocument();
 
-    expect(await findByText('Billing Information')).toBeInTheDocument();
+    expect(screen.getByText('Billing Information')).toBeInTheDocument();
   });
 
   it('User can click to remove item from favorites card', async () => {
     render(<FavoriteResources />, { initialStates: mockInitialState() });
 
     // Billing Information is found...
-    expect(await screen.findByText('Billing Information')).toBeInTheDocument();
+    expect(screen.getByText('Billing Information')).toBeInTheDocument();
     const removeBilling = screen.getByLabelText(
       'Remove Billing Information link from your favorite resources'
     );
     userEvent.click(removeBilling);
-    expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
+    // Once for the removal, and another time for the resorting order of all resources
+    expect(await mockPostFavorite).toHaveBeenCalledTimes(2);
     expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
+  });
+
+  it('Finds "draggable" attribute, present when we can re-order resources', async () => {
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
+    expect(screen.getByText('Favorites')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Academics for Student Athletes/i })).toHaveAttribute(
+      'draggable'
+    );
+  });
+
+  it('Finds re-ordering explanation for keyboard or screen reader users', async () => {
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
+    expect(screen.getByText('Favorites')).toBeInTheDocument();
+    expect(screen.getByText(/allow re-ordering with the up and down keys/i)).toBeInTheDocument();
   });
 });

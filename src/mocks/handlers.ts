@@ -157,7 +157,21 @@ export const handlers = [
   }),
 
   rest.get(RESOURCES_BY_QUEUE_API, async (req, res, ctx) => {
-    return res(ctx.json(resourcesCardData.data));
+    // Gets the category and capitalizes it to match response
+    const cat = req.params.category.charAt(0).toUpperCase() + req.params.category.slice(1);
+
+    // Filters results (this happens server side normally) to match category
+    const filteredResources = resourcesCardData.data.items.filter((i) =>
+      i.categories.includes(cat)
+    );
+
+    // Return filtered resources by categories
+    return res(
+      ctx.json({
+        entityQueueTitle: resourcesCardData.data.entityQueueTitle,
+        items: filteredResources,
+      })
+    );
   }),
 
   rest.get(CATEGORIES_API, async (req, res, ctx) => {

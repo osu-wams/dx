@@ -23,10 +23,10 @@ describe('<ResourcesCard />', () => {
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
-  it('should have two items', async () => {
+  it('should have two financial resources with audience of Student', async () => {
     const { findByText, getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />);
     await findByText('Student Jobs');
-    expect(getByTestId('resource-container').children).toHaveLength(4);
+    expect(getByTestId('resource-container').children).toHaveLength(2);
   });
 
   it('should have a clickable resource that fires GooglaAnalytics', async () => {
