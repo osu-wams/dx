@@ -377,6 +377,9 @@ declare module 'styled-components/macro' {
         icon: {
           color: string;
         };
+        dragIcon: {
+          color: string;
+        };
       };
       trainings: {
         filter: {

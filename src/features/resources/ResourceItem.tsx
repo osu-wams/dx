@@ -222,7 +222,7 @@ const ResourceItem = ({
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <Icon icon={faGripLines} />
+              <Icon icon={faGripLines} color={themeContext.features.resources.dragIcon.color} />
               <Resource />
               <FaveHeart />
             </ListItemFlex>
