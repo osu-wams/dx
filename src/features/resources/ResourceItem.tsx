@@ -184,8 +184,8 @@ const ResourceItem = ({
             format(systemCheckedAt)}
         </DateContainer>
         <p>
-          We think there might be something wrong with this link. The status for this resources IT
-          system is: {errorMsg}. Open anyways?
+          We think there might be something wrong with this link. The status for this
+          resource&apos;s IT system is: {errorMsg}. Open anyways?
         </p>
       </MyDialogContent>
       <MyDialogFooter style={{ marginTop: '0' }}>
