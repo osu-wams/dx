@@ -46,6 +46,7 @@ const ResourceItem = ({
   const { data, isSuccess } = useStatus();
   const [showDialog, setShowDialog] = useState(false);
   const [itSystemError, setItSystemError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const [systemCheckedAt, setSystemCheckedAt] = useState(new Date());
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
@@ -89,6 +90,7 @@ const ResourceItem = ({
 
         if (resource.itSystem && result && result.status !== 1) {
           setItSystemError(true);
+          setErrorMsg(result.statusText);
         }
         // update date checked time
         setSystemCheckedAt(new Date());
@@ -170,7 +172,7 @@ const ResourceItem = ({
         </h2>
       </div>
 
-      <MyDialogContent column>
+      <MyDialogContent column style={{ paddingBottom: '0px' }}>
         <DateContainer>
           {resource.title} •{' '}
           {systemCheckedAt.toLocaleString('en-US', {
@@ -181,7 +183,10 @@ const ResourceItem = ({
             ' on ' +
             format(systemCheckedAt)}
         </DateContainer>
-        <p>We think there might be something wrong with this link. Open anyways?</p>
+        <p>
+          We think there might be something wrong with this link. The status for this resources IT
+          system is: {errorMsg}. Open anyways?
+        </p>
       </MyDialogContent>
       <MyDialogFooter style={{ marginTop: '0' }}>
         <ExternalLink href={resource.link} onClick={close}>
