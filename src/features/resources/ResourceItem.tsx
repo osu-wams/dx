@@ -90,7 +90,8 @@ const ResourceItem = ({
 
         if (resource.itSystem && result && result.status !== 1) {
           setItSystemError(true);
-          setErrorMsg(result.statusText);
+          // check to see if IT system has a status message
+          if (result.statusText) setErrorMsg(result.statusText);
         }
         // update date checked time
         setSystemCheckedAt(new Date());
@@ -183,10 +184,7 @@ const ResourceItem = ({
             ' on ' +
             format(systemCheckedAt)}
         </DateContainer>
-        <p>
-          We think there might be something wrong with this link. The status for this
-          resource&apos;s IT system is: {errorMsg}. Open anyways?
-        </p>
+        <p>{errorMsg}.</p>
       </MyDialogContent>
       <MyDialogFooter style={{ marginTop: '0' }}>
         <ExternalLink href={resource.link} onClick={close}>
