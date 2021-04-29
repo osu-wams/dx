@@ -82,6 +82,17 @@ describe('<ResourcesCard />', () => {
 
     expect(await findByTestId('warning-icon')).toBeInTheDocument();
   });
+
+  it('should display warning message if resource with IT system down is clicked', async () => {
+    const { findByText, findAllByText } = render(<ResourcesCard categ="featured" icon={faStars} />);
+
+    render(<ITSystemStatus />);
+    const BoxResource = await findAllByText('Box');
+    userEvent.click(BoxResource[0]);
+
+    expect(await findByText(/Resource may be unavailable/i)).toBeInTheDocument();
+    expect(await findByText(/Performance Issues./i)).toBeInTheDocument();
+  });
 });
 
 describe('with an InfoButton in the CardFooter', () => {
