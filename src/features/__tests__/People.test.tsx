@@ -25,6 +25,7 @@ describe('<People />', () => {
 
     expect(await screen.findByText('Sch of Mech/Ind/Mfg Engr')).toBeInTheDocument();
     expect(await screen.findByText('Showing 3 of 3')).toBeInTheDocument();
+    expect(await screen.findByTestId('icon-counter')).toHaveTextContent('3');
     const link = await screen.findByText('Bob Ross');
     expect(link).toBeInTheDocument();
     userEvent.click(link);
