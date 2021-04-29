@@ -112,3 +112,19 @@ export const commaList = (list: any, emptyTerm?: string) => {
     return list.toString();
   }
 };
+
+/**
+ * Removes Duplicates from Arrays of objects with or without subproperties
+ * @param arrayToFilter array of object to filter
+ * @param prop the property we want to filter by
+ * @param nestedProp this optional property in case it's further nested
+ */
+export function removeDuplicates(arrayToFilter: any[], prop: string, nestedProp?: string) {
+  return arrayToFilter.filter((obj, pos, arr) => {
+    if (!nestedProp) {
+      return arr.map((mapObj) => mapObj[prop]).indexOf(obj[prop]) === pos;
+    } else {
+      return arr.map((mapObj) => mapObj[prop].nestedProp).indexOf(obj[prop].nestedProp) === pos;
+    }
+  });
+}
