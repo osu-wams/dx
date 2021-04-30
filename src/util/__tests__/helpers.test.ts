@@ -7,6 +7,7 @@ import {
   formatPhone,
   arrayIncludes,
   commaList,
+  removeDuplicates,
 } from '../helpers';
 
 describe('titleCase', () => {
@@ -149,5 +150,52 @@ describe('commaList', () => {
     expect(commaList(undefined)).toBe('');
     expect(commaList(null, empty)).toBe(empty);
     expect(commaList(false, empty)).toBe(empty);
+  });
+});
+
+describe('removeDuplicates', () => {
+  const array1 = [
+    { id: 1, color: 'red' },
+    { id: 2, color: 'purple' },
+    { id: 3, color: 'red' },
+    { id: 4, color: 'red' },
+  ];
+  const result1 = [
+    { id: 1, color: 'red' },
+    { id: 2, color: 'purple' },
+  ];
+  const array2 = [
+    { id: 1, color: 'red' },
+    { id: 2, color: 'purple' },
+    { id: 3, color: 'red' },
+    { id: 4, color: 'purple' },
+    { id: 5, color: 'black' },
+    { id: 6, color: 'purple' },
+    { id: 7, color: 'purple' },
+  ];
+  const result2 = [
+    { id: 1, color: 'red' },
+    { id: 2, color: 'purple' },
+    { id: 5, color: 'black' },
+  ];
+  // Array of nested object
+  const array3 = [
+    { id: 1, color: { dark: 'red' } },
+    { id: 2, color: { dark: 'purple' } },
+    { id: 3, color: { dark: 'red' } },
+    { id: 2, color: { dark: 'purple' } },
+  ];
+  const result3 = [
+    { id: 1, color: { dark: 'red' } },
+    { id: 2, color: { dark: 'purple' } },
+  ];
+
+  it('filters by object property any duplicates', () => {
+    expect(removeDuplicates(array1, 'color')).toStrictEqual(result1);
+    expect(removeDuplicates(array2, 'color')).toStrictEqual(result2);
+  });
+
+  it('filters by nested object property', () => {
+    expect(removeDuplicates(array3, 'color', 'dark')).toStrictEqual(result3);
   });
 });

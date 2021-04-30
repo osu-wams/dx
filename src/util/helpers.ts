@@ -124,7 +124,7 @@ export function removeDuplicates(arrayToFilter: any[], prop: string, nestedProp?
     if (!nestedProp) {
       return arr.map((mapObj) => mapObj[prop]).indexOf(obj[prop]) === pos;
     } else {
-      return arr.map((mapObj) => mapObj[prop].nestedProp).indexOf(obj[prop].nestedProp) === pos;
+      return arr.map((mapObj) => mapObj[prop][nestedProp]).indexOf(obj[prop][nestedProp]) === pos;
     }
   });
 }
