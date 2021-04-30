@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { fal, faHeart, faGripLines } from '@fortawesome/pro-light-svg-icons';
+import { faHeart as faSolidHeart } from '@fortawesome/pro-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -103,7 +104,7 @@ const ResourceItem = ({
   const FaveHeart = () => (
     <Checkbox
       icon={<Icon icon={faHeart} />}
-      checkedIcon={<Icon icon={faHeart} color={Color['orange-400']} />}
+      checkedIcon={<Icon icon={faSolidHeart} color={Color['orange-400']} />}
       value={resource.id}
       checked={favs}
       onChange={handleChange}

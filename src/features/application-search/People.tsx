@@ -52,7 +52,10 @@ const People: React.FC = () => {
   });
   return (
     <Card>
-      <CardHeader title="People" badge={<CardIcon icon={faUserCircle} />} />
+      <CardHeader
+        title="People"
+        badge={<CardIcon icon={faUserCircle} count={data?.length ?? 0} />}
+      />
       <CardContent flush>
         {error && ListErrorMessage('Failed searching for People.', error)}
         {data && renderItems(5, data)}

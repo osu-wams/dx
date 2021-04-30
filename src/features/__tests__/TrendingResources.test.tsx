@@ -69,8 +69,9 @@ describe('Trending Resources Card', () => {
   });
 
   it('User can click on the resource and it sends a google analytics event', async () => {
-    const { findByText } = render(<TrendingResources />, { initialStates: mockInitialState() });
-    const resource = await findByText('Student Jobs');
+    render(<TrendingResources />, { initialStates: mockInitialState() });
+    expect(await screen.findByText('Trending')).toBeInTheDocument();
+    const resource = screen.getByText('Student Jobs');
     expect(resource).toBeInTheDocument();
     userEvent.click(resource);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);

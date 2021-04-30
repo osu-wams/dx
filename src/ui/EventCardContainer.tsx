@@ -5,7 +5,7 @@ import { Types } from '@osu-wams/lib';
 import { User } from '@osu-wams/hooks';
 import EventCard from './EventCard';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
-import { arrayIncludes } from 'src/util/helpers';
+import { arrayIncludes, removeDuplicates } from 'src/util/helpers';
 import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
@@ -111,8 +111,9 @@ const EventCardContainer = ({ page, ...props }) => {
           filtered.filter((announcement) => hasAudience(user.data, announcement))
         );
       }
+
       announcementsToUse = announcementsToUse.slice(0, 6);
-      eventsToUse = eventsToUse.slice(0, 6);
+      eventsToUse = removeDuplicates(eventsToUse, 'action', 'link').slice(0, 6);
 
       if (announcementsToUse.length || eventsToUse.length) {
         // Weave two arrays alternating an item from each providing that the array

@@ -55,7 +55,10 @@ const Places: React.FC = () => {
   });
   return (
     <Card>
-      <CardHeader title="Places" badge={<CardIcon icon={faMapMarkerAlt} />} />
+      <CardHeader
+        title="Places"
+        badge={<CardIcon icon={faMapMarkerAlt} count={data?.length ?? 0} />}
+      />
       <CardContent flush>
         {error && ListErrorMessage('Failed searching for Places.', error)}
         {data && renderItems(5, data)}

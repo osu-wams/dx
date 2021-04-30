@@ -13,7 +13,7 @@ describe('<Places />', () => {
     expect(await screen.findByText('Places')).toBeInTheDocument();
     expect(screen.queryByText('Cascade Hall')).not.toBeInTheDocument();
   });
-  it('should render as list of people when searched', async () => {
+  it('should render as list of places when searched', async () => {
     render(<Places />, {
       initialStates: [
         {
@@ -24,6 +24,7 @@ describe('<Places />', () => {
     });
     expect(await screen.findByAltText('Cascade Hall')).toBeInTheDocument();
     expect(await screen.findByText('Showing 3 of 3')).toBeInTheDocument();
+    expect(await screen.findByTestId('icon-counter')).toHaveTextContent('3');
     const link = await screen.findByText('Cascade Hall');
     expect(link).toBeInTheDocument();
     userEvent.click(link);
