@@ -46,13 +46,14 @@ describe('formatTime', () => {
 xdescribe('format dates', () => {
   // Localist Event Calendar format, and academicCalendar format
   const eventCalendar = '2019-11-26T19:30:00-08:00';
-  const academicCalendar = 'Thu, 28 Nov 2019 00:00:00 -0800';
+  const academicCalendar = 'Thu, 28 Nov 2019 19:00:00 -0800';
   test.each`
     input               | expected
     ${'2018-12-31'}     | ${'December 31, 2018'}
     ${'2018-09-06'}     | ${'September 6, 2018'}
     ${academicCalendar} | ${'November 28, 2019'}
     ${eventCalendar}    | ${'November 26, 2019'}
+    ${undefined}        | ${''}
   `('converts dates from API to human readable', ({ input, expected }) => {
     expect(format(input)).toBe(expected);
   });

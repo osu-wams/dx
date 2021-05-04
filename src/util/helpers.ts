@@ -31,20 +31,26 @@ export function formatTime(hours: string) {
  * Default format returned: November 06, 2019
  */
 export const format = (date: Date | string | number, type: string = 'MMMM d, yyyy') => {
-  if (type === 'dueAt') {
-    type = "MMM do 'at' h:mm a";
-  }
-
-  if (typeof date === 'string') {
-    // if parseISO understands the date as valid we use it
-    if (isValid(parseISO(date))) {
-      date = parseISO(date);
-    } else {
-      date = new Date(Date.parse(date));
+  try {
+    if (type === 'dueAt') {
+      type = "MMM do 'at' h:mm a";
     }
-  }
 
-  return fns(date, type);
+    if (typeof date === 'string') {
+      // if parseISO understands the date as valid we use it
+      if (isValid(parseISO(date))) {
+        date = parseISO(date);
+      } else {
+        date = new Date(Date.parse(date));
+      }
+    }
+
+    return fns(date, type);
+  } catch (err) {
+    console.debug(`util/helpers#format(${date},${type}) failed: ${err}`);
+    console.trace();
+    return '';
+  }
 };
 
 /* Preferred Money format for simple strings to dollars
