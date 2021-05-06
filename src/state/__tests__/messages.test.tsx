@@ -3,7 +3,7 @@ import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Message } from '@osu-wams/lib';
-import { messagesState } from '../messages';
+import { State } from '@osu-wams/hooks';
 import { useApplicationMessages } from '../../hooks/useApplicationMessages';
 
 jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
@@ -35,7 +35,7 @@ it('renders a message in state', async () => {
   render(<TestComponent />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [mockMessage],
       },
     ],
@@ -69,7 +69,7 @@ it('adds and displays a new message', async () => {
 
 it('dismisses a visible message', async () => {
   const { queryByText } = render(<TestComponent />, {
-    initialStates: [{ state: messagesState, value: [mockMessage] }],
+    initialStates: [{ state: State.messagesState, value: [mockMessage] }],
   });
 
   expect(queryByText(type)).toBeInTheDocument();
