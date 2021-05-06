@@ -4,9 +4,7 @@ import AcademicsDashboard from '../Academics/AcademicsDashboard';
 import { screen } from '@testing-library/react';
 import { academicAnnouncementResult } from 'src/mocks/handlers';
 import { mockInitialState } from 'src/setupTests';
-import { announcementState } from 'src/state';
-import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
-import { Events } from '@osu-wams/hooks';
+import { State, Events } from '@osu-wams/hooks';
 
 const { academicCalendar6 } = Events.mockEvents;
 const mockUseAcademicCalendarEvents = jest.fn();
@@ -23,7 +21,7 @@ describe('<AcademicsDashboard />', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValueOnce([
       {
-        state: announcementState(ANNOUNCEMENT_PAGES.academics),
+        state: State.announcementState(State.ANNOUNCEMENT_PAGES.academics),
         value: {
           isLoading: false,
           isError: false,
@@ -51,7 +49,7 @@ describe('with no events', () => {
   it('should not render Announcements with no events', async () => {
     mockInitialState.mockReturnValueOnce([
       {
-        state: announcementState(ANNOUNCEMENT_PAGES.academics),
+        state: State.announcementState(State.ANNOUNCEMENT_PAGES.academics),
         value: {
           isLoading: false,
           isError: false,

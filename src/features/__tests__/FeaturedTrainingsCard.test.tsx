@@ -4,8 +4,7 @@ import { mockEmployeeUser, render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
 import { mockGAEvent } from 'src/setupTests';
-import { trainingState } from 'src/state';
-import { Trainings } from '@osu-wams/hooks';
+import { State, Trainings } from '@osu-wams/hooks';
 
 describe('<FeaturedTrainingsCard />', () => {
   // Set mock function result before running any tests
@@ -14,7 +13,7 @@ describe('<FeaturedTrainingsCard />', () => {
       user: mockEmployeeUser,
       initialStates: [
         {
-          state: trainingState,
+          state: State.trainingState,
           value: Trainings.mockTrainings,
         },
       ],

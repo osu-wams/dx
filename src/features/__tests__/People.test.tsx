@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { mockGAEvent } from 'src/setupTests';
 import People from 'src/features/application-search/People';
 import { PEOPLE_API } from 'src/mocks/apis';
-import { applicationSearchState } from 'src/state/applicationSearch';
+import { State } from '@osu-wams/hooks';
 
 describe('<People />', () => {
   it('should render nothing when there is no search', async () => {
@@ -17,7 +17,7 @@ describe('<People />', () => {
     render(<People />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: 'superceded-by-msw-mock-return',
         },
       ],
@@ -41,7 +41,7 @@ describe('<People />', () => {
     render(<People />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: 'superceded-by-msw-mock-return',
         },
       ],
@@ -55,7 +55,7 @@ describe('<People />', () => {
     render(<People />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: 'superceded-by-msw-mock-return',
         },
       ],
@@ -69,7 +69,7 @@ describe('<People />', () => {
     render(<People />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: 'superceded-by-msw-mock-return',
         },
       ],

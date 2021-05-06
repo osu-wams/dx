@@ -3,7 +3,7 @@ import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Message, Types } from '@osu-wams/lib';
-import { messagesState } from 'src/state/messages';
+import { State } from '@osu-wams/hooks';
 import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 import { ApplicationMessages } from '../ApplicationMessages';
 
@@ -40,7 +40,7 @@ it('renders a message with close button and data', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [mockMessage],
       },
     ],
@@ -60,7 +60,7 @@ it('renders a "warn" message with appropriate icon', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: 'warn' }],
       },
     ],
@@ -77,7 +77,7 @@ it('renders a "success" message with appropriate icon', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: 'success' }],
       },
     ],
@@ -94,7 +94,7 @@ it('renders an "error" message with appropriate icon', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: 'error' }],
       },
     ],
@@ -111,7 +111,7 @@ it('renders an "info" message with appropriate icon when type is missing', async
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: null }],
       },
     ],
@@ -128,7 +128,7 @@ it('renders an "info" message with appropriate icon when type is bogus', async (
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: 'bogus' }],
       },
     ],
@@ -151,7 +151,7 @@ it('does not render if visibility is false', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, visible: false }],
       },
     ],
@@ -172,7 +172,7 @@ it('adds and displays a new message', async () => {
 
 it('close button dismisses a visible message', async () => {
   render(<ApplicationMessages />, {
-    initialStates: [{ state: messagesState, value: [mockMessage] }],
+    initialStates: [{ state: State.messagesState, value: [mockMessage] }],
   });
 
   expect(screen.getByText(title)).toBeInTheDocument();
@@ -194,7 +194,7 @@ it('close button dismisses each message on the stack one at a time', async () =>
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [mockMessage, secondMockMessage],
       },
     ],

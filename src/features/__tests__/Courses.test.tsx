@@ -5,15 +5,15 @@ import { render } from 'src/util/test-utils';
 import Courses from '../Courses';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { Helpers } from '@osu-wams/utils';
+import { State } from '@osu-wams/hooks';
 import { startDate } from '../schedule/schedule-utils';
-import { courseState, infoButtonState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 describe('<Courses />', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValueOnce([
       {
-        state: courseState,
+        state: State.courseState,
         value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
       },
     ]);
@@ -124,7 +124,7 @@ describe('with an InfoButton in the CardFooter and missing data', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValueOnce([
       {
-        state: infoButtonState,
+        state: State.infoButtonState,
         value: [{ content: '...', id: 'some-other-id', title: '...' }],
       },
     ]);
@@ -140,7 +140,7 @@ describe('with an InfoButton in the CardFooter', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValueOnce([
       {
-        state: infoButtonState,
+        state: State.infoButtonState,
         value: [
           { content: 'Info Button Content', id: 'current-courses', title: 'Info Button Title' },
         ],
@@ -159,7 +159,7 @@ describe('without courses present', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValueOnce([
       {
-        state: courseState,
+        state: State.courseState,
         value: { isLoading: false, isError: false, isSuccess: true, data: [] },
       },
     ]);

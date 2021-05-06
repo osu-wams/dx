@@ -5,11 +5,6 @@ exports[`does not render an info button because no id is supplied 1`] = `null`;
 exports[`with an application state provided does not render an info button with an invalid id 1`] = `null`;
 
 exports[`with an application state provided renders an info button  1`] = `
-.c2 {
-  color: #696361;
-  background-color: transparent;
-}
-
 .c1 {
   background-color: transparent;
   color: #ffffff;
@@ -25,6 +20,11 @@ exports[`with an application state provided renders an info button  1`] = `
 
 .c1:disabled {
   cursor: not-allowed;
+}
+
+.c2 {
+  color: #696361;
+  background-color: transparent;
 }
 
 @media screen and (max-width:768px) {

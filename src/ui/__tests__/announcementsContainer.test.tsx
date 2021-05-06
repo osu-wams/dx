@@ -4,14 +4,13 @@ import { screen } from '@testing-library/react';
 import { render, alterMock } from 'src/util/test-utils';
 import AnnouncementContainer from '../AnnouncementContainer';
 import { mockGAEvent } from 'src/setupTests';
-import { Announcements } from '@osu-wams/hooks';
+import { State, Announcements } from '@osu-wams/hooks';
 import { ANNOUNCEMENTS_API } from 'src/mocks/apis';
-import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
 const { financialAnnouncementResult } = Announcements.mockAnnouncements;
 
 describe('<AnnouncementContainer> as Academics', () => {
   beforeEach(async () => {
-    render(<AnnouncementContainer page={ANNOUNCEMENT_PAGES.academics} />);
+    render(<AnnouncementContainer page={State.ANNOUNCEMENT_PAGES.academics} />);
     await screen.findAllByTestId('eventcard');
   });
   it('Should show Academic announcements and untagged', async () => {
@@ -33,7 +32,7 @@ describe('<AnnouncementContainer> as Academics', () => {
 describe('<AnnouncementContainer> as Finances', () => {
   beforeEach(async () => {
     alterMock(ANNOUNCEMENTS_API, financialAnnouncementResult.data);
-    render(<AnnouncementContainer page={ANNOUNCEMENT_PAGES.finances} />);
+    render(<AnnouncementContainer page={State.ANNOUNCEMENT_PAGES.finances} />);
     await screen.findAllByTestId('eventcard');
   });
 

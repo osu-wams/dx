@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
 import { InfoButton } from '../Button';
-import { infoButtonState } from 'src/state';
+import { State } from '@osu-wams/hooks';
 
 it('does not render an info button because no id is supplied', () => {
   const { container } = render(<InfoButton />);
@@ -15,7 +15,7 @@ describe('with an application state provided', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValue([
       {
-        state: infoButtonState,
+        state: State.infoButtonState,
         value: [{ content: 'Info Button Content', id: 'valid-id', title: 'Info Button Title' }],
       },
     ]);

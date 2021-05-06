@@ -3,10 +3,9 @@ import { cleanup, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EventCardContainer from '../EventCardContainer';
 import { render, mockEmployeeUser, alterMock } from 'src/util/test-utils';
-import { Announcements, Events } from '@osu-wams/hooks';
+import { State, Announcements, Events } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
 import { STUDENT_EVENTS_API, ANNOUNCEMENTS_API } from 'src/mocks/apis';
-import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
 
 const { studentExperienceEvents, studentExperienceEvents_10 } = Events.mockEvents;
 const { announcementsData, announcementsData_10 } = Announcements.mockAnnouncements;
@@ -20,7 +19,7 @@ describe('<EventCardContainer />', () => {
 
   it('should show 5 student event cards', async () => {
     const { findByText, queryByText, getAllByTestId } = render(
-      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
     );
 
     await waitFor(() => {
@@ -36,7 +35,7 @@ describe('<EventCardContainer />', () => {
 
   it('should show 6 employee event cards for an employee in corvallis', async () => {
     const { getAllByTestId, findByText, queryByText } = render(
-      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />,
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />,
       {
         user: mockEmployeeUser,
       }
@@ -56,7 +55,7 @@ describe('<EventCardContainer />', () => {
 
   it('should show 6 employee event cards for an employee in corvallis with a non-standard campus code', async () => {
     const { getAllByTestId, findByText, queryByText } = render(
-      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />,
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />,
       {
         user: {
           ...mockEmployeeUser,
@@ -78,7 +77,7 @@ describe('<EventCardContainer />', () => {
 
   it('should show 5 employee event cards for an employee in bend', async () => {
     const { getAllByTestId, findByText, queryByText } = render(
-      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />,
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />,
       {
         user: {
           ...mockEmployeeUser,
@@ -100,7 +99,7 @@ describe('<EventCardContainer />', () => {
 
   it('should display text', async () => {
     const { findAllByTestId, findByText } = render(
-      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
     );
     await findAllByTestId('eventcard');
     expect(await findByText(/Announcement test body text 2/i)).toBeInTheDocument();
@@ -110,7 +109,7 @@ describe('<EventCardContainer />', () => {
 
   it('should track clicks to events and announcements', async () => {
     const { findAllByTestId, findByText } = render(
-      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
     );
     await findAllByTestId('eventcard');
     const localist = await findByText(/Localist test title/i);
@@ -122,7 +121,7 @@ describe('<EventCardContainer />', () => {
 
   it('should alternate types of events', async () => {
     const { getAllByTestId, getAllByText } = render(
-      <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
     );
     await waitFor(() => {
       const cards = getAllByTestId('eventcard');
@@ -136,7 +135,9 @@ describe('<EventCardContainer />', () => {
 
   it('should render only announcements when no localist events loaded', async () => {
     alterMock(STUDENT_EVENTS_API, []);
-    const { getAllByTestId } = render(<EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />);
+    const { getAllByTestId } = render(
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
+    );
     await waitFor(() => {
       expect(getAllByTestId('eventcard')).toHaveLength(2);
     });
@@ -146,7 +147,9 @@ describe('<EventCardContainer />', () => {
     alterMock(STUDENT_EVENTS_API, studentExperienceEvents.data);
     alterMock(ANNOUNCEMENTS_API, []);
 
-    const { getAllByTestId } = render(<EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />);
+    const { getAllByTestId } = render(
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
+    );
 
     await waitFor(() => {
       expect(getAllByTestId('eventcard')).toHaveLength(3);
@@ -157,7 +160,9 @@ describe('<EventCardContainer />', () => {
     alterMock(ANNOUNCEMENTS_API, announcementsData_10.data);
     alterMock(STUDENT_EVENTS_API, studentExperienceEvents_10.data);
 
-    const { getAllByTestId } = render(<EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />);
+    const { getAllByTestId } = render(
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
+    );
 
     await waitFor(() => {
       expect(getAllByTestId('eventcard')).toHaveLength(12);
@@ -168,11 +173,13 @@ describe('<EventCardContainer />', () => {
     alterMock(ANNOUNCEMENTS_API, announcementsData_10.data);
     alterMock(STUDENT_EVENTS_API, studentExperienceEvents_10.data);
     let match = true;
-    const { findAllByTestId } = render(<EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />);
+    const { findAllByTestId } = render(
+      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
+    );
     const test1 = await findAllByTestId('eventcard');
 
     cleanup(); // ensure the dom fully clears and cleans before rendering a second time
-    render(<EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />);
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
 
     const test2 = await findAllByTestId('eventcard');
     expect(test1.length).toEqual(test2.length);
@@ -190,7 +197,7 @@ describe('<EventCardContainer />', () => {
   describe('Employee vs Student Events', () => {
     it('should see Student Events but not employee ones', async () => {
       const { findAllByTestId, queryByText, findByText } = render(
-        <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />
+        <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
       );
       await findAllByTestId('eventcard');
       expect(await findByText(/Localist test title 1/i)).toBeInTheDocument();
@@ -199,7 +206,7 @@ describe('<EventCardContainer />', () => {
 
     it('should see Employee Events but not student ones', async () => {
       const { findAllByTestId, queryByText, findByText } = render(
-        <EventCardContainer page={ANNOUNCEMENT_PAGES.dashboard} />,
+        <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />,
         {
           user: mockEmployeeUser,
         }

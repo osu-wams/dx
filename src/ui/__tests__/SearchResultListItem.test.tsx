@@ -1,9 +1,8 @@
 import React from 'react';
 import Fuse from 'fuse.js';
-import { SearchItem } from 'src/state/search';
 import { render } from 'src/util/test-utils';
 import SearchResultListItem from '../ApplicationSearch/SearchResultListItem';
-import { Resources, Trainings, Student, User } from '@osu-wams/hooks';
+import { State, Resources, Trainings, Student, User } from '@osu-wams/hooks';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 const { resourcesData } = Resources.mockResources;
@@ -15,7 +14,7 @@ const notification = User.mockUser.userMessage;
 
 describe('with a resource (typical) search result item', () => {
   const { id, title, audiences, locations, link } = resource;
-  const resourceResult: Fuse.FuseResult<SearchItem> = {
+  const resourceResult: Fuse.FuseResult<State.SearchItem> = {
     item: {
       attr: { resource },
       id,
@@ -56,7 +55,7 @@ describe('with a resource (typical) search result item', () => {
 
 describe('with a training search result item', () => {
   const { id, title } = training;
-  const trainingResult: Fuse.FuseResult<SearchItem> = {
+  const trainingResult: Fuse.FuseResult<State.SearchItem> = {
     item: {
       attr: { training },
       id,
@@ -96,7 +95,7 @@ describe('with a course search result item', () => {
     id,
     attributes: { courseSubjectNumber, courseTitle },
   } = course;
-  const courseResult: Fuse.FuseResult<SearchItem> = {
+  const courseResult: Fuse.FuseResult<State.SearchItem> = {
     item: {
       attr: { courses: { ...course } },
       id,
@@ -121,7 +120,7 @@ describe('with a course search result item', () => {
 
 describe('with a notification search result item', () => {
   const { messageId, title } = notification;
-  const notificationResult: Fuse.FuseResult<SearchItem> = {
+  const notificationResult: Fuse.FuseResult<State.SearchItem> = {
     item: {
       attr: { notification },
       id: messageId,

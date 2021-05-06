@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { mockGAEvent } from 'src/setupTests';
 import Places from 'src/features/application-search/Places';
 import { LOCATIONS_API } from 'src/mocks/apis';
-import { applicationSearchState } from 'src/state/applicationSearch';
+import { State } from '@osu-wams/hooks';
 
 describe('<Places />', () => {
   it('should render nothing when there is no search', async () => {
@@ -17,7 +17,7 @@ describe('<Places />', () => {
     render(<Places />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: 'superceded-by-msw-mock-return',
         },
       ],
@@ -40,7 +40,7 @@ describe('<Places />', () => {
     render(<Places />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: 'superceded-by-msw-mock-return',
         },
       ],
@@ -54,7 +54,7 @@ describe('<Places />', () => {
     render(<Places />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: 'superceded-by-msw-mock-return',
         },
       ],
@@ -68,7 +68,7 @@ describe('<Places />', () => {
     render(<Places />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: 'superceded-by-msw-mock-return',
         },
       ],
