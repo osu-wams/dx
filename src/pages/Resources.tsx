@@ -20,16 +20,6 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 
 const { getAffiliation } = User;
 
-const getInitialCategory = () => {
-  if (window.location.search.startsWith('?category=')) {
-    const terms = window.location.search.split('=');
-    if (terms.length === 2) {
-      return decodeURI(terms[1]);
-    }
-  }
-  return decodeURI(HooksResources.defaultCategoryName());
-};
-
 // Resources Page with components to filter, search and favorite resources
 const Resources = () => {
   const user = useRecoilValue(userState);
@@ -38,6 +28,7 @@ const Resources = () => {
   const [categories, setCategories] = useRecoilState(categoryState);
   const [activeCategory, setActiveCategory] = useRecoilState(selectedCategoryState);
   const resources = useRecoilValue(resourceState);
+
   /**
    * Filter the categories to include any that have an affilation related to the type of user
    * (student vs employee)
@@ -64,44 +55,47 @@ const Resources = () => {
 
   /* eslint-disable no-restricted-globals */
   /**
-   * Allows for Back/Forward buttons to click and the component to update its state based on which category
-   * had been clicked. This provides the ability to have the category in the location bar for bookmarks, link
-   * sharing.
-   *
-   * * When the component mounts, bind onpopstate to handle history events (Back/Forward buttons clicked)
-   * * to detect if the history state includes the category name, in which case set the active category to match.
-   * * Push the default activeCategory to the history at the start.
+   * Component re-render causes history state to compound into a messy bug, using replaceState ensures
+   * that once the component settles, it will have one history for the back/forward button to use.
    */
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    setActiveCategory(getInitialCategory());
-    window.onpopstate = function (e) {
-      if (e.state) {
-        if (e.state.category) setActiveCategory(decodeURI(e.state.category));
-      }
-    };
-  }, []);
-  /* eslint-enable react-hooks/exhaustive-deps */
+    const params = new URLSearchParams(window.location.search);
+    let category = params.get('category') ?? '';
+    if (!category) {
+      category = decodeURI(HooksResources.defaultCategoryName());
+    }
+    if (typeof history.replaceState === 'function') {
+      history.replaceState({ category }, category, `?category=${category}`);
+    }
+    setActiveCategory(category);
 
+    window.onpopstate = (ev: any) => {
+      if (ev.state?.category) setActiveCategory(ev.state.category);
+    };
+
+    return () => setActiveCategory('');
+  }, []);
+
+  /**
+   * Push to the history state if the currently active category doesn't match the previously set
+   * history (the page that was last visited). In the case that the history and active category don't match
+   * AND the active category exists in the window location bar then this is the first time the user has visited
+   * the Resources page so we don't push a state (because the browser handles the first state by default.)
+   */
   useEffect(() => {
-    /**
-     * Push to the history state if the currently active category doesn't match the previously set
-     * history (the page that was last visited). In the case that the history and active category don't match
-     * AND the active category exists in the window location bar then this is the first time the user has visited
-     * the Resources page so we don't push a state (because the browser handles the first state by default.)
-     */
-    if (typeof history.pushState === 'function') {
-      if (
-        activeCategory &&
-        history.state?.category !== activeCategory &&
-        !window.location.search.includes(activeCategory)
-      ) {
-        window.history.pushState(
-          { category: activeCategory },
-          activeCategory,
-          `?category=${activeCategory}`
-        );
-      }
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category') ?? '';
+    if (
+      activeCategory &&
+      history.state?.category !== activeCategory &&
+      category !== activeCategory &&
+      typeof history.pushState === 'function'
+    ) {
+      history.pushState(
+        { category: activeCategory },
+        activeCategory,
+        `?category=${activeCategory}`
+      );
     }
   }, [activeCategory]);
   /* eslint-enable no-restricted-globals */

@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitFor, screen } from '@testing-library/react';
+import { waitFor, screen, fireEvent } from '@testing-library/react';
 import {
   render,
   authUser,
@@ -286,7 +286,10 @@ describe('<Resources />', () => {
     expect(featured).not.toHaveClass('selected');
 
     // Back button causes window.onpopstate to fire and it would have the previously clicked category
-    window.onpopstate!(new PopStateEvent('state', { state: { category: 'featured' } }));
+    fireEvent.popState(window, {
+      state: { category: 'featured' },
+    });
+
     await waitFor(() => expect(featured).toHaveClass('selected'));
     expect(all).not.toHaveClass('selected');
   });
