@@ -6,18 +6,18 @@ import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
 import ResourcesCategories from 'src/features/resources/ResourcesCategories';
 import ResourcesSearch from 'src/features/resources/ResourcesSearch';
 import ResourcesList from 'src/features/resources/ResourcesList';
-import { useCategories, User, Resources as HooksResources } from '@osu-wams/hooks';
+import { State, useCategories, User, Resources as HooksResources } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
-import {
+import { useRecoilValue, useRecoilState } from 'recoil';
+
+const {
   userState,
   resourceState,
   selectedCategoryState,
   categoryState,
   filteredResourcesState,
-} from 'src/state';
-import { useRecoilValue, useRecoilState } from 'recoil';
-
+} = State;
 const { getAffiliation } = User;
 
 // Resources Page with components to filter, search and favorite resources

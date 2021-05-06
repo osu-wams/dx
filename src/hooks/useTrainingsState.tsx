@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { useTrainings } from '@osu-wams/hooks';
+import { State, useTrainings } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { trainingState } from 'src/state';
 
 export const useTrainingsState = () => {
   const api = useTrainings();
-  const [trainings, setTrainings] = useRecoilState(trainingState);
+  const [trainings, setTrainings] = useRecoilState(State.trainingState);
 
   useEffect(() => {
     const { isError, isLoading, isSuccess, data } = api;

@@ -7,12 +7,12 @@ import {
   HighlightDescription,
 } from 'src/ui/Highlights';
 import { Types } from '@osu-wams/lib';
+import { State } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
-import { courseState } from 'src/state';
 
 export const StudentEnrolledCredits: React.FC = () => {
   const [enrolledCredits, setEnrolledCredits] = useState(0);
-  const courses = useRecoilValue(courseState);
+  const courses = useRecoilValue(State.courseState);
 
   useEffect(() => {
     if (courses.data) {

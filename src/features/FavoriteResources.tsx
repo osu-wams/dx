@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Loading } from 'src/ui/Loading';
 import { Types, User } from '@osu-wams/lib';
+import { State, Resources } from '@osu-wams/hooks';
+import { Resources as ResourcesUtils } from '@osu-wams/utils';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from 'src/ui/List';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
@@ -9,13 +11,12 @@ import FailedState from 'src/ui/FailedState';
 import { InternalLink } from 'src/ui/Link';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import { ResourceItem } from './resources/ResourceItem';
-import { activeFavoriteResources } from './resources/resources-utils';
 import favoritesImg from 'src/assets/favorites.svg';
-import { resourceState, userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Resources } from '@osu-wams/hooks';
 import VisuallyHidden from '@reach/visually-hidden';
+
+const { resourceState, userState } = State;
 
 /**
  * Filters all resources to display a card with individuals FavoriteResources
@@ -30,8 +31,12 @@ export const FavoriteResources = () => {
 
   useEffect(() => {
     if (user.data.favoriteResources && res.data && res.data.length > 0) {
-      setFavoriteResources(activeFavoriteResources(user.data.favoriteResources, res.data));
-      setFieldComponents(activeFavoriteResources(user.data.favoriteResources, res.data));
+      setFavoriteResources(
+        ResourcesUtils.activeFavoriteResources(user.data.favoriteResources, res.data)
+      );
+      setFieldComponents(
+        ResourcesUtils.activeFavoriteResources(user.data.favoriteResources, res.data)
+      );
     }
   }, [res.data, user.data.favoriteResources]);
 

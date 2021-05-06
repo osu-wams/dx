@@ -10,14 +10,13 @@ import {
 import VisuallyHidden from '@reach/visually-hidden';
 import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { Event } from 'src/util/gaTracking';
-import { User } from '@osu-wams/hooks';
+import { State, User } from '@osu-wams/hooks';
+import { Routes } from '@osu-wams/utils';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
-import { userState } from 'src/state';
 import Icon from 'src/ui/Icon';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { dashboardState } from 'src/state/application';
-import { Routes } from 'src/routers';
 
+const { dashboardState, userState } = State;
 const { AFFILIATIONS } = User;
 
 const ProfileMenu = () => {
@@ -105,7 +104,7 @@ const ProfileMenu = () => {
         <HeaderNavList>
           <MenuLink
             as={Link}
-            to={Routes().profile.fullPath}
+            to={Routes.Routes().profile.fullPath}
             data-testid="profile-link"
             onClick={() =>
               Event('header', 'user-button-menu', 'Profile link from User Button dropdown')

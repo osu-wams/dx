@@ -1702,7 +1702,7 @@
   resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.76/909404418765e1137e57ca60cc529851eaccda23ef19d905806921d9bacf2d98#e5e95a086c6995f6a59bce84fef8fbfeb25b07e8"
   integrity sha512-BwZk4k3WvfXRbExzt7HWHrCBurPikhmc8tWTjj9++I/UAjmgwNvxJcb1a2HyEBFmhSJCvWzO1RB1bBzXcFDxrg==
 
-"@osu-wams/utils@^0.0.8":
+"@osu-wams/utils@0.0.8", "@osu-wams/utils@^0.0.8":
   version "0.0.8"
   resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.8/c79ddd58f8056b85930f7fe149c234c63f19f8e5c146e76c74a36b19e0482fd5#84ba5fb632ae48d30e5249724ae47883d977aa54"
   integrity sha512-44ImOAds1lgWTMELHtVqTcqrdryzNoCqoWqlOmImIbQggNM9Z0MbxarJCsfRwj7/+C6JztGR5XyoDL5v+CvLiQ==

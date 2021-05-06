@@ -3,9 +3,11 @@ import styled from 'styled-components/macro';
 import { spacing } from 'src/theme';
 import CustomBtn from 'src/ui/CustomBtn';
 import { Event } from 'src/util/gaTracking';
+import { State } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { resourceSearchState, categoryState, selectedCategoryState } from 'src/state';
+
+const { resourceSearchState, categoryState, selectedCategoryState } = State;
 
 /**
  * Displays a list of clickable categories for the Resources page

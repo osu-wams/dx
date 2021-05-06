@@ -6,9 +6,8 @@ import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLinkSVG } 
 import { useAcademicCalendarEvents } from '@osu-wams/hooks';
 import { Date, DateDay, DateMonth } from '../ui/Date';
 import { ExternalLink } from '../ui/Link';
-import Url from '../util/externalUrls.data';
+import { Helpers, Url } from '@osu-wams/utils';
 import { Event } from '../util/gaTracking';
-import { format } from '../util/helpers';
 
 /**
  * Academic Calendar Card
@@ -46,8 +45,8 @@ const AcademicCalendar = () => {
                   target="_blank"
                 >
                   <Date>
-                    <DateDay>{format(pubDate, 'd')}</DateDay>
-                    <DateMonth>{format(pubDate, 'MMM')}</DateMonth>
+                    <DateDay>{Helpers.format(pubDate, 'd')}</DateDay>
+                    <DateMonth>{Helpers.format(pubDate, 'MMM')}</DateMonth>
                   </Date>
                   <ListItemText>
                     <ListItemHeader>{title}</ListItemHeader>

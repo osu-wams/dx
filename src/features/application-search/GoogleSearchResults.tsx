@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { Card, CardHeader, CardContent } from 'src/ui/Card';
 import { Helmet } from 'react-helmet-async';
 import { useRecoilValue } from 'recoil';
-import { applicationSearchState } from 'src/state/applicationSearch';
+import { State } from '@osu-wams/hooks';
 import { borderRadius, spacing } from 'src/theme';
 
 const SearchResultsContainer = styled.div<{ search?: string }>`
@@ -16,7 +16,7 @@ const SearchResultsContainer = styled.div<{ search?: string }>`
 
 const GoogleSearchResults: React.FC<any> = () => {
   const gcseResults = useRef<HTMLDivElement>(null);
-  const search = useRecoilValue(applicationSearchState);
+  const search = useRecoilValue(State.applicationSearchState);
 
   useEffect(() => {
     if (search) {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { State } from '@osu-wams/hooks';
 import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
@@ -14,11 +15,16 @@ import {
   FeatureCardContent,
 } from 'src/ui/Card/variants/FeatureCard';
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
-import { singularPlural } from 'src/util/helpers';
+import { Helpers, Routes } from '@osu-wams/utils';
 import placeholderImage from 'src/assets/training-placeholder.png';
 import { useResetScroll } from 'src/hooks/useResetScroll';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
+import TrainingsSearch from 'src/features/training/TrainingsSearch';
+import TrainingsFilters from 'src/features/training/TrainingsFilters';
+import { TrainingSubHeader } from 'src/features/training/TrainingStyles';
+
+const {
+  dashboardState,
   trainingState,
   trainingTagState,
   debouncedTrainingSearchState,
@@ -26,12 +32,7 @@ import {
   selectedTrainingTagState,
   trainingSearchState,
   trainingAudienceState,
-} from 'src/state';
-import TrainingsSearch from 'src/features/training/TrainingsSearch';
-import TrainingsFilters from 'src/features/training/TrainingsFilters';
-import { TrainingSubHeader } from 'src/features/training/TrainingStyles';
-import { dashboardState } from 'src/state/application';
-import { Routes } from 'src/routers';
+} = State;
 
 const Training = () => {
   useResetScroll();
@@ -53,7 +54,7 @@ const Training = () => {
     if (dashboard.affiliation !== 'employee' || dashboard.navigateTo.indexOf('training') < 0) {
       setDashboardState({
         affiliation: 'employee',
-        navigateTo: Routes().trainings.fullPath,
+        navigateTo: Routes.Routes().trainings.fullPath,
       });
     }
   }, []);
@@ -139,7 +140,8 @@ const Training = () => {
 
           {trainings.isSuccess && (
             <p>
-              found {filteredTrainings.length} {singularPlural(filteredTrainings.length, 'result')}
+              found {filteredTrainings.length}{' '}
+              {Helpers.singularPlural(filteredTrainings.length, 'result')}
             </p>
           )}
           {trainings.isSuccess && filteredTrainings.length > 0 ? (

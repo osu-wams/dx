@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { faGraduationCap } from '@fortawesome/pro-light-svg-icons';
+import { State } from '@osu-wams/hooks';
+import { Routes } from '@osu-wams/utils';
 import Courses from 'src/features/Courses';
 import AnnouncementContainer from 'src/ui/AnnouncementContainer';
 import { MainGridWrapper, Masonry } from 'src/theme';
@@ -10,12 +12,10 @@ import AcademicOverview from 'src/features/AcademicOverview';
 import ResourcesCard from 'src/features/ResourcesCard';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { AcademicProgram } from 'src/features/AcademicProgram';
-import { filteredCards } from 'src/state';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
-import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
-import { dashboardState } from 'src/state/application';
-import { Routes, Dashboards } from 'src/routers';
+
+const { ANNOUNCEMENT_PAGES, filteredCards, dashboardState } = State;
 
 const AcademicsDashboard = () => {
   const cards = useRecoilValue(filteredCards('Academics'));
@@ -23,12 +23,12 @@ const AcademicsDashboard = () => {
 
   useEffect(() => {
     if (
-      dashboard.affiliation !== Dashboards.student ||
-      dashboard.navigateTo.indexOf(Routes().academics.path) < 0
+      dashboard.affiliation !== Routes.Dashboards.student ||
+      dashboard.navigateTo.indexOf(Routes.Routes().academics.path) < 0
     ) {
       setDashboardState({
-        affiliation: Dashboards.student,
-        navigateTo: Routes().academics.fullPath,
+        affiliation: Routes.Dashboards.student,
+        navigateTo: Routes.Routes().academics.fullPath,
       });
     }
   }, []);

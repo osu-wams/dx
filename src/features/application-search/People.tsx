@@ -8,12 +8,11 @@ import {
   ListItemContent,
   ListItemContentLinkName,
 } from 'src/ui/List';
-import { usePeople, Constants } from '@osu-wams/hooks';
+import { State, usePeople, Constants } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { useRecoilValue } from 'recoil';
-import { applicationSearchState } from 'src/state/applicationSearch';
 import { ExternalLink } from 'src/ui/Link';
-import Url from 'src/util/externalUrls.data';
+import { Url } from '@osu-wams/utils';
 import { Event } from 'src/util/gaTracking';
 import { ListCount, ListErrorMessage } from 'src/ui/ApplicationSearch/ListItem';
 
@@ -44,7 +43,7 @@ const renderItems = (count: number, data: Types.Directory[]) => {
 };
 
 const People: React.FC = () => {
-  const search = useRecoilValue(applicationSearchState);
+  const search = useRecoilValue(State.applicationSearchState);
   const { data, error } = usePeople(search, {
     ...Constants.REACT_QUERY_DEFAULT_CONFIG,
     enabled: !!search,

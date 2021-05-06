@@ -6,12 +6,12 @@ import AnnouncementContainer from '../ui/AnnouncementContainer';
 import FinancialTransactions from '../features/FinancialTransactions';
 import FinancialOverview from '../features/financial-overview/FinancialOverview';
 import { MainGridWrapper, Masonry } from '../theme';
-import { filteredCards } from 'src/state';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
-import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
-import { dashboardState } from 'src/state/application';
-import { Routes, Dashboards } from 'src/routers';
+import { Routes } from '@osu-wams/utils';
+import { State } from '@osu-wams/hooks';
+
+const { filteredCards, ANNOUNCEMENT_PAGES, dashboardState } = State;
 
 const Finances = () => {
   const cards = useRecoilValue(filteredCards('Finances'));
@@ -19,12 +19,12 @@ const Finances = () => {
 
   useEffect(() => {
     if (
-      dashboard.affiliation !== Dashboards.student ||
-      dashboard.navigateTo.indexOf(Routes().finances.path) < 0
+      dashboard.affiliation !== Routes.Dashboards.student ||
+      dashboard.navigateTo.indexOf(Routes.Routes().finances.path) < 0
     ) {
       setDashboardState({
-        affiliation: Dashboards.student,
-        navigateTo: Routes().finances.fullPath,
+        affiliation: Routes.Dashboards.student,
+        navigateTo: Routes.Routes().finances.fullPath,
       });
     }
   }, []);

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { Constants, useAffiliationEvents } from '@osu-wams/hooks';
+import { State, Constants, useAffiliationEvents } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { localistEventsState } from 'src/state/events';
 
 export const useAffiliationEventsState = (affiliation: string) => {
   const api = useAffiliationEvents(affiliation, {
@@ -9,7 +8,7 @@ export const useAffiliationEventsState = (affiliation: string) => {
     staleTime: 1000 * 60 * 30,
     cacheTime: 1000 * 60 * 30,
   });
-  const [events, setEvents] = useRecoilState(localistEventsState({ affiliation }));
+  const [events, setEvents] = useRecoilState(State.localistEventsState({ affiliation }));
 
   useEffect(() => {
     const { isError, isLoading, isSuccess, data } = api;

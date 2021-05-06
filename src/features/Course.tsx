@@ -15,11 +15,10 @@ import {
   ListItemLeadText,
 } from 'src/ui/List';
 import MyDialog, { MyDialogFooter, MyDialogHeader } from 'src/ui/MyDialog';
-import { formatTime, format, singularPlural } from 'src/util/helpers';
+import { Url, Helpers } from '@osu-wams/utils';
 import { getIconByScheduleType } from './course-utils';
 import Divider from 'src/ui/Divider';
 import { ExternalLink } from 'src/ui/Link';
-import Url from 'src/util/externalUrls.data';
 import { Event } from 'src/util/gaTracking';
 import {
   ICoursesMap,
@@ -31,6 +30,7 @@ import {
 import { fontSize, spacing, ThemeConfiguration } from 'src/theme';
 import { Types } from '@osu-wams/lib';
 
+const { formatTime, format, singularPlural } = Helpers;
 interface ICourse {
   coursesMap: ICoursesMap;
   isOpen: boolean;

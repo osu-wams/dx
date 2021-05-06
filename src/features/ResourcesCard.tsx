@@ -8,9 +8,8 @@ import { InternalLink } from '../ui/Link';
 import FailedState from '../ui/FailedState';
 import { Event } from '../util/gaTracking';
 import { Types } from '@osu-wams/lib';
-import { User, useResourcesByQueue } from '@osu-wams/hooks';
+import { State, User, useResourcesByQueue } from '@osu-wams/hooks';
 import { ResourceItem } from './resources/ResourceItem';
-import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { hasAudience } = User;
@@ -25,7 +24,7 @@ const ResourcesContainer = styled(CardContent)`
  * Displays resources from a given category
  */
 const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, icon }) => {
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const res = useResourcesByQueue(categ);
   const [resources, setResources] = useState<Types.Resource[]>([]);
   const [cardTitle, setCardTitle] = useState('');

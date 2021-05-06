@@ -4,11 +4,12 @@ import { Accordion, AccordionItem } from '@reach/accordion';
 import '@reach/accordion/styles.css';
 import { spacing, MainGridWrapper, MainGrid, breakpoints, fontSize, borderRadius } from 'src/theme';
 import PageTitle from 'src/ui/PageTitle';
-import { User } from '@osu-wams/hooks';
+import { State, User } from '@osu-wams/hooks';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { filteredNotifications, userMessagesState } from 'src/state';
 import { markNotificationRead } from 'src/features/notifications/notifications-utils';
 import { Notification } from 'src/features/notifications/Notification';
+
+const { filteredNotifications, userMessagesState } = State;
 
 const Notifications = () => {
   const notifications = useRecoilValue(filteredNotifications('all'));

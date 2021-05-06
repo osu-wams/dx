@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { useInfoButtons } from '@osu-wams/hooks';
+import { State, useInfoButtons } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { infoButtonState } from 'src/state';
 
 export const useInfoButtonsState = () => {
   const api = useInfoButtons();
-  const [infoButtons, setInfoButtons] = useRecoilState(infoButtonState);
+  const [infoButtons, setInfoButtons] = useRecoilState(State.infoButtonState);
 
   useEffect(() => {
     const { data } = api;

@@ -5,9 +5,9 @@ import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '../theme/themes';
 import { User } from '@osu-wams/lib';
+import { State } from '@osu-wams/hooks';
 import { mobile, desktop } from 'src/hooks/useMediaQuery';
 import { RecoilRoot } from 'recoil';
-import { userState } from 'src/state';
 import { rest } from 'msw';
 import { server } from 'src/mocks/server';
 import { HelmetProvider } from 'react-helmet-async';
@@ -66,7 +66,7 @@ const renderWithUserContext = (
     return (
       <RecoilRoot
         initializeState={(snap) => {
-          snap.set(userState, user);
+          snap.set(State.userState, user);
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
@@ -86,7 +86,7 @@ const renderWithAppContext = (ui, { initialStates = new Array(), ...options } = 
     return (
       <RecoilRoot
         initializeState={(snap) => {
-          snap.set(userState, authUser);
+          snap.set(State.userState, authUser);
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >
@@ -116,7 +116,7 @@ const renderWithAllContexts = (
     return (
       <RecoilRoot
         initializeState={(snap) => {
-          snap.set(userState, user);
+          snap.set(State.userState, user);
           initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
         }}
       >

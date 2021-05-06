@@ -1,24 +1,25 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/macro';
+import { State } from '@osu-wams/hooks';
 import { Loading } from 'src/ui/Loading';
 import { fontSize, spacing, breakpoints, MainGridWrapper, MainGrid } from 'src/theme';
 import PageTitle from 'src/ui/PageTitle';
 import { Card, CardHeader, CardContent } from 'src/ui/Card';
 import { Table, TableBody, TableRow, TableCell, TableHeader, TableHeaderCell } from 'src/ui/Table';
-import { singularPlural, titleCase } from 'src/util/helpers';
 import { Event } from 'src/util/gaTracking';
 import { AcademicSubNav } from './AcademicsSubNav';
 import { SearchBar } from 'src/ui/SearchBar';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import {
+import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
+import { Helpers, Routes } from '@osu-wams/utils';
+
+const {
   debouncedGradesSearchState,
   filteredGradesState,
   gradesSearchState,
   gradesState,
-} from 'src/state';
-import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
-import { dashboardState } from 'src/state/application';
-import { Routes } from 'src/routers';
+  dashboardState,
+} = State;
 
 const getSearchQuerystring = () => {
   if (window.location.search.startsWith('?c=')) {
@@ -47,7 +48,7 @@ const PastCourses = () => {
     if (dashboard.affiliation !== 'student' || dashboard.navigateTo.indexOf('past-courses') < 0) {
       setDashboardState({
         affiliation: 'student',
-        navigateTo: `${Routes()['past courses'].fullPath}${window.location.search}`,
+        navigateTo: `${Routes.Routes()['past courses'].fullPath}${window.location.search}`,
       });
     }
     return () => setQuery('');
@@ -98,7 +99,8 @@ const PastCourses = () => {
         {grades.data.length > 0 ? (
           <HistoryGrid aria-live="polite" aria-atomic="true">
             <Count>
-              Found {filteredGrades.length} {singularPlural(filteredGrades.length, 'course')}
+              Found {filteredGrades.length}{' '}
+              {Helpers.singularPlural(filteredGrades.length, 'course')}
             </Count>
             {Object.keys(gradesByTerm).map((key, index) => (
               <HistoryCard key={index} collapsing={CardCollapse(index, query)}>
@@ -128,12 +130,12 @@ const PastCourses = () => {
                           return (
                             <TableRow key={subindex}>
                               <TableCell>
-                                <CourseTitle>{titleCase(courseTitle)}</CourseTitle>
+                                <CourseTitle>{Helpers.titleCase(courseTitle)}</CourseTitle>
                                 <CourseData>
                                   <strong>
                                     {courseSubject} {courseNumber} &middot;
                                   </strong>{' '}
-                                  {creditHours} {singularPlural(creditHours, 'Credit')}
+                                  {creditHours} {Helpers.singularPlural(creditHours, 'Credit')}
                                 </CourseData>
                                 {courseReferenceNumber && (
                                   <CourseData>CRN: {courseReferenceNumber}</CourseData>

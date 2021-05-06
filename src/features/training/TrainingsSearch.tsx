@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { State } from '@osu-wams/hooks';
 import { useMediaQuery } from 'react-responsive';
 import { breakpoints } from 'src/theme';
 import { SearchBar } from 'src/ui/SearchBar';
-import {
+import { useRecoilState, useResetRecoilState } from 'recoil';
+
+const {
   selectedTrainingTagState,
   trainingSearchState,
   debouncedTrainingSearchState,
   selectedTrainingAudienceState,
-} from 'src/state';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+} = State;
 
 const TrainingsSearch: React.FC<any> = () => {
   const [query, setQuery] = useRecoilState(trainingSearchState);

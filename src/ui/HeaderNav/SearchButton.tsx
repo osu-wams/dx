@@ -6,7 +6,7 @@ import { HeaderNavButton } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import Icon from 'src/ui/Icon';
 import { useNavigate } from '@reach/router';
-import { Routes } from 'src/routers';
+import { Routes } from '@osu-wams/utils';
 
 const SearchButton = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const SearchButton = () => {
       <HeaderNavButton
         onClick={() => {
           Event('header', 'search-button', 'Search button clicked');
-          navigate(Routes().search.fullPath);
+          navigate(Routes.Routes().search.fullPath);
         }}
       >
         <Icon icon={faSearch} size="lg" />

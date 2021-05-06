@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { Constants, usePlannerItems } from '@osu-wams/hooks';
+import { Constants, usePlannerItems, State } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { plannerItemState, userState } from 'src/state';
+
+const { plannerItemState, userState } = State;
 
 export const usePlannerItemsState = () => {
   const user = useRecoilValue<Types.UserState>(userState);

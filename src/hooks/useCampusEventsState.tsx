@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { Constants, useCampusEvents } from '@osu-wams/hooks';
+import { State, Constants, useCampusEvents } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { localistEventsState } from 'src/state/events';
 
 export const useCampusEventsState = (campus: string) => {
   const api = useCampusEvents(campus, {
@@ -9,7 +8,7 @@ export const useCampusEventsState = (campus: string) => {
     staleTime: 1000 * 60 * 30,
     cacheTime: 1000 * 60 * 30,
   });
-  const [events, setEvents] = useRecoilState(localistEventsState({ campus }));
+  const [events, setEvents] = useRecoilState(State.localistEventsState({ campus }));
 
   useEffect(() => {
     const { isError, isLoading, isSuccess, data } = api;

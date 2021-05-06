@@ -3,11 +3,10 @@ import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
-import { format, formatDollars } from 'src/util/helpers';
 import { fontSize } from 'src/theme';
 import { useAccountTransactions } from '@osu-wams/hooks';
 import { ExternalLink } from 'src/ui/Link';
-import Url from 'src/util/externalUrls.data';
+import { Url, Helpers } from '@osu-wams/utils';
 import { Table, TableBody, TableCell, TableRow, TableHeader, TableHeaderCell } from '../ui/Table';
 import transaction from 'src/assets/transaction.svg';
 import { Event } from 'src/util/gaTracking';
@@ -91,13 +90,13 @@ const FinancialTransactions: FC = () => {
                 <TableRow key={index}>
                   <TransactionAmount>
                     <TransactionNumber transactionType={transaction.transactionType}>
-                      {formatDollars(transaction.amount)}
+                      {Helpers.formatDollars(transaction.amount)}
                     </TransactionNumber>
                     <TransactionDetail>{transaction.transactionType}</TransactionDetail>
                   </TransactionAmount>
                   <TransactionDetails>
                     <TransactionName>{transaction.description}</TransactionName>
-                    <TransactionDetail>{format(transaction.entryDate)}</TransactionDetail>
+                    <TransactionDetail>{Helpers.format(transaction.entryDate)}</TransactionDetail>
                   </TransactionDetails>
                 </TableRow>
               ))}

@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
 import { fontSize } from 'src/theme';
 import { Event } from 'src/util/gaTracking';
-import { format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 
 const ScheduleCardDayMenu = ({ selectedDay, nextFiveDays, setSelectedDay, daysWithEvents }) => {
   return (
@@ -23,10 +23,10 @@ const ScheduleCardDayMenu = ({ selectedDay, nextFiveDays, setSelectedDay, daysWi
           >
             <DayIndicator aria-hidden>{daysWithEvents.includes(day) ? '\u2022' : ''}</DayIndicator>
             <DayOfWeek aria-hidden selected={selected}>
-              {format(day, 'EEE')}
+              {Helpers.format(day, 'EEE')}
             </DayOfWeek>
-            <VisuallyHidden>{format(day, 'EEEE')}</VisuallyHidden>
-            <DayOfMonth selected={selected}>{format(day, 'd')}</DayOfMonth>
+            <VisuallyHidden>{Helpers.format(day, 'EEEE')}</VisuallyHidden>
+            <DayOfMonth selected={selected}>{Helpers.format(day, 'd')}</DayOfMonth>
           </DaySelector>
         );
       })}

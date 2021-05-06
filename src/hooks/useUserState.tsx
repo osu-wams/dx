@@ -1,13 +1,19 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { User } from '@osu-wams/lib';
-import { useUser } from '@osu-wams/hooks';
-import { dashboardState, initialRouteState, isLoadedState, userState } from 'src/state/application';
+import { State, useUser } from '@osu-wams/hooks';
 import { changeAffiliation } from 'src/util/user';
 import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 import { navigate } from '@reach/router';
-import { WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD } from 'src/state/messages';
-import { Routes } from 'src/routers';
+import { Routes } from '@osu-wams/utils';
+
+const {
+  dashboardState,
+  initialRouteState,
+  isLoadedState,
+  userState,
+  WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD,
+} = State;
 
 export const useUserState = () => {
   const userHook = useUser();
@@ -50,8 +56,12 @@ export const useUserState = () => {
       if (pathname === '/') {
         navigate(`/${userSetDashboard}`).then((v) => setIsLoaded(true));
       } else {
-        const onStudentDashboard = pathname.toLowerCase().startsWith(Routes().student.fullPath);
-        const onEmployeeDashboard = pathname.toLowerCase().startsWith(Routes().employee.fullPath);
+        const onStudentDashboard = pathname
+          .toLowerCase()
+          .startsWith(Routes.Routes().student.fullPath);
+        const onEmployeeDashboard = pathname
+          .toLowerCase()
+          .startsWith(Routes.Routes().employee.fullPath);
         // Visiting any route that doesn't start with /student or /employee just loads the application
         if (!onStudentDashboard && !onEmployeeDashboard) {
           if (initialRoute && initialRoute !== '/') {
@@ -62,7 +72,7 @@ export const useUserState = () => {
           // User is a student (non-employee type) visiting an employee dashboard link, redirect them to the student dashboard
           if (!User.isEmployee(data) && onEmployeeDashboard) {
             addMessage(WARN_STUDENT_ACCESS_EMPLOYEE_DASHBOARD);
-            navigate(Routes().student.fullPath).then((v) => setIsLoaded(true));
+            navigate(Routes.Routes().student.fullPath).then((v) => setIsLoaded(true));
           } else {
             // changeAffiliation to match the dashboard they are attempting to visit, which will cause the effect to re-run
             // and finally be handled the by the last else-statement to setIsLoaded(true)

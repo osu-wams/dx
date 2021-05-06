@@ -9,7 +9,7 @@ import {
 } from 'src/ui/Highlights';
 import { fontSize } from 'src/theme';
 import { useHolds } from '@osu-wams/hooks';
-import { singularPlural, format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 
 const HoldsList = styled.ul`
   margin: 0;
@@ -41,7 +41,7 @@ export const StudentHolds: React.FC = () => {
         <HighlightDescription>
           <span>You have</span>
           <HighlightEmphasisInline> {data.length}</HighlightEmphasisInline>
-          <span> {singularPlural(data.length, 'hold')} on your student account.</span>
+          <span> {Helpers.singularPlural(data.length, 'hold')} on your student account.</span>
           {data.length > 0 && (
             <HoldsList>
               {data.map(
@@ -49,7 +49,7 @@ export const StudentHolds: React.FC = () => {
                   h.description && (
                     <li key={i}>
                       <HoldTitle>{h.description}</HoldTitle>
-                      <HoldDescription>Effective {format(h.fromDate)}</HoldDescription>
+                      <HoldDescription>Effective {Helpers.format(h.fromDate)}</HoldDescription>
                     </li>
                   )
               )}

@@ -1,8 +1,9 @@
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import { messagesState, showMessage } from 'src/state/messages';
 import { Types } from '@osu-wams/lib';
 import nanoid from 'nanoid';
-import { Errors } from '@osu-wams/hooks';
+import { State, Errors } from '@osu-wams/hooks';
+
+const { messagesState, showMessage } = State;
 
 export const useApplicationMessages = () => {
   const setMessages = useSetRecoilState(messagesState);

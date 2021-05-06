@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
 import Courses from '../Courses';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
-import { format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 import { startDate } from '../schedule/schedule-utils';
 import { courseState, infoButtonState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
@@ -94,7 +94,7 @@ describe('<Courses />', () => {
     expect(courseDialog).toBeInTheDocument();
 
     // For Final exams we spell out the month and day (match meetingDateTime format on Course.tsx)
-    const monthDay = format(startDate(), 'MMMM d');
+    const monthDay = Helpers.format(startDate(), 'MMMM d');
     expect(courseDialog).toHaveTextContent(monthDay);
   });
 

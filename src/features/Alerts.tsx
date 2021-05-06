@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, Badge } from 'src/ui/Card';
 import Icon from 'src/ui/Icon';
-import { format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 import { Types } from '@osu-wams/lib';
 import { useDxAlerts, useRaveAlerts } from '@osu-wams/hooks';
 import { fontSize, breakpoints } from 'src/theme';
@@ -84,7 +84,7 @@ const Alerts = () => {
       />
       <AlertContent>
         <p>
-          {format(alert.updated)}: {alert.content ?? ''}
+          {Helpers.format(alert.updated)}: {alert.content ?? ''}
         </p>
       </AlertContent>
     </AlertCardWrapper>

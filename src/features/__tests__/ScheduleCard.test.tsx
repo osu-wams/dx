@@ -6,7 +6,7 @@ import { Events, Student } from '@osu-wams/hooks';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
-import { format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 import { courseState, plannerItemState } from 'src/state';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
@@ -127,7 +127,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
-    const duePartialText = `Due ${format(new Date(), 'dueAt')}`.slice(0, -5);
+    const duePartialText = `Due ${Helpers.format(new Date(), 'dueAt')}`.slice(0, -5);
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
     const todayPlannerItem = screen.getByText(/Testo Planner Discussion/);

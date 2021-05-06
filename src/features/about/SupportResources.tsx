@@ -16,7 +16,7 @@ import {
   ListItemContentLinkName,
 } from 'src/ui/List';
 import { Event } from 'src/util/gaTracking';
-import Url from 'src/util/externalUrls.data';
+import { Url } from '@osu-wams/utils';
 
 const SupportResources: FC = () => {
   const themeContext = useContext(ThemeContext);

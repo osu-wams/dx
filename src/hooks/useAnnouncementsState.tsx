@@ -1,13 +1,8 @@
 import { useEffect } from 'react';
-import { User, useAnnouncements } from '@osu-wams/hooks';
+import { State, User, useAnnouncements } from '@osu-wams/hooks';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  announcementsFilterState,
-  announcementState,
-  filteredAnnouncements,
-} from 'src/state/announcements';
-import { userState } from 'src/state';
 
+const { announcementsFilterState, announcementState, filteredAnnouncements, userState } = State;
 const { getAffiliation } = User;
 
 export const useAnnouncementsState = (page: string) => {

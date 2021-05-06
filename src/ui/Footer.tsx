@@ -10,11 +10,10 @@ import { Event } from 'src/util/gaTracking';
 import Button from './Button';
 import { fontSize, borderRadius, breakpoints } from 'src/theme';
 import Icon from './Icon';
-import Url from 'src/util/externalUrls.data';
+import { Url } from '@osu-wams/utils';
 import Masquerade from 'src/features/Masquerade';
-import { User, useAppVersions } from '@osu-wams/hooks';
+import { State, User, useAppVersions } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
-import { userState } from 'src/state';
 
 const { GROUPS } = User;
 
@@ -76,7 +75,7 @@ const FooterDeployedContent = styled.span`
 `;
 
 const Footer = () => {
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const {
     data: { serverVersion, appVersion },
   } = useAppVersions({ serverVersion: '', appVersion: '' });

@@ -12,36 +12,9 @@ import {
   ListItemFlex,
 } from 'src/ui/List';
 import { courseCodeOrIcon } from 'src/features/Courses';
-import Url from 'src/util/externalUrls.data';
+import { Canvas, Course } from '@osu-wams/utils';
 import { Event } from 'src/util/gaTracking';
 import { Bubble } from 'src/ui/Bubble';
-import { plannerItemDate } from '../course-utils';
-
-/**
- * Some Canvas link include the full path including https://instructure...
- * Check to see if that data is included, and if so don't prepend it.
- * If that's not there we add that ourselves. (Most links don't have it)
- */
-export const canvasUrl = (url) => {
-  if (!url) {
-    return Url.canvas.main;
-  }
-  // Old canvas url is replaced with the new format
-  if (url.startsWith(Url.canvas.mainOld)) {
-    const newUrl = url.replace(Url.canvas.mainOld, Url.canvas.main);
-    return newUrl;
-  }
-  // Canvas url is correctly formed or legacy url for dev.dx
-  if (
-    url.startsWith(Url.canvas.main) ||
-    url.startsWith(Url.canvas.betaOld) ||
-    url.startsWith(Url.canvas.testOld)
-  ) {
-    return url;
-  } else {
-    return Url.canvas.main + url;
-  }
-};
 
 // removes underscores from plannable_type
 const replaceUnderScore = (val: string) => {
@@ -60,7 +33,9 @@ export const CanvasPlannerItems = ({
   const PlannerText = ({ title, plannable_type, plannable_date }) => (
     <ListItemText>
       <ListItemHeader>{title}</ListItemHeader>
-      <ListItemDescription>{plannerItemDate(plannable_type, plannable_date)}</ListItemDescription>
+      <ListItemDescription>
+        {Course.plannerItemDate(plannable_type, plannable_date)}
+      </ListItemDescription>
     </ListItemText>
   );
 
@@ -86,10 +61,10 @@ export const CanvasPlannerItems = ({
           <ListItemFlex key={plannable_id} hoverable={typeof html_url !== 'undefined'}>
             {html_url ? (
               <ListItemContentLink
-                href={canvasUrl(html_url)}
+                href={Canvas.canvasUrl(html_url)}
                 target="_blank"
                 onClick={() =>
-                  Event('planner-items', 'Canvas planner item click', canvasUrl(html_url))
+                  Event('planner-items', 'Canvas planner item click', Canvas.canvasUrl(html_url))
                 }
               >
                 {courseCodeOrIcon(context_name, courses, <PlannerIcon />)}

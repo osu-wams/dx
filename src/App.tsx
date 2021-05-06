@@ -10,12 +10,13 @@ import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
-import { userState, themeState } from './state';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
+import { State } from '@osu-wams/hooks';
+import { Routes } from '@osu-wams/utils';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
-import { RouterPage, Routes } from './routers';
+import { RouterPage } from './routers';
 import Profile from './pages/Profile';
 import About from './pages/About';
 import Search from './pages/Search';
@@ -33,7 +34,8 @@ import {
   useUserState,
   useSearchIndexState,
 } from 'src/hooks';
-import { initialRouteState, isLoadedState } from './state/application';
+
+const { initialRouteState, isLoadedState, userState, themeState } = State;
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -163,13 +165,13 @@ const App = (props: AppProps) => {
                 <AnimatePresence exitBeforeEnter>
                   <Router>
                     <RouterPage default pageComponent={<PageNotFound />} />
-                    <EmployeeRouter path={Routes().employee.path + '/*'} />
-                    <StudentRouter path={Routes().student.path + '/*'} />
-                    <RouterPage path={Routes().profile.path} pageComponent={<Profile />} />
-                    <RouterPage path={Routes().about.path} pageComponent={<About />} />
-                    <RouterPage path={Routes().search.path} pageComponent={<Search />} />
+                    <EmployeeRouter path={Routes.Routes().employee.path + '/*'} />
+                    <StudentRouter path={Routes.Routes().student.path + '/*'} />
+                    <RouterPage path={Routes.Routes().profile.path} pageComponent={<Profile />} />
+                    <RouterPage path={Routes.Routes().about.path} pageComponent={<About />} />
+                    <RouterPage path={Routes.Routes().search.path} pageComponent={<Search />} />
                     <RouterPage
-                      path={Routes().notifications.path}
+                      path={Routes.Routes().notifications.path}
                       pageComponent={<Notifications />}
                     />
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (

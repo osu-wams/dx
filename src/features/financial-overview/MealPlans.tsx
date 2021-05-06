@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/macro';
 import { Loading } from 'src/ui/Loading';
 import { useMealPlans } from '@osu-wams/hooks';
-import { formatDollars } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 import {
   Highlight,
   HighlightTitle,
@@ -41,7 +41,7 @@ export const MealPlans = () => {
                 : themeContext.features.finances.mealPlans.emphasisNoBalance.color
             }
           >
-            {formatDollars(mealPlans.data[0].attributes?.balance)}
+            {Helpers.formatDollars(mealPlans.data[0].attributes?.balance)}
           </HighlightEmphasis>
           <HighlightTitle marginTop={0}>Meal Plan Balance</HighlightTitle>
           <HighlightDescription>

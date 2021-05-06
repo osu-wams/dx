@@ -3,18 +3,20 @@ import { Menu, MenuItem, MenuPopover } from '@reach/menu-button';
 import { faDotCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faCaretDown } from '@fortawesome/pro-solid-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
+import { State } from '@osu-wams/hooks';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Event, IComponents } from 'src/util/gaTracking';
-import {
+import Icon from 'src/ui/Icon';
+import { ThemeContext } from 'styled-components/macro';
+import { MenuButtonWrapper, MenuListWrapper } from './TrainingStyles';
+
+const {
   selectedTrainingAudienceState,
   selectedTrainingTagState,
   trainingSearchState,
   trainingAudienceState,
   trainingTagState,
-} from 'src/state';
-import Icon from 'src/ui/Icon';
-import { ThemeContext } from 'styled-components/macro';
-import { MenuButtonWrapper, MenuListWrapper } from './TrainingStyles';
+} = State;
 
 const TrainingsFilter: React.FC<any> = ({
   filterState,

@@ -1,14 +1,16 @@
 import React from 'react';
+import { State } from '@osu-wams/hooks';
 import TrainingsFilter from './TrainingsFilter';
 import { Event } from 'src/util/gaTracking';
-import {
+import { TrainingSubHeader } from './TrainingStyles';
+
+const {
   selectedTrainingAudienceState,
   selectedTrainingTagState,
   trainingSearchState,
   trainingAudienceState,
   trainingTagState,
-} from 'src/state';
-import { TrainingSubHeader } from './TrainingStyles';
+} = State;
 
 const TrainingsFilters: React.FC<any> = () => {
   return (

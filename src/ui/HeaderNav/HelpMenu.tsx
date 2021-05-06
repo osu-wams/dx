@@ -2,12 +2,11 @@ import React from 'react';
 import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { faQuestionCircle, faComment, faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';
-import Url from 'src/util/externalUrls.data';
+import { Url, Routes } from '@osu-wams/utils';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import Icon from 'src/ui/Icon';
 import { Link } from '@reach/router';
-import { Routes } from 'src/routers';
 
 const HelpMenu = () => {
   return (
@@ -22,7 +21,7 @@ const HelpMenu = () => {
         <HeaderNavList>
           <MenuLink
             as={Link}
-            to={Routes().about.fullPath}
+            to={Routes.Routes().about.fullPath}
             onClick={() => Event('header', 'help-button-menu', 'About MyOregonState link clicked')}
           >
             <Icon icon={faInfoCircle} />

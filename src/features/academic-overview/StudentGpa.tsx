@@ -6,13 +6,12 @@ import {
   HighlightEmphasis,
   HighlightDescription,
 } from 'src/ui/Highlights';
-import { useGpa } from '@osu-wams/hooks';
+import { State, useGpa } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { useRecoilValue } from 'recoil';
-import { userState } from 'src/state';
 
 export const StudentGpa: React.FC = () => {
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const { data, isLoading, isSuccess } = useGpa();
   const [selectedGpa, setSelectedGpa] = useState<Types.GpaLevel>({
     gpa: '',

@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { useCards } from '@osu-wams/hooks';
+import { State, useCards } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { dynamicCardState } from 'src/state';
 
 export const useCardsState = () => {
   const api = useCards();
-  const [cards, setCards] = useRecoilState(dynamicCardState);
+  const [cards, setCards] = useRecoilState(State.dynamicCardState);
 
   useEffect(() => {
     const { isLoading, isSuccess, data } = api;

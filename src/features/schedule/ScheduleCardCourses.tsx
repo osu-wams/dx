@@ -10,10 +10,9 @@ import {
   NoItemsImage,
   NoItemsText,
 } from './ScheduleCardStyles';
-import Url from 'src/util/externalUrls.data';
+import { Url, Helpers } from '@osu-wams/utils';
 import Icon from 'src/ui/Icon';
 import coursesSvg from 'src/assets/courses.svg';
-import { formatTime } from 'src/util/helpers';
 import {
   List,
   ListItem,
@@ -136,8 +135,8 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
                 {course.attributes.scheduleDescription} &bull; {meetingTimeDescription(meetingTime)}
               </ListItemDescription>
               <ListItemDescription>
-                {meetingTime.beginTime && formatTime(meetingTime.beginTime) + ' - '}
-                {meetingTime.endTime && formatTime(meetingTime.endTime)}
+                {meetingTime.beginTime && Helpers.formatTime(meetingTime.beginTime) + ' - '}
+                {meetingTime.endTime && Helpers.formatTime(meetingTime.endTime)}
               </ListItemDescription>
             </ListItemText>
             {courseOnCorvallisCampus(course) && meetingTimeCampusMap(course, meetingTime)}

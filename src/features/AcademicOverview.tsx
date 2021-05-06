@@ -13,17 +13,16 @@ import { AcademicStanding } from './academic-overview/AcademicStanding';
 import { StudentHolds } from './academic-overview/StudentHolds';
 import { StudentGpa } from './academic-overview/StudentGpa';
 import { StudentEnrolledCredits } from './academic-overview/StudentEnrolledCredits';
-import Url from '../util/externalUrls.data';
+import { Url } from '@osu-wams/utils';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
-import { User } from '@osu-wams/hooks';
-import { userState } from 'src/state';
+import { State, User } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
 
 const { isGraduate } = User;
 
 export const AcademicOverview = () => {
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
 
   return (
     <Card collapsing={false}>

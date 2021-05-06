@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { useResources } from '@osu-wams/hooks';
+import { State, useResources } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { resourceState } from 'src/state';
 
 export const useResourcesState = () => {
   const api = useResources();
-  const [resources, setResources] = useRecoilState(resourceState);
+  const [resources, setResources] = useRecoilState(State.resourceState);
 
   useEffect(() => {
     const { isError, isLoading, isSuccess, data } = api;

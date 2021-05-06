@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { useCourseSchedule } from '@osu-wams/hooks';
+import { State, useCourseSchedule } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { courseState } from 'src/state';
 
 export const useCourseScheduleState = () => {
   const api = useCourseSchedule();
-  const [courses, setCourses] = useRecoilState(courseState);
+  const [courses, setCourses] = useRecoilState(State.courseState);
 
   useEffect(() => {
     const { isError, isLoading, isSuccess, data } = api;

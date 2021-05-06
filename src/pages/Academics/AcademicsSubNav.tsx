@@ -2,15 +2,15 @@ import React from 'react';
 import { faThLarge, faClock } from '@fortawesome/pro-light-svg-icons';
 import { SubNav, SubNavLink } from 'src/ui/SubNav';
 import Icon from 'src/ui/Icon';
-import { Routes } from 'src/routers';
+import { Routes } from '@osu-wams/utils';
 
 const AcademicSubNav = () => {
   return (
     <SubNav>
-      <SubNavLink to={Routes().academics.fullPath}>
+      <SubNavLink to={Routes.Routes().academics.fullPath}>
         <Icon icon={faThLarge} /> Dashboard
       </SubNavLink>
-      <SubNavLink to={Routes()['past courses'].fullPath}>
+      <SubNavLink to={Routes.Routes()['past courses'].fullPath}>
         <Icon icon={faClock} />
         Past Courses
       </SubNavLink>

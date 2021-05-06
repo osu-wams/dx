@@ -5,27 +5,27 @@ import { Event } from 'src/util/gaTracking';
 import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
 import { Mobile, Desktop } from 'src/hooks/useMediaQuery';
-import { Routes, Dashboards } from 'src/routers';
+import { Routes } from '@osu-wams/utils';
 
 const MainNavStudent = (...props) => {
   return (
     <Nav {...props}>
       <NavLink
-        to={Routes().student.fullPath}
+        to={Routes.Routes().student.fullPath}
         onClick={() => Event('student-navigation-main', 'Overview link clicked')}
       >
         <Icon icon={faHome} />
         Overview
       </NavLink>
       <NavLink
-        to={Routes().academics.fullPath}
+        to={Routes.Routes().academics.fullPath}
         onClick={() => Event('student-navigation-main', 'Academics link clicked')}
       >
         <Icon icon={faGraduationCap} />
         Academics
       </NavLink>
       <NavLink
-        to={Routes().finances.fullPath}
+        to={Routes.Routes().finances.fullPath}
         onClick={() => Event('student-navigation-main', 'Finances link clicked')}
       >
         <Icon icon={faHandsUsd} />
@@ -47,7 +47,7 @@ const DesktopLinks = () => {
   return (
     <>
       <NavLink
-        to={Routes(Dashboards.student).resources.fullPath}
+        to={Routes.Routes(Routes.Dashboards.student).resources.fullPath}
         onClick={() => Event('student-navigation-main', 'Resource link clicked')}
       >
         <Icon icon={faList} />

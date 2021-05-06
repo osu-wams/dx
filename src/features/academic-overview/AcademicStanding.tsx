@@ -7,7 +7,7 @@ import {
   HighlightDescription,
 } from 'src/ui/Highlights';
 import { useAcademicStatus } from '@osu-wams/hooks';
-import Url from 'src/util/externalUrls.data';
+import { Url } from '@osu-wams/utils';
 import { SimpleExternalLink } from 'src/ui/Link';
 import { Event } from 'src/util/gaTracking';
 

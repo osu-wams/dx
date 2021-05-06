@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { useGrades } from '@osu-wams/hooks';
+import { State, useGrades } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { gradesState } from 'src/state';
 
 export const useGradesState = () => {
   const api = useGrades();
-  const [grades, setGrades] = useRecoilState(gradesState);
+  const [grades, setGrades] = useRecoilState(State.gradesState);
 
   useEffect(() => {
     const { isError, isLoading, isSuccess, data } = api;

@@ -3,6 +3,7 @@ import ReactGA from 'react-ga';
 import { CloseButton } from 'src/ui/Button';
 import { LeadText, Description } from 'src/ui/Text';
 import { Types } from '@osu-wams/lib';
+import { Helpers, Routes } from '@osu-wams/utils';
 import MyDialog, {
   MyDialogFooter,
   MyDialogContent,
@@ -12,11 +13,9 @@ import MyDialog, {
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink, InternalLink, LinkDivider } from 'src/ui/Link';
 import { TwoCol } from 'src/ui/Grids';
-import { commaList } from 'src/util/helpers';
 import { ThemeContext } from 'styled-components/macro';
 import { useMediaQuery } from 'react-responsive';
 import { breakpoints } from 'src/theme';
-import { Routes } from 'src/routers';
 
 const TrainingDetails: React.FC<any> = ({
   training,
@@ -72,7 +71,7 @@ const TrainingDetails: React.FC<any> = ({
         <TwoCol>
           <div>
             <LeadText>Delivery Method</LeadText>
-            <Description>{commaList(training.deliveryMethod, empty)}</Description>
+            <Description>{Helpers.commaList(training.deliveryMethod, empty)}</Description>
 
             <LeadText>Offered by</LeadText>
             <Description>{training.offeredBy ? training.offeredBy : empty}</Description>
@@ -86,7 +85,7 @@ const TrainingDetails: React.FC<any> = ({
             <Description>{training.prerequisites ? training.prerequisites : empty}</Description>
 
             <LeadText>Audience</LeadText>
-            <Description>{commaList(training.audiences, empty)}</Description>
+            <Description>{Helpers.commaList(training.audiences, empty)}</Description>
 
             <LeadText>Cost</LeadText>
             <Description>{training.cost ? 'Yes' : 'No cost'}</Description>
@@ -97,7 +96,7 @@ const TrainingDetails: React.FC<any> = ({
         {!!includeShowAll && (
           <>
             <InternalLink
-              to={Routes().trainings.fullPath}
+              to={Routes.Routes().trainings.fullPath}
               onClick={() => {
                 Event('training', 'modal link: See all trainings page link');
                 close();

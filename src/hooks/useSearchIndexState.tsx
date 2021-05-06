@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { usePageSearchIndex } from '@osu-wams/hooks';
+import { State, usePageSearchIndex } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
-import { pageSearchIndexState } from 'src/state';
 
 export const useSearchIndexState = () => {
   const api = usePageSearchIndex();
-  const [pageSearchIndex, setPageSearchIndex] = useRecoilState(pageSearchIndexState);
+  const [pageSearchIndex, setPageSearchIndex] = useRecoilState(State.pageSearchIndexState);
 
   useEffect(() => {
     const { isLoading, isSuccess, isError, data } = api;

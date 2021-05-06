@@ -1,4 +1,6 @@
-import {
+import { Helpers } from '@osu-wams/utils';
+
+const {
   titleCase,
   formatTime,
   format,
@@ -8,7 +10,7 @@ import {
   arrayIncludes,
   commaList,
   removeDuplicates,
-} from '../helpers';
+} = Helpers;
 
 describe('titleCase', () => {
   it('should transform UPPERCASE', () => {

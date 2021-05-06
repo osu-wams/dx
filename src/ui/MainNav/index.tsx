@@ -1,8 +1,7 @@
 import React from 'react';
 import { MainNavStudent } from './MainNavStudent';
 import { MainNavEmployee } from './MainNavEmployee';
-import { User } from '@osu-wams/hooks';
-import { userState } from 'src/state';
+import { User, State } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
 
 const { hasPrimaryAffiliation, AFFILIATIONS } = User;
@@ -13,7 +12,7 @@ const { hasPrimaryAffiliation, AFFILIATIONS } = User;
  * @returns the MainNav component based on your primary affiliation
  */
 const MainNav = () => {
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   if (hasPrimaryAffiliation(user?.data, [AFFILIATIONS.employee])) {
     return <MainNavEmployee />;
   } else {

@@ -8,17 +8,18 @@ import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import getMUITheme from 'src/ui/MUITheme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
+import { spacing } from 'src/theme/theme-settings';
+import { User, State } from '@osu-wams/hooks';
+
+const {
   applicationTypeFilterState,
   applicationAudienceFilterState,
   applicationCampusFilterState,
   applicationFilterState,
-} from 'src/state/applicationSearch';
-import { themeState } from 'src/state';
-import { spacing } from 'src/theme/theme-settings';
-import { userState } from 'src/state';
-import { User } from '@osu-wams/hooks';
-import { isEmployeeState } from 'src/state/application';
+  themeState,
+  userState,
+  isEmployeeState,
+} = State;
 
 const FieldsetList = styled.div`
   > fieldset:last-child {
