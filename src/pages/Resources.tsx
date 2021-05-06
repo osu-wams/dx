@@ -69,8 +69,8 @@ const Resources = () => {
     }
     setActiveCategory(category);
 
-    window.onpopstate = function () {
-      if (history.state?.category) setActiveCategory(history.state.category);
+    window.onpopstate = (ev: any) => {
+      if (ev.state?.category) setActiveCategory(ev.state.category);
     };
 
     return () => setActiveCategory('');
