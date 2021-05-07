@@ -5,10 +5,9 @@ import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { useRecoilValue } from 'recoil';
-import { State, User, Admin } from '@osu-wams/hooks';
+import { State, User, Admin, useApplicationMessagesState } from '@osu-wams/hooks';
 import Button from 'src/ui/Button';
 import { Event } from 'src/util/gaTracking';
-import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
 
 const { postSettings, usersSettings } = User;
 
@@ -16,7 +15,7 @@ const AdminSettings: FC = () => {
   const user = useRecoilValue(State.userState);
   const [devTools, setDevTools] = React.useState<boolean>(user.data.devTools ?? false);
   const [disabled, setDisabled] = React.useState<boolean>(false);
-  const { addMessage } = useApplicationMessages();
+  const { addMessage } = useApplicationMessagesState();
 
   React.useEffect(() => {
     setDevTools(user.data.devTools ?? false);

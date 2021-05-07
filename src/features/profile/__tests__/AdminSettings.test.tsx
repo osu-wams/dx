@@ -8,12 +8,6 @@ import { mockGAEvent } from 'src/setupTests';
 jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
 
 const mockAddMessage = jest.fn();
-jest.mock('../../../hooks/useApplicationMessages.tsx', () => ({
-  useApplicationMessages: () => ({
-    addMessage: mockAddMessage,
-  }),
-}));
-
 const mockPostSettings = jest.fn();
 const mockApiCache = jest.fn();
 const mockPostAppMessageError = jest.fn();
@@ -21,6 +15,9 @@ jest.mock('@osu-wams/hooks', () => {
   const original = jest.requireActual('@osu-wams/hooks');
   return {
     ...original,
+    useApplicationMessagesState: () => ({
+      addMessage: mockAddMessage,
+    }),
     User: {
       ...original.User,
       postSettings: () => mockPostSettings(),

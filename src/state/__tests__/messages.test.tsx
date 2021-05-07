@@ -3,15 +3,14 @@ import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Message } from '@osu-wams/lib';
-import { State } from '@osu-wams/hooks';
-import { useApplicationMessages } from '../../hooks/useApplicationMessages';
+import { State, useApplicationMessagesState } from '@osu-wams/hooks';
 
 jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
 
 const newMessage = jest.fn();
 
 const TestComponent = () => {
-  const { message, addMessage, dismissMessage } = useApplicationMessages();
+  const { message, addMessage, dismissMessage } = useApplicationMessagesState();
   return (
     <>
       <button onClick={() => addMessage(newMessage())}>Add</button>

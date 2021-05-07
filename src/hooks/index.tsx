@@ -1,6 +1,5 @@
 import useAffiliationEventsState from './useAffiliationEventsState';
 import useAnnouncementsState from './useAnnouncementsState';
-import { useApplicationMessages } from './useApplicationMessages';
 import useCampusEventsState from './useCampusEventsState';
 import useCardsState from './useCardsState';
 import useCourseScheduleState from './useCourseScheduleState';
@@ -12,13 +11,11 @@ import usePlannerItemsState from './usePlannerItemsState';
 import useResetScroll from './useResetScroll';
 import useResourcesState from './useResourcesState';
 import useTrainingsState from './useTrainingsState';
-import useUserState from './useUserState';
 import useSearchIndexState from './useSearchIndexState';
 
 export {
   useAffiliationEventsState,
   useAnnouncementsState,
-  useApplicationMessages,
   useCampusEventsState,
   useCardsState,
   useCourseScheduleState,
@@ -30,6 +27,5 @@ export {
   useResetScroll,
   useResourcesState,
   useTrainingsState,
-  useUserState,
-  useSearchIndexState
+  useSearchIndexState,
 };

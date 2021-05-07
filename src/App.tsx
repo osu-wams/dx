@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { Router, Location, RouteComponentProps } from '@reach/router';
+import { navigate, Router, Location, RouteComponentProps } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
@@ -12,7 +12,7 @@ import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
-import { State } from '@osu-wams/hooks';
+import { State, useUserState } from '@osu-wams/hooks';
 import { Routes } from '@osu-wams/utils';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
@@ -31,7 +31,6 @@ import {
   usePlannerItemsState,
   useResourcesState,
   useTrainingsState,
-  useUserState,
   useSearchIndexState,
 } from 'src/hooks';
 
@@ -91,7 +90,7 @@ const App = (props: AppProps) => {
   const user = useRecoilValue<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const containerElementRef = useRef(props.containerElement);
-  useUserState();
+  useUserState(navigate);
   useGradesState();
   useCourseScheduleState();
   usePlannerItemsState();
