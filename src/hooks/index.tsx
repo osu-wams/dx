@@ -1,6 +1,3 @@
-import useAffiliationEventsState from './useAffiliationEventsState';
-import useAnnouncementsState from './useAnnouncementsState';
-import useCampusEventsState from './useCampusEventsState';
 import useCardsState from './useCardsState';
 import useCourseScheduleState from './useCourseScheduleState';
 import useDebouncedSearchState from './useDebouncedSearchState';
@@ -13,9 +10,6 @@ import useTrainingsState from './useTrainingsState';
 import useSearchIndexState from './useSearchIndexState';
 
 export {
-  useAffiliationEventsState,
-  useAnnouncementsState,
-  useCampusEventsState,
   useCardsState,
   useCourseScheduleState,
   useDebouncedSearchState,

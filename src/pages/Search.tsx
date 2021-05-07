@@ -1,5 +1,5 @@
 import React from 'react';
-import { State } from '@osu-wams/hooks';
+import { State, useAnnouncementsState } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import styled from 'styled-components/macro';
 import { MainGridWrapper, spacing } from '../theme';
@@ -13,7 +13,6 @@ import {
 } from 'src/features/application-search';
 import SearchResultListItem from 'src/ui/ApplicationSearch/SearchResultListItem';
 import { useRecoilValue } from 'recoil';
-import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
 import { Desktop, Mobile } from 'src/hooks/useMediaQuery';
 import { FiltersMobile } from 'src/features/application-search/FiltersMobile';
 import emptySearch from 'src/assets/empty-search.svg';

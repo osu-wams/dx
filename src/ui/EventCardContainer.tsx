@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { Title } from 'src/ui/PageTitle';
 import { Types } from '@osu-wams/lib';
-import { State, User } from '@osu-wams/hooks';
+import {
+  State,
+  User,
+  useAffiliationEventsState,
+  useAnnouncementsState,
+  useCampusEventsState,
+} from '@osu-wams/hooks';
 import { Helpers } from '@osu-wams/utils';
 import EventCard from './EventCard';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
 import { useRecoilValue } from 'recoil';
-import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
-import useCampusEventsState from 'src/hooks/useCampusEventsState';
-import useAffiliationEventsState from 'src/hooks/useAffiliationEventsState';
 
 const { hasAudience, atCampus, CAMPUS_CODES, hasPrimaryAffiliation, AFFILIATIONS } = User;
 
