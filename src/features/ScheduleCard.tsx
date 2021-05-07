@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Loading } from 'src/ui/Loading';
 import { isSameDay } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { State, useAcademicCalendarEvents } from '@osu-wams/hooks';
+import { State, useAcademicCalendarEvents, useCourseScheduleState } from '@osu-wams/hooks';
 import { getNextFiveDays, coursesOnDay, startDate } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
@@ -14,7 +14,6 @@ import { Helpers } from '@osu-wams/utils';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
 
 const { userState, plannerItemState } = State;
 
