@@ -1,4 +1,3 @@
-import useCardsState from './useCardsState';
 import useCourseScheduleState from './useCourseScheduleState';
 import useDebouncedSearchState from './useDebouncedSearchState';
 import useGradesState from './useGradesState';
@@ -10,7 +9,6 @@ import useTrainingsState from './useTrainingsState';
 import useSearchIndexState from './useSearchIndexState';
 
 export {
-  useCardsState,
   useCourseScheduleState,
   useDebouncedSearchState,
   useGradesState,
