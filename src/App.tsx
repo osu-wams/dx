@@ -18,6 +18,7 @@ import {
   useUserState,
   useResourcesState,
   useTrainingsState,
+  usePageSearchIndexState,
 } from '@osu-wams/hooks';
 import { Routes } from '@osu-wams/utils';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
@@ -34,7 +35,6 @@ import {
   useGradesState,
   useInfoButtonsState,
   usePlannerItemsState,
-  useSearchIndexState,
 } from 'src/hooks';
 
 const { initialRouteState, isLoadedState, userState, themeState } = State;
@@ -101,7 +101,7 @@ const App = (props: AppProps) => {
   useCardsState();
   useInfoButtonsState();
   useTrainingsState();
-  useSearchIndexState();
+  usePageSearchIndexState();
 
   /* eslint-disable react-hooks/exhaustive-deps  */
 
