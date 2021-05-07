@@ -15,13 +15,14 @@ import { Types } from '@osu-wams/lib';
 import {
   State,
   useCardsState,
-  useUserState,
-  useResourcesState,
-  useTrainingsState,
-  usePageSearchIndexState,
   useCourseScheduleState,
   useGradesState,
+  useInfoButtonsState,
+  usePageSearchIndexState,
   usePlannerItemsState,
+  useResourcesState,
+  useTrainingsState,
+  useUserState,
 } from '@osu-wams/hooks';
 import { Routes } from '@osu-wams/utils';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
@@ -33,7 +34,6 @@ import Search from './pages/Search';
 import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
-import { useInfoButtonsState } from 'src/hooks';
 
 const { initialRouteState, isLoadedState, userState, themeState } = State;
 
