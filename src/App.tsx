@@ -12,7 +12,13 @@ import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
-import { State, useCardsState, useUserState, useResourcesState } from '@osu-wams/hooks';
+import {
+  State,
+  useCardsState,
+  useUserState,
+  useResourcesState,
+  useTrainingsState,
+} from '@osu-wams/hooks';
 import { Routes } from '@osu-wams/utils';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
@@ -28,7 +34,6 @@ import {
   useGradesState,
   useInfoButtonsState,
   usePlannerItemsState,
-  useTrainingsState,
   useSearchIndexState,
 } from 'src/hooks';
 
