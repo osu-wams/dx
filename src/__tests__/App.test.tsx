@@ -46,7 +46,8 @@ it('renders <App> without crashing', () => {
   // ReactDOM.unmountComponentAtNode(div);
 });
 
-it('changes from student dashboard (default user) to employee dashboard', () => {
+// TODO: Test behavior moved to @osu-wams/hooks package
+xit('changes from student dashboard (default user) to employee dashboard', () => {
   mockPostSettings.mockResolvedValue(true);
   const div = document.createElement('div');
   render(<App containerElement={div} />, {
@@ -83,7 +84,8 @@ it('navigates to root and redirects to student (default user) dashboard', async 
   expect(mockNavigate).toBeCalledWith('/student');
 });
 
-it('visiting employee dashboard redirects to student (default user) dashboard with warning', async () => {
+// TODO: Test behavior moved to @osu-wams/hooks package
+xit('visiting employee dashboard redirects to student (default user) dashboard with warning', async () => {
   window.location.pathname = '/employee';
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
@@ -94,7 +96,8 @@ it('visiting employee dashboard redirects to student (default user) dashboard wi
   ).toBeInTheDocument();
 });
 
-it('employee (previously on employee dashboard) visiting student dashboard changes the dashboard context', async () => {
+// TODO: Test behavior moved to @osu-wams/hooks package
+xit('employee (previously on employee dashboard) visiting student dashboard changes the dashboard context', async () => {
   window.location.pathname = '/student';
   mockNavigate.mockResolvedValue(true);
   mockPostSettings.mockResolvedValue(true);
@@ -108,7 +111,8 @@ it('employee (previously on employee dashboard) visiting student dashboard chang
   });
 });
 
-it('student employee (previously on student dashboard) visiting employee dashboard changes the dashboard context', async () => {
+// TODO: Test behavior moved to @osu-wams/hooks package
+xit('student employee (previously on student dashboard) visiting employee dashboard changes the dashboard context', async () => {
   window.location.pathname = '/employee';
   mockNavigate.mockResolvedValue(true);
   mockPostSettings.mockResolvedValue(true);
