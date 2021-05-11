@@ -5,14 +5,13 @@ import { faHeart as faSolidHeart } from '@fortawesome/pro-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Resources, useStatus } from '@osu-wams/hooks';
+import { State, Resources, useStatus } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src/ui/List';
 import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
 import { TrendingEvent } from './GATrendingResource';
 import { Event } from 'src/util/gaTracking';
-import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { ExternalLink } from '../../ui/Link';
 import { CloseButton } from '../../ui/Button';
@@ -20,7 +19,7 @@ import MyDialog, { MyDialogContent, MyDialogFooter } from '../../ui/MyDialog';
 import { faExclamationCircle as faExclamationCircleHollow } from '@fortawesome/pro-light-svg-icons';
 import { faExclamationCircle as faExclamationCircleSolid } from '@fortawesome/pro-solid-svg-icons';
 import { fontSize, Color } from 'src/theme';
-import { format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 import { Draggable } from 'react-beautiful-dnd';
 
 // Adds all font awesome icons so we can call them by name (coming from Drupal API)
@@ -42,7 +41,7 @@ const ResourceItem = ({
   index?: number;
 }) => {
   const themeContext = useContext(ThemeContext);
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const [favs, setFav] = useState(false);
   const { data, isSuccess } = useStatus();
   const [showDialog, setShowDialog] = useState(false);
@@ -183,7 +182,7 @@ const ResourceItem = ({
             hour12: true,
           }) +
             ' on ' +
-            format(systemCheckedAt)}
+            Helpers.format(systemCheckedAt)}
         </DateContainer>
         <p>{errorMsg}.</p>
       </MyDialogContent>

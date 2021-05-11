@@ -8,12 +8,11 @@ import { spacing, fontSize } from 'src/theme';
 import { Types } from '@osu-wams/lib';
 import VisuallyHidden from '@reach/visually-hidden';
 import Icon from 'src/ui/Icon';
-import { User } from '@osu-wams/hooks';
-import { format } from 'src/util/helpers';
+import { State, User } from '@osu-wams/hooks';
+import { Helpers } from '@osu-wams/utils';
 import { RichTextContent } from 'src/ui/RichText';
 import { Event } from 'src/util/gaTracking';
 import { useSetRecoilState } from 'recoil';
-import { userMessagesState } from 'src/state';
 import { markNotificationRead } from './notifications-utils';
 
 export const Notification = ({
@@ -25,7 +24,7 @@ export const Notification = ({
 }) => {
   const { isExpanded } = useAccordionItemContext();
   const themeContext = React.useContext(ThemeContext);
-  const setNotifications = useSetRecoilState(userMessagesState);
+  const setNotifications = useSetRecoilState(State.userMessagesState);
 
   type NotiType = 'unread' | 'read';
   // We might eventually support more message states and have different icons
@@ -66,7 +65,7 @@ export const Notification = ({
           <NotificationTitle>
             {n.title}
             <NotificationDate>
-              {n.deliveredAt && format(n.deliveredAt, "'Received' MMM do 'at' h a")}
+              {n.deliveredAt && Helpers.format(n.deliveredAt, "'Received' MMM do 'at' h a")}
             </NotificationDate>
           </NotificationTitle>
           <Icon icon={isExpanded ? faChevronDown : faChevronUp} css={{ marginLeft: 'auto' }} />

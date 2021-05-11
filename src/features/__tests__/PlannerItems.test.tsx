@@ -3,10 +3,10 @@ import user from '@testing-library/user-event';
 import { render, authUser } from 'src/util/test-utils';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from 'src/setupTests';
-import { Student } from '@osu-wams/hooks';
-import { courseState, infoButtonState, plannerItemState } from 'src/state';
+import { State, Student } from '@osu-wams/hooks';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
+const { courseState, infoButtonState, plannerItemState } = State;
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockInitialState = jest.fn();
 const mockUser = jest.fn();

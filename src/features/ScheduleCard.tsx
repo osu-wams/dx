@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Loading } from 'src/ui/Loading';
 import { isSameDay } from 'date-fns';
 import VisuallyHidden from '@reach/visually-hidden';
-import { useAcademicCalendarEvents } from '@osu-wams/hooks';
+import { State, useAcademicCalendarEvents, useCourseScheduleState } from '@osu-wams/hooks';
 import { getNextFiveDays, coursesOnDay, startDate } from './schedule/schedule-utils';
 import {
   ScheduleCardDayMenu,
@@ -10,12 +10,12 @@ import {
   ScheduleCardAssignments,
   ScheduleCardAcademicCalendar,
 } from './schedule';
-import { format } from '../util/helpers';
+import { Helpers } from '@osu-wams/utils';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
-import { userState, plannerItemState } from 'src/state';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import useCourseScheduleState from 'src/hooks/useCourseScheduleState';
+
+const { userState, plannerItemState } = State;
 
 /**
  * Course Schedule Card
@@ -68,7 +68,9 @@ const ScheduleCard = () => {
   return (
     <Card collapsing={false}>
       <VisuallyHidden>
-        <Header data-testid="scheduleCardHeader">{format(selectedDay, 'EEEE MMMM d')}</Header>
+        <Header data-testid="scheduleCardHeader">
+          {Helpers.format(selectedDay, 'EEEE MMMM d')}
+        </Header>
       </VisuallyHidden>
       <CardContent>
         <ScheduleCardDayMenu

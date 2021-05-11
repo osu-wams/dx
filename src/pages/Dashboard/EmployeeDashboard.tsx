@@ -1,5 +1,6 @@
 import React from 'react';
 import { faStars } from '@fortawesome/pro-light-svg-icons';
+import { State } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import EventCardContainer from 'src/ui/EventCardContainer';
 import { MainGridWrapper, Masonry } from 'src/theme';
@@ -9,10 +10,10 @@ import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { TrendingResources } from 'src/features/TrendingResources';
 import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
-import { filteredCards } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
-import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
+
+const { ANNOUNCEMENT_PAGES, filteredCards } = State;
 
 const EmployeeDashboard = () => {
   const cards = useRecoilValue(filteredCards('Dashboard'));

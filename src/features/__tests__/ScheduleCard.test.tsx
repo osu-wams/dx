@@ -2,14 +2,14 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { render, authUser } from 'src/util/test-utils';
-import { Events, Student } from '@osu-wams/hooks';
+import { State, Events, Student } from '@osu-wams/hooks';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { getDayShortcode } from '../schedule/schedule-utils';
-import { format } from 'src/util/helpers';
-import { courseState, plannerItemState } from 'src/state';
+import { Helpers } from '@osu-wams/utils';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
+const { courseState, plannerItemState } = State;
 const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 const mockSimpleSchedule = Student.CourseSchedule.mockCourseSchedule.simpleSchedule;
 const getThisDate = (): number => {
@@ -26,7 +26,7 @@ jest.mock('@osu-wams/hooks', () => {
     // @ts-ignore spread error on object only
     ...jest.requireActual('@osu-wams/hooks'),
     useAcademicCalendarEvents: () => mockUseAcademicCalendarEvents(),
-    usePlannerItems: () => mockUsePlannerItems(),
+    usePlannerItems: () => jest.fn(),
   };
 });
 
@@ -127,7 +127,7 @@ describe('<ScheduleCard /> with data and canvas authorized user', () => {
   });
 
   it('should find "Testo Planner Discussion" PlannerItem in card and click it to track analytics', async () => {
-    const duePartialText = `Due ${format(new Date(), 'dueAt')}`.slice(0, -5);
+    const duePartialText = `Due ${Helpers.format(new Date(), 'dueAt')}`.slice(0, -5);
     render(<ScheduleCard />, { initialStates: mockInitialState() });
 
     const todayPlannerItem = screen.getByText(/Testo Planner Discussion/);

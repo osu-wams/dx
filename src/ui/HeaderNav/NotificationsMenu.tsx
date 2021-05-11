@@ -9,17 +9,17 @@ import { Event } from 'src/util/gaTracking';
 import { EmptyStateText } from 'src/ui/EmptyStates';
 import MyDialog from 'src/ui/MyDialog';
 import { CloseButton } from 'src/ui/Button';
-import { Constants, User, useMessages } from '@osu-wams/hooks';
+import { State, Constants, User, useMessages } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { InternalLink } from 'src/ui/Link';
 import { spacing, breakpoints, fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
-import { format } from 'src/util/helpers';
-import { filteredNotifications, userMessagesState } from 'src/state';
 import { dismissAll, markNotificationRead } from 'src/features/notifications/notifications-utils';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { RichTextContent } from '../RichText';
-import { Routes } from 'src/routers';
+import { Routes, Helpers } from '@osu-wams/utils';
+
+const { filteredNotifications, userMessagesState } = State;
 
 const Date = styled.div`
   margin-top: ${spacing.xs};
@@ -80,10 +80,10 @@ const NotificationModal = ({
       <RichTextContent dangerouslySetInnerHTML={{ __html: notification.content }}></RichTextContent>
       <FooterLinks>
         {notification.deliveredAt && (
-          <Date>Received {format(notification.deliveredAt, "MMM do 'at' h a")}</Date>
+          <Date>Received {Helpers.format(notification.deliveredAt, "MMM do 'at' h a")}</Date>
         )}
         <InternalLink
-          to={Routes().notifications.fullPath}
+          to={Routes.Routes().notifications.fullPath}
           onClick={() => {
             Event('notifications-menu', 'modal link: See all notifications page link');
             close();
@@ -157,7 +157,7 @@ const NotificationsMenu = () => {
             </h2>
             <MenuLink
               as={Link}
-              to={Routes().notifications.fullPath}
+              to={Routes.Routes().notifications.fullPath}
               onClick={() => {
                 Event('notifications-menu', `See all notifications page`);
               }}
@@ -197,7 +197,7 @@ const NotificationsMenu = () => {
                 <Indicator />
                 <div>
                   <NotificationTitle>{m.title}</NotificationTitle>
-                  {m.deliveredAt && <Date>{format(m.deliveredAt, "MMM do 'at' h a")}</Date>}
+                  {m.deliveredAt && <Date>{Helpers.format(m.deliveredAt, "MMM do 'at' h a")}</Date>}
                 </div>
               </MenuItem>
               <MenuItem

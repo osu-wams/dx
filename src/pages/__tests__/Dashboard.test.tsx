@@ -2,7 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { render, mockEmployeeUser } from 'src/util/test-utils';
 import { mockInitialState } from 'src/setupTests';
-import { courseState } from 'src/state';
+import { State } from '@osu-wams/hooks';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 import Dashboard from '../Dashboard';
@@ -11,7 +11,7 @@ describe('<StudentDashboard />', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValueOnce([
       {
-        state: courseState,
+        state: State.courseState,
         value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
       },
     ]);

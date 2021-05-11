@@ -10,11 +10,10 @@ import {
 } from 'src/ui/List';
 import placeholderImage from 'src/assets/location-placeholder.png';
 import { ExternalLink } from 'src/ui/Link';
-import { Constants, useLocations } from '@osu-wams/hooks';
+import { State, Constants, useLocations } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
-import { applicationSearchState } from 'src/state/applicationSearch';
 import { Types } from '@osu-wams/lib';
-import Url from 'src/util/externalUrls.data';
+import { Url } from '@osu-wams/utils';
 import { Event } from 'src/util/gaTracking';
 import { ListCount, ListErrorMessage } from 'src/ui/ApplicationSearch/ListItem';
 
@@ -47,7 +46,7 @@ const renderItems = (count: number, data: Types.Location[]) => {
 };
 
 const Places: React.FC = () => {
-  const search = useRecoilValue(applicationSearchState);
+  const search = useRecoilValue(State.applicationSearchState);
   const { error, data } = useLocations(search, {
     ...Constants.REACT_QUERY_DEFAULT_CONFIG,
     enabled: !!search,

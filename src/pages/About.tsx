@@ -1,15 +1,15 @@
 import React from 'react';
+import { State } from '@osu-wams/hooks';
 import PageTitle from '../ui/PageTitle';
 import Info from '../features/about/Info';
 import SupportResources from '../features/about/SupportResources';
 import ReleaseNotes from '../features/about/ReleaseNotes';
 import { MainGridWrapper, Masonry } from '../theme';
 import { useRecoilValue } from 'recoil';
-import { filteredCards } from 'src/state';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 
 const About = () => {
-  const cards = useRecoilValue(filteredCards('About'));
+  const cards = useRecoilValue(State.filteredCards('About'));
 
   return (
     <MainGridWrapper data-testid="about-page">

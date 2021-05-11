@@ -3,14 +3,14 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Fieldset, Legend } from 'src/ui/forms';
-import { User } from '@osu-wams/hooks';
-import { titleCase } from 'src/util/helpers';
+import { State, User } from '@osu-wams/hooks';
+import { Helpers } from '@osu-wams/utils';
 import { defaultTheme, themesLookup } from 'src/theme/themes';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { userState, themeState } from 'src/state';
 import { Event } from 'src/util/gaTracking';
 
 const { postSettings, usersSettings } = User;
+const { userState, themeState } = State;
 
 export const RadioButtonsGroup = () => {
   const themes = Object.keys(themesLookup);
@@ -46,7 +46,7 @@ export const RadioButtonsGroup = () => {
       <Legend>Theme</Legend>
       <RadioGroup aria-label="theme" name="theme" value={value} onChange={handleChange}>
         {themes.map((t) => (
-          <FormControlLabel key={t} value={t} control={<Radio />} label={titleCase(t)} />
+          <FormControlLabel key={t} value={t} control={<Radio />} label={Helpers.titleCase(t)} />
         ))}
       </RadioGroup>
     </Fieldset>

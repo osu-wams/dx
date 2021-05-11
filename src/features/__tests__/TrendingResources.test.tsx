@@ -4,9 +4,8 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { TrendingResources } from 'src/features/TrendingResources';
 import { mockGAEvent } from 'src/setupTests';
-import { Resources } from '@osu-wams/hooks';
-import { resourceState } from 'src/state';
-import { Routes } from 'src/routers';
+import { State, Resources } from '@osu-wams/hooks';
+import { Routes } from '@osu-wams/utils';
 
 const mockInitialState = jest.fn();
 window.open = jest.fn();
@@ -17,7 +16,7 @@ describe('Trending Resources Card', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValue([
       {
-        state: resourceState,
+        state: State.resourceState,
         value: resourcesData,
       },
     ]);
@@ -75,7 +74,7 @@ describe('Trending Resources Card', () => {
     expect(resource).toBeInTheDocument();
     userEvent.click(resource);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
-    var el = document.querySelector(`a[href="${Routes('student').resources.fullPath}"]`);
+    var el = document.querySelector(`a[href="${Routes.Routes('student').resources.fullPath}"]`);
     if (el) {
       userEvent.click(el);
     }

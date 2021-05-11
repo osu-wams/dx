@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { Router, Location, RouteComponentProps } from '@reach/router';
+import { navigate, Router, Location, RouteComponentProps } from '@reach/router';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
@@ -10,30 +10,32 @@ import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
 import { themesLookup } from './theme/themes';
 import { GlobalStyles } from './theme';
-import { userState, themeState } from './state';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
+import {
+  State,
+  useCardsState,
+  useCourseScheduleState,
+  useGradesState,
+  useInfoButtonsState,
+  usePageSearchIndexState,
+  usePlannerItemsState,
+  useResourcesState,
+  useTrainingsState,
+  useUserState,
+} from '@osu-wams/hooks';
+import { Routes } from '@osu-wams/utils';
 import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
-import { RouterPage, Routes } from './routers';
+import { RouterPage } from './routers';
 import Profile from './pages/Profile';
 import About from './pages/About';
 import Search from './pages/Search';
 import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
-import {
-  useCardsState,
-  useCourseScheduleState,
-  useGradesState,
-  useInfoButtonsState,
-  usePlannerItemsState,
-  useResourcesState,
-  useTrainingsState,
-  useUserState,
-  useSearchIndexState,
-} from 'src/hooks';
-import { initialRouteState, isLoadedState } from './state/application';
+
+const { initialRouteState, isLoadedState, userState, themeState } = State;
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -89,7 +91,7 @@ const App = (props: AppProps) => {
   const user = useRecoilValue<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const containerElementRef = useRef(props.containerElement);
-  useUserState();
+  useUserState(navigate);
   useGradesState();
   useCourseScheduleState();
   usePlannerItemsState();
@@ -97,7 +99,7 @@ const App = (props: AppProps) => {
   useCardsState();
   useInfoButtonsState();
   useTrainingsState();
-  useSearchIndexState();
+  usePageSearchIndexState();
 
   /* eslint-disable react-hooks/exhaustive-deps  */
 
@@ -163,13 +165,13 @@ const App = (props: AppProps) => {
                 <AnimatePresence exitBeforeEnter>
                   <Router>
                     <RouterPage default pageComponent={<PageNotFound />} />
-                    <EmployeeRouter path={Routes().employee.path + '/*'} />
-                    <StudentRouter path={Routes().student.path + '/*'} />
-                    <RouterPage path={Routes().profile.path} pageComponent={<Profile />} />
-                    <RouterPage path={Routes().about.path} pageComponent={<About />} />
-                    <RouterPage path={Routes().search.path} pageComponent={<Search />} />
+                    <EmployeeRouter path={Routes.Routes().employee.path + '/*'} />
+                    <StudentRouter path={Routes.Routes().student.path + '/*'} />
+                    <RouterPage path={Routes.Routes().profile.path} pageComponent={<Profile />} />
+                    <RouterPage path={Routes.Routes().about.path} pageComponent={<About />} />
+                    <RouterPage path={Routes.Routes().search.path} pageComponent={<Search />} />
                     <RouterPage
-                      path={Routes().notifications.path}
+                      path={Routes.Routes().notifications.path}
                       pageComponent={<Notifications />}
                     />
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (

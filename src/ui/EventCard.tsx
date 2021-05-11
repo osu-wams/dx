@@ -6,7 +6,7 @@ import Icon from './Icon';
 import { spacing, fontSize, mq } from 'src/theme';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
-import { format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 import { Types } from '@osu-wams/lib';
 
 const ButtonWithIcon = styled(Button).attrs({
@@ -140,7 +140,10 @@ const EventCardContent = ({ item }: { item: Types.LocalistEvent | Types.Announce
           target="_blank"
           onClick={() => Event('calendar-event', item.title, item.action?.link)}
         >
-          <EventCardDate month={format(item.date!, 'MMM')} day={format(item.date!, 'd')} />
+          <EventCardDate
+            month={Helpers.format(item.date!, 'MMM')}
+            day={Helpers.format(item.date!, 'd')}
+          />
           <EventCardLargeTitle>{item.title}</EventCardLargeTitle>
         </EventCardBody>
       )}

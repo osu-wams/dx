@@ -2,36 +2,9 @@ import React from 'react';
 import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Message, Types } from '@osu-wams/lib';
-import { messagesState } from 'src/state/messages';
-import { useApplicationMessages } from 'src/hooks/useApplicationMessages';
+import { Message } from '@osu-wams/lib';
+import { State } from '@osu-wams/hooks';
 import { ApplicationMessages } from '../ApplicationMessages';
-
-jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
-
-const newMessage = jest.fn();
-const mockPostAppMessageError = jest.fn();
-jest.mock('@osu-wams/hooks', () => {
-  const original = jest.requireActual('@osu-wams/hooks');
-  return {
-    ...original,
-    Errors: {
-      ...original.Errors,
-      postAppMessageError: (o: Types.Message) => mockPostAppMessageError(o),
-    },
-  };
-});
-
-// Simple Component to test Adding a message
-const TestComponent = () => {
-  const { addMessage } = useApplicationMessages();
-  return (
-    <div>
-      <button onClick={() => addMessage(newMessage())}>Add</button>
-      <ApplicationMessages />
-    </div>
-  );
-};
 
 const { mockMessage } = Message;
 const { body, title } = mockMessage;
@@ -40,7 +13,7 @@ it('renders a message with close button and data', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [mockMessage],
       },
     ],
@@ -60,7 +33,7 @@ it('renders a "warn" message with appropriate icon', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: 'warn' }],
       },
     ],
@@ -77,7 +50,7 @@ it('renders a "success" message with appropriate icon', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: 'success' }],
       },
     ],
@@ -94,7 +67,7 @@ it('renders an "error" message with appropriate icon', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: 'error' }],
       },
     ],
@@ -111,7 +84,7 @@ it('renders an "info" message with appropriate icon when type is missing', async
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: null }],
       },
     ],
@@ -128,7 +101,7 @@ it('renders an "info" message with appropriate icon when type is bogus', async (
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, type: 'bogus' }],
       },
     ],
@@ -151,7 +124,7 @@ it('does not render if visibility is false', async () => {
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [{ ...mockMessage, visible: false }],
       },
     ],
@@ -160,19 +133,9 @@ it('does not render if visibility is false', async () => {
   expect(screen.queryByText(body)).not.toBeInTheDocument();
 });
 
-it('adds and displays a new message', async () => {
-  const errorApplicationMessage = { ...mockMessage, type: 'error' };
-  newMessage.mockReturnValueOnce({ ...errorApplicationMessage });
-  render(<TestComponent />);
-  userEvent.click(screen.getByText(/Add/i));
-  expect(await screen.findByText(title)).toBeInTheDocument();
-  expect(await screen.findByText(body)).toBeInTheDocument();
-  expect(mockPostAppMessageError).toHaveBeenCalledWith(errorApplicationMessage);
-});
-
 it('close button dismisses a visible message', async () => {
   render(<ApplicationMessages />, {
-    initialStates: [{ state: messagesState, value: [mockMessage] }],
+    initialStates: [{ state: State.messagesState, value: [mockMessage] }],
   });
 
   expect(screen.getByText(title)).toBeInTheDocument();
@@ -194,7 +157,7 @@ it('close button dismisses each message on the stack one at a time', async () =>
   render(<ApplicationMessages />, {
     initialStates: [
       {
-        state: messagesState,
+        state: State.messagesState,
         value: [mockMessage, secondMockMessage],
       },
     ],

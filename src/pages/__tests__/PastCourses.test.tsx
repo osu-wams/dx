@@ -1,12 +1,9 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { alterMock, render } from 'src/util/test-utils';
+import { render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
-import { GRADES_API } from 'src/mocks/apis';
-import { gradesState } from 'src/state';
-import { dashboardState } from 'src/state/application';
-import { Student } from '@osu-wams/hooks';
+import { State, Student } from '@osu-wams/hooks';
 
 describe('<PastCourses />', () => {
   it('renders without errors', async () => {
@@ -23,7 +20,7 @@ describe('<PastCourses />', () => {
     render(<PastCourses />, {
       initialStates: [
         {
-          state: gradesState,
+          state: State.gradesState,
           value: Student.Grades.mockGrades,
         },
       ],
@@ -37,7 +34,7 @@ describe('<PastCourses />', () => {
     render(<PastCourses />, {
       initialStates: [
         {
-          state: gradesState,
+          state: State.gradesState,
           value: Student.Grades.mockGrades,
         },
       ],
@@ -50,7 +47,7 @@ describe('<PastCourses />', () => {
     render(<PastCourses />, {
       initialStates: [
         {
-          state: gradesState,
+          state: State.gradesState,
           value: {
             data: [],
             isLoading: false,
@@ -70,7 +67,7 @@ describe('<PastCourses />', () => {
       render(<PastCourses />, {
         initialStates: [
           {
-            state: gradesState,
+            state: State.gradesState,
             value: Student.Grades.mockGrades,
           },
         ],
@@ -86,7 +83,7 @@ describe('<PastCourses />', () => {
       render(<PastCourses />, {
         initialStates: [
           {
-            state: gradesState,
+            state: State.gradesState,
             value: Student.Grades.mockGrades,
           },
         ],
@@ -103,7 +100,7 @@ describe('<PastCourses />', () => {
       render(<PastCourses />, {
         initialStates: [
           {
-            state: gradesState,
+            state: State.gradesState,
             value: Student.Grades.mockGrades,
           },
         ],
@@ -127,7 +124,7 @@ describe('<PastCourses />', () => {
       render(<PastCourses />, {
         initialStates: [
           {
-            state: gradesState,
+            state: State.gradesState,
             value: Student.Grades.mockGrades,
           },
         ],

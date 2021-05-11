@@ -2,9 +2,9 @@ import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, mockEmployeeUser, authUser } from 'src/util/test-utils';
 import Header from '../Header';
-import { themeState } from 'src/state';
+import { State } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
-import { act, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 describe('Dashboard Headers', () => {
   it('Student has "Student Dashboard" title', async () => {
@@ -147,7 +147,7 @@ describe('with a campus code', () => {
       render(<Header />, {
         initialStates: [
           {
-            state: themeState,
+            state: State.themeState,
             value: 'dark',
           },
         ],
@@ -215,7 +215,7 @@ describe('with a campus code', () => {
         user: mockUser(),
         initialStates: [
           {
-            state: themeState,
+            state: State.themeState,
             value: 'dark',
           },
         ],
@@ -260,7 +260,7 @@ describe('with a campus code', () => {
         user: mockUser(),
         initialStates: [
           {
-            state: themeState,
+            state: State.themeState,
             value: 'dark',
           },
         ],

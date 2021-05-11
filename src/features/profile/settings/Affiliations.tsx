@@ -3,9 +3,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components/macro';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
-import { User } from '@osu-wams/hooks';
+import { State, User } from '@osu-wams/hooks';
 import { fontSize } from 'src/theme';
-import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { Event } from 'src/util/gaTracking';
 
@@ -19,7 +18,7 @@ const Label = styled.span`
 `;
 
 export const SwitchesGroup = () => {
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const [state, setState] = useState<{
     firstYear: boolean;
     graduate: boolean;

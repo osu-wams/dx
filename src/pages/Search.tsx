@@ -1,4 +1,5 @@
 import React from 'react';
+import { State, useAnnouncementsState } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import styled from 'styled-components/macro';
 import { MainGridWrapper, spacing } from '../theme';
@@ -11,21 +12,21 @@ import {
   Places,
 } from 'src/features/application-search';
 import SearchResultListItem from 'src/ui/ApplicationSearch/SearchResultListItem';
-import {
+import { useRecoilValue } from 'recoil';
+import { Desktop, Mobile } from 'src/hooks/useMediaQuery';
+import { FiltersMobile } from 'src/features/application-search/FiltersMobile';
+import emptySearch from 'src/assets/empty-search.svg';
+import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
+import { Helpers } from '@osu-wams/utils';
+
+const {
+  ANNOUNCEMENT_PAGES,
   applicationSearchState,
   filteredApplicationSearchState,
   selectedTypeFilters,
   selectedAudienceFilters,
   selectedCampusFilters,
-} from 'src/state/applicationSearch';
-import { useRecoilValue } from 'recoil';
-import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
-import { ANNOUNCEMENT_PAGES } from 'src/state/announcements';
-import { Desktop, Mobile } from 'src/hooks/useMediaQuery';
-import { FiltersMobile } from 'src/features/application-search/FiltersMobile';
-import emptySearch from 'src/assets/empty-search.svg';
-import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
-import { singularPlural } from 'src/util/helpers';
+} = State;
 
 const EmptyStateStyle = styled(EmptyState)({
   padding: `0 0 ${spacing.default} 0`,
@@ -43,7 +44,7 @@ const EmptySearchState = ({
   selectedCampuses: string[];
 }) => {
   const count = selectedTypes.length + selectedAudiences.length + selectedCampuses.length;
-  const filtersSet = count ? `, with ${count} ${singularPlural(count, 'filter')} set,` : '';
+  const filtersSet = count ? `, with ${count} ${Helpers.singularPlural(count, 'filter')} set,` : '';
   return (
     <EmptyStateStyle>
       <EmptyStateImage src={emptySearch} alt="Search Icon" />

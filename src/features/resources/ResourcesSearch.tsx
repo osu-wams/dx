@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { State } from '@osu-wams/hooks';
 import { useMediaQuery } from 'react-responsive';
 import { breakpoints } from 'src/theme';
 import { SearchBar } from 'src/ui/SearchBar';
 import { Event } from 'src/util/gaTracking';
-import {
+import { useRecoilState, useRecoilValue } from 'recoil';
+import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
+
+const {
   selectedCategoryState,
   resourceSearchState,
   debouncedResourceSearchState,
   filteredResourcesState,
-} from 'src/state';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import useDebouncedSearchState from 'src/hooks/useDebouncedSearchState';
+} = State;
 
 const ResourcesSearch: React.FC<any> = () => {
   const { debouncedQuery, query, setQuery, resetDebouncedSearch } = useDebouncedSearchState({

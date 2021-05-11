@@ -9,19 +9,17 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 import { User } from '@osu-wams/hooks';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
-import { useDegrees } from '@osu-wams/hooks';
+import { State, useDegrees } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
+import { Url, Helpers } from '@osu-wams/utils';
 import { Loading } from 'src/ui/Loading';
 import { List, ListItem, ListItemContent, ListItemDescription, ListItemText } from 'src/ui/List';
 import Icon from 'src/ui/Icon';
 import { ExternalLink } from 'src/ui/Link';
-import Url from 'src/util/externalUrls.data';
 import { Event } from 'src/util/gaTracking';
-import { titleCase } from 'src/util/helpers';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import degreeImg from 'src/assets/program-of-study.svg';
 import { ThemeContext } from 'styled-components/macro';
-import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 
 const { usersCampus } = User;
@@ -29,7 +27,7 @@ const { usersCampus } = User;
 const AcademicProgram = () => {
   const themeContext = useContext(ThemeContext);
   const { data, loading }: { data: Types.Degree[]; loading: boolean } = useDegrees();
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const { campusName } = usersCampus(user.data);
 
   const degreeData = {
@@ -136,7 +134,7 @@ const AcademicProgram = () => {
 
               {renderItem(d.college, degreeData.college)}
 
-              {campusName && renderItem(titleCase(campusName), degreeData.campus)}
+              {campusName && renderItem(Helpers.titleCase(campusName), degreeData.campus)}
             </List>
           </CardContent>
         ))}

@@ -4,14 +4,16 @@ import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from '../ui/Card';
 import { List } from '../ui/List';
 import { AuthorizeCanvas } from '../features/canvas/AuthorizeCanvas';
-import Url from '../util/externalUrls.data';
+import { State } from '@osu-wams/hooks';
+import { Url } from '@osu-wams/utils';
 import { ExternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 import assignment from '../assets/assignment.svg';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
-import { courseState, userState, plannerItemState } from 'src/state';
 import { useRecoilValue } from 'recoil';
+
+const { courseState, userState, plannerItemState } = State;
 
 /**
  * Upcoming Assignments Card

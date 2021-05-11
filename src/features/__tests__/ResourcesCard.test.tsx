@@ -5,7 +5,7 @@ import { faCube, faStars } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
 import { ITSystemStatus } from '../it-systems-status/ITSystemStatus';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
-import { infoButtonState } from 'src/state';
+import { State } from '@osu-wams/hooks';
 import { RESOURCES_BY_QUEUE_API } from 'src/mocks/apis';
 
 window.open = jest.fn();
@@ -99,7 +99,7 @@ describe('with an InfoButton in the CardFooter', () => {
   it('does not display the button when the infoButtonData is missing it', async () => {
     mockInitialState.mockReturnValue([
       {
-        state: infoButtonState,
+        state: State.infoButtonState,
         value: [{ content: '...', id: 'some-other-id', title: '...' }],
       },
     ]);
@@ -114,7 +114,7 @@ describe('with an InfoButton in the CardFooter', () => {
   it('displays the button when the infoButtonData is included', async () => {
     mockInitialState.mockReturnValue([
       {
-        state: infoButtonState,
+        state: State.infoButtonState,
         value: [
           { content: 'Info Button Content', id: 'financial-resources', title: 'Info Button Title' },
         ],

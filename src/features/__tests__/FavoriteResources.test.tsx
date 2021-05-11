@@ -4,8 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { render, authUser } from 'src/util/test-utils';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { mockGAEvent } from 'src/setupTests';
-import { Resources } from '@osu-wams/hooks';
-import { resourceState } from 'src/state';
+import { State, Resources } from '@osu-wams/hooks';
 
 const mockInitialState = jest.fn();
 const mockPostFavorite = jest.fn();
@@ -27,7 +26,7 @@ describe('Favorite Resources Card', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValue([
       {
-        state: resourceState,
+        state: State.resourceState,
         value: resourcesData,
       },
     ]);

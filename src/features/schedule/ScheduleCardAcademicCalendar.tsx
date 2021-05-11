@@ -3,7 +3,7 @@ import { CardSection, SectionHeader } from './ScheduleCardStyles';
 import { List, ListItem, ListItemHeader, ListItemText, ListItemContentLink } from 'src/ui/List';
 import { Event } from 'src/util/gaTracking';
 import { Date as D, DateDay, DateMonth } from 'src/ui/Date';
-import { format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 
 const ScheduleCardAcademicCalendar = ({ calEvents }) => (
   <>
@@ -20,8 +20,8 @@ const ScheduleCardAcademicCalendar = ({ calEvents }) => (
                 onClick={() => Event('schedule-card', 'academic-calendar-link', link)}
               >
                 <D>
-                  <DateDay>{format(pubDate, 'd')}</DateDay>
-                  <DateMonth>{format(Date.parse(pubDate), 'MMM')}</DateMonth>
+                  <DateDay>{Helpers.format(pubDate, 'd')}</DateDay>
+                  <DateMonth>{Helpers.format(Date.parse(pubDate), 'MMM')}</DateMonth>
                 </D>
                 <ListItemText>
                   <ListItemHeader>{title} </ListItemHeader>

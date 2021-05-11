@@ -4,10 +4,9 @@ import styled, { ThemeContext } from 'styled-components/macro';
 import { CardContentCell } from 'src/ui/Card';
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
-import Url from 'src/util/externalUrls.data';
+import { Url, Helpers } from '@osu-wams/utils';
 import { ListItem } from 'src/ui/List';
 import { fontSize } from 'src/theme';
-import { format } from 'src/util/helpers';
 import Icon from 'src/ui/Icon';
 import { ICachetComponent, ICachetIncident } from '@osu-wams/hooks/dist/api/status';
 import VisuallyHidden from '@reach/visually-hidden';
@@ -63,7 +62,7 @@ const ITSystemSticky: React.FC<{ components: ICachetComponent[] }> = ({ componen
               <Badge data-testid="sticky-incident-badge">{c.name}</Badge>
               <Title>{i.name}</Title>
             </Header>
-            <Date>{format(i.updatedAt, 'h:mmaaaa, ccc, LLL Lo')}</Date>
+            <Date>{Helpers.format(i.updatedAt, 'h:mmaaaa, ccc, LLL Lo')}</Date>
             <Message>{i.message}</Message>
           </ListItem>
         ))

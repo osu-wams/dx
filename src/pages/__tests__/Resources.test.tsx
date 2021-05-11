@@ -12,9 +12,8 @@ import { Context as ResponsiveContext } from 'react-responsive';
 import userEvent from '@testing-library/user-event';
 import ResourcesComponent from 'src/pages/Resources';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
-import { Resources } from '@osu-wams/hooks';
+import { State, Resources } from '@osu-wams/hooks';
 import { User } from '@osu-wams/lib';
-import { resourceState } from 'src/state';
 
 const mockInitialState = jest.fn();
 const mockDefaultCategory = jest.fn();
@@ -70,7 +69,7 @@ describe('<Resources />', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValue([
       {
-        state: resourceState,
+        state: State.resourceState,
         value: resourcesData,
       },
     ]);
@@ -146,7 +145,7 @@ describe('<Resources />', () => {
       mockDefaultCategory.mockReturnValue('All');
       mockInitialState.mockReturnValue([
         {
-          state: resourceState,
+          state: State.resourceState,
           value: {
             isLoading: resourcesData.isLoading,
             isSuccess: resourcesData.isSuccess,

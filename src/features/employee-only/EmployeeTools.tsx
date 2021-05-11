@@ -8,7 +8,7 @@ import {
   CardContentCell,
   CardIcon,
 } from 'src/ui/Card';
-import Url from 'src/util/externalUrls.data';
+import { Url } from '@osu-wams/utils';
 import { HighlightExternalLink } from 'src/ui/Link';
 import { Event } from 'src/util/gaTracking';
 

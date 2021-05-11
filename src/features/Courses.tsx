@@ -1,6 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
 import { ThemeContext } from 'styled-components/macro';
+import { Url, Helpers, Course as CourseUtils, Routes } from '@osu-wams/utils';
+import { Types } from '@osu-wams/lib';
+import { State } from '@osu-wams/hooks';
 import { Card, CardHeader, CardIcon, CardContent, CardFooter } from '../ui/Card';
 import { sortedGroupedByCourseName, ICoursesMap } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
 import {
@@ -13,17 +16,11 @@ import {
 } from '../ui/List';
 import coursesImg from '../assets/courses.svg';
 import Course from '../features/Course';
-import { singularPlural } from '../util/helpers';
 import { fontSize } from '../theme';
 import { ExternalLink, InternalLink } from '../ui/Link';
-import Url from '../util/externalUrls.data';
 import { Event } from '../util/gaTracking';
-import { matchedCourseContext } from './course-utils';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
-import { Types } from '@osu-wams/lib';
 import { useRecoilValue } from 'recoil';
-import { courseState } from 'src/state';
-import { Routes } from 'src/routers';
 
 /**
  * Get the course item lead text or the icon
@@ -35,7 +32,7 @@ export const courseCodeOrIcon = (
   courseList: Types.CourseSchedule[],
   iconElement: JSX.Element
 ): JSX.Element => {
-  const course = matchedCourseContext(courseList, contextName);
+  const course = CourseUtils.matchedCourseContext(courseList, contextName);
   if (!course) return iconElement;
   return courseItemLeadText(course.courseSubject, course.courseNumber);
 };
@@ -56,7 +53,7 @@ export const courseItemLeadText = (subject: string, number: string): JSX.Element
 
 const Courses = () => {
   const themeContext = useContext(ThemeContext);
-  const courses = useRecoilValue(courseState);
+  const courses = useRecoilValue(State.courseState);
   const [isOpen, setOpen] = useState(false);
   const [showCoursesMap, setShowCoursesMap] = useState<ICoursesMap | null>(null);
 
@@ -88,7 +85,8 @@ const Courses = () => {
                   {coursesMap.title}
                 </ListItemDescription>
                 <ListItemDescription>
-                  {coursesMap.creditHours} {singularPlural(coursesMap.creditHours, 'Credit')}
+                  {coursesMap.creditHours}{' '}
+                  {Helpers.singularPlural(coursesMap.creditHours, 'Credit')}
                 </ListItemDescription>
               </ListItemText>
             </ListItemContentButton>
@@ -112,7 +110,7 @@ const Courses = () => {
 
   const NoCoursesFooterLink = () => (
     <InternalLink
-      to={Routes()['past courses'].fullPath}
+      to={Routes.Routes()['past courses'].fullPath}
       onClick={() => Event('courses', 'Empty state card footer link to Past Courses clicked')}
     >
       See past courses and grades

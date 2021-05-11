@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import EventCard from './EventCard';
 import { Title } from 'src/ui/PageTitle';
-import { User } from '@osu-wams/hooks';
+import { State, User, useAnnouncementsState } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
-import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
-import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
 
 const { hasAudience } = User;
 
@@ -26,7 +24,7 @@ const AnnouncementContainerWrapper = styled.div`
 
 const AnnouncementContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<Types.Announcement[]>([]);
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const { filtered } = useAnnouncementsState(page); // TODO: Promote to application-state for search
 
   useEffect(() => {

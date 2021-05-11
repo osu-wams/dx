@@ -11,7 +11,7 @@ import { List } from 'src/ui/List';
 import { AuthorizeCanvasCompact } from '../canvas/AuthorizeCanvas';
 import { CanvasPlannerItems } from 'src/features/canvas/CanvasPlannerItems';
 import { Types } from '@osu-wams/lib';
-import { userState } from 'src/state';
+import { State } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
 
 const ScheduleCardAssignments = ({
@@ -21,7 +21,7 @@ const ScheduleCardAssignments = ({
   selectedPlannerItems: Types.PlannerItem[];
   courseList: Types.CourseSchedule[];
 }) => {
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
 
   const noAssignmentsDue = () => (
     <NoItems as="li">

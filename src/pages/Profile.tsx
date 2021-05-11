@@ -1,12 +1,14 @@
 import React from 'react';
+import { State } from '@osu-wams/hooks';
 import PageTitle from '../ui/PageTitle';
 import OSUProfile from '../features/profile/OSUProfile';
 import { AdminSettings } from 'src/features/profile/AdminSettings';
 import Settings from '../features/profile/Settings';
 import { MainGridWrapper, Masonry } from '../theme';
 import { useRecoilValue } from 'recoil';
-import { filteredCards, userState } from 'src/state';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
+
+const { filteredCards, userState } = State;
 
 const Profile = () => {
   const user = useRecoilValue(userState);

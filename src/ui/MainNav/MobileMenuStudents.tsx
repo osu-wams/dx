@@ -9,7 +9,7 @@ import {
 import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
 import { MobileMainNav, MobileNavLink } from './MainNavStyles';
-import { Routes, Dashboards } from 'src/routers';
+import { Routes } from '@osu-wams/utils';
 
 const MobileMenuStudents = ({ toggleFullMenu, ...props }) => {
   // Simplify closing of modal and adding the GA event data
@@ -20,24 +20,27 @@ const MobileMenuStudents = ({ toggleFullMenu, ...props }) => {
 
   return (
     <MobileMainNav {...props}>
-      <MobileNavLink to={Routes().student.fullPath} onClick={() => ClickEvents('Overview')}>
+      <MobileNavLink to={Routes.Routes().student.fullPath} onClick={() => ClickEvents('Overview')}>
         <Icon icon={faHome} />
         Overview
       </MobileNavLink>
-      <MobileNavLink to={Routes().academics.fullPath} onClick={() => ClickEvents('Academics')}>
+      <MobileNavLink
+        to={Routes.Routes().academics.fullPath}
+        onClick={() => ClickEvents('Academics')}
+      >
         <Icon icon={faGraduationCap} />
         Academics
       </MobileNavLink>
-      <MobileNavLink to={Routes().finances.fullPath} onClick={() => ClickEvents('Finances')}>
+      <MobileNavLink to={Routes.Routes().finances.fullPath} onClick={() => ClickEvents('Finances')}>
         <Icon icon={faHandsUsd} />
         Finances
       </MobileNavLink>
-      <MobileNavLink to={Routes().search.fullPath} onClick={() => ClickEvents('Search')}>
+      <MobileNavLink to={Routes.Routes().search.fullPath} onClick={() => ClickEvents('Search')}>
         <Icon icon={faSearch} />
         Search
       </MobileNavLink>
       <MobileNavLink
-        to={Routes(Dashboards.student).resources.fullPath}
+        to={Routes.Routes(Routes.Dashboards.student).resources.fullPath}
         onClick={() => ClickEvents('Resources')}
       >
         <Icon icon={faList} />

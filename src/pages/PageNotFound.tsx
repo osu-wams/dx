@@ -5,8 +5,7 @@ import image404 from 'src/assets/404.svg';
 import { InternalLink } from '../ui/Link';
 import { Event } from 'src/util/gaTracking';
 import { MainGridWrapper, MainGrid } from 'src/theme';
-import { User } from '@osu-wams/hooks';
-import { userState } from 'src/state';
+import { State, User } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
 
 const Content = styled.div`
@@ -14,7 +13,7 @@ const Content = styled.div`
 `;
 const PageNotFound = () => {
   const themeContext = useContext(ThemeContext);
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
 
   return (

@@ -13,7 +13,7 @@ import {
 } from 'src/ui/Card';
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
-import Url from 'src/util/externalUrls.data';
+import { Url } from '@osu-wams/utils';
 import { ITSystemSticky } from './ITSystemSticky';
 import { Status, useStatus } from '@osu-wams/hooks';
 import { ITSystemItem } from '../it-systems-status/ITSystemItem';

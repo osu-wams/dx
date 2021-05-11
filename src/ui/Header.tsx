@@ -13,11 +13,9 @@ import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { HeaderNav } from './HeaderNav';
 import { breakpoints, Color, fontSize, spacing } from 'src/theme';
-import { User } from '@osu-wams/hooks';
-import { User as UserUtil } from '@osu-wams/lib';
-import { Types } from '@osu-wams/lib';
-import { arrayIncludes, titleCase } from 'src/util/helpers';
-import { userState, themeState } from 'src/state';
+import { State, User } from '@osu-wams/hooks';
+import { Types, User as UserUtil } from '@osu-wams/lib';
+import { Helpers } from '@osu-wams/utils';
 import { useRecoilValue } from 'recoil';
 import { Desktop } from 'src/hooks/useMediaQuery';
 import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
@@ -25,6 +23,7 @@ import Icon from './Icon';
 import { faMask } from '@fortawesome/pro-light-svg-icons';
 
 const { usersCampus, CAMPUS_CODES } = User;
+const { userState, themeState } = State;
 
 const MasqueradeBanner = styled.div`
   display: flex;
@@ -102,13 +101,13 @@ const campusLogo = (user: Types.User, selectedTheme: string) => {
   if (!user) return { image: isDarkMode ? logoDark : logo, alt: osu };
 
   const { campusCode } = usersCampus(user);
-  if (arrayIncludes(CAMPUS_CODES.ecampus, campusCode)) {
+  if (Helpers.arrayIncludes(CAMPUS_CODES.ecampus, campusCode)) {
     return {
       image: isDarkMode ? ecampusLogoDark : ecampusLogo,
       alt: `${osu} Ecampus`,
     };
   }
-  if (arrayIncludes(CAMPUS_CODES.bend, campusCode)) {
+  if (Helpers.arrayIncludes(CAMPUS_CODES.bend, campusCode)) {
     return {
       image: isDarkMode ? cascadesLogoDark : cascadesLogo,
       alt: `${osu} Cascades`,
@@ -139,7 +138,7 @@ const Header = () => {
       {user.data.isMasquerade && (
         <MasqueradeBanner data-testid="masquerade-banner">
           Masqueraded as{' '}
-          {titleCase(user.data.primaryAffiliation ?? user.data.primaryAffiliationOverride)}
+          {Helpers.titleCase(user.data.primaryAffiliation ?? user.data.primaryAffiliationOverride)}
           <Icon icon={faMask} color={Color.white} />
         </MasqueradeBanner>
       )}

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { render, mockGradUser } from 'src/util/test-utils';
 import AcademicOverview from '../AcademicOverview';
 import { mockGAEvent } from 'src/setupTests';
-import { courseState } from 'src/state';
+import { State } from '@osu-wams/hooks';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 const mockInitialState = jest.fn();
@@ -13,7 +13,7 @@ describe('<Academic Overview />', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValue([
       {
-        state: courseState,
+        state: State.courseState,
         value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
       },
     ]);

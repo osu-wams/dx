@@ -4,10 +4,9 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import styled from 'styled-components/macro';
 import { Fieldset, Legend } from 'src/ui/forms';
-import { User } from '@osu-wams/hooks';
-import { titleCase } from 'src/util/helpers';
+import { State, User } from '@osu-wams/hooks';
+import { Helpers } from '@osu-wams/utils';
 import { fontSize } from 'src/theme';
-import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
 import { Event } from 'src/util/gaTracking';
 
@@ -21,7 +20,7 @@ const Label = styled.span`
 `;
 
 export const RadioButtonsGroup = () => {
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const [value, setValue] = useState(DEFAULT_CAMPUS);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ export const RadioButtonsGroup = () => {
             control={<Radio data-testid={key} />}
             label={
               <Label>
-                {titleCase(key)}
+                {Helpers.titleCase(key)}
                 <span>
                   {CAMPUS_CODES[key].some((c) =>
                     settingIsDefault(user.data, 'campusCode', c, DEFAULT_CAMPUS)

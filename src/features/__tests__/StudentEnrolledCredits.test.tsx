@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import StudentEnrolledCredits from '../academic-overview/StudentEnrolledCredits';
-import { courseState } from 'src/state';
+import { State } from '@osu-wams/hooks';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 const mockInitialState = jest.fn();
@@ -11,7 +11,7 @@ describe('<StudentEnrolledCredits />', () => {
   it('should render and have the approriate standing', async () => {
     mockInitialState.mockReturnValue([
       {
-        state: courseState,
+        state: State.courseState,
         value: {
           isLoading: false,
           isError: false,
@@ -28,7 +28,7 @@ describe('<StudentEnrolledCredits />', () => {
   it('should return appropriate text when data is empty', async () => {
     mockInitialState.mockReturnValue([
       {
-        state: courseState,
+        state: State.courseState,
         value: {
           isLoading: false,
           isError: false,

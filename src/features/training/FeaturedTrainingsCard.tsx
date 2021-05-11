@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { faUsersClass } from '@fortawesome/pro-light-svg-icons';
 import { Types } from '@osu-wams/lib';
+import { Routes } from '@osu-wams/utils';
+import { State } from '@osu-wams/hooks';
 import { Loading } from 'src/ui/Loading';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
 import { InternalLink } from 'src/ui/Link';
@@ -13,11 +15,9 @@ import {
   FeatureCardContent,
 } from 'src/ui/Card/variants/FeatureCard';
 import { useRecoilValue } from 'recoil';
-import { trainingState } from 'src/state';
-import { Routes } from 'src/routers';
 
 const FeaturedTrainingsCard = () => {
-  const { data, isSuccess, isLoading } = useRecoilValue(trainingState);
+  const { data, isSuccess, isLoading } = useRecoilValue(State.trainingState);
   const [isOpen, setOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState(null);
   const [featuredTrainings, setFeaturedTrainings] = useState<Types.Training[]>([]);
@@ -74,7 +74,7 @@ const FeaturedTrainingsCard = () => {
       </CardContent>
       <CardFooter>
         <InternalLink
-          to={Routes().trainings.fullPath}
+          to={Routes.Routes().trainings.fullPath}
           onClick={() => Event('training-featured', 'View more trainings')}
         >
           View more trainings

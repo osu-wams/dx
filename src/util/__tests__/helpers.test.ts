@@ -1,4 +1,6 @@
-import {
+import { Helpers } from '@osu-wams/utils';
+
+const {
   titleCase,
   formatTime,
   format,
@@ -8,7 +10,7 @@ import {
   arrayIncludes,
   commaList,
   removeDuplicates,
-} from '../helpers';
+} = Helpers;
 
 describe('titleCase', () => {
   it('should transform UPPERCASE', () => {
@@ -96,7 +98,7 @@ describe('formatPhone', () => {
     ${'5417312345'}    | ${'5417312345'}
     ${'+5721234567'}   | ${'+57 2 1234567'}
     ${'+861012345678'} | ${'+86 10 1234 5678'}
-    ${null}            | ${undefined}
+    ${null}            | ${null}
   `(
     'transform phones from various countries into clear, national formats with country code if outside US',
     ({ input, expected }) => {

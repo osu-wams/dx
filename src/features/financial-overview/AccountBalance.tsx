@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/macro';
 import { Loading } from 'src/ui/Loading';
 import { useAccountBalance } from '@osu-wams/hooks';
-import { formatDollars } from 'src/util/helpers';
 import {
   Highlight,
   HighlightTitle,
@@ -10,7 +9,7 @@ import {
   HighlightDescription,
 } from 'src/ui/Highlights';
 import { ExternalLink } from 'src/ui/Link';
-import Url from 'src/util/externalUrls.data';
+import { Url, Helpers } from '@osu-wams/utils';
 import { Event } from 'src/util/gaTracking';
 
 /**
@@ -24,7 +23,7 @@ const AccountBalance = () => {
     <Highlight textAlignLeft>
       <HighlightEmphasis color={themeContext.features.finances.accountBalance.emphasis.color}>
         {loading && <Loading />}
-        {formatDollars(data?.attributes?.currentBalance) ?? (!loading && 'No data')}
+        {Helpers.formatDollars(data?.attributes?.currentBalance) ?? (!loading && 'No data')}
       </HighlightEmphasis>
       <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
       <HighlightDescription>

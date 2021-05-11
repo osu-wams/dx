@@ -4,9 +4,9 @@ import { mockEmployeeUser, render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import Training from 'src/pages/Training';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
-import { trainingTagState, trainingAudienceState, trainingState } from 'src/state';
-import { Trainings } from '@osu-wams/hooks';
+import { State, Trainings } from '@osu-wams/hooks';
 
+const { trainingTagState, trainingAudienceState, trainingState } = State;
 /**
  * Render Trainings with the most commonly used features
  * We reuse a lot of these elements in our tests

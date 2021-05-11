@@ -4,8 +4,7 @@ import { render } from 'src/util/test-utils';
 import Notifications from '../Notifications';
 import { mockGAEvent } from 'src/setupTests';
 import { screen } from '@testing-library/react';
-import { User } from '@osu-wams/hooks';
-import { userMessagesState } from 'src/state';
+import { State, User } from '@osu-wams/hooks';
 
 // Mock recoi state
 const mockInitialState = jest.fn();
@@ -14,7 +13,7 @@ describe('With 1 SENT notification', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValue([
       {
-        state: userMessagesState,
+        state: State.userMessagesState,
         value: {
           data: User.mockUser.userMessageItems.items,
           isLoading: false,
@@ -48,7 +47,7 @@ describe('With 2 SENT and 1 READ notifications', () => {
   beforeEach(() => {
     mockInitialState.mockReturnValue([
       {
-        state: userMessagesState,
+        state: State.userMessagesState,
         value: {
           data: User.mockUser.userThreeMessages.items,
           isLoading: false,

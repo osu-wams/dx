@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import { Title } from 'src/ui/PageTitle';
 import { Types } from '@osu-wams/lib';
-import { User } from '@osu-wams/hooks';
+import {
+  State,
+  User,
+  useAffiliationEventsState,
+  useAnnouncementsState,
+  useCampusEventsState,
+} from '@osu-wams/hooks';
+import { Helpers } from '@osu-wams/utils';
 import EventCard from './EventCard';
 import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
-import { arrayIncludes, removeDuplicates } from 'src/util/helpers';
-import { userState } from 'src/state';
 import { useRecoilValue } from 'recoil';
-import useAnnouncementsState from 'src/hooks/useAnnouncementsState';
-import useCampusEventsState from 'src/hooks/useCampusEventsState';
-import useAffiliationEventsState from 'src/hooks/useAffiliationEventsState';
 
 const { hasAudience, atCampus, CAMPUS_CODES, hasPrimaryAffiliation, AFFILIATIONS } = User;
 
@@ -55,19 +57,19 @@ const filterEmployeeEvents = (
 ) => {
   const { bend, corvallis } = CAMPUS_CODES;
   if (inBend) {
-    return events.filter((e) => !e.campus_code || arrayIncludes(bend, e.campus_code));
+    return events.filter((e) => !e.campus_code || Helpers.arrayIncludes(bend, e.campus_code));
   } else if (inCorvallis) {
-    return events.filter((e) => !e.campus_code || arrayIncludes(corvallis, e.campus_code));
+    return events.filter((e) => !e.campus_code || Helpers.arrayIncludes(corvallis, e.campus_code));
   } else {
     return events.filter(
-      (e) => !e.campus_code || !arrayIncludes([...bend, ...corvallis], e.campus_code)
+      (e) => !e.campus_code || !Helpers.arrayIncludes([...bend, ...corvallis], e.campus_code)
     );
   }
 };
 
 const EventCardContainer = ({ page, ...props }) => {
   const [events, setEvents] = useState<(Types.LocalistEvent | Types.Announcement)[]>([]);
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(State.userState);
   const { events: studentExperienceEvents } = useAffiliationEventsState(User.AFFILIATIONS.student);
   const { events: employeeEvents } = useAffiliationEventsState(User.AFFILIATIONS.employee);
   const { events: bendEvents } = useCampusEventsState('bend');
@@ -113,7 +115,7 @@ const EventCardContainer = ({ page, ...props }) => {
       }
 
       announcementsToUse = announcementsToUse.slice(0, 6);
-      eventsToUse = removeDuplicates(eventsToUse, 'action', 'link').slice(0, 6);
+      eventsToUse = Helpers.removeDuplicates(eventsToUse, 'action', 'link').slice(0, 6);
 
       if (announcementsToUse.length || eventsToUse.length) {
         // Weave two arrays alternating an item from each providing that the array

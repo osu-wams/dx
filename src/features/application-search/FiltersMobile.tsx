@@ -4,7 +4,7 @@ import { borderRadius, fontSize, spacing } from 'src/theme';
 import MyDialog from 'src/ui/MyDialog';
 import Button, { CloseButton } from 'src/ui/Button';
 import { FilterByType } from './Filters';
-import { applicationSearchMobileFilterState } from 'src/state/applicationSearch';
+import { State } from '@osu-wams/hooks';
 import { useRecoilState } from 'recoil';
 import { Event } from 'src/util/gaTracking';
 
@@ -45,7 +45,7 @@ const ApplyFilterStyle = styled.div`
 
 const FiltersMobile = () => {
   const themeContext = useContext(ThemeContext);
-  const [visible, setVisible] = useRecoilState(applicationSearchMobileFilterState);
+  const [visible, setVisible] = useRecoilState(State.applicationSearchMobileFilterState);
   const title = 'Filters';
   return (
     <MyDialog

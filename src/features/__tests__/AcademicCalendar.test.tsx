@@ -3,9 +3,8 @@ import { render, alterMock } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AcademicCalendar from '../AcademicCalendar';
-import { Events } from '@osu-wams/hooks';
+import { State, Events } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
-import { infoButtonState } from 'src/state';
 import { ACADEMIC_CALENDAR_API } from 'src/mocks/apis';
 
 const { academicCalendar3 } = Events.mockEvents;
@@ -56,7 +55,7 @@ describe('with an InfoButton in the CardFooter', () => {
   test('does not display the button when the infoButtonData is missing it', async () => {
     mockInitialState.mockReturnValue([
       {
-        state: infoButtonState,
+        state: State.infoButtonState,
         value: [{ content: '...', id: 'some-other-id', title: '...' }],
       },
     ]);
@@ -71,7 +70,7 @@ describe('with an InfoButton in the CardFooter', () => {
   test('displays the button when the infoButtonData is included', async () => {
     mockInitialState.mockReturnValue([
       {
-        state: infoButtonState,
+        state: State.infoButtonState,
         value: [
           { content: 'Info Button Content', id: 'academic-calendar', title: 'Info Button Title' },
         ],

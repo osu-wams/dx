@@ -1,6 +1,6 @@
 import { addDays, eachDayOfInterval, isAfter, isBefore } from 'date-fns';
 import { isNullOrUndefined } from 'util';
-import { format } from 'src/util/helpers';
+import { Helpers } from '@osu-wams/utils';
 import { Types } from '@osu-wams/lib';
 
 export interface ICoursesMap {
@@ -32,7 +32,7 @@ export const getNextFiveDays = (startDate: number) => {
  */
 export const getDayShortcode = (date: Date) => {
   let twoLetterShortcodes = ['Th', 'Sa', 'Su'];
-  let shortcode = format(date, 'EEEE').substr(0, 2);
+  let shortcode = Helpers.format(date, 'EEEE').substr(0, 2);
   shortcode = twoLetterShortcodes.includes(shortcode) ? shortcode : shortcode.substr(0, 1);
 
   return shortcode;

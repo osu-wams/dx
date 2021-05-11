@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { faExternalLink } from '@fortawesome/pro-solid-svg-icons';
 import { ListItemFlex } from 'src/ui/List';
 import { SimpleInternalLink, SimpleExternalLink, SimpleModalLink } from 'src/ui/Link';
-import { SearchItem } from 'src/state/search';
+import { State } from '@osu-wams/hooks';
 import Fuse from 'fuse.js';
 import { BubbleExternalLink, BubbleInternalLink } from 'src/ui/Bubble';
 import { borderRadius, spacing, breakpoints, fontSize } from 'src/theme';
@@ -48,7 +48,7 @@ const SubText = styled.div`
   color: ${({ theme }) => theme.ui.searchResult.subText.color};
 `;
 
-const titleLink = (item: SearchItem, toggleModal?: () => void) => {
+const titleLink = (item: State.SearchItem, toggleModal?: () => void) => {
   const { link, title } = item;
   if (toggleModal && link?.modal) {
     return (
@@ -66,7 +66,7 @@ const titleLink = (item: SearchItem, toggleModal?: () => void) => {
   );
 };
 
-const titleBubble = (item: SearchItem) => {
+const titleBubble = (item: State.SearchItem) => {
   const { link, type } = item;
   return link?.href ? (
     <BubbleExternalLink>
@@ -78,7 +78,7 @@ const titleBubble = (item: SearchItem) => {
   );
 };
 
-const itemModal = (selected: SearchItem, toggleModal: () => void) => {
+const itemModal = (selected: State.SearchItem, toggleModal: () => void) => {
   switch (selected?.type) {
     case 'Training':
       return (
@@ -111,12 +111,12 @@ const itemModal = (selected: SearchItem, toggleModal: () => void) => {
 const SearchResultListItem = ({
   searchResult: { item },
 }: {
-  searchResult: Fuse.FuseResult<SearchItem>;
+  searchResult: Fuse.FuseResult<State.SearchItem>;
 }) => {
   const [isOpen, setOpen] = useState(false);
-  const [selected, setSelected] = useState<SearchItem>();
+  const [selected, setSelected] = useState<State.SearchItem>();
 
-  const toggleModal = (item?: SearchItem) => {
+  const toggleModal = (item?: State.SearchItem) => {
     setOpen(!isOpen);
     if (item) {
       setSelected(item);

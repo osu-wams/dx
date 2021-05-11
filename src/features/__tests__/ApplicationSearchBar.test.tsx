@@ -4,9 +4,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
-import { applicationSearchState } from 'src/state/applicationSearch';
-import { resourceState } from 'src/state';
-import { Resources } from '@osu-wams/hooks';
+import { State, Resources } from '@osu-wams/hooks';
 
 const notFoundSearchTerm = 'bobross';
 const foundSearchTerm = 'testo';
@@ -21,7 +19,7 @@ describe('<ApplicationSearchBar />', () => {
     render(<ApplicationSearchBar />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: notFoundSearchTerm,
         },
       ],
@@ -33,11 +31,11 @@ describe('<ApplicationSearchBar />', () => {
     render(<ApplicationSearchBar />, {
       initialStates: [
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: foundSearchTerm,
         },
         {
-          state: resourceState,
+          state: State.resourceState,
           value: {
             data: Resources.mockResources.resourcesData.data,
             isLoading: false,
@@ -58,11 +56,11 @@ describe('<ApplicationSearchBar />', () => {
     beforeEach(async () => {
       mockInitialState.mockReturnValueOnce([
         {
-          state: applicationSearchState,
+          state: State.applicationSearchState,
           value: '',
         },
         {
-          state: resourceState,
+          state: State.resourceState,
           value: {
             data: Resources.mockResources.resourcesData.data,
             isLoading: false,
