@@ -5,8 +5,6 @@ import { render } from 'src/util/test-utils';
 import { AdminSettings } from '../AdminSettings';
 import { mockGAEvent } from 'src/setupTests';
 
-jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
-
 const mockAddMessage = jest.fn();
 const mockPostSettings = jest.fn();
 const mockApiCache = jest.fn();

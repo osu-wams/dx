@@ -5,7 +5,9 @@ import { Card, CardContent, CardHeader, CardFooter, Badge } from '../Card';
 import Button from '../Button';
 import { Color } from 'src/theme';
 
-jest.mock('nanoid', () => () => `nanoid-${Date.now()}`);
+jest.mock('nanoid', () => ({
+  nanoid: () => Date.now() + 'test',
+}));
 
 // Standard card that is used most frequently in this app - should have thorough test coverage
 const StandardCard = () => (

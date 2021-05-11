@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import { useMediaQuery } from 'react-responsive';
 import { CardBase } from './StyledCardComponents';
 import { breakpoints } from 'src/theme';
