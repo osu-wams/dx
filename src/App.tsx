@@ -25,7 +25,7 @@ import {
   useUserState,
 } from '@osu-wams/hooks';
 import { Routes } from '@osu-wams/utils';
-import { ReactQueryDevtools } from 'react-query-devtools/dist/react-query-devtools.production.min';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
 import { RouterPage } from './routers';
 import Profile from './pages/Profile';

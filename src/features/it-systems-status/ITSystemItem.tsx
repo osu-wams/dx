@@ -9,7 +9,7 @@ import {
 import { ListItem } from 'src/ui/List';
 import { fontSize, spacing, ThemeConfiguration } from 'src/theme';
 import Icon from 'src/ui/Icon';
-import { ICachetComponent } from '@osu-wams/hooks/dist/api/status';
+import { Types } from '@osu-wams/lib';
 
 const Container = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ const FlexListItem = styled(ListItem)`
 `;
 
 const getIconProps = (
-  component: ICachetComponent,
+  component: Types.CachetComponent,
   fontSize,
   themeContext: ThemeConfiguration
 ): { icon: IconDefinition; color: string; fontSize: string } => {
@@ -74,7 +74,7 @@ const getIconProps = (
   }
 };
 
-const ITSystemItem: React.FC<{ component: ICachetComponent }> = ({ component }) => {
+const ITSystemItem: React.FC<{ component: Types.CachetComponent }> = ({ component }) => {
   const themeContext = useContext(ThemeContext);
 
   return (

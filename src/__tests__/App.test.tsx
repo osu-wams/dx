@@ -7,6 +7,7 @@ import { mockEmployeeUser, mockStudentEmployeeUser, render } from 'src/util/test
 import { LocationProvider, createHistory, createMemorySource } from '@reach/router';
 import App from '../App';
 import { RecoilRoot } from 'recoil';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const { dashboardState, initialRouteState } = State;
 
@@ -35,12 +36,15 @@ it('renders <App> without crashing', () => {
   const div = document.createElement('div');
   // Setup for ReachRouter
   const testHistory = createHistory(createMemorySource('/'));
+  const queryClient = new QueryClient();
   ReactDOM.render(
-    <RecoilRoot>
-      <LocationProvider history={testHistory}>
-        <App containerElement={div} />
-      </LocationProvider>
-    </RecoilRoot>,
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <LocationProvider history={testHistory}>
+          <App containerElement={div} />
+        </LocationProvider>
+      </RecoilRoot>
+    </QueryClientProvider>,
     div
   );
   // ReactDOM.unmountComponentAtNode(div);

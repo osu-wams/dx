@@ -18,6 +18,7 @@ import { dismissAll, markNotificationRead } from 'src/features/notifications/not
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { RichTextContent } from '../RichText';
 import { Routes, Helpers } from '@osu-wams/utils';
+import { useQueryClient } from 'react-query';
 
 const { filteredNotifications, userMessagesState } = State;
 
@@ -98,6 +99,7 @@ const NotificationModal = ({
 };
 
 const NotificationsMenu = () => {
+  const queryClient = useQueryClient();
   const notifications = useRecoilValue<Types.UserMessagesState>(filteredNotifications('unread'));
   const notificationsHook = useMessages({
     ...Constants.REACT_QUERY_DEFAULT_CONFIG,
@@ -229,7 +231,7 @@ const NotificationsMenu = () => {
           {notifications.data.length > 0 && (
             <MenuItem
               onSelect={() => {
-                dismissAll();
+                dismissAll(queryClient);
                 Event('notifications-menu', 'Dismiss ALL notifications');
               }}
             >

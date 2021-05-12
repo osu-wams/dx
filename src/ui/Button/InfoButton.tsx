@@ -8,7 +8,7 @@ import { CloseButton } from './index';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
-import { InfoButtonState } from '@osu-wams/hooks/dist/api/infoButtons';
+import { Types } from '@osu-wams/lib';
 import { State } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
 
@@ -35,7 +35,7 @@ const InfoButton = (props) => {
   const themeContext = useContext(ThemeContext);
   const infoButtonData = useRecoilValue(State.infoButtonState);
   const [dialogVisible, toggleDialog] = useState(false);
-  const [currentButton, setButton] = useState<InfoButtonState | null>(null);
+  const [currentButton, setButton] = useState<Types.InfoButtonState | null>(null);
 
   useEffect(() => {
     if (Array.isArray(infoButtonData)) {

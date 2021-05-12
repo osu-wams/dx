@@ -4,7 +4,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
 import { useAddresses } from '@osu-wams/hooks';
 import Icon from 'src/ui/Icon';
-import { MailingAddress } from '@osu-wams/hooks/dist/api/person/addresses';
+import { Types } from '@osu-wams/lib';
 
 const ProfileAddress = () => {
   const address = useAddresses();
@@ -19,9 +19,7 @@ const ProfileAddress = () => {
 };
 
 const renderAddress = (
-  {
-    attributes: { addressType, addressLine1, city, stateCode, postalCode },
-  }: MailingAddress,
+  { attributes: { addressType, addressLine1, city, stateCode, postalCode } }: Types.Address,
   color
 ) => (
   <div>

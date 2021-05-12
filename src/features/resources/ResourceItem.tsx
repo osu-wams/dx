@@ -43,7 +43,7 @@ const ResourceItem = ({
   const themeContext = useContext(ThemeContext);
   const user = useRecoilValue(State.userState);
   const [favs, setFav] = useState(false);
-  const { data, isSuccess } = useStatus();
+  const status = useStatus();
   const [showDialog, setShowDialog] = useState(false);
   const [itSystemError, setItSystemError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -83,10 +83,10 @@ const ResourceItem = ({
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (status.isSuccess) {
       // look for the resource's corresponding IT system
-      if (resource.hasOwnProperty('itSystem') && data) {
-        var result = data.find((system) => system.name === resource.itSystem);
+      if (resource.hasOwnProperty('itSystem') && status.data) {
+        var result = status.data.find((system) => system.name === resource.itSystem);
 
         if (resource.itSystem && result && result.status !== 1) {
           setItSystemError(true);
@@ -97,7 +97,7 @@ const ResourceItem = ({
         setSystemCheckedAt(new Date());
       }
     }
-  }, [isSuccess]);
+  }, [status.isSuccess, status.data]);
 
   // Heart Icon to Favorite or unfavorite the Resources
   const FaveHeart = () => (
