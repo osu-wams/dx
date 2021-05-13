@@ -19,7 +19,7 @@ const Catch = <Props extends { errorHandlerCallback?: Function }>(
     displayName: string = '';
 
     state: ErrorState = {
-      error: undefined
+      error: undefined,
     };
 
     static getDerivedStateFromError(error: Error) {
@@ -57,9 +57,11 @@ const ErrorBoundary = Catch(
   },
   (error, info, callback) => {
     postError(error)
-      .then(v => console.debug('Error boundary reported to server:', error))
-      .catch(err => console.error);
-    if (callback) callback();
+      .then((v) => console.debug('Error boundary reported to server:', error))
+      .catch((err) => console.error)
+      .finally(() => {
+        if (callback) callback();
+      });
   }
 );
 
