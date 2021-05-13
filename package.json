@@ -117,7 +117,8 @@
       "!src/index.tsx",
       "!src/registerServiceWorker.js",
       "!src/setupTests.ts",
-      "!src/setupProxy.js"
+      "!src/setupProxy.js",
+      "!src/util/test-utils.tsx"
     ],
     "coverageThreshold": {
       "global": {
