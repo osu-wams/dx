@@ -63,7 +63,7 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should not open new window when clicking resource with IT System down', async () => {
-    const { findByText } = render(
+    const { findAllByText } = render(
       <>
         <ResourcesCard categ="featured" icon={faStars} />
         <ITSystemStatus />
@@ -71,23 +71,20 @@ describe('<ResourcesCard />', () => {
     );
 
     global.open = jest.fn();
-
-    const BoxResource = await findByText('Box');
-    expect(BoxResource).toBeInTheDocument();
-
-    userEvent.click(BoxResource);
+    const BoxResource = await findAllByText('Box');
+    expect(BoxResource).toHaveLength(2);
+    userEvent.click(BoxResource[0]);
     expect(global.open).not.toHaveBeenCalled();
   });
 
   it('should have warning icon on resource if IT system is down', async () => {
-    const { findByTestId, findByText } = render(
+    const { findByTestId, findAllByText } = render(
       <>
         <ResourcesCard categ="featured" icon={faStars} />
         <ITSystemStatus />
       </>
     );
-    const BoxResource = await findByText('Box');
-
+    expect(await findAllByText('Box')).toHaveLength(2);
     expect(await findByTestId('warning-icon')).toBeInTheDocument();
   });
 
