@@ -20,13 +20,10 @@ jest.mock('@osu-wams/hooks', () => ({
   },
 }));
 
+let consoleSpy;
 beforeEach(() => {
+  consoleSpy = jest.spyOn(console, 'error').mockImplementation();
   mockedPostError.mockResolvedValue(undefined);
-});
-
-// Do not report to console.error or console.debug since we are expecting these
-afterEach(() => {
-  jest.spyOn(console, 'error').mockImplementation(() => {});
 });
 
 describe('<ErrorBoundary />', () => {
@@ -48,7 +45,7 @@ describe('<ErrorBoundary />', () => {
     expect(screen.getByText('Error')).toBeInTheDocument();
     expect(screen.queryByText('Success')).not.toBeInTheDocument();
     expect(mockedPostError).toBeCalledTimes(1);
-    expect(console.error).toHaveBeenCalledTimes(2);
+    expect(consoleSpy).toHaveBeenCalledTimes(2);
   });
   it('should call the ErrorHandlerCallback when an error happens', async () => {
     render(
@@ -62,7 +59,8 @@ describe('<ErrorBoundary />', () => {
     expect(screen.getByText('Error')).toBeInTheDocument();
     expect(screen.queryByText('Success')).not.toBeInTheDocument();
     expect(mockedPostError).toBeCalledTimes(1);
+    await new Promise(setImmediate); // cause Jest to flush inflight promises before checking if the callback had been called
     expect(mockedErrorCallback).toBeCalledTimes(1);
-    expect(console.error).toHaveBeenCalledTimes(2);
+    expect(consoleSpy).toHaveBeenCalledTimes(2);
   });
 });
