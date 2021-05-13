@@ -1686,10 +1686,10 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@1.0.115":
-  version "1.0.115"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.115/7ad7752d6746baf3fa0af2558bd68eb8a6a9dd0849092bd2a89f992ed982b0fe#4cc252795d4949bf0d7ff700fad3e22086030f3a"
-  integrity sha512-XkRVkHYJA7wHkOCGnW8eOHhjyqeSAubUHGTgolUI6ANNPdL3KzP0Wj8qg7ak5aKYl6JoX8/16cFK7lzz3aWxtg==
+"@osu-wams/hooks@1.0.116":
+  version "1.0.116"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.116/15b05880c5fe959e477a96043f5bdbf0b4a419c7bc7265c28e45918f6e8c2c39#a577558f01de472d4ab7b38dc5eafd40a84b6966"
+  integrity sha512-9kVmi0wkaIlwgZ5iQTOKBVMKDtfIXQ1Br+1YZvT/w01TzEd9B4f0AkcJ/Hp4kh9Q5wtTT13m3tycuhxqBNwrkw==
   dependencies:
     "@osu-wams/lib" "^0.1.78"
     "@osu-wams/utils" "^0.0.10"
