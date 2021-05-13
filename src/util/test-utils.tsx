@@ -11,6 +11,7 @@ import { RecoilRoot } from 'recoil';
 import { rest } from 'msw';
 import { server } from 'src/mocks/server';
 import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 // Helper method to change the mock responses by MSW
 export const alterMock = (api: string, mock: any, status: number = 200) => {
@@ -63,19 +64,23 @@ const renderWithUserContext = (
   { user = authUser, initialStates = new Array(), ...options } = {}
 ) => {
   const Wrapper = (props) => {
+    const queryClient = new QueryClient();
+
     return (
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(State.userState, user);
-          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
-        }}
-      >
-        <LocationProvider>
-          <HelmetProvider>
-            <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
-          </HelmetProvider>
-        </LocationProvider>
-      </RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot
+          initializeState={(snap) => {
+            snap.set(State.userState, user);
+            initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+          }}
+        >
+          <LocationProvider>
+            <HelmetProvider>
+              <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+            </HelmetProvider>
+          </LocationProvider>
+        </RecoilRoot>
+      </QueryClientProvider>
     );
   };
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
@@ -83,19 +88,23 @@ const renderWithUserContext = (
 
 const renderWithAppContext = (ui, { initialStates = new Array(), ...options } = {}) => {
   const Wrapper = (props) => {
+    const queryClient = new QueryClient();
+
     return (
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(State.userState, authUser);
-          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
-        }}
-      >
-        <LocationProvider>
-          <HelmetProvider>
-            <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
-          </HelmetProvider>
-        </LocationProvider>
-      </RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot
+          initializeState={(snap) => {
+            snap.set(State.userState, authUser);
+            initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+          }}
+        >
+          <LocationProvider>
+            <HelmetProvider>
+              <ThemeProvider theme={themesLookup[defaultTheme]} {...props} />
+            </HelmetProvider>
+          </LocationProvider>
+        </RecoilRoot>
+      </QueryClientProvider>
     );
   };
   return testingLibraryRender(ui, { wrapper: Wrapper, ...options });
@@ -113,24 +122,28 @@ const renderWithAllContexts = (
   } = {}
 ) => {
   const Wrapper = (props) => {
+    const queryClient = new QueryClient();
+
     return (
-      <RecoilRoot
-        initializeState={(snap) => {
-          snap.set(State.userState, user);
-          initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
-        }}
-      >
-        <LocationProvider history={history}>
-          <HelmetProvider>
-            <ThemeProvider theme={themesLookup[defaultTheme]}>
-              <ResponsiveContext.Provider
-                value={{ width: isDesktop ? desktop : mobile }}
-                {...props}
-              />
-            </ThemeProvider>
-          </HelmetProvider>
-        </LocationProvider>
-      </RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot
+          initializeState={(snap) => {
+            snap.set(State.userState, user);
+            initialStates.forEach((s: { state: any; value: any }) => snap.set(s.state, s.value));
+          }}
+        >
+          <LocationProvider history={history}>
+            <HelmetProvider>
+              <ThemeProvider theme={themesLookup[defaultTheme]}>
+                <ResponsiveContext.Provider
+                  value={{ width: isDesktop ? desktop : mobile }}
+                  {...props}
+                />
+              </ThemeProvider>
+            </HelmetProvider>
+          </LocationProvider>
+        </RecoilRoot>
+      </QueryClientProvider>
     );
   };
   return { ...testingLibraryRender(ui, { wrapper: Wrapper, ...options }), history };

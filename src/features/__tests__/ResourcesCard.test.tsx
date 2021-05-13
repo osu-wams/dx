@@ -63,33 +63,41 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should not open new window when clicking resource with IT System down', async () => {
-    render(<ITSystemStatus />);
-    const { findByText } = render(<ResourcesCard categ="featured" icon={faStars} />);
+    const { findAllByText } = render(
+      <>
+        <ResourcesCard categ="featured" icon={faStars} />
+        <ITSystemStatus />
+      </>
+    );
 
     global.open = jest.fn();
-
-    const BoxResource = await findByText('Box');
-    expect(BoxResource).toBeInTheDocument();
-
-    userEvent.click(BoxResource);
+    const BoxResource = await findAllByText('Box');
+    expect(BoxResource).toHaveLength(2);
+    userEvent.click(BoxResource[0]);
     expect(global.open).not.toHaveBeenCalled();
   });
 
   it('should have warning icon on resource if IT system is down', async () => {
-    render(<ITSystemStatus />);
-    const { findByTestId, findByText } = render(<ResourcesCard categ="featured" icon={faStars} />);
-    const BoxResource = await findByText('Box');
-
+    const { findByTestId, findAllByText } = render(
+      <>
+        <ResourcesCard categ="featured" icon={faStars} />
+        <ITSystemStatus />
+      </>
+    );
+    expect(await findAllByText('Box')).toHaveLength(2);
     expect(await findByTestId('warning-icon')).toBeInTheDocument();
   });
 
   it('should display warning message if resource with IT system down is clicked', async () => {
-    const { findByText, findAllByText } = render(<ResourcesCard categ="featured" icon={faStars} />);
-
-    render(<ITSystemStatus />);
+    const { findByText, findAllByText } = render(
+      <>
+        <ResourcesCard categ="featured" icon={faStars} />
+        <ITSystemStatus />
+      </>
+    );
+    await findByText('Featured');
     const BoxResource = await findAllByText('Box');
     userEvent.click(BoxResource[0]);
-
     expect(await findByText(/Resource may be unavailable/i)).toBeInTheDocument();
     expect(await findByText(/Performance Issues./i)).toBeInTheDocument();
   });

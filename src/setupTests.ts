@@ -2,7 +2,6 @@ import ReactGA from 'react-ga';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
 import * as cache from './util/cache';
-import { queryCache } from 'react-query';
 import { server } from 'src/mocks/server';
 import axios from 'axios';
 
@@ -47,7 +46,6 @@ afterEach(() => {
   // don't output debug statements to console
   jest.spyOn(console, 'debug').mockImplementation(() => {});
   jest.clearAllMocks();
-  queryCache.clear();
   server.resetHandlers();
 });
 

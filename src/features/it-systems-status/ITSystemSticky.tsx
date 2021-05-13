@@ -8,7 +8,7 @@ import { Url, Helpers } from '@osu-wams/utils';
 import { ListItem } from 'src/ui/List';
 import { fontSize } from 'src/theme';
 import Icon from 'src/ui/Icon';
-import { ICachetComponent, ICachetIncident } from '@osu-wams/hooks/dist/api/status';
+import { Types } from '@osu-wams/lib';
 import VisuallyHidden from '@reach/visually-hidden';
 
 const Header = styled.div`
@@ -45,13 +45,13 @@ const Message = styled.div`
   color: ${({ theme }) => theme.features.itStatus.sticky.message.color};
 `;
 
-const ITSystemSticky: React.FC<{ components: ICachetComponent[] }> = ({ components }) => {
+const ITSystemSticky: React.FC<{ components: Types.CachetComponent[] }> = ({ components }) => {
   const themeContext = useContext(ThemeContext);
 
   return (
     <CardContentCell>
-      {components.map((c: ICachetComponent) =>
-        c.incidents.map((i: ICachetIncident) => (
+      {components.map((c: Types.CachetComponent) =>
+        c.incidents.map((i: Types.CachetIncident) => (
           <ListItem spaced key={i.id}>
             <Header>
               <Icon

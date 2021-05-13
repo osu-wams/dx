@@ -1,5 +1,5 @@
 import { Types } from '@osu-wams/lib';
-import { queryCache } from 'react-query';
+import { QueryClient } from 'react-query';
 import { User } from '@osu-wams/hooks';
 
 export const markNotificationRead = (
@@ -23,8 +23,8 @@ export const markNotificationRead = (
   };
 };
 
-export const dismissAll = () => {
+export const dismissAll = (queryClient: QueryClient) => {
   User.updateUserMessage({ status: 'READ' }).then(() => {
-    queryCache.invalidateQueries('userMessages');
+    queryClient.invalidateQueries('userMessages');
   });
 };

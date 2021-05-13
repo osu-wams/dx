@@ -10,6 +10,7 @@ import idleTimer from './util/idleTimer';
 import cookieRefreshTimer from './util/cookieRefreshTimer';
 import { RecoilRoot } from 'recoil';
 import ReadyIntegration from './util/ready-integration';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
 const { postError, IGNORED_ERRORS } = Errors;
 
@@ -82,12 +83,16 @@ try {
   // made API calls that extended the cookie expiration time
   cookieRefreshTimer();
 
+  const queryClient = new QueryClient();
+
   ReactDOM.render(
-    <RecoilRoot>
-      <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
-        <App containerElement={applicationRoot} />
-      </ErrorBoundary>
-    </RecoilRoot>,
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
+          <App containerElement={applicationRoot} />
+        </ErrorBoundary>
+      </RecoilRoot>
+    </QueryClientProvider>,
     applicationRoot
   );
 } catch (e) {
