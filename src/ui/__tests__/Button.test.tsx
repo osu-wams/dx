@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
 import Button, { CloseButton } from '../Button';
-import { Color } from 'src/theme';
+import { Color } from '@osu-wams/theme';
 
 const DefaultBtn = () => <Button>I am a button</Button>;
 

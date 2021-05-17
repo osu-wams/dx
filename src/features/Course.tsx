@@ -27,7 +27,7 @@ import {
   onlyMeetingTypes,
   examName,
 } from './schedule/schedule-utils'; // eslint-disable  @typescript-eslint/no-unused-vars
-import { fontSize, spacing, ThemeConfiguration } from 'src/theme';
+import { fontSize, spacing, MOSTheme } from '@osu-wams/theme';
 import { Types } from '@osu-wams/lib';
 
 const { formatTime, format, singularPlural } = Helpers;
@@ -91,7 +91,7 @@ const meetingDateTime = (meetingTime: Types.CourseScheduleMeetingTime): string =
 const meetingTimeListItem = (
   key: string,
   meetingTime: Types.CourseScheduleMeetingTime,
-  themeContext: ThemeConfiguration
+  themeContext: MOSTheme
 ): JSX.Element => (
   <CourseListItem key={key}>
     <ListItemContent style={{ paddingBottom: 0 }}>
@@ -125,7 +125,7 @@ const meetingTimeListItem = (
 const facultyListItem = (
   faculty: Types.CourseScheduleFaculty,
   index: number,
-  themeContext: ThemeConfiguration
+  themeContext: MOSTheme
 ): JSX.Element => (
   <CourseListItem key={`${faculty.email}-${index}`}>
     <ListItemContent style={{ paddingBottom: 0 }}>
@@ -152,7 +152,7 @@ const buildingCampusMap = (
   building: string,
   buildingDescription: string,
   room: string,
-  themeContext: ThemeConfiguration
+  themeContext: MOSTheme
 ): JSX.Element => (
   <MapLink
     href={Url.campusMap.building + building}

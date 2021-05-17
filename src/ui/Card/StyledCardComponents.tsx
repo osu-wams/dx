@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { motion } from 'framer-motion';
-import { borderRadius, spacing, mq } from 'src/theme';
+import { borderRadius, spacing, mq } from '@osu-wams/theme';
 
 interface IBadge {
   fg?: string;

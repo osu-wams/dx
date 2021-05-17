@@ -12,7 +12,7 @@ import cascadesLogoDark from 'src/assets/osu-cascades-dark.svg';
 import '@reach/menu-button/styles.css';
 import MainNav from './MainNav/';
 import { HeaderNav } from './HeaderNav';
-import { breakpoints, Color, fontSize, spacing } from 'src/theme';
+import { breakpoints, Color, fontSize, spacing } from '@osu-wams/theme';
 import { State, User } from '@osu-wams/hooks';
 import { Types, User as UserUtil } from '@osu-wams/lib';
 import { Helpers } from '@osu-wams/utils';

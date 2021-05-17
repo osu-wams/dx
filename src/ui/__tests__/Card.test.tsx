@@ -3,7 +3,7 @@ import { fireEvent } from '@testing-library/react';
 import { render } from 'src/util/test-utils';
 import { Card, CardContent, CardHeader, CardFooter, Badge } from '../Card';
 import Button from '../Button';
-import { Color } from 'src/theme';
+import { Color } from '@osu-wams/theme';
 
 jest.mock('nanoid', () => ({
   nanoid: () => Date.now() + 'test',

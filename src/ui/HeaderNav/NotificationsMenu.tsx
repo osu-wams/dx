@@ -12,7 +12,7 @@ import { CloseButton } from 'src/ui/Button';
 import { State, Constants, User, useMessages } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { InternalLink } from 'src/ui/Link';
-import { spacing, breakpoints, fontSize } from 'src/theme';
+import { spacing, breakpoints, fontSize } from '@osu-wams/theme';
 import Icon from 'src/ui/Icon';
 import { dismissAll, markNotificationRead } from 'src/features/notifications/notifications-utils';
 import { useRecoilValue, useSetRecoilState } from 'recoil';

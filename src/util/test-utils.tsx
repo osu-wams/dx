@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { createHistory, createMemorySource, LocationProvider } from '@reach/router';
 import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
-import { themesLookup, defaultTheme } from '../theme/themes';
+import { themesLookup, defaultTheme } from '@osu-wams/theme';
 import { User } from '@osu-wams/lib';
 import { State } from '@osu-wams/hooks';
 import { mobile, desktop } from 'src/hooks/useMediaQuery';

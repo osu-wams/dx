@@ -1,6 +1,6 @@
 import React from 'react';
 import { faListAlt } from '@fortawesome/pro-light-svg-icons';
-import { MainGridWrapper, Masonry } from 'src/theme';
+import { MainGridWrapper, Masonry } from 'src/ui/grid';
 import { Card, CardContent, CardFooter, CardHeader, CardIcon } from 'src/ui/Card';
 import PageTitle from 'src/ui/PageTitle';
 import { ExternalLink } from 'src/ui/Link';

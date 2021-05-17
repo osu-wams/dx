@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { fontSize, spacing } from 'src/theme';
+import { fontSize, spacing } from '@osu-wams/theme';
 
 /**
  * Content currently from Drupal used in ReleaseNotes and Info among others

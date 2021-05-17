@@ -7,7 +7,7 @@ import {
   faQuestionCircle,
 } from '@fortawesome/pro-light-svg-icons';
 import { ListItem } from 'src/ui/List';
-import { fontSize, spacing, ThemeConfiguration } from 'src/theme';
+import { fontSize, spacing, MOSTheme } from '@osu-wams/theme';
 import Icon from 'src/ui/Icon';
 import { Types } from '@osu-wams/lib';
 
@@ -35,7 +35,7 @@ const FlexListItem = styled(ListItem)`
 const getIconProps = (
   component: Types.CachetComponent,
   fontSize,
-  themeContext: ThemeConfiguration
+  themeContext: MOSTheme
 ): { icon: IconDefinition; color: string; fontSize: string } => {
   const props = {
     fontSize: fontSize[24],

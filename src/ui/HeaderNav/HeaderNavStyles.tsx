@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { fontSize, spacing, borderRadius, breakpoints, shadows } from 'src/theme';
+import { fontSize, spacing, borderRadius, breakpoints, shadows } from '@osu-wams/theme';
 import { MenuList, MenuButton } from '@reach/menu-button';
 
 const HeaderNavButton = styled(MenuButton)`

@@ -2,7 +2,7 @@ import React, { useContext, FC } from 'react';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { ICollapse } from './ICollapse';
-import { spacing, fontSize } from 'src/theme';
+import { spacing, fontSize } from '@osu-wams/theme';
 import styled from 'styled-components/macro';
 import { CardContext } from './Card';
 

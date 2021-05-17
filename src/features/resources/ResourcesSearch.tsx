@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { State } from '@osu-wams/hooks';
 import { useMediaQuery } from 'react-responsive';
-import { breakpoints } from 'src/theme';
+import { breakpoints } from '@osu-wams/theme';
 import { SearchBar } from 'src/ui/SearchBar';
 import { Event } from 'src/util/gaTracking';
 import { useRecoilState, useRecoilValue } from 'recoil';

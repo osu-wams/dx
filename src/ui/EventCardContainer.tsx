@@ -11,7 +11,8 @@ import {
 } from '@osu-wams/hooks';
 import { Helpers } from '@osu-wams/utils';
 import EventCard from './EventCard';
-import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
+import { spacing, breakpoints } from '@osu-wams/theme';
+import { SecondGridWrapper } from 'src/ui/grid';
 import { useRecoilValue } from 'recoil';
 
 const { hasAudience, atCampus, CAMPUS_CODES, hasPrimaryAffiliation, AFFILIATIONS } = User;

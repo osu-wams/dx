@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { nanoid } from 'nanoid';
 import { useMediaQuery } from 'react-responsive';
 import { CardBase } from './StyledCardComponents';
-import { breakpoints } from 'src/theme';
+import { breakpoints } from '@osu-wams/theme';
 
 const CardContext = React.createContext<any>(null);
 

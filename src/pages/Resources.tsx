@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { CardBase } from 'src/ui/Card';
-import { spacing, MainGridWrapper, MainGrid } from 'src/theme';
+import { spacing } from '@osu-wams/theme';
+import { MainGridWrapper, MainGrid } from 'src/ui/grid';
 import ResourcesCategories from 'src/features/resources/ResourcesCategories';
 import ResourcesSearch from 'src/features/resources/ResourcesSearch';
 import ResourcesList from 'src/features/resources/ResourcesList';
@@ -11,13 +12,8 @@ import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-const {
-  userState,
-  resourceState,
-  selectedCategoryState,
-  categoryState,
-  filteredResourcesState,
-} = State;
+const { userState, resourceState, selectedCategoryState, categoryState, filteredResourcesState } =
+  State;
 const { getAffiliation } = User;
 
 // Resources Page with components to filter, search and favorite resources

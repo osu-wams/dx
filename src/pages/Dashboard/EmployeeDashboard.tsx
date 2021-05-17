@@ -3,7 +3,7 @@ import { faStars } from '@fortawesome/pro-light-svg-icons';
 import { State } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import EventCardContainer from 'src/ui/EventCardContainer';
-import { MainGridWrapper, Masonry } from 'src/theme';
+import { MainGridWrapper, Masonry } from 'src/ui/grid';
 import ResourcesCard from 'src/features/ResourcesCard';
 import { EmployeeTools } from 'src/features/employee-only';
 import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { breakpoints, spacing } from 'src/theme';
+import { breakpoints, spacing } from '@osu-wams/theme';
 
 /**
  * As we create more columns we make this more flexible

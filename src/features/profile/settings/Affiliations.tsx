@@ -4,7 +4,7 @@ import Switch from '@material-ui/core/Switch';
 import styled from 'styled-components/macro';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import { State, User } from '@osu-wams/hooks';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 import { useRecoilValue } from 'recoil';
 import { Event } from 'src/util/gaTracking';
 

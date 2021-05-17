@@ -2,7 +2,7 @@ import React from 'react';
 import { isSameDay } from 'date-fns';
 import styled from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 import { Event } from 'src/util/gaTracking';
 import { Helpers } from '@osu-wams/utils';
 

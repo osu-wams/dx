@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { fontSize } from '../theme';
+import { fontSize } from '@osu-wams/theme';
 
 const Date = styled.div`
   margin: 0 auto;

@@ -1,6 +1,6 @@
 import { Link } from '@reach/router';
 import styled from 'styled-components/macro';
-import { fontSize, breakpoints } from 'src/theme';
+import { fontSize, breakpoints } from '@osu-wams/theme';
 
 const SubNav = styled.nav`
   display: flex;

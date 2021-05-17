@@ -12,10 +12,10 @@ import MyDialog, {
 } from 'src/ui/MyDialog';
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink, InternalLink, LinkDivider } from 'src/ui/Link';
-import { TwoCol } from 'src/ui/Grids';
+import { TwoCol } from 'src/ui/grid';
 import { ThemeContext } from 'styled-components/macro';
 import { useMediaQuery } from 'react-responsive';
-import { breakpoints } from 'src/theme';
+import { breakpoints } from '@osu-wams/theme';
 
 const TrainingDetails: React.FC<any> = ({
   training,

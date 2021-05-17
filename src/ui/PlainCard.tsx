@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/macro';
 import { Card, CardContent, CardFooter } from 'src/ui/Card';
-import { fontSize, spacing } from 'src/theme';
+import { fontSize, spacing } from '@osu-wams/theme';
 
 const Header = styled.h2`
   color: ${({ theme }) => theme.ui.plainCard.header.color};

@@ -6,7 +6,7 @@ import { SimpleInternalLink, SimpleExternalLink, SimpleModalLink } from 'src/ui/
 import { State } from '@osu-wams/hooks';
 import Fuse from 'fuse.js';
 import { BubbleExternalLink, BubbleInternalLink } from 'src/ui/Bubble';
-import { borderRadius, spacing, breakpoints, fontSize } from 'src/theme';
+import { borderRadius, spacing, breakpoints, fontSize } from '@osu-wams/theme';
 import Icon from '../Icon';
 import { TrainingDetails } from 'src/features/training/TrainingDetails';
 import Course from 'src/features/Course';

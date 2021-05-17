@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-import { css } from 'styled-components';
-import { spacing, fontSize, borderRadius } from 'src/theme';
+import styled, { css } from 'styled-components/macro';
+import { spacing, fontSize, borderRadius } from '@osu-wams/theme';
 
 type SpacedList = {
   spaced?: boolean;

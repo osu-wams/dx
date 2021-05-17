@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ThemeContext } from 'styled-components/macro';
 import VisuallyHidden from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
-import { fontSize, ThemeConfiguration } from 'src/theme';
+import { fontSize, MOSTheme } from '@osu-wams/theme';
 import {
   CardSection,
   SectionHeader,
@@ -106,7 +106,7 @@ const ScheduleCardCourses = (props: ScheduleCardCoursesProps) => {
   const meetingTimeListItems = (
     coursesMap: Map<string, ICoursesMap>,
     course: Types.CourseSchedule,
-    themeContext: ThemeConfiguration
+    themeContext: MOSTheme
   ): JSX.Element[] => {
     const meetingTimes = meetingTimesOnDay(course.attributes.meetingTimes, selectedDay);
     return exceptMeetingTypes(meetingTimes, ['MID']).map(

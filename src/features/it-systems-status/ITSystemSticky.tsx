@@ -6,7 +6,7 @@ import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
 import { Url, Helpers } from '@osu-wams/utils';
 import { ListItem } from 'src/ui/List';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 import Icon from 'src/ui/Icon';
 import { Types } from '@osu-wams/lib';
 import VisuallyHidden from '@reach/visually-hidden';

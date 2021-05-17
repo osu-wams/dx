@@ -3,7 +3,7 @@ import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 import { useAccountTransactions } from '@osu-wams/hooks';
 import { ExternalLink } from 'src/ui/Link';
 import { Url, Helpers } from '@osu-wams/utils';

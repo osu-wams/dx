@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { spacing, fontSize } from 'src/theme';
+import { spacing, fontSize } from '@osu-wams/theme';
 
 const Description = styled.div`
   font-size: ${fontSize[14]};

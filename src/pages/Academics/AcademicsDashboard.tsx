@@ -4,7 +4,7 @@ import { State } from '@osu-wams/hooks';
 import { Routes } from '@osu-wams/utils';
 import Courses from 'src/features/Courses';
 import AnnouncementContainer from 'src/ui/AnnouncementContainer';
-import { MainGridWrapper, Masonry } from 'src/theme';
+import { MainGridWrapper, Masonry } from 'src/ui/grid';
 import PlannerItems from 'src/features/PlannerItems';
 import AcademicCalendar from 'src/features/AcademicCalendar';
 import PageTitle from 'src/ui/PageTitle';

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { fontSize, spacing } from 'src/theme';
+import { fontSize, spacing } from '@osu-wams/theme';
 
 export const Bubble = styled.span`
   background: ${({ theme }) => theme.ui.bubble.background};

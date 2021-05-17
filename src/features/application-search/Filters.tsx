@@ -8,7 +8,7 @@ import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import getMUITheme from 'src/ui/MUITheme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { spacing } from 'src/theme/theme-settings';
+import { spacing } from '@osu-wams/theme';
 import { User, State } from '@osu-wams/hooks';
 
 const {
