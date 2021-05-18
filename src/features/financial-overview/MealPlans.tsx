@@ -23,25 +23,25 @@ const NoMealPlans = () => (
 
 export const MealPlans = () => {
   const themeContext = useContext(ThemeContext);
-  const mealPlans = useMealPlans();
+  const { data, isLoading } = useMealPlans();
 
   return (
     <Highlight textAlignLeft>
-      {mealPlans.loading && (
+      {isLoading && (
         <HighlightTitle>
           <Loading lines={4} />
         </HighlightTitle>
       )}
-      {mealPlans?.data?.length ? (
+      {data && data.length > 0 ? (
         <>
           <HighlightEmphasis
             color={
-              mealPlans.data[0].attributes?.balance && mealPlans.data[0].attributes?.balance > 0
+              data[0].attributes?.balance && data[0].attributes?.balance > 0
                 ? themeContext.features.finances.mealPlans.emphasisBalance.color
                 : themeContext.features.finances.mealPlans.emphasisNoBalance.color
             }
           >
-            {Helpers.formatDollars(mealPlans.data[0].attributes?.balance)}
+            {Helpers.formatDollars(data[0].attributes?.balance)}
           </HighlightEmphasis>
           <HighlightTitle marginTop={0}>Meal Plan Balance</HighlightTitle>
           <HighlightDescription>
@@ -49,7 +49,7 @@ export const MealPlans = () => {
           </HighlightDescription>
         </>
       ) : (
-        !mealPlans.loading && <NoMealPlans />
+        !isLoading && <NoMealPlans />
       )}
       <ExternalLink
         style={{ float: 'right', paddingTop: '16px' }}

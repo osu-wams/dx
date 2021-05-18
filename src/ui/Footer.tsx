@@ -76,9 +76,7 @@ const FooterDeployedContent = styled.span`
 
 const Footer = () => {
   const user = useRecoilValue(State.userState);
-  const {
-    data: { serverVersion, appVersion },
-  } = useAppVersions({ serverVersion: '', appVersion: '' });
+  const { healthCheck, appVersion } = useAppVersions();
   const [showMasqueradeDialog, setShowMasqueradeDialog] = useState(false);
   const themeContext = useContext(ThemeContext);
   const toggleMasqueradeDialog = () => setShowMasqueradeDialog(!showMasqueradeDialog);
@@ -88,16 +86,20 @@ const Footer = () => {
    * @param versionString the original version string
    * @param repository the github repository name
    */
-  const versionLink = (versionString: string, repository: string): JSX.Element => {
-    const [dateTime, version] = versionString.split('-'); // eslint-disable-line
-    if (isNullOrUndefined(version) || version === '') {
-      return <span>{versionString}</span>;
+  const versionLink = (repository: string, versionString?: string): JSX.Element => {
+    if (versionString) {
+      const [dateTime, version] = versionString.split('-'); // eslint-disable-line
+      if (!version) {
+        return <span>{versionString}</span>;
+      } else {
+        return (
+          <a href={`http://github.com/osu-wams/${repository}/commit/${version}`} target="blank">
+            {versionString}
+          </a>
+        );
+      }
     } else {
-      return (
-        <a href={`http://github.com/osu-wams/${repository}/commit/${version}`} target="blank">
-          {versionString}
-        </a>
-      );
+      return <span>not-found</span>;
     }
   };
 
@@ -162,10 +164,10 @@ const Footer = () => {
           {user?.data?.isAdmin && (
             <>
               <FooterDeployedContent>
-                Server Version: {versionLink(serverVersion, 'dx-server')}
+                Server Version: {versionLink('dx-server', healthCheck.data?.version)}
               </FooterDeployedContent>
               <FooterDeployedContent>
-                Client Version: {versionLink(appVersion, 'dx')}
+                Client Version: {versionLink('dx', appVersion.data)}
               </FooterDeployedContent>
             </>
           )}

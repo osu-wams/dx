@@ -26,7 +26,7 @@ const { usersCampus } = User;
 
 const AcademicProgram = () => {
   const themeContext = useContext(ThemeContext);
-  const { data, loading }: { data: Types.Degree[]; loading: boolean } = useDegrees();
+  const degrees = useDegrees();
   const user = useRecoilValue(State.userState);
   const { campusName } = usersCampus(user.data);
 
@@ -101,38 +101,50 @@ const AcademicProgram = () => {
   return (
     <Card>
       <CardHeader title="My Academic Program" badge={<CardIcon icon={faUserGraduate} />} />
-      {loading && <Loading />}
-      {!loading && data.length === 0 && (
+      {degrees.isLoading && <Loading />}
+      {!degrees.isLoading && degrees.data && degrees.data.length === 0 && (
         <CardContent>
           <NoDegreeData />
         </CardContent>
       )}
-      {!loading &&
-        data &&
-        data.map((d: Types.Degree, i: number) => (
+      {!degrees.isLoading &&
+        degrees.data &&
+        degrees.data.map((d: { attributes: Types.Degree }, i: number) => (
           <CardContent
             style={i === 0 ? { paddingBottom } : { borderTop }}
             className={`degree-card degree-card-${i}`}
             key={i}
           >
             <List>
-              {d?.majors?.first?.major &&
-                renderItem([d.majors.first.major, d.majors.first.department], degreeData.major)}
-              {d.majors.second &&
-                renderItem([d.majors.second.major, d.majors.second.department], degreeData.major)}
-              {d.majors.third &&
-                renderItem([d.majors.third.major, d.majors.third.department], degreeData.major)}
-              {d.majors.fourth &&
-                renderItem([d.majors.fourth.major, d.majors.fourth.department], degreeData.major)}
+              {d.attributes?.majors?.first?.major &&
+                renderItem(
+                  [d.attributes.majors.first.major, d.attributes.majors.first.department],
+                  degreeData.major
+                )}
+              {d.attributes.majors.second &&
+                renderItem(
+                  [d.attributes.majors.second.major, d.attributes.majors.second.department],
+                  degreeData.major
+                )}
+              {d.attributes.majors.third &&
+                renderItem(
+                  [d.attributes.majors.third.major, d.attributes.majors.third.department],
+                  degreeData.major
+                )}
+              {d.attributes.majors.fourth &&
+                renderItem(
+                  [d.attributes.majors.fourth.major, d.attributes.majors.fourth.department],
+                  degreeData.major
+                )}
 
-              {renderItem(d.minors.first, degreeData.minor)}
-              {renderItem(d.minors.second, degreeData.minor)}
-              {renderItem(d.minors.third, degreeData.minor)}
-              {renderItem(d.minors.fourth, degreeData.minor)}
+              {renderItem(d.attributes.minors.first, degreeData.minor)}
+              {renderItem(d.attributes.minors.second, degreeData.minor)}
+              {renderItem(d.attributes.minors.third, degreeData.minor)}
+              {renderItem(d.attributes.minors.fourth, degreeData.minor)}
 
-              {renderItem(d.degree, degreeData.degree)}
+              {renderItem(d.attributes.degree, degreeData.degree)}
 
-              {renderItem(d.college, degreeData.college)}
+              {renderItem(d.attributes.college, degreeData.college)}
 
               {campusName && renderItem(Helpers.titleCase(campusName), degreeData.campus)}
             </List>
