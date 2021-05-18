@@ -83,6 +83,7 @@ const ListItemContent = styled.div<SpacedList>`
 
 const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
   color: ${({ theme }) => theme.ui.list.item.link.color};
+  cursor: pointer;
   &:hover {
     ${ListItemHeader},
     ${ListItemContentLinkName} {
@@ -134,6 +135,7 @@ const ListItemFlex = styled(ListItem).attrs((props: { hoverable?: boolean }) => 
 type TLink = React.HTMLProps<HTMLAnchorElement>;
 
 const ListItemResourceLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
+  cursor: pointer;
   &:hover,
   &:active,
   &:focus {
