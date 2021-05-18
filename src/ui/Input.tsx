@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { spacing, fontSize, borderRadius } from 'src/theme';
+import { spacing, fontSize, borderRadius } from '@osu-wams/theme';
 
 interface IInput
   extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {

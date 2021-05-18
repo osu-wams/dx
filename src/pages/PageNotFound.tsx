@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import styled, { ThemeContext } from 'styled-components/macro';
 import image404 from 'src/assets/404.svg';
-import { InternalLink } from '../ui/Link';
+import { InternalLink } from 'src/ui/Link';
 import { Event } from 'src/util/gaTracking';
-import { MainGridWrapper, MainGrid } from 'src/theme';
+import { MainGridWrapper, MainGrid } from 'src/ui/grid';
 import { State, User } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
 

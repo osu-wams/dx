@@ -17,7 +17,7 @@ import { Url } from '@osu-wams/utils';
 import { ITSystemSticky } from './ITSystemSticky';
 import { Status, useStatus } from '@osu-wams/hooks';
 import { ITSystemItem } from '../it-systems-status/ITSystemItem';
-import { breakpoints } from 'src/theme';
+import { breakpoints } from '@osu-wams/theme';
 
 const AllOperational = () => (
   <CardHeaderSimple>

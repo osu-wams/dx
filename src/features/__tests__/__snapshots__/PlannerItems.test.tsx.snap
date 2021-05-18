@@ -255,6 +255,7 @@ exports[`<PlannerItems /> should have a "Week 5 Lab Discussion" assignment on ou
 
 .c4 {
   color: #423E3C;
+  cursor: pointer;
 }
 
 .c4:hover {

@@ -4,7 +4,7 @@ import { Card, CardHeader, CardContent } from 'src/ui/Card';
 import { Helmet } from 'react-helmet-async';
 import { useRecoilValue } from 'recoil';
 import { State } from '@osu-wams/hooks';
-import { borderRadius, spacing } from 'src/theme';
+import { borderRadius, spacing } from '@osu-wams/theme';
 
 const SearchResultsContainer = styled.div<{ search?: string }>`
   display: ${(props) => (props.search ? 'block' : 'none')};

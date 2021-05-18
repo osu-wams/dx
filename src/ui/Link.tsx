@@ -3,7 +3,7 @@ import { Link } from '@reach/router';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { faLongArrowRight, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
-import { borderRadius, spacing, fontSize, Color } from 'src/theme';
+import { borderRadius, spacing, fontSize, Color } from '@osu-wams/theme';
 interface LinkProps {
   children: any;
   to?: string;

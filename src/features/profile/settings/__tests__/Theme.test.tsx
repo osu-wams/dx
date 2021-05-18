@@ -2,7 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
-import Theme from '../Theme';
+import Theme from 'src/features/profile/settings/Theme';
 
 const mockPostSettings = jest.fn();
 jest.mock('@osu-wams/hooks', () => {

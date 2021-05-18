@@ -2,8 +2,8 @@ import React from 'react';
 import { State, useAnnouncementsState } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import styled from 'styled-components/macro';
-import { MainGridWrapper, spacing } from '../theme';
-import { ThreeCol } from 'src/ui/Grids';
+import { spacing } from '@osu-wams/theme';
+import { MainGridWrapper, ThreeCol } from 'src/ui/grid';
 import {
   ApplicationSearchBar,
   Filters,

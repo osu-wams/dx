@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { faBars } from '@fortawesome/pro-light-svg-icons';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 import Icon from '../Icon';
 import MyDialog from '../MyDialog';
 import { CloseButton } from 'src/ui/Button';

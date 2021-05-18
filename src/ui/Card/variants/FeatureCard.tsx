@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { CardButtonBase } from 'src/ui/Card';
-import { spacing, mq, fontSize } from 'src/theme';
+import { spacing, mq, fontSize } from '@osu-wams/theme';
 
 type Featured = {
   featured?: boolean;

@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { fontSize, spacing } from 'src/theme';
+import { fontSize, spacing } from '@osu-wams/theme';
 import { CardBase } from 'src/ui/Card';
 
 const CardSection = styled.div`

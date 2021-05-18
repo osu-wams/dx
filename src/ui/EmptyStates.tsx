@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { spacing } from 'src/theme';
+import { spacing } from '@osu-wams/theme';
 
 const EmptyState = styled.div`
   display: flex;

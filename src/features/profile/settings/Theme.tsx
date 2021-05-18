@@ -5,7 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Fieldset, Legend } from 'src/ui/forms';
 import { State, User } from '@osu-wams/hooks';
 import { Helpers } from '@osu-wams/utils';
-import { defaultTheme, themesLookup } from 'src/theme/themes';
+import { defaultTheme, themesLookup } from '@osu-wams/theme';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { Event } from 'src/util/gaTracking';
 

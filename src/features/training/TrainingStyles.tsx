@@ -1,7 +1,7 @@
 import react from 'react';
 import styled from 'styled-components/macro';
 import { MenuList, MenuButton } from '@reach/menu-button';
-import { borderRadius, fontSize, shadows, spacing } from 'src/theme';
+import { borderRadius, fontSize, shadows, spacing } from '@osu-wams/theme';
 
 export const MenuButtonWrapper = styled(MenuButton)<{ selected: boolean }>`
   color: ${({ theme, selected }) =>

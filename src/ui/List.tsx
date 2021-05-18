@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-import { css } from 'styled-components';
-import { spacing, fontSize, borderRadius } from 'src/theme';
+import styled, { css } from 'styled-components/macro';
+import { spacing, fontSize, borderRadius } from '@osu-wams/theme';
 
 type SpacedList = {
   spaced?: boolean;
@@ -84,6 +83,7 @@ const ListItemContent = styled.div<SpacedList>`
 
 const ListItemContentLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
   color: ${({ theme }) => theme.ui.list.item.link.color};
+  cursor: pointer;
   &:hover {
     ${ListItemHeader},
     ${ListItemContentLinkName} {
@@ -135,6 +135,7 @@ const ListItemFlex = styled(ListItem).attrs((props: { hoverable?: boolean }) => 
 type TLink = React.HTMLProps<HTMLAnchorElement>;
 
 const ListItemResourceLink = styled(ListItemContent).attrs({ as: 'a' })<TLink>`
+  cursor: pointer;
   &:hover,
   &:active,
   &:focus {

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/macro';
-import { spacing, fontSize } from 'src/theme';
+import { spacing, fontSize } from '@osu-wams/theme';
 
 interface IHighlight {
   textAlignLeft?: boolean;

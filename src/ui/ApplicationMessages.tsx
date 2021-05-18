@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 import { Types } from '@osu-wams/lib';
 import { useApplicationMessagesState } from '@osu-wams/hooks';
-import { fontSize, borderRadius, spacing, shadows } from 'src/theme';
+import { fontSize, borderRadius, spacing, shadows } from '@osu-wams/theme';
 import Icon from './Icon';
 import { CloseButton } from './Button';
 

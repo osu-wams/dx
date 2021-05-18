@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components/macro';
-import { spacing, breakpoints } from 'src/theme';
+import { spacing, breakpoints } from '@osu-wams/theme';
 
 const MasonryDiv = styled.div`
   @media (min-width: ${breakpoints.small}) {
@@ -18,8 +18,8 @@ const Col = styled.div`
   grid-auto-rows: max-content;
 `;
 
-const Masonry = ({ children }) => {
-  const cols = Array;
+const Masonry = ({ children }: { children: any }) => {
+  const cols: any[][] = [];
   const ref = useRef<HTMLDivElement>(null);
   const numCols = 2;
 
@@ -44,7 +44,7 @@ const Masonry = ({ children }) => {
 
   const createCols = () => {
     for (let i = 0; i < numCols; i++) cols[i] = [];
-    children.forEach((child, i) => {
+    children.forEach((child: any, i: number) => {
       if (Array.isArray(child)) {
         child.forEach((c, i) => {
           cols[i % numCols].push(c);
@@ -61,7 +61,7 @@ const Masonry = ({ children }) => {
     <MasonryDiv ref={ref}>
       {Array(numCols)
         .fill('')
-        .map((el, i) => (
+        .map((_, i) => (
           <Col key={i}>{cols[i]}</Col>
         ))}
     </MasonryDiv>

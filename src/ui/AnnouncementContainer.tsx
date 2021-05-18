@@ -4,7 +4,8 @@ import EventCard from './EventCard';
 import { Title } from 'src/ui/PageTitle';
 import { State, User, useAnnouncementsState } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
-import { spacing, breakpoints, SecondGridWrapper } from 'src/theme';
+import { spacing, breakpoints } from '@osu-wams/theme';
+import { SecondGridWrapper } from 'src/ui/grid';
 import { useRecoilValue } from 'recoil';
 
 const { hasAudience } = User;

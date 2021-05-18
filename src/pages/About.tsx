@@ -4,7 +4,7 @@ import PageTitle from '../ui/PageTitle';
 import Info from '../features/about/Info';
 import SupportResources from '../features/about/SupportResources';
 import ReleaseNotes from '../features/about/ReleaseNotes';
-import { MainGridWrapper, Masonry } from '../theme';
+import { MainGridWrapper, Masonry } from 'src/ui/grid';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 

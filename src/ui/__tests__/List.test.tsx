@@ -10,7 +10,7 @@ import {
 } from '../List';
 import { faFileAlt } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
-import { Color } from 'src/theme';
+import { Color } from '@osu-wams/theme';
 
 const RightIcon = () => (
   <List>
