@@ -7,15 +7,9 @@ import Icon from 'src/ui/Icon';
 import { Types } from '@osu-wams/lib';
 
 const ProfileAddress = () => {
-  const address = useAddresses();
+  const { isSuccess, data } = useAddresses();
   const themeContext = useContext(ThemeContext);
-  return (
-    <>
-      {!address.loading &&
-        address.data &&
-        renderAddress(address.data, themeContext.features.profile.icon.color)}
-    </>
-  );
+  return <>{isSuccess && data && renderAddress(data, themeContext.features.profile.icon.color)}</>;
 };
 
 const renderAddress = (

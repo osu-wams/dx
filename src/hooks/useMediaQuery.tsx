@@ -1,5 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
-import { breakpoints } from 'src/theme';
+import { breakpoints } from '@osu-wams/theme';
 
 // Converts our theme px values to intergers
 const desktop = parseInt(breakpoints.small, 10);

@@ -10,7 +10,7 @@ import { Event } from '../util/gaTracking';
 import { Masquerade as hooksMasquerade } from '@osu-wams/hooks';
 import * as cache from '../util/cache';
 
-const { getMasqueradeUser, postMasqueradeUser } = hooksMasquerade;
+const { useMasqueradeUser, postMasqueradeUser } = hooksMasquerade;
 interface MasqueradeProps {
   showMasqueradeDialog: boolean;
   toggleMasqueradeDialog: (event?: any) => void;
@@ -21,18 +21,15 @@ export const Masquerade = (props: MasqueradeProps) => {
   const { showMasqueradeDialog, toggleMasqueradeDialog } = props;
   const [masqueradeId, setMasqueradeId] = useState('');
   const [masqueradeReason, setMasqueradeReason] = useState('');
+  const { data } = useMasqueradeUser();
 
   useEffect(() => {
-    getMasqueradeUser()
-      .then((data) => {
-        if (data && data.masqueradeId !== '') {
-          cache.clear();
-          setMasqueradeId(data.masqueradeId);
-          setMasqueradeReason(data.masqueradeReason);
-        }
-      })
-      .catch((err) => console.log);
-  }, []);
+    if (data && data.masqueradeId !== '') {
+      cache.clear();
+      setMasqueradeId(data.masqueradeId);
+      setMasqueradeReason(data.masqueradeReason);
+    }
+  }, [data]);
 
   const performMasquerade = () => {
     if (!masqueradeDisabled()) {

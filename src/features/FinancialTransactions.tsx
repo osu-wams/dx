@@ -3,7 +3,7 @@ import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 import { useAccountTransactions } from '@osu-wams/hooks';
 import { ExternalLink } from 'src/ui/Link';
 import { Url, Helpers } from '@osu-wams/utils';
@@ -65,7 +65,7 @@ const NoTransactions = () => (
  * Displays past financial transactions for the current user
  */
 const FinancialTransactions: FC = () => {
-  const { data, loading } = useAccountTransactions();
+  const { data, isSuccess, isLoading } = useAccountTransactions();
 
   return (
     <Card>
@@ -76,8 +76,8 @@ const FinancialTransactions: FC = () => {
         }
       />
       <CardContent flush>
-        {loading && <Loading lines={5} />}
-        {data?.attributes.transactions?.length ?? 0 ? (
+        {isLoading && <Loading lines={5} />}
+        {(isSuccess && data?.attributes.transactions?.length) ?? 0 ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
             <TableHeader>
               <TableRow>
@@ -103,7 +103,7 @@ const FinancialTransactions: FC = () => {
             </TableBody>
           </TransactionsTable>
         ) : (
-          !loading && <NoTransactions />
+          <NoTransactions />
         )}
       </CardContent>
       <CardFooter infoButtonId="recent-transactions">

@@ -1,6 +1,6 @@
 import { Link } from '@reach/router';
 import styled from 'styled-components/macro';
-import { fontSize, breakpoints, spacing } from 'src/theme';
+import { fontSize, breakpoints, spacing } from '@osu-wams/theme';
 import { IconStyle } from '../Icon';
 
 const Nav = styled.nav`

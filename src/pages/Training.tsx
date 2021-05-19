@@ -3,7 +3,7 @@ import { State } from '@osu-wams/hooks';
 import { Loading } from 'src/ui/Loading';
 import styled from 'styled-components/macro';
 import { useDebounce } from 'use-debounce';
-import { MainGridWrapper, MainGrid } from 'src/theme';
+import { MainGridWrapper, MainGrid } from 'src/ui/grid';
 import { useTrainingAudiences, useTrainingTags } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import VisuallyHidden from '@reach/visually-hidden';

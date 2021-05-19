@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { Color } from '../theme';
+import { Color } from '@osu-wams/theme';
 
 const getMUITheme = (mode: string) => {
   const themeType = mode === 'dark' ? mode : undefined;

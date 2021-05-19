@@ -3,7 +3,7 @@ import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { CardBase } from './Card';
 import Icon from './Icon';
-import { spacing, fontSize, mq } from 'src/theme';
+import { spacing, fontSize, mq } from '@osu-wams/theme';
 import Button from './Button';
 import { Event } from 'src/util/gaTracking';
 import { Helpers } from '@osu-wams/utils';

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { spacing, breakpoints } from 'src/theme';
+import { spacing, breakpoints } from '@osu-wams/theme';
 import { motion } from 'framer-motion';
 
 /* Page Grid
@@ -24,7 +24,7 @@ const MainGridWrapperStyles = styled(motion.div)`
   }
 `;
 
-const MainGridWrapper = ({ children, ...props }) => {
+const MainGridWrapper = ({ children, ...props }: { children: any }) => {
   const opacityAnimation = {
     hidden: { opacity: 0 },
     visible: {

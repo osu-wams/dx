@@ -1,8 +1,7 @@
 import React, { FC, InputHTMLAttributes, useContext } from 'react';
-import styled from 'styled-components/macro';
-import { fontSize } from '../theme';
+import styled, { ThemeContext } from 'styled-components/macro';
+import { fontSize } from '@osu-wams/theme';
 import { IconLookup } from 'src/features/resources/resources-utils';
-import { ThemeContext } from 'styled-components/macro';
 
 interface BtnProps {
   text: string;

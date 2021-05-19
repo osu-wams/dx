@@ -11,7 +11,7 @@ import Icon from 'src/ui/Icon';
 import { Helpers } from '@osu-wams/utils';
 import { Types } from '@osu-wams/lib';
 import { useDxAlerts, useRaveAlerts } from '@osu-wams/hooks';
-import { fontSize, breakpoints } from 'src/theme';
+import { fontSize, breakpoints } from '@osu-wams/theme';
 
 const AlertWrapper = styled.div`
   width: 100%;

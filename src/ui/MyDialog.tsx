@@ -1,6 +1,6 @@
 import { Dialog } from '@reach/dialog';
 import styled from 'styled-components/macro';
-import { borderRadius, fontSize, spacing, breakpoints } from 'src/theme';
+import { borderRadius, fontSize, spacing, breakpoints } from '@osu-wams/theme';
 
 const MyDialog = styled(Dialog)<{ padding?: string }>`
   background: ${({ theme }) => theme.ui.myDialog.background};

@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import styledMap from 'styled-map';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 
 interface ITable {
   striped?: boolean;

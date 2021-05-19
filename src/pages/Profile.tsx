@@ -4,7 +4,7 @@ import PageTitle from '../ui/PageTitle';
 import OSUProfile from '../features/profile/OSUProfile';
 import { AdminSettings } from 'src/features/profile/AdminSettings';
 import Settings from '../features/profile/Settings';
-import { MainGridWrapper, Masonry } from '../theme';
+import { MainGridWrapper, Masonry } from 'src/ui/grid';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 

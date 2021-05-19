@@ -5,7 +5,7 @@ import { Person } from '@osu-wams/hooks';
 
 const mockMealPlans = Person.MealPlans.mockMealPlans;
 const mockUseMealPlans = jest.fn();
-const mockNoData = { data: [], loading: false, error: false };
+const mockNoData = { data: [], isSuccess: false, error: false };
 
 jest.mock('@osu-wams/hooks', () => {
   return {

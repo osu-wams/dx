@@ -18,7 +18,7 @@ import { CloseButton } from '../../ui/Button';
 import MyDialog, { MyDialogContent, MyDialogFooter } from '../../ui/MyDialog';
 import { faExclamationCircle as faExclamationCircleHollow } from '@fortawesome/pro-light-svg-icons';
 import { faExclamationCircle as faExclamationCircleSolid } from '@fortawesome/pro-solid-svg-icons';
-import { fontSize, Color } from 'src/theme';
+import { fontSize, Color } from '@osu-wams/theme';
 import { Helpers } from '@osu-wams/utils';
 import { Draggable } from 'react-beautiful-dnd';
 

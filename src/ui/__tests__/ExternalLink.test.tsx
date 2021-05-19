@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'src/util/test-utils';
-import { Color } from 'src/theme';
+import { Color } from '@osu-wams/theme';
 import { ExternalLink, SimpleExternalLink } from '../Link';
 
 const Default = () => <ExternalLink href="https://oregonstate.edu">Default link</ExternalLink>;

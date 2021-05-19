@@ -7,7 +7,7 @@ import {
   HighlightEmphasisInline,
   HighlightDescription,
 } from 'src/ui/Highlights';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 import { useHolds } from '@osu-wams/hooks';
 import { Helpers } from '@osu-wams/utils';
 
@@ -31,13 +31,13 @@ const HoldDescription = styled.div`
 `;
 
 export const StudentHolds: React.FC = () => {
-  const { data, loading } = useHolds();
+  const { data, isLoading, isSuccess } = useHolds();
 
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Holds</HighlightTitle>
-      {loading && <Loading />}
-      {!loading && (
+      {isLoading && <Loading />}
+      {isSuccess && data && (
         <HighlightDescription>
           <span>You have</span>
           <HighlightEmphasisInline> {data.length}</HighlightEmphasisInline>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 import { faFilter } from '@fortawesome/pro-light-svg-icons';
 import { faFilter as solidFaFilter } from '@fortawesome/pro-solid-svg-icons';
-import { breakpoints, spacing, fontSize as themeFontSize, borderRadius } from 'src/theme';
+import { breakpoints, spacing, fontSize as themeFontSize, borderRadius } from '@osu-wams/theme';
 import { SearchBar } from 'src/ui/SearchBar';
 import { Event } from 'src/util/gaTracking';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';

@@ -3,7 +3,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import styled from 'styled-components/macro';
 import { Helpers } from '@osu-wams/utils';
 import Icon from 'src/ui/Icon';
-import { fontSize } from 'src/theme';
+import { fontSize } from '@osu-wams/theme';
 
 const renderListItem = (title: string, field: string | null, icon: any, color: string) => {
   if (field && title && icon) {

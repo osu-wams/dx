@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import { fontSize } from '../theme';
+import { fontSize } from '@osu-wams/theme';
 
 type IconProps = {
   bg?: string;
@@ -12,14 +12,14 @@ type IconProps = {
 type CounterProps = {
   count?: number;
   top?: boolean;
-}
+};
 
 const IconWrapper = styled.div`
   position: relative;
 `;
 
 const IconCounter = styled.div<CounterProps>(
-  ({theme}) => ({
+  ({ theme }) => ({
     fontSize: fontSize[12],
     position: 'absolute',
     color: theme.ui.icon.counter.color,
@@ -27,13 +27,16 @@ const IconCounter = styled.div<CounterProps>(
     padding: '0 .6rem !important',
     borderRadius: '1rem',
   }),
-  ({top}) =>  !top ? {
-    bottom: '-.5rem',
-    right: '-.8rem',
-  } : {
-    top: '-.6rem',
-    left: '50%',
-  }
+  ({ top }) =>
+    !top
+      ? {
+          bottom: '-.5rem',
+          right: '-.8rem',
+        }
+      : {
+          top: '-.6rem',
+          left: '50%',
+        }
 );
 
 export const IconStyle = styled(FontAwesomeIcon)<IconProps>(
@@ -58,7 +61,9 @@ const Icon = (props: CounterProps & FontAwesomeIconProps & IconProps) => {
     return (
       <IconWrapper>
         <IconStyle {...others} />
-        <IconCounter data-testid="icon-counter" top={top}>{count}</IconCounter>
+        <IconCounter data-testid="icon-counter" top={top}>
+          {count}
+        </IconCounter>
       </IconWrapper>
     );
   }

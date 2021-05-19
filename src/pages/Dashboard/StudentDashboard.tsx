@@ -4,7 +4,7 @@ import { State } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
 import ScheduleCard from 'src/features/ScheduleCard';
 import EventCardContainer from 'src/ui/EventCardContainer';
-import { MainGridWrapper, Masonry } from 'src/theme';
+import { MainGridWrapper, Masonry } from 'src/ui/grid';
 import ResourcesCard from 'src/features/ResourcesCard';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { TrendingResources } from 'src/features/TrendingResources';

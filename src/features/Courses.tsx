@@ -16,7 +16,7 @@ import {
 } from '../ui/List';
 import coursesImg from '../assets/courses.svg';
 import Course from '../features/Course';
-import { fontSize } from '../theme';
+import { fontSize } from '@osu-wams/theme';
 import { ExternalLink, InternalLink } from '../ui/Link';
 import { Event } from '../util/gaTracking';
 import { EmptyState, EmptyStateImage, EmptyStateText } from '../ui/EmptyStates';
