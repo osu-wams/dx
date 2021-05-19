@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components/macro';
+import React, { useState, useEffect, useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
 import { faExternalLink } from '@fortawesome/pro-solid-svg-icons';
 import { ListItemFlex } from 'src/ui/List';
 import { SimpleInternalLink, SimpleExternalLink, SimpleModalLink } from 'src/ui/Link';
-import { State } from '@osu-wams/hooks';
+import { State, useStatus } from '@osu-wams/hooks';
+import { Helpers } from '@osu-wams/utils';
 import Fuse from 'fuse.js';
 import { BubbleExternalLink, BubbleInternalLink } from 'src/ui/Bubble';
 import { borderRadius, spacing, breakpoints, fontSize } from 'src/theme';
@@ -12,6 +13,15 @@ import { TrainingDetails } from 'src/features/training/TrainingDetails';
 import Course from 'src/features/Course';
 import { sortedGroupedByCourseName } from 'src/features/schedule/schedule-utils';
 import { NotificationModal } from '../HeaderNav/NotificationsMenu';
+import MyDialog, { MyDialogContent, MyDialogFooter } from '../MyDialog';
+import { CloseButton } from '../Button';
+import { ExternalLink } from '../Link';
+import { faExclamationCircle as faExclamationCircleHollow } from '@fortawesome/pro-light-svg-icons';
+import { faExclamationCircle as faExclamationCircleSolid } from '@fortawesome/pro-solid-svg-icons';
+
+const DateContainer = styled.div`
+  color: ${({ theme }) => theme.notification.date};
+`;
 
 const SearchResultStyles = styled(ListItemFlex)`
   border-radius: ${borderRadius[16]};
@@ -48,8 +58,15 @@ const SubText = styled.div`
   color: ${({ theme }) => theme.ui.searchResult.subText.color};
 `;
 
-const titleLink = (item: State.SearchItem, toggleModal?: () => void) => {
+const titleLink = (
+  item: State.SearchItem,
+  itStatus: any | undefined,
+  openDialog: () => void,
+  toggleModal?: () => void
+) => {
   const { link, title } = item;
+  const themeContext = useContext(ThemeContext);
+
   if (toggleModal && link?.modal) {
     return (
       <SimpleModalLink onClick={toggleModal} css={{ cursor: 'pointer' }}>
@@ -62,7 +79,26 @@ const titleLink = (item: State.SearchItem, toggleModal?: () => void) => {
       {title}
     </SimpleInternalLink>
   ) : (
-    <SimpleExternalLink href={link?.href}>{title}</SimpleExternalLink>
+    <SimpleExternalLink
+      href={link?.href}
+      onClick={(e) => {
+        if (itStatus !== undefined && itStatus.status !== 1) {
+          e.preventDefault();
+          openDialog();
+        }
+      }}
+    >
+      {title}
+      {itStatus && itStatus.status !== 1 && (
+        <Icon
+          fontSize={fontSize[14]}
+          icon={faExclamationCircleSolid}
+          color={themeContext.features.itStatus.item.icon.partialOutage}
+          data-testid="warning-icon"
+          style={{ display: 'inline-block', marginLeft: 5, marginBottom: 8 }}
+        />
+      )}
+    </SimpleExternalLink>
   );
 };
 
@@ -115,6 +151,80 @@ const SearchResultListItem = ({
 }) => {
   const [isOpen, setOpen] = useState(false);
   const [selected, setSelected] = useState<State.SearchItem>();
+  const themeContext = useContext(ThemeContext);
+  const status = useStatus();
+  const [itSystemStatus, setItSystemStatus] = useState<{
+    details: any | undefined;
+    timeChecked: Date | null;
+  }>({
+    details: undefined,
+    timeChecked: null,
+  });
+  const [showDialog, setShowDialog] = useState(false);
+  const openDialog = () => {
+    setShowDialog(true);
+  };
+  const closeDialog = () => setShowDialog(false);
+
+  useEffect(() => {
+    if (item.attr.resource && item.attr.resource.hasOwnProperty('itSystem') && status.isSuccess) {
+      const resource = item.attr.resource;
+      var result = status.data.find((system) => system.name === resource.itSystem);
+      setItSystemStatus({
+        details: result,
+        timeChecked: new Date(),
+      });
+    }
+  }, [status.isSuccess]);
+
+  const OutageDialog = () => (
+    <MyDialog
+      isOpen={showDialog}
+      onDismiss={closeDialog}
+      aria-labelledby="message-title"
+      style={{ marginTop: '30vh' }}
+    >
+      <CloseButton onClick={closeDialog} />
+      <div>
+        <Icon
+          fontSize={fontSize[26]}
+          icon={faExclamationCircleHollow}
+          color={themeContext.features.itStatus.item.icon.partialOutage}
+          style={{ display: 'inline-block', paddingRight: '5px' }}
+        />
+        <h2
+          id="message-title"
+          style={{
+            fontSize: fontSize[18],
+            marginTop: '0',
+            marginLeft: '5px',
+            display: 'inline-block',
+          }}
+        >
+          This resource may be unavailable.
+        </h2>
+      </div>
+
+      <MyDialogContent column style={{ paddingBottom: '0px' }}>
+        <DateContainer>
+          {item?.attr?.resource?.title ?? 'Resource'} •{' '}
+          {itSystemStatus.timeChecked?.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          }) +
+            ' on ' +
+            Helpers.format(itSystemStatus.timeChecked ?? '')}
+        </DateContainer>
+        <p>{itSystemStatus.details.statusText}.</p>
+      </MyDialogContent>
+      <MyDialogFooter style={{ marginTop: '0' }}>
+        <ExternalLink href={item.link?.href} onClick={closeDialog}>
+          Continue to resource
+        </ExternalLink>
+      </MyDialogFooter>
+    </MyDialog>
+  );
 
   const toggleModal = (item?: State.SearchItem) => {
     setOpen(!isOpen);
@@ -124,23 +234,26 @@ const SearchResultListItem = ({
   };
 
   return (
-    <SearchResultStyles
-      onClick={() => {
-        toggleModal(item);
-      }}
-    >
-      <Header>
-        {titleLink(item, () => toggleModal(item))}
-        {titleBubble(item)}
-      </Header>
-      {item.subText &&
-        (item.subText.html ? (
-          <SubText dangerouslySetInnerHTML={{ __html: item.subText.html ?? '' }} />
-        ) : (
-          <SubText>{item.subText.value ?? ''}</SubText>
-        ))}
-      {isOpen && selected && itemModal(selected, () => toggleModal(item))}
-    </SearchResultStyles>
+    <>
+      <SearchResultStyles
+        onClick={() => {
+          toggleModal(item);
+        }}
+      >
+        <Header>
+          {titleLink(item, itSystemStatus.details, openDialog, () => toggleModal(item))}
+          {titleBubble(item)}
+        </Header>
+        {item.subText &&
+          (item.subText.html ? (
+            <SubText dangerouslySetInnerHTML={{ __html: item.subText.html ?? '' }} />
+          ) : (
+            <SubText>{item.subText.value ?? ''}</SubText>
+          ))}
+        {isOpen && selected && itemModal(selected, () => toggleModal(item))}
+      </SearchResultStyles>
+      {showDialog && <OutageDialog />}
+    </>
   );
 };
 
