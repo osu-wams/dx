@@ -141,7 +141,6 @@ const AcademicProgram = () => {
                 {renderItem(degree, degreeData.degree)}
                 {renderItem(college, degreeData.college)}
                 {campusName && renderItem(Helpers.titleCase(campusName), degreeData.campus)}
-                {console.log(degree, college, campusName)}
               </List>
             </CardContent>
           )
