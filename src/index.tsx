@@ -5,12 +5,12 @@ import ReactGA from 'react-ga';
 import App from './App';
 import ErrorBoundary from './features/ErrorBoundary';
 import * as cache from './util/cache';
-import { Errors } from '@osu-wams/hooks';
+import { Errors, queryClient, updateQueryClientOptions } from '@osu-wams/hooks';
 import idleTimer from './util/idleTimer';
 import cookieRefreshTimer from './util/cookieRefreshTimer';
 import { RecoilRoot } from 'recoil';
 import ReadyIntegration from './util/ready-integration';
-import { QueryClientProvider, QueryClient } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 
 const { postError, IGNORED_ERRORS } = Errors;
 
@@ -19,6 +19,12 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.REACT_APP_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 const isGADebug = process.env.REACT_APP_GA_DEBUG === 'true';
+
+if (isDevelopment || isTest) {
+  global.__DEV__ = true;
+} else {
+  global.__DEV__ = false;
+}
 
 // Ready Education authentication flow as described in DD-1103
 if (!isProduction && window.location.pathname.endsWith('/ready-education-auth')) {
@@ -79,11 +85,17 @@ try {
 
   // Set an idle timer to redirect the browser to a path after a period of inactivity
   idleTimer();
+
+  updateQueryClientOptions(queryClient, {
+    baseUrl: '/',
+    enabled: true,
+    retry: true,
+    headers: {},
+  });
+
   // Set a cookie refresh timer to ensure the cookie remains valid while the user may not have
   // made API calls that extended the cookie expiration time
-  cookieRefreshTimer();
-
-  const queryClient = new QueryClient();
+  cookieRefreshTimer(queryClient);
 
   ReactDOM.render(
     <QueryClientProvider client={queryClient}>

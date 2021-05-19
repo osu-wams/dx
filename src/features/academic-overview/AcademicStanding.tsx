@@ -12,20 +12,18 @@ import { SimpleExternalLink } from 'src/ui/Link';
 import { Event } from 'src/util/gaTracking';
 
 export const AcademicStanding: React.FC = () => {
-  const academicStatus = useAcademicStatus();
+  const { isSuccess, isLoading, data } = useAcademicStatus();
 
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Academic Standing</HighlightTitle>
-      {academicStatus.loading && <Loading />}
-      {!academicStatus.loading && (
+      {isLoading && <Loading />}
+      {isSuccess && (
         <HighlightDescription>
-          {academicStatus.data.academicStanding?.length ?? 0 ? (
+          {data && (data.academicStanding?.length ?? 0) ? (
             <>
               Your academic standing is{' '}
-              <HighlightEmphasisInline>
-                {academicStatus.data.academicStanding}
-              </HighlightEmphasisInline>
+              <HighlightEmphasisInline>{data.academicStanding}</HighlightEmphasisInline>
               .<br />
               <SimpleExternalLink
                 href={Url.registrar.academicStanding}

@@ -5,7 +5,7 @@ import { render as testingLibraryRender } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { themesLookup, defaultTheme } from '@osu-wams/theme';
 import { User } from '@osu-wams/lib';
-import { State } from '@osu-wams/hooks';
+import { State, updateQueryClientOptions } from '@osu-wams/hooks';
 import { mobile, desktop } from 'src/hooks/useMediaQuery';
 import { RecoilRoot } from 'recoil';
 import { rest } from 'msw';
@@ -65,6 +65,12 @@ const renderWithUserContext = (
 ) => {
   const Wrapper = (props) => {
     const queryClient = new QueryClient();
+    updateQueryClientOptions(queryClient, {
+      baseUrl: '/',
+      enabled: true,
+      headers: {},
+      retry: true,
+    });
 
     return (
       <QueryClientProvider client={queryClient}>
@@ -89,6 +95,12 @@ const renderWithUserContext = (
 const renderWithAppContext = (ui, { initialStates = new Array(), ...options } = {}) => {
   const Wrapper = (props) => {
     const queryClient = new QueryClient();
+    updateQueryClientOptions(queryClient, {
+      baseUrl: '/',
+      enabled: true,
+      headers: {},
+      retry: true,
+    });
 
     return (
       <QueryClientProvider client={queryClient}>
@@ -123,6 +135,12 @@ const renderWithAllContexts = (
 ) => {
   const Wrapper = (props) => {
     const queryClient = new QueryClient();
+    updateQueryClientOptions(queryClient, {
+      baseUrl: '/',
+      enabled: true,
+      headers: {},
+      retry: true,
+    });
 
     return (
       <QueryClientProvider client={queryClient}>

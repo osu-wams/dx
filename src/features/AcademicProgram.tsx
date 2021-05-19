@@ -26,7 +26,7 @@ const { usersCampus } = User;
 
 const AcademicProgram = () => {
   const themeContext = useContext(ThemeContext);
-  const { data, loading }: { data: Types.Degree[]; loading: boolean } = useDegrees();
+  const { isSuccess, isLoading, data } = useDegrees();
   const user = useRecoilValue(State.userState);
   const { campusName } = usersCampus(user.data);
 
@@ -58,6 +58,11 @@ const AcademicProgram = () => {
     icon: any;
   }
 
+  interface degreeMajor {
+    major: string | null;
+    department: string | null;
+  }
+
   const NoDegreeData = () => (
     <EmptyState>
       <EmptyStateImage src={degreeImg} alt="" />
@@ -70,16 +75,21 @@ const AcademicProgram = () => {
 
   /**
    * Renders or skips individual items from the program of study
-   * @param fields
+   * @param degree
    * @param degreeData
    */
-  const renderItem = (fields: (string | null) | (string | null)[], degreeData: degreeInfo) => {
-    if (!fields) {
+  const renderItem = (degree: degreeMajor | string | null, degreeData: degreeInfo) => {
+    if (!degree) {
       return;
     }
 
-    if (fields && Array.isArray(fields)) {
-      fields = fields.filter(Boolean).join(', ');
+    // Coerce the degreeMajor, string, or null into an array of string/null for filter and joining below
+    let fields: (string | null)[];
+    if (Object.keys(degree).some((k) => k === 'major')) {
+      const { major, department } = degree as degreeMajor;
+      fields = [major, department];
+    } else {
+      fields = [degree.toString()];
     }
 
     return (
@@ -87,7 +97,7 @@ const AcademicProgram = () => {
         <ListItemContent>
           <Icon icon={degreeData.icon} />
           <ListItemText>
-            {fields}
+            {fields.filter(Boolean).join(', ')}
             <ListItemDescription>{degreeData.description}</ListItemDescription>
           </ListItemText>
         </ListItemContent>
@@ -101,43 +111,40 @@ const AcademicProgram = () => {
   return (
     <Card>
       <CardHeader title="My Academic Program" badge={<CardIcon icon={faUserGraduate} />} />
-      {loading && <Loading />}
-      {!loading && data.length === 0 && (
+      {isLoading && <Loading />}
+      {isSuccess && data && data.length === 0 && (
         <CardContent>
           <NoDegreeData />
         </CardContent>
       )}
-      {!loading &&
+      {isSuccess &&
         data &&
-        data.map((d: Types.Degree, i: number) => (
-          <CardContent
-            style={i === 0 ? { paddingBottom } : { borderTop }}
-            className={`degree-card degree-card-${i}`}
-            key={i}
-          >
-            <List>
-              {d?.majors?.first?.major &&
-                renderItem([d.majors.first.major, d.majors.first.department], degreeData.major)}
-              {d.majors.second &&
-                renderItem([d.majors.second.major, d.majors.second.department], degreeData.major)}
-              {d.majors.third &&
-                renderItem([d.majors.third.major, d.majors.third.department], degreeData.major)}
-              {d.majors.fourth &&
-                renderItem([d.majors.fourth.major, d.majors.fourth.department], degreeData.major)}
-
-              {renderItem(d.minors.first, degreeData.minor)}
-              {renderItem(d.minors.second, degreeData.minor)}
-              {renderItem(d.minors.third, degreeData.minor)}
-              {renderItem(d.minors.fourth, degreeData.minor)}
-
-              {renderItem(d.degree, degreeData.degree)}
-
-              {renderItem(d.college, degreeData.college)}
-
-              {campusName && renderItem(Helpers.titleCase(campusName), degreeData.campus)}
-            </List>
-          </CardContent>
-        ))}
+        data.map(
+          (
+            { attributes: { majors, minors, degree, college } }: { attributes: Types.Degree },
+            i: number
+          ) => (
+            <CardContent
+              style={i === 0 ? { paddingBottom } : { borderTop }}
+              className={`degree-card degree-card-${i}`}
+              key={i}
+            >
+              <List>
+                {renderItem(majors.first, degreeData.major)}
+                {renderItem(majors.second, degreeData.major)}
+                {renderItem(majors.third, degreeData.major)}
+                {renderItem(majors.fourth, degreeData.major)}
+                {renderItem(minors.first, degreeData.minor)}
+                {renderItem(minors.second, degreeData.minor)}
+                {renderItem(minors.third, degreeData.minor)}
+                {renderItem(minors.fourth, degreeData.minor)}
+                {renderItem(degree, degreeData.degree)}
+                {renderItem(college, degreeData.college)}
+                {campusName && renderItem(Helpers.titleCase(campusName), degreeData.campus)}
+              </List>
+            </CardContent>
+          )
+        )}
       <CardFooter>
         <ExternalLink
           href={Url.banner.studentProfile}

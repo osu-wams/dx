@@ -31,13 +31,13 @@ const HoldDescription = styled.div`
 `;
 
 export const StudentHolds: React.FC = () => {
-  const { data, loading } = useHolds();
+  const { data, isLoading, isSuccess } = useHolds();
 
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Holds</HighlightTitle>
-      {loading && <Loading />}
-      {!loading && (
+      {isLoading && <Loading />}
+      {isSuccess && data && (
         <HighlightDescription>
           <span>You have</span>
           <HighlightEmphasisInline> {data.length}</HighlightEmphasisInline>

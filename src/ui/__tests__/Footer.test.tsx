@@ -12,7 +12,7 @@ import {
   mockGradUser,
 } from 'src/util/test-utils';
 
-const mockGetMasqueradeUser = jest.fn();
+const mockUseMasqueradeUser = jest.fn();
 const mockPostMasqueradeUser = jest.fn();
 
 const mockUser = jest.fn();
@@ -21,9 +21,9 @@ jest.mock('@osu-wams/hooks', () => {
   return {
     // @ts-ignore spread object
     ...jest.requireActual('@osu-wams/hooks'),
-    
+
     Masquerade: {
-      getMasqueradeUser: () => mockGetMasqueradeUser(),
+      useMasqueradeUser: () => mockUseMasqueradeUser(),
       postMasqueradeUser: () => mockPostMasqueradeUser(),
     },
   };
@@ -31,10 +31,9 @@ jest.mock('@osu-wams/hooks', () => {
 
 beforeEach(() => {
   Storage.prototype.clear = jest.fn();
-  mockGetMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo' });
+  mockUseMasqueradeUser.mockReturnValue({ data: { masqueradeId: 'Testo' }, isLoading: false });
   mockPostMasqueradeUser.mockResolvedValue({ masqueradeId: 'Testo Post' });
   mockUser.mockReturnValue(authUser);
-  
 });
 
 it('Masquerade link is present for administrators and they can open and close the modal', async () => {

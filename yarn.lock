@@ -1687,13 +1687,13 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@1.0.116":
-  version "1.0.116"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.116/15b05880c5fe959e477a96043f5bdbf0b4a419c7bc7265c28e45918f6e8c2c39#a577558f01de472d4ab7b38dc5eafd40a84b6966"
-  integrity sha512-9kVmi0wkaIlwgZ5iQTOKBVMKDtfIXQ1Br+1YZvT/w01TzEd9B4f0AkcJ/Hp4kh9Q5wtTT13m3tycuhxqBNwrkw==
+"@osu-wams/hooks@1.0.119":
+  version "1.0.119"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.119/ba6ac7e33cb44d0597667ed85adf75a530da4e596fb48b31b949299e77ff8fa9#d746e339ef0ef57269c243f5f39a9c71c27980da"
+  integrity sha512-MhlVOfLumHzZaCyEuTbCnQXL9WK6ePGza9tiO0BDVpUmM8rR/AOw2DiI4Bs/Y0nWAwH4ekAOMrplcICPWx6P6w==
   dependencies:
-    "@osu-wams/lib" "^0.1.78"
-    "@osu-wams/utils" "^0.0.10"
+    "@osu-wams/lib" "^0.1.79"
+    "@osu-wams/utils" "^0.0.11"
     axios "^0.21.1"
     fuse.js "^6.4.6"
     nanoid "^3.1.22"
@@ -1701,29 +1701,24 @@
     recoil "0.2.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@0.1.78":
-  version "0.1.78"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.78/5af7a3e563c74e41c6fe5c34c822e70aa1f2708369bdb05a56c986ede5b324f5#83b2f8871881f7dc99fd14b21619c49ae7b17315"
-  integrity sha512-tLjXVZqPE6zArqt1Eht/Vw4c/Z9fczQoX+tHy+46b+YGWsOw+XY4j/qOtuTFKKdNxejg5QAeBv3F4bIjOj4FGg==
-
-"@osu-wams/lib@^0.1.78":
+"@osu-wams/lib@0.1.79", "@osu-wams/lib@^0.1.79":
   version "0.1.79"
   resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.79/8d21c5ecffd95a78ef9aaee63aecee0911aa9ab12c58654f95eadb9a27c234d4#f9d58295eed7eb961b7e5a43289e9cf2ee62edcb"
   integrity sha512-tiCamu3ck7EzQl7XobXrjRcay8OPmesli0vkHyFpLp+OWdzuqzvdmGPAGv0cWXMkLHrnUJOPYVwK5u6cdrt6dA==
 
-"@osu-wams/theme@0.1.1":
-  version "0.1.1"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/theme/0.1.1/d187cf7446ad84f3bc4677294f7a228faf6cceaaf6334b9363b6d8cd773a1505#c30bcfef5c9aca4b8e0c8a272e7293c031b2afff"
-  integrity sha512-u05g25smJewkRD4EX/H8Pkc7z8soebg9GVS2Vt4HlX7+hV8Hiu33siTAvCviLakoL4MShLMSBTwLVZoIT1U7rA==
+"@osu-wams/theme@0.1.2":
+  version "0.1.2"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/theme/0.1.2/c27e88495ce10b99c765d1dd286f1453f318ea2b9f7c7d7fdd9d9dc7ed3e2436#41a1244af783bd21dac61c97d4c8bd2c07635669"
+  integrity sha512-A8Y6IRWISsLJ3applBAcLgjvkJqojXlj/YskuoLWwhUYX+2nXJIZ6v/Pz/Ky4im65AFbC5UenII4Slr8GNZq4g==
   dependencies:
     styled-components "^5.3.0"
 
-"@osu-wams/utils@0.0.10", "@osu-wams/utils@^0.0.10":
-  version "0.0.10"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.10/3a7a7772fd2f56b7256c00a35fe0371476fcc7a8ab5f596fea0e407e1241b91d#a983ff5b2e6b999efe5fd8aeab4a5ff97ef94de9"
-  integrity sha512-iJXdM+3lto2SYNnQdf7ASvpeQdZ6DhgqGplMN7FdYgRH2NbY7CXMwfEGRLqzmW/DJkv6UkwbJzwvY7kF8U4iTg==
+"@osu-wams/utils@0.0.11", "@osu-wams/utils@^0.0.11":
+  version "0.0.11"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.11/d84c3c3116750b55b27bd1477a2e7181fb8e912b350d19937429e613e5c39496#6ce4f24cd2e09ddc56b38b8a1051bbbb05d289ee"
+  integrity sha512-l03Ibga60wUNpI4oxVCt9ckX8ipKcBB6KLeVqbTAKmERgwbhnnQsHHhOCIeePQTvD1Upw3hEK78zIDajfGKyAw==
   dependencies:
-    "@osu-wams/lib" "^0.1.78"
+    "@osu-wams/lib" "^0.1.79"
     date-fns "^2.21.1"
     libphonenumber-js "^1.9.17"
 
