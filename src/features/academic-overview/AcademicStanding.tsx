@@ -12,13 +12,13 @@ import { SimpleExternalLink } from 'src/ui/Link';
 import { Event } from 'src/util/gaTracking';
 
 export const AcademicStanding: React.FC = () => {
-  const { isLoading, data } = useAcademicStatus();
+  const { isSuccess, isLoading, data } = useAcademicStatus();
 
   return (
     <Highlight textAlignLeft>
       <HighlightTitle marginTop={0}>Academic Standing</HighlightTitle>
       {isLoading && <Loading />}
-      {!isLoading && (
+      {isSuccess && (
         <HighlightDescription>
           {data && (data.academicStanding?.length ?? 0) ? (
             <>

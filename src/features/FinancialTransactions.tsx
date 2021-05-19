@@ -65,7 +65,7 @@ const NoTransactions = () => (
  * Displays past financial transactions for the current user
  */
 const FinancialTransactions: FC = () => {
-  const { data, isLoading } = useAccountTransactions();
+  const { data, isSuccess, isLoading } = useAccountTransactions();
 
   return (
     <Card>
@@ -77,7 +77,7 @@ const FinancialTransactions: FC = () => {
       />
       <CardContent flush>
         {isLoading && <Loading lines={5} />}
-        {data?.attributes.transactions?.length ?? 0 ? (
+        {(isSuccess && data?.attributes.transactions?.length) ?? 0 ? (
           <TransactionsTable variant="basic" data-testid="transaction-container">
             <TableHeader>
               <TableRow>
@@ -103,7 +103,7 @@ const FinancialTransactions: FC = () => {
             </TableBody>
           </TransactionsTable>
         ) : (
-          !isLoading && <NoTransactions />
+          <NoTransactions />
         )}
       </CardContent>
       <CardFooter infoButtonId="recent-transactions">

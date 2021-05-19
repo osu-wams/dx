@@ -26,7 +26,7 @@ const { usersCampus } = User;
 
 const AcademicProgram = () => {
   const themeContext = useContext(ThemeContext);
-  const { isLoading, data } = useDegrees();
+  const { isSuccess, isLoading, data } = useDegrees();
   const user = useRecoilValue(State.userState);
   const { campusName } = usersCampus(user.data);
 
@@ -112,12 +112,12 @@ const AcademicProgram = () => {
     <Card>
       <CardHeader title="My Academic Program" badge={<CardIcon icon={faUserGraduate} />} />
       {isLoading && <Loading />}
-      {!isLoading && data && data.length === 0 && (
+      {isSuccess && data && data.length === 0 && (
         <CardContent>
           <NoDegreeData />
         </CardContent>
       )}
-      {!isLoading &&
+      {isSuccess &&
         data &&
         data.map(
           (

@@ -17,13 +17,13 @@ import { Event } from 'src/util/gaTracking';
  */
 const AccountBalance = () => {
   const themeContext = useContext(ThemeContext);
-  const { data, isLoading } = useAccountBalance();
+  const { data, isLoading, isSuccess } = useAccountBalance();
 
   return (
     <Highlight textAlignLeft>
       <HighlightEmphasis color={themeContext.features.finances.accountBalance.emphasis.color}>
         {isLoading && <Loading />}
-        {Helpers.formatDollars(data?.attributes?.currentBalance) ?? (!isLoading && 'No data')}
+        {Helpers.formatDollars(data?.attributes?.currentBalance) ?? (!isSuccess && 'No data')}
       </HighlightEmphasis>
       <HighlightTitle marginTop={0}>Student Account Balance</HighlightTitle>
       <HighlightDescription>

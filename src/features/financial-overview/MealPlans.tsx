@@ -23,7 +23,7 @@ const NoMealPlans = () => (
 
 export const MealPlans = () => {
   const themeContext = useContext(ThemeContext);
-  const { data, isLoading } = useMealPlans();
+  const { data, isLoading, isSuccess } = useMealPlans();
 
   return (
     <Highlight textAlignLeft>
@@ -32,7 +32,7 @@ export const MealPlans = () => {
           <Loading lines={4} />
         </HighlightTitle>
       )}
-      {data && data.length > 0 ? (
+      {isSuccess && data && data.length > 0 ? (
         <>
           <HighlightEmphasis
             color={
@@ -49,7 +49,7 @@ export const MealPlans = () => {
           </HighlightDescription>
         </>
       ) : (
-        !isLoading && <NoMealPlans />
+        <NoMealPlans />
       )}
       <ExternalLink
         style={{ float: 'right', paddingTop: '16px' }}
