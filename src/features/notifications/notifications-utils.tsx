@@ -2,6 +2,7 @@ import { Types } from '@osu-wams/lib';
 import { QueryClient } from 'react-query';
 import { User } from '@osu-wams/hooks';
 
+// TODO: Move this to dx-monorepo as this feature is implemented in dx-mobile
 export const markNotificationRead = (
   prevNotifications: Types.UserMessagesState,
   notificationId: string
@@ -23,8 +24,9 @@ export const markNotificationRead = (
   };
 };
 
+// TODO: Move this to dx-monorepo as this feature is implemented in dx-mobile
 export const dismissAll = (queryClient: QueryClient) => {
   User.updateUserMessage({ status: 'READ' }).then(() => {
-    queryClient.invalidateQueries('userMessages');
+    queryClient.invalidateQueries('/api/user/messages');
   });
 };
