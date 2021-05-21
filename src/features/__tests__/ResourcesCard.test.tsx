@@ -78,7 +78,7 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should have warning icon on resource if IT system is down', async () => {
-    const { findByTestId, findAllByText } = render(
+    const { findByTestId, findAllByText, container } = render(
       <>
         <ResourcesCard categ="featured" icon={faStars} />
         <ITSystemStatus />
@@ -86,6 +86,8 @@ describe('<ResourcesCard />', () => {
     );
     expect(await findAllByText('Box')).toHaveLength(2);
     expect(await findByTestId('warning-icon')).toBeInTheDocument();
+    // makes sure class is present that styles the warning icon appropriately
+    expect(container.querySelector('.warning-icon')).toBeInTheDocument();
   });
 
   it('should display warning message if resource with IT system down is clicked', async () => {
