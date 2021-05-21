@@ -81,7 +81,7 @@ const ScheduleCard = () => {
         />
         {plannerItems.isLoading && <Loading lines={4} />}
         <div aria-live="assertive" aria-atomic="true">
-          {plannerItems.isSuccess && (
+          {!plannerItems.isLoading && (
             <ScheduleCardAssignments
               courseList={courses.data}
               selectedPlannerItems={selectedPlannerItems}
