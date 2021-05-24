@@ -60,8 +60,8 @@ const SubText = styled.div`
 
 const titleLink = (
   item: State.SearchItem,
-  itStatus: any | undefined,
   openDialog: () => void,
+  itStatus?: any,
   toggleModal?: () => void
 ) => {
   const { link, title } = item;
@@ -82,7 +82,7 @@ const titleLink = (
     <SimpleExternalLink
       href={link?.href}
       onClick={(e) => {
-        if (itStatus !== undefined && itStatus.status !== 1) {
+        if (itStatus && itStatus.status !== 1) {
           e.preventDefault();
           openDialog();
         }
@@ -154,11 +154,11 @@ const SearchResultListItem = ({
   const themeContext = useContext(ThemeContext);
   const status = useStatus();
   const [itSystemStatus, setItSystemStatus] = useState<{
-    details: any | undefined;
-    timeChecked: Date | null;
+    details?: any;
+    timeChecked?: Date;
   }>({
     details: undefined,
-    timeChecked: null,
+    timeChecked: undefined,
   });
   const [showDialog, setShowDialog] = useState(false);
   const openDialog = () => {
@@ -241,7 +241,7 @@ const SearchResultListItem = ({
         }}
       >
         <Header>
-          {titleLink(item, itSystemStatus.details, openDialog, () => toggleModal(item))}
+          {titleLink(item, openDialog, itSystemStatus.details, () => toggleModal(item))}
           {titleBubble(item)}
         </Header>
         {item.subText &&
