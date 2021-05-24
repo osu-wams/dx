@@ -134,12 +134,13 @@ const ResourceItem = ({
     >
       {IconLookup(resource.iconName, themeContext.features.resources.icon.color)}
       <ListItemContentLinkName>{resource.title}</ListItemContentLinkName>
-      {itSystemError && (
+      {!itSystemError && (
         <Icon
           fontSize={fontSize[18]}
           icon={faExclamationCircleSolid}
           color={themeContext.features.itStatus.item.icon.partialOutage}
           data-testid="warning-icon"
+          className="warning-icon"
         />
       )}
     </ListItemResourceLink>

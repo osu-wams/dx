@@ -66,7 +66,7 @@ exports[`<PlannerItems /> should have a "My Awesome Planner Note" note on our mo
   padding-left: 1.5rem;
 }
 
-.c2 div + svg {
+.c2 .warning-icon {
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
@@ -246,7 +246,7 @@ exports[`<PlannerItems /> should have a "Week 5 Lab Discussion" assignment on ou
   padding-left: 1.5rem;
 }
 
-.c3 div + svg {
+.c3 .warning-icon {
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;

@@ -90,6 +90,7 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   const [input, setInput] = useState('');
   const navigatedToSearch = useMatch(Routes.Routes().search.fullPath);
   const navigate = useNavigate();
+  const queryTerm = getSearchQuerystring();
 
   const resetSearch = () => {
     setOnSearchPage(false);
@@ -99,9 +100,8 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
 
   // When a user visits the /search page directly, fetch optionally provided query and set it
   useEffect(() => {
-    const query = getSearchQuerystring();
-    if (navigatedToSearch && query) {
-      setSearch(query);
+    if (navigatedToSearch && queryTerm) {
+      setSearch(queryTerm);
     }
 
     // ApplicationSearchBar fell out of scope (mobile), so reset search
@@ -116,6 +116,12 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
     } else {
       // User has navigated to /search, set onSearchPage to true
       setOnSearchPage(true);
+
+      // User comes back to the page with the back button
+      if (!search && queryTerm) {
+        setInput(queryTerm);
+        setSearch(queryTerm);
+      }
     }
   }, [navigatedToSearch]);
 
@@ -129,6 +135,15 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
       navigate(Routes.Routes().search.fullPath).then((_v) => setSearch(search));
     }
   }, [search]);
+
+  // Typically when hitting back/forward in browser windows
+  // Checks if queryTerm in url is the same as what is in state and sets the ui accordingly
+  useEffect(() => {
+    if (queryTerm && search !== queryTerm) {
+      setInput(queryTerm);
+      setSearch(queryTerm);
+    }
+  }, [queryTerm]);
 
   // Track events in GA when search term is updated and items are filtered
   useEffect(() => {
