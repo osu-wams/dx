@@ -25,9 +25,9 @@ describe('<ResourcesCard />', () => {
   });
 
   it('should have two financial resources with audience of Student', async () => {
-    const { findByText, getByTestId } = render(<ResourcesCard categ="financial" icon={faCube} />);
-    await findByText('Student Jobs');
-    expect(getByTestId('resource-container').children).toHaveLength(2);
+    render(<ResourcesCard categ="financial" icon={faCube} />);
+    await screen.findByText('Student Jobs');
+    expect(screen.getByTestId('resource-container').children).toHaveLength(2);
   });
 
   it('should have a clickable resource that fires GooglaAnalytics', async () => {
@@ -84,21 +84,24 @@ describe('<ResourcesCard />', () => {
         <ITSystemStatus />
       </>
     );
+
     expect(await screen.findAllByText('Box')).toHaveLength(2);
     expect(await screen.findByTestId('warning-icon')).toBeInTheDocument();
     // makes sure class is present that styles the warning icon appropriately
     expect(container.querySelector('.warning-icon')).toBeInTheDocument();
   });
 
-  it.only('should only have 1 warning icon, because only 1 resource is down', async () => {
+  it('should only have 1 warning icon, because only 1 resource is down', async () => {
     render(
       <>
         <ResourcesCard categ="featured" icon={faStars} />
         <ITSystemStatus />
       </>
     );
-
-    expect(await screen.findByTestId('warning-icon')).toBeInTheDocument();
+    await screen.findByText('Featured');
+    // findAllBy* + toHaveLength(1) currently fails testing library linting for some reason, so we are sidestepping it
+    const failingResources = await screen.findAllByTestId('warning-icon');
+    expect(failingResources.length).toBe(1);
   });
 
   it('should display warning message if resource with IT system down is clicked', async () => {
