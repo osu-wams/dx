@@ -131,8 +131,8 @@ describe('with an InfoButton in the CardFooter and missing data', () => {
   });
 
   it('does not display the button when the infoButtonData is missing it', async () => {
-    const { queryByTestId } = render(<Courses />, { initialStates: mockInitialState() });
-    const element = queryByTestId('current-courses');
+    render(<Courses />, { initialStates: mockInitialState() });
+    const element = screen.queryByTestId('current-courses');
     expect(element).not.toBeInTheDocument();
   });
 });

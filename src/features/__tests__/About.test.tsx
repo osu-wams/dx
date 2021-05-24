@@ -24,25 +24,25 @@ describe('<About />', () => {
   });
 
   it('should display card with appropriate content', async () => {
-    const { findByText } = render(<About />);
-    expect(await findByText('PageContent Title')).toBeInTheDocument();
+    render(<About />);
+    expect(await screen.findByText('PageContent Title')).toBeInTheDocument();
     expect(
-      await findByText(/This is the PageContent body content/i, { selector: 'p' })
+      await screen.findByText(/This is the PageContent body content/i, { selector: 'p' })
     ).toBeInTheDocument();
   });
 
   it('should find the release notes card with appropriate content', async () => {
-    const { findByText } = render(<About />);
-    expect(await findByText('Release : Winter test 2019')).toBeInTheDocument();
-    expect(await findByText('Test Release Note')).toBeInTheDocument();
-    expect(await findByText(/test release note body content/i)).toBeInTheDocument();
+    render(<About />);
+    expect(await screen.findByText('Release : Winter test 2019')).toBeInTheDocument();
+    expect(await screen.findByText('Test Release Note')).toBeInTheDocument();
+    expect(await screen.findByText(/test release note body content/i)).toBeInTheDocument();
   });
 
   it('should have support resources links that are tracked via GA', () => {
-    const { getByText } = render(<About />);
-    const started = getByText(/getting started/i);
-    const getHelp = getByText(/Get help/i);
-    const giveFeedback = getByText(/Give us feedback/i);
+    render(<About />);
+    const started = screen.getByText(/getting started/i);
+    const getHelp = screen.getByText(/Get help/i);
+    const giveFeedback = screen.getByText(/Give us feedback/i);
     userEvent.click(started);
     userEvent.click(getHelp);
     userEvent.click(giveFeedback);

@@ -23,8 +23,8 @@ describe('Trending Resources Card', () => {
   });
 
   it('does not render when there are no trending resources', async () => {
-    const { queryByText } = render(<TrendingResources />, { initialStates: mockInitialState() });
-    expect(queryByText('Trending')).not.toBeInTheDocument();
+    render(<TrendingResources />, { initialStates: mockInitialState() });
+    expect(screen.queryByText('Trending')).not.toBeInTheDocument();
   });
 
   it('Renders Trending Resources Card Title and the 1 active trending resource for the student', async () => {

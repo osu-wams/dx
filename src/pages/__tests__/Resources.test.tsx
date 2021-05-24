@@ -39,23 +39,22 @@ jest.mock('@osu-wams/hooks', () => {
  * Here we can simplify the logic in one place
  */
 const renderResources = async (userType?: any) => {
-  let utils;
   if (!userType) {
-    utils = render(<ResourcesComponent />, { initialStates: mockInitialState() });
+    render(<ResourcesComponent />, { initialStates: mockInitialState() });
   } else {
-    utils = render(<ResourcesComponent />, {
+    render(<ResourcesComponent />, {
       user: userType,
       initialStates: mockInitialState(),
     });
   }
-  const featured = await utils.findByLabelText('Featured');
-  const all = await utils.findByLabelText('All');
-  const favorites = await utils.findByLabelText('Favorites');
-  const searchInput = (await utils.findByPlaceholderText('Find resources')) as HTMLInputElement;
-  const financial = await utils.findByLabelText('Financial');
+
+  const featured = await screen.findByLabelText('Featured');
+  const all = await screen.findByLabelText('All');
+  const favorites = await screen.findByLabelText('Favorites');
+  const searchInput = (await screen.findByPlaceholderText('Find resources')) as HTMLInputElement;
+  const financial = await screen.findByLabelText('Financial');
 
   return {
-    ...utils,
     searchInput,
     featured,
     financial,
@@ -97,10 +96,10 @@ describe('<Resources />', () => {
     });
 
     it('Should have a link to skip to results with matching ID in the result container', async () => {
-      const { getByText, findByTestId } = await renderResources();
-      const skipLink = getByText('Skip to results');
+      await renderResources();
+      const skipLink = screen.getByText('Skip to results');
       const anchor = skipLink.getAttribute('href')!.slice(1);
-      const results = await findByTestId('resourcesResults');
+      const results = await screen.findByTestId('resourcesResults');
       const resultsId = results.getAttribute('id');
 
       expect(anchor).toEqual(resultsId);
@@ -119,14 +118,14 @@ describe('<Resources />', () => {
   describe('Category interactions', () => {
     it('should have "Featured" selected and clickable All category that gets appropriate results', async () => {
       mockDefaultCategory.mockReturnValue('All');
-      const { findByText, all, featured } = await renderResources();
+      const { all, featured } = await renderResources();
 
       expect(featured).toHaveClass('selected'); // default selected
 
       userEvent.click(all);
 
-      expect(await findByText(/Student Jobs/)).toBeInTheDocument();
-      expect(await findByText(/Billing Information/)).toBeInTheDocument();
+      expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
+      expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
 
       expect(featured).not.toHaveClass('selected');
       expect(all).toHaveClass('selected');
@@ -265,11 +264,11 @@ describe('<Resources />', () => {
       value: location,
     });
 
-    const { findByText, featured, all } = await renderResources();
+    const { featured, all } = await renderResources();
     await waitFor(() => expect(featured).not.toHaveClass('selected'));
     expect(all).toHaveClass('selected');
-    expect(await findByText(/Billing Information/)).toBeInTheDocument();
-    expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+    expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
+    expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
     location.search = '';
   });
 
@@ -318,10 +317,10 @@ describe('<Resources />', () => {
     });
 
     it('Finds Student Jobs resource, clicking on heart input adds it as a favorite', async () => {
-      const { findByText, all } = await renderResources();
+      const { all } = await renderResources();
       userEvent.click(all);
 
-      expect(await findByText(/Student Jobs/)).toBeInTheDocument();
+      expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
       var el = document.querySelector(
         `input[aria-label="Add Student Jobs link to your favorite resources"]`
       );
@@ -478,13 +477,13 @@ describe('<Resources />', () => {
     });
 
     it('finds "Student Jobs" and "Billing Information" but not "Listservs" when clicking the Financial category', async () => {
-      const { queryByText, getByText, findByText, financial } = await renderResources();
+      const { financial } = await renderResources();
       userEvent.click(financial);
 
-      expect(await findByText(/found 2 results/)).toBeInTheDocument();
-      expect(queryByText(/Listservs/)).not.toBeInTheDocument();
-      expect(getByText(/Student Jobs/)).toBeInTheDocument();
-      expect(getByText(/Billing Information/)).toBeInTheDocument();
+      expect(await screen.findByText(/found 2 results/)).toBeInTheDocument();
+      expect(screen.queryByText(/Listservs/)).not.toBeInTheDocument();
+      expect(screen.getByText(/Student Jobs/)).toBeInTheDocument();
+      expect(screen.getByText(/Billing Information/)).toBeInTheDocument();
       expect(financial).toHaveClass('selected');
     });
 

@@ -7,12 +7,12 @@ import { mockGAEvent } from 'src/setupTests';
 
 describe('student main navigation', () => {
   it('Main Navigation Links for students are to be present and tracked in Google Analytics', async () => {
-    const { getByText } = render(<MainNav />);
+    render(<MainNav />);
 
-    const home = getByText('Overview');
-    const academics = getByText('Academics');
-    const finances = getByText('Finances');
-    const menu = getByText('Menu');
+    const home = screen.getByText('Overview');
+    const academics = screen.getByText('Academics');
+    const finances = screen.getByText('Finances');
+    const menu = screen.getByText('Menu');
     userEvent.click(home);
     userEvent.click(academics);
     userEvent.click(finances);

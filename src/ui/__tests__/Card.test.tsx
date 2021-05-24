@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { render } from 'src/util/test-utils';
 import { Card, CardContent, CardHeader, CardFooter, Badge } from '../Card';
 import Button from '../Button';
@@ -46,62 +47,62 @@ const CardNoBadge = () => (
 
 describe('<Card />', () => {
   it('should render', () => {
-    const { getByTestId } = render(<StandardCard />);
-    expect(getByTestId(/StandardCardContent/i)).toBeInTheDocument();
+    render(<StandardCard />);
+    expect(screen.getByTestId(/StandardCardContent/i)).toBeInTheDocument();
   });
 
   it('should display a title in the header', () => {
-    const { getByTestId } = render(<StandardCard />);
-    expect(getByTestId(/standardcardheader/i)).toHaveTextContent(/header/i);
+    render(<StandardCard />);
+    expect(screen.getByTestId(/standardcardheader/i)).toHaveTextContent(/header/i);
   });
 
   it('should display a badge in the header if one is supplied', () => {
-    const { getByTestId } = render(<StandardCard />);
-    expect(getByTestId(/standardcardheader/i)).toHaveTextContent('4');
+    render(<StandardCard />);
+    expect(screen.getByTestId(/standardcardheader/i)).toHaveTextContent('4');
   });
 
   it('should not display a badge if no badge supplied', () => {
-    const { getByTestId } = render(<CardNoBadge />);
-    expect(getByTestId(/cardnobadgeheader/i)).toHaveTextContent('Header');
+    render(<CardNoBadge />);
+    expect(screen.getByTestId(/cardnobadgeheader/i)).toHaveTextContent('Header');
   });
 
   // !TODO: Visibility issues with latest update
   xit('should not display card content when collapsed', () => {
-    const { getByTestId } = render(<StandardCard />);
-    expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
+    render(<StandardCard />);
+    expect(screen.getByTestId(/standardcardcontent/i)).not.toBeVisible();
   });
 
   // !TODO:  check visibility update test
   xit('should display card content when expanded', () => {
-    const { getByTestId } = render(<StandardCard />);
-    expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
-    expect(getByTestId(/standardcardfooter/i)).not.toBeVisible();
+    render(<StandardCard />);
+    expect(screen.getByTestId(/standardcardcontent/i)).not.toBeVisible();
+    expect(screen.getByTestId(/standardcardfooter/i)).not.toBeVisible();
 
-    fireEvent.click(getByTestId('StandardCardHeader'));
-    expect(getByTestId(/standardcardcontent/i)).toBeVisible();
-    expect(getByTestId(/standardcardfooter/i)).toBeVisible();
+    userEvent.click(screen.getByTestId('StandardCardHeader'));
+    expect(screen.getByTestId(/standardcardcontent/i)).toBeVisible();
+    expect(screen.getByTestId(/standardcardfooter/i)).toBeVisible();
 
-    fireEvent.click(getByTestId('StandardCardHeader'));
-    expect(getByTestId(/standardcardcontent/i)).not.toBeVisible();
-    expect(getByTestId(/standardcardfooter/i)).not.toBeVisible();
+    userEvent.click(screen.getByTestId('StandardCardHeader'));
+    expect(screen.getByTestId(/standardcardcontent/i)).not.toBeVisible();
+    expect(screen.getByTestId(/standardcardfooter/i)).not.toBeVisible();
   });
 
   it('should display card content by default on larger screens', () => {
-    const { getByTestId } = render(<StandardCard />, { isDesktop: true });
-    expect(getByTestId(/standardcardcontent/i)).toBeVisible();
+    render(<StandardCard />, { isDesktop: true });
+    expect(screen.getByTestId(/standardcardcontent/i)).toBeVisible();
   });
 
   it('should not be collapsible on mobile view when collapsing prop is set to false', () => {
-    const { getByText } = render(<NonCollapsingCard />);
+    render(<NonCollapsingCard />);
 
     // the svg icon for collapsing cards should not exist
-    expect(getByText('Header').nextSibling).not.toBeInTheDocument();
+    expect(screen.getByText('Header').nextSibling).not.toBeInTheDocument();
   });
 
   it('should be collapsible on mobile view when collapsing prop is not defined or set to true', () => {
-    const { getByText } = render(<StandardCard />);
+    render(<StandardCard />);
 
     // the svg icon for collapsing cards should exist
-    expect(getByText('Header').nextSibling).toBeInstanceOf(SVGSVGElement);
+    expect(screen.getByText('Header').nextSibling).toBeInstanceOf(SVGSVGElement);
   });
 });

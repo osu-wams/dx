@@ -12,13 +12,12 @@ const { trainingTagState, trainingAudienceState, trainingState } = State;
  * We reuse a lot of these elements in our tests
  */
 const renderTrainings = () => {
-  const utils = render(<Training />, { user: mockEmployeeUser, initialStates: mockInitialState() });
+  render(<Training />, { user: mockEmployeeUser, initialStates: mockInitialState() });
 
-  const category = utils.getByRole('button', { name: 'Category Category' });
-  const audience = utils.getByRole('button', { name: 'Audience Audience' });
-  const searchInput = utils.getByPlaceholderText('Search for trainings') as HTMLInputElement;
+  const category = screen.getByRole('button', { name: 'Category Category' });
+  const audience = screen.getByRole('button', { name: 'Audience Audience' });
+  const searchInput = screen.getByPlaceholderText('Search for trainings') as HTMLInputElement;
   return {
-    ...utils,
     searchInput,
     category,
     audience,
