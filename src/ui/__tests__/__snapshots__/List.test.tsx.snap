@@ -74,7 +74,7 @@ exports[`An icon on the right 1`] = `
   padding-left: 1.5rem;
 }
 
-.c2 div + svg {
+.c2 .warning-icon {
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
@@ -210,7 +210,7 @@ exports[`Default style with icon on left 1`] = `
   padding-left: 1.5rem;
 }
 
-.c2 div + svg {
+.c2 .warning-icon {
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
@@ -345,7 +345,7 @@ exports[`Icon on both left and right 1`] = `
   padding-left: 1.5rem;
 }
 
-.c2 div + svg {
+.c2 .warning-icon {
   font-size: 14px;
   width: 14px !important;
   margin-top: -10px;
