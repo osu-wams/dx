@@ -2,6 +2,7 @@ import React from 'react';
 import Fuse from 'fuse.js';
 import { render } from 'src/util/test-utils';
 import SearchResultListItem from '../ApplicationSearch/SearchResultListItem';
+import { ITSystemStatus } from '../../features/it-systems-status/ITSystemStatus';
 import { State, Resources, Trainings, Student, User } from '@osu-wams/hooks';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,6 +12,8 @@ const training = Trainings.mockTrainings.data[0];
 const resource = resourcesData.data[0];
 const course = Student.CourseSchedule.mockCourseSchedule.courseScheduleHookData.data[0];
 const notification = User.mockUser.userMessage;
+
+window.open = jest.fn();
 
 describe('with a resource (typical) search result item', () => {
   const { id, title, audiences, locations, link } = resource;
@@ -139,5 +142,39 @@ describe('with a notification search result item', () => {
     const close = await screen.findByText('Close', { selector: 'span' });
     userEvent.click(close);
     expect(screen.queryByTestId('notification-modal')).not.toBeInTheDocument();
+  });
+});
+
+describe('with a resource (typical) search result item', () => {
+  const resource = resourcesData.data[7];
+  const { id, title, audiences, locations, link } = resource;
+  const resourceResult: Fuse.FuseResult<State.SearchItem> = {
+    item: {
+      attr: { resource },
+      id,
+      title,
+      type: 'Resource',
+      audience: audiences,
+      campuses: locations,
+      link: { href: link },
+      subText: { value: 'Some subtext here version 2' },
+    },
+    refIndex: 1,
+  };
+
+  it('resource with down IT system should display warning icon and dialog', async () => {
+    const { findByText, findByTestId } = render(
+      <>
+        <ITSystemStatus />
+        <SearchResultListItem searchResult={resourceResult} />
+      </>
+    );
+    const link = await findByText('Box', { selector: 'a' });
+    expect(link).toBeInTheDocument();
+
+    expect(await findByTestId('warning-icon')).toBeInTheDocument();
+    userEvent.click(link);
+    expect(await findByText(/Resource may be unavailable/i)).toBeInTheDocument();
+    expect(await findByText(/Performance Issues./i)).toBeInTheDocument();
   });
 });
