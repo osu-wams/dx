@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
@@ -69,8 +69,8 @@ describe('<ApplicationSearchBar />', () => {
           },
         },
       ]);
-      const container = render(<ApplicationSearchBar />, { initialStates: mockInitialState() });
-      history = container.history;
+      const view = render(<ApplicationSearchBar />, { initialStates: mockInitialState() });
+      history = view.history;
       searchBar = await screen.findByTestId('applicationSearch');
     });
     it('updates location and input field when search is performed', async () => {

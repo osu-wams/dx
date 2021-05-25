@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, alterMock, mockGradUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render, alterMock, mockGradUser } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import StudentGpa from '../academic-overview/StudentGpa';
 import { Student } from '@osu-wams/hooks';

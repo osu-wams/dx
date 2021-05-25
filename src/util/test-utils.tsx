@@ -167,8 +167,4 @@ const renderWithAllContexts = (
   return { ...testingLibraryRender(ui, { wrapper: Wrapper, ...options }), history };
 };
 
-const render = renderWithAllContexts;
-// Pass a different user
-// const { getByTestId } = renderWithUserContext(<Dashboard />, { user: authUser });
-
-export { renderWithUserContext, renderWithAppContext, renderWithAllContexts, render };
+export { renderWithUserContext, renderWithAppContext, renderWithAllContexts };

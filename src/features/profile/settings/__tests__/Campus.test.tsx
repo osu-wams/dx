@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
-import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render, authUser, mockEmployeeUser } from 'src/util/test-utils';
 import Campus from '../Campus';
 
 const mockPostSettings = jest.fn();
@@ -87,19 +87,19 @@ describe('<Campus />', () => {
     mockUser.mockReturnValue({
       ...mockEmployeeUser,
     });
-    const { getByText } = render(<Campus />, { user: mockUser() });
-    const defaultCampus = getByText('(Default)');
+    render(<Campus />, { user: mockUser() });
+    const defaultCampus = screen.getByText('(Default)');
     const campusLabel = defaultCampus!.parentElement;
     expect(campusLabel).toHaveTextContent('Corvallis');
   });
 
   it('submits updates when a change is fired', async () => {
-    const { getByTestId } = render(<Campus />, { user: mockUser() });
-    const corvallisButton = getByTestId('corvallis');
+    render(<Campus />, { user: mockUser() });
+    const corvallisButton = screen.getByTestId('corvallis');
     fireEvent.click(corvallisButton.children[0].children[0]);
-    const bendButton = getByTestId('bend');
+    const bendButton = screen.getByTestId('bend');
     fireEvent.click(bendButton.children[0].children[0]);
-    const ecampusButton = getByTestId('ecampus');
+    const ecampusButton = screen.getByTestId('ecampus');
     fireEvent.click(ecampusButton.children[0].children[0]);
     // Clicking a radio button that is already checked is no-op, this should
     // only register a click on each of the other buttons

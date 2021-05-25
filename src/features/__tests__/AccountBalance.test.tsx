@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { render, alterMock } from 'src/util/test-utils';
+import { renderWithAllContexts as render, alterMock } from 'src/util/test-utils';
 import AccountBalance from '../financial-overview/AccountBalance';
 import { ACCOUNT_BALANCE_API } from 'src/mocks/apis';
 

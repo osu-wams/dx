@@ -1,6 +1,6 @@
 import React from 'react';
 import Fuse from 'fuse.js';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import SearchResultListItem from '../ApplicationSearch/SearchResultListItem';
 import { ITSystemStatus } from '../../features/it-systems-status/ITSystemStatus';
 import { State, Resources, Trainings, Student, User } from '@osu-wams/hooks';
@@ -163,18 +163,18 @@ describe('with a resource (typical) search result item', () => {
   };
 
   it('resource with down IT system should display warning icon and dialog', async () => {
-    const { findByText, findByTestId } = render(
+    render(
       <>
         <ITSystemStatus />
         <SearchResultListItem searchResult={resourceResult} />
       </>
     );
-    const link = await findByText('Box', { selector: 'a' });
+    const link = await screen.findByText('Box', { selector: 'a' });
     expect(link).toBeInTheDocument();
 
-    expect(await findByTestId('warning-icon')).toBeInTheDocument();
+    expect(await screen.findByTestId('warning-icon')).toBeInTheDocument();
     userEvent.click(link);
-    expect(await findByText(/Resource may be unavailable/i)).toBeInTheDocument();
-    expect(await findByText(/Performance Issues./i)).toBeInTheDocument();
+    expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Performance Issues./i)).toBeInTheDocument();
   });
 });

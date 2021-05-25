@@ -1,8 +1,8 @@
 import React from 'react';
-import { cleanup, waitFor } from '@testing-library/react';
+import { cleanup, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EventCardContainer from '../EventCardContainer';
-import { render, mockEmployeeUser, alterMock } from 'src/util/test-utils';
+import { renderWithAllContexts as render, mockEmployeeUser, alterMock } from 'src/util/test-utils';
 import { State, Announcements, Events } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
 import { STUDENT_EVENTS_API, ANNOUNCEMENTS_API } from 'src/mocks/apis';
@@ -18,114 +18,97 @@ describe('<EventCardContainer />', () => {
   });
 
   it('should show 5 student event cards', async () => {
-    const { findByText, queryByText, getAllByTestId } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-    );
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
 
     await waitFor(() => {
-      expect(getAllByTestId('eventcard')).toHaveLength(5);
+      expect(screen.getAllByTestId('eventcard')).toHaveLength(5);
     });
 
-    expect(await findByText(/Student Only Announcement/i)).toBeInTheDocument();
-    expect(queryByText(/Employee Only Announcement/i)).not.toBeInTheDocument();
+    expect(await screen.findByText(/Student Only Announcement/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Employee Only Announcement/i)).not.toBeInTheDocument();
     expect(
-      await findByText(/Katherine Dziedzic - Integrative Biology PhD Defense Seminar/i)
+      await screen.findByText(/Katherine Dziedzic - Integrative Biology PhD Defense Seminar/i)
     ).toBeInTheDocument();
   });
 
   it('should show 6 employee event cards for an employee in corvallis', async () => {
-    const { getAllByTestId, findByText, queryByText } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />,
-      {
-        user: mockEmployeeUser,
-      }
-    );
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />, {
+      user: mockEmployeeUser,
+    });
 
-    expect(await findByText(/Employee Only Announcement/i)).toBeInTheDocument();
-    expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
-    expect(queryByText(/Transfer Tuesdays at COCC/i)).not.toBeInTheDocument();
+    expect(await screen.findByText(/Employee Only Announcement/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Transfer Tuesdays at COCC/i)).not.toBeInTheDocument();
     expect(
-      await findByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
+      await screen.findByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
     ).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(getAllByTestId('eventcard')).toHaveLength(6);
+      expect(screen.getAllByTestId('eventcard')).toHaveLength(6);
     });
   });
 
   it('should show 6 employee event cards for an employee in corvallis with a non-standard campus code', async () => {
-    const { getAllByTestId, findByText, queryByText } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />,
-      {
-        user: {
-          ...mockEmployeeUser,
-          data: { ...mockEmployeeUser.data, audienceOverride: { campusCode: 'J' } },
-        },
-      }
-    );
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />, {
+      user: {
+        ...mockEmployeeUser,
+        data: { ...mockEmployeeUser.data, audienceOverride: { campusCode: 'J' } },
+      },
+    });
 
     await waitFor(() => {
-      expect(getAllByTestId('eventcard')).toHaveLength(6);
+      expect(screen.getAllByTestId('eventcard')).toHaveLength(6);
     });
-    expect(await findByText(/Employee Only Announcement/i)).toBeInTheDocument();
-    expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
-    expect(queryByText(/Transfer Tuesdays at COCC/i)).not.toBeInTheDocument();
+    expect(await screen.findByText(/Employee Only Announcement/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Transfer Tuesdays at COCC/i)).not.toBeInTheDocument();
     expect(
-      queryByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
+      screen.queryByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
     ).toBeInTheDocument();
   });
 
   it('should show 5 employee event cards for an employee in bend', async () => {
-    const { getAllByTestId, findByText, queryByText } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />,
-      {
-        user: {
-          ...mockEmployeeUser,
-          data: { ...mockEmployeeUser.data, audienceOverride: { campusCode: 'B' } },
-        },
-      }
-    );
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />, {
+      user: {
+        ...mockEmployeeUser,
+        data: { ...mockEmployeeUser.data, audienceOverride: { campusCode: 'B' } },
+      },
+    });
 
     await waitFor(() => {
-      expect(getAllByTestId('eventcard')).toHaveLength(5);
+      expect(screen.getAllByTestId('eventcard')).toHaveLength(5);
     });
-    expect(await findByText(/Employee Only Announcement/i)).toBeInTheDocument();
-    expect(queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
-    expect(queryByText(/Transfer Tuesdays at COCC/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Employee Only Announcement/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Student Only Announcement/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Transfer Tuesdays at COCC/i)).toBeInTheDocument();
     expect(
-      queryByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
+      screen.queryByText(/The Road Less Traveled - Willamette Valley PhotoArts Guild Exhibit/i)
     ).not.toBeInTheDocument();
   });
 
   it('should display text', async () => {
-    const { findAllByTestId, findByText } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-    );
-    await findAllByTestId('eventcard');
-    expect(await findByText(/Announcement test body text 2/i)).toBeInTheDocument();
-    expect(await findByText(/Announcement link title/i)).toBeInTheDocument();
-    expect(await findByText(/Localist test title 1/i)).toBeInTheDocument();
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
+    await screen.findAllByTestId('eventcard');
+    expect(await screen.findByText(/Announcement test body text 2/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Announcement link title/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Localist test title 1/i)).toBeInTheDocument();
   });
 
   it('should track clicks to events and announcements', async () => {
-    const { findAllByTestId, findByText } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-    );
-    await findAllByTestId('eventcard');
-    const localist = await findByText(/Localist test title/i);
-    const announcementLink = await findByText(/Announcement link title/i);
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
+    await screen.findAllByTestId('eventcard');
+    const localist = await screen.findByText(/Localist test title/i);
+    const announcementLink = await screen.findByText(/Announcement link title/i);
     userEvent.click(localist);
     userEvent.click(announcementLink);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should alternate types of events', async () => {
-    const { getAllByTestId, getAllByText } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-    );
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
     await waitFor(() => {
-      const cards = getAllByTestId('eventcard');
-      const bodyText = getAllByText(/body text/i);
+      const cards = screen.getAllByTestId('eventcard');
+      const bodyText = screen.getAllByText(/body text/i);
       expect(cards[0]).toContainElement(bodyText[0]);
       expect(cards[2]).toContainElement(bodyText[1]);
       expect(cards[1]).not.toContainElement(bodyText[0]);
@@ -135,11 +118,9 @@ describe('<EventCardContainer />', () => {
 
   it('should render only announcements when no localist events loaded', async () => {
     alterMock(STUDENT_EVENTS_API, []);
-    const { getAllByTestId } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-    );
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
     await waitFor(() => {
-      expect(getAllByTestId('eventcard')).toHaveLength(2);
+      expect(screen.getAllByTestId('eventcard')).toHaveLength(2);
     });
   });
 
@@ -147,12 +128,10 @@ describe('<EventCardContainer />', () => {
     alterMock(STUDENT_EVENTS_API, studentExperienceEvents.data);
     alterMock(ANNOUNCEMENTS_API, []);
 
-    const { getAllByTestId } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-    );
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
 
     await waitFor(() => {
-      expect(getAllByTestId('eventcard')).toHaveLength(3);
+      expect(screen.getAllByTestId('eventcard')).toHaveLength(3);
     });
   });
 
@@ -160,12 +139,10 @@ describe('<EventCardContainer />', () => {
     alterMock(ANNOUNCEMENTS_API, announcementsData_10.data);
     alterMock(STUDENT_EVENTS_API, studentExperienceEvents_10.data);
 
-    const { getAllByTestId } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-    );
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
 
     await waitFor(() => {
-      expect(getAllByTestId('eventcard')).toHaveLength(12);
+      expect(screen.getAllByTestId('eventcard')).toHaveLength(12);
     });
   });
 
@@ -173,15 +150,13 @@ describe('<EventCardContainer />', () => {
     alterMock(ANNOUNCEMENTS_API, announcementsData_10.data);
     alterMock(STUDENT_EVENTS_API, studentExperienceEvents_10.data);
     let match = true;
-    const { findAllByTestId } = render(
-      <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-    );
-    const test1 = await findAllByTestId('eventcard');
+    render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
+    const test1 = await screen.findAllByTestId('eventcard');
 
     cleanup(); // ensure the dom fully clears and cleans before rendering a second time
     render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
 
-    const test2 = await findAllByTestId('eventcard');
+    const test2 = await screen.findAllByTestId('eventcard');
     expect(test1.length).toEqual(test2.length);
 
     // loop through each and check to see if either of the arrays at index x dont match
@@ -196,26 +171,21 @@ describe('<EventCardContainer />', () => {
 
   describe('Employee vs Student Events', () => {
     it('should see Student Events but not employee ones', async () => {
-      const { findAllByTestId, queryByText, findByText } = render(
-        <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />
-      );
-      await findAllByTestId('eventcard');
-      expect(await findByText(/Localist test title 1/i)).toBeInTheDocument();
-      expect(queryByText(/2019 Oregon Employees/i)).not.toBeInTheDocument();
+      render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />);
+      await screen.findAllByTestId('eventcard');
+      expect(await screen.findByText(/Localist test title 1/i)).toBeInTheDocument();
+      expect(screen.queryByText(/2019 Oregon Employees/i)).not.toBeInTheDocument();
     });
 
     it('should see Employee Events but not student ones', async () => {
-      const { findAllByTestId, queryByText, findByText } = render(
-        <EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />,
-        {
-          user: mockEmployeeUser,
-        }
-      );
-      await findAllByTestId('eventcard');
-      expect(await findByText(/Employee Only Announcement/i)).toBeInTheDocument();
-      expect(await findByText(/Announcement link title/i)).toBeInTheDocument();
-      expect(queryByText(/Localist test title 1/i)).not.toBeInTheDocument();
-      expect(await findByText(/2019 Oregon Employees/i)).toBeInTheDocument();
+      render(<EventCardContainer page={State.ANNOUNCEMENT_PAGES.dashboard} />, {
+        user: mockEmployeeUser,
+      });
+      await screen.findAllByTestId('eventcard');
+      expect(await screen.findByText(/Employee Only Announcement/i)).toBeInTheDocument();
+      expect(await screen.findByText(/Announcement link title/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Localist test title 1/i)).not.toBeInTheDocument();
+      expect(await screen.findByText(/2019 Oregon Employees/i)).toBeInTheDocument();
     });
   });
 });

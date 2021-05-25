@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { render, alterMock } from 'src/util/test-utils';
+import { renderWithAllContexts as render, alterMock } from 'src/util/test-utils';
 import Alerts from '../Alerts';
 import { Alerts as alertsHooks } from '@osu-wams/hooks';
 import { DX_ALERTS_API, RAVE_ALERTS_API } from 'src/mocks/apis';

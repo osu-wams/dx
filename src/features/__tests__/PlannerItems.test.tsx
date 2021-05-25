@@ -1,6 +1,7 @@
 import React from 'react';
 import user from '@testing-library/user-event';
-import { render, authUser } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
+import { renderWithAllContexts as render, authUser } from 'src/util/test-utils';
 import PlannerItems from '../PlannerItems';
 import { mockGAEvent } from 'src/setupTests';
 import { State, Student } from '@osu-wams/hooks';
@@ -35,8 +36,8 @@ describe('<PlannerItems />', () => {
     ]);
   });
   it('should have a "Week 5 Lab Discussion" assignment on our mock data', async () => {
-    const { findByText } = render(<PlannerItems />, { initialStates: mockInitialState() });
-    const el = await findByText('Week 5 Lab Discussion');
+    render(<PlannerItems />, { initialStates: mockInitialState() });
+    const el = await screen.findByText('Week 5 Lab Discussion');
     const li = el.closest('li');
     expect(li).toMatchSnapshot('with hover');
   });
@@ -69,27 +70,27 @@ describe('<PlannerItems />', () => {
         },
       },
     ]);
-    const { findByText } = render(<PlannerItems />, { initialStates: mockInitialState() });
+    render(<PlannerItems />, { initialStates: mockInitialState() });
 
-    const el = await findByText('My Awesome Planner Note');
+    const el = await screen.findByText('My Awesome Planner Note');
     const li = el.closest('li');
     expect(li).toMatchSnapshot('without hover');
   });
 
   it('should track analytics when footer link and assignment is clicked', async () => {
-    const { getByText, findByText } = render(<PlannerItems />, {
+    render(<PlannerItems />, {
       initialStates: mockInitialState(),
     });
 
     // Planner Item
-    await findByText('Week 5 Lab Discussion');
+    await screen.findByText('Week 5 Lab Discussion');
 
-    const PlannerItem = getByText('Week 5 Lab Discussion');
+    const PlannerItem = screen.getByText('Week 5 Lab Discussion');
     user.click(PlannerItem);
     expect(mockGAEvent).toHaveBeenCalled();
 
     // Footer link
-    const CanvasLink = await findByText('View more in Canvas');
+    const CanvasLink = await screen.findByText('View more in Canvas');
     user.click(CanvasLink);
     expect(mockGAEvent).toHaveBeenCalled();
   });
@@ -115,10 +116,10 @@ describe('<PlannerItems />', () => {
       },
     ]);
 
-    const { findByText } = render(<PlannerItems />, {
+    render(<PlannerItems />, {
       initialStates: mockInitialState(),
     });
-    const noAssignments = await findByText(/You have no upcoming Canvas assignments/);
+    const noAssignments = await screen.findByText(/You have no upcoming Canvas assignments/);
     expect(noAssignments).toBeInTheDocument();
   });
 });
@@ -148,13 +149,13 @@ describe('with an InfoButton in the CardFooter', () => {
         },
       },
     ]);
-    const { queryByTestId, findByText } = render(<PlannerItems />, {
+    render(<PlannerItems />, {
       initialStates: mockInitialState(),
     });
-    const noAssignments = await findByText(/You have no upcoming Canvas assignments/);
+    const noAssignments = await screen.findByText(/You have no upcoming Canvas assignments/);
     expect(noAssignments).toBeInTheDocument();
 
-    const element = queryByTestId('canvas');
+    const element = screen.queryByTestId('canvas');
     expect(element).not.toBeInTheDocument();
   });
 
@@ -182,9 +183,9 @@ describe('with an InfoButton in the CardFooter', () => {
         },
       },
     ]);
-    const { findByTestId } = render(<PlannerItems />, { initialStates: mockInitialState() });
+    render(<PlannerItems />, { initialStates: mockInitialState() });
 
-    const element = await findByTestId('canvas');
+    const element = await screen.findByTestId('canvas');
     expect(element).toBeInTheDocument();
   });
 });
@@ -219,14 +220,14 @@ describe('with a user who has not opted-in Canvas', () => {
       isCanvasOptIn: false,
     });
 
-    const { queryByTestId, findAllByText } = render(<PlannerItems />, {
+    render(<PlannerItems />, {
       user: mockUser(),
       initialStates: mockInitialState(),
     });
 
-    const element = queryByTestId('icon-counter');
+    const element = screen.queryByTestId('icon-counter');
     expect(element).not.toBeInTheDocument();
-    const authorizeElements = await findAllByText(/Authorize Canvas/i);
+    const authorizeElements = await screen.findAllByText(/Authorize Canvas/i);
     expect(authorizeElements.length).toBe(2);
   });
 });

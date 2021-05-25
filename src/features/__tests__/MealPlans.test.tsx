@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
 import MealPlans from '../financial-overview/MealPlans';
 import { Person } from '@osu-wams/hooks';
 
@@ -21,21 +22,21 @@ describe('<MealPlans />', () => {
   });
 
   it('should have a $16.88 balance from our mock data', async () => {
-    const { getByText } = render(<MealPlans />);
-    expect(getByText('$16.88')).toBeInTheDocument();
-    expect(getByText('Add money')).toBeInTheDocument();
+    render(<MealPlans />);
+    expect(screen.getByText('$16.88')).toBeInTheDocument();
+    expect(screen.getByText('Add money')).toBeInTheDocument();
   });
 
   it('should have Meal Plan Balance as title from our mock data', async () => {
-    const { getByText } = render(<MealPlans />);
-    expect(getByText('Meal Plan Balance')).toBeInTheDocument();
-    expect(getByText('Add money')).toBeInTheDocument();
+    render(<MealPlans />);
+    expect(screen.getByText('Meal Plan Balance')).toBeInTheDocument();
+    expect(screen.getByText('Add money')).toBeInTheDocument();
   });
 
   it('should let user know they do not have a meal plan', async () => {
     mockUseMealPlans.mockResolvedValue(Promise.resolve(mockNoData));
-    const { getByText } = render(<MealPlans />);
-    expect(getByText('You do not have a meal plan.')).toBeInTheDocument();
-    expect(getByText('Add money')).toBeInTheDocument();
+    render(<MealPlans />);
+    expect(screen.getByText('You do not have a meal plan.')).toBeInTheDocument();
+    expect(screen.getByText('Add money')).toBeInTheDocument();
   });
 });

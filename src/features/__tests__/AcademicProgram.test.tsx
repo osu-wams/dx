@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { render, alterMock } from 'src/util/test-utils';
+import { renderWithAllContexts as render, alterMock } from 'src/util/test-utils';
 import { AcademicProgram } from '../AcademicProgram';
 import { mockGAEvent } from 'src/setupTests';
 import { DEGREES_API } from 'src/mocks/apis';

@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { Routes } from '@osu-wams/utils';
 import { State } from '@osu-wams/hooks';
-import { mockEmployeeUser, mockStudentEmployeeUser, render } from 'src/util/test-utils';
+import {
+  mockEmployeeUser,
+  mockStudentEmployeeUser,
+  renderWithAllContexts as render,
+} from 'src/util/test-utils';
 import { LocationProvider, createHistory, createMemorySource } from '@reach/router';
 import App from '../App';
 import { RecoilRoot } from 'recoil';

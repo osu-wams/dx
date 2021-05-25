@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { Bubble, BubbleExternalLink, BubbleInternalLink } from '../Bubble';
 
 it('Renders default bubble', () => {

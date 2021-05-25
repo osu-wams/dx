@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import PlainCard from '../PlainCard';
 
 const Plain = () => (
@@ -17,14 +18,14 @@ const PlainNoTitle = () => (
 );
 describe('<PlainCard /> ', () => {
   test('Should render with children', () => {
-    const { getByTestId } = render(<Plain />);
-    expect(getByTestId('paragraph')).toBeInTheDocument();
-    expect(getByTestId('span')).toBeInTheDocument();
+    render(<Plain />);
+    expect(screen.getByTestId('paragraph')).toBeInTheDocument();
+    expect(screen.getByTestId('span')).toBeInTheDocument();
   });
 
   test('Title in rendered element should be "Plain Card Title"', () => {
-    const { getByText } = render(<Plain />);
-    expect(getByText('Plain Card Title')).toBeInTheDocument();
+    render(<Plain />);
+    expect(screen.getByText('Plain Card Title')).toBeInTheDocument();
   });
 
   test('should not contain a h3 element when a title prop is not specified', () => {

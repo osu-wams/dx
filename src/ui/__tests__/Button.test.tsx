@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import Button, { CloseButton } from '../Button';
 import { Color } from '@osu-wams/theme';
 

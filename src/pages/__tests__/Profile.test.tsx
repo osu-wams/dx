@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, mockAdminUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render, mockAdminUser } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import Profile from '../Profile';
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, mockEmployeeUser, mockStudentEmployeeUser } from 'src/util/test-utils';
+import {
+  renderWithAllContexts as render,
+  mockEmployeeUser,
+  mockStudentEmployeeUser,
+} from 'src/util/test-utils';
 import { ProfileMenu } from '../HeaderNav/ProfileMenu';
 import { mockGAEvent } from 'src/setupTests';
 import { act, screen } from '@testing-library/react';

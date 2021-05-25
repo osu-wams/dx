@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { render, mockGradUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render, mockGradUser } from 'src/util/test-utils';
 import AcademicOverview from '../AcademicOverview';
 import { mockGAEvent } from 'src/setupTests';
 import { State } from '@osu-wams/hooks';

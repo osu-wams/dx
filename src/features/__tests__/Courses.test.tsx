@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import Courses from '../Courses';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { Helpers } from '@osu-wams/utils';
@@ -131,8 +131,8 @@ describe('with an InfoButton in the CardFooter and missing data', () => {
   });
 
   it('does not display the button when the infoButtonData is missing it', async () => {
-    const { queryByTestId } = render(<Courses />, { initialStates: mockInitialState() });
-    const element = queryByTestId('current-courses');
+    render(<Courses />, { initialStates: mockInitialState() });
+    const element = screen.queryByTestId('current-courses');
     expect(element).not.toBeInTheDocument();
   });
 });

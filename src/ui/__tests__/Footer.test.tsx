@@ -1,7 +1,7 @@
 import React from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithUserContext, render, renderWithAllContexts } from 'src/util/test-utils';
+import { renderWithUserContext, renderWithAllContexts as render } from 'src/util/test-utils';
 import Footer from '../Footer';
 import { mockGAEvent } from 'src/setupTests';
 import {
@@ -55,12 +55,12 @@ it('Masquerade link is present for administrators and they can open and close th
 });
 
 it('As an administrator, I can click "masquerade" and trigger the api calls', async () => {
-  const { findByText, findByTestId } = renderWithUserContext(<Footer />, { user: mockAdminUser });
+  renderWithUserContext(<Footer />, { user: mockAdminUser });
   //Profile icon click - this text is visually hidden
-  const maskLink = await findByText('Masquerade');
+  const maskLink = await screen.findByText('Masquerade');
   userEvent.click(maskLink);
 
-  const maskOverlay = await findByTestId('masquerade-dialog');
+  const maskOverlay = await screen.findByTestId('masquerade-dialog');
   // Masquerade overlay shows up
   expect(maskOverlay).toBeInTheDocument();
 
@@ -75,13 +75,13 @@ it('As an administrator, I can click "masquerade" and trigger the api calls', as
 });
 
 it('Links to be present and tracked in Google Analytics', async () => {
-  const { getByText } = renderWithUserContext(<Footer />, { user: mockUser() });
+  renderWithUserContext(<Footer />, { user: mockUser() });
   //Profile icon click - this text is visually hidden
-  const supportLink = getByText('Get Support');
-  const feedbackLink = getByText('Give Feedback');
-  const copyrightLink = getByText('Copyright');
-  const disclaimerLink = getByText('Disclaimer');
-  const accessibilityLink = getByText(/Accessibility Information/);
+  const supportLink = screen.getByText('Get Support');
+  const feedbackLink = screen.getByText('Give Feedback');
+  const copyrightLink = screen.getByText('Copyright');
+  const disclaimerLink = screen.getByText('Disclaimer');
+  const accessibilityLink = screen.getByText(/Accessibility Information/);
 
   userEvent.click(supportLink);
   userEvent.click(feedbackLink);
@@ -101,9 +101,9 @@ it('Application deployed versions', async () => {
 describe('Masquerade', () => {
   [authUser, mockStudentEmployeeUser, mockEmployeeUser, mockGradUser].forEach((user) => {
     it('Masquerade link should not be present for ' + user, async () => {
-      const { queryByText } = renderWithUserContext(<Footer />, { user: user });
+      renderWithUserContext(<Footer />, { user: user });
 
-      const maskLink = queryByText('Masquerade');
+      const maskLink = screen.queryByText('Masquerade');
       expect(maskLink).not.toBeInTheDocument();
     });
   });

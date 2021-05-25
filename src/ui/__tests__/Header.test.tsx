@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, mockEmployeeUser, authUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render, mockEmployeeUser, authUser } from 'src/util/test-utils';
 import Header from '../Header';
 import { State } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
