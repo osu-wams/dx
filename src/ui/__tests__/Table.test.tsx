@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { Table, TableBody, TableRow, TableCell } from '../Table';
 
 const DefaultTable = () => (

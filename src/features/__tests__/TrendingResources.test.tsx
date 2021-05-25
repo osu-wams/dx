@@ -1,5 +1,9 @@
 import React from 'react';
-import { render, mockEmployeeUser, mockGradUser } from 'src/util/test-utils';
+import {
+  renderWithAllContexts as render,
+  mockEmployeeUser,
+  mockGradUser,
+} from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { TrendingResources } from 'src/features/TrendingResources';

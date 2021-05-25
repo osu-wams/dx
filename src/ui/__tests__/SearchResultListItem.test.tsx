@@ -1,6 +1,6 @@
 import React from 'react';
 import Fuse from 'fuse.js';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import SearchResultListItem from '../ApplicationSearch/SearchResultListItem';
 import { ITSystemStatus } from '../../features/it-systems-status/ITSystemStatus';
 import { State, Resources, Trainings, Student, User } from '@osu-wams/hooks';

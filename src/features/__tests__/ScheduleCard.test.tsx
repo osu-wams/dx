@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { render, authUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render, authUser } from 'src/util/test-utils';
 import { State, Events, Student } from '@osu-wams/hooks';
 import ScheduleCard from '../ScheduleCard';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';

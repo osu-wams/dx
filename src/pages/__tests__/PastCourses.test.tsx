@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
 import { State, Student } from '@osu-wams/hooks';

@@ -53,7 +53,7 @@ You need to modify package.json to work with the dx-monorepo locally:
 
     ...
     import { waitForElement } from '@testing-library/react';
-    import { render } from '/src/util/test-utils'; // replace /src with relative path
+    import { renderWithAllContexts as render } from '/src/util/test-utils'; // replace /src with relative path
     ...
     // An example test
     it('should render the resources page', async () => {

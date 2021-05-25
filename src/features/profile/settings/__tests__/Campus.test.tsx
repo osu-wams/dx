@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
-import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render, authUser, mockEmployeeUser } from 'src/util/test-utils';
 import Campus from '../Campus';
 
 const mockPostSettings = jest.fn();

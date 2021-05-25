@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import StudentHolds from '../academic-overview/StudentHolds';
 import { alterMock } from 'src/util/test-utils';

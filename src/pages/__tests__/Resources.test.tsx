@@ -1,7 +1,7 @@
 import React from 'react';
 import { waitFor, screen, fireEvent } from '@testing-library/react';
 import {
-  render,
+  renderWithAllContexts as render,
   authUser,
   mockEmployeeUser,
   renderWithUserContext,

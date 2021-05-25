@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { mockEmployeeUser, render } from 'src/util/test-utils';
+import { mockEmployeeUser, renderWithAllContexts as render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
 import { mockGAEvent } from 'src/setupTests';

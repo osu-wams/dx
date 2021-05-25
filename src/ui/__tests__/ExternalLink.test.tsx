@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { screen } from '@testing-library/react';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { Color } from '@osu-wams/theme';
 import { ExternalLink, SimpleExternalLink } from '../Link';
 
@@ -51,15 +52,16 @@ test('Background is orange-400, and text is white', () => {
 });
 
 test('Make sure ExternalLink target="_blank" attribute is passed down', () => {
-  const { container } = render(<Default />);
-
-  expect(container.firstChild).toHaveAttribute('target', '_blank');
+  render(<Default />);
+  expect(screen.getByRole('link', { name: 'Default link' })).toHaveAttribute('target', '_blank');
 });
 
 test('Make sure SimpleExternalLink target="_blank" attribute is passed down', () => {
-  const { container } = render(<SimpleExtLink />);
-
-  expect(container.firstChild).toHaveAttribute('target', '_blank');
+  render(<SimpleExtLink />);
+  expect(screen.getByRole('link', { name: 'Simple External Link Sample' })).toHaveAttribute(
+    'target',
+    '_blank'
+  );
 });
 
 test('Make sure SVG image is present', () => {

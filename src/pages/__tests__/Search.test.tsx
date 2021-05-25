@@ -1,17 +1,13 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import { mockInitialState } from 'src/setupTests';
 import userEvent from '@testing-library/user-event';
 import { State, Resources, SearchIndex } from '@osu-wams/hooks';
 import Search from '../Search';
 
-const {
-  applicationSearchState,
-  applicationTypeFilterState,
-  pageSearchIndexState,
-  resourceState,
-} = State;
+const { applicationSearchState, applicationTypeFilterState, pageSearchIndexState, resourceState } =
+  State;
 const notFoundSearchTerm = 'bobross';
 const foundSearchTerm = 'testo';
 

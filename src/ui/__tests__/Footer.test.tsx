@@ -1,7 +1,7 @@
 import React from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithUserContext, render, renderWithAllContexts } from 'src/util/test-utils';
+import { renderWithUserContext, renderWithAllContexts as render } from 'src/util/test-utils';
 import Footer from '../Footer';
 import { mockGAEvent } from 'src/setupTests';
 import {

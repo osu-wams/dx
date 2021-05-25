@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { render, authUser, mockEmployeeUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render, authUser, mockEmployeeUser } from 'src/util/test-utils';
 import Affiliations from '../Affiliations';
 
 const mockUser = jest.fn();

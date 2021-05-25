@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { render, alterMock } from 'src/util/test-utils';
+import { renderWithAllContexts as render, alterMock } from 'src/util/test-utils';
 import { faCube, faStars } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
 import { ITSystemStatus } from '../it-systems-status/ITSystemStatus';

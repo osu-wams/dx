@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EventCardContainer from '../EventCardContainer';
-import { render, mockEmployeeUser, alterMock } from 'src/util/test-utils';
+import { renderWithAllContexts as render, mockEmployeeUser, alterMock } from 'src/util/test-utils';
 import { State, Announcements, Events } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
 import { STUDENT_EVENTS_API, ANNOUNCEMENTS_API } from 'src/mocks/apis';

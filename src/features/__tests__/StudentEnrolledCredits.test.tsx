@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import StudentEnrolledCredits from '../academic-overview/StudentEnrolledCredits';
 import { State } from '@osu-wams/hooks';

@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { waitFor, screen } from '@testing-library/react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { MobileMenuStudents } from '../MainNav/MobileMenuStudents';
 import { mockGAEvent } from 'src/setupTests';
 

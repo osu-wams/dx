@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import OSUProfile from '../profile/OSUProfile';
@@ -9,7 +9,8 @@ import { alterMock } from 'src/util/test-utils';
 import { PERSONS_ADDRESSES_API, PERSONS_API, PERSONS_PHONE_API } from 'src/mocks/apis';
 
 const { personsMinimalAddressData } = Person.Addresses.mockAddresses;
-const { preferredName, nullName, preferredFirstName, multiplePhonesData } = Person.Persons.mockPersons;
+const { preferredName, nullName, preferredFirstName, multiplePhonesData } =
+  Person.Persons.mockPersons;
 
 describe('<OSUProfile />', () => {
   // Default Data
