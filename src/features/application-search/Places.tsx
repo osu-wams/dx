@@ -22,7 +22,7 @@ const LocationImage = styled.img`
 `;
 
 const renderItems = (count: number, data: Types.Location[]) => {
-  if (!data.length) {
+  if (!Array.isArray(data) || !data.length) {
     return (
       <ListItemContent compact>
         <ListItemText>No places found.</ListItemText>
