@@ -48,7 +48,7 @@
   },
   "scripts": {
     "start": "EXTEND_ESLINT=true react-scripts start",
-    "build": "EXTEND_ESLINT=true react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "TZ=UTC react-scripts test --env=jsdom",
     "test:coverage": "TZ=UTC react-scripts test --env=jsdom --coverage --watchAll=false",
     "eject": "react-scripts eject",
