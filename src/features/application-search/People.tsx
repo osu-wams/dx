@@ -17,7 +17,7 @@ import { Event } from 'src/util/gaTracking';
 import { ListCount, ListErrorMessage } from 'src/ui/ApplicationSearch/ListItem';
 
 const renderItems = (count: number, data: Types.Directory[]) => {
-  if (!data.length) {
+  if (!Array.isArray(data) || !data.length) {
     return (
       <ListItemContent compact>
         <ListItemText>No people found.</ListItemText>

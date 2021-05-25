@@ -14,8 +14,17 @@ import { Helpers } from '@osu-wams/utils';
 import { Header } from './schedule/ScheduleCardStyles';
 import { Card, CardFooter, CardContent } from '../ui/Card';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { Types } from '@osu-wams/lib';
 
 const { userState, plannerItemState } = State;
+
+const selectedCalEvents = (selectedDay: Date, data?: Types.AcademicEvent[]) => {
+  if (!Array.isArray(data)) return [];
+
+  return data.filter((event) => {
+    return event.pubDate ? isSameDay(Date.parse(event.pubDate), selectedDay) : '';
+  });
+};
 
 /**
  * Course Schedule Card
@@ -37,10 +46,6 @@ const ScheduleCard = () => {
       item.plannable_date ? isSameDay(Date.parse(item.plannable_date), selectedDay) : false
     );
   }
-
-  const selectedCalEvents = (calEvents.data ?? []).filter((event) => {
-    return event.pubDate ? isSameDay(Date.parse(event.pubDate), selectedDay) : '';
-  });
 
   // Get a list of days with courses or assignments.
   // Used to display the orange dots above days to indicate
@@ -91,7 +96,9 @@ const ScheduleCard = () => {
           {courses.isSuccess && courses.data && (
             <ScheduleCardCourses courses={courses.data} selectedDay={selectedDay} />
           )}
-          <ScheduleCardAcademicCalendar calEvents={selectedCalEvents} />
+          <ScheduleCardAcademicCalendar
+            calEvents={selectedCalEvents(selectedDay, calEvents.data)}
+          />
         </div>
       </CardContent>
       <CardFooter infoButtonId="schedule-card"></CardFooter>
