@@ -67,7 +67,13 @@ const renderProfile = (
   const preferredEmail = e.filter((obj) => {
     return obj.attributes.preferredInd == true;
   })[0];
-  const { emailAddress } = preferredEmail.attributes;
+
+  // Temporary fix until we address the underlying issue of bad data.
+  let emailAddress = '';
+  if (preferredEmail && preferredEmail.attributes.emailAddress) {
+    emailAddress = preferredEmail.attributes.emailAddress;
+  }
+
   const preferredPhone = phone.filter((obj) => {
     return obj.attributes.primaryInd == true && obj.attributes.phoneType.code == 'CM';
   })[0];
