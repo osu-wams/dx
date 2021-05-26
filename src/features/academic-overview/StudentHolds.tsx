@@ -50,6 +50,7 @@ export const StudentHolds: React.FC = () => {
                     <li key={i}>
                       <HoldTitle>{h.description}</HoldTitle>
                       <HoldDescription>Effective {Helpers.format(h.fromDate)}</HoldDescription>
+                      {h.reason && <HoldDescription>{h.reason}</HoldDescription>}
                     </li>
                   )
               )}
