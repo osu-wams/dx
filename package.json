@@ -47,7 +47,7 @@
     "use-debounce": "^3.4.3"
   },
   "scripts": {
-    "start": "EXTEND_ESLINT=true react-scripts start",
+    "start": "react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "TZ=UTC react-scripts test --env=jsdom",
     "test:coverage": "TZ=UTC react-scripts test --env=jsdom --coverage --watchAll=false",
