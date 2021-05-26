@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-node-access */
 import React from 'react';
 import { screen } from '@testing-library/react';
 import { renderWithAllContexts as render } from 'src/util/test-utils';
