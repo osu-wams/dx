@@ -11,12 +11,13 @@ describe('<StudentHolds />', () => {
     expect(await screen.findByText('Bill is overdue')).toBeInTheDocument();
     expect(await screen.findByText('1')).toBeInTheDocument();
     expect(await screen.findByText('hold on your student account.')).toBeInTheDocument();
+    expect(await screen.findByText('pay was due 2 years ago')).toBeInTheDocument();
   });
 
   it('should render and have a multiple holds', async () => {
     alterMock(HOLDS_API, [
-      { description: 'blah', fromDate: '2020-10-11' },
-      { description: 'BobRoss', fromDate: '2019-09-01' },
+      { description: 'blah', reason: null, fromDate: '2020-10-11' },
+      { description: 'BobRoss', reason: 'fail', fromDate: '2019-09-01' },
     ]);
     render(<StudentHolds />);
 
