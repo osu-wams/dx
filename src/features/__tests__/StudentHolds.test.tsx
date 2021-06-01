@@ -1,9 +1,11 @@
 import React from 'react';
 import { renderWithAllContexts as render } from 'src/util/test-utils';
+import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import StudentHolds from '../academic-overview/StudentHolds';
 import { alterMock } from 'src/util/test-utils';
 import { HOLDS_API } from 'src/mocks/apis';
+import { mockGAEvent } from 'src/setupTests';
 
 describe('<StudentHolds />', () => {
   it('should render and have a single hold', async () => {
@@ -12,6 +14,9 @@ describe('<StudentHolds />', () => {
     expect(await screen.findByText('1')).toBeInTheDocument();
     expect(await screen.findByText('hold on your student account.')).toBeInTheDocument();
     expect(await screen.findByText('pay was due 2 years ago')).toBeInTheDocument();
+    const more = await screen.findByText(/learn more about holds/i);
+    userEvent.click(more);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   it('should render and have a multiple holds', async () => {
