@@ -9,7 +9,9 @@ import {
 } from 'src/ui/Highlights';
 import { fontSize } from '@osu-wams/theme';
 import { useHolds } from '@osu-wams/hooks';
-import { Helpers } from '@osu-wams/utils';
+import { Helpers, Url } from '@osu-wams/utils';
+import { SimpleExternalLink } from 'src/ui/Link';
+import { Event } from 'src/util/gaTracking';
 
 const HoldsList = styled.ul`
   margin: 0;
@@ -54,6 +56,12 @@ export const StudentHolds: React.FC = () => {
                     </li>
                   )
               )}
+              <SimpleExternalLink
+                href={Url.registrar.holdsInfo}
+                onClick={() => Event('academic-overview', 'holds link')}
+              >
+                Learn more about holds
+              </SimpleExternalLink>
             </HoldsList>
           )}
         </HighlightDescription>
