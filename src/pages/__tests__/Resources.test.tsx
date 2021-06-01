@@ -48,7 +48,7 @@ const renderResources = async (userType?: any) => {
       initialStates: mockInitialState(),
     });
   }
-
+  await screen.findByText('Resources');
   const featured = await screen.findByLabelText('Featured');
   const all = await screen.findByLabelText('All');
   const favorites = await screen.findByLabelText('Favorites');
@@ -86,13 +86,16 @@ describe('<Resources />', () => {
       expect(searchInput).not.toHaveFocus();
     });
 
-    it('should autoFocus on desktop', () => {
+    it('should autoFocus on desktop', async () => {
       renderWithUserContext(
         <ResponsiveContext.Provider value={{ width: '768' }}>
           <ResourcesComponent />
         </ResponsiveContext.Provider>
       );
-      const searchInput = screen.getByPlaceholderText('Find resources') as HTMLInputElement;
+      await screen.findByText('Resources');
+      const searchInput = (await screen.findByPlaceholderText(
+        'Find resources'
+      )) as HTMLInputElement;
       expect(searchInput).toHaveFocus();
     });
 
@@ -168,7 +171,7 @@ describe('<Resources />', () => {
       mockDefaultCategory.mockReturnValue(defaultCategory);
       const { searchInput } = await renderResources();
 
-      const academic = screen.getByLabelText('Academic');
+      const academic = await screen.findByLabelText('Academic');
 
       // Search input value changed to "noResults"
       await userEvent.type(searchInput, 'noResults');
