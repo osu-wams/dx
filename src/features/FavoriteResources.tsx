@@ -14,6 +14,7 @@ import { ResourceItem } from './resources/ResourceItem';
 import favoritesImg from 'src/assets/favorites.svg';
 import { useRecoilValue } from 'recoil';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useQueryClient } from 'react-query';
 import VisuallyHidden from '@reach/visually-hidden';
 
 const { resourceState, userState } = State;
@@ -28,6 +29,7 @@ export const FavoriteResources = () => {
     (Types.FavoriteResource & { resource?: Types.Resource })[]
   >([]);
   const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (user.data.favoriteResources && res.data && res.data.length > 0) {
@@ -51,7 +53,11 @@ export const FavoriteResources = () => {
   );
 
   const [fieldComponents, setFieldComponents] = useState<any[]>([]);
-  const swapArrayElements = (elementsArray, startIndex, endIndex) => {
+  const swapArrayElements = (
+    elementsArray: { resource: Types.Resource; active: boolean }[],
+    startIndex: number,
+    endIndex: number
+  ) => {
     const result = Array.from(elementsArray);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -61,7 +67,7 @@ export const FavoriteResources = () => {
 
   /**
    * Runs when the user uses the up/down key to move an element or dragged via mouse
-   * Sets the state
+   * Sets the local state and updates the server data as well
    * @param draggableItem
    * @returns local state of arranged items
    */
@@ -80,25 +86,21 @@ export const FavoriteResources = () => {
     );
     setFieldComponents(reorderedComponentsList);
     Event('favorite-resource', 'Dragged or Reordered');
-  };
-
-  /**
-   * We update and post favorite resources after they have been reordered or one is removed
-   */
-  useEffect(() => {
-    const resources = fieldComponents.map(({ resource, active }, index) => ({
+    const resources = reorderedComponentsList.map(({ resource, active }, index) => ({
       resourceId: resource.id,
       active: active,
       order: index,
     }));
 
+    // Reorder at the server level the local state and clears favorites react query cache
     if (resources.length > 1) {
       const fetchData = async () => {
         await Resources.postFavorite(resources);
+        queryClient.invalidateQueries('/api/resources/favorites');
       };
       fetchData();
     }
-  }, [fieldComponents]);
+  };
 
   return (
     <Card>
