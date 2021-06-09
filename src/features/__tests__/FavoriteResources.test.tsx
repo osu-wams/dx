@@ -57,8 +57,7 @@ describe('Favorite Resources Card', () => {
       'Remove Billing Information link from your favorite resources'
     );
     userEvent.click(removeBilling);
-    // Once for the removal, and another time for the resorting order of all resources
-    expect(await mockPostFavorite).toHaveBeenCalledTimes(2);
+    expect(await mockPostFavorite).toHaveBeenCalledTimes(1);
     expect(await authUser.refreshFavorites).toHaveBeenCalledTimes(1);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
