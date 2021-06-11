@@ -184,5 +184,29 @@ describe('with a resource (typical) search result item', () => {
 
     expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
     expect(await screen.findByText(/Performance Issues./i)).toBeInTheDocument();
+
+    // Close modal to trigger analytics and confirm modal content is no longer present
+    userEvent.click(await screen.findByText('Close'));
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(screen.queryByText(/Performance Issues./i)).not.toBeInTheDocument();
+  });
+
+  it('resource with down IT system should display warning icon and allow users click through it', async () => {
+    render(
+      <>
+        <ITSystemStatus />
+        <SearchResultListItem searchResult={resourceResult} />
+      </>
+    );
+
+    expect(await screen.findByTestId('warning-icon')).toBeInTheDocument();
+    userEvent.click(await screen.findByText('Box', { selector: 'a' }));
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+
+    expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
+
+    // Continues to resource and it's tracked in Google Analytics
+    userEvent.click(await screen.findByText('Continue to resource'));
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 });
