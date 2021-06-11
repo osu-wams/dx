@@ -8,6 +8,7 @@ import { State, Resources, Trainings, Student, User } from '@osu-wams/hooks';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 const { resourcesData } = Resources.mockResources;
+import { mockGAEvent } from 'src/setupTests';
 
 const training = Trainings.mockTrainings.data[0];
 const resource = resourcesData.data[0];
@@ -78,11 +79,13 @@ describe('with a training search result item', () => {
     expect(link).toBeInTheDocument();
     expect(link).not.toHaveAttribute('href');
   });
+
   it('renders with html subtext', async () => {
     render(<SearchResultListItem searchResult={trainingResult} />);
     const subtext = await screen.findByText(/tag 1 .* tag 2/, { selector: 'div' });
     expect(subtext).toBeInTheDocument();
   });
+
   it('toggles the modal', async () => {
     render(<SearchResultListItem searchResult={trainingResult} />);
     const link = await screen.findByText('Play nice with others', { selector: 'a' });
@@ -111,6 +114,7 @@ describe('with a course search result item', () => {
     },
     refIndex: 1,
   };
+
   it('toggles the modal', async () => {
     render(<SearchResultListItem searchResult={courseResult} />);
     const link = await screen.findByText('WR214', { selector: 'a' });
@@ -135,6 +139,7 @@ describe('with a notification search result item', () => {
     },
     refIndex: 1,
   };
+
   it('toggles the modal', async () => {
     render(<SearchResultListItem searchResult={notificationResult} />);
     const link = await screen.findByText('Title', { selector: 'a' });
@@ -175,7 +180,33 @@ describe('with a resource (typical) search result item', () => {
 
     expect(await screen.findByTestId('warning-icon')).toBeInTheDocument();
     userEvent.click(link);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+
     expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
     expect(await screen.findByText(/Performance Issues./i)).toBeInTheDocument();
+
+    // Close modal to trigger analytics and confirm modal content is no longer present
+    userEvent.click(await screen.findByText('Close'));
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(screen.queryByText(/Performance Issues./i)).not.toBeInTheDocument();
+  });
+
+  it('resource with down IT system should display warning icon and allow users click through it', async () => {
+    render(
+      <>
+        <ITSystemStatus />
+        <SearchResultListItem searchResult={resourceResult} />
+      </>
+    );
+
+    expect(await screen.findByTestId('warning-icon')).toBeInTheDocument();
+    userEvent.click(await screen.findByText('Box', { selector: 'a' }));
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+
+    expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
+
+    // Continues to resource and it's tracked in Google Analytics
+    userEvent.click(await screen.findByText('Continue to resource'));
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 });

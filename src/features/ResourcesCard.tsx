@@ -58,8 +58,9 @@ const ResourcesCard: FC<{ categ: string; icon: IconDefinition }> = ({ categ, ico
               <ResourceItem
                 key={resource.id}
                 resource={resource}
-                event={() => Event('resources-card', categ, resource.title)}
-              />
+                eventCategory="resources-card"
+                eventAction={categ}
+              /> // !TODO HELP
             ))}
           </List>
         )}

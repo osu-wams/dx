@@ -34,7 +34,8 @@ const DynamicCard: React.FC<{ data: Types.DynamicCard }> = ({ data }) => {
                   <ResourceItem
                     key={r.id}
                     resource={r}
-                    event={() => Event('dynamic-card', 'resource', r.title)}
+                    eventCategory="dynamic-card"
+                    eventAction={'resource ' + r.title}
                   />
                 );
               })

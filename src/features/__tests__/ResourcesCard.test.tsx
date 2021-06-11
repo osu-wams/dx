@@ -115,9 +115,35 @@ describe('<ResourcesCard />', () => {
     await screen.findByText('Featured');
     const BoxResource = await screen.findAllByText('Box');
     userEvent.click(BoxResource[0]);
+    // 2 times it's called - 1. the generic resource click and 2. The warning modal is opened
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
     expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
     expect(await screen.findByText(/Performance Issues./i)).toBeInTheDocument();
+
+    // Close modal to trigger analytics and confirm modal content is no longer present
+    userEvent.click(await screen.findByText('Close'));
+    expect(mockGAEvent).toHaveBeenCalledTimes(3);
+    expect(screen.queryByText(/Performance Issues./i)).not.toBeInTheDocument();
   });
+});
+
+it('Warning message has a link to continue to resource', async () => {
+  render(
+    <>
+      <ResourcesCard categ="featured" icon={faStars} />
+      <ITSystemStatus />
+    </>
+  );
+  await screen.findByText('Featured');
+  const BoxResource = await screen.findAllByText('Box');
+  userEvent.click(BoxResource[0]);
+  // 2 times it's called - 1. the generic resource click and 2. The warning modal is opened
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
+  expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
+
+  // Continues to resource and it's tracked in Google Analytics
+  userEvent.click(await screen.findByText('Continue to resource'));
+  expect(mockGAEvent).toHaveBeenCalledTimes(3);
 });
 
 describe('with an InfoButton in the CardFooter', () => {

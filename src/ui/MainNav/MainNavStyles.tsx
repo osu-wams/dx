@@ -35,7 +35,8 @@ const Nav = styled.nav`
   }
 `;
 
-const NavLink = styled(Link)`
+// Adding <any> for now as typescript wasn't compiling with it as a regular styled component
+const NavLink = styled(Link)<any>`
   display: flex;
   flex-direction: column;
   @media (min-width: ${breakpoints.small}) {

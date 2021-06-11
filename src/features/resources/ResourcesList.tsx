@@ -17,7 +17,8 @@ const ResourcesList: React.FC<{ resources: Types.Resource[]; user: Types.User }>
             <ResourceItem
               key={resource.id}
               resource={resource}
-              event={() => Event('resource', resource.title)}
+              eventCategory="resource"
+              eventAction={resource.title}
             />
           ))}
       </List>

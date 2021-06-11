@@ -11,7 +11,7 @@ import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src
 import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
 import { TrendingEvent } from './GATrendingResource';
-import { Event } from 'src/util/gaTracking';
+import { Event, EventAction, IComponents } from 'src/util/gaTracking';
 import { useRecoilValue } from 'recoil';
 import { ExternalLink } from '../../ui/Link';
 import { CloseButton } from '../../ui/Button';
@@ -31,12 +31,14 @@ const DateContainer = styled.div`
 
 const ResourceItem = ({
   resource,
-  event,
+  eventCategory,
+  eventAction,
   draggable,
   index,
 }: {
   resource: Types.Resource;
-  event: any;
+  eventCategory: IComponents;
+  eventAction: string;
   draggable?: boolean;
   index?: number;
 }) => {
@@ -113,12 +115,20 @@ const ResourceItem = ({
     />
   );
 
+  const closeModal = () => {
+    Event('resource-warning', EventAction.resourceWarning.modalClosed);
+    close();
+  };
+
   // Resource with click event
   const Resource = () => (
     <ListItemResourceLink
       onClick={() => {
+        Event(eventCategory, eventAction);
+
         // if resource's IT system has an error, open the dialog box
         if (itSystemError) {
+          Event('resource-warning', EventAction.resourceWarning.modalOpened);
           open();
         }
         // else, open link
@@ -126,7 +136,6 @@ const ResourceItem = ({
           window.open(resource.link);
           close();
         }
-        event();
         if (!resource.excludeTrending) {
           TrendingEvent(resource, user.data);
         }
@@ -149,11 +158,11 @@ const ResourceItem = ({
   const OutageDialog = () => (
     <MyDialog
       isOpen={showDialog}
-      onDismiss={close}
+      onDismiss={closeModal}
       aria-labelledby="message-title"
       style={{ marginTop: '30vh' }}
     >
-      <CloseButton onClick={close} />
+      <CloseButton onClick={closeModal} />
       <div>
         <Icon
           fontSize={fontSize[26]}
@@ -188,7 +197,13 @@ const ResourceItem = ({
         <p>{errorMsg}.</p>
       </MyDialogContent>
       <MyDialogFooter style={{ marginTop: '0' }}>
-        <ExternalLink href={resource.link} onClick={close}>
+        <ExternalLink
+          href={resource.link}
+          onClick={() => {
+            close();
+            Event('resource-warning', EventAction.resourceWarning.resourceAccessed);
+          }}
+        >
           Continue to resource
         </ExternalLink>
       </MyDialogFooter>

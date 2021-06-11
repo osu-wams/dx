@@ -18,6 +18,7 @@ import { CloseButton } from '../Button';
 import { ExternalLink } from '../Link';
 import { faExclamationCircle as faExclamationCircleHollow } from '@fortawesome/pro-light-svg-icons';
 import { faExclamationCircle as faExclamationCircleSolid } from '@fortawesome/pro-solid-svg-icons';
+import { Event, EventAction } from 'src/util/gaTracking';
 
 const DateContainer = styled.div`
   color: ${({ theme }) => theme.notification.date};
@@ -84,6 +85,7 @@ const titleLink = (
       onClick={(e) => {
         if (itStatus && itStatus.status !== 1) {
           e.preventDefault();
+          Event('resource-warning', EventAction.resourceWarning.modalOpened);
           openDialog();
         }
       }}
@@ -164,7 +166,10 @@ const SearchResultListItem = ({
   const openDialog = () => {
     setShowDialog(true);
   };
-  const closeDialog = () => setShowDialog(false);
+  const closeDialog = () => {
+    setShowDialog(false);
+    Event('resource-warning', EventAction.resourceWarning.modalClosed);
+  };
 
   useEffect(() => {
     if (item.attr.resource && item.attr.resource.hasOwnProperty('itSystem') && status.isSuccess) {
@@ -219,7 +224,13 @@ const SearchResultListItem = ({
         <p>{itSystemStatus.details.statusText}.</p>
       </MyDialogContent>
       <MyDialogFooter style={{ marginTop: '0' }}>
-        <ExternalLink href={item.link?.href} onClick={closeDialog}>
+        <ExternalLink
+          href={item.link?.href}
+          onClick={() => {
+            setShowDialog(false);
+            Event('resource-warning', EventAction.resourceWarning.resourceAccessed);
+          }}
+        >
           Continue to resource
         </ExternalLink>
       </MyDialogFooter>
