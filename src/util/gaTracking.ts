@@ -48,6 +48,7 @@ export type IComponents =
   | 'resource-search-failed'
   | 'resource-category'
   | 'resources-card'
+  | 'resource-warning'
   | 'schedule-card'
   | 'student-navigation-main'
   | 'student-mobile-nav'
@@ -72,4 +73,12 @@ export const Event = (category: IComponents, action: string, label?: string) => 
     action,
     label,
   });
+};
+
+export const EventAction = {
+  resourceWarning: {
+    modalOpened: 'modal opened',
+    modalClosed: 'modal closed',
+    resourceAccessed: 'continued to resource',
+  },
 };
