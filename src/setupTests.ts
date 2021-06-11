@@ -56,6 +56,7 @@ afterAll(() => server.close());
  * Google Analytics setup
  */
 jest.mock('../src/util/gaTracking', () => ({
+  ...jest.requireActual('../src/util/gaTracking'),
   Event: (category: any = 'mockedCategory', action: string = 'mockedAction', label?: string) => {
     if (label) return mockGAEvent(category, action, label);
     return mockGAEvent(category, action);
@@ -70,7 +71,6 @@ jest.mock('../src/features/resources/GATrendingResource', () => ({
 
 // Supress missing CSS warnings in tests from @reach ui components
 jest.mock('@reach/utils', () => ({
-  // @ts-ignore spread object
   ...jest.requireActual('@reach/utils'),
   checkStyles: jest.fn(),
 }));
