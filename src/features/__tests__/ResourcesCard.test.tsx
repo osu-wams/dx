@@ -115,6 +115,8 @@ describe('<ResourcesCard />', () => {
     await screen.findByText('Featured');
     const BoxResource = await screen.findAllByText('Box');
     userEvent.click(BoxResource[0]);
+    // 2 times it's called - 1. the generic resource click and 2. The warning modal is opened
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
     expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
     expect(await screen.findByText(/Performance Issues./i)).toBeInTheDocument();
   });
