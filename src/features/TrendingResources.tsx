@@ -41,7 +41,8 @@ export const TrendingResources = () => {
               <ResourceItem
                 key={resource.id}
                 resource={resource}
-                event={() => Event('trending-resources-card', resource.title)}
+                eventCategory="trending-resources-card"
+                eventAction={resource.title}
               />
             ))}
           </List>

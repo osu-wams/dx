@@ -125,7 +125,8 @@ export const FavoriteResources = () => {
                       resource && (
                         <ResourceItem
                           resource={resource}
-                          event={() => Event('favorite-resources-card', resource.title)}
+                          eventCategory="favorite-resources-card"
+                          eventAction={resource.title}
                           draggable
                           index={index}
                           key={resource.id}

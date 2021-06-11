@@ -11,7 +11,7 @@ import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src
 import { IconLookup } from './resources-utils';
 import Icon from 'src/ui/Icon';
 import { TrendingEvent } from './GATrendingResource';
-import { Event, EventAction } from 'src/util/gaTracking';
+import { Event, EventAction, IComponents } from 'src/util/gaTracking';
 import { useRecoilValue } from 'recoil';
 import { ExternalLink } from '../../ui/Link';
 import { CloseButton } from '../../ui/Button';
@@ -31,12 +31,14 @@ const DateContainer = styled.div`
 
 const ResourceItem = ({
   resource,
-  event,
+  eventCategory,
+  eventAction,
   draggable,
   index,
 }: {
   resource: Types.Resource;
-  event: any;
+  eventCategory: IComponents;
+  eventAction: string;
   draggable?: boolean;
   index?: number;
 }) => {
@@ -122,6 +124,8 @@ const ResourceItem = ({
   const Resource = () => (
     <ListItemResourceLink
       onClick={() => {
+        Event(eventCategory, eventAction);
+
         // if resource's IT system has an error, open the dialog box
         if (itSystemError) {
           Event('resource-warning', EventAction.resourceWarning.modalOpened);
