@@ -8,7 +8,8 @@ import ReactGA from 'react-ga';
 import Header from './ui/Header';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
-import { themesLookup, GlobalStyles } from '@osu-wams/theme';
+import GlobalStyles from './util/globalStyles';
+import { themesLookup } from '@osu-wams/theme';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Types } from '@osu-wams/lib';
 import {
