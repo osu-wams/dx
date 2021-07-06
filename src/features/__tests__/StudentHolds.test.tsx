@@ -14,10 +14,12 @@ describe('<StudentHolds />', () => {
     expect(await screen.findByText('1')).toBeInTheDocument();
     expect(await screen.findByText('hold on your student account.')).toBeInTheDocument();
     expect(await screen.findByText('pay was due 2 years ago')).toBeInTheDocument();
-    expect(await screen.findByText('View your holds')).toBeInTheDocument();
     const more = await screen.findByText(/learn more about holds/i);
     userEvent.click(more);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
+    const view = await screen.findByText(/view your holds/i);
+    userEvent.click(view);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
   });
 
   it('should render and have a multiple holds', async () => {
