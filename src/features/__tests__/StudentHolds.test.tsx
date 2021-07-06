@@ -14,6 +14,7 @@ describe('<StudentHolds />', () => {
     expect(await screen.findByText('1')).toBeInTheDocument();
     expect(await screen.findByText('hold on your student account.')).toBeInTheDocument();
     expect(await screen.findByText('pay was due 2 years ago')).toBeInTheDocument();
+    expect(await screen.findByText('View your holds')).toBeInTheDocument();
     const more = await screen.findByText(/learn more about holds/i);
     userEvent.click(more);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -32,6 +33,8 @@ describe('<StudentHolds />', () => {
     expect(await screen.findByText('Effective October 11, 2020')).toBeInTheDocument();
     expect(await screen.findByText('2')).toBeInTheDocument();
     expect(await screen.findByText('holds on your student account.')).toBeInTheDocument();
+    expect(await screen.findByText('View your holds')).toBeInTheDocument();
+    expect(await screen.findByText('Learn more about holds')).toBeInTheDocument();
   });
 
   it('should return appropriate text when data is empty', async () => {
@@ -40,5 +43,7 @@ describe('<StudentHolds />', () => {
 
     expect(await screen.findByText('0')).toBeInTheDocument();
     expect(await screen.findByText('holds on your student account.')).toBeInTheDocument();
+    expect(screen.queryByText('View your holds')).not.toBeInTheDocument();
+    expect(screen.queryByText('Learn more about holds')).not.toBeInTheDocument();
   });
 });
