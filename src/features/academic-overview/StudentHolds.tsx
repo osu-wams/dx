@@ -59,9 +59,16 @@ export const StudentHolds: React.FC = () => {
               <SimpleExternalLink
                 href={Url.registrar.holdsInfo}
                 onClick={() => Event('academic-overview', 'holds link')}
-                style={{ marginTop: '14px' }}
+                style={{ width: '100%', marginTop: '14px' }}
               >
                 Learn more about holds
+              </SimpleExternalLink>
+              <SimpleExternalLink
+                href={Url.banner.viewHolds}
+                onClick={() => Event('academic-overview', 'view holds link')}
+                style={{ width: '100%' }}
+              >
+                View your holds
               </SimpleExternalLink>
             </HoldsList>
           )}
