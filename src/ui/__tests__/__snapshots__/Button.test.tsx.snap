@@ -83,7 +83,7 @@ exports[`Renders a large button with default colors 1`] = `
   border-radius: 4px;
   cursor: pointer;
   padding: 1rem 1.8rem;
-  font-size: 1.8rem;
+  font-size: 18px;
 }
 
 .c0 + .c0 {
@@ -109,7 +109,7 @@ exports[`Renders a small button with default colors 1`] = `
   border-radius: 4px;
   cursor: pointer;
   padding: .2rem .3rem;
-  font-size: 1.4rem;
+  font-size: 14px;
 }
 
 .c0 + .c0 {
@@ -135,7 +135,7 @@ exports[`Renders a super button with all the props changed: bg, fg, size 1`] = `
   border-radius: 4px;
   cursor: pointer;
   padding: 1rem 1.8rem;
-  font-size: 1.8rem;
+  font-size: 18px;
 }
 
 .c0 + .c0 {

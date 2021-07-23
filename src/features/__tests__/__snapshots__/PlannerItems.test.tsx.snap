@@ -88,7 +88,7 @@ exports[`<PlannerItems /> should have a "My Awesome Planner Note" note on our mo
 .c1 .MuiCheckbox-root {
   width: 48px;
   height: 48px;
-  font-size: 1.8rem;
+  font-size: 18px;
   margin-right: 5px;
 }
 
@@ -98,28 +98,28 @@ exports[`<PlannerItems /> should have a "My Awesome Planner Note" note on our mo
 
 .c7 {
   color: #7B746F;
-  font-size: 1.4rem;
+  font-size: 14px;
   line-height: 1.6rem;
 }
 
 .c3 {
-  line-height: 1.4rem;
+  line-height: 14px;
   text-align: center;
   padding: 0 16px 0 0;
   color: #D73F09;
-  width: 5.8rem;
+  width: 58px;
 }
 
 .c3 strong {
-  line-height: 2.0rem;
-  font-size: 2.0rem;
+  line-height: 20px;
+  font-size: 20px;
 }
 
 .c8 {
   background: #E9E5E4;
   border-radius: 4px;
   color: #2E2B2A;
-  font-size: 1.2rem;
+  font-size: 12px;
   padding: 2px 4px;
   -webkit-align-self: flex-start;
   -ms-flex-item-align: start;
@@ -282,7 +282,7 @@ exports[`<PlannerItems /> should have a "Week 5 Lab Discussion" assignment on ou
 .c1 .MuiCheckbox-root {
   width: 48px;
   height: 48px;
-  font-size: 1.8rem;
+  font-size: 18px;
   margin-right: 5px;
 }
 
@@ -305,7 +305,7 @@ exports[`<PlannerItems /> should have a "Week 5 Lab Discussion" assignment on ou
 
 .c10 {
   color: #7B746F;
-  font-size: 1.4rem;
+  font-size: 14px;
   line-height: 1.6rem;
 }
 
@@ -313,7 +313,7 @@ exports[`<PlannerItems /> should have a "Week 5 Lab Discussion" assignment on ou
   background: #E9E5E4;
   border-radius: 4px;
   color: #2E2B2A;
-  font-size: 1.2rem;
+  font-size: 12px;
   padding: 2px 4px;
   -webkit-align-self: flex-start;
   -ms-flex-item-align: start;

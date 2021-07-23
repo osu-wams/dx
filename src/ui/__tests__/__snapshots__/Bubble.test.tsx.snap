@@ -5,7 +5,7 @@ exports[`Renders default bubble 1`] = `
   background: #E9E5E4;
   border-radius: 4px;
   color: #2E2B2A;
-  font-size: 1.2rem;
+  font-size: 12px;
   padding: 2px 4px;
   -webkit-align-self: flex-start;
   -ms-flex-item-align: start;
@@ -29,7 +29,7 @@ exports[`Renders external link bubble 1`] = `
   background: #E9E5E4;
   border-radius: 4px;
   color: #2E2B2A;
-  font-size: 1.2rem;
+  font-size: 12px;
   padding: 2px 4px;
   -webkit-align-self: flex-start;
   -ms-flex-item-align: start;
@@ -42,13 +42,13 @@ exports[`Renders external link bubble 1`] = `
 .c1 {
   background: #FFF2D5;
   color: #915513;
-  font-size: 1.2rem;
+  font-size: 12px;
   font-weight: bold;
 }
 
 .c1 > svg {
   margin-left: 4px;
-  font-size: 1rem;
+  font-size: 10px;
   color: #915513;
 }
 
@@ -66,7 +66,7 @@ exports[`Renders internal link bubble 1`] = `
   background: #E9E5E4;
   border-radius: 4px;
   color: #2E2B2A;
-  font-size: 1.2rem;
+  font-size: 12px;
   padding: 2px 4px;
   -webkit-align-self: flex-start;
   -ms-flex-item-align: start;
@@ -79,7 +79,7 @@ exports[`Renders internal link bubble 1`] = `
 .c1 {
   background: #ECF5F6;
   color: #007082;
-  font-size: 1.2rem;
+  font-size: 12px;
   font-weight: bold;
 }
 
