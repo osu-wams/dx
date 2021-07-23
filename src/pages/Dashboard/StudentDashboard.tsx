@@ -11,6 +11,7 @@ import { TrendingResources } from 'src/features/TrendingResources';
 import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
+import CovidCompliance from 'src/features/CovidCompliance';
 
 const { ANNOUNCEMENT_PAGES, filteredCards } = State;
 
@@ -24,6 +25,7 @@ const StudentDashboard = () => {
         <Masonry>
           <>
             <ScheduleCard />
+            <CovidCompliance />
             <ITSystemStatus />
           </>
           <FavoriteResources />
