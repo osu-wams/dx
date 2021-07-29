@@ -24,11 +24,13 @@ const VaccinationContent = styled.div({
 });
 
 const VaccinationContentBody = styled.div(({ theme }) => ({
+  color: theme.features.covidVaccination.content.color,
+  display: 'flex',
+  flexDirection: 'column',
+  fontSize: fontSize['14'],
   paddingLeft: spacing.large,
   paddingRight: spacing.xl,
   paddingTop: spacing.small,
-  color: theme.features.covidVaccination.content.color,
-  fontSize: fontSize['14'],
 }));
 
 const hasCovidVaccination = (medical: Types.Medical[]) => {
