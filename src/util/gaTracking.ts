@@ -21,6 +21,7 @@ export type IComponents =
   | 'canvas-auth'
   | 'course'
   | 'courses'
+  | 'covid-compliance'
   | 'dx-event'
   | 'dynamic-card'
   | 'employee-navigation-main'
