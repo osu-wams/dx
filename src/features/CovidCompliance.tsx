@@ -82,9 +82,9 @@ const CovidCompliance: FC = () => {
               </ExternalLink>
               <ExternalLink
                 href={Url.covidCompliance.decline}
-                onClick={() => Event('covid-compliance', `Clicked declination form`)}
+                onClick={() => Event('covid-compliance', `Clicked exemption form`)}
               >
-                • Complete the declination form
+                • Complete an exemption form
               </ExternalLink>
             </VaccinationContentBody>
           </VaccinationContent>
