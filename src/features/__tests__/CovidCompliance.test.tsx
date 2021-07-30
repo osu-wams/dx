@@ -38,7 +38,7 @@ describe('<CovidCompliance />', () => {
     render(<CovidCompliance />);
     const getVaccinated = screen.getByText(/get the vaccination/i);
     const register = screen.getByText(/enter your vaccine information/i);
-    const decline = screen.getByText(/complete the declination form/i);
+    const decline = screen.getByText(/complete an exemption form/i);
     userEvent.click(getVaccinated);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
     userEvent.click(register);
