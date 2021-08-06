@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithAllContexts as render, mockEcampusUser } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Person } from '@osu-wams/hooks';
@@ -19,6 +19,14 @@ jest.mock('@osu-wams/hooks', () => {
 describe('<CovidCompliance />', () => {
   beforeEach(() => {
     mockUseMedical.mockReturnValue(mockMedical);
+  });
+
+  it('should not render for ecampus students', () => {
+    render(<CovidCompliance />, { user: mockEcampusUser });
+
+    expect(
+      screen.queryByText(/covid vaccination/i, { selector: 'h2 > span' })
+    ).not.toBeInTheDocument();
   });
 
   it('should have title: "Covid Vaccination"', () => {

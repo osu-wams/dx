@@ -8,12 +8,13 @@ import {
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon } from 'src/ui/Card';
 import { fontSize, spacing } from '@osu-wams/theme';
-import { useMedical } from '@osu-wams/hooks';
+import { State, User, useMedical } from '@osu-wams/hooks';
 import { ExternalLink } from 'src/ui/Link';
 import { Url } from '@osu-wams/utils';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
 import Icon from 'src/ui/Icon';
+import { useRecoilValue } from 'recoil';
 
 const VaccinationContent = styled.div({
   flex: 1,
@@ -38,8 +39,12 @@ const hasCovidVaccination = (medical: Types.Medical[]) => {
 };
 
 const CovidCompliance: FC = () => {
+  const user = useRecoilValue(State.userState);
   const theme = useContext(ThemeContext);
   const { data, isSuccess, isLoading } = useMedical();
+  const { campusName } = User.usersCampus(user.data);
+  // Don't render the Covid card for students who are associated with Ecampus
+  if (campusName && campusName === 'ecampus') return null;
   return (
     <Card collapsing={false}>
       <CardHeader title="Covid Vaccination" badge={<CardIcon icon={faNotesMedical} />} />
