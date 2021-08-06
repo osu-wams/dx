@@ -25,6 +25,17 @@ export const alterMock = (api: string, mock: any, status: number = 200) => {
 const { mockUser } = User;
 export const authUserAudienceOverride = mockUser.userAudienceOverride;
 
+export const mockEcampusUser = {
+  ...mockUser.user,
+  data: {
+    ...mockUser.user.data,
+    audienceOverride: {
+      campusCode: User.CAMPUS_CODES['ecampus'][0],
+    },
+  },
+  refreshFavorites: jest.fn(),
+};
+
 export const mockGradUser = {
   ...mockUser.userGraduate,
   refreshFavorites: jest.fn(),
