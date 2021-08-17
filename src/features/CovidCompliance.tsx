@@ -58,7 +58,7 @@ const CovidCompliance: FC = () => {
               size={'4x'}
             />
             <VaccinationContentBody>
-              You are in compliance with the university covid vaccination policy.
+              You are in compliance with the university COVID-19 vaccination policy.
             </VaccinationContentBody>
           </VaccinationContent>
         ) : (
@@ -70,7 +70,7 @@ const CovidCompliance: FC = () => {
             />
             <VaccinationContentBody>
               <b>
-                You are not in compliance with the university covid vaccination policy. Please take
+                You are not in compliance with the university COVID-19 vaccination policy. Please take
                 one of the following actions:
               </b>
               <ExternalLink
