@@ -222,6 +222,70 @@ exports[`InternalLink background is orange-400 and text is white 1`] = `
 </div>
 `;
 
+exports[`SimpleInternalLink 1`] = `
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #D73F09;
+  background-color: transparent;
+  display: inline-block;
+  padding: 0;
+}
+
+.c0:hover,
+.c0:active,
+.c0:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0 > svg {
+  margin-left: 1.2rem;
+}
+
+<div>
+  <a
+    class="c0"
+    href="/https://oregonstate.edu"
+    padding="0"
+  >
+    Simple Internal Link Sample
+  </a>
+</div>
+`;
+
+exports[`Test SimpleInternalLink props are passed down 1`] = `
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #D73F09;
+  background-color: transparent;
+  display: inline-block;
+  padding: 0;
+}
+
+.c0:hover,
+.c0:active,
+.c0:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0 > svg {
+  margin-left: 1.2rem;
+}
+
+<div>
+  <a
+    class="c0"
+    href="/https://oregonstate.edu"
+    padding="0"
+  >
+    Simple Internal Link Sample
+  </a>
+</div>
+`;
+
 exports[`Text color is pine-400 1`] = `
 .c1 {
   color: #D73F09;

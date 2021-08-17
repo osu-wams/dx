@@ -3,7 +3,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { Color } from '@osu-wams/theme';
-import { ExternalLink, InternalLink, SimpleExternalLink } from '../Link';
+import { ExternalLink, InternalLink, SimpleExternalLink, SimpleInternalLink } from '../Link';
 
 const Default = () => <ExternalLink href="https://oregonstate.edu">Default link</ExternalLink>;
 
@@ -35,6 +35,12 @@ const InternalLinkBothColors = () => (
   <InternalLink bg={Color['orange-400']} fg={Color.white} to="https://oregonstate.edu">
     Orange Background with White text
   </InternalLink>
+);
+
+const SimpleIntLink = () => (
+  <SimpleInternalLink to="https://oregonstate.edu">
+    Simple Internal Link Sample
+  </SimpleInternalLink>
 );
 
 // Snapshot tests to make sure our props are carried through
@@ -80,5 +86,10 @@ test('Make sure SVG image is present', () => {
 
 test('InternalLink background is orange-400 and text is white', () => {
   const { container } = render(<InternalLinkBothColors />);
+  expect(container).toMatchSnapshot();
+});
+
+test('Test SimpleInternalLink props are passed down', () => {
+  const { container } = render(<SimpleIntLink />);
   expect(container).toMatchSnapshot();
 });
