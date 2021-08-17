@@ -165,6 +165,63 @@ exports[`Default options 1`] = `
 </div>
 `;
 
+exports[`InternalLink background is orange-400 and text is white 1`] = `
+.c1 {
+  color: #ffffff;
+  background-color: transparent;
+}
+
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: transparent;
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #D73F09;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+.c0:hover,
+.c0:active,
+.c0:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0 > svg {
+  margin-left: 1.2rem;
+}
+
+<div>
+  <a
+    bg="#D73F09"
+    class="c0"
+    fg="#ffffff"
+    href="/https://oregonstate.edu"
+  >
+    Orange Background with White text
+    <svg
+      aria-hidden="true"
+      class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
+      color="#ffffff"
+      data-icon="long-arrow-right"
+      data-prefix="fal"
+      focusable="false"
+      role="img"
+      viewBox="0 0 448 512"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M311.03 131.515l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L387.887 239H12c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h375.887l-83.928 83.444c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l116.485-116c4.686-4.686 4.686-12.284 0-16.971L328 131.515c-4.686-4.687-12.284-4.687-16.97 0z"
+        fill="currentColor"
+      />
+    </svg>
+  </a>
+</div>
+`;
+
 exports[`Text color is pine-400 1`] = `
 .c1 {
   color: #D73F09;

@@ -3,7 +3,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { Color } from '@osu-wams/theme';
-import { ExternalLink, SimpleExternalLink } from '../Link';
+import { ExternalLink, InternalLink, SimpleExternalLink } from '../Link';
 
 const Default = () => <ExternalLink href="https://oregonstate.edu">Default link</ExternalLink>;
 
@@ -29,6 +29,12 @@ const SimpleExtLink = () => (
   <SimpleExternalLink href="https://oregonstate.edu">
     Simple External Link Sample
   </SimpleExternalLink>
+);
+
+const InternalLinkBothColors = () => (
+  <InternalLink bg={Color['orange-400']} fg={Color.white} to="https://oregonstate.edu">
+    Orange Background with White text
+  </InternalLink>
 );
 
 // Snapshot tests to make sure our props are carried through
@@ -70,4 +76,9 @@ test('Make sure SVG image is present', () => {
   const svg = container.querySelector('svg');
 
   expect(container).toContainElement(svg);
+});
+
+test('InternalLink background is orange-400 and text is white', () => {
+  const { container } = render(<InternalLinkBothColors />);
+  expect(container).toMatchSnapshot();
 });
