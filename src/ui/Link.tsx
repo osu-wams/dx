@@ -92,7 +92,7 @@ const InternalLink = (props: LinkProps) => {
   const { children, to, fg, hideIcon, ...rest } = props;
   const themeContext = useContext(ThemeContext);
   return (
-    <LinkStyles as={Link} to={to!} {...rest}>
+    <LinkStyles as={Link} to={to!} fg={fg} {...rest}>
       {children}
       {!hideIcon && (
         <Icon icon={faLongArrowRight} color={fg ?? themeContext.ui.link.icon.internal.color} />
