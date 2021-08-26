@@ -14,6 +14,7 @@ export type IComponents =
   | 'application-search-person'
   | 'application-search-places'
   | 'application-search-place'
+  | 'application-search-results'
   | 'badge'
   | 'about'
   | 'about-info'

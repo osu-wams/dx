@@ -54,6 +54,7 @@ describe('with a resource (typical) search result item', () => {
     render(<SearchResultListItem searchResult={resourceResult} />);
     const link = await screen.findByText('Bend Testo Success Center', { selector: 'a' });
     userEvent.click(link);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
     expect(screen.queryByText('Close', { selector: 'span' })).not.toBeInTheDocument();
   });
 });
@@ -180,14 +181,14 @@ describe('with a resource (typical) search result item', () => {
 
     expect(await screen.findByTestId('warning-icon')).toBeInTheDocument();
     userEvent.click(link);
-    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+    expect(mockGAEvent).toHaveBeenCalledTimes(3);
 
     expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
     expect(await screen.findByText(/Performance Issues./i)).toBeInTheDocument();
 
     // Close modal to trigger analytics and confirm modal content is no longer present
     userEvent.click(await screen.findByText('Close'));
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(mockGAEvent).toHaveBeenCalledTimes(4);
     expect(screen.queryByText(/Performance Issues./i)).not.toBeInTheDocument();
   });
 
@@ -201,12 +202,12 @@ describe('with a resource (typical) search result item', () => {
 
     expect(await screen.findByTestId('warning-icon')).toBeInTheDocument();
     userEvent.click(await screen.findByText('Box', { selector: 'a' }));
-    expect(mockGAEvent).toHaveBeenCalledTimes(1);
+    expect(mockGAEvent).toHaveBeenCalledTimes(3);
 
     expect(await screen.findByText(/Resource may be unavailable/i)).toBeInTheDocument();
 
     // Continues to resource and it's tracked in Google Analytics
     userEvent.click(await screen.findByText('Continue to resource'));
-    expect(mockGAEvent).toHaveBeenCalledTimes(2);
+    expect(mockGAEvent).toHaveBeenCalledTimes(4);
   });
 });
