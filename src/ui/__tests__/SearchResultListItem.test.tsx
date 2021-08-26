@@ -54,6 +54,7 @@ describe('with a resource (typical) search result item', () => {
     render(<SearchResultListItem searchResult={resourceResult} />);
     const link = await screen.findByText('Bend Testo Success Center', { selector: 'a' });
     userEvent.click(link);
+    expect(mockGAEvent).toHaveBeenCalledTimes(2);
     expect(screen.queryByText('Close', { selector: 'span' })).not.toBeInTheDocument();
   });
 });
