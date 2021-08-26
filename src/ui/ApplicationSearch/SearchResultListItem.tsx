@@ -249,6 +249,8 @@ const SearchResultListItem = ({
       <SearchResultStyles
         onClick={() => {
           toggleModal(item);
+          Event('application-search-results', item.title);
+          Event('resource', item.title);
         }}
       >
         <Header>
