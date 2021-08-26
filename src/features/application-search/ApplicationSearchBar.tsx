@@ -21,6 +21,7 @@ const {
   selectedTypeFilters,
   selectedAudienceFilters,
   selectedCampusFilters,
+  fuseIndex,
 } = State;
 
 const HeaderSearchWrapper = styled.div`
@@ -86,6 +87,7 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   const selectedTypes = useRecoilValue(selectedTypeFilters);
   const selectedAudiences = useRecoilValue(selectedAudienceFilters);
   const selectedCampuses = useRecoilValue(selectedCampusFilters);
+  const searchIndex = useRecoilValue(fuseIndex);
   const [onSearchPage, setOnSearchPage] = useState(false);
   const [input, setInput] = useState('');
   const navigatedToSearch = useMatch(Routes.Routes().search.fullPath);
@@ -149,7 +151,8 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   useEffect(() => {
     if (search) {
       // If a query has no results, emit a GA Event to track for improving items search
-      if (filteredItems.length === 0) {
+      const records = searchIndex.getIndex()['records'];
+      if (filteredItems.length === 0 && records?.length) {
         Event('application-search-failed', search);
       }
 
