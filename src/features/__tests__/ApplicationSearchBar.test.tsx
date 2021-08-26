@@ -4,7 +4,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
-import { State, Resources } from '@osu-wams/hooks';
+import { State, Resources, Student } from '@osu-wams/hooks';
 
 const notFoundSearchTerm = 'bobross';
 const foundSearchTerm = 'testo';
@@ -21,6 +21,10 @@ describe('<ApplicationSearchBar />', () => {
         {
           state: State.applicationSearchState,
           value: notFoundSearchTerm,
+        },
+        {
+          state: State.gradesState,
+          value: Student.Grades.mockGrades,
         },
       ],
     });
