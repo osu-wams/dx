@@ -191,7 +191,7 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
       <SearchBar
         id="applicationSearch"
         data-testid="applicationSearch"
-        labelText=""
+        labelText="Search"
         inputValue={input}
         onChange={onChange}
         onKeyUp={onKeyUp}
