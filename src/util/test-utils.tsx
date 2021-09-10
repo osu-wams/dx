@@ -147,7 +147,7 @@ const renderWithAllContexts = (
   const Wrapper = (props) => {
     const queryClient = new QueryClient();
     updateQueryClientOptions(queryClient, {
-      baseUrl: '/',
+      baseUrl: 'http://localhost',
       enabled: true,
       headers: {},
       retry: true,
