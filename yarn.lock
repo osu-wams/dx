@@ -1687,14 +1687,14 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@1.0.128":
-  version "1.0.128"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.128/cfa9b564821f2d3438fda93ab08c935b2d664d554c70dd62c07503a7818b5ce4#311f07f1fe466976cfbd1bab378c559cdca8c0d6"
-  integrity sha512-NFewsYnJU5aQLv4jOVjb2ekyk4kT1x3OfM/gpkyWNZqUXQGn+wdj89FzyKHkeAmoOHtSStuj09tzkCPaEaKdfg==
+"@osu-wams/hooks@1.0.130":
+  version "1.0.130"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.130/23135366127d5f733e2bde95a2fcc2e5e4c1c6d0245499aab71786056ab3ce7b#c4a07f8d9d6d547d349ba9ca0d8231c80f6ceaa3"
+  integrity sha512-sLPjK+htliWhGMY4uLEDx9kCRvGchzTWmiRQ6YkfcvQpNtPe+2ipeoJhI1FexOwWV+uD+Ls1e0uiY7OKMw05vw==
   dependencies:
     "@osu-wams/lib" "^0.1.83"
     "@osu-wams/utils" "^0.0.18"
-    axios "^0.21.1"
+    axios "^0.21.4"
     fuse.js "^6.4.6"
     nanoid "^3.1.22"
     react-query "3.16.0"
@@ -3131,6 +3131,13 @@ axios@^0.21.1:
   integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
   dependencies:
     follow-redirects "^1.10.0"
+
+axios@^0.21.4:
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+  dependencies:
+    follow-redirects "^1.14.0"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -5979,6 +5986,11 @@ follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.1.tgz#d9114ded0a1cfdd334e164e6662ad02bfd91ff43"
   integrity sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==
+
+follow-redirects@^1.14.0:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.3.tgz#6ada78118d8d24caee595595accdc0ac6abd022e"
+  integrity sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==
 
 for-in@^1.0.2:
   version "1.0.2"
