@@ -46,7 +46,7 @@ const renderItems = (count: number, data: Types.Location[]) => {
 };
 
 const Places: React.FC = () => {
-  const search = useRecoilValue(State.applicationSearchState);
+  const search = encodeURI(useRecoilValue(State.applicationSearchState));
   const { error, data } = useLocations(search, {
     ...Constants.REACT_QUERY_DEFAULT_CONFIG,
     enabled: !!search,

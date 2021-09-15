@@ -115,4 +115,10 @@ describe('<ApplicationSearchBar />', () => {
       });
     });
   });
+  it('Error should be handled when search term is \'%\'', async () => {
+    window.location.search = '?q=%';
+    render(<ApplicationSearchBar />);
+    const searchBar = await screen.findByTestId('applicationSearch');
+    expect(searchBar).toBeInTheDocument();
+  });
 });
