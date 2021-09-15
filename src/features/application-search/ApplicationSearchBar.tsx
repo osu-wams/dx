@@ -56,7 +56,10 @@ const getSearchQuerystring = () => {
   if (window.location.search.startsWith('?q=')) {
     const terms = window.location.search.split('=');
     if (terms.length === 2) {
-      return decodeURI(terms[1]);
+      // Only need to decode if terms[1] is a valid encoding
+      try {
+        return decodeURI(terms[1]);
+      } catch (err) { /* do nothing */ }
     }
   }
 };
