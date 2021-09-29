@@ -30,7 +30,7 @@ describe('<PastCourses />', () => {
     expect(await screen.findByText(/CRN: 15625/i)).toBeInTheDocument();
   });
 
-  it('should find only one instace of a course excluded from GPA', async () => {
+  it('should find only one instance of a course excluded from GPA', async () => {
     render(<PastCourses />, {
       initialStates: [
         {
@@ -136,6 +136,19 @@ describe('<PastCourses />', () => {
       // Most "Mathematics" classes have the "MTH" abbreviation instead of "Mathematics"
       const coursesNotFound = await screen.findByText(/Found 0 courses/i);
       expect(coursesNotFound).toBeInTheDocument();
+    });
+
+    it('should find faculty name in document', async () => {
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: State.gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
+
+      expect(await screen.findByText('Hess, Robin')).toBeInTheDocument();
     });
   });
 });
