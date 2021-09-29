@@ -125,6 +125,7 @@ const PastCourses = () => {
                             creditHours,
                             gradeFinal,
                             courseTitle,
+                            faculty
                           },
                           subindex
                         ) => {
@@ -138,6 +139,9 @@ const PastCourses = () => {
                                   </strong>{' '}
                                   {creditHours} {Helpers.singularPlural(creditHours, 'Credit')}
                                 </CourseData>
+                                {faculty && faculty.map(({ name: facultyName }, facultyIndex) =>
+                                  (<CourseData key={facultyIndex}>{facultyName}</CourseData>)
+                                )}
                                 {courseReferenceNumber && (
                                   <CourseData>CRN: {courseReferenceNumber}</CourseData>
                                 )}
