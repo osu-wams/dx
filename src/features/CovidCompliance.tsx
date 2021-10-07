@@ -1,20 +1,15 @@
 import React, { FC, useContext } from 'react';
 import { Loading } from 'src/ui/Loading';
 import styled, { ThemeContext } from 'styled-components/macro';
-import {
-  faCheckCircle,
-  faExclamationCircle,
-  faNotesMedical,
-} from '@fortawesome/pro-light-svg-icons';
+import { faExclamationCircle, faNotesMedical } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon } from 'src/ui/Card';
 import { fontSize, spacing } from '@osu-wams/theme';
-import { State, User, useMedical } from '@osu-wams/hooks';
+import { useMedical, useCovidvacStudentState, usePerson } from '@osu-wams/hooks';
 import { ExternalLink } from 'src/ui/Link';
 import { Url } from '@osu-wams/utils';
 import { Event } from 'src/util/gaTracking';
 import { Types } from '@osu-wams/lib';
 import Icon from 'src/ui/Icon';
-import { useRecoilValue } from 'recoil';
 
 const VaccinationContent = styled.div({
   flex: 1,
@@ -34,34 +29,25 @@ const VaccinationContentBody = styled.div(({ theme }) => ({
   paddingTop: spacing.small,
 }));
 
-const hasCovidVaccination = (medical: Types.Medical[]) => {
-  return medical.some((m: Types.Medical) => m.code === 'COVIDVACC');
-};
-
 const CovidCompliance: FC = () => {
-  const user = useRecoilValue(State.userState);
+  const { covidvacStudent } = useCovidvacStudentState();
   const theme = useContext(ThemeContext);
-  const { data, isSuccess, isLoading } = useMedical();
-  const { campusName } = User.usersCampus(user.data);
-  // Don't render the Covid card for students who are associated with Ecampus
-  if (campusName && campusName === 'ecampus') return null;
+  const medical = useMedical();
+  const person = usePerson();
+  const isLoading = medical.isLoading || person.isLoading || covidvacStudent.isLoading;
+  const isSuccess = medical.isSuccess && person.isSuccess && covidvacStudent.isSuccess;
+  const { data } = medical;
+  // dont render if user is part of grouper group
+  if (covidvacStudent.isSuccess
+      && !covidvacStudent.data.find(student => student.attributes.onid === person?.data?.onid)) {
+    return null;
+  }
   return (
     <Card collapsing={false}>
       <CardHeader title="Covid Vaccination" badge={<CardIcon icon={faNotesMedical} />} />
       <CardContent>
         {isLoading && <Loading lines={5} />}
-        {isSuccess && data && hasCovidVaccination(data) ? (
-          <VaccinationContent>
-            <Icon
-              icon={faCheckCircle}
-              color={theme.features.covidVaccination.icon.compliantColor}
-              size={'4x'}
-            />
-            <VaccinationContentBody>
-              You are in compliance with the university COVID-19 vaccination policy.
-            </VaccinationContentBody>
-          </VaccinationContent>
-        ) : (
+        {isSuccess && data && (
           <VaccinationContent>
             <Icon
               icon={faExclamationCircle}
