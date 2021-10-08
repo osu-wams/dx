@@ -4,7 +4,7 @@ import styled, { ThemeContext } from 'styled-components/macro';
 import { faExclamationCircle, faNotesMedical } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon } from 'src/ui/Card';
 import { fontSize, spacing } from '@osu-wams/theme';
-import { useMedical, useCovidvacStudentState, usePerson } from '@osu-wams/hooks';
+import { useHasMember } from '@osu-wams/hooks';
 import { ExternalLink } from 'src/ui/Link';
 import { Url } from '@osu-wams/utils';
 import { Event } from 'src/util/gaTracking';
@@ -30,16 +30,10 @@ const VaccinationContentBody = styled.div(({ theme }) => ({
 }));
 
 const CovidCompliance: FC = () => {
-  const { covidvacStudent } = useCovidvacStudentState();
   const theme = useContext(ThemeContext);
-  const medical = useMedical();
-  const person = usePerson();
-  const isLoading = medical.isLoading || person.isLoading || covidvacStudent.isLoading;
-  const isSuccess = medical.isSuccess && person.isSuccess && covidvacStudent.isSuccess;
-  const { data } = medical;
+  const { isLoading, isSuccess, data: isUserInGroup } = useHasMember('covidvac-student');
   // dont render if user is part of grouper group
-  if (covidvacStudent.isSuccess
-      && !covidvacStudent.data.find(student => student.attributes.onid === person?.data?.onid)) {
+  if (isSuccess && !isUserInGroup) {
     return null;
   }
   return (
@@ -47,7 +41,7 @@ const CovidCompliance: FC = () => {
       <CardHeader title="Covid Vaccination" badge={<CardIcon icon={faNotesMedical} />} />
       <CardContent>
         {isLoading && <Loading lines={5} />}
-        {isSuccess && data && (
+        {isSuccess && (
           <VaccinationContent>
             <Icon
               icon={faExclamationCircle}
