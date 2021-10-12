@@ -1,28 +1,23 @@
 import React from 'react';
-import { renderWithAllContexts as render, mockEcampusUser } from 'src/util/test-utils';
+import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Person } from '@osu-wams/hooks';
 import CovidCompliance from '../CovidCompliance';
 import { mockGAEvent } from 'src/setupTests';
 
-const mockMedical = Person.Medical.mockMedical;
-const mockUseMedical = jest.fn();
+const mockUseHasMember = jest.fn();
 
 jest.mock('@osu-wams/hooks', () => {
   return {
     ...jest.requireActual('@osu-wams/hooks'),
-    useMedical: () => mockUseMedical(),
+    useHasMember: () => mockUseHasMember(),
   };
 });
 
 describe('<CovidCompliance />', () => {
-  beforeEach(() => {
-    mockUseMedical.mockReturnValue(mockMedical);
-  });
-
-  it('should not render for ecampus students', () => {
-    render(<CovidCompliance />, { user: mockEcampusUser });
+  it('should not render for users not in grouper group students', () => {
+    mockUseHasMember.mockReturnValue({ isLoading: false, isSuccess: true, data: false });
+    render(<CovidCompliance />);
 
     expect(
       screen.queryByText(/covid vaccination/i, { selector: 'h2 > span' })
@@ -30,20 +25,16 @@ describe('<CovidCompliance />', () => {
   });
 
   it('should have title: "Covid Vaccination"', () => {
+    mockUseHasMember.mockReturnValue({ isLoading: false, isSuccess: true, data: true });
     render(<CovidCompliance />);
 
     expect(screen.getByText(/covid vaccination/i, { selector: 'h2 > span' })).toBeInTheDocument();
   });
 
-  it('should have a positive vaccination message', () => {
-    render(<CovidCompliance />);
-
-    expect(screen.getByText(/you are in compliance/i)).toBeInTheDocument();
-  });
-
   it('should find links to become compliant', async () => {
-    mockUseMedical.mockReturnValue({ ...mockMedical, data: [] });
+    mockUseHasMember.mockReturnValue({ isLoading: false, isSuccess: true, data: true });
     render(<CovidCompliance />);
+
     const getVaccinated = screen.getByText(/get the vaccination/i);
     const register = screen.getByText(/enter your vaccine information/i);
     const decline = screen.getByText(/complete an exemption form/i);
@@ -56,7 +47,7 @@ describe('<CovidCompliance />', () => {
   });
 
   it('should show a negative vaccination message', async () => {
-    mockUseMedical.mockReturnValue({ ...mockMedical, data: [] });
+    mockUseHasMember.mockReturnValue({ isLoading: false, isSuccess: true, data: true });
     render(<CovidCompliance />);
 
     expect(screen.getByText(/you are not in compliance/i)).toBeInTheDocument();
