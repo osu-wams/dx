@@ -228,7 +228,7 @@ const Header = () => {
           {isEmployee ? (
             <Menu>
               <DashboardTitle>
-                <SiteTitle data-testid="toggle-title">
+                <SiteTitle data-testid="dashboard-title">
                   {title}
                   {isEmployee && (
                     <Icon
@@ -255,7 +255,7 @@ const Header = () => {
               </MenuPopover>
             </Menu>
           ) : (
-            <SiteTitle>{title}</SiteTitle>
+            <SiteTitle data-testid="dashboard-title">{title}</SiteTitle>
           )}
 
           <MainNav />

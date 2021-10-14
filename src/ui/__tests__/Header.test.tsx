@@ -10,7 +10,7 @@ import {
 import Header from '../Header';
 import { State } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
-import { screen, within, act } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 
 describe('Dashboard Headers', () => {
   it('Student has "Student Dashboard" title', async () => {
@@ -21,7 +21,8 @@ describe('Dashboard Headers', () => {
 
   it('Employee has "Employee Dashboard" title', async () => {
     render(<Header />, { user: mockEmployeeUser });
-    expect(await screen.findByText('Employee Dashboard')).toBeInTheDocument();
+    const DashboardTitle = await screen.findByTestId('dashboard-title');
+    expect(DashboardTitle).toHaveTextContent('Employee Dashboard');
     expect(screen.queryByTestId('masquerade-banner')).not.toBeInTheDocument();
   });
 
@@ -35,7 +36,7 @@ describe('Dashboard Headers', () => {
         },
       },
     });
-    expect(await screen.findByText('Employee Dashboard')).toBeInTheDocument();
+    expect(await screen.findAllByText('Employee Dashboard')).toHaveLength(2);
     expect(await screen.findByText('Masqueraded as Employee')).toBeInTheDocument();
     expect(await screen.findByTestId('masquerade-banner')).toBeInTheDocument();
   });
@@ -306,7 +307,7 @@ describe('with a dashboard context', () => {
       expect(ToggleDashboardIcon).toBeInTheDocument();
       userEvent.click(ToggleDashboardIcon);
       expect(await screen.findByTestId('dashboard-toggle-menu')).toBeInTheDocument();
-      const DashboardTitle = await screen.findByTestId('toggle-title');
+      const DashboardTitle = await screen.findByTestId('dashboard-title');
       expect(DashboardTitle).toHaveTextContent('Employee Dashboard');
       expect(await screen.findAllByText('Student Dashboard')).toHaveLength(2);
     });
@@ -344,7 +345,7 @@ describe('with a dashboard context', () => {
         },
       });
 
-      const DashboardTitle = await screen.findByTestId('toggle-title');
+      const DashboardTitle = await screen.findByTestId('dashboard-title');
       expect(DashboardTitle).toHaveTextContent('Employee Dashboard');
     });
   });
