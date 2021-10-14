@@ -1,11 +1,16 @@
 /* eslint-disable testing-library/no-node-access */
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { renderWithAllContexts as render, mockEmployeeUser, authUser } from 'src/util/test-utils';
+import {
+  renderWithAllContexts as render,
+  mockEmployeeUser,
+  mockStudentEmployeeUser,
+  authUser,
+} from 'src/util/test-utils';
 import Header from '../Header';
 import { State } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
-import { screen } from '@testing-library/react';
+import { screen, within, act } from '@testing-library/react';
 
 describe('Dashboard Headers', () => {
   it('Student has "Student Dashboard" title', async () => {
@@ -294,6 +299,43 @@ describe('with a dashboard context', () => {
 
       const href = appLink.getAttribute('href');
       expect(href).toEqual('/employee');
+    });
+  });
+  describe('as a student employee', () => {
+    it('opens dashboard toggle menu when clicking site title', async () => {
+      render(<Header />, { user: mockStudentEmployeeUser });
+      const ToggleDashboardIcon = await screen.findByTestId('dashboard-toggle-icon');
+      expect(ToggleDashboardIcon).toBeInTheDocument();
+      userEvent.click(ToggleDashboardIcon);
+      expect(await screen.findByTestId('dashboard-toggle-menu')).toBeInTheDocument();
+      expect(await screen.findAllByText('Student Dashboard')).toHaveLength(2);
+    });
+
+    it('checkmark should appear next to active dashboard in toggle menu', async () => {
+      render(<Header />, { user: mockStudentEmployeeUser });
+      const ToggleDashboardIcon = await screen.findByTestId('dashboard-toggle-icon');
+      userEvent.click(ToggleDashboardIcon);
+      const StudentDashboardOption = await screen.findByTestId('student-toggle-option');
+      const checkmarkIcon = within(StudentDashboardOption).getByTestId('active-icon');
+      expect(checkmarkIcon).toBeInTheDocument();
+
+      // icon should not show up for the non-toggled dashboard option
+      const EmployeeDashboardOption = await screen.findByTestId('employee-toggle-option');
+      const checkmarkIcon2 = within(EmployeeDashboardOption).getByTestId('inactive-icon');
+      expect(checkmarkIcon2).toBeInTheDocument();
+    });
+
+    // student employee with employee primary override shows employee dashboard
+    it('student employee with override shows employee dashboard', async () => {
+      render(<Header />, {
+        user: {
+          ...mockStudentEmployeeUser,
+          data: { ...mockStudentEmployeeUser.data, primaryAffiliationOverride: 'employee' },
+        },
+      });
+
+      const DashboardTitle = await screen.findByTestId('toggle-title');
+      expect(DashboardTitle).toHaveTextContent('Employee Dashboard');
     });
   });
 });

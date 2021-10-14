@@ -114,6 +114,11 @@ const DashboardTitle = styled(MenuButton)`
   }
 `;
 
+const DashboardToggleOption = styled(MenuItem)`
+  margin-right: 0;
+  align-items: 'flex-end';
+`;
+
 /**
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
@@ -155,8 +160,12 @@ const ToggleOption = (props) => {
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+  const iconOpacity = toggledAffiliation == affiliation ? 1 : 0;
+  const iconId = toggledAffiliation == affiliation ? 'active-icon' : 'inactive-icon';
+
   return (
-    <MenuItem
+    <DashboardToggleOption
+      data-testid={props.testid}
       onSelect={() => {
         setDashboardState({
           affiliation: affiliation,
@@ -165,11 +174,13 @@ const ToggleOption = (props) => {
       }}
       key={props.toggledAffiliation}
     >
-      {toggledAffiliation == affiliation && (
-        <Icon icon={faCheck} style={{ padding: 3, color: Color['orange-400'] }} />
-      )}
+      <Icon
+        data-testid={iconId}
+        icon={faCheck}
+        style={{ padding: 3, color: Color['orange-400'], opacity: iconOpacity }}
+      />
       {capitalizeFirstLetter(affiliation)} Dashboard
-    </MenuItem>
+    </DashboardToggleOption>
   );
 };
 
@@ -185,9 +196,9 @@ const Header = () => {
   );
 
   useEffect(() => {
-    if (user.data?.primaryAffiliationOverride) {
-      setToggledAffiliation(user.data.primaryAffiliationOverride);
-    }
+    user.data?.primaryAffiliationOverride
+      ? setToggledAffiliation(user.data.primaryAffiliationOverride)
+      : setToggledAffiliation(user.data.primaryAffiliation);
     // Checks for any employee affiliation (finds Student Employees too)
     if (
       user.data?.primaryAffiliation === AFFILIATIONS.student &&
@@ -220,15 +231,29 @@ const Header = () => {
           {studentEmployee ? (
             <Menu>
               <DashboardTitle>
-                <SiteTitle>
+                <SiteTitle data-testid="toggle-title">
                   {title}
-                  {studentEmployee && <Icon icon={faCaretDown} style={{ marginLeft: 10 }} />}
+                  {studentEmployee && (
+                    <Icon
+                      data-testid="dashboard-toggle-icon"
+                      icon={faCaretDown}
+                      style={{ marginLeft: 10 }}
+                    />
+                  )}
                 </SiteTitle>
               </DashboardTitle>
               <MenuPopover>
-                <HeaderNavList>
-                  <ToggleOption affiliation={'student'} toggledAffiliation={toggledAffiliation} />
-                  <ToggleOption affiliation={'employee'} toggledAffiliation={toggledAffiliation} />
+                <HeaderNavList data-testid="dashboard-toggle-menu">
+                  <ToggleOption
+                    testid="student-toggle-option"
+                    affiliation={'student'}
+                    toggledAffiliation={toggledAffiliation}
+                  />
+                  <ToggleOption
+                    testid="employee-toggle-option"
+                    affiliation={'employee'}
+                    toggledAffiliation={toggledAffiliation}
+                  />
                 </HeaderNavList>
               </MenuPopover>
             </Menu>
