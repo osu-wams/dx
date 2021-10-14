@@ -190,7 +190,7 @@ const Header = () => {
   const theme = useRecoilValue(themeState);
   const { image, alt } = campusLogo(user.data, theme);
   const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
-  const [studentEmployee, setStudentEmployee] = useState(false);
+  const [isEmployee, setIsEmployee] = useState(false);
   const [toggledAffiliation, setToggledAffiliation] = useState(
     user.data?.primaryAffiliationOverride ?? ''
   );
@@ -200,11 +200,8 @@ const Header = () => {
       ? setToggledAffiliation(user.data.primaryAffiliationOverride)
       : setToggledAffiliation(user.data.primaryAffiliation);
     // Checks for any employee affiliation (finds Student Employees too)
-    if (
-      user.data?.primaryAffiliation === AFFILIATIONS.student &&
-      user.data?.affiliations.includes(AFFILIATIONS.employee)
-    ) {
-      setStudentEmployee(true);
+    if (user.data?.affiliations.includes(AFFILIATIONS.employee)) {
+      setIsEmployee(true);
     }
   }, [user.data]);
 
@@ -228,12 +225,12 @@ const Header = () => {
       </HeaderWrapper>
       <Navigation>
         <NavHeaderWrapper>
-          {studentEmployee ? (
+          {isEmployee ? (
             <Menu>
               <DashboardTitle>
                 <SiteTitle data-testid="toggle-title">
                   {title}
-                  {studentEmployee && (
+                  {isEmployee && (
                     <Icon
                       data-testid="dashboard-toggle-icon"
                       icon={faCaretDown}

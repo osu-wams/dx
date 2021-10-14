@@ -300,6 +300,16 @@ describe('with a dashboard context', () => {
       const href = appLink.getAttribute('href');
       expect(href).toEqual('/employee');
     });
+    it('opens dashboard toggle menu when clicking site title', async () => {
+      render(<Header />, { user: mockEmployeeUser });
+      const ToggleDashboardIcon = await screen.findByTestId('dashboard-toggle-icon');
+      expect(ToggleDashboardIcon).toBeInTheDocument();
+      userEvent.click(ToggleDashboardIcon);
+      expect(await screen.findByTestId('dashboard-toggle-menu')).toBeInTheDocument();
+      const DashboardTitle = await screen.findByTestId('toggle-title');
+      expect(DashboardTitle).toHaveTextContent('Employee Dashboard');
+      expect(await screen.findAllByText('Student Dashboard')).toHaveLength(2);
+    });
   });
   describe('as a student employee', () => {
     it('opens dashboard toggle menu when clicking site title', async () => {
