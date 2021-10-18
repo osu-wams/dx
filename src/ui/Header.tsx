@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styled from 'styled-components/macro';
 import { LocationProvider, Link } from '@reach/router';
@@ -16,14 +16,18 @@ import { breakpoints, Color, fontSize, spacing } from '@osu-wams/theme';
 import { State, User } from '@osu-wams/hooks';
 import { Types, User as UserUtil } from '@osu-wams/lib';
 import { Helpers } from '@osu-wams/utils';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Desktop } from 'src/hooks/useMediaQuery';
 import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
 import Icon from './Icon';
-import { faMask } from '@fortawesome/pro-light-svg-icons';
+import { faMask, faCheck } from '@fortawesome/pro-light-svg-icons';
+import { faCaretDown } from '@fortawesome/pro-solid-svg-icons';
+import { Menu, MenuPopover, MenuItem, MenuButton } from '@reach/menu-button';
+import { HeaderNavList } from './HeaderNav/HeaderNavStyles';
 
 const { usersCampus, CAMPUS_CODES } = User;
-const { userState, themeState } = State;
+const { userState, themeState, dashboardState } = State;
+const { AFFILIATIONS } = User;
 
 const MasqueradeBanner = styled.div`
   display: flex;
@@ -91,6 +95,30 @@ const Logo = styled.img`
   }
 `;
 
+const DashboardTitle = styled(MenuButton)`
+  color: ${({ theme }) => theme.ui.richText.title.color};
+  display: none;
+  background: ${({ theme }) => theme.ui.myDialog.background};
+  border: none;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 2px 5px;
+  > svg.fa-lg {
+    font-size: ${fontSize[24]};
+  }
+  @media (min-width: ${breakpoints.small}) {
+    display: block;
+    font-size: ${fontSize[18]};
+    font-weight: 500;
+    max-width: ${breakpoints.large};
+  }
+`;
+
+const DashboardToggleOption = styled(MenuItem)`
+  margin-right: 0;
+  align-items: 'flex-end';
+`;
+
 /**
  * Return the ecampus or cascades logo if the user is identified as belonging to one of those campuses
  * @param user the currently logged in user
@@ -126,12 +154,56 @@ const mainTitle = (user: Types.User) => {
   return title + ' Dashboard';
 };
 
+const ToggleOption = (props) => {
+  const { affiliation, toggledAffiliation } = props;
+  const setDashboardState = useSetRecoilState(dashboardState);
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+  const iconOpacity = toggledAffiliation == affiliation ? 1 : 0;
+  const iconId = toggledAffiliation == affiliation ? 'active-icon' : 'inactive-icon';
+
+  return (
+    <DashboardToggleOption
+      data-testid={props.testid}
+      onSelect={() => {
+        setDashboardState({
+          affiliation: affiliation,
+          navigateTo: `${affiliation}`,
+        });
+      }}
+      key={props.toggledAffiliation}
+    >
+      <Icon
+        data-testid={iconId}
+        icon={faCheck}
+        style={{ padding: 3, color: Color['orange-400'], opacity: iconOpacity }}
+      />
+      {capitalizeFirstLetter(affiliation)} Dashboard
+    </DashboardToggleOption>
+  );
+};
+
 const Header = () => {
   const user = useRecoilValue(userState);
   const title = mainTitle(user.data);
   const theme = useRecoilValue(themeState);
   const { image, alt } = campusLogo(user.data, theme);
   const dashboardLink = `/${User.getAffiliation(user.data).toLowerCase()}`;
+  const [isEmployee, setIsEmployee] = useState(false);
+  const [toggledAffiliation, setToggledAffiliation] = useState(
+    user.data?.primaryAffiliationOverride ?? ''
+  );
+
+  useEffect(() => {
+    user.data?.primaryAffiliationOverride
+      ? setToggledAffiliation(user.data.primaryAffiliationOverride)
+      : setToggledAffiliation(user.data.primaryAffiliation);
+    // Checks for any employee affiliation (finds Student Employees too)
+    if (user.data?.affiliations.includes(AFFILIATIONS.employee)) {
+      setIsEmployee(true);
+    }
+  }, [user.data]);
 
   return (
     <LocationProvider>
@@ -153,7 +225,39 @@ const Header = () => {
       </HeaderWrapper>
       <Navigation>
         <NavHeaderWrapper>
-          <SiteTitle>{title}</SiteTitle>
+          {isEmployee ? (
+            <Menu>
+              <DashboardTitle>
+                <SiteTitle data-testid="dashboard-title">
+                  {title}
+                  {isEmployee && (
+                    <Icon
+                      data-testid="dashboard-toggle-icon"
+                      icon={faCaretDown}
+                      style={{ marginLeft: 10 }}
+                    />
+                  )}
+                </SiteTitle>
+              </DashboardTitle>
+              <MenuPopover>
+                <HeaderNavList data-testid="dashboard-toggle-menu">
+                  <ToggleOption
+                    testid="student-toggle-option"
+                    affiliation={'student'}
+                    toggledAffiliation={toggledAffiliation}
+                  />
+                  <ToggleOption
+                    testid="employee-toggle-option"
+                    affiliation={'employee'}
+                    toggledAffiliation={toggledAffiliation}
+                  />
+                </HeaderNavList>
+              </MenuPopover>
+            </Menu>
+          ) : (
+            <SiteTitle data-testid="dashboard-title">{title}</SiteTitle>
+          )}
+
           <MainNav />
         </NavHeaderWrapper>
       </Navigation>
