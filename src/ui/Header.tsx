@@ -169,7 +169,7 @@ const ToggleOption = (props) => {
       onSelect={() => {
         setDashboardState({
           affiliation: affiliation,
-          navigateTo: `${affiliation}`,
+          navigateTo: `/${affiliation}`,
         });
       }}
       key={props.toggledAffiliation}
