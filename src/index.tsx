@@ -11,6 +11,8 @@ import cookieRefreshTimer from './util/cookieRefreshTimer';
 import { RecoilRoot } from 'recoil';
 import ReadyIntegration from './util/ready-integration';
 import { QueryClientProvider } from 'react-query';
+import { BrowserRouter } from 'react-router-dom';
+import { LocationProvider } from '@reach/router';
 
 const { postError, IGNORED_ERRORS } = Errors;
 
@@ -101,7 +103,9 @@ try {
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
-          <App containerElement={applicationRoot} />
+          <LocationProvider>
+            <App containerElement={applicationRoot} />
+          </LocationProvider>
         </ErrorBoundary>
       </RecoilRoot>
     </QueryClientProvider>,
