@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { navigate, Router, Location, RouteComponentProps } from '@reach/router';
+import { navigate, Location, RouteComponentProps } from '@reach/router';
+import { Routes as ReactRouter, Route, useLocation } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
@@ -150,6 +151,8 @@ const App = (props: AppProps) => {
   // We use this to conditionally load/strip the header and footer
   const mobileApp = user.data.isMobile;
 
+  const location = useLocation();
+
   return (
     <HelmetProvider>
       <ThemeProvider theme={themesLookup[theme]}>
@@ -163,21 +166,21 @@ const App = (props: AppProps) => {
               <PageGridWrapper key={location.key}>
                 {ReactGA.pageview(location.pathname + location.search + location.hash)}
                 <AnimatePresence exitBeforeEnter>
-                  <Router>
-                    <RouterPage default pageComponent={<PageNotFound />} />
-                    <EmployeeRouter path={Routes.Routes().employee.path + '/*'} />
-                    <StudentRouter path={Routes.Routes().student.path + '/*'} />
-                    <RouterPage path={Routes.Routes().profile.path} pageComponent={<Profile />} />
-                    <RouterPage path={Routes.Routes().about.path} pageComponent={<About />} />
-                    <RouterPage path={Routes.Routes().search.path} pageComponent={<Search />} />
-                    <RouterPage
-                      path={Routes.Routes().notifications.path}
-                      pageComponent={<Notifications />}
+                  <ReactRouter>
+                    <Route path="*" element={<PageNotFound />} />
+                    <Route
+                      path={Routes.Routes().employee.path + '/*'}
+                      element={<EmployeeRouter />}
                     />
+                    <Route path={Routes.Routes().student.path + '/*'} element={<StudentRouter />} />
+                    <Route path={Routes.Routes().profile.path} element={<Profile />} />
+                    <Route path={Routes.Routes().about.path} element={<About />} />
+                    <Route path={Routes.Routes().search.path} element={<Search />} />
+                    <Route path={Routes.Routes().notifications.path} element={<Notifications />} />
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                      <RouterPage path="covid" pageComponent={<MobileCovid />} />
+                      <Route path="covid" element={<MobileCovid />} />
                     )}
-                  </Router>
+                  </ReactRouter>
                 </AnimatePresence>
               </PageGridWrapper>
             )}

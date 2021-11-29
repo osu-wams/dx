@@ -103,9 +103,9 @@ try {
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <ErrorBoundary errorComponent={() => <></>} errorHandlerCallback={redirectToError}>
-          <LocationProvider>
+          <BrowserRouter>
             <App containerElement={applicationRoot} />
-          </LocationProvider>
+          </BrowserRouter>
         </ErrorBoundary>
       </RecoilRoot>
     </QueryClientProvider>,
