@@ -6,7 +6,7 @@ import { Url, Routes } from '@osu-wams/utils';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import Icon from 'src/ui/Icon';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 
 const HelpMenu = () => {
   return (

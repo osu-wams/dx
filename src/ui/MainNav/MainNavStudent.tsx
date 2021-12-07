@@ -11,6 +11,7 @@ const MainNavStudent = (...props) => {
   return (
     <Nav {...props}>
       <NavLink
+        end
         to={Routes.Routes().student.fullPath}
         onClick={() => Event('student-navigation-main', 'Overview link clicked')}
       >
@@ -18,6 +19,7 @@ const MainNavStudent = (...props) => {
         Overview
       </NavLink>
       <NavLink
+        end
         to={Routes.Routes().academics.fullPath}
         onClick={() => Event('student-navigation-main', 'Academics link clicked')}
       >
@@ -25,6 +27,7 @@ const MainNavStudent = (...props) => {
         Academics
       </NavLink>
       <NavLink
+        end
         to={Routes.Routes().finances.fullPath}
         onClick={() => Event('student-navigation-main', 'Finances link clicked')}
       >

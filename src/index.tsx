@@ -12,7 +12,6 @@ import { RecoilRoot } from 'recoil';
 import ReadyIntegration from './util/ready-integration';
 import { QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
-import { LocationProvider } from '@reach/router';
 
 const { postError, IGNORED_ERRORS } = Errors;
 

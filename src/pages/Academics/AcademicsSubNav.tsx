@@ -7,10 +7,10 @@ import { Routes } from '@osu-wams/utils';
 const AcademicSubNav = () => {
   return (
     <SubNav>
-      <SubNavLink to={Routes.Routes().academics.fullPath}>
+      <SubNavLink end to={Routes.Routes().academics.fullPath}>
         <Icon icon={faThLarge} /> Dashboard
       </SubNavLink>
-      <SubNavLink to={Routes.Routes()['past courses'].fullPath}>
+      <SubNavLink end to={Routes.Routes()['past courses'].fullPath}>
         <Icon icon={faClock} />
         Past Courses
       </SubNavLink>

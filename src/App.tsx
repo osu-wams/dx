@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
 import { navigate, Location, RouteComponentProps } from '@reach/router';
-import { Routes as ReactRouter, Route, useLocation } from 'react-router-dom';
+import { Routes as ReactRouter, Route, useLocation, Navigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
@@ -28,7 +28,6 @@ import {
 import { Routes } from '@osu-wams/utils';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
-import { RouterPage } from './routers';
 import Profile from './pages/Profile';
 import About from './pages/About';
 import Search from './pages/Search';
@@ -36,7 +35,7 @@ import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
 
-const { initialRouteState, isLoadedState, userState, themeState } = State;
+const { initialRouteState, isLoadedState, userState, themeState, dashboardState } = State;
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -92,6 +91,7 @@ const App = (props: AppProps) => {
   const user = useRecoilValue<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const containerElementRef = useRef(props.containerElement);
+  const dashboard = useRecoilValue(dashboardState);
   useUserState(navigate);
   useGradesState();
   useCourseScheduleState();
@@ -167,7 +167,7 @@ const App = (props: AppProps) => {
                 {ReactGA.pageview(location.pathname + location.search + location.hash)}
                 <AnimatePresence exitBeforeEnter>
                   <ReactRouter>
-                    <Route path="*" element={<PageNotFound />} />
+                    <Route path="/" element={<Navigate replace to={dashboard.affiliation} />} />
                     <Route
                       path={Routes.Routes().employee.path + '/*'}
                       element={<EmployeeRouter />}
@@ -180,6 +180,7 @@ const App = (props: AppProps) => {
                     {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
                       <Route path="covid" element={<MobileCovid />} />
                     )}
+                    <Route path="*" element={<PageNotFound />} />
                   </ReactRouter>
                 </AnimatePresence>
               </PageGridWrapper>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from '@reach/router';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   faUserCircle,
   faUser,
@@ -43,6 +43,7 @@ const ProfileMenu = () => {
 
   // Creates an additional menu item if you are an employee or student employee
   const ToggleAffiliationLink = () => {
+    const navigate = useNavigate();
     const Student = {
       description: 'Student Dashboard',
       icon: faGraduationCap,
@@ -85,6 +86,7 @@ const ProfileMenu = () => {
             affiliation: affiliationOverride,
             navigateTo: `/${affiliationOverride}`,
           });
+          navigate(Routes.Routes().student.path);
         }}
       >
         <Icon icon={toggleIcon} /> {description}
