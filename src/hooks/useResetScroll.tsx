@@ -5,7 +5,7 @@ export const useResetScroll = () => {
   const navigate = useNavigate();
   const { state, pathname } = useLocation();
 
-  const updateState = React.useCallback(() => {
+  /*const updateState = React.useCallback(() => {
     navigate(pathname, {
       // @ts-ignore spread object
       state: { ...state, scrolled: true },
@@ -19,7 +19,19 @@ export const useResetScroll = () => {
     if (!state) {
       updateState();
     }
-  }, [state, updateState]);
+  }, [state, updateState]);*/
+
+  React.useEffect(() => {
+    // @ts-ignore type unknown
+    if (!state) {
+      navigate(pathname, {
+        // @ts-ignore spread object
+        state: { ...state, scrolled: true },
+        replace: true,
+      });
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, state, navigate]);
 };
 
 export default useResetScroll;

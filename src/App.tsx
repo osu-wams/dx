@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { Location, RouteComponentProps } from '@reach/router';
-import { Routes as ReactRouter, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import { Routes as ReactRouter, Route, useLocation, useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
@@ -76,14 +75,14 @@ const EmployeeRouter = Loadable({
   loader: () => import('./routers/Employee'),
   loading: Loading,
   delay: 200,
-}) as React.FunctionComponent<RouteComponentProps> & LoadableComponent;
+}) as React.FunctionComponent & LoadableComponent;
 
 /* istanbul ignore next */
 const StudentRouter = Loadable({
   loader: () => import('./routers/Student'),
   loading: Loading,
   delay: 200,
-}) as React.FunctionComponent<RouteComponentProps> & LoadableComponent;
+}) as React.FunctionComponent & LoadableComponent;
 
 const App = (props: AppProps) => {
   const isLoaded = useRecoilValue(isLoadedState);
@@ -161,30 +160,23 @@ const App = (props: AppProps) => {
         <Alerts />
         <ApplicationMessages />
         <ContentWrapper>
-          <Location>
-            {({ location }) => (
-              <PageGridWrapper key={location.key}>
-                {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                <AnimatePresence exitBeforeEnter>
-                  <ReactRouter>
-                    <Route
-                      path={Routes.Routes().employee.path + '/*'}
-                      element={<EmployeeRouter />}
-                    />
-                    <Route path={Routes.Routes().student.path + '/*'} element={<StudentRouter />} />
-                    <Route path={Routes.Routes().profile.path} element={<Profile />} />
-                    <Route path={Routes.Routes().about.path} element={<About />} />
-                    <Route path={Routes.Routes().search.path} element={<Search />} />
-                    <Route path={Routes.Routes().notifications.path} element={<Notifications />} />
-                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                      <Route path="covid" element={<MobileCovid />} />
-                    )}
-                    <Route path="*" element={<PageNotFound />} />
-                  </ReactRouter>
-                </AnimatePresence>
-              </PageGridWrapper>
-            )}
-          </Location>
+          <PageGridWrapper key={location.key}>
+            {ReactGA.pageview(location.pathname + location.search + location.hash)}
+            <AnimatePresence exitBeforeEnter>
+              <ReactRouter>
+                <Route path={Routes.Routes().employee.path + '/*'} element={<EmployeeRouter />} />
+                <Route path={Routes.Routes().student.path + '/*'} element={<StudentRouter />} />
+                <Route path={Routes.Routes().profile.path} element={<Profile />} />
+                <Route path={Routes.Routes().about.path} element={<About />} />
+                <Route path={Routes.Routes().search.path} element={<Search />} />
+                <Route path={Routes.Routes().notifications.path} element={<Notifications />} />
+                {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                  <Route path="covid" element={<MobileCovid />} />
+                )}
+                <Route path="*" element={<PageNotFound />} />
+              </ReactRouter>
+            </AnimatePresence>
+          </PageGridWrapper>
         </ContentWrapper>
         {!mobileApp && <Footer />}
       </ThemeProvider>
