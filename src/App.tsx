@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { navigate, Location, RouteComponentProps } from '@reach/router';
-import { Routes as ReactRouter, Route, useLocation, Navigate } from 'react-router-dom';
+import { Location, RouteComponentProps } from '@reach/router';
+import { Routes as ReactRouter, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
@@ -35,7 +35,7 @@ import Notifications from './pages/Notifications';
 import PageNotFound from './pages/PageNotFound';
 import MobileCovid from './pages/mobile-app/MobileCovid';
 
-const { initialRouteState, isLoadedState, userState, themeState, dashboardState } = State;
+const { initialRouteState, isLoadedState, userState, themeState } = State;
 
 const ContentWrapper = styled.main`
   display: flex;
@@ -91,7 +91,7 @@ const App = (props: AppProps) => {
   const user = useRecoilValue<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const containerElementRef = useRef(props.containerElement);
-  const dashboard = useRecoilValue(dashboardState);
+  const navigate = useNavigate();
   useUserState(navigate);
   useGradesState();
   useCourseScheduleState();
@@ -167,7 +167,6 @@ const App = (props: AppProps) => {
                 {ReactGA.pageview(location.pathname + location.search + location.hash)}
                 <AnimatePresence exitBeforeEnter>
                   <ReactRouter>
-                    <Route path="/" element={<Navigate replace to={dashboard.affiliation} />} />
                     <Route
                       path={Routes.Routes().employee.path + '/*'}
                       element={<EmployeeRouter />}
