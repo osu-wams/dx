@@ -8,7 +8,6 @@ import {
   mockStudentEmployeeUser,
   renderWithAllContexts as render,
 } from 'src/util/test-utils';
-import { LocationProvider, createHistory, createMemorySource } from '@reach/router';
 import App from '../App';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -29,18 +28,14 @@ jest.mock('@osu-wams/hooks', () => {
 });
 
 const mockNavigate = jest.fn();
-jest.mock('@reach/router', () => {
-  const original = jest.requireActual('@reach/router');
-  return {
-    ...original,
-    navigate: (route) => mockNavigate(route),
-  };
-});
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as any),
+  useNavigate: () => mockNavigate,
+}));
 
 it('renders <App> without crashing', () => {
   const div = document.createElement('div');
-  // Setup for ReachRouter
-  const testHistory = createHistory(createMemorySource('/'));
   const queryClient = new QueryClient();
   ReactDOM.render(
     <QueryClientProvider client={queryClient}>
@@ -87,10 +82,10 @@ it('navigates to an initial route', async () => {
       ],
     }
   );
-  expect(mockNavigate).toBeCalledWith('/about');
+  expect(mockNavigate).lastCalledWith('/about', { replace: true });
 });
 
-it.only('navigates to root and redirects to student (default user) dashboard', async () => {
+it('navigates to root and redirects to student (default user) dashboard', async () => {
   window.location.pathname = '/';
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
@@ -99,7 +94,7 @@ it.only('navigates to root and redirects to student (default user) dashboard', a
       <App containerElement={div} />
     </BrowserRouter>
   );
-  expect(mockNavigate).toBeCalledWith('/student');
+  expect(mockNavigate).lastCalledWith('/student', { replace: true });
 });
 
 // TODO: Test behavior moved to @osu-wams/hooks package
@@ -173,6 +168,6 @@ it('student employee visiting student dashboard', async () => {
   );
   expect(mockPostSettings).not.toBeCalled();
   await waitFor(() => {
-    expect(mockNavigate).toBeCalledWith('/student');
+    expect(mockNavigate).lastCalledWith('/student', { replace: true });
   });
 });

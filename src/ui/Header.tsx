@@ -202,7 +202,7 @@ const Header = () => {
       ? setToggledAffiliation(user.data.primaryAffiliationOverride)
       : setToggledAffiliation(user.data.primaryAffiliation);
     // Checks for any employee affiliation (finds Student Employees too)
-    if (user.data?.affiliations.includes(AFFILIATIONS.employee)) {
+    if (user.data?.affiliations?.includes(AFFILIATIONS.employee)) {
       setIsEmployee(true);
     }
   }, [user.data]);
