@@ -4,10 +4,15 @@ import { screen } from '@testing-library/react';
 import { mockEmployeeUser, renderWithAllContexts as render } from 'src/util/test-utils';
 import MainNav from '../MainNav/';
 import { mockGAEvent } from 'src/setupTests';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('student main navigation', () => {
   it('Main Navigation Links for students are to be present and tracked in Google Analytics', async () => {
-    render(<MainNav />);
+    render(
+      <BrowserRouter>
+        <MainNav />
+      </BrowserRouter>
+    );
 
     const home = screen.getByText('Overview');
     const academics = screen.getByText('Academics');
@@ -22,7 +27,12 @@ describe('student main navigation', () => {
   });
 
   it('Main Navigation in desktop has "Resources" link tracked in Google Analytics', async () => {
-    render(<MainNav />, { isDesktop: true });
+    render(
+      <BrowserRouter>
+        <MainNav />
+      </BrowserRouter>,
+      { isDesktop: true }
+    );
 
     const resources = screen.getByText('Resources');
     const menu = screen.queryByText('Menu');
@@ -36,9 +46,14 @@ describe('student main navigation', () => {
 });
 
 it('Main Navigation for Employee visible and tracked in Google Analytics', async () => {
-  render(<MainNav />, {
-    user: mockEmployeeUser,
-  });
+  render(
+    <BrowserRouter>
+      <MainNav />
+    </BrowserRouter>,
+    {
+      user: mockEmployeeUser,
+    }
+  );
 
   const home = screen.getByText('Overview');
   const resources = screen.getByText('Resources');

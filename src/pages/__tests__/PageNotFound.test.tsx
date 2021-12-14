@@ -8,15 +8,24 @@ import {
 } from 'src/util/test-utils';
 import { mockGAEvent } from 'src/setupTests';
 import PageNotFound from '../PageNotFound';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('404 page', () => {
   it('renders', () => {
-    render(<PageNotFound />);
+    render(
+      <BrowserRouter>
+        <PageNotFound />
+      </BrowserRouter>
+    );
     expect(screen.getByTestId('404-page')).toBeInTheDocument();
   });
 
   it('has clickable links to dashboard and support page', () => {
-    render(<PageNotFound />);
+    render(
+      <BrowserRouter>
+        <PageNotFound />
+      </BrowserRouter>
+    );
     const dashboard = screen.getByText(/to dashboard/);
     userEvent.click(dashboard);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -25,7 +34,12 @@ describe('404 page', () => {
 
 describe('navigation link test', () => {
   it('correct nav link for employee user', () => {
-    render(<PageNotFound />, { user: mockEmployeeUser });
+    render(
+      <BrowserRouter>
+        <PageNotFound />
+      </BrowserRouter>,
+      { user: mockEmployeeUser }
+    );
     const link = screen.getByTestId('nav-link');
     userEvent.click(link);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -33,7 +47,12 @@ describe('navigation link test', () => {
   });
 
   it('correct nav link for student user', () => {
-    render(<PageNotFound />, { user: mockGradStudentEmployeeUser });
+    render(
+      <BrowserRouter>
+        <PageNotFound />
+      </BrowserRouter>,
+      { user: mockGradStudentEmployeeUser }
+    );
     const link = screen.getByTestId('nav-link');
     userEvent.click(link);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);

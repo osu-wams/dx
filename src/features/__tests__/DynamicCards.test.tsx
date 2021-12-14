@@ -13,6 +13,7 @@ import Academics from 'src/pages/Academics';
 import Profile from 'src/pages/Profile';
 import { State, Resources, Cards } from '@osu-wams/hooks';
 import { mockCourseSchedule } from 'src/mocks/handlers';
+import { BrowserRouter } from 'react-router-dom';
 
 const { courseState, resourceState, dynamicCardState } = State;
 const { resourcesData } = Resources.mockResources;
@@ -60,7 +61,12 @@ describe('<DynamicCard />', () => {
         ...cardsData,
         data: [{ ...cardsData.data[4] }],
       });
-      render(<Dashboard />, { user: mockEmployeeUser, initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Dashboard />
+        </BrowserRouter>,
+        { user: mockEmployeeUser, initialStates: mockInitialState() }
+      );
 
       const cardTitle = await screen.findByText(/All Employees!/i);
       expect(cardTitle).toBeInTheDocument();
@@ -76,7 +82,12 @@ describe('<DynamicCard />', () => {
     });
 
     it('Undergrad should find "All Students" Dynamic Card', async () => {
-      render(<Dashboard />, { initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Dashboard />
+        </BrowserRouter>,
+        { initialStates: mockInitialState() }
+      );
 
       const cardTitle = await screen.findByText(/All Students!/i);
       expect(cardTitle).toBeInTheDocument();
@@ -95,7 +106,12 @@ describe('<DynamicCard />', () => {
     });
 
     it('Grad Student  should find "All Students" Dynamic Card', async () => {
-      render(<Dashboard />, { initialStates: mockInitialState(), user: mockGradUser });
+      render(
+        <BrowserRouter>
+          <Dashboard />
+        </BrowserRouter>,
+        { initialStates: mockInitialState(), user: mockGradUser }
+      );
 
       expect(await screen.findByText(/All Students!/i)).toBeInTheDocument();
       expect(await screen.findByText(/This card is for all students/i)).toBeInTheDocument();
@@ -116,7 +132,12 @@ describe('<DynamicCard />', () => {
     });
 
     it('Student Employee should find "All Students" and "Everyone!" Dynamic Card', async () => {
-      render(<Dashboard />, { initialStates: mockInitialState(), user: mockStudentEmployeeUser });
+      render(
+        <BrowserRouter>
+          <Dashboard />
+        </BrowserRouter>,
+        { initialStates: mockInitialState(), user: mockStudentEmployeeUser }
+      );
 
       expect(await screen.findByText(/All Students!/i)).toBeInTheDocument();
       expect(await screen.findByText(/This card is for all students/i)).toBeInTheDocument();
@@ -139,7 +160,12 @@ describe('<DynamicCard />', () => {
       });
     });
     it('Employee should find "All Employees" Dynamic Card', async () => {
-      render(<Finances />, { user: mockEmployeeUser, initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Finances />
+        </BrowserRouter>,
+        { user: mockEmployeeUser, initialStates: mockInitialState() }
+      );
 
       expect(screen.getByText(/All Employees!/i)).toBeInTheDocument();
 
@@ -148,7 +174,12 @@ describe('<DynamicCard />', () => {
     });
 
     it('Undergrad should only find "All Students" Dynamic Card', async () => {
-      render(<Finances />, { initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Finances />
+        </BrowserRouter>,
+        { initialStates: mockInitialState() }
+      );
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
 
@@ -157,7 +188,12 @@ describe('<DynamicCard />', () => {
     });
 
     it('Grad Student should find "All Students" and "Graduates Card" Dynamic Cards', async () => {
-      render(<Finances />, { initialStates: mockInitialState(), user: mockGradUser });
+      render(
+        <BrowserRouter>
+          <Finances />
+        </BrowserRouter>,
+        { initialStates: mockInitialState(), user: mockGradUser }
+      );
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
       expect(screen.getByText(/Graduates Card!/i)).toBeInTheDocument();
@@ -178,14 +214,24 @@ describe('<DynamicCard />', () => {
       });
     });
     it('Employee should find "All Employees" Dynamic Card', async () => {
-      render(<Academics />, { user: mockEmployeeUser, initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Academics />
+        </BrowserRouter>,
+        { user: mockEmployeeUser, initialStates: mockInitialState() }
+      );
 
       expect(screen.getByText(/All Employees!/i)).toBeInTheDocument();
       expect(screen.queryByText(/All Students!/i)).not.toBeInTheDocument();
     });
 
     it('Undergrad should only find "All Students" Dynamic Card', async () => {
-      render(<Academics />, { initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Academics />
+        </BrowserRouter>,
+        { initialStates: mockInitialState() }
+      );
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
       expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
@@ -193,7 +239,12 @@ describe('<DynamicCard />', () => {
     });
 
     it('Grad Student should find "All Students" and "Graduates Card" Dynamic Cards', async () => {
-      render(<Academics />, { user: mockGradUser, initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Academics />
+        </BrowserRouter>,
+        { user: mockGradUser, initialStates: mockInitialState() }
+      );
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
       expect(screen.getByText(/Graduates Card!/i)).toBeInTheDocument();
@@ -214,14 +265,24 @@ describe('<DynamicCard />', () => {
       });
     });
     it('Employee should find "All Employees" Dynamic Card', async () => {
-      render(<Profile />, { user: mockEmployeeUser, initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Profile />
+        </BrowserRouter>,
+        { user: mockEmployeeUser, initialStates: mockInitialState() }
+      );
 
       expect(screen.getByText(/All Employees!/i)).toBeInTheDocument();
       expect(screen.queryByText(/All Students!/i)).not.toBeInTheDocument();
     });
 
     it('Undergrad should only find "All Students" Dynamic Card', async () => {
-      render(<Profile />, { initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Profile />
+        </BrowserRouter>,
+        { initialStates: mockInitialState() }
+      );
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
       expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
@@ -229,7 +290,12 @@ describe('<DynamicCard />', () => {
     });
 
     it('Grad Student should find "All Students" and "Graduates Card" Dynamic Cards', async () => {
-      render(<Profile />, { user: mockGradUser, initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Profile />
+        </BrowserRouter>,
+        { user: mockGradUser, initialStates: mockInitialState() }
+      );
 
       expect(screen.getByText(/All Students!/i)).toBeInTheDocument();
       expect(screen.getByText(/Graduates Card!/i)).toBeInTheDocument();

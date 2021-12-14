@@ -9,6 +9,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 const { resourcesData } = Resources.mockResources;
 import { mockGAEvent } from 'src/setupTests';
+import { BrowserRouter } from 'react-router-dom';
 
 const training = Trainings.mockTrainings.data[0];
 const resource = resourcesData.data[0];
@@ -33,25 +34,41 @@ describe('with a resource (typical) search result item', () => {
     refIndex: 1,
   };
   it('renders with an external link title', async () => {
-    render(<SearchResultListItem searchResult={resourceResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={resourceResult} />
+      </BrowserRouter>
+    );
     const link = await screen.findByText('Bend Testo Success Center', { selector: 'a' });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', 'https://success.oregonstate.edu/');
   });
   it('renders with an external link bubble with icon', async () => {
-    render(<SearchResultListItem searchResult={resourceResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={resourceResult} />
+      </BrowserRouter>
+    );
     const bubble = await screen.findByText('Resource', { selector: 'span' });
     expect(bubble).toBeInTheDocument();
     expect(bubble.lastChild).toMatchSnapshot();
   });
   it('renders with a simple subtext', async () => {
-    render(<SearchResultListItem searchResult={resourceResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={resourceResult} />
+      </BrowserRouter>
+    );
     const subtext = await screen.findByText('Some subtext here', { selector: 'div' });
     expect(subtext).toBeInTheDocument();
   });
 
   it('renders without a modal', async () => {
-    render(<SearchResultListItem searchResult={resourceResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={resourceResult} />
+      </BrowserRouter>
+    );
     const link = await screen.findByText('Bend Testo Success Center', { selector: 'a' });
     userEvent.click(link);
     expect(mockGAEvent).toHaveBeenCalledTimes(2);
@@ -75,20 +92,32 @@ describe('with a training search result item', () => {
   };
 
   it('renders with an internal link title', async () => {
-    render(<SearchResultListItem searchResult={trainingResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={trainingResult} />
+      </BrowserRouter>
+    );
     const link = await screen.findByText('Play nice with others', { selector: 'a' });
     expect(link).toBeInTheDocument();
     expect(link).not.toHaveAttribute('href');
   });
 
   it('renders with html subtext', async () => {
-    render(<SearchResultListItem searchResult={trainingResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={trainingResult} />
+      </BrowserRouter>
+    );
     const subtext = await screen.findByText(/tag 1 .* tag 2/, { selector: 'div' });
     expect(subtext).toBeInTheDocument();
   });
 
   it('toggles the modal', async () => {
-    render(<SearchResultListItem searchResult={trainingResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={trainingResult} />
+      </BrowserRouter>
+    );
     const link = await screen.findByText('Play nice with others', { selector: 'a' });
     userEvent.click(link);
     expect(await screen.findByTestId('training-modal')).toBeInTheDocument();
@@ -117,7 +146,11 @@ describe('with a course search result item', () => {
   };
 
   it('toggles the modal', async () => {
-    render(<SearchResultListItem searchResult={courseResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={courseResult} />
+      </BrowserRouter>
+    );
     const link = await screen.findByText('WR214', { selector: 'a' });
     userEvent.click(link);
     expect(await screen.findByTestId('course-dialog')).toBeInTheDocument();
@@ -142,7 +175,11 @@ describe('with a notification search result item', () => {
   };
 
   it('toggles the modal', async () => {
-    render(<SearchResultListItem searchResult={notificationResult} />);
+    render(
+      <BrowserRouter>
+        <SearchResultListItem searchResult={notificationResult} />
+      </BrowserRouter>
+    );
     const link = await screen.findByText('Title', { selector: 'a' });
     userEvent.click(link);
     expect(await screen.findByTestId('notification-modal')).toBeInTheDocument();
@@ -172,8 +209,10 @@ describe('with a resource (typical) search result item', () => {
   it('resource with down IT system should display warning icon and dialog', async () => {
     render(
       <>
-        <ITSystemStatus />
-        <SearchResultListItem searchResult={resourceResult} />
+        <BrowserRouter>
+          <ITSystemStatus />
+          <SearchResultListItem searchResult={resourceResult} />
+        </BrowserRouter>
       </>
     );
     const link = await screen.findByText('Box', { selector: 'a' });
@@ -195,8 +234,10 @@ describe('with a resource (typical) search result item', () => {
   it('resource with down IT system should display warning icon and allow users click through it', async () => {
     render(
       <>
-        <ITSystemStatus />
-        <SearchResultListItem searchResult={resourceResult} />
+        <BrowserRouter>
+          <ITSystemStatus />
+          <SearchResultListItem searchResult={resourceResult} />
+        </BrowserRouter>
       </>
     );
 

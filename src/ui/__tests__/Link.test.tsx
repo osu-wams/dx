@@ -3,7 +3,15 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { Color } from '@osu-wams/theme';
-import { ExternalLink, HighlightExternalLink, InternalLink, SimpleExternalLink, SimpleInternalLink, SimpleModalLink } from '../Link';
+import {
+  ExternalLink,
+  HighlightExternalLink,
+  InternalLink,
+  SimpleExternalLink,
+  SimpleInternalLink,
+  SimpleModalLink,
+} from '../Link';
+import { BrowserRouter } from 'react-router-dom';
 
 const Default = () => <ExternalLink href="https://oregonstate.edu">Default link</ExternalLink>;
 
@@ -38,9 +46,7 @@ const InternalLinkBothColors = () => (
 );
 
 const SimpleIntLink = () => (
-  <SimpleInternalLink to="https://oregonstate.edu">
-    Simple Internal Link Sample
-  </SimpleInternalLink>
+  <SimpleInternalLink to="https://oregonstate.edu">Simple Internal Link Sample</SimpleInternalLink>
 );
 
 const HighlightExtLink = () => (
@@ -49,40 +55,60 @@ const HighlightExtLink = () => (
   </HighlightExternalLink>
 );
 
-const SimpleModLink = () => (
-  <SimpleModalLink>
-    Simple Modal Link
-  </SimpleModalLink>
-);
+const SimpleModLink = () => <SimpleModalLink>Simple Modal Link</SimpleModalLink>;
 
 // Snapshot tests to make sure our props are carried through
 test('Default options', () => {
-  const { container } = render(<Default />);
+  const { container } = render(
+    <BrowserRouter>
+      <Default />
+    </BrowserRouter>
+  );
   expect(container).toMatchSnapshot();
 });
 
 test('Background color is orange-400', () => {
-  const { container } = render(<BackgroundColor />);
+  const { container } = render(
+    <BrowserRouter>
+      <BackgroundColor />
+    </BrowserRouter>
+  );
   expect(container).toMatchSnapshot();
 });
 
 test('Text color is pine-400', () => {
-  const { container } = render(<TextColor />);
+  const { container } = render(
+    <BrowserRouter>
+      <TextColor />
+    </BrowserRouter>
+  );
   expect(container).toMatchSnapshot();
 });
 
 test('Background is orange-400, and text is white', () => {
-  const { container } = render(<BothColors />);
+  const { container } = render(
+    <BrowserRouter>
+      <BothColors />
+    </BrowserRouter>
+  );
   expect(container).toMatchSnapshot();
 });
 
 test('Make sure ExternalLink target="_blank" attribute is passed down', () => {
-  render(<Default />);
+  render(
+    <BrowserRouter>
+      <Default />
+    </BrowserRouter>
+  );
   expect(screen.getByRole('link', { name: 'Default link' })).toHaveAttribute('target', '_blank');
 });
 
 test('Make sure SimpleExternalLink target="_blank" attribute is passed down', () => {
-  render(<SimpleExtLink />);
+  render(
+    <BrowserRouter>
+      <SimpleExtLink />
+    </BrowserRouter>
+  );
   expect(screen.getByRole('link', { name: 'Simple External Link Sample' })).toHaveAttribute(
     'target',
     '_blank'
@@ -90,28 +116,48 @@ test('Make sure SimpleExternalLink target="_blank" attribute is passed down', ()
 });
 
 test('Make sure SVG image is present', () => {
-  const { container } = render(<TextColor />);
+  const { container } = render(
+    <BrowserRouter>
+      <TextColor />
+    </BrowserRouter>
+  );
   const svg = container.querySelector('svg');
 
   expect(container).toContainElement(svg);
 });
 
 test('InternalLink background is orange-400 and text is white', () => {
-  const { container } = render(<InternalLinkBothColors />);
+  const { container } = render(
+    <BrowserRouter>
+      <InternalLinkBothColors />
+    </BrowserRouter>
+  );
   expect(container).toMatchSnapshot();
 });
 
 test('Test SimpleInternalLink props are passed down', () => {
-  const { container } = render(<SimpleIntLink />);
+  const { container } = render(
+    <BrowserRouter>
+      <SimpleIntLink />
+    </BrowserRouter>
+  );
   expect(container).toMatchSnapshot();
 });
 
 test('Highlighted text is orange', () => {
-  const { container } = render(<HighlightExtLink />);
+  const { container } = render(
+    <BrowserRouter>
+      <HighlightExtLink />
+    </BrowserRouter>
+  );
   expect(container).toMatchSnapshot();
 });
 
 test('Basic SimpleModalLink test', () => {
-  const { container } = render(<SimpleModLink />);
+  const { container } = render(
+    <BrowserRouter>
+      <SimpleModLink />
+    </BrowserRouter>
+  );
   expect(container).toMatchSnapshot();
 });

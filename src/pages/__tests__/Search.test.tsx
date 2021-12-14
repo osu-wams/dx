@@ -5,6 +5,7 @@ import { mockInitialState } from 'src/setupTests';
 import userEvent from '@testing-library/user-event';
 import { State, Resources, SearchIndex } from '@osu-wams/hooks';
 import Search from '../Search';
+import { BrowserRouter } from 'react-router-dom';
 
 const { applicationSearchState, applicationTypeFilterState, pageSearchIndexState, resourceState } =
   State;
@@ -13,7 +14,11 @@ const foundSearchTerm = 'testo';
 
 describe('<Search/>', () => {
   it('renders the proper layout for mobile view', async () => {
-    render(<Search />);
+    render(
+      <BrowserRouter>
+        <Search />
+      </BrowserRouter>
+    );
     expect(await screen.findByText(/Perform a search using the search box/)).toBeInTheDocument();
     expect(await screen.findByText(/People/)).toBeInTheDocument();
     expect(await screen.findByText(/Places/)).toBeInTheDocument();
@@ -26,7 +31,12 @@ describe('<Search/>', () => {
   });
 
   it('renders the proper layout for desktop view', async () => {
-    render(<Search />, { isDesktop: true });
+    render(
+      <BrowserRouter>
+        <Search />
+      </BrowserRouter>,
+      { isDesktop: true }
+    );
     expect(await screen.findByText(/Perform a search using the search box/)).toBeInTheDocument();
     expect(await screen.findByText(/People/)).toBeInTheDocument();
     expect(await screen.findByText(/Places/)).toBeInTheDocument();
@@ -48,7 +58,12 @@ describe('<Search/>', () => {
       ]);
     });
     it('renders a search page with no results found', async () => {
-      render(<Search />, { initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Search />
+        </BrowserRouter>,
+        { initialStates: mockInitialState() }
+      );
       expect(await screen.findByText(/"bobross" did not return/)).toBeInTheDocument();
       expect(await screen.findByText(/OSU Search Results/)).toBeInTheDocument();
     });
@@ -82,7 +97,12 @@ describe('<Search/>', () => {
       ]);
     });
     it('renders a search page with the About page as a result', async () => {
-      render(<Search />, { initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Search />
+        </BrowserRouter>,
+        { initialStates: mockInitialState() }
+      );
       const searchBar = screen.getByTestId('applicationSearch');
 
       // Search input value changed to "noResults"
@@ -95,27 +115,33 @@ describe('<Search/>', () => {
     });
 
     it('renders a search result to pageNotFound for an undefined page index result', async () => {
-      render(<Search />, {
-        initialStates: [
-          ...mockInitialState(),
-          {
-            state: pageSearchIndexState,
-            value: {
-              data: [
-                {
-                  ...SearchIndex.mockPageSearchIndex.pageSearchIndexData[0],
-                  page: null,
-                },
-              ],
-              isLoading: false,
-              isSuccess: false,
-              isError: false,
+      render(
+        <BrowserRouter>
+          <Search />
+        </BrowserRouter>,
+        {
+          initialStates: [
+            ...mockInitialState(),
+            {
+              state: pageSearchIndexState,
+              value: {
+                data: [
+                  {
+                    ...SearchIndex.mockPageSearchIndex.pageSearchIndexData[0],
+                    page: null,
+                  },
+                ],
+                isLoading: false,
+                isSuccess: false,
+                isError: false,
+              },
             },
-          },
-        ],
-      });
+          ],
+        }
+      );
       const searchBar = screen.getByTestId('applicationSearch');
 
+      userEvent.clear(searchBar);
       await userEvent.type(searchBar, 'About{enter}');
       expect(await screen.findByTestId('simple-internal-link')).toHaveAttribute(
         'href',
@@ -124,27 +150,32 @@ describe('<Search/>', () => {
     });
 
     it('renders a search result to pageNotFound for a page index not defined in Routes', async () => {
-      render(<Search />, {
-        initialStates: [
-          ...mockInitialState(),
-          {
-            state: pageSearchIndexState,
-            value: {
-              data: [
-                {
-                  ...SearchIndex.mockPageSearchIndex.pageSearchIndexData[0],
-                  page: 'BobRoss',
-                },
-              ],
-              isLoading: false,
-              isSuccess: false,
-              isError: false,
+      render(
+        <BrowserRouter>
+          <Search />
+        </BrowserRouter>,
+        {
+          initialStates: [
+            ...mockInitialState(),
+            {
+              state: pageSearchIndexState,
+              value: {
+                data: [
+                  {
+                    ...SearchIndex.mockPageSearchIndex.pageSearchIndexData[0],
+                    page: 'BobRoss',
+                  },
+                ],
+                isLoading: false,
+                isSuccess: false,
+                isError: false,
+              },
             },
-          },
-        ],
-      });
+          ],
+        }
+      );
       const searchBar = screen.getByTestId('applicationSearch');
-
+      userEvent.clear(searchBar);
       await userEvent.type(searchBar, 'About{enter}');
       expect(await screen.findByTestId('simple-internal-link')).toHaveAttribute(
         'href',
@@ -153,55 +184,70 @@ describe('<Search/>', () => {
     });
 
     it('renders a search page with results found', async () => {
-      render(<Search />, { initialStates: mockInitialState() });
+      render(
+        <BrowserRouter>
+          <Search />
+        </BrowserRouter>,
+        { initialStates: mockInitialState() }
+      );
       expect(await screen.findByText(/Bend Testo Success Center/)).toBeInTheDocument();
       expect(await screen.findByText(/OSU Search Results/)).toBeInTheDocument();
     });
 
     it('renders a search page with results filtered out by 1 filter', async () => {
-      render(<Search />, {
-        initialStates: [
-          ...mockInitialState(),
-          {
-            state: applicationTypeFilterState,
-            value: [
-              {
-                checked: true,
-                label: 'Events',
-                name: 'events',
-                type: 'Event',
-              },
-            ],
-          },
-        ],
-      });
+      render(
+        <BrowserRouter>
+          <Search />
+        </BrowserRouter>,
+        {
+          initialStates: [
+            ...mockInitialState(),
+            {
+              state: applicationTypeFilterState,
+              value: [
+                {
+                  checked: true,
+                  label: 'Events',
+                  name: 'events',
+                  type: 'Event',
+                },
+              ],
+            },
+          ],
+        }
+      );
       expect(screen.queryByText(/Bend Testo Success Center/)).not.toBeInTheDocument();
       expect(await screen.findByText(/with 1 filter set/)).toBeInTheDocument();
       expect(await screen.findByText(/OSU Search Results/)).toBeInTheDocument();
     });
     it('renders a search page with results filtered out by more than 1 filter', async () => {
-      render(<Search />, {
-        initialStates: [
-          ...mockInitialState(),
-          {
-            state: applicationTypeFilterState,
-            value: [
-              {
-                checked: true,
-                label: 'Events',
-                name: 'events',
-                type: 'Event',
-              },
-              {
-                checked: true,
-                label: 'Announcements',
-                name: 'announcements',
-                type: 'Annoucement',
-              },
-            ],
-          },
-        ],
-      });
+      render(
+        <BrowserRouter>
+          <Search />
+        </BrowserRouter>,
+        {
+          initialStates: [
+            ...mockInitialState(),
+            {
+              state: applicationTypeFilterState,
+              value: [
+                {
+                  checked: true,
+                  label: 'Events',
+                  name: 'events',
+                  type: 'Event',
+                },
+                {
+                  checked: true,
+                  label: 'Announcements',
+                  name: 'announcements',
+                  type: 'Annoucement',
+                },
+              ],
+            },
+          ],
+        }
+      );
       expect(screen.queryByText(/Bend Testo Success Center/)).not.toBeInTheDocument();
       expect(await screen.findByText(/with 2 filters set/)).toBeInTheDocument();
       expect(await screen.findByText(/OSU Search Results/)).toBeInTheDocument();

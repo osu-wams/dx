@@ -4,9 +4,14 @@ import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { HelpMenu } from '../HeaderNav/HelpMenu';
 import { mockGAEvent } from 'src/setupTests';
 import { screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 
 it('Help button and Get Help link are in the menu and tracked via GA', async () => {
-  render(<HelpMenu />);
+  render(
+    <BrowserRouter>
+      <HelpMenu />
+    </BrowserRouter>
+  );
 
   userEvent.click(screen.getByRole('button', { name: /help/i }));
 
@@ -19,7 +24,11 @@ it('Help button and Get Help link are in the menu and tracked via GA', async () 
 });
 
 it('Feedback link tracked via GA', async () => {
-  render(<HelpMenu />);
+  render(
+    <BrowserRouter>
+      <HelpMenu />
+    </BrowserRouter>
+  );
 
   userEvent.click(screen.getByRole('button', { name: /help/i }));
 
@@ -32,7 +41,11 @@ it('Feedback link tracked via GA', async () => {
 });
 
 it('About MyOregonState link tracked via GA', async () => {
-  render(<HelpMenu />);
+  render(
+    <BrowserRouter>
+      <HelpMenu />
+    </BrowserRouter>
+  );
 
   userEvent.click(screen.getByRole('button', { name: /help/i }));
 

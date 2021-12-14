@@ -5,19 +5,25 @@ import userEvent from '@testing-library/user-event';
 import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
 import { mockGAEvent } from 'src/setupTests';
 import { State, Trainings } from '@osu-wams/hooks';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('<FeaturedTrainingsCard />', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
-    render(<FeaturedTrainingsCard />, {
-      user: mockEmployeeUser,
-      initialStates: [
-        {
-          state: State.trainingState,
-          value: Trainings.mockTrainings,
-        },
-      ],
-    });
+    render(
+      <BrowserRouter>
+        <FeaturedTrainingsCard />
+      </BrowserRouter>,
+      {
+        user: mockEmployeeUser,
+        initialStates: [
+          {
+            state: State.trainingState,
+            value: Trainings.mockTrainings,
+          },
+        ],
+      }
+    );
   });
 
   describe('Main components', () => {

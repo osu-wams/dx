@@ -7,10 +7,15 @@ import { screen, waitFor } from '@testing-library/react';
 import { alterMock } from 'src/util/test-utils';
 import { USER_MESSAGES_API } from 'src/mocks/apis';
 import { User } from '@osu-wams/hooks';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('With 1 SENT notifications', () => {
   beforeEach(() => {
-    render(<NotificationsMenu />);
+    render(
+      <BrowserRouter>
+        <NotificationsMenu />
+      </BrowserRouter>
+    );
   });
 
   it('Finds the main notification bell button with 1 notification', async () => {
@@ -58,7 +63,11 @@ describe('With 1 SENT notifications', () => {
 describe('Without unread notifications', () => {
   beforeEach(() => {
     alterMock(USER_MESSAGES_API, { items: [User.mockUser.userReadMessage], lastKey: undefined });
-    render(<NotificationsMenu />);
+    render(
+      <BrowserRouter>
+        <NotificationsMenu />
+      </BrowserRouter>
+    );
   });
 
   it('Main notification bell button with 1 notification since it is read', async () => {
@@ -87,7 +96,11 @@ describe('Without unread notifications', () => {
 
 it('With 3 notifications, 2 unread 1 read', async () => {
   alterMock(USER_MESSAGES_API, User.mockUser.userThreeMessages);
-  render(<NotificationsMenu />);
+  render(
+    <BrowserRouter>
+      <NotificationsMenu />
+    </BrowserRouter>
+  );
 
   // finds 2 indicator in menu
   const menu = await screen.findByRole('button', { name: /2 notification/i });

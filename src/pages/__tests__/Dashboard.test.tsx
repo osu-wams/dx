@@ -6,6 +6,7 @@ import { State } from '@osu-wams/hooks';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 import Dashboard from '../Dashboard';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('<StudentDashboard />', () => {
   beforeEach(() => {
@@ -15,7 +16,12 @@ describe('<StudentDashboard />', () => {
         value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
       },
     ]);
-    render(<Dashboard />, { initialStates: mockInitialState() });
+    render(
+      <BrowserRouter>
+        <Dashboard />
+      </BrowserRouter>,
+      { initialStates: mockInitialState() }
+    );
   });
   it('renders the student dashboard', async () => {
     expect(screen.getByTestId('student-dashboard-page')).toBeInTheDocument();
@@ -29,7 +35,12 @@ describe('<StudentDashboard />', () => {
 
 describe('<EmployeeDashboard />', () => {
   beforeEach(() => {
-    render(<Dashboard />, { user: mockEmployeeUser });
+    render(
+      <BrowserRouter>
+        <Dashboard />
+      </BrowserRouter>,
+      { user: mockEmployeeUser }
+    );
   });
 
   it('renders the employee dashboard', async () => {
