@@ -1,21 +1,16 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import { NotificationsMenu } from '../HeaderNav/NotificationsMenu';
 import { mockGAEvent } from 'src/setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import { alterMock } from 'src/util/test-utils';
 import { USER_MESSAGES_API } from 'src/mocks/apis';
 import { User } from '@osu-wams/hooks';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('With 1 SENT notifications', () => {
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <NotificationsMenu />
-      </BrowserRouter>
-    );
+    render(<NotificationsMenu />);
   });
 
   it('Finds the main notification bell button with 1 notification', async () => {
@@ -63,11 +58,7 @@ describe('With 1 SENT notifications', () => {
 describe('Without unread notifications', () => {
   beforeEach(() => {
     alterMock(USER_MESSAGES_API, { items: [User.mockUser.userReadMessage], lastKey: undefined });
-    render(
-      <BrowserRouter>
-        <NotificationsMenu />
-      </BrowserRouter>
-    );
+    render(<NotificationsMenu />);
   });
 
   it('Main notification bell button with 1 notification since it is read', async () => {
@@ -96,11 +87,7 @@ describe('Without unread notifications', () => {
 
 it('With 3 notifications, 2 unread 1 read', async () => {
   alterMock(USER_MESSAGES_API, User.mockUser.userThreeMessages);
-  render(
-    <BrowserRouter>
-      <NotificationsMenu />
-    </BrowserRouter>
-  );
+  render(<NotificationsMenu />);
 
   // finds 2 indicator in menu
   const menu = await screen.findByRole('button', { name: /2 notification/i });

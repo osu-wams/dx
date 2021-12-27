@@ -6,7 +6,7 @@ import { State } from '@osu-wams/hooks';
 import {
   mockEmployeeUser,
   mockStudentEmployeeUser,
-  renderWithAllContexts as render,
+  renderWithRouter as render,
 } from 'src/util/test-utils';
 import App from '../App';
 import { RecoilRoot } from 'recoil';
@@ -69,19 +69,14 @@ xit('changes from student dashboard (default user) to employee dashboard', () =>
 it('navigates to an initial route', async () => {
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
-  render(
-    <BrowserRouter>
-      <App containerElement={div} />
-    </BrowserRouter>,
-    {
-      initialStates: [
-        {
-          state: initialRouteState,
-          value: Routes.Routes().about.fullPath,
-        },
-      ],
-    }
-  );
+  render(<App containerElement={div} />, {
+    initialStates: [
+      {
+        state: initialRouteState,
+        value: Routes.Routes().about.fullPath,
+      },
+    ],
+  });
   expect(mockNavigate).lastCalledWith('/about', { replace: true });
 });
 
@@ -89,11 +84,7 @@ it('navigates to root and redirects to student (default user) dashboard', async 
   window.location.pathname = '/';
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
-  render(
-    <BrowserRouter>
-      <App containerElement={div} />
-    </BrowserRouter>
-  );
+  render(<App containerElement={div} />);
   expect(mockNavigate).lastCalledWith('/student', { replace: true });
 });
 
@@ -103,9 +94,9 @@ xit('visiting employee dashboard redirects to student (default user) dashboard w
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
   render(
-    <BrowserRouter>
+    <>
       <App containerElement={div} />{' '}
-    </BrowserRouter>
+    </>
   );
   expect(mockNavigate).toBeCalledWith('/student');
   expect(
@@ -119,14 +110,9 @@ xit('employee (previously on employee dashboard) visiting student dashboard chan
   mockNavigate.mockResolvedValue(true);
   mockPostSettings.mockResolvedValue(true);
   const div = document.createElement('div');
-  render(
-    <BrowserRouter>
-      <App containerElement={div} />
-    </BrowserRouter>,
-    {
-      user: mockEmployeeUser,
-    }
-  );
+  render(<App containerElement={div} />, {
+    user: mockEmployeeUser,
+  });
   expect(mockPostSettings).toBeCalledWith({ primaryAffiliationOverride: 'student' });
   await waitFor(() => {
     expect(mockNavigate).toBeCalledWith('/student');
@@ -139,14 +125,9 @@ xit('student employee (previously on student dashboard) visiting employee dashbo
   mockNavigate.mockResolvedValue(true);
   mockPostSettings.mockResolvedValue(true);
   const div = document.createElement('div');
-  render(
-    <BrowserRouter>
-      <App containerElement={div} />
-    </BrowserRouter>,
-    {
-      user: mockStudentEmployeeUser,
-    }
-  );
+  render(<App containerElement={div} />, {
+    user: mockStudentEmployeeUser,
+  });
   expect(mockPostSettings).toBeCalledWith({ primaryAffiliationOverride: 'employee' });
   await waitFor(() => {
     expect(mockNavigate).toBeCalledWith('/employee');
@@ -158,14 +139,9 @@ it('student employee visiting student dashboard', async () => {
   mockNavigate.mockResolvedValue(true);
   mockPostSettings.mockResolvedValue(true);
   const div = document.createElement('div');
-  render(
-    <BrowserRouter>
-      <App containerElement={div} />
-    </BrowserRouter>,
-    {
-      user: mockStudentEmployeeUser,
-    }
-  );
+  render(<App containerElement={div} />, {
+    user: mockStudentEmployeeUser,
+  });
   expect(mockPostSettings).not.toBeCalled();
   await waitFor(() => {
     expect(mockNavigate).lastCalledWith('/student', { replace: true });

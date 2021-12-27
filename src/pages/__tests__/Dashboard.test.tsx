@@ -1,12 +1,11 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { renderWithAllContexts as render, mockEmployeeUser } from 'src/util/test-utils';
+import { renderWithRouter as render, mockEmployeeUser } from 'src/util/test-utils';
 import { mockInitialState } from 'src/setupTests';
 import { State } from '@osu-wams/hooks';
 import { mockCourseSchedule } from 'src/mocks/handlers';
 
 import Dashboard from '../Dashboard';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('<StudentDashboard />', () => {
   beforeEach(() => {
@@ -16,12 +15,7 @@ describe('<StudentDashboard />', () => {
         value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
       },
     ]);
-    render(
-      <BrowserRouter>
-        <Dashboard />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<Dashboard />, { initialStates: mockInitialState() });
   });
   it('renders the student dashboard', async () => {
     expect(screen.getByTestId('student-dashboard-page')).toBeInTheDocument();
@@ -35,12 +29,7 @@ describe('<StudentDashboard />', () => {
 
 describe('<EmployeeDashboard />', () => {
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <Dashboard />
-      </BrowserRouter>,
-      { user: mockEmployeeUser }
-    );
+    render(<Dashboard />, { user: mockEmployeeUser });
   });
 
   it('renders the employee dashboard', async () => {

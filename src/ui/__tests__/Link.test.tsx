@@ -1,7 +1,7 @@
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import { Color } from '@osu-wams/theme';
 import {
   ExternalLink,
@@ -11,7 +11,6 @@ import {
   SimpleInternalLink,
   SimpleModalLink,
 } from '../Link';
-import { BrowserRouter } from 'react-router-dom';
 
 const Default = () => <ExternalLink href="https://oregonstate.edu">Default link</ExternalLink>;
 
@@ -59,56 +58,32 @@ const SimpleModLink = () => <SimpleModalLink>Simple Modal Link</SimpleModalLink>
 
 // Snapshot tests to make sure our props are carried through
 test('Default options', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <Default />
-    </BrowserRouter>
-  );
+  const { container } = render(<Default />);
   expect(container).toMatchSnapshot();
 });
 
 test('Background color is orange-400', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <BackgroundColor />
-    </BrowserRouter>
-  );
+  const { container } = render(<BackgroundColor />);
   expect(container).toMatchSnapshot();
 });
 
 test('Text color is pine-400', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <TextColor />
-    </BrowserRouter>
-  );
+  const { container } = render(<TextColor />);
   expect(container).toMatchSnapshot();
 });
 
 test('Background is orange-400, and text is white', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <BothColors />
-    </BrowserRouter>
-  );
+  const { container } = render(<BothColors />);
   expect(container).toMatchSnapshot();
 });
 
 test('Make sure ExternalLink target="_blank" attribute is passed down', () => {
-  render(
-    <BrowserRouter>
-      <Default />
-    </BrowserRouter>
-  );
+  render(<Default />);
   expect(screen.getByRole('link', { name: 'Default link' })).toHaveAttribute('target', '_blank');
 });
 
 test('Make sure SimpleExternalLink target="_blank" attribute is passed down', () => {
-  render(
-    <BrowserRouter>
-      <SimpleExtLink />
-    </BrowserRouter>
-  );
+  render(<SimpleExtLink />);
   expect(screen.getByRole('link', { name: 'Simple External Link Sample' })).toHaveAttribute(
     'target',
     '_blank'
@@ -116,48 +91,28 @@ test('Make sure SimpleExternalLink target="_blank" attribute is passed down', ()
 });
 
 test('Make sure SVG image is present', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <TextColor />
-    </BrowserRouter>
-  );
+  const { container } = render(<TextColor />);
   const svg = container.querySelector('svg');
 
   expect(container).toContainElement(svg);
 });
 
 test('InternalLink background is orange-400 and text is white', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <InternalLinkBothColors />
-    </BrowserRouter>
-  );
+  const { container } = render(<InternalLinkBothColors />);
   expect(container).toMatchSnapshot();
 });
 
 test('Test SimpleInternalLink props are passed down', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <SimpleIntLink />
-    </BrowserRouter>
-  );
+  const { container } = render(<SimpleIntLink />);
   expect(container).toMatchSnapshot();
 });
 
 test('Highlighted text is orange', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <HighlightExtLink />
-    </BrowserRouter>
-  );
+  const { container } = render(<HighlightExtLink />);
   expect(container).toMatchSnapshot();
 });
 
 test('Basic SimpleModalLink test', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <SimpleModLink />
-    </BrowserRouter>
-  );
+  const { container } = render(<SimpleModLink />);
   expect(container).toMatchSnapshot();
 });

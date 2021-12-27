@@ -1,86 +1,62 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import PastCourses from '../Academics/PastCourses';
 import { State, Student } from '@osu-wams/hooks';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('<PastCourses />', () => {
   it('renders without errors', async () => {
-    render(
-      <BrowserRouter>
-        <PastCourses />
-      </BrowserRouter>
-    );
+    render(<PastCourses />);
     expect(screen.getByTestId('past-courses')).toBeInTheDocument();
   });
 
   it('renders and finds placeholder text: "Find past courses"', () => {
-    render(
-      <BrowserRouter>
-        <PastCourses />
-      </BrowserRouter>
-    );
+    render(<PastCourses />);
     expect(screen.getByPlaceholderText('Find past courses')).toBeInTheDocument();
   });
 
   it('should find the course: "Test Course Title" and the CRN', async () => {
-    render(
-      <BrowserRouter>
-        <PastCourses />
-      </BrowserRouter>,
-      {
-        initialStates: [
-          {
-            state: State.gradesState,
-            value: Student.Grades.mockGrades,
-          },
-        ],
-      }
-    );
+    render(<PastCourses />, {
+      initialStates: [
+        {
+          state: State.gradesState,
+          value: Student.Grades.mockGrades,
+        },
+      ],
+    });
     const Algebra = await screen.findByText('Test Course Title');
     expect(Algebra).toBeInTheDocument();
     expect(await screen.findByText(/CRN: 15625/i)).toBeInTheDocument();
   });
 
   it('should find only one instance of a course excluded from GPA', async () => {
-    render(
-      <BrowserRouter>
-        <PastCourses />
-      </BrowserRouter>,
-      {
-        initialStates: [
-          {
-            state: State.gradesState,
-            value: Student.Grades.mockGrades,
-          },
-        ],
-      }
-    );
+    render(<PastCourses />, {
+      initialStates: [
+        {
+          state: State.gradesState,
+          value: Student.Grades.mockGrades,
+        },
+      ],
+    });
     const excludedFromGPA = await screen.findByText(/Excluded - GPA\/Credits/);
     expect(excludedFromGPA).toBeInTheDocument();
   });
 
   it('should find the message: "No course history yet" if grades is an empty array', async () => {
-    render(
-      <BrowserRouter>
-        <PastCourses />
-      </BrowserRouter>,
-      {
-        initialStates: [
-          {
-            state: State.gradesState,
-            value: {
-              data: [],
-              isLoading: false,
-              isSuccess: true,
-              isError: false,
-            },
+    render(<PastCourses />, {
+      initialStates: [
+        {
+          state: State.gradesState,
+          value: {
+            data: [],
+            isLoading: false,
+            isSuccess: true,
+            isError: false,
           },
-        ],
-      }
-    );
+        },
+      ],
+    });
 
     const NoGrades = await screen.findByText('No course history yet');
     expect(NoGrades).toBeInTheDocument();
@@ -88,19 +64,14 @@ describe('<PastCourses />', () => {
 
   describe('User searches', () => {
     it('should find "MTH 451" when typing and fire a google analytics event', async () => {
-      render(
-        <BrowserRouter>
-          <PastCourses />
-        </BrowserRouter>,
-        {
-          initialStates: [
-            {
-              state: State.gradesState,
-              value: Student.Grades.mockGrades,
-            },
-          ],
-        }
-      );
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: State.gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
       const searchInput = screen.getByLabelText('Find past courses');
       userEvent.type(searchInput, 'MTH 451');
       const FinalGrade = await screen.findByText(/MTH 451/i);
@@ -109,19 +80,14 @@ describe('<PastCourses />', () => {
     });
 
     it('should not break when adding regex to the search and find the grade', async () => {
-      render(
-        <BrowserRouter>
-          <PastCourses />
-        </BrowserRouter>,
-        {
-          initialStates: [
-            {
-              state: State.gradesState,
-              value: Student.Grades.mockGrades,
-            },
-          ],
-        }
-      );
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: State.gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
       const searchInput = screen.getByLabelText('Find past courses');
       await screen.findByText('Test Course Title');
       userEvent.type(searchInput, 'A=B-');
@@ -131,19 +97,14 @@ describe('<PastCourses />', () => {
     });
 
     it('should find all 7 of the mathematics (MTH) classes', async () => {
-      render(
-        <BrowserRouter>
-          <PastCourses />
-        </BrowserRouter>,
-        {
-          initialStates: [
-            {
-              state: State.gradesState,
-              value: Student.Grades.mockGrades,
-            },
-          ],
-        }
-      );
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: State.gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
 
       const searchInput = screen.getByLabelText('Find past courses');
       await userEvent.type(searchInput, 'Mathematics');
@@ -160,19 +121,14 @@ describe('<PastCourses />', () => {
     });
 
     it('should not find any courses after searching something bogus', async () => {
-      render(
-        <BrowserRouter>
-          <PastCourses />
-        </BrowserRouter>,
-        {
-          initialStates: [
-            {
-              state: State.gradesState,
-              value: Student.Grades.mockGrades,
-            },
-          ],
-        }
-      );
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: State.gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
 
       const searchInput = screen.getByLabelText('Find past courses');
       await userEvent.type(searchInput, 'bogusBogus');
@@ -183,19 +139,14 @@ describe('<PastCourses />', () => {
     });
 
     it('should find faculty name in document', async () => {
-      render(
-        <BrowserRouter>
-          <PastCourses />
-        </BrowserRouter>,
-        {
-          initialStates: [
-            {
-              state: State.gradesState,
-              value: Student.Grades.mockGrades,
-            },
-          ],
-        }
-      );
+      render(<PastCourses />, {
+        initialStates: [
+          {
+            state: State.gradesState,
+            value: Student.Grades.mockGrades,
+          },
+        ],
+      });
 
       expect(await screen.findByText('Hess, Robin')).toBeInTheDocument();
     });

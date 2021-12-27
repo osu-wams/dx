@@ -1,29 +1,23 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { mockEmployeeUser, renderWithAllContexts as render } from 'src/util/test-utils';
+import { mockEmployeeUser, renderWithRouter as render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
 import { mockGAEvent } from 'src/setupTests';
 import { State, Trainings } from '@osu-wams/hooks';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('<FeaturedTrainingsCard />', () => {
   // Set mock function result before running any tests
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <FeaturedTrainingsCard />
-      </BrowserRouter>,
-      {
-        user: mockEmployeeUser,
-        initialStates: [
-          {
-            state: State.trainingState,
-            value: Trainings.mockTrainings,
-          },
-        ],
-      }
-    );
+    render(<FeaturedTrainingsCard />, {
+      user: mockEmployeeUser,
+      initialStates: [
+        {
+          state: State.trainingState,
+          value: Trainings.mockTrainings,
+        },
+      ],
+    });
   });
 
   describe('Main components', () => {

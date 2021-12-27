@@ -1,25 +1,19 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import {
-  renderWithAllContexts as render,
+  renderWithRouter as render,
   mockEmployeeUser,
   mockStudentEmployeeUser,
 } from 'src/util/test-utils';
 import { ProfileMenu } from '../HeaderNav/ProfileMenu';
 import { mockGAEvent } from 'src/setupTests';
 import { act, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 
 it('Employees can toggle between Student and Employee dashboards', async () => {
   act(() => {
-    render(
-      <BrowserRouter>
-        <ProfileMenu />
-      </BrowserRouter>,
-      {
-        user: mockEmployeeUser,
-      }
-    );
+    render(<ProfileMenu />, {
+      user: mockEmployeeUser,
+    });
   });
   await act(async () => {
     userEvent.click(screen.getByRole('button', { name: /profile/i }));
@@ -31,11 +25,7 @@ it('Employees can toggle between Student and Employee dashboards', async () => {
 });
 
 it('has a logout link in the menu', async () => {
-  render(
-    <BrowserRouter>
-      <ProfileMenu />
-    </BrowserRouter>
-  );
+  render(<ProfileMenu />);
 
   userEvent.click(screen.getByRole('button', { name: /profile/i }));
   const logoutLink = await screen.findByText('Logout');
@@ -45,11 +35,7 @@ it('has a logout link in the menu', async () => {
 });
 
 it('User Button and profile link are in the menu and tracked via GA', async () => {
-  render(
-    <BrowserRouter>
-      <ProfileMenu />
-    </BrowserRouter>
-  );
+  render(<ProfileMenu />);
 
   act(() => {
     userEvent.click(screen.getByRole('button', { name: /profile/i }));
@@ -64,11 +50,7 @@ it('User Button and profile link are in the menu and tracked via GA', async () =
 
 describe('Menu items per role', () => {
   it('Student menu items', async () => {
-    render(
-      <BrowserRouter>
-        <ProfileMenu />
-      </BrowserRouter>
-    );
+    render(<ProfileMenu />);
 
     // When clicking to open a modal updates state, you still need the act wrapper or warnings pop up
     act(() => {
@@ -84,12 +66,7 @@ describe('Menu items per role', () => {
   });
 
   it('Employee menu items', async () => {
-    render(
-      <BrowserRouter>
-        <ProfileMenu />
-      </BrowserRouter>,
-      { user: mockEmployeeUser }
-    );
+    render(<ProfileMenu />, { user: mockEmployeeUser });
 
     // When clicking to open a modal updates state, you still need the act wrapper or warnings pop up
     act(() => {
@@ -105,12 +82,7 @@ describe('Menu items per role', () => {
   });
 
   it('Student Employee menu items', async () => {
-    render(
-      <BrowserRouter>
-        <ProfileMenu />
-      </BrowserRouter>,
-      { user: mockStudentEmployeeUser }
-    );
+    render(<ProfileMenu />, { user: mockStudentEmployeeUser });
 
     // When clicking to open a modal updates state, you still need the act wrapper or warnings pop up
     act(() => {

@@ -1,70 +1,56 @@
 import React from 'react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render, renderWithAllContexts } from 'src/util/test-utils';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
 import { State, Resources, Student } from '@osu-wams/hooks';
-import { BrowserRouter, Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 const notFoundSearchTerm = 'bobross';
 const foundSearchTerm = 'testo';
 describe('<ApplicationSearchBar />', () => {
   it('render nothing when there is no search', async () => {
-    render(
-      <BrowserRouter>
-        <ApplicationSearchBar />
-      </BrowserRouter>
-    );
+    render(<ApplicationSearchBar />);
     const searchBar = await screen.findByTestId('applicationSearch');
     expect(searchBar).toBeInTheDocument();
     expect(searchBar).toHaveValue('');
   });
   it('sends a GA event when there are no filtered items found', async () => {
-    render(
-      <BrowserRouter>
-        <ApplicationSearchBar />
-      </BrowserRouter>,
-      {
-        initialStates: [
-          {
-            state: State.applicationSearchState,
-            value: notFoundSearchTerm,
-          },
-          {
-            state: State.gradesState,
-            value: Student.Grades.mockGrades,
-          },
-        ],
-      }
-    );
+    render(<ApplicationSearchBar />, {
+      initialStates: [
+        {
+          state: State.applicationSearchState,
+          value: notFoundSearchTerm,
+        },
+        {
+          state: State.gradesState,
+          value: Student.Grades.mockGrades,
+        },
+      ],
+    });
     expect(mockGAEvent).toBeCalledWith('application-search-failed', notFoundSearchTerm);
     expect(mockGAEvent).toBeCalledTimes(1);
   });
   it('sends a GA event when there are filtered items found', async () => {
-    render(
-      <BrowserRouter>
-        <ApplicationSearchBar />
-      </BrowserRouter>,
-      {
-        initialStates: [
-          {
-            state: State.applicationSearchState,
-            value: foundSearchTerm,
+    render(<ApplicationSearchBar />, {
+      initialStates: [
+        {
+          state: State.applicationSearchState,
+          value: foundSearchTerm,
+        },
+        {
+          state: State.resourceState,
+          value: {
+            data: Resources.mockResources.resourcesData.data,
+            isLoading: false,
+            isSuccess: false,
+            isError: false,
           },
-          {
-            state: State.resourceState,
-            value: {
-              data: Resources.mockResources.resourcesData.data,
-              isLoading: false,
-              isSuccess: false,
-              isError: false,
-            },
-          },
-        ],
-      }
-    );
+        },
+      ],
+    });
     expect(mockGAEvent).toBeCalledWith('application-search', foundSearchTerm);
     expect(mockGAEvent).toBeCalledTimes(1);
   });
@@ -90,7 +76,7 @@ describe('<ApplicationSearchBar />', () => {
           },
         },
       ]);
-      render(
+      renderWithAllContexts(
         <Router location={history.location} navigator={history}>
           <ApplicationSearchBar />
         </Router>,
@@ -138,11 +124,7 @@ describe('<ApplicationSearchBar />', () => {
   });
   it("Error should be handled when search term is '%'", async () => {
     window.location.search = '?q=%';
-    render(
-      <BrowserRouter>
-        <ApplicationSearchBar />
-      </BrowserRouter>
-    );
+    render(<ApplicationSearchBar />);
     const searchBar = await screen.findByTestId('applicationSearch');
     expect(searchBar).toBeInTheDocument();
   });

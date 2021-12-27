@@ -2,54 +2,37 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { renderWithAllContexts as render, alterMock } from 'src/util/test-utils';
+import { renderWithRouter as render, alterMock } from 'src/util/test-utils';
 import { faCube, faStars } from '@fortawesome/pro-light-svg-icons';
 import ResourcesCard from '../ResourcesCard';
 import { ITSystemStatus } from '../it-systems-status/ITSystemStatus';
 import { mockGAEvent, mockTrendingEvent } from 'src/setupTests';
 import { State } from '@osu-wams/hooks';
 import { RESOURCES_BY_QUEUE_API } from 'src/mocks/apis';
-import { BrowserRouter } from 'react-router-dom';
 
 window.open = jest.fn();
 
 const mockInitialState = jest.fn();
 describe('<ResourcesCard />', () => {
   it('should render the appropriate title', async () => {
-    render(
-      <BrowserRouter>
-        <ResourcesCard categ="financial" icon={faCube} />
-      </BrowserRouter>
-    );
+    render(<ResourcesCard categ="financial" icon={faCube} />);
     expect(await screen.findByText('Featured')).toBeInTheDocument();
   });
 
   it('should have items with icons and text', async () => {
-    const { container } = render(
-      <BrowserRouter>
-        <ResourcesCard categ="financial" icon={faCube} />
-      </BrowserRouter>
-    );
+    const { container } = render(<ResourcesCard categ="financial" icon={faCube} />);
     await screen.findByText('Student Jobs');
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('should have two financial resources with audience of Student', async () => {
-    render(
-      <BrowserRouter>
-        <ResourcesCard categ="financial" icon={faCube} />
-      </BrowserRouter>
-    );
+    render(<ResourcesCard categ="financial" icon={faCube} />);
     await screen.findByText('Student Jobs');
     expect(screen.getByTestId('resource-container').children).toHaveLength(2);
   });
 
   it('should have a clickable resource that fires GooglaAnalytics', async () => {
-    render(
-      <BrowserRouter>
-        <ResourcesCard categ="financial" icon={faCube} />
-      </BrowserRouter>
-    );
+    render(<ResourcesCard categ="financial" icon={faCube} />);
     const StudentJobsResource = await screen.findByText('Student Jobs');
     userEvent.click(StudentJobsResource);
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
@@ -57,20 +40,12 @@ describe('<ResourcesCard />', () => {
   });
 
   it('financial resources should have a more financial resources link', async () => {
-    render(
-      <BrowserRouter>
-        <ResourcesCard categ="financial" icon={faCube} />
-      </BrowserRouter>
-    );
+    render(<ResourcesCard categ="financial" icon={faCube} />);
     await screen.findByText('View more financial resources');
   });
 
   it('should have a link to all category resources', async () => {
-    render(
-      <BrowserRouter>
-        <ResourcesCard categ="academic" icon={faCube} />
-      </BrowserRouter>
-    );
+    render(<ResourcesCard categ="academic" icon={faCube} />);
     const AllAcademicLink = await screen.findByText('View more academic resources');
     expect(AllAcademicLink).toBeInTheDocument();
 
@@ -84,21 +59,15 @@ describe('<ResourcesCard />', () => {
       entityQueueTitle: 'Foo Bar',
       items: [],
     });
-    render(
-      <BrowserRouter>
-        <ResourcesCard categ="financial" icon={faCube} />
-      </BrowserRouter>
-    );
+    render(<ResourcesCard categ="financial" icon={faCube} />);
     expect(await screen.findByText('No resources available.')).toBeInTheDocument();
   });
 
   it('should not open new window when clicking resource with IT System down', async () => {
     render(
       <>
-        <BrowserRouter>
-          <ResourcesCard categ="featured" icon={faStars} />
-          <ITSystemStatus />
-        </BrowserRouter>
+        <ResourcesCard categ="featured" icon={faStars} />
+        <ITSystemStatus />
       </>
     );
 
@@ -112,10 +81,8 @@ describe('<ResourcesCard />', () => {
   it('should have warning icon on resource if IT system is down', async () => {
     const { container } = render(
       <>
-        <BrowserRouter>
-          <ResourcesCard categ="featured" icon={faStars} />
-          <ITSystemStatus />
-        </BrowserRouter>
+        <ResourcesCard categ="featured" icon={faStars} />
+        <ITSystemStatus />
       </>
     );
 
@@ -128,10 +95,8 @@ describe('<ResourcesCard />', () => {
   it('should only have 1 warning icon, because only 1 resource is down', async () => {
     render(
       <>
-        <BrowserRouter>
-          <ResourcesCard categ="featured" icon={faStars} />
-          <ITSystemStatus />
-        </BrowserRouter>
+        <ResourcesCard categ="featured" icon={faStars} />
+        <ITSystemStatus />
       </>
     );
     await screen.findByText('Featured');
@@ -143,10 +108,8 @@ describe('<ResourcesCard />', () => {
   it('should display warning message if resource with IT system down is clicked', async () => {
     render(
       <>
-        <BrowserRouter>
-          <ResourcesCard categ="featured" icon={faStars} />
-          <ITSystemStatus />
-        </BrowserRouter>
+        <ResourcesCard categ="featured" icon={faStars} />
+        <ITSystemStatus />
       </>
     );
     await screen.findByText('Featured');
@@ -167,10 +130,8 @@ describe('<ResourcesCard />', () => {
 it('Warning message has a link to continue to resource', async () => {
   render(
     <>
-      <BrowserRouter>
-        <ResourcesCard categ="featured" icon={faStars} />
-        <ITSystemStatus />
-      </BrowserRouter>
+      <ResourcesCard categ="featured" icon={faStars} />
+      <ITSystemStatus />
     </>
   );
   await screen.findByText('Featured');
@@ -193,14 +154,9 @@ describe('with an InfoButton in the CardFooter', () => {
         value: [{ content: '...', id: 'some-other-id', title: '...' }],
       },
     ]);
-    render(
-      <BrowserRouter>
-        <ResourcesCard categ="financial" icon={faCube} />
-      </BrowserRouter>,
-      {
-        initialStates: mockInitialState(),
-      }
-    );
+    render(<ResourcesCard categ="financial" icon={faCube} />, {
+      initialStates: mockInitialState(),
+    });
 
     const element = screen.queryByTestId('financial-resources');
     expect(element).not.toBeInTheDocument();
@@ -215,14 +171,9 @@ describe('with an InfoButton in the CardFooter', () => {
         ],
       },
     ]);
-    render(
-      <BrowserRouter>
-        <ResourcesCard categ="financial" icon={faCube} />
-      </BrowserRouter>,
-      {
-        initialStates: mockInitialState(),
-      }
-    );
+    render(<ResourcesCard categ="financial" icon={faCube} />, {
+      initialStates: mockInitialState(),
+    });
 
     expect(await screen.findByTestId('financial-resources')).toBeInTheDocument();
   });

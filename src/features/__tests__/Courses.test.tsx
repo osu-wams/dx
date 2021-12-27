@@ -1,14 +1,13 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import Courses from '../Courses';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { Helpers } from '@osu-wams/utils';
 import { State } from '@osu-wams/hooks';
 import { startDate } from '../schedule/schedule-utils';
 import { mockCourseSchedule } from 'src/mocks/handlers';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('<Courses />', () => {
   beforeEach(() => {
@@ -18,12 +17,7 @@ describe('<Courses />', () => {
         value: { isLoading: false, isError: false, isSuccess: true, data: mockCourseSchedule },
       },
     ]);
-    render(
-      <BrowserRouter>
-        <Courses />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<Courses />, { initialStates: mockInitialState() });
   });
   it('renders a list of courses for the current user', async () => {
     const courseTitle = screen.getByText(/data structures/i);
@@ -137,12 +131,7 @@ describe('with an InfoButton in the CardFooter and missing data', () => {
   });
 
   it('does not display the button when the infoButtonData is missing it', async () => {
-    render(
-      <BrowserRouter>
-        <Courses />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<Courses />, { initialStates: mockInitialState() });
     const element = screen.queryByTestId('current-courses');
     expect(element).not.toBeInTheDocument();
   });
@@ -160,12 +149,7 @@ describe('with an InfoButton in the CardFooter', () => {
   });
 
   it('displays the button when the infoButtonData is included', async () => {
-    render(
-      <BrowserRouter>
-        <Courses />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<Courses />, { initialStates: mockInitialState() });
 
     expect(screen.getByTestId('current-courses')).toBeInTheDocument();
   });
@@ -179,12 +163,7 @@ describe('without courses present', () => {
         value: { isLoading: false, isError: false, isSuccess: true, data: [] },
       },
     ]);
-    render(
-      <BrowserRouter>
-        <Courses />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<Courses />, { initialStates: mockInitialState() });
   });
 
   it('contains message about no courses scheduled this term', () => {

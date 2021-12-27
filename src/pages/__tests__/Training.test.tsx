@@ -1,12 +1,11 @@
 /* eslint-disable testing-library/no-node-access */
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { mockEmployeeUser, renderWithAllContexts as render } from 'src/util/test-utils';
+import { mockEmployeeUser, renderWithRouter as render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import Training from 'src/pages/Training';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import { State, Trainings } from '@osu-wams/hooks';
-import { BrowserRouter } from 'react-router-dom';
 
 const { trainingTagState, trainingAudienceState, trainingState } = State;
 /**
@@ -14,12 +13,7 @@ const { trainingTagState, trainingAudienceState, trainingState } = State;
  * We reuse a lot of these elements in our tests
  */
 const renderTrainings = () => {
-  render(
-    <BrowserRouter>
-      <Training />
-    </BrowserRouter>,
-    { user: mockEmployeeUser, initialStates: mockInitialState() }
-  );
+  render(<Training />, { user: mockEmployeeUser, initialStates: mockInitialState() });
 
   const category = screen.getByRole('button', { name: 'Category Category' });
   const audience = screen.getByRole('button', { name: 'Audience Audience' });

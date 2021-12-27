@@ -1,11 +1,10 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithAllContexts as render, authUser } from 'src/util/test-utils';
+import { renderWithRouter as render, authUser } from 'src/util/test-utils';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { mockGAEvent } from 'src/setupTests';
 import { State, Resources } from '@osu-wams/hooks';
-import { BrowserRouter } from 'react-router-dom';
 
 const mockInitialState = jest.fn();
 const mockPostFavorite = jest.fn();
@@ -35,23 +34,13 @@ describe('Favorite Resources Card', () => {
 
   it('Empty State shows up when user has no Favorites', async () => {
     const noFavUser = { ...authUser, data: { ...authUser.data, favoriteResources: [] } };
-    render(
-      <BrowserRouter>
-        <FavoriteResources />
-      </BrowserRouter>,
-      { user: noFavUser, initialStates: mockInitialState() }
-    );
+    render(<FavoriteResources />, { user: noFavUser, initialStates: mockInitialState() });
     expect(await screen.findByText(/You have not added any favorite/i)).toBeInTheDocument();
     expect(screen.queryByText('Academics for Student Athletes')).not.toBeInTheDocument();
   });
 
   it('Renders Favorite Resources Card Title and the 2 active favorite resources', async () => {
-    render(
-      <BrowserRouter>
-        <FavoriteResources />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
     expect(screen.getByText('Favorites')).toBeInTheDocument();
 
     expect(screen.getByText('Academics for Student Athletes')).toBeInTheDocument();
@@ -60,12 +49,7 @@ describe('Favorite Resources Card', () => {
   });
 
   it('User can click to remove item from favorites card', async () => {
-    render(
-      <BrowserRouter>
-        <FavoriteResources />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
 
     // Billing Information is found...
     expect(screen.getByText('Billing Information')).toBeInTheDocument();
@@ -79,12 +63,7 @@ describe('Favorite Resources Card', () => {
   });
 
   it('Finds "draggable" attribute, present when we can re-order resources', async () => {
-    render(
-      <BrowserRouter>
-        <FavoriteResources />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
     expect(screen.getByText('Favorites')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Academics for Student Athletes/i })).toHaveAttribute(
       'draggable'
@@ -92,12 +71,7 @@ describe('Favorite Resources Card', () => {
   });
 
   it('Finds re-ordering explanation for keyboard or screen reader users', async () => {
-    render(
-      <BrowserRouter>
-        <FavoriteResources />
-      </BrowserRouter>,
-      { initialStates: mockInitialState() }
-    );
+    render(<FavoriteResources />, { initialStates: mockInitialState() });
     expect(screen.getByText('Favorites')).toBeInTheDocument();
     expect(screen.getByText(/allow re-ordering with the up and down keys/i)).toBeInTheDocument();
   });

@@ -1,19 +1,14 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { waitFor, screen } from '@testing-library/react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import { MobileMenuStudents } from '../MainNav/MobileMenuStudents';
 import { mockGAEvent } from 'src/setupTests';
-import { BrowserRouter } from 'react-router-dom';
 
 const mockToggle = jest.fn();
 
 test('More menu has links that are tracked via Google Analytics', async () => {
-  render(
-    <BrowserRouter>
-      <MobileMenuStudents toggleFullMenu={mockToggle} />
-    </BrowserRouter>
-  );
+  render(<MobileMenuStudents toggleFullMenu={mockToggle} />);
 
   const resources = screen.getByText('Resources');
   const academics = screen.getByText('Academics');

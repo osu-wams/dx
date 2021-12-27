@@ -2,7 +2,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import {
-  renderWithAllContexts as render,
+  renderWithRouter as render,
   mockEmployeeUser,
   mockStudentEmployeeUser,
   authUser,
@@ -11,46 +11,31 @@ import Header from '../Header';
 import { State } from '@osu-wams/hooks';
 import { mockGAEvent } from 'src/setupTests';
 import { screen, within } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 
 describe('Dashboard Headers', () => {
   it('Student has "Student Dashboard" title', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    );
+    render(<Header />);
     expect(await screen.findByText('Student Dashboard')).toBeInTheDocument();
     expect(screen.queryByTestId('masquerade-banner')).not.toBeInTheDocument();
   });
 
   it('Employee has "Employee Dashboard" title', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-      { user: mockEmployeeUser }
-    );
+    render(<Header />, { user: mockEmployeeUser });
     const DashboardTitle = await screen.findByTestId('dashboard-title');
     expect(DashboardTitle).toHaveTextContent('Employee Dashboard');
     expect(screen.queryByTestId('masquerade-banner')).not.toBeInTheDocument();
   });
 
   it('Employee has a masquerade banner when masquerading', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-      {
-        user: {
-          ...mockEmployeeUser,
-          data: {
-            ...mockEmployeeUser.data,
-            isMasquerade: true,
-          },
+    render(<Header />, {
+      user: {
+        ...mockEmployeeUser,
+        data: {
+          ...mockEmployeeUser.data,
+          isMasquerade: true,
         },
-      }
-    );
+      },
+    });
     expect(await screen.findAllByText('Employee Dashboard')).toHaveLength(2);
     expect(await screen.findByText('Masqueraded as Employee')).toBeInTheDocument();
     expect(await screen.findByTestId('masquerade-banner')).toBeInTheDocument();
@@ -59,11 +44,7 @@ describe('Dashboard Headers', () => {
 
 describe('Student mobile menu interactions', () => {
   it('Student Dashboard title only visible when menu is expanded', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    );
+    render(<Header />);
 
     const title = 'Student Dashboard';
     const studentDashboard = screen.queryByText(title);
@@ -80,11 +61,7 @@ describe('Student mobile menu interactions', () => {
   });
 
   it('Clicking "menu" opens and clicking the close dismisses the modal', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    );
+    render(<Header />);
 
     const menu = screen.getByText('Menu');
     userEvent.click(menu);
@@ -99,11 +76,7 @@ describe('Student mobile menu interactions', () => {
   });
 
   it('Clicking main link inside the modal dismisses the modal', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    );
+    render(<Header />);
 
     const menu = screen.getByText('Menu');
     userEvent.click(menu);
@@ -118,11 +91,7 @@ describe('Student mobile menu interactions', () => {
   });
 
   it('Clicking footer link inside the modal dismisses the modal', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    );
+    render(<Header />);
 
     const menu = screen.getByText('Menu');
     userEvent.click(menu);
@@ -136,12 +105,7 @@ describe('Student mobile menu interactions', () => {
   });
 
   it('Cannot find mobile menu in desktop version, all links visible immediately', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-      { isDesktop: true }
-    );
+    render(<Header />, { isDesktop: true });
 
     const menu = screen.queryByText('Menu');
     expect(menu).not.toBeInTheDocument();
@@ -153,11 +117,7 @@ describe('Student mobile menu interactions', () => {
   });
 
   it('Help and Profile menu open and have their respective menu items', async () => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    );
+    render(<Header />);
 
     const helpMenu = screen.getByText('Help');
     userEvent.click(helpMenu);
@@ -181,11 +141,7 @@ describe('with a campus code', () => {
 
   describe('as a Corvallis user', () => {
     it('renders the appropriate header logo', () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>
-      );
+      render(<Header />);
       const appHeader = screen.getByTestId('app-header-logo');
       expect(appHeader).toBeInTheDocument();
 
@@ -195,19 +151,14 @@ describe('with a campus code', () => {
     });
 
     it('render the appropriate header logo in dark mode', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        {
-          initialStates: [
-            {
-              state: State.themeState,
-              value: 'dark',
-            },
-          ],
-        }
-      );
+      render(<Header />, {
+        initialStates: [
+          {
+            state: State.themeState,
+            value: 'dark',
+          },
+        ],
+      });
       const appHeader = screen.getByTestId('app-header-logo');
       expect(appHeader).toBeInTheDocument();
 
@@ -230,11 +181,7 @@ describe('with a campus code', () => {
           },
         },
       });
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>
-      );
+      render(<Header />);
 
       const appHeader = screen.getByTestId('app-header-logo');
       expect(appHeader).toBeInTheDocument();
@@ -261,12 +208,7 @@ describe('with a campus code', () => {
       });
     });
     it('renders the appropriate header logo', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        { user: mockUser() }
-      );
+      render(<Header />, { user: mockUser() });
 
       const appHeader = screen.getByTestId('app-header-logo');
       expect(appHeader).toBeInTheDocument();
@@ -276,20 +218,15 @@ describe('with a campus code', () => {
     });
 
     it('render the appropriate header logo in dark mode', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        {
-          user: mockUser(),
-          initialStates: [
-            {
-              state: State.themeState,
-              value: 'dark',
-            },
-          ],
-        }
-      );
+      render(<Header />, {
+        user: mockUser(),
+        initialStates: [
+          {
+            state: State.themeState,
+            value: 'dark',
+          },
+        ],
+      });
       const appHeader = screen.getByTestId('app-header-logo');
       expect(appHeader).toBeInTheDocument();
 
@@ -315,12 +252,7 @@ describe('with a campus code', () => {
       });
     });
     it('renders the appropriate header logo', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        { user: mockUser() }
-      );
+      render(<Header />, { user: mockUser() });
 
       const appHeader = screen.getByTestId('app-header-logo');
       expect(appHeader).toBeInTheDocument();
@@ -331,20 +263,15 @@ describe('with a campus code', () => {
     });
 
     it('render the appropriate header logo in dark mode', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        {
-          user: mockUser(),
-          initialStates: [
-            {
-              state: State.themeState,
-              value: 'dark',
-            },
-          ],
-        }
-      );
+      render(<Header />, {
+        user: mockUser(),
+        initialStates: [
+          {
+            state: State.themeState,
+            value: 'dark',
+          },
+        ],
+      });
       const appHeader = screen.getByTestId('app-header-logo');
       expect(appHeader).toBeInTheDocument();
 
@@ -357,11 +284,7 @@ describe('with a campus code', () => {
 describe('with a dashboard context', () => {
   describe('as a student', () => {
     it('renders the appropriate header link', () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>
-      );
+      render(<Header />);
       const appLink = screen.getByTestId('app-header-logo').parentElement!;
       expect(appLink).toBeInTheDocument();
 
@@ -371,12 +294,7 @@ describe('with a dashboard context', () => {
   });
   describe('as an employee', () => {
     it('renders the appropriate header link', () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        { user: mockEmployeeUser }
-      );
+      render(<Header />, { user: mockEmployeeUser });
       const appLink = screen.getByTestId('app-header-logo').parentElement!;
       expect(appLink).toBeInTheDocument();
 
@@ -384,12 +302,7 @@ describe('with a dashboard context', () => {
       expect(href).toEqual('/employee');
     });
     it('opens dashboard toggle menu when clicking site title', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        { user: mockEmployeeUser }
-      );
+      render(<Header />, { user: mockEmployeeUser });
       const ToggleDashboardIcon = await screen.findByTestId('dashboard-toggle-icon');
       expect(ToggleDashboardIcon).toBeInTheDocument();
       userEvent.click(ToggleDashboardIcon);
@@ -401,12 +314,7 @@ describe('with a dashboard context', () => {
   });
   describe('as a student employee', () => {
     it('opens dashboard toggle menu when clicking site title', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        { user: mockStudentEmployeeUser }
-      );
+      render(<Header />, { user: mockStudentEmployeeUser });
       const ToggleDashboardIcon = await screen.findByTestId('dashboard-toggle-icon');
       expect(ToggleDashboardIcon).toBeInTheDocument();
       userEvent.click(ToggleDashboardIcon);
@@ -415,12 +323,7 @@ describe('with a dashboard context', () => {
     });
 
     it('checkmark should appear next to active dashboard in toggle menu', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        { user: mockStudentEmployeeUser }
-      );
+      render(<Header />, { user: mockStudentEmployeeUser });
       const ToggleDashboardIcon = await screen.findByTestId('dashboard-toggle-icon');
       userEvent.click(ToggleDashboardIcon);
       const StudentDashboardOption = await screen.findByTestId('student-toggle-option');
@@ -435,17 +338,12 @@ describe('with a dashboard context', () => {
 
     // student employee with employee primary override shows employee dashboard
     it('student employee with override shows employee dashboard', async () => {
-      render(
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>,
-        {
-          user: {
-            ...mockStudentEmployeeUser,
-            data: { ...mockStudentEmployeeUser.data, primaryAffiliationOverride: 'employee' },
-          },
-        }
-      );
+      render(<Header />, {
+        user: {
+          ...mockStudentEmployeeUser,
+          data: { ...mockStudentEmployeeUser.data, primaryAffiliationOverride: 'employee' },
+        },
+      });
 
       const DashboardTitle = await screen.findByTestId('dashboard-title');
       expect(DashboardTitle).toHaveTextContent('Employee Dashboard');
