@@ -87,7 +87,7 @@ const ProfileMenu = () => {
           });
         }}
       >
-        <Icon icon={toggleIcon} /> {description}!!!
+        <Icon icon={toggleIcon} /> {description}
       </MenuLink>
     );
   };
