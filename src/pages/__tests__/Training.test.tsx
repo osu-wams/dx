@@ -14,7 +14,6 @@ const { trainingTagState, trainingAudienceState, trainingState } = State;
  */
 const renderTrainings = () => {
   render(<Training />, { user: mockEmployeeUser, initialStates: mockInitialState() });
-
   const category = screen.getByRole('button', { name: 'Category Category' });
   const audience = screen.getByRole('button', { name: 'Audience Audience' });
   const searchInput = screen.getByPlaceholderText('Search for trainings') as HTMLInputElement;

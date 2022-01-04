@@ -93,11 +93,7 @@ xit('visiting employee dashboard redirects to student (default user) dashboard w
   window.location.pathname = '/employee';
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
-  render(
-    <>
-      <App containerElement={div} />{' '}
-    </>
-  );
+  render(<App containerElement={div} />);
   expect(mockNavigate).toBeCalledWith('/student');
   expect(
     await screen.findByText(/You do not have permission to access this page/)
