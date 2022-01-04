@@ -1729,6 +1729,15 @@
     date-fns "^2.21.1"
     libphonenumber-js "^1.9.17"
 
+"@osu-wams/utils@^0.0.22":
+  version "0.0.22"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.22/cb5c2ed35e596732c1be8e596b0007829187544d9709f79fa8bb5fb9e99f708d#962729bb548cec11f2b695410b59c34b31ef6994"
+  integrity sha512-FFwHtVNPNasqF7MnJN1AwaQkS6X+9pG3e04xrkXXcOEXRL31mmJ5MhtdCWpjJTrqyr6uTtu10g2WN6rqKjhwBQ==
+  dependencies:
+    "@osu-wams/lib" "^0.1.85"
+    date-fns "^2.21.1"
+    libphonenumber-js "^1.9.17"
+
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"

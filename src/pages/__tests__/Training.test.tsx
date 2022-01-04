@@ -1,7 +1,7 @@
 /* eslint-disable testing-library/no-node-access */
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { mockEmployeeUser, renderWithAllContexts as render } from 'src/util/test-utils';
+import { mockEmployeeUser, renderWithRouter as render } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import Training from 'src/pages/Training';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';

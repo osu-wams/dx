@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { mockEmployeeUser, renderWithAllContexts as render } from 'src/util/test-utils';
+import { mockEmployeeUser, renderWithRouter as render } from 'src/util/test-utils';
 import MainNav from '../MainNav/';
 import { mockGAEvent } from 'src/setupTests';
 

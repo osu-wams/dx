@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import AcademicsDashboard from '../Academics/AcademicsDashboard';
 import { screen } from '@testing-library/react';
 import { academicAnnouncementResult } from 'src/mocks/handlers';

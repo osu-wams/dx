@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithAllContexts as render, authUser } from 'src/util/test-utils';
+import { renderWithRouter as render, authUser } from 'src/util/test-utils';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { mockGAEvent } from 'src/setupTests';
 import { State, Resources } from '@osu-wams/hooks';

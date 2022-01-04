@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import { mockInitialState } from 'src/setupTests';
 import userEvent from '@testing-library/user-event';
@@ -116,6 +116,7 @@ describe('<Search/>', () => {
       });
       const searchBar = screen.getByTestId('applicationSearch');
 
+      userEvent.clear(searchBar);
       await userEvent.type(searchBar, 'About{enter}');
       expect(await screen.findByTestId('simple-internal-link')).toHaveAttribute(
         'href',
@@ -144,7 +145,7 @@ describe('<Search/>', () => {
         ],
       });
       const searchBar = screen.getByTestId('applicationSearch');
-
+      userEvent.clear(searchBar);
       await userEvent.type(searchBar, 'About{enter}');
       expect(await screen.findByTestId('simple-internal-link')).toHaveAttribute(
         'href',

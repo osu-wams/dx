@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { renderWithAllContexts as render, mockEmployeeUser } from 'src/util/test-utils';
+import { renderWithRouter as render, mockEmployeeUser } from 'src/util/test-utils';
 import { mockInitialState } from 'src/setupTests';
 import { State } from '@osu-wams/hooks';
 import { mockCourseSchedule } from 'src/mocks/handlers';

@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import { NotificationsMenu } from '../HeaderNav/NotificationsMenu';
 import { mockGAEvent } from 'src/setupTests';
 import { screen, waitFor } from '@testing-library/react';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import Finances from '../Finances';
-import { renderWithAllContexts as render, alterMock } from 'src/util/test-utils';
+import { renderWithRouter as render, alterMock } from 'src/util/test-utils';
 import { ANNOUNCEMENTS_API } from 'src/mocks/apis';
 
 describe('Finances page with standard data', () => {
