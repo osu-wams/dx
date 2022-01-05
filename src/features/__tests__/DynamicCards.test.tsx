@@ -2,7 +2,7 @@
 import React from 'react';
 import { screen, within } from '@testing-library/react';
 import {
-  renderWithAllContexts as render,
+  renderWithRouter as render,
   mockEmployeeUser,
   mockGradUser,
   mockStudentEmployeeUser,

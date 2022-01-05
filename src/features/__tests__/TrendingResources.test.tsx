@@ -1,10 +1,6 @@
 /* eslint-disable testing-library/no-node-access */
 import React from 'react';
-import {
-  renderWithAllContexts as render,
-  mockEmployeeUser,
-  mockGradUser,
-} from 'src/util/test-utils';
+import { renderWithRouter as render, mockEmployeeUser, mockGradUser } from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { TrendingResources } from 'src/features/TrendingResources';

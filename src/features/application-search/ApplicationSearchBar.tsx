@@ -7,7 +7,7 @@ import { SearchBar } from 'src/ui/SearchBar';
 import { Event } from 'src/util/gaTracking';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { SearchWrapper } from 'src/ui/SearchBar';
-import { useNavigate, useMatch } from '@reach/router';
+import { useNavigate, useMatch } from 'react-router-dom';
 import Icon from 'src/ui/Icon';
 import { Mobile } from 'src/hooks/useMediaQuery';
 import { StyledBtn } from 'src/ui/CustomBtn';
@@ -59,7 +59,9 @@ const getSearchQuerystring = () => {
       // Only need to decode if terms[1] is a valid encoding
       try {
         return decodeURI(terms[1]);
-      } catch (err) { /* do nothing */ }
+      } catch (err) {
+        /* do nothing */
+      }
     }
   }
 };
@@ -137,7 +139,8 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
 
     // Navigate to search page then set shared state to initiate a search
     if (!onSearchPage && !navigatedToSearch && search) {
-      navigate(Routes.Routes().search.fullPath).then((_v) => setSearch(search));
+      navigate(Routes.Routes().search.fullPath);
+      setSearch(search);
     }
   }, [search]);
 
@@ -169,7 +172,8 @@ const ApplicationSearchBar = ({ fontSize }: { fontSize?: string }) => {
   const searchHandler = () => {
     if (!onSearchPage && input) {
       // Navigate to search page then set shared state to initiate a search
-      navigate(Routes.Routes().search.fullPath).then((_v) => setSearch(input));
+      navigate(Routes.Routes().search.fullPath);
+      setSearch(input);
     } else {
       // While on the search page, set the query causing application state to operate and
       // results to render.

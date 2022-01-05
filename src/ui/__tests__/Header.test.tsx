@@ -2,7 +2,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import {
-  renderWithAllContexts as render,
+  renderWithRouter as render,
   mockEmployeeUser,
   mockStudentEmployeeUser,
   authUser,

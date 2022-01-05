@@ -5,7 +5,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { HeaderNavButton } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import Icon from 'src/ui/Icon';
-import { useNavigate } from '@reach/router';
+import { useNavigate } from 'react-router-dom';
 import { Routes } from '@osu-wams/utils';
 
 const SearchButton = () => {

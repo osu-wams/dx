@@ -1,24 +1,21 @@
 import React from 'react';
-import { useLocation, useNavigate } from '@reach/router';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const useResetScroll = () => {
   const navigate = useNavigate();
-  const { href, state } = useLocation();
+  const { state, pathname } = useLocation();
 
-  const updateState = React.useCallback(() => {
-    navigate(href, {
-      // @ts-ignore spread object
-      state: { ...state, scrolled: true },
-      replace: true,
-    }).then(() => window.scrollTo(0, 0));
-  }, [href, state, navigate]);
-
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     // @ts-ignore type unknown
-    if (state && !state?.scrolled) {
-      updateState();
+    if (!state) {
+      navigate(pathname, {
+        // @ts-ignore spread object
+        state: { ...state, scrolled: true },
+        replace: true,
+      });
+      window.scrollTo(0, 0);
     }
-  }, [state, updateState]);
+  }, [pathname, state, navigate]);
 };
 
 export default useResetScroll;

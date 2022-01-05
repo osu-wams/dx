@@ -1,9 +1,16 @@
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render } from 'src/util/test-utils';
 import { Color } from '@osu-wams/theme';
-import { ExternalLink, HighlightExternalLink, InternalLink, SimpleExternalLink, SimpleInternalLink, SimpleModalLink } from '../Link';
+import {
+  ExternalLink,
+  HighlightExternalLink,
+  InternalLink,
+  SimpleExternalLink,
+  SimpleInternalLink,
+  SimpleModalLink,
+} from '../Link';
 
 const Default = () => <ExternalLink href="https://oregonstate.edu">Default link</ExternalLink>;
 
@@ -38,9 +45,7 @@ const InternalLinkBothColors = () => (
 );
 
 const SimpleIntLink = () => (
-  <SimpleInternalLink to="https://oregonstate.edu">
-    Simple Internal Link Sample
-  </SimpleInternalLink>
+  <SimpleInternalLink to="https://oregonstate.edu">Simple Internal Link Sample</SimpleInternalLink>
 );
 
 const HighlightExtLink = () => (
@@ -49,11 +54,7 @@ const HighlightExtLink = () => (
   </HighlightExternalLink>
 );
 
-const SimpleModLink = () => (
-  <SimpleModalLink>
-    Simple Modal Link
-  </SimpleModalLink>
-);
+const SimpleModLink = () => <SimpleModalLink>Simple Modal Link</SimpleModalLink>;
 
 // Snapshot tests to make sure our props are carried through
 test('Default options', () => {

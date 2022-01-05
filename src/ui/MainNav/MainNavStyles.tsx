@@ -1,4 +1,4 @@
-import { Link } from '@reach/router';
+import { NavLink as RRNavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { fontSize, breakpoints, spacing } from '@osu-wams/theme';
 import { IconStyle } from '../Icon';
@@ -36,7 +36,7 @@ const Nav = styled.nav`
 `;
 
 // Adding <any> for now as typescript wasn't compiling with it as a regular styled component
-const NavLink = styled(Link)<any>`
+const NavLink = styled(RRNavLink)<any>`
   display: flex;
   flex-direction: column;
   @media (min-width: ${breakpoints.small}) {

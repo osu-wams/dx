@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
-import { navigate, Router, Location, RouteComponentProps } from '@reach/router';
+import { Routes as ReactRouter, Route, useLocation, useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga';
@@ -27,7 +27,6 @@ import {
 import { Routes } from '@osu-wams/utils';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ApplicationMessages } from 'src/ui/ApplicationMessages';
-import { RouterPage } from './routers';
 import Profile from './pages/Profile';
 import About from './pages/About';
 import Search from './pages/Search';
@@ -76,14 +75,14 @@ const EmployeeRouter = Loadable({
   loader: () => import('./routers/Employee'),
   loading: Loading,
   delay: 200,
-}) as React.FunctionComponent<RouteComponentProps> & LoadableComponent;
+}) as React.FunctionComponent & LoadableComponent;
 
 /* istanbul ignore next */
 const StudentRouter = Loadable({
   loader: () => import('./routers/Student'),
   loading: Loading,
   delay: 200,
-}) as React.FunctionComponent<RouteComponentProps> & LoadableComponent;
+}) as React.FunctionComponent & LoadableComponent;
 
 const App = (props: AppProps) => {
   const isLoaded = useRecoilValue(isLoadedState);
@@ -91,6 +90,7 @@ const App = (props: AppProps) => {
   const user = useRecoilValue<Types.UserState>(userState);
   const [theme, setTheme] = useRecoilState<string>(themeState);
   const containerElementRef = useRef(props.containerElement);
+  const navigate = useNavigate();
   useUserState(navigate);
   useGradesState();
   useCourseScheduleState();
@@ -150,6 +150,8 @@ const App = (props: AppProps) => {
   // We use this to conditionally load/strip the header and footer
   const mobileApp = user.data.isMobile;
 
+  const location = useLocation();
+
   return (
     <HelmetProvider>
       <ThemeProvider theme={themesLookup[theme]}>
@@ -158,30 +160,23 @@ const App = (props: AppProps) => {
         <Alerts />
         <ApplicationMessages />
         <ContentWrapper>
-          <Location>
-            {({ location }) => (
-              <PageGridWrapper key={location.key}>
-                {ReactGA.pageview(location.pathname + location.search + location.hash)}
-                <AnimatePresence exitBeforeEnter>
-                  <Router>
-                    <RouterPage default pageComponent={<PageNotFound />} />
-                    <EmployeeRouter path={Routes.Routes().employee.path + '/*'} />
-                    <StudentRouter path={Routes.Routes().student.path + '/*'} />
-                    <RouterPage path={Routes.Routes().profile.path} pageComponent={<Profile />} />
-                    <RouterPage path={Routes.Routes().about.path} pageComponent={<About />} />
-                    <RouterPage path={Routes.Routes().search.path} pageComponent={<Search />} />
-                    <RouterPage
-                      path={Routes.Routes().notifications.path}
-                      pageComponent={<Notifications />}
-                    />
-                    {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
-                      <RouterPage path="covid" pageComponent={<MobileCovid />} />
-                    )}
-                  </Router>
-                </AnimatePresence>
-              </PageGridWrapper>
-            )}
-          </Location>
+          <PageGridWrapper key={location.key}>
+            {ReactGA.pageview(location.pathname + location.search + location.hash)}
+            <AnimatePresence exitBeforeEnter>
+              <ReactRouter>
+                <Route path={Routes.Routes().employee.path + '/*'} element={<EmployeeRouter />} />
+                <Route path={Routes.Routes().student.path + '/*'} element={<StudentRouter />} />
+                <Route path={Routes.Routes().profile.path} element={<Profile />} />
+                <Route path={Routes.Routes().about.path} element={<About />} />
+                <Route path={Routes.Routes().search.path} element={<Search />} />
+                <Route path={Routes.Routes().notifications.path} element={<Notifications />} />
+                {process.env.REACT_APP_EXPERIMENTAL === 'true' && (
+                  <Route path="covid" element={<MobileCovid />} />
+                )}
+                <Route path="*" element={<PageNotFound />} />
+              </ReactRouter>
+            </AnimatePresence>
+          </PageGridWrapper>
         </ContentWrapper>
         {!mobileApp && <Footer />}
       </ThemeProvider>

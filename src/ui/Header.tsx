@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styled from 'styled-components/macro';
-import { LocationProvider, Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 import { Event } from 'src/util/gaTracking';
 import logo from 'src/assets/osu-logo.svg';
 import ecampusLogo from 'src/assets/osu-ecampus.svg';
@@ -24,6 +24,7 @@ import { faMask, faCheck } from '@fortawesome/pro-light-svg-icons';
 import { faCaretDown } from '@fortawesome/pro-solid-svg-icons';
 import { Menu, MenuPopover, MenuItem, MenuButton } from '@reach/menu-button';
 import { HeaderNavList } from './HeaderNav/HeaderNavStyles';
+import { useResetScroll } from 'src/hooks/useResetScroll';
 
 const { usersCampus, CAMPUS_CODES } = User;
 const { userState, themeState, dashboardState } = State;
@@ -185,6 +186,7 @@ const ToggleOption = (props) => {
 };
 
 const Header = () => {
+  useResetScroll();
   const user = useRecoilValue(userState);
   const title = mainTitle(user.data);
   const theme = useRecoilValue(themeState);
@@ -200,13 +202,13 @@ const Header = () => {
       ? setToggledAffiliation(user.data.primaryAffiliationOverride)
       : setToggledAffiliation(user.data.primaryAffiliation);
     // Checks for any employee affiliation (finds Student Employees too)
-    if (user.data?.affiliations.includes(AFFILIATIONS.employee)) {
+    if (user.data?.affiliations?.includes(AFFILIATIONS.employee)) {
       setIsEmployee(true);
     }
   }, [user.data]);
 
   return (
-    <LocationProvider>
+    <>
       {user.data.isMasquerade && (
         <MasqueradeBanner data-testid="masquerade-banner">
           Masqueraded as{' '}
@@ -261,7 +263,7 @@ const Header = () => {
           <MainNav />
         </NavHeaderWrapper>
       </Navigation>
-    </LocationProvider>
+    </>
   );
 };
 

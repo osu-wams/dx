@@ -1,10 +1,12 @@
 import React from 'react';
-import { renderWithAllContexts as render } from 'src/util/test-utils';
+import { renderWithRouter as render, renderWithAllContexts } from 'src/util/test-utils';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
 import ApplicationSearchBar from 'src/features/application-search/ApplicationSearchBar';
 import { State, Resources, Student } from '@osu-wams/hooks';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 const notFoundSearchTerm = 'bobross';
 const foundSearchTerm = 'testo';
@@ -58,6 +60,7 @@ describe('<ApplicationSearchBar />', () => {
     let searchBar;
 
     beforeEach(async () => {
+      history = createMemoryHistory({ initialEntries: ['/'] });
       mockInitialState.mockReturnValueOnce([
         {
           state: State.applicationSearchState,
@@ -73,8 +76,12 @@ describe('<ApplicationSearchBar />', () => {
           },
         },
       ]);
-      const view = render(<ApplicationSearchBar />, { initialStates: mockInitialState() });
-      history = view.history;
+      renderWithAllContexts(
+        <Router location={history.location} navigator={history}>
+          <ApplicationSearchBar />
+        </Router>,
+        { initialStates: mockInitialState() }
+      );
       searchBar = await screen.findByTestId('applicationSearch');
     });
     it('updates location and input field when search is performed', async () => {
@@ -115,7 +122,7 @@ describe('<ApplicationSearchBar />', () => {
       });
     });
   });
-  it('Error should be handled when search term is \'%\'', async () => {
+  it("Error should be handled when search term is '%'", async () => {
     window.location.search = '?q=%';
     render(<ApplicationSearchBar />);
     const searchBar = await screen.findByTestId('applicationSearch');

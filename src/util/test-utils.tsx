@@ -12,6 +12,7 @@ import { rest } from 'msw';
 import { server } from 'src/mocks/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter } from 'react-router-dom';
 
 // Helper method to change the mock responses by MSW
 export const alterMock = (api: string, mock: any, status: number = 200) => {
@@ -178,4 +179,8 @@ const renderWithAllContexts = (
   return { ...testingLibraryRender(ui, { wrapper: Wrapper, ...options }), history };
 };
 
-export { renderWithUserContext, renderWithAppContext, renderWithAllContexts };
+const renderWithRouter = (component: any, componentStates?: any) => {
+  return renderWithAllContexts(<BrowserRouter>{component}</BrowserRouter>, componentStates);
+};
+
+export { renderWithUserContext, renderWithAppContext, renderWithAllContexts, renderWithRouter };

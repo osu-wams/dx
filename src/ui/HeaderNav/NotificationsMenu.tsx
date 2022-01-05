@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
 import { faBell } from '@fortawesome/pro-light-svg-icons';
 import VisuallyHidden from '@reach/visually-hidden';

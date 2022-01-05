@@ -6,12 +6,12 @@ import { State } from '@osu-wams/hooks';
 import {
   mockEmployeeUser,
   mockStudentEmployeeUser,
-  renderWithAllContexts as render,
+  renderWithRouter as render,
 } from 'src/util/test-utils';
-import { LocationProvider, createHistory, createMemorySource } from '@reach/router';
 import App from '../App';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter } from 'react-router-dom';
 
 const { dashboardState, initialRouteState } = State;
 
@@ -28,25 +28,21 @@ jest.mock('@osu-wams/hooks', () => {
 });
 
 const mockNavigate = jest.fn();
-jest.mock('@reach/router', () => {
-  const original = jest.requireActual('@reach/router');
-  return {
-    ...original,
-    navigate: (route) => mockNavigate(route),
-  };
-});
+
+jest.mock('react-router-dom', () => ({
+  ...(jest.requireActual('react-router-dom') as any),
+  useNavigate: () => mockNavigate,
+}));
 
 it('renders <App> without crashing', () => {
   const div = document.createElement('div');
-  // Setup for ReachRouter
-  const testHistory = createHistory(createMemorySource('/'));
   const queryClient = new QueryClient();
   ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <LocationProvider history={testHistory}>
+        <BrowserRouter>
           <App containerElement={div} />
-        </LocationProvider>
+        </BrowserRouter>
       </RecoilRoot>
     </QueryClientProvider>,
     div
@@ -81,7 +77,7 @@ it('navigates to an initial route', async () => {
       },
     ],
   });
-  expect(mockNavigate).toBeCalledWith('/about');
+  expect(mockNavigate).lastCalledWith('/about', { replace: true });
 });
 
 it('navigates to root and redirects to student (default user) dashboard', async () => {
@@ -89,7 +85,7 @@ it('navigates to root and redirects to student (default user) dashboard', async 
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
   render(<App containerElement={div} />);
-  expect(mockNavigate).toBeCalledWith('/student');
+  expect(mockNavigate).lastCalledWith('/student', { replace: true });
 });
 
 // TODO: Test behavior moved to @osu-wams/hooks package
@@ -144,6 +140,6 @@ it('student employee visiting student dashboard', async () => {
   });
   expect(mockPostSettings).not.toBeCalled();
   await waitFor(() => {
-    expect(mockNavigate).toBeCalledWith('/student');
+    expect(mockNavigate).lastCalledWith('/student', { replace: true });
   });
 });

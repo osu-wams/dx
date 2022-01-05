@@ -1,4 +1,4 @@
-import { Link } from '@reach/router';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { fontSize, breakpoints } from '@osu-wams/theme';
 
@@ -14,7 +14,7 @@ const SubNav = styled.nav`
   }
 `;
 
-const SubNavLink = styled(Link)`
+const SubNavLink = styled(NavLink)`
   padding: 0.2rem 0;
   line-height: 20px;
   text-decoration: none;

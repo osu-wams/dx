@@ -9,6 +9,7 @@ const MainNavEmployee = (...props) => {
   return (
     <Nav {...props}>
       <NavLink
+        end
         to={Routes.Routes().employee.fullPath}
         onClick={() => Event('employee-navigation-main', 'Overview link clicked')}
       >
@@ -16,6 +17,7 @@ const MainNavEmployee = (...props) => {
         Overview
       </NavLink>
       <NavLink
+        end
         to={Routes.Routes(Routes.Dashboards.employee).resources.fullPath}
         onClick={() => Event('employee-navigation-main', 'Resources link clicked')}
       >
@@ -23,6 +25,7 @@ const MainNavEmployee = (...props) => {
         Resources
       </NavLink>
       <NavLink
+        end
         to={Routes.Routes().trainings.fullPath}
         onClick={() => Event('employee-navigation-main', 'Training link clicked')}
       >
