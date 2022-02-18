@@ -1729,15 +1729,6 @@
     date-fns "^2.21.1"
     libphonenumber-js "^1.9.17"
 
-"@osu-wams/utils@^0.0.22":
-  version "0.0.22"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.22/cb5c2ed35e596732c1be8e596b0007829187544d9709f79fa8bb5fb9e99f708d#962729bb548cec11f2b695410b59c34b31ef6994"
-  integrity sha512-FFwHtVNPNasqF7MnJN1AwaQkS6X+9pG3e04xrkXXcOEXRL31mmJ5MhtdCWpjJTrqyr6uTtu10g2WN6rqKjhwBQ==
-  dependencies:
-    "@osu-wams/lib" "^0.1.85"
-    date-fns "^2.21.1"
-    libphonenumber-js "^1.9.17"
-
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"
@@ -12976,9 +12967,9 @@ url-loader@4.1.1:
     schema-utils "^3.0.0"
 
 url-parse@^1.4.3, url-parse@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.1.tgz#d5fa9890af8a5e1f274a2c98376510f6425f6e3b"
-  integrity sha512-HOfCOUJt7iSYzEx/UqgtwKRMC6EU91NFhsCHMv9oM03VJcVo2Qrp8T8kI9D7amFf1cu+/3CEhgb3rF9zL7k85Q==
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.7.tgz#00780f60dbdae90181f51ed85fb24109422c932a"
+  integrity sha512-HxWkieX+STA38EDk7CE9MEryFeHCKzgagxlGvsdS7WBImq9Mk+PGwiT56w82WI3aicwJA8REp42Cxo98c8FZMA==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
