@@ -41,18 +41,18 @@ exports[`<Table /> BasicTable no border around table element 1`] = `
       Basic Table
     </caption>
     <tbody
-      class="TableBody-sc-257f50-0"
+      class=""
     >
       <tr
-        class="TableRow-sc-1otpgt5-0"
+        class=""
       >
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           One col
         </td>
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           Two col
         </td>
@@ -103,18 +103,18 @@ exports[`<Table /> CompactTable smaller paddings and font size 1`] = `
       Compact Table
     </caption>
     <tbody
-      class="TableBody-sc-257f50-0"
+      class=""
     >
       <tr
-        class="TableRow-sc-1otpgt5-0"
+        class=""
       >
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           One col
         </td>
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           Two col
         </td>
@@ -165,18 +165,18 @@ exports[`<Table /> DefaultTable gets rendered with border around table 1`] = `
       Default Table
     </caption>
     <tbody
-      class="TableBody-sc-257f50-0"
+      class=""
     >
       <tr
-        class="TableRow-sc-1otpgt5-0"
+        class=""
       >
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           One col
         </td>
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           Two col
         </td>
@@ -229,29 +229,29 @@ exports[`<Table /> Stetch table gets 100% width 1`] = `
     </caption>
     <tbody>
       <tr
-        class="TableRow-sc-1otpgt5-0"
+        class=""
       >
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           One col
         </td>
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           Two col
         </td>
       </tr>
       <tr
-        class="TableRow-sc-1otpgt5-0"
+        class=""
       >
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           One col
         </td>
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           Two col
         </td>
@@ -307,29 +307,29 @@ exports[`<Table /> StripedTable alternates background color on rows 1`] = `
     </caption>
     <tbody>
       <tr
-        class="TableRow-sc-1otpgt5-0"
+        class=""
       >
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           One col
         </td>
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           Two col
         </td>
       </tr>
       <tr
-        class="TableRow-sc-1otpgt5-0"
+        class=""
       >
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           One col
         </td>
         <td
-          class="TableCell-yj8482-0"
+          class=""
         >
           Two col
         </td>

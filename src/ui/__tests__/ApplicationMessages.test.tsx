@@ -24,7 +24,7 @@ it('renders a message with close button and data', async () => {
   expect(screen.getByText(body)).toBeInTheDocument();
 
   // Default "info" Message
-  const messageIcon = document.querySelector('[data-icon="info-circle"]');
+  const messageIcon = document.querySelector('[data-icon="circle-info"]');
   const messageType = document.querySelector('[type="info"]');
   expect(messageIcon).toBeInTheDocument();
   expect(messageType).toBeInTheDocument();
@@ -42,7 +42,7 @@ it('renders a "warn" message with appropriate icon', async () => {
 
   // Warn Message
   const messageType = document.querySelector('[type="warn"]');
-  const messageIcon = document.querySelector('[data-icon="exclamation-triangle"]');
+  const messageIcon = document.querySelector('[data-icon="triangle-exclamation"]');
   expect(messageType).toBeInTheDocument();
   expect(messageIcon).toBeInTheDocument();
 });
@@ -59,7 +59,7 @@ it('renders a "success" message with appropriate icon', async () => {
 
   // Success Message
   const messageType = document.querySelector('[type="success"]');
-  const messageIcon = document.querySelector('[data-icon="check-circle"]');
+  const messageIcon = document.querySelector('[data-icon="circle-check"]');
   expect(messageType).toBeInTheDocument();
   expect(messageIcon).toBeInTheDocument();
 });
@@ -92,7 +92,7 @@ it('renders an "info" message with appropriate icon when type is missing', async
   });
 
   // Default "info" Message
-  const messageIcon = document.querySelector('[data-icon="info-circle"]');
+  const messageIcon = document.querySelector('[data-icon="circle-info"]');
   const messageType = document.querySelector('[type="info"]');
   expect(messageIcon).toBeInTheDocument();
   expect(messageType).toBeInTheDocument();
@@ -109,7 +109,7 @@ it('renders an "info" message with appropriate icon when type is bogus', async (
   });
 
   // Default "info" Message
-  const messageIcon = document.querySelector('[data-icon="info-circle"]');
+  const messageIcon = document.querySelector('[data-icon="circle-info"]');
   const messageType = document.querySelector('[type="bogus"]');
   expect(messageIcon).toBeInTheDocument();
   expect(messageType).toBeInTheDocument();
