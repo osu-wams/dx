@@ -110,7 +110,7 @@ try {
     </QueryClientProvider>,
     applicationRoot
   );
-} catch (e) {
+} catch (e: any) {
   if (IGNORED_ERRORS.includes(e.toString())) {
     console.warn(`DX Application caught an ignored error "${e.toString()}".`);
   } else {

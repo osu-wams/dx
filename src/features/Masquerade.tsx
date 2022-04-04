@@ -39,7 +39,7 @@ export const Masquerade = (props: MasqueradeProps) => {
           toggleMasqueradeDialog();
           toast.success(`Masquerading as OSU ID ${masqueradeId}.`, { transition: Zoom });
           setTimeout(() => {
-            window.location.reload(true);
+            window.location.reload();
           }, 2000);
         })
         .catch((err) => console.log(err));
@@ -51,7 +51,7 @@ export const Masquerade = (props: MasqueradeProps) => {
           setMasqueradeId('');
           toast.info('Masquerade session ended.', { transition: Zoom });
           setTimeout(() => {
-            window.location.reload(true);
+            window.location.reload();
           }, 2000);
         })
         .catch((err) => console.log(err));
