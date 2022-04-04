@@ -38,17 +38,17 @@ exports[`Background color is orange-400 1`] = `
     Orange Background link
     <svg
       aria-hidden="true"
-      class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
+      class="svg-inline--fa fa-arrow-right-long c1"
       color="#D73F09"
-      data-icon="long-arrow-right"
+      data-icon="arrow-right-long"
       data-prefix="fal"
       focusable="false"
       role="img"
-      viewBox="0 0 448 512"
+      viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M311.03 131.515l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L387.887 239H12c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h375.887l-83.928 83.444c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l116.485-116c4.686-4.686 4.686-12.284 0-16.971L328 131.515c-4.686-4.687-12.284-4.687-16.97 0z"
+        d="M363.3 100.7l144 144C510.4 247.8 512 251.9 512 255.1s-1.562 8.188-4.688 11.31l-144 144c-6.25 6.25-16.38 6.25-22.62 0s-6.25-16.38 0-22.62l116.7-116.7H16c-8.844 0-16-7.156-16-15.1c0-8.844 7.156-16 16-16h441.4l-116.7-116.7c-6.25-6.25-6.25-16.38 0-22.62S357.1 94.44 363.3 100.7z"
         fill="currentColor"
       />
     </svg>
@@ -94,17 +94,17 @@ exports[`Background is orange-400, and text is white 1`] = `
     Orange Background with White text
     <svg
       aria-hidden="true"
-      class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
+      class="svg-inline--fa fa-arrow-right-long c1"
       color="#ffffff"
-      data-icon="long-arrow-right"
+      data-icon="arrow-right-long"
       data-prefix="fal"
       focusable="false"
       role="img"
-      viewBox="0 0 448 512"
+      viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M311.03 131.515l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L387.887 239H12c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h375.887l-83.928 83.444c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l116.485-116c4.686-4.686 4.686-12.284 0-16.971L328 131.515c-4.686-4.687-12.284-4.687-16.97 0z"
+        d="M363.3 100.7l144 144C510.4 247.8 512 251.9 512 255.1s-1.562 8.188-4.688 11.31l-144 144c-6.25 6.25-16.38 6.25-22.62 0s-6.25-16.38 0-22.62l116.7-116.7H16c-8.844 0-16-7.156-16-15.1c0-8.844 7.156-16 16-16h441.4l-116.7-116.7c-6.25-6.25-6.25-16.38 0-22.62S357.1 94.44 363.3 100.7z"
         fill="currentColor"
       />
     </svg>
@@ -177,17 +177,17 @@ exports[`Default options 1`] = `
     Default link
     <svg
       aria-hidden="true"
-      class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
+      class="svg-inline--fa fa-arrow-right-long c1"
       color="#D73F09"
-      data-icon="long-arrow-right"
+      data-icon="arrow-right-long"
       data-prefix="fal"
       focusable="false"
       role="img"
-      viewBox="0 0 448 512"
+      viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M311.03 131.515l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L387.887 239H12c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h375.887l-83.928 83.444c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l116.485-116c4.686-4.686 4.686-12.284 0-16.971L328 131.515c-4.686-4.687-12.284-4.687-16.97 0z"
+        d="M363.3 100.7l144 144C510.4 247.8 512 251.9 512 255.1s-1.562 8.188-4.688 11.31l-144 144c-6.25 6.25-16.38 6.25-22.62 0s-6.25-16.38 0-22.62l116.7-116.7H16c-8.844 0-16-7.156-16-15.1c0-8.844 7.156-16 16-16h441.4l-116.7-116.7c-6.25-6.25-6.25-16.38 0-22.62S357.1 94.44 363.3 100.7z"
         fill="currentColor"
       />
     </svg>
@@ -236,17 +236,17 @@ exports[`Highlighted text is orange 1`] = `
     Highlighted external link
     <svg
       aria-hidden="true"
-      class="svg-inline--fa fa-external-link fa-w-16 c2"
+      class="svg-inline--fa fa-arrow-up-right-from-square c2"
       color="#D73F09"
-      data-icon="external-link"
+      data-icon="arrow-up-right-from-square"
       data-prefix="fal"
       focusable="false"
       role="img"
-      viewBox="0 0 512 512"
+      viewBox="0 0 448 512"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M440,256H424a8,8,0,0,0-8,8V464a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V112A16,16,0,0,1,48,96H248a8,8,0,0,0,8-8V72a8,8,0,0,0-8-8H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V264A8,8,0,0,0,440,256ZM500,0,364,.34a12,12,0,0,0-12,12v10a12,12,0,0,0,12,12L454,34l.7.71L131.51,357.86a12,12,0,0,0,0,17l5.66,5.66a12,12,0,0,0,17,0L477.29,57.34l.71.7-.34,90a12,12,0,0,0,12,12h10a12,12,0,0,0,12-12L512,12A12,12,0,0,0,500,0Z"
+        d="M272 64C263.2 64 256 56.84 256 48C256 39.16 263.2 32 272 32H432C440.8 32 448 39.16 448 48V208C448 216.8 440.8 224 432 224C423.2 224 416 216.8 416 208V86.63L187.3 315.3C181.1 321.6 170.9 321.6 164.7 315.3C158.4 309.1 158.4 298.9 164.7 292.7L393.4 64H272zM0 112C0 85.49 21.49 64 48 64H176C184.8 64 192 71.16 192 80C192 88.84 184.8 96 176 96H48C39.16 96 32 103.2 32 112V432C32 440.8 39.16 448 48 448H368C376.8 448 384 440.8 384 432V304C384 295.2 391.2 288 400 288C408.8 288 416 295.2 416 304V432C416 458.5 394.5 480 368 480H48C21.49 480 0 458.5 0 432V112z"
         fill="currentColor"
       />
     </svg>
@@ -293,17 +293,17 @@ exports[`InternalLink background is orange-400 and text is white 1`] = `
     Orange Background with White text
     <svg
       aria-hidden="true"
-      class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
+      class="svg-inline--fa fa-arrow-right-long c1"
       color="#ffffff"
-      data-icon="long-arrow-right"
+      data-icon="arrow-right-long"
       data-prefix="fal"
       focusable="false"
       role="img"
-      viewBox="0 0 448 512"
+      viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M311.03 131.515l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L387.887 239H12c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h375.887l-83.928 83.444c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l116.485-116c4.686-4.686 4.686-12.284 0-16.971L328 131.515c-4.686-4.687-12.284-4.687-16.97 0z"
+        d="M363.3 100.7l144 144C510.4 247.8 512 251.9 512 255.1s-1.562 8.188-4.688 11.31l-144 144c-6.25 6.25-16.38 6.25-22.62 0s-6.25-16.38 0-22.62l116.7-116.7H16c-8.844 0-16-7.156-16-15.1c0-8.844 7.156-16 16-16h441.4l-116.7-116.7c-6.25-6.25-6.25-16.38 0-22.62S357.1 94.44 363.3 100.7z"
         fill="currentColor"
       />
     </svg>
@@ -381,17 +381,17 @@ exports[`Text color is pine-400 1`] = `
     Green Text link
     <svg
       aria-hidden="true"
-      class="svg-inline--fa fa-long-arrow-right fa-w-14 c1"
+      class="svg-inline--fa fa-arrow-right-long c1"
       color="#D73F09"
-      data-icon="long-arrow-right"
+      data-icon="arrow-right-long"
       data-prefix="fal"
       focusable="false"
       role="img"
-      viewBox="0 0 448 512"
+      viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M311.03 131.515l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L387.887 239H12c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h375.887l-83.928 83.444c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l116.485-116c4.686-4.686 4.686-12.284 0-16.971L328 131.515c-4.686-4.687-12.284-4.687-16.97 0z"
+        d="M363.3 100.7l144 144C510.4 247.8 512 251.9 512 255.1s-1.562 8.188-4.688 11.31l-144 144c-6.25 6.25-16.38 6.25-22.62 0s-6.25-16.38 0-22.62l116.7-116.7H16c-8.844 0-16-7.156-16-15.1c0-8.844 7.156-16 16-16h441.4l-116.7-116.7c-6.25-6.25-6.25-16.38 0-22.62S357.1 94.44 363.3 100.7z"
         fill="currentColor"
       />
     </svg>
