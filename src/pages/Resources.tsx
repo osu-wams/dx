@@ -61,6 +61,7 @@ const Resources = () => {
       category = decodeURI(HooksResources.defaultCategoryName());
     }
     if (typeof history.replaceState === 'function') {
+      console.warn(`Replacing history state: ${category}`);
       history.replaceState({ category }, category, `?category=${category}`);
     }
     setActiveCategory(category);
