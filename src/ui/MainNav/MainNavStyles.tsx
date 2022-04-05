@@ -62,6 +62,7 @@ const NavLink = styled(RRNavLink)<any>`
   ${IconStyle} {
     font-size: 20px;
     color: ${({ theme }) => theme.header.mainNavList.icon};
+    width: .8em
   }
   /* select and hover styles */
   &[aria-current],
