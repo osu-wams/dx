@@ -26,11 +26,11 @@ const EmployeeDashboard = () => {
         <Masonry>
           <EmployeeTools />
           <FavoriteResources />
-          <ITSystemStatus />
           <SuccessFactors />
           <ResourcesCard categ="employee_featured" icon={faStars} />
-          <TrendingResources />
+          <ITSystemStatus />
           <FeaturedTrainingsCard />
+          <TrendingResources />
           {cards.map((c) => (
             <DynamicCard key={c.id} data={c} />
           ))}
