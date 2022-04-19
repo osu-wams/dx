@@ -8,6 +8,7 @@ import ResourcesCard from 'src/features/ResourcesCard';
 import { EmployeeTools } from 'src/features/employee-only';
 import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
 import { FavoriteResources } from 'src/features/FavoriteResources';
+import { SuccessFactors } from 'src/features/SuccessFactors';
 import { TrendingResources } from 'src/features/TrendingResources';
 import { FeaturedTrainingsCard } from 'src/features/training/FeaturedTrainingsCard';
 import { useRecoilValue } from 'recoil';
@@ -26,6 +27,7 @@ const EmployeeDashboard = () => {
           <EmployeeTools />
           <FavoriteResources />
           <ITSystemStatus />
+          <SuccessFactors />
           <ResourcesCard categ="employee_featured" icon={faStars} />
           <TrendingResources />
           <FeaturedTrainingsCard />
