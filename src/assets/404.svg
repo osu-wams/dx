@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 3000 1600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+<svg width="100%" height="100%" viewBox="0 0 3000 1600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlnsSerif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
     <g transform="matrix(0.779068,0,0,0.779068,685.839,205.873)">
         <g id="sun">
             <g>
@@ -83,7 +83,7 @@
         </g>
     </g>
     <g transform="matrix(1.47013,0,0,1.47013,-87.6574,-239.842)">
-        <g id="_404" serif:id="404">
+        <g id="_404" serifId="404">
             <text x="583px" y="802px" style="font-family:'Stratum2-Black', 'Stratum2', sans-serif;font-weight:900;font-size:600.3px;fill:none;stroke:rgb(229,87,18);stroke-width:8.84px;">40</text>
         </g>
     </g>
@@ -93,7 +93,7 @@
     <g transform="matrix(1,0,0,1,1713.04,351.445)">
         <text x="0px" y="587.758px" style="font-family:'Stratum2-Black', 'Stratum2', sans-serif;font-weight:900;font-size:882.519px;fill:none;stroke:rgb(229,87,18);stroke-width:13px;">4</text>
     </g>
-    <g id="tree-left" serif:id="tree left" transform="matrix(1,0,0,1,220,0)">
+    <g id="tree-left" serifId="tree left" transform="matrix(1,0,0,1,220,0)">
         <g transform="matrix(0.554392,0,0,0.544485,-472.278,302.358)">
             <g transform="matrix(0.692308,0,0,0.665698,715.231,426.848)">
                 <path d="M1915,993.766C1915,986.168 1909.17,980 1902,980C1894.83,980 1889,986.168 1889,993.766L1889,1310.23C1889,1317.83 1894.83,1324 1902,1324C1909.17,1324 1915,1317.83 1915,1310.23L1915,993.766Z" style="fill:rgb(214,214,214);"/>
@@ -302,7 +302,7 @@
             </g>
         </g>
     </g>
-    <g id="tree-right" serif:id="tree right" transform="matrix(-1,0,0,1,2769.88,7)">
+    <g id="tree-right" serifId="tree right" transform="matrix(-1,0,0,1,2769.88,7)">
         <g transform="matrix(0.554392,0,0,0.544485,-413.278,313.687)">
             <g transform="matrix(0.692308,0,0,0.665698,715.231,426.848)">
                 <path d="M1915,993.766C1915,986.168 1909.17,980 1902,980C1894.83,980 1889,986.168 1889,993.766L1889,1310.23C1889,1317.83 1894.83,1324 1902,1324C1909.17,1324 1915,1317.83 1915,1310.23L1915,993.766Z" style="fill:rgb(214,214,214);"/>
