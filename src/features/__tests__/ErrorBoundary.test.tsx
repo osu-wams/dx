@@ -2,6 +2,7 @@ import React from 'react';
 import { renderWithAllContexts as render } from 'src/util/test-utils';
 import { screen } from '@testing-library/react';
 import ErrorBoundary from '../ErrorBoundary';
+import { setImmediate } from 'timers';
 
 const ComponentWithError = () => {
   const badMethod = () => {
