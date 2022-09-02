@@ -22,7 +22,7 @@ const PageNotFound = () => {
         <h1>Page Not Found</h1>
       </VisuallyHidden>
       <MainGrid>
-        <img src={image404} alt="" />
+        <img src={image404} alt="404" />
         <Content>
           <h2>Dam.</h2>
           <p>
