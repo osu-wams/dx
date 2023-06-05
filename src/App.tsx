@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Routes as ReactRouter, Route, useLocation, useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components/macro';
 import { AnimatePresence } from 'framer-motion';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import Header from './ui/Header';
 import Alerts from './features/Alerts';
 import Footer from './ui/Footer';
@@ -161,7 +161,7 @@ const App = (props: AppProps) => {
         <ApplicationMessages />
         <ContentWrapper>
           <PageGridWrapper key={location.key}>
-            {ReactGA.pageview(location.pathname + location.search + location.hash)}
+            {ReactGA.send({ hitType: 'pageview', page: location.pathname + location.search + location.hash })}
             <AnimatePresence exitBeforeEnter>
               <ReactRouter>
                 <Route path={Routes.Routes().employee.path + '/*'} element={<EmployeeRouter />} />

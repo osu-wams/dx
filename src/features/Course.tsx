@@ -1,7 +1,7 @@
 import React, { FC, useContext } from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import styled, { ThemeContext } from 'styled-components/macro';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { faMapMarkerAlt, faEnvelope } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../ui/Icon';
 import { CloseButton } from 'src/ui/Button';
@@ -180,7 +180,7 @@ const Course: FC<ICourse> = ({ coursesMap, isOpen, toggleCourse }) => {
       data-testid="course-dialog"
       aria-labelledby="course-title"
     >
-      {ReactGA.modalview('/academics/course-details')}
+      {ReactGA.send({ hitType: 'modalview', page: '/academics/course-details' })}
       <MyDialogHeader>
         <CloseButton onClick={toggleCourse} />
         <div>
