@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { CloseButton } from 'src/ui/Button';
 import { LeadText, Description } from 'src/ui/Text';
 import { Types } from '@osu-wams/lib';
@@ -44,7 +44,7 @@ const TrainingDetails: React.FC<any> = ({
       onDismiss={() => toggleTraining()}
       aria-labelledby="training-title"
     >
-      {ReactGA.modalview('/training/training-details')}
+      {ReactGA.send({ hitType: 'modalview', page: '/training/training-details', title: 'test'})}
       {training.image && (
         <div style={{ position: 'relative' }}>
           <MyDialogImage src={training.image} alt="" />

@@ -1,4 +1,4 @@
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 // To make it easier to filter, our components will be the categories in Google Analytics
 export type IComponents =

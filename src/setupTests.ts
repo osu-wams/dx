@@ -1,11 +1,11 @@
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-styled-components';
 import * as cache from './util/cache';
 import { server } from 'src/mocks/server';
 import axios from 'axios';
 
-ReactGA.initialize('UA-48705802-13', {
+ReactGA.initialize('G-FKJ26XQJCS', {
   testMode: true,
 });
 

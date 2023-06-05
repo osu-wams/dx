@@ -1,7 +1,7 @@
 import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import App from './App';
 import ErrorBoundary from './features/ErrorBoundary';
 import * as cache from './util/cache';
@@ -71,9 +71,9 @@ if (isDevelopment) {
 try {
   // When running tests, intialize in ./setupTests.js instead
   if (!isTest) {
-    ReactGA.initialize('UA-48705802-13', {
+    ReactGA.initialize('G-FKJ26XQJCS', {
       // Uncomment line below to get details in the console when developing
-      debug: isDevelopment && isGADebug,
+      testMode: isDevelopment && isGADebug,
       gaOptions: {
         siteSpeedSampleRate: 100,
       },
