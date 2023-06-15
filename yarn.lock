@@ -2594,7 +2594,16 @@
   dependencies:
     styled-components "^5.3.0"
 
-"@osu-wams/utils@0.0.26", "@osu-wams/utils@^0.0.26":
+"@osu-wams/utils@0.0.28":
+  version "0.0.28"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.28/44741e6901daca518eaaab067a8396c5c6cf3aec#44741e6901daca518eaaab067a8396c5c6cf3aec"
+  integrity sha512-0YkygRe8RqMNAHBCbLKiFMVkO1OZ/RZ98H6UtHmbXv4opMJEzu9IkV8lno70QrILsz7JBw/q8obx1rfvBrgINw==
+  dependencies:
+    "@osu-wams/lib" "^0.1.87"
+    date-fns "^2.21.1"
+    libphonenumber-js "^1.9.17"
+
+"@osu-wams/utils@^0.0.26":
   version "0.0.26"
   resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.26/5e19be0f4124910cb03143a57f9617c477fe8cc6ecbec12151aaf7fd18e65403#7bc858022cc52092084dacc9c58c18e0825e7dab"
   integrity sha512-MviEA50NzGLz3b8tbfmWQTcYkjxHXQIHv5C1WUxhuSmvGhzTXRDFSMiDIsLs2dN3ysu1FaND2UbR4b0Xq3ZIgw==
