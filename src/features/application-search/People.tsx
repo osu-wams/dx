@@ -43,7 +43,7 @@ const renderItems = (count: number, data: Types.Directory[]) => {
 };
 
 const People: React.FC = () => {
-  const search = encodeURI(useRecoilValue(State.applicationSearchState));
+  const search = encodeURI(useRecoilValue(State.applicationSearchState).replace(/[%*()]/g, ''));
   const { data, error } = usePeople(search, {
     ...Constants.REACT_QUERY_DEFAULT_CONFIG,
     enabled: !!search,
