@@ -12,6 +12,7 @@ import { useRecoilValue } from 'recoil';
 import { DynamicCard } from 'src/ui/Card/variants/DynamicCard';
 import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
 import CovidCompliance from 'src/features/CovidCompliance';
+import BeaverhubAlert from 'src/features/BeaverhubAlert';
 
 const { ANNOUNCEMENT_PAGES, filteredCards } = State;
 
@@ -21,6 +22,7 @@ const StudentDashboard = () => {
   return (
     <>
       <MainGridWrapper data-testid="student-dashboard-page">
+        <BeaverhubAlert />
         <PageTitle title="Overview" />
         <Masonry>
           <>
