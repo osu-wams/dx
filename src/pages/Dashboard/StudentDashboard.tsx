@@ -27,7 +27,6 @@ const StudentDashboard = () => {
         <Masonry>
           <>
             <ScheduleCard />
-            <CovidCompliance />
             <ITSystemStatus />
           </>
           <FavoriteResources />
