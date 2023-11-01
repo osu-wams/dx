@@ -34,7 +34,7 @@ const EmployeeTools = () => {
             >
               Evals
             </HighlightExternalLink>
-            <div>Electronic performance evaluation system</div>
+            <div>Electronic performance evaluation system (requires VPN)</div>
           </CardContentCell>
         </CardContentRow>
       </CardContentTable>
