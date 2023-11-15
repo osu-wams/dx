@@ -2085,7 +2085,7 @@
     ignore "^4.0.6"
     import-fresh "^3.2.1"
     js-yaml "^3.13.1"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
 "@eslint/eslintrc@^1.3.1":
@@ -2162,7 +2162,7 @@
   dependencies:
     "@humanwhocodes/object-schema" "^1.2.1"
     debug "^4.1.1"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
@@ -2171,7 +2171,7 @@
   dependencies:
     "@humanwhocodes/object-schema" "^1.2.0"
     debug "^4.1.1"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 "@humanwhocodes/gitignore-to-minimatch@^1.0.2":
   version "1.0.2"
@@ -2568,13 +2568,13 @@
   resolved "https://registry.yarnpkg.com/@open-draft/until/-/until-1.0.3.tgz#db9cc719191a62e7d9200f6e7bab21c5b848adca"
   integrity sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==
 
-"@osu-wams/hooks@1.0.142":
-  version "1.0.142"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.142/0d5d9ac0b5d83de84d0d6e65ae9ec4d0bd34f9317094171d6b47c78a610c4252#f0470e37320f93d607d9ad5aaffd74e6e0d18a40"
-  integrity sha512-8fP/6nYiCGX0mjrJdEk1VhI1Mo/UkvuDsuBnofcSF6HkvaaOG1fPMJ76X9IT6Y+/3BS7rUrbZXxc+6DitD0Ifg==
+"@osu-wams/hooks@1.0.146":
+  version "1.0.146"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/hooks/1.0.146/e4dcb107941f60e8bbdd1a79b470abd70405dafd#e4dcb107941f60e8bbdd1a79b470abd70405dafd"
+  integrity sha512-R3tuAFaVNBGBQnZl10hVJnMZjxssQl3K+sRjPI+aC4v+Lut7jv87Fe1Un+fBy6UXzsl2wzPGp340YLDDgnoKlQ==
   dependencies:
     "@osu-wams/lib" "^0.1.87"
-    "@osu-wams/utils" "^0.0.26"
+    "@osu-wams/utils" "^0.0.28"
     axios "^0.26.0"
     fuse.js "^6.4.6"
     nanoid "^3.1.22"
@@ -2594,19 +2594,10 @@
   dependencies:
     styled-components "^5.3.0"
 
-"@osu-wams/utils@0.0.28":
+"@osu-wams/utils@0.0.28", "@osu-wams/utils@^0.0.28":
   version "0.0.28"
   resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.28/44741e6901daca518eaaab067a8396c5c6cf3aec#44741e6901daca518eaaab067a8396c5c6cf3aec"
   integrity sha512-0YkygRe8RqMNAHBCbLKiFMVkO1OZ/RZ98H6UtHmbXv4opMJEzu9IkV8lno70QrILsz7JBw/q8obx1rfvBrgINw==
-  dependencies:
-    "@osu-wams/lib" "^0.1.87"
-    date-fns "^2.21.1"
-    libphonenumber-js "^1.9.17"
-
-"@osu-wams/utils@^0.0.26":
-  version "0.0.26"
-  resolved "https://npm.pkg.github.com/download/@osu-wams/utils/0.0.26/5e19be0f4124910cb03143a57f9617c477fe8cc6ecbec12151aaf7fd18e65403#7bc858022cc52092084dacc9c58c18e0825e7dab"
-  integrity sha512-MviEA50NzGLz3b8tbfmWQTcYkjxHXQIHv5C1WUxhuSmvGhzTXRDFSMiDIsLs2dN3ysu1FaND2UbR4b0Xq3ZIgw==
   dependencies:
     "@osu-wams/lib" "^0.1.87"
     date-fns "^2.21.1"
@@ -5850,7 +5841,7 @@ eslint-plugin-import@^2.23.3:
     has "^1.0.3"
     is-core-module "^2.8.0"
     is-glob "^4.0.3"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
     object.values "^1.1.5"
     resolve "^1.20.0"
     tsconfig-paths "^3.12.0"
@@ -5906,7 +5897,7 @@ eslint-plugin-jsx-a11y@^6.4.1:
     has "^1.0.3"
     jsx-ast-utils "^3.2.1"
     language-tags "^1.0.5"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 eslint-plugin-jsx-a11y@^6.5.1:
   version "6.6.1"
@@ -6063,7 +6054,7 @@ eslint@^7.27.0:
     json-stable-stringify-without-jsonify "^1.0.1"
     levn "^0.4.1"
     lodash.merge "^4.6.2"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
     natural-compare "^1.4.0"
     optionator "^0.9.1"
     progress "^2.0.0"
@@ -6479,7 +6470,7 @@ fork-ts-checker-webpack-plugin@^6.5.0:
     fs-extra "^9.0.0"
     glob "^7.1.6"
     memfs "^3.1.2"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
     schema-utils "2.7.0"
     semver "^7.3.2"
     tapable "^1.0.0"
@@ -6671,7 +6662,7 @@ glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
     inherits "2"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
@@ -7073,7 +7064,7 @@ ignore-walk@3.0.4:
   resolved "https://registry.yarnpkg.com/ignore-walk/-/ignore-walk-3.0.4.tgz#c9a09f69b7c7b479a5d74ac1a3c0d4236d2a6335"
   integrity sha512-PY6Ii8o1jMRA1z4F2hRkH/xN59ox43DavKvD3oDpfurRlOJyAHpifIwpbdv1n4jt4ov0jSpw3kQ4GhJnpBL6WQ==
   dependencies:
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 ignore@^4.0.6:
   version "4.0.6"
@@ -7477,7 +7468,7 @@ jake@^10.8.5:
     async "^3.2.3"
     chalk "^4.0.2"
     filelist "^1.0.1"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 jest-axe@^3.5.0:
   version "3.5.0"
@@ -8599,7 +8590,7 @@ minimalistic-assert@^1.0.0:
   integrity sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==
 
 minimatch@3.0.5:
-  version "3.0.5"
+  version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
   dependencies:
@@ -10410,7 +10401,7 @@ recursive-readdir@^2.2.2:
   resolved "https://registry.yarnpkg.com/recursive-readdir/-/recursive-readdir-2.2.2.tgz#9946fb3274e1628de6e36b2f6714953b4845094f"
   integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
   dependencies:
-    minimatch "3.0.5"
+    minimatch "3.0.4"
 
 redent@^3.0.0:
   version "3.0.0"
@@ -11638,7 +11629,7 @@ test-exclude@^6.0.0:
   dependencies:
     "@istanbuljs/schema" "^0.1.2"
     glob "^7.1.4"
-    minimatch "^3.0.5"
+    minimatch "^3.0.4"
 
 text-table@^0.2.0:
   version "0.2.0"
