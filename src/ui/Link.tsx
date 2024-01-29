@@ -56,8 +56,9 @@ const HighlightExternalLinkStyles = styled(LinkStyles)<StyleProps>(() => ({
 const ExternalLink = (props: LinkProps) => {
   const themeContext = useContext(ThemeContext);
   const { children, fg, hideIcon } = props;
+  const target = props.target || "_blank"
   return (
-    <LinkStyles {...props} target="_blank">
+    <LinkStyles {...props} target={target}>
       {children}
       {!hideIcon && (
         <Icon icon={faLongArrowRight} color={fg ?? themeContext.ui.link.icon.external.color} />

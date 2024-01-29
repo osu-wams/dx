@@ -1,10 +1,8 @@
 import React from 'react';
-import { faHome, faGraduationCap, faHandsUsd, faList } from '@fortawesome/pro-light-svg-icons';
+import { faHome, faList } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { Event } from 'src/util/gaTracking';
-import { FullMobileMenu } from './FullMobileMenu';
 import { Nav, NavLink } from './MainNavStyles';
-import { Mobile, Desktop } from 'src/hooks/useMediaQuery';
 import { Routes } from '@osu-wams/utils';
 
 const MainNavStudent = (...props) => {
@@ -18,30 +16,6 @@ const MainNavStudent = (...props) => {
         <Icon icon={faHome} />
         Overview
       </NavLink>
-      <NavLink
-        end
-        to={Routes.Routes().academics.fullPath}
-        onClick={() => Event('student-navigation-main', 'Academics link clicked')}
-      >
-        <Icon icon={faGraduationCap} />
-        Academics
-      </NavLink>
-      <NavLink
-        end
-        to={Routes.Routes().finances.fullPath}
-        onClick={() => Event('student-navigation-main', 'Finances link clicked')}
-      >
-        <Icon icon={faHandsUsd} />
-        Finances
-      </NavLink>
-
-      <Mobile>
-        <FullMobileMenu />
-      </Mobile>
-
-      <Desktop>
-        <DesktopLinks />
-      </Desktop>
     </Nav>
   );
 };
