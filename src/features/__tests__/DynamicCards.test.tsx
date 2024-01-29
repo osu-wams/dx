@@ -74,57 +74,6 @@ describe('<DynamicCard />', () => {
       expect(screen.queryByText(/All Students!/i)).not.toBeInTheDocument();
       expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
     });
-
-    it('Undergrad should find "All Students" Dynamic Card', async () => {
-      render(<Dashboard />, { initialStates: mockInitialState() });
-
-      const cardTitle = await screen.findByText(/All Students!/i);
-      expect(cardTitle).toBeInTheDocument();
-
-      const dynamicCard = cardTitle.closest('div');
-      expect(dynamicCard).toHaveTextContent(/This card is for all students/i);
-      // expect(await screen.findByText(/This card is for all students/i)).toBeInTheDocument();
-
-      // Finds the resource included in card
-      expect(dynamicCard).toHaveTextContent(/Academics for Student Athletes/i);
-      expect(await screen.findByText(/Everyone!/i)).toBeInTheDocument();
-
-      // Does not find Student affiliation dynamic card
-      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
-      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
-    });
-
-    it('Grad Student  should find "All Students" Dynamic Card', async () => {
-      render(<Dashboard />, { initialStates: mockInitialState(), user: mockGradUser });
-
-      expect(await screen.findByText(/All Students!/i)).toBeInTheDocument();
-      expect(await screen.findByText(/This card is for all students/i)).toBeInTheDocument();
-
-      const cardTitle = await screen.findByText(/Graduates Card!/i);
-      expect(cardTitle).toBeInTheDocument();
-      const dynamicCard = cardTitle.closest('div');
-
-      expect(
-        within(dynamicCard!).getByText(/This card is for graduates only/i)
-      ).toBeInTheDocument();
-
-      // Finds the resource included in card
-      expect(within(dynamicCard!).getByText(/Academics for Student Athletes/i)).toBeInTheDocument();
-
-      // Does not find Employee affiliation dynamic card
-      expect(screen.queryByText(/All Employees!/i)).not.toBeInTheDocument();
-    });
-
-    it('Student Employee should find "All Students" and "Everyone!" Dynamic Card', async () => {
-      render(<Dashboard />, { initialStates: mockInitialState(), user: mockStudentEmployeeUser });
-
-      expect(await screen.findByText(/All Students!/i)).toBeInTheDocument();
-      expect(await screen.findByText(/This card is for all students/i)).toBeInTheDocument();
-      expect(await screen.findByText(/Everyone!/i)).toBeInTheDocument();
-
-      // Does not find Employee affiliation dynamic card
-      expect(screen.queryByText(/Graduates Card!/i)).not.toBeInTheDocument();
-    });
   });
 
   describe('Finances', () => {

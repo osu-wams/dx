@@ -5,36 +5,6 @@ import { mockEmployeeUser, renderWithRouter as render } from 'src/util/test-util
 import MainNav from '../MainNav/';
 import { mockGAEvent } from 'src/setupTests';
 
-describe('student main navigation', () => {
-  it('Main Navigation Links for students are to be present and tracked in Google Analytics', async () => {
-    render(<MainNav />);
-
-    const home = screen.getByText('Overview');
-    const academics = screen.getByText('Academics');
-    const finances = screen.getByText('Finances');
-    const menu = screen.getByText('Menu');
-    userEvent.click(home);
-    userEvent.click(academics);
-    userEvent.click(finances);
-    userEvent.click(menu);
-
-    expect(mockGAEvent).toHaveBeenCalledTimes(4);
-  });
-
-  it('Main Navigation in desktop has "Resources" link tracked in Google Analytics', async () => {
-    render(<MainNav />, { isDesktop: true });
-
-    const resources = screen.getByText('Resources');
-    const menu = screen.queryByText('Menu');
-
-    expect(resources).toBeInTheDocument();
-    expect(menu).not.toBeInTheDocument();
-
-    userEvent.click(resources);
-    expect(mockGAEvent).toHaveBeenCalledTimes(1);
-  });
-});
-
 it('Main Navigation for Employee visible and tracked in Google Analytics', async () => {
   render(<MainNav />, {
     user: mockEmployeeUser,

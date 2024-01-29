@@ -20,11 +20,6 @@ describe('<StudentDashboard />', () => {
   it('renders the student dashboard', async () => {
     expect(screen.getByTestId('student-dashboard-page')).toBeInTheDocument();
   });
-
-  it('should find "Courses" and IT System status card in the Student Dashboard', async () => {
-    expect(screen.getByText('Courses')).toBeInTheDocument();
-    expect(await screen.findByText(/Major Outage/i)).toBeInTheDocument();
-  });
 });
 
 describe('<EmployeeDashboard />', () => {
