@@ -17,7 +17,7 @@ export const BeaverhubCard = () => {
       <Card collapsing={false}>
         <CardHeader title="Your OSU Student Portal Has Moved" badge={<CardIcon icon={faGlobe} />} />
         <CardContent>
-        The student experience in MyOregonState is moving to Beaver Hub. Learn more about Beaver Hub and the new features that will be available on the Beaver Hub website.
+        The student experience in MyOregonState has moved to Beaver Hub. Click the button below to learn more about the new features available to you.
         If you are a student employee, you can still access employee-related tools and resources by selecting &apos;Employee Dashboard&apos; from the dropdown above.
         </CardContent>
         <CardFooter infoButtonId="beaverhub-card">
