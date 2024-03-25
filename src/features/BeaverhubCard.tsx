@@ -23,7 +23,7 @@ export const BeaverhubCard = () => {
         <CardFooter infoButtonId="beaverhub-card">
           <Button btnSize='large' style={{width: "100%"}}>
             <ExternalLink target="_self"
-              href="https://beaverhub.oregonstate.edu"
+              href="https://beaverhub.oregonstate.edu/s/landing"
               fg="white"
             >
               Proceed to Beaver Hub
