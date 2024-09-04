@@ -18,19 +18,6 @@ it('Help button and Get Help link are in the menu and tracked via GA', async () 
   expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });
 
-it('Feedback link tracked via GA', async () => {
-  render(<HelpMenu />);
-
-  userEvent.click(screen.getByRole('button', { name: /help/i }));
-
-  const feedbackLink = await screen.findByText('Give feedback', { selector: 'a' });
-
-  expect(feedbackLink).toBeInTheDocument();
-
-  userEvent.click(feedbackLink);
-  expect(mockGAEvent).toHaveBeenCalledTimes(2);
-});
-
 it('About MyOregonState link tracked via GA', async () => {
   render(<HelpMenu />);
 

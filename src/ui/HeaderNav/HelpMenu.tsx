@@ -37,16 +37,6 @@ const HelpMenu = () => {
             <Icon icon={faQuestionCircle} />
             Get Help
           </MenuLink>
-
-          <MenuLink
-            as="a"
-            href={Url.support.main}
-            target="_blank"
-            onClick={() => Event('header', 'help-button-menu', 'Give feedback link clicked')}
-          >
-            <Icon icon={faComment} />
-            Give feedback
-          </MenuLink>
         </HeaderNavList>
       </MenuPopover>
     </Menu>

@@ -40,12 +40,8 @@ describe('<About />', () => {
 
   it('should have support resources links that are tracked via GA', () => {
     render(<About />);
-    const started = screen.getByText(/getting started/i);
     const getHelp = screen.getByText(/Get help/i);
-    const giveFeedback = screen.getByText(/Give us feedback/i);
-    userEvent.click(started);
     userEvent.click(getHelp);
-    userEvent.click(giveFeedback);
-    expect(mockGAEvent).toHaveBeenCalledTimes(3);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 });

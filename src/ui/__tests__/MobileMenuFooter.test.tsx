@@ -13,7 +13,6 @@ test('More menu has links that are tracked via Google Analytics', async () => {
 
   userEvent.click(screen.getByText('About'));
   userEvent.click(screen.getByText('Help'));
-  userEvent.click(screen.getByText('Feedback'));
 
-  expect(mockGAEvent).toHaveBeenCalledTimes(3);
+  expect(mockGAEvent).toHaveBeenCalledTimes(2);
 });

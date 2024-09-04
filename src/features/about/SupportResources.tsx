@@ -4,8 +4,6 @@ import Icon from 'src/ui/Icon';
 import {
   faCogs,
   faUserHeadset,
-  faCommentAltLines,
-  faExternalLink,
 } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardIcon, CardFooter } from 'src/ui/Card';
 import {
@@ -27,18 +25,6 @@ const SupportResources: FC = () => {
         <List>
           <ListItem>
             <ListItemContentLinkSVG
-              href={Url.feedback.main}
-              target="_blank"
-              onClick={() => Event('about', 'feedback')}
-            >
-              <Icon icon={faCommentAltLines} color={themeContext.ui.list.item.link.color} />
-              <ListItemText>
-                <ListItemContentLinkName>Give us feedback on MyOregonState</ListItemContentLinkName>
-              </ListItemText>
-            </ListItemContentLinkSVG>
-          </ListItem>
-          <ListItem>
-            <ListItemContentLinkSVG
               href={Url.support.main}
               target="_blank"
               onClick={() => Event('about', 'get help')}
@@ -46,18 +32,6 @@ const SupportResources: FC = () => {
               <Icon icon={faUserHeadset} color={themeContext.ui.list.item.link.color} />
               <ListItemText>
                 <ListItemContentLinkName>Get help with MyOregonState</ListItemContentLinkName>
-              </ListItemText>
-            </ListItemContentLinkSVG>
-          </ListItem>
-          <ListItem>
-            <ListItemContentLinkSVG
-              href={Url.gettingStarted.main}
-              target="_blank"
-              onClick={() => Event('about', 'getting started')}
-            >
-              <Icon icon={faExternalLink} color={themeContext.ui.list.item.link.color} />
-              <ListItemText>
-                <ListItemContentLinkName>Getting started</ListItemContentLinkName>
               </ListItemText>
             </ListItemContentLinkSVG>
           </ListItem>
