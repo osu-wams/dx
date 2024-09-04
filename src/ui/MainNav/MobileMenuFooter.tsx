@@ -20,17 +20,6 @@ const MobileMenuFooter = ({ toggleFullMenu, ...props }) => {
         Help
       </MobileFooterLink>
       <MobileFooterLink
-        as="a"
-        href={Url.feedback.main}
-        onClick={() => {
-          toggleFullMenu(false);
-          Event('footer-menu-nav', 'Feedback link clicked');
-        }}
-      >
-        <Icon icon={faComment} />
-        Feedback
-      </MobileFooterLink>
-      <MobileFooterLink
         to={Routes.Routes().about.fullPath}
         onClick={() => {
           toggleFullMenu(false);

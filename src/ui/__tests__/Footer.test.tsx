@@ -79,18 +79,16 @@ it('Links to be present and tracked in Google Analytics', async () => {
   renderWithUserContext(<Footer />, { user: mockUser() });
   //Profile icon click - this text is visually hidden
   const supportLink = screen.getByText('Get Support');
-  const feedbackLink = screen.getByText('Give Feedback');
   const copyrightLink = screen.getByText('Copyright');
   const disclaimerLink = screen.getByText('Disclaimer');
   const accessibilityLink = screen.getByText(/Accessibility Information/);
 
   userEvent.click(supportLink);
-  userEvent.click(feedbackLink);
   userEvent.click(copyrightLink);
   userEvent.click(disclaimerLink);
   userEvent.click(accessibilityLink);
 
-  await waitFor(() => expect(mockGAEvent).toHaveBeenCalledTimes(5));
+  await waitFor(() => expect(mockGAEvent).toHaveBeenCalledTimes(4));
 });
 
 it('Application deployed versions', async () => {

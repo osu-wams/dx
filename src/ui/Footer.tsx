@@ -121,19 +121,6 @@ const Footer = () => {
               <br />
               Get Support
             </FooterIconLink>
-            <FooterIconLink
-              href={Url.feedback.main}
-              target="_blank"
-              onClick={() => Event('footer', 'Give Feedback link')}
-            >
-              <Icon
-                icon={faCommentAltCheck}
-                color={themeContext.footer.iconLink.icon.color}
-                size="2x"
-              />
-              <br />
-              Give Feedback
-            </FooterIconLink>
           </FooterButtonWrapper>
           <a
             href="https://oregonstate.edu/copyright"
