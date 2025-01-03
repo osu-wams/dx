@@ -12,7 +12,7 @@ export const SuccessFactors = () => {
 
   return user?.data?.groups?.includes(group) ? (
     <Card>
-      <CardHeader title="Performance Management Pilot" badge={<CardIcon icon={faChartLineUp} />} />
+      <CardHeader title="SuccessFactors" badge={<CardIcon icon={faChartLineUp} />} />
       <CardContentTable>
         <CardContentRow className="row-span-1">
           <CardContentCell>
