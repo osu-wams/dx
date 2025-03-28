@@ -52,8 +52,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
-    "test": "TZ=UTC react-scripts test --env=jsdom",
-    "test:coverage": "TZ=UTC react-scripts test --env=jsdom --coverage --watchAll=false",
+    "test": "TZ=UTC react-scripts test --env=jsdom --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+    "test:coverage": "TZ=UTC react-scripts test --env=jsdom --coverage --watchAll=false --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx,.js 'src/**/*'",
     "lint:css": "stylelint 'src/**/*.tsx'",
