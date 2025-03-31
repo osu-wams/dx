@@ -1,9 +1,9 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import { Color } from '@osu-wams/theme';
 
 const getMUITheme = (mode: string) => {
   const themeType = mode === 'dark' ? mode : undefined;
-  return createMuiTheme({
+  return createTheme({
     typography: {
       fontFamily: 'Open Sans, sans-serif',
       htmlFontSize: 10,
