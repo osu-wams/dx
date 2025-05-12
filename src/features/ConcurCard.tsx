@@ -1,34 +1,32 @@
 import React from 'react';
-import { faChartLineUp } from '@fortawesome/pro-light-svg-icons';
+import { faPlane } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon, CardContentTable, CardContentRow, CardContentCell } from '../ui/Card';
 import { State, User } from '@osu-wams/hooks';
 import { useRecoilValue } from 'recoil';
-import { ExternalLink, HighlightExternalLink } from 'src/ui/Link';
+import { HighlightExternalLink } from 'src/ui/Link';
 import { Url } from '@osu-wams/utils';
 
-export const SuccessFactors = () => {
+export const ConcurCard = () => {
   const user = useRecoilValue(State.userState);
-  const group = User.GROUPS.successFactors;
-
-  return user?.data?.groups?.includes(group) ? (
+  return (
     <Card>
-      <CardHeader title="SuccessFactors" badge={<CardIcon icon={faChartLineUp} />} />
+      <CardHeader title="Travel and Expense" badge={<CardIcon icon={faPlane} />} />
       <CardContentTable>
         <CardContentRow className="row-span-1">
           <CardContentCell>
-            <HighlightExternalLink href={Url.successFactors.main}>
-              About
+            <HighlightExternalLink href={Url.concur.main}>
+              Concur
             </HighlightExternalLink>
-            <div>Information about the performance management pilot</div>
+            <div>OSU&apos;s travel and expense reporting program.</div>
           </CardContentCell>
           <CardContentCell>
-            <HighlightExternalLink href={Url.successFactors.login}>
-              Login
+            <HighlightExternalLink href={Url.concur.accountsPayable}>
+              Accounts Payable
             </HighlightExternalLink>
-            <div>Login to SuccessFactors</div>
+            <div>OSU&apos;s travel & expense program including travel, reimbursements, cash advances, expense reports, and credit card program.</div>
           </CardContentCell>
         </CardContentRow>
       </CardContentTable>
     </Card>
-  ) : null;
+  );
 }
