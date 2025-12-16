@@ -7,7 +7,7 @@ import {
   faGraduationCap,
   faBriefcase,
 } from '@fortawesome/pro-light-svg-icons';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
 import { Event } from 'src/util/gaTracking';
 import { State, User } from '@osu-wams/hooks';

@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { CardButtonBase } from 'src/ui/Card';
 import { spacing, mq, fontSize } from '@osu-wams/theme';
 

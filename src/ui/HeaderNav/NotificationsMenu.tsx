@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
 import { faBell } from '@fortawesome/pro-light-svg-icons';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import { EmptyStateText } from 'src/ui/EmptyStates';

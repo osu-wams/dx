@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { borderRadius, fontSize, spacing } from '@osu-wams/theme';
 
 type IBtnSizes = 'small' | 'large';

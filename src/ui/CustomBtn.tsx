@@ -1,5 +1,5 @@
 import React, { FC, InputHTMLAttributes, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { fontSize } from '@osu-wams/theme';
 import { IconLookup } from 'src/features/resources/resources-utils';
 

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Loading } from 'src/ui/Loading';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { faMoneyBillWave } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardContent, CardFooter, CardIcon } from 'src/ui/Card';
 import { fontSize } from '@osu-wams/theme';

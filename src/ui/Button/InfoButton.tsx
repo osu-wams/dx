@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import VisuallyHidden from '@reach/visually-hidden';
-import styled, { ThemeContext } from 'styled-components/macro';
+import { VisuallyHidden } from '@reach/visually-hidden';
+import styled, { ThemeContext } from 'styled-components';
 import { fontSize } from '@osu-wams/theme';
 import Icon from 'src/ui/Icon';
 import MyDialog from 'src/ui/MyDialog';

@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { fal, faHeart, faGripLines } from '@fortawesome/pro-light-svg-icons';
 import { faHeart as faSolidHeart } from '@fortawesome/pro-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from '@mui/material/Checkbox';
 import { State, Resources, useStatus } from '@osu-wams/hooks';
 import { Types } from '@osu-wams/lib';
 import { ListItemFlex, ListItemResourceLink, ListItemContentLinkName } from 'src/ui/List';

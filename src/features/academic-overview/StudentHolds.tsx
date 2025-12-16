@@ -1,6 +1,6 @@
 import React from 'react';
 import { Loading } from 'src/ui/Loading';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import {
   Highlight,
   HighlightTitle,

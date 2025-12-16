@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import 'react-toastify/dist/ReactToastify.min.css';
-import styled from 'styled-components/macro';
+import 'react-toastify/dist/ReactToastify.css';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Event } from 'src/util/gaTracking';
 import logo from 'src/assets/osu-logo.svg';

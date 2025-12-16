@@ -1,5 +1,5 @@
 import { Dialog } from '@reach/dialog';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { borderRadius, fontSize, spacing, breakpoints } from '@osu-wams/theme';
 
 const MyDialog = styled(Dialog)<{ padding?: string }>`

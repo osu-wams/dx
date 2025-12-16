@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Accordion, AccordionItem } from '@reach/accordion';
 import '@reach/accordion/styles.css';
 import { spacing, breakpoints, fontSize, borderRadius } from '@osu-wams/theme';

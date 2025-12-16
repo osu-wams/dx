@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import MyDialog from '../ui/MyDialog';
 import Button from '../ui/Button';
 import Input from '../ui/Input';
 import Label from '../ui/Label';
 import { toast, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { Event } from '../util/gaTracking';
 import { Masquerade as hooksMasquerade } from '@osu-wams/hooks';
 import * as cache from '../util/cache';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from '@reach/menu-button';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import { HeaderNavButton } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import Icon from 'src/ui/Icon';

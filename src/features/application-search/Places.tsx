@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardContent, CardHeader, CardIcon, CardFooter } from 'src/ui/Card';
 import {

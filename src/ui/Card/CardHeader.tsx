@@ -3,7 +3,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../Icon';
 import { ICollapse } from './ICollapse';
 import { spacing, fontSize } from '@osu-wams/theme';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { CardContext } from './Card';
 
 const CardHeader: FC<{ title?: string; badge?: any }> = ({ title, badge, ...props }) => {

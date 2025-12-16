@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { spacing } from '@osu-wams/theme';
 import { ICollapse } from './ICollapse';
 import { CardContext } from './Card';

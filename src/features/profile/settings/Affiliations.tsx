@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import styled from 'styled-components/macro';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import styled from 'styled-components';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import { State, User } from '@osu-wams/hooks';
 import { fontSize } from '@osu-wams/theme';

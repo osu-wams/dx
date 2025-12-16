@@ -1,7 +1,7 @@
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import VisuallyHidden from '@reach/visually-hidden';
-import { ThemeContext } from 'styled-components/macro';
+import { VisuallyHidden } from '@reach/visually-hidden';
+import { ThemeContext } from 'styled-components';
 
 /**
  * Loading component wrapper for React Loading Skeleton

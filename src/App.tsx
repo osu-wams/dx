@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
 import { Routes as ReactRouter, Route, useLocation, useNavigate } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components/macro';
+import styled, { ThemeProvider } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga4';
 import Header from './ui/Header';

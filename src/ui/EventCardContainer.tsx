@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Title } from 'src/ui/PageTitle';
 import { Types } from '@osu-wams/lib';
 import {

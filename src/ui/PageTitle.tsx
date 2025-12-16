@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { fontSize, breakpoints } from '@osu-wams/theme';
 
 type Props = {

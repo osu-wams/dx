@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import { faEnvelope, faMobileAlt, faPhone, faUserCircle } from '@fortawesome/pro-light-svg-icons';
 import { Loading } from 'src/ui/Loading';
 import { useEmails, usePerson, usePhones } from '@osu-wams/hooks';

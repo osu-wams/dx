@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Card, CardContent, CardFooter } from 'src/ui/Card';
 import { fontSize, spacing } from '@osu-wams/theme';
 

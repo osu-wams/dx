@@ -1,12 +1,12 @@
 import React from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { faChevronDown, faChevronUp } from '@fortawesome/pro-light-svg-icons';
 import { AccordionButton, AccordionPanel, useAccordionItemContext } from '@reach/accordion';
 import '@reach/accordion/styles.css';
 import { faCircle } from '@fortawesome/pro-solid-svg-icons';
 import { spacing, fontSize } from '@osu-wams/theme';
 import { Types } from '@osu-wams/lib';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import Icon from 'src/ui/Icon';
 import { State, User } from '@osu-wams/hooks';
 import { Helpers } from '@osu-wams/utils';

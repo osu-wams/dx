@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { faUserCog } from '@fortawesome/pro-light-svg-icons';
 import { Card, CardHeader, CardIcon, CardFooter, CardContent } from 'src/ui/Card';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Checkbox } from '@material-ui/core';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { Checkbox } from '@mui/material';
 import { Fieldset, Legend, FormGroup } from 'src/ui/forms';
 import getMUITheme from 'src/ui/MUITheme';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { spacing } from '@osu-wams/theme';
 import { User, State } from '@osu-wams/hooks';
