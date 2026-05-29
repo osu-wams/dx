@@ -5,7 +5,7 @@ import PageTitle from 'src/ui/PageTitle';
 import EventCardContainer from 'src/ui/EventCardContainer';
 import { MainGridWrapper, Masonry } from 'src/ui/grid';
 import ResourcesCard from 'src/features/ResourcesCard';
-import { EmployeeTools } from 'src/features/employee-only';
+import { EmployeeTools, Workday } from 'src/features/employee-only';
 import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { ConcurCard } from 'src/features/ConcurCard';
@@ -24,7 +24,7 @@ const EmployeeDashboard = () => {
       <MainGridWrapper data-testid="employee-dashboard-page">
         <PageTitle title="Overview" />
         <Masonry>
-          <EmployeeTools />
+          <Workday />
           <FavoriteResources />
           <ConcurCard />
           <ResourcesCard categ="employee_featured" icon={faStars} />
