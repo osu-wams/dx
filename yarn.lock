@@ -2671,7 +2671,12 @@
     recoil "0.2.0"
     stacktrace-js "^2.0.2"
 
-"@osu-wams/lib@0.1.87", "@osu-wams/lib@^0.1.87":
+"@osu-wams/lib@0.1.89":
+  version "0.1.89"
+  resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.89/f653d0857ace9f081776b4f665f6cbfbab199525#f653d0857ace9f081776b4f665f6cbfbab199525"
+  integrity sha512-hm4ojWJldthPbai0654pUhzNxIrUBsmBfIinpJ1BYnRASz5L7HRgUQROW3FKHer7EDAwsdyUT8CrKBQFWsnZiw==
+
+"@osu-wams/lib@^0.1.87":
   version "0.1.87"
   resolved "https://npm.pkg.github.com/download/@osu-wams/lib/0.1.87/257ccc7334123351d2d6903a59370c40b495bfaa3145d9ccb45d36b78ad2fb27#ed9a114892905222fba29cc0d2aa7caac72732df"
   integrity sha512-UsngcLEa3TMRUEmeWntqSmEgTdK4QBTI/z+NMSija7vceoHS8Cy3+Ivf958CM2N2J6N9bdL5FbLS66fBhe7z2w==
