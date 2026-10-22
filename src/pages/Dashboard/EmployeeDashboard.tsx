@@ -6,7 +6,6 @@ import EventCardContainer from 'src/ui/EventCardContainer';
 import { MainGridWrapper, Masonry } from 'src/ui/grid';
 import ResourcesCard from 'src/features/ResourcesCard';
 import { EmployeeTools, Workday } from 'src/features/employee-only';
-import { ITSystemStatus } from 'src/features/it-systems-status/ITSystemStatus';
 import { FavoriteResources } from 'src/features/FavoriteResources';
 import { ConcurCard } from 'src/features/ConcurCard';
 import { TrendingResources } from 'src/features/TrendingResources';
@@ -28,7 +27,6 @@ const EmployeeDashboard = () => {
           <FavoriteResources />
           <ConcurCard />
           <ResourcesCard categ="employee_featured" icon={faStars} />
-          <ITSystemStatus />
           <FeaturedTrainingsCard />
           <TrendingResources />
           {cards.map((c) => (
