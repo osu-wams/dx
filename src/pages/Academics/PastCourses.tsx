@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { State } from '@osu-wams/hooks';
 import { Loading } from 'src/ui/Loading';
 import { fontSize, spacing, breakpoints } from '@osu-wams/theme';

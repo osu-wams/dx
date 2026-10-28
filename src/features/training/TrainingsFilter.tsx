@@ -1,14 +1,20 @@
 import React, { useContext } from 'react';
-import { Menu, MenuItem, MenuPopover } from '@reach/menu-button';
+import { Menu, MenuItem as ReachMenuItem } from '@reach/menu-button';
 import { faDotCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faCaretDown } from '@fortawesome/pro-solid-svg-icons';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import { State } from '@osu-wams/hooks';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Event, IComponents } from 'src/util/gaTracking';
 import Icon from 'src/ui/Icon';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import { MenuButtonWrapper, MenuListWrapper } from './TrainingStyles';
+
+// The `selected` attribute is forwarded to the rendered element for styling; @reach's types
+// do not declare it.
+const MenuItem = ReachMenuItem as React.ComponentType<
+  React.ComponentProps<typeof ReachMenuItem> & { selected?: boolean }
+>;
 
 const {
   selectedTrainingAudienceState,
@@ -40,7 +46,7 @@ const TrainingsFilter: React.FC<any> = ({
   const items = useRecoilValue(dataState);
   const themeContext = useContext(ThemeContext);
 
-  const selectedAll = (name?: string) => name?.toLowerCase() === 'all' ?? false;
+  const selectedAll = (name?: string) => name?.toLowerCase() === 'all';
 
   const handleClick = (name: string) => {
     setActiveFilter(name);
@@ -62,35 +68,33 @@ const TrainingsFilter: React.FC<any> = ({
         />
         <VisuallyHidden>{allLabel}</VisuallyHidden>
       </MenuButtonWrapper>
-      <MenuPopover>
-        <MenuListWrapper>
-          <MenuItem
-            key="all"
-            id="all"
-            selected={selectedAll(activeFilter)}
-            onSelect={() => handleClick('all')}
-          >
-            <Icon icon={selectedAll(activeFilter) ? faDotCircle : faCircle} />
-            {allTitle}
-          </MenuItem>
-          {items?.data?.length &&
-            items?.data?.map((type) => (
-              <MenuItem
-                key={type.id}
-                id={type.name}
-                selected={activeFilter?.toLowerCase() === type.name.toLowerCase() ? true : false}
-                onSelect={() => handleClick(type.name)}
-              >
-                <Icon
-                  icon={
-                    activeFilter?.toLowerCase() === type.name.toLowerCase() ? faDotCircle : faCircle
-                  }
-                />
-                {type.name}
-              </MenuItem>
-            ))}
-        </MenuListWrapper>
-      </MenuPopover>
+      <MenuListWrapper>
+        <MenuItem
+          key="all"
+          id="all"
+          selected={selectedAll(activeFilter)}
+          onSelect={() => handleClick('all')}
+        >
+          <Icon icon={selectedAll(activeFilter) ? faDotCircle : faCircle} />
+          {allTitle}
+        </MenuItem>
+        {items?.data?.length &&
+          items?.data?.map((type) => (
+            <MenuItem
+              key={type.id}
+              id={type.name}
+              selected={activeFilter?.toLowerCase() === type.name.toLowerCase() ? true : false}
+              onSelect={() => handleClick(type.name)}
+            >
+              <Icon
+                icon={
+                  activeFilter?.toLowerCase() === type.name.toLowerCase() ? faDotCircle : faCircle
+                }
+              />
+              {type.name}
+            </MenuItem>
+          ))}
+      </MenuListWrapper>
     </Menu>
   );
 };

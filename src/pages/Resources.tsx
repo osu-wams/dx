@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Loading } from 'src/ui/Loading';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { CardBase } from 'src/ui/Card';
 import { spacing } from '@osu-wams/theme';
 import { MainGridWrapper, MainGrid } from 'src/ui/grid';
@@ -9,7 +9,7 @@ import ResourcesSearch from 'src/features/resources/ResourcesSearch';
 import ResourcesList from 'src/features/resources/ResourcesList';
 import { State, useCategories, User, Resources as HooksResources } from '@osu-wams/hooks';
 import PageTitle from 'src/ui/PageTitle';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 const { userState, resourceState, selectedCategoryState, categoryState, filteredResourcesState } =

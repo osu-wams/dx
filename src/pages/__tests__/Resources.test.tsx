@@ -259,21 +259,14 @@ describe('<Resources />', () => {
   });
 
   it('should load a different category based on the URL parameter', async () => {
-    let location = {
-      ...window.location,
-      search: '?category=all',
-    };
-    Object.defineProperty(window, 'location', {
-      writable: true,
-      value: location,
-    });
+    window.history.pushState({}, '', '?category=all');
 
     const { featured, all } = await renderResources();
     await waitFor(() => expect(featured).not.toHaveClass('selected'));
     expect(all).toHaveClass('selected');
     expect(await screen.findByText(/Billing Information/)).toBeInTheDocument();
     expect(await screen.findByText(/Student Jobs/)).toBeInTheDocument();
-    location.search = '';
+    window.history.pushState({}, '', '/');
   });
 
   it('should change categories when the back button is clicked', async () => {

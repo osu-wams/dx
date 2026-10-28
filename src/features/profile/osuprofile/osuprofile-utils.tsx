@@ -1,6 +1,6 @@
 import React from 'react';
-import VisuallyHidden from '@reach/visually-hidden';
-import styled from 'styled-components/macro';
+import { VisuallyHidden } from '@reach/visually-hidden';
+import styled from 'styled-components';
 import { Helpers } from '@osu-wams/utils';
 import Icon from 'src/ui/Icon';
 import { fontSize } from '@osu-wams/theme';

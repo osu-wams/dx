@@ -1,5 +1,5 @@
 import react from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { MenuList, MenuButton } from '@reach/menu-button';
 import { borderRadius, fontSize, shadows, spacing } from '@osu-wams/theme';
 

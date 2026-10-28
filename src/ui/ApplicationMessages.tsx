@@ -1,6 +1,6 @@
 import React from 'react';
-import Portal from '@reach/portal';
-import styled, { ThemeContext } from 'styled-components/macro';
+import { Portal } from '@reach/portal';
+import styled, { ThemeContext } from 'styled-components';
 import {
   faExclamationTriangle,
   faCheckCircle,

@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { fontSize } from '@osu-wams/theme';
 
 const Date = styled.div`

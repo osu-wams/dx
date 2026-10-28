@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { faArrowRight } from '@fortawesome/pro-light-svg-icons';
 import canvasLogo from 'src/assets/logo-canvas.png';
 import { ListItem, ListItemDescription, ListItemText, ListItemContentLink } from 'src/ui/List';

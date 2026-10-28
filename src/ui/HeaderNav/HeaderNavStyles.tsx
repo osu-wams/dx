@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { fontSize, spacing, borderRadius, breakpoints, shadows } from '@osu-wams/theme';
 import { MenuList, MenuButton } from '@reach/menu-button';
 
@@ -46,11 +46,15 @@ const HeaderNavList = styled(MenuList)`
         font-size: ${fontSize[24]};
       }
     }
-    div + div {
-      [data-reach-menu-item] {
-        border: none;
-        border-top: 1px solid ${({ theme }) => theme.header.headerNavList.menuItem.borderTop};
-      }
+    /* MenuLink rendered as a <button> (e.g. the dashboard toggle) */
+    button[data-reach-menu-item] {
+      border: none;
+      width: 100%;
+      text-align: left;
+    }
+    div + div [data-reach-menu-item],
+    [data-reach-menu-item] + [data-reach-menu-item] {
+      border-top: 1px solid ${({ theme }) => theme.header.headerNavList.menuItem.borderTop};
     }
   }
   [data-reach-menu-item][data-selected] {

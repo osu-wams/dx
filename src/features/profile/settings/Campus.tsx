@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Fieldset, Legend } from 'src/ui/forms';
 import { State, User } from '@osu-wams/hooks';
 import { Helpers } from '@osu-wams/utils';

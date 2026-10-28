@@ -15,7 +15,7 @@ import favoritesImg from 'src/assets/favorites.svg';
 import { useRecoilValue } from 'recoil';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useQueryClient } from 'react-query';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 
 const { resourceState, userState } = State;
 

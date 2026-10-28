@@ -30,8 +30,8 @@ describe('<ApplicationSearchBar />', () => {
         },
       ],
     });
-    expect(mockGAEvent).toBeCalledWith('application-search-failed', notFoundSearchTerm);
-    expect(mockGAEvent).toBeCalledTimes(1);
+    expect(mockGAEvent).toHaveBeenCalledWith('application-search-failed', notFoundSearchTerm);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
   it('sends a GA event when there are filtered items found', async () => {
     render(<ApplicationSearchBar />, {
@@ -51,8 +51,8 @@ describe('<ApplicationSearchBar />', () => {
         },
       ],
     });
-    expect(mockGAEvent).toBeCalledWith('application-search', foundSearchTerm);
-    expect(mockGAEvent).toBeCalledTimes(1);
+    expect(mockGAEvent).toHaveBeenCalledWith('application-search', foundSearchTerm);
+    expect(mockGAEvent).toHaveBeenCalledTimes(1);
   });
 
   describe('with an empty search input', () => {
@@ -88,16 +88,16 @@ describe('<ApplicationSearchBar />', () => {
       userEvent.type(searchBar, `${notFoundSearchTerm}{enter}`);
       expect(history.location.pathname).toBe('/search');
       await waitFor(() => {
-        expect(mockGAEvent).toBeCalledWith('application-search-failed', notFoundSearchTerm);
-        expect(mockGAEvent).toBeCalledTimes(1);
+        expect(mockGAEvent).toHaveBeenCalledWith('application-search-failed', notFoundSearchTerm);
+        expect(mockGAEvent).toHaveBeenCalledTimes(1);
       });
     });
     it('navigates to the search page when search is performed', async () => {
       userEvent.type(searchBar, `${foundSearchTerm}{enter}`);
       expect(history.location.pathname).toBe('/search');
       await waitFor(() => {
-        expect(mockGAEvent).toBeCalledWith('application-search', foundSearchTerm);
-        expect(mockGAEvent).toBeCalledTimes(1);
+        expect(mockGAEvent).toHaveBeenCalledWith('application-search', foundSearchTerm);
+        expect(mockGAEvent).toHaveBeenCalledTimes(1);
       });
     });
     it('performs a search after the enter key is pressed', async () => {
@@ -106,8 +106,8 @@ describe('<ApplicationSearchBar />', () => {
       userEvent.type(searchBar, '{enter}');
       expect(history.location.pathname).toBe('/search');
       await waitFor(() => {
-        expect(mockGAEvent).toBeCalledWith('application-search', foundSearchTerm);
-        expect(mockGAEvent).toBeCalledTimes(1);
+        expect(mockGAEvent).toHaveBeenCalledWith('application-search', foundSearchTerm);
+        expect(mockGAEvent).toHaveBeenCalledTimes(1);
       });
     });
     it('performs a search when the search button is clicked', async () => {
@@ -117,13 +117,13 @@ describe('<ApplicationSearchBar />', () => {
       userEvent.click(button[0]);
       expect(history.location.pathname).toBe('/search');
       await waitFor(() => {
-        expect(mockGAEvent).toBeCalledWith('application-search', foundSearchTerm);
-        expect(mockGAEvent).toBeCalledTimes(1);
+        expect(mockGAEvent).toHaveBeenCalledWith('application-search', foundSearchTerm);
+        expect(mockGAEvent).toHaveBeenCalledTimes(1);
       });
     });
   });
   it("Error should be handled when search term is '%'", async () => {
-    window.location.search = '?q=%';
+    window.history.pushState({}, '', '?q=%');
     render(<ApplicationSearchBar />);
     const searchBar = await screen.findByTestId('applicationSearch');
     expect(searchBar).toBeInTheDocument();

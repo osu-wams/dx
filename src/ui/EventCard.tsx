@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { faLongArrowRight } from '@fortawesome/pro-light-svg-icons';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { CardBase } from './Card';
 import Icon from './Icon';
 import { spacing, fontSize, mq } from '@osu-wams/theme';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import MyDialog from '../ui/MyDialog';
 import Button from '../ui/Button';
 import Input from '../ui/Input';

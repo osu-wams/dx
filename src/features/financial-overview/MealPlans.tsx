@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import { Loading } from 'src/ui/Loading';
 import { useMealPlans } from '@osu-wams/hooks';
 import { Helpers } from '@osu-wams/utils';

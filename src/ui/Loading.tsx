@@ -1,7 +1,8 @@
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import VisuallyHidden from '@reach/visually-hidden';
-import { ThemeContext } from 'styled-components/macro';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { VisuallyHidden } from '@reach/visually-hidden';
+import { ThemeContext } from 'styled-components';
 
 /**
  * Loading component wrapper for React Loading Skeleton
@@ -13,7 +14,7 @@ const Loading: React.FC<{ lines?: number }> = ({ lines = 1, ...props }) => {
   const themeContext = React.useContext(ThemeContext);
   return (
     <SkeletonTheme
-      color={themeContext.ui.skeleton.color}
+      baseColor={themeContext.ui.skeleton.color}
       highlightColor={themeContext.ui.skeleton.highlight}
     >
       <VisuallyHidden>Loading...</VisuallyHidden>

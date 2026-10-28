@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Card, CardHeader, CardContent } from 'src/ui/Card';
 import { Helmet } from 'react-helmet-async';
 import { useRecoilValue } from 'recoil';

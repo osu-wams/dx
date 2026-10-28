@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { faExternalLink } from '@fortawesome/pro-solid-svg-icons';
 import { ListItemFlex } from 'src/ui/List';
 import { SimpleInternalLink, SimpleExternalLink, SimpleModalLink } from 'src/ui/Link';

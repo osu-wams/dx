@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { faFilter } from '@fortawesome/pro-light-svg-icons';
 import { faFilter as solidFaFilter } from '@fortawesome/pro-solid-svg-icons';
 import { breakpoints, spacing, fontSize as themeFontSize, borderRadius } from '@osu-wams/theme';

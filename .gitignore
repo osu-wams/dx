@@ -16,3 +16,4 @@ server/config/local.js
 .yalc
 yalc.lock
 .eslintcache
+bundle-stats.html

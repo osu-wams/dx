@@ -1,4 +1,3 @@
-import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga4';
@@ -22,9 +21,9 @@ const isTest = process.env.NODE_ENV === 'test';
 const isGADebug = process.env.REACT_APP_GA_DEBUG === 'true';
 
 if (isDevelopment || isTest) {
-  global.__DEV__ = true;
+  globalThis.__DEV__ = true;
 } else {
-  global.__DEV__ = false;
+  globalThis.__DEV__ = false;
 }
 
 // Ready Education authentication flow as described in DD-1103

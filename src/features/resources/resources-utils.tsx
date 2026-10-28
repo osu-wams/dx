@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconDefinition, findIconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { fal } from '@fortawesome/pro-light-svg-icons';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Types } from '@osu-wams/lib';
 import { User } from '@osu-wams/hooks';
 import Icon from 'src/ui/Icon';

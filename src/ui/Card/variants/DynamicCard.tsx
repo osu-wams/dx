@@ -7,7 +7,7 @@ import { Event } from 'src/util/gaTracking';
 import { RichTextContent } from 'src/ui/RichText';
 import { ExternalLink } from 'src/ui/Link';
 import { IconLookup } from 'src/features/resources/resources-utils';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 
 const DynamicCard: React.FC<{ data: Types.DynamicCard }> = ({ data }) => {
   const themeContext = useContext(ThemeContext);

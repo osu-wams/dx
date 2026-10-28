@@ -54,11 +54,12 @@ export const ANNOUNCEMENTS_API = an + '*';
  * Resources
  */
 
-export const RESOURCES_API = res;
+// msw 2 only treats a trailing slash as optional when the pattern itself has none.
+export const RESOURCES_API = '*/api/resources';
 export const RESOURCES_BY_QUEUE_API = res + 'category/:category';
-export const CATEGORIES_API = res + 'categories/';
+export const CATEGORIES_API = res + 'categories';
 export const TRENDING_RESOURCES_API = res + 'trending/*';
-export const FAVORITE_RESOURCES_API = res + 'favorites/';
+export const FAVORITE_RESOURCES_API = res + 'favorites';
 
 /**
  * Alerts
@@ -70,7 +71,7 @@ export const DX_ALERTS_API = alerts + '/dx';
 /**
  * Trainings
  */
-export const TRAININGS_API = train;
+export const TRAININGS_API = '*/api/trainings';
 
 export const TRAININGS_TAGS_API = train + 'tags';
 

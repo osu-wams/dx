@@ -50,7 +50,7 @@ const GlobalStyle = createGlobalStyle`
     }
   }
   @media screen and (min-width: 768px) {
-    [data-reach-menu] {
+    [data-reach-menu-popover] {
       z-index: 10;
     }
   }

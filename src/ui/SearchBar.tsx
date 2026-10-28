@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { faSearch } from '@fortawesome/pro-light-svg-icons';
-import styled, { ThemeContext } from 'styled-components/macro';
-import VisuallyHidden from '@reach/visually-hidden';
+import styled, { ThemeContext } from 'styled-components';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import Icon from 'src/ui/Icon';
 import { breakpoints, fontSize } from '@osu-wams/theme';
 import Input from 'src/ui/Input';

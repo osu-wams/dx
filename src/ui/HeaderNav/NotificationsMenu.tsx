@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Menu, MenuPopover, MenuItem, MenuLink } from '@reach/menu-button';
+import { Menu, MenuItem, MenuLink } from '@reach/menu-button';
 import { faBell } from '@fortawesome/pro-light-svg-icons';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import { HeaderNavButton, HeaderNavList } from './HeaderNavStyles';
 import { Event } from 'src/util/gaTracking';
 import { EmptyStateText } from 'src/ui/EmptyStates';
@@ -144,104 +144,102 @@ const NotificationsMenu = () => {
         </span>
         <VisuallyHidden>Notifications</VisuallyHidden>
       </HeaderNavButton>
-      <MenuPopover>
-        <HeaderNavList>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              padding: '10px 12px',
+      <HeaderNavList>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            padding: '10px 12px',
+          }}
+        >
+          <h2 style={{ fontSize: '16px', fontWeight: 'normal', margin: '0' }}>
+            <Icon icon={faBell} size="lg" /> Notifications ({notifications.data.length})
+          </h2>
+          <MenuLink
+            as={Link}
+            to={Routes.Routes().notifications.fullPath}
+            onClick={() => {
+              Event('notifications-menu', `See all notifications page`);
             }}
+            style={{ color: themeContext.ui.link.icon.internal.color, padding: 0 }}
           >
-            <h2 style={{ fontSize: '16px', fontWeight: 'normal', margin: '0' }}>
-              <Icon icon={faBell} size="lg" /> Notifications ({notifications.data.length})
-            </h2>
-            <MenuLink
-              as={Link}
-              to={Routes.Routes().notifications.fullPath}
-              onClick={() => {
-                Event('notifications-menu', `See all notifications page`);
+            View all <VisuallyHidden>notifications</VisuallyHidden>
+          </MenuLink>
+        </div>
+        {notifications.data.length === 0 && (
+          <div style={{ display: 'flex' }}>
+            <MenuItem
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
               }}
-              style={{ color: themeContext.ui.link.icon.internal.color, padding: 0 }}
+              onSelect={() => {}}
             >
-              View all <VisuallyHidden>notifications</VisuallyHidden>
-            </MenuLink>
+              <EmptyStateText>You have no new notifications.</EmptyStateText>
+            </MenuItem>
           </div>
-          {notifications.data.length === 0 && (
-            <div style={{ display: 'flex' }}>
-              <MenuItem
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-                onSelect={() => {}}
-              >
-                <EmptyStateText>You have no new notifications.</EmptyStateText>
-              </MenuItem>
-            </div>
-          )}
+        )}
 
-          {notifications.data.map((m: Types.UserMessage) => (
-            <div key={m.messageId} style={{ display: 'flex' }}>
-              <MenuItem
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  open();
-                }}
-                onSelect={() => {
-                  setSelectedNotification(m);
-                  dismissNotification(m);
-                  Event('notifications-menu', 'opened notification', m.title);
-                }}
-              >
-                <Indicator />
-                <div>
-                  <NotificationTitle>{m.title}</NotificationTitle>
-                  {m.deliveredAt && <Date>{Helpers.format(m.deliveredAt, "MMM do 'at' h a")}</Date>}
-                </div>
-              </MenuItem>
-              <MenuItem
-                onSelect={() => {
-                  dismissNotification(m);
-                  Event('notifications-menu', 'dismissed notification', m.title);
-                }}
-                onMouseUp={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  dismissNotification(m);
-                }}
-                onKeyDown={(event) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  dismissNotification(m);
-                }}
-                style={{
-                  fontSize: fontSize[14],
-                }}
-              >
-                Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
-              </MenuItem>
-            </div>
-          ))}
-          {isOpen && selectedNotification && (
-            <NotificationModal notification={selectedNotification} isOpen={isOpen} close={close} />
-          )}
-          {notifications.data.length > 0 && (
+        {notifications.data.map((m: Types.UserMessage) => (
+          <div key={m.messageId} style={{ display: 'flex' }}>
+            <MenuItem
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                open();
+              }}
+              onSelect={() => {
+                setSelectedNotification(m);
+                dismissNotification(m);
+                Event('notifications-menu', 'opened notification', m.title);
+              }}
+            >
+              <Indicator />
+              <div>
+                <NotificationTitle>{m.title}</NotificationTitle>
+                {m.deliveredAt && <Date>{Helpers.format(m.deliveredAt, "MMM do 'at' h a")}</Date>}
+              </div>
+            </MenuItem>
             <MenuItem
               onSelect={() => {
-                dismissAll(queryClient);
-                Event('notifications-menu', 'Dismiss ALL notifications');
+                dismissNotification(m);
+                Event('notifications-menu', 'dismissed notification', m.title);
+              }}
+              onMouseUp={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                dismissNotification(m);
+              }}
+              onKeyDown={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                dismissNotification(m);
+              }}
+              style={{
+                fontSize: fontSize[14],
               }}
             >
-              <span style={{ marginLeft: 'auto' }}>
-                Dismiss all <VisuallyHidden>notifications</VisuallyHidden>
-              </span>
+              Dismiss <VisuallyHidden>{m.title}</VisuallyHidden>
             </MenuItem>
-          )}
-        </HeaderNavList>
-      </MenuPopover>
+          </div>
+        ))}
+        {isOpen && selectedNotification && (
+          <NotificationModal notification={selectedNotification} isOpen={isOpen} close={close} />
+        )}
+        {notifications.data.length > 0 && (
+          <MenuItem
+            onSelect={() => {
+              dismissAll(queryClient);
+              Event('notifications-menu', 'Dismiss ALL notifications');
+            }}
+          >
+            <span style={{ marginLeft: 'auto' }}>
+              Dismiss all <VisuallyHidden>notifications</VisuallyHidden>
+            </span>
+          </MenuItem>
+        )}
+      </HeaderNavList>
     </Menu>
   );
 };

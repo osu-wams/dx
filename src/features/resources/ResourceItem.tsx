@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { fal, faHeart, faGripLines } from '@fortawesome/pro-light-svg-icons';
 import { faHeart as faSolidHeart } from '@fortawesome/pro-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';

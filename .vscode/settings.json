@@ -5,5 +5,5 @@
     "sourcemaps": "inline",
     "disableOptimisticBPs": true
   },
-  "jestrunner.jestCommand": "yarn test"
+  "jestrunner.jestCommand": "yarn test:ci"
 }

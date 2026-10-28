@@ -13,7 +13,7 @@ import MyDialog, {
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink, InternalLink, LinkDivider } from 'src/ui/Link';
 import { TwoCol } from 'src/ui/grid';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import { breakpoints } from '@osu-wams/theme';
 

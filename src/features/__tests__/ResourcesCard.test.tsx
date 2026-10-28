@@ -33,8 +33,10 @@ describe('<ResourcesCard />', () => {
 
   it('should have a clickable resource that fires GooglaAnalytics', async () => {
     render(<ResourcesCard categ="financial" icon={faCube} />);
-    const StudentJobsResource = await screen.findByText('Student Jobs');
-    userEvent.click(StudentJobsResource);
+    await screen.findByText('Student Jobs');
+    // ResourceItem re-mounts its inner components on every render, so query again right
+    // before clicking to avoid holding a detached node.
+    userEvent.click(screen.getByText('Student Jobs'));
     expect(mockGAEvent).toHaveBeenCalledTimes(1);
     expect(mockTrendingEvent).toHaveBeenCalledTimes(1);
   });

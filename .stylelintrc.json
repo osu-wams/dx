@@ -1,0 +1,12 @@
+{
+  "extends": ["stylelint-config-recommended"],
+  "customSyntax": "postcss-styled-syntax",
+  "rules": {
+    "media-query-no-invalid": null,
+    "no-empty-source": null,
+    "property-no-deprecated": null,
+    "declaration-property-value-keyword-no-deprecated": null,
+    "declaration-property-value-no-unknown": [true, { "severity": "warning" }],
+    "declaration-block-no-shorthand-property-overrides": [true, { "severity": "warning" }]
+  }
+}

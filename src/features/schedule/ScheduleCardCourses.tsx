@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { ThemeContext } from 'styled-components/macro';
-import VisuallyHidden from '@reach/visually-hidden';
+import { ThemeContext } from 'styled-components';
+import { VisuallyHidden } from '@reach/visually-hidden';
 import { faMapMarkerAlt } from '@fortawesome/pro-light-svg-icons';
 import { fontSize, MOSTheme } from '@osu-wams/theme';
 import {

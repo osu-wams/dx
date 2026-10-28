@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { IconDefinition } from '@fortawesome/pro-light-svg-icons';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { fontSize } from '@osu-wams/theme';
 import Icon from '../Icon';
 
