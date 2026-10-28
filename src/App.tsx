@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import Loadable, { LoadableComponent } from 'react-loadable';
 import { HelmetProvider } from 'react-helmet-async';
 import { Routes as ReactRouter, Route, useLocation, useNavigate } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components/macro';
+import styled, { ThemeProvider } from 'styled-components';
 import { AnimatePresence } from 'framer-motion';
 import ReactGA from 'react-ga4';
 import Header from './ui/Header';
@@ -72,14 +72,15 @@ const Loading = (props) => {
 
 /* istanbul ignore next */
 const EmployeeRouter = Loadable({
-  loader: () => import('./routers/Employee'),
+  // react-loadable only unwraps `.default` for webpack-style modules; native ESM needs it explicit.
+  loader: () => import('./routers/Employee').then((m) => m.default),
   loading: Loading,
   delay: 200,
 }) as React.FunctionComponent & LoadableComponent;
 
 /* istanbul ignore next */
 const StudentRouter = Loadable({
-  loader: () => import('./routers/Student'),
+  loader: () => import('./routers/Student').then((m) => m.default),
   loading: Loading,
   delay: 200,
 }) as React.FunctionComponent & LoadableComponent;

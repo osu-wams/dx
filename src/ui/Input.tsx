@@ -1,8 +1,10 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { spacing, fontSize, borderRadius } from '@osu-wams/theme';
 
-interface IInput
-  extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface IInput extends React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+> {
   osuSize?: string;
 }
 // Outputs the padding size in pixel for the component

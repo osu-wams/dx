@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import EventCard from './EventCard';
 import { Title } from 'src/ui/PageTitle';
 import { State, User, useAnnouncementsState } from '@osu-wams/hooks';

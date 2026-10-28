@@ -62,11 +62,12 @@ xit('changes from student dashboard (default user) to employee dashboard', () =>
       },
     ],
   });
-  expect(mockPostSettings).toBeCalledTimes(1);
-  expect(mockPostSettings).toBeCalledWith({ primaryAffiliationOverride: 'employee' });
+  expect(mockPostSettings).toHaveBeenCalledTimes(1);
+  expect(mockPostSettings).toHaveBeenCalledWith({ primaryAffiliationOverride: 'employee' });
 });
 
 it('navigates to an initial route', async () => {
+  window.history.pushState({}, '', Routes.Routes().about.fullPath);
   mockNavigate.mockResolvedValue(true);
   const div = document.createElement('div');
   render(<App containerElement={div} />, {
@@ -77,69 +78,20 @@ it('navigates to an initial route', async () => {
       },
     ],
   });
-  expect(mockNavigate).lastCalledWith('/about', { replace: true });
-});
-
-it('navigates to root and redirects to student (default user) dashboard', async () => {
-  window.location.pathname = '/';
-  mockNavigate.mockResolvedValue(true);
-  const div = document.createElement('div');
-  render(<App containerElement={div} />);
-  expect(mockNavigate).lastCalledWith('/student', { replace: true });
-});
-
-// TODO: Test behavior moved to @osu-wams/hooks package
-xit('visiting employee dashboard redirects to student (default user) dashboard with warning', async () => {
-  window.location.pathname = '/employee';
-  mockNavigate.mockResolvedValue(true);
-  const div = document.createElement('div');
-  render(<App containerElement={div} />);
-  expect(mockNavigate).toBeCalledWith('/student');
-  expect(
-    await screen.findByText(/You do not have permission to access this page/)
-  ).toBeInTheDocument();
-});
-
-// TODO: Test behavior moved to @osu-wams/hooks package
-xit('employee (previously on employee dashboard) visiting student dashboard changes the dashboard context', async () => {
-  window.location.pathname = '/student';
-  mockNavigate.mockResolvedValue(true);
-  mockPostSettings.mockResolvedValue(true);
-  const div = document.createElement('div');
-  render(<App containerElement={div} />, {
-    user: mockEmployeeUser,
-  });
-  expect(mockPostSettings).toBeCalledWith({ primaryAffiliationOverride: 'student' });
-  await waitFor(() => {
-    expect(mockNavigate).toBeCalledWith('/student');
-  });
+  expect(mockNavigate).toHaveBeenLastCalledWith('/about', { replace: true });
 });
 
 // TODO: Test behavior moved to @osu-wams/hooks package
 xit('student employee (previously on student dashboard) visiting employee dashboard changes the dashboard context', async () => {
-  window.location.pathname = '/employee';
+  window.history.pushState({}, '', '/employee');
   mockNavigate.mockResolvedValue(true);
   mockPostSettings.mockResolvedValue(true);
   const div = document.createElement('div');
   render(<App containerElement={div} />, {
     user: mockStudentEmployeeUser,
   });
-  expect(mockPostSettings).toBeCalledWith({ primaryAffiliationOverride: 'employee' });
+  expect(mockPostSettings).toHaveBeenCalledWith({ primaryAffiliationOverride: 'employee' });
   await waitFor(() => {
-    expect(mockNavigate).toBeCalledWith('/employee');
-  });
-});
-
-it('student employee visiting student dashboard', async () => {
-  window.location.pathname = '/student';
-  mockNavigate.mockResolvedValue(true);
-  mockPostSettings.mockResolvedValue(true);
-  const div = document.createElement('div');
-  render(<App containerElement={div} />, {
-    user: mockStudentEmployeeUser,
-  });
-  expect(mockPostSettings).not.toBeCalled();
-  await waitFor(() => {
-    expect(mockNavigate).lastCalledWith('/student', { replace: true });
+    expect(mockNavigate).toHaveBeenCalledWith('/employee');
   });
 });

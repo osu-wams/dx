@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { faLongArrowRight, faExternalLink } from '@fortawesome/pro-light-svg-icons';
 import Icon from './Icon';
 import { borderRadius, spacing, fontSize, Color } from '@osu-wams/theme';

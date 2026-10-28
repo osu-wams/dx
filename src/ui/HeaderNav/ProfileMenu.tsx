@@ -7,8 +7,8 @@ import {
   faGraduationCap,
   faBriefcase,
 } from '@fortawesome/pro-light-svg-icons';
-import VisuallyHidden from '@reach/visually-hidden';
-import { Menu, MenuLink, MenuPopover } from '@reach/menu-button';
+import { VisuallyHidden } from '@reach/visually-hidden';
+import { Menu, MenuLink } from '@reach/menu-button';
 import { Event } from 'src/util/gaTracking';
 import { State, User } from '@osu-wams/hooks';
 import { Routes } from '@osu-wams/utils';
@@ -100,30 +100,28 @@ const ProfileMenu = () => {
         <Icon icon={faUserCircle} size="lg" />
         <VisuallyHidden>Profile</VisuallyHidden>
       </HeaderNavButton>
-      <MenuPopover>
-        <HeaderNavList>
-          <MenuLink
-            as={Link}
-            to={Routes.Routes().profile.fullPath}
-            data-testid="profile-link"
-            onClick={() =>
-              Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
-            }
-          >
-            <Icon icon={faUser} />
-            Profile
-          </MenuLink>
-          {ToggleAffiliationLink()}
+      <HeaderNavList>
+        <MenuLink
+          as={Link}
+          to={Routes.Routes().profile.fullPath}
+          data-testid="profile-link"
+          onClick={() =>
+            Event('header', 'user-button-menu', 'Profile link from User Button dropdown')
+          }
+        >
+          <Icon icon={faUser} />
+          Profile
+        </MenuLink>
+        {ToggleAffiliationLink()}
 
-          <MenuLink
-            as="a"
-            href="/logout"
-            onClick={() => Event('header', 'user-button-menu', 'Logout link clicked')}
-          >
-            <Icon icon={faSignOut} /> Logout
-          </MenuLink>
-        </HeaderNavList>
-      </MenuPopover>
+        <MenuLink
+          as="a"
+          href="/logout"
+          onClick={() => Event('header', 'user-button-menu', 'Logout link clicked')}
+        >
+          <Icon icon={faSignOut} /> Logout
+        </MenuLink>
+      </HeaderNavList>
     </Menu>
   );
 };

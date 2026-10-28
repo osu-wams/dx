@@ -1,7 +1,11 @@
 /* eslint-disable testing-library/no-node-access */
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { mockEmployeeUser, renderWithRouter as render } from 'src/util/test-utils';
+import {
+  mockEmployeeUser,
+  renderWithRouter as render,
+  waitForMenuToSettle,
+} from 'src/util/test-utils';
 import userEvent from '@testing-library/user-event';
 import Training from 'src/pages/Training';
 import { mockGAEvent, mockInitialState } from 'src/setupTests';
@@ -22,6 +26,14 @@ const renderTrainings = () => {
     category,
     audience,
   };
+};
+
+// @reach/menu-button unmounts its items when a menu closes, so every selection has to reopen
+// the menu, wait for it to accept selections, and look the item up again.
+const selectMenuItem = async (menuButton: HTMLElement, item: string | RegExp) => {
+  userEvent.click(menuButton);
+  await waitForMenuToSettle();
+  userEvent.click(await screen.findByRole('menuitem', { name: item }));
 };
 
 describe('<Training />', () => {
@@ -54,6 +66,7 @@ describe('<Training />', () => {
       const { category } = renderTrainings();
       expect(category).toBeInTheDocument();
       userEvent.click(category);
+      await waitForMenuToSettle();
 
       expect(screen.getByRole('menuitem', { name: /All Trainings/i })).toBeInTheDocument();
 
@@ -65,6 +78,7 @@ describe('<Training />', () => {
       const { audience } = renderTrainings();
       expect(audience).toBeInTheDocument();
       userEvent.click(audience);
+      await waitForMenuToSettle();
       expect(screen.getByText('All Audiences')).toBeInTheDocument();
       expect(screen.getByText('Classified Staff')).toBeInTheDocument();
       expect(screen.getByText('Student')).toBeInTheDocument();
@@ -107,27 +121,23 @@ describe('<Training />', () => {
       const nice = 'Play nice with others';
       expect(screen.getByText(nice)).toBeInTheDocument();
 
-      userEvent.click(category);
-      const alltrainings = await screen.findByRole('menuitem', { name: /All Trainings/i });
-      const leadership = await screen.findByText('Leadership');
-      const engagement = await screen.findByText('Employee Engagement');
-
-      userEvent.click(leadership);
+      await selectMenuItem(category, /^Leadership$/i);
       expect(category).toHaveTextContent('Leadership');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
       expect(screen.queryByText(nice)).not.toBeInTheDocument(); // Cannot find play nice since it's not tagged 'leadership'
       expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
 
-      userEvent.click(engagement);
+      await selectMenuItem(category, /^Employee Engagement$/i);
       expect(category).toHaveTextContent('Employee Engagement');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
       expect(screen.getByText(nice)).toBeInTheDocument(); // play nice is found again under 'engagement'
 
-      userEvent.click(alltrainings);
+      await selectMenuItem(category, /All Trainings/i);
       expect(category).toHaveTextContent('Category');
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
 
-      expect(mockGAEvent).toHaveBeenCalledTimes(4);
+      // 3 menu opens + 3 selections
+      expect(mockGAEvent).toHaveBeenCalledTimes(6);
     });
 
     it('Filters training results when clicking on audience button', async () => {
@@ -136,27 +146,23 @@ describe('<Training />', () => {
       const nice = 'Play nice with others';
       expect(screen.getByText(nice)).toBeInTheDocument();
 
-      userEvent.click(audience);
-      const allaudience = await screen.findByText('All Audiences');
-      const classified = await screen.findByText('Classified Staff');
-      const student = await screen.findByText('Student');
-
-      userEvent.click(classified);
+      await selectMenuItem(audience, /^Classified Staff$/i);
       expect(audience).toHaveTextContent('Classified Staff');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
       expect(screen.queryByText(nice)).not.toBeInTheDocument(); // Cannot find play nice since it's not for 'Classified Staff' audience
       expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
 
-      userEvent.click(student);
+      await selectMenuItem(audience, /^Student$/i);
       expect(audience).toHaveTextContent('Student');
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
       expect(screen.getByText(nice)).toBeInTheDocument(); // play nice is found again for 'Student' audience
 
-      userEvent.click(allaudience);
+      await selectMenuItem(audience, /All Audiences/i);
       expect(audience).toHaveTextContent('Audience');
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
 
-      expect(mockGAEvent).toHaveBeenCalledTimes(4);
+      // 3 menu opens + 3 selections
+      expect(mockGAEvent).toHaveBeenCalledTimes(6);
     });
 
     it('Filters training as a composite of both audience and category', async () => {
@@ -165,37 +171,31 @@ describe('<Training />', () => {
       const nice = 'Play nice with others';
       expect(screen.getByText(nice)).toBeInTheDocument();
 
-      userEvent.click(audience);
-      const allaudience = await screen.findByText('All Audiences');
-      const classified = await screen.findByText('Classified Staff');
-      userEvent.click(category);
-      const alltrainings = await screen.findByRole('menuitem', { name: /All Trainings/i });
-      const engagement = await screen.findByText('Employee Engagement');
-
       // Set an audience filter and find 1 training is filtered out now.
-      userEvent.click(classified);
+      await selectMenuItem(audience, /^Classified Staff$/i);
       expect(audience).toHaveTextContent('Classified Staff');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();
       expect(screen.queryByText(nice)).not.toBeInTheDocument(); // Cannot find play nice since it's not for 'Classified Staff' audience
       expect(screen.getByText(/Super Testo 2/i)).toBeInTheDocument();
 
       // Add the category filter and find that another training has been filtered out now.
-      userEvent.click(engagement);
+      await selectMenuItem(category, /^Employee Engagement$/i);
       expect(category).toHaveTextContent('Employee Engagement');
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
       expect(screen.queryByText(/Testo Training/i)).not.toBeInTheDocument(); // Cannot find Testo Training because it's not for 'Employee Engagement'
 
       // Unset the category filter and find that more results show again.
-      userEvent.click(alltrainings);
+      await selectMenuItem(category, /All Trainings/i);
       expect(category).toHaveTextContent('Category');
       expect(await screen.findByText('found 2 results')).toBeInTheDocument(); // Reset to all categories now shows the filter as it was with audiences filtered only
 
       // Unset the audience filter and find that all results show now.
-      userEvent.click(allaudience);
+      await selectMenuItem(audience, /All Audiences/i);
       expect(audience).toHaveTextContent('Audience');
       expect(await screen.findByText('found 3 results')).toBeInTheDocument(); // Reset to all trainings now shows with no filters set
 
-      expect(mockGAEvent).toHaveBeenCalledTimes(6);
+      // 4 menu opens + 4 selections
+      expect(mockGAEvent).toHaveBeenCalledTimes(8);
     });
 
     it('Clicking a category clears previously entered data and shows all results under the tag', async () => {
@@ -204,6 +204,7 @@ describe('<Training />', () => {
       userEvent.type(searchInput, 'Super Testo 2');
       expect(await screen.findByText('found 1 result')).toBeInTheDocument();
       userEvent.click(category);
+      await waitForMenuToSettle();
       const alltrainings = await screen.findByRole('menuitem', { name: /All Trainings/i });
       userEvent.click(alltrainings);
       expect(await screen.findByText('found 3 results')).toBeInTheDocument();
@@ -258,6 +259,7 @@ describe('<Training />', () => {
       const { category, searchInput } = renderTrainings();
       const nice = 'Play nice with others';
       userEvent.click(category);
+      await waitForMenuToSettle();
       const leadership = await screen.findByText('Leadership');
       userEvent.click(leadership);
       expect(await screen.findByText('found 2 results')).toBeInTheDocument();

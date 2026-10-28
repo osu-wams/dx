@@ -1,7 +1,28 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+This project was originally bootstrapped with Create React App and now builds with [Vite](https://vite.dev/)
+and runs its tests with [Jest](https://jestjs.io/).
 
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+## Requirements
+
+- Node.js 24 (see `.nvmrc`; run `nvm use`)
+- Yarn 1.x
+
+## Scripts
+
+| Command              | What it does                                                      |
+| -------------------- | ----------------------------------------------------------------- |
+| `yarn start`         | Vite dev server on port 3000 (proxies `/api`, `/login`, etc. to `localhost:4000`) |
+| `yarn build`         | Type-checks with `tsc`, then writes a production build to `build/` |
+| `yarn preview`       | Serves the production build locally                               |
+| `yarn test`          | Jest in watch mode                                                |
+| `yarn test:ci`       | Jest, single run                                                  |
+| `yarn test:coverage` | Jest with coverage                                                |
+| `yarn typecheck`     | `tsc --noEmit`                                                    |
+| `yarn lint`          | ESLint (flat config in `eslint.config.mjs`)                       |
+| `yarn lint:css`      | Stylelint over styled-components CSS                              |
+| `yarn analyze`       | Production build plus an interactive bundle size report           |
+
+Environment variables for the browser bundle keep the `REACT_APP_` prefix (`REACT_APP_ENV`,
+`REACT_APP_EXPERIMENTAL`, `REACT_APP_GA_DEBUG`); see `vite.config.mts`.
 
 Currently \${FONTAWESOME_TOKEN} is an environment variable.
 Add it to your .bashrc .zshrc or preferred file of choice.

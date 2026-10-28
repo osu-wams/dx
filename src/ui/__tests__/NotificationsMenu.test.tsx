@@ -4,7 +4,7 @@ import { renderWithRouter as render } from 'src/util/test-utils';
 import { NotificationsMenu } from '../HeaderNav/NotificationsMenu';
 import { mockGAEvent } from 'src/setupTests';
 import { screen, waitFor } from '@testing-library/react';
-import { alterMock } from 'src/util/test-utils';
+import { alterMock, waitForMenuToSettle } from 'src/util/test-utils';
 import { USER_MESSAGES_API } from 'src/mocks/apis';
 import { User } from '@osu-wams/hooks';
 
@@ -24,6 +24,7 @@ describe('With 1 SENT notifications', () => {
     const date = await screen.findByRole('menuitem', { name: /Jan 1st at 4 PM/i });
     expect(date).toBeInTheDocument();
 
+    await waitForMenuToSettle();
     userEvent.click(date);
     expect(await screen.findByText(/content/i)).toBeInTheDocument();
 

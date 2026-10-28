@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { faFlag } from '@fortawesome/pro-light-svg-icons';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { CardContentCell } from 'src/ui/Card';
 import { Event } from 'src/util/gaTracking';
 import { ExternalLink } from 'src/ui/Link';
@@ -9,7 +9,7 @@ import { ListItem } from 'src/ui/List';
 import { fontSize } from '@osu-wams/theme';
 import Icon from 'src/ui/Icon';
 import { Types } from '@osu-wams/lib';
-import VisuallyHidden from '@reach/visually-hidden';
+import { VisuallyHidden } from '@reach/visually-hidden';
 
 const Header = styled.div`
   display: flex;

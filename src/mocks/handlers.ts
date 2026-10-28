@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 import {
   Student,
   Events,
@@ -97,68 +97,45 @@ const mockPlannerItems = Student.PlannerItems.mockPlannerItems;
 // Mock API Data for our Endpoints
 export const handlers = [
   // Students
-  rest.get(ACADEMIC_STATUS_API, async (req, res, ctx) => {
-    return res(ctx.json(mockAcademicStatus));
-  }),
+  http.get(ACADEMIC_STATUS_API, () => HttpResponse.json(mockAcademicStatus)),
 
-  rest.get(ACCOUNT_BALANCE_API, async (req, res, ctx) => {
-    return res(ctx.json(mockAccountBalance));
-  }),
+  http.get(ACCOUNT_BALANCE_API, () => HttpResponse.json(mockAccountBalance)),
 
-  rest.get(CLASS_SCHEDULE_API, async (req, res, ctx) => {
-    return res(ctx.json(mockCourseSchedule));
-  }),
+  http.get(CLASS_SCHEDULE_API, () => HttpResponse.json(mockCourseSchedule)),
 
-  rest.get(DEGREES_API, async (req, res, ctx) => {
+  http.get(DEGREES_API, () => {
     // Modify data to match what the server returns
     const apiData = mockDegrees.map((d) => ({
       attributes: d,
     }));
-    return res(ctx.json(apiData));
+    return HttpResponse.json(apiData);
   }),
 
-  rest.get(GPA_API, async (req, res, ctx) => {
-    return res(ctx.json(mockGpa.data));
-  }),
+  http.get(GPA_API, () => HttpResponse.json(mockGpa.data)),
 
-  rest.get(GRADES_API, async (req, res, ctx) => {
-    return res(ctx.json(mockGrades.data));
-  }),
+  http.get(GRADES_API, () => HttpResponse.json(mockGrades.data)),
 
-  rest.get(HOLDS_API, async (req, res, ctx) => {
-    return res(ctx.json(mockHolds));
-  }),
+  http.get(HOLDS_API, () => HttpResponse.json(mockHolds)),
 
-  rest.get(PLANNER_ITEMS_API, async (req, res, ctx) => {
-    return res(ctx.json(mockPlannerItems.data));
-  }),
+  http.get(PLANNER_ITEMS_API, () => HttpResponse.json(mockPlannerItems.data)),
 
-  rest.get(ACCOUNT_TRANSACTION_API, async (req, res, ctx) => {
-    return res(ctx.json(mockAccountTransactions.data));
-  }),
+  http.get(ACCOUNT_TRANSACTION_API, () => HttpResponse.json(mockAccountTransactions.data)),
 
   // Events
-  rest.get(ACADEMIC_CALENDAR_API, async (req, res, ctx) => {
-    return res(ctx.json(academicCalendar6.data));
-  }),
+  http.get(ACADEMIC_CALENDAR_API, () => HttpResponse.json(academicCalendar6.data)),
 
   // Anouncements
-  rest.get(ANNOUNCEMENTS_API, async (req, res, ctx) => {
-    return res(ctx.json(academicAnnouncementResult.data));
-  }),
+  http.get(ANNOUNCEMENTS_API, () => HttpResponse.json(academicAnnouncementResult.data)),
 
   // Resources
-  rest.get(TRENDING_RESOURCES_API, async (req, res, ctx) => {
-    return res(ctx.json(trendingResourcesData.data));
-  }),
+  http.get(TRENDING_RESOURCES_API, () => HttpResponse.json(trendingResourcesData.data)),
 
-  rest.get(RESOURCES_API, async (req, res, ctx) => {
-    return res(ctx.json(resourcesData.data));
-  }),
+  http.get(RESOURCES_API, () => HttpResponse.json(resourcesData.data)),
 
-  rest.get(RESOURCES_BY_QUEUE_API, async (req, res, ctx) => {
+  http.get(RESOURCES_BY_QUEUE_API, ({ params }) => {
     // Gets the category and capitalizes it to match response
-    const cat = req.params.category.charAt(0).toUpperCase() + req.params.category.slice(1);
+    const category = String(params.category);
+    const cat = category.charAt(0).toUpperCase() + category.slice(1);
 
     // Filters results (this happens server side normally) to match category
     const filteredResources = resourcesCardData.data.items.filter((i) =>
@@ -166,140 +143,84 @@ export const handlers = [
     );
 
     // Return filtered resources by categories
-    return res(
-      ctx.json({
-        entityQueueTitle: resourcesCardData.data.entityQueueTitle,
-        items: filteredResources,
-      })
-    );
+    return HttpResponse.json({
+      entityQueueTitle: resourcesCardData.data.entityQueueTitle,
+      items: filteredResources,
+    });
   }),
 
-  rest.get(CATEGORIES_API, async (req, res, ctx) => {
-    return res(ctx.json(categoriesData.data));
-  }),
+  http.get(CATEGORIES_API, () => HttpResponse.json(categoriesData.data)),
 
-  rest.post(FAVORITE_RESOURCES_API, async (req, res, ctx) => {
-    return res(ctx.json(favoriteResource));
-  }),
+  http.post(FAVORITE_RESOURCES_API, () => HttpResponse.json(favoriteResource)),
 
   // Alerts
-  rest.get(RAVE_ALERTS_API, async (req, res, ctx) => {
-    return res(ctx.json(raveAlerts.data));
-  }),
+  http.get(RAVE_ALERTS_API, () => HttpResponse.json(raveAlerts.data)),
 
-  rest.get(DX_ALERTS_API, async (req, res, ctx) => {
-    return res(ctx.json(dxAlerts.data));
-  }),
+  http.get(DX_ALERTS_API, () => HttpResponse.json(dxAlerts.data)),
 
   // Trainings
-  rest.get(TRAININGS_API, async (req, res, ctx) => {
-    return res(ctx.json(Trainings.mockTrainings.data));
-  }),
+  http.get(TRAININGS_API, () => HttpResponse.json(Trainings.mockTrainings.data)),
 
-  rest.get(TRAININGS_TAGS_API, async (req, res, ctx) => {
-    return res(ctx.json(Trainings.mockTrainingTags.data));
-  }),
+  http.get(TRAININGS_TAGS_API, () => HttpResponse.json(Trainings.mockTrainingTags.data)),
 
-  rest.get(TRAININGS_AUDIENCES_API, async (req, res, ctx) => {
-    return res(ctx.json(Trainings.mockTrainingAudiences.data));
-  }),
+  http.get(TRAININGS_AUDIENCES_API, () => HttpResponse.json(Trainings.mockTrainingAudiences.data)),
 
   // Persons
-  rest.get(PERSONS_API, async (req, res, ctx) => {
-    return res(ctx.json(personsData.data));
-  }),
+  http.get(PERSONS_API, () => HttpResponse.json(personsData.data)),
 
-  rest.get(PERSONS_EMAIL_API, async (req, res, ctx) => {
-    return res(ctx.json(emailsData.data));
-  }),
+  http.get(PERSONS_EMAIL_API, () => HttpResponse.json(emailsData.data)),
 
-  rest.get(PERSONS_PHONE_API, async (req, res, ctx) => {
-    return res(ctx.json(phonesData.data));
-  }),
+  http.get(PERSONS_PHONE_API, () => HttpResponse.json(phonesData.data)),
 
-  rest.get(PERSONS_MEALPLAN_API, async (req, res, ctx) => {
-    return res(ctx.json(mockMealPlans.data));
-  }),
+  http.get(PERSONS_MEALPLAN_API, () => HttpResponse.json(mockMealPlans.data)),
 
-  rest.get(PERSONS_ADDRESSES_API, async (req, res, ctx) => {
-    return res(ctx.json(personsMailingAddressData.data));
-  }),
+  http.get(PERSONS_ADDRESSES_API, () => HttpResponse.json(personsMailingAddressData.data)),
 
   // User
-  rest.get(USER_API, async (req, res, ctx) => {
-    return res(ctx.json(authUser));
-  }),
+  http.get(USER_API, () => HttpResponse.json(authUser)),
 
-  rest.get(USER_MESSAGES_API, async (req, res, ctx) => {
-    return res(ctx.json(mockUserMessages));
-  }),
+  http.get(USER_MESSAGES_API, () => HttpResponse.json(mockUserMessages)),
 
-  rest.post(USER_MESSAGES_API, async (req, res, ctx) => {
-    return res(ctx.json(readUserMessage));
-  }),
+  http.post(USER_MESSAGES_API, () => HttpResponse.json(readUserMessage)),
 
   // Info-Button
-  rest.get(INFO_BUTTON_API, async (req, res, ctx) => {
-    return res(ctx.json(mockInfoButtons.data));
-  }),
+  http.get(INFO_BUTTON_API, () => HttpResponse.json(mockInfoButtons.data)),
 
   // Status
-  rest.get(IT_STATUS_API, async (req, res, ctx) => {
-    return res(ctx.json(mockStatus));
-  }),
+  http.get(IT_STATUS_API, () => HttpResponse.json(mockStatus)),
 
   // Dynamic Cards
-  rest.get(CARDS_API, async (req, res, ctx) => {
-    return res(ctx.json(mockCards));
-  }),
+  http.get(CARDS_API, () => HttpResponse.json(mockCards)),
 
   // Release Notes
-  rest.get(RELEASE_NOTES_API, async (req, res, ctx) => {
-    return res(ctx.json(mockReleaseNotes));
-  }),
+  http.get(RELEASE_NOTES_API, () => HttpResponse.json(mockReleaseNotes)),
 
   // Page Content (About Page for Now)
-  rest.get(PAGE_CONTENT_API + '/about', async (req, res, ctx) => {
-    return res(ctx.json(mockPageContent));
-  }),
+  http.get(PAGE_CONTENT_API + '/about', () => HttpResponse.json(mockPageContent)),
 
   // Student Events
-  rest.get(STUDENT_EVENTS_API, async (req, res, ctx) => {
-    return res(ctx.json(studentExperienceEvents.data));
-  }),
+  http.get(STUDENT_EVENTS_API, () => HttpResponse.json(studentExperienceEvents.data)),
 
   // Employee Events
-  rest.get(EMPLOYEE_EVENTS_API, async (req, res, ctx) => {
-    return res(ctx.json(employeeEvents.data));
-  }),
+  http.get(EMPLOYEE_EVENTS_API, () => HttpResponse.json(employeeEvents.data)),
 
   // Campus Events
-  rest.get(CAMPUS_EVENTS_API, async (req, res, ctx) => {
-    return res(ctx.json(studentExperienceEvents.data));
-  }),
+  http.get(CAMPUS_EVENTS_API, () => HttpResponse.json(studentExperienceEvents.data)),
 
   // Health Check
-  rest.get(HEALTH_CHECK_API, async (req, res, ctx) => {
-    return res(
-      ctx.json({
-        version: 'server-test-123',
-        useMocks: 0,
-      })
-    );
-  }),
+  http.get(HEALTH_CHECK_API, () =>
+    HttpResponse.json({
+      version: 'server-test-123',
+      useMocks: 0,
+    })
+  ),
 
   // App Version
-  rest.get(APP_VERSION_API, async (req, res, ctx) => {
-    return res(ctx.body('client-test-123'));
-  }),
+  http.get(APP_VERSION_API, () => HttpResponse.text('client-test-123')),
 
   // People Search
-  rest.get(PEOPLE_API, async (req, res, ctx) => {
-    return res(ctx.json(mockPeople.data));
-  }),
+  http.get(PEOPLE_API, () => HttpResponse.json(mockPeople.data)),
 
   // Locations Search
-  rest.get(LOCATIONS_API, async (req, res, ctx) => {
-    return res(ctx.json(mockLocations.data));
-  }),
+  http.get(LOCATIONS_API, () => HttpResponse.json(mockLocations.data)),
 ];

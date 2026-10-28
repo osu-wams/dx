@@ -1,5 +1,5 @@
 import { NavLink as RRNavLink } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { fontSize, breakpoints, spacing } from '@osu-wams/theme';
 import { IconStyle } from '../Icon';
 

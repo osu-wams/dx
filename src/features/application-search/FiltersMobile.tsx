@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { borderRadius, fontSize, spacing } from '@osu-wams/theme';
 import MyDialog from 'src/ui/MyDialog';
 import Button, { CloseButton } from 'src/ui/Button';

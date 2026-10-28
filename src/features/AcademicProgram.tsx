@@ -19,7 +19,7 @@ import { ExternalLink } from 'src/ui/Link';
 import { Event } from 'src/util/gaTracking';
 import { EmptyState, EmptyStateImage, EmptyStateText } from 'src/ui/EmptyStates';
 import degreeImg from 'src/assets/program-of-study.svg';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
 const { usersCampus } = User;

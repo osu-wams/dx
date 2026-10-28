@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { fontSize, spacing } from '@osu-wams/theme';
 
 export const Bubble = styled.span`

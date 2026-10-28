@@ -9,17 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [24.x]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: yarn install, lint, test
         run: |
           yarn install --frozen-lockfile
           yarn run lint
+          yarn run typecheck
           yarn run test:coverage -w 1 --silent
         env:
           CI: true
@@ -29,23 +30,21 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
       - name: report code coverage
-        run: npx codecov@3
-        if: matrix.node-version == '14.x'
-        env:
-          CI: true
-          FONTAWESOME_TOKEN: not-actually-used-but-necessary-here
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          GITHUB_NPM_TOKEN: not-actually-used-but-necessary-here
+        uses: codecov/codecov-action@v5
+        if: matrix.node-version == '24.x'
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: coverage
   build:
     needs: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [24.x]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build client

@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga4';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import 'jest-styled-components';
 import * as cache from './util/cache';
 import { server } from 'src/mocks/server';
@@ -29,6 +29,9 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
+  // jsdom shares one window per test file; start every test from the root URL so query
+  // strings and paths set by a previous test (e.g. /search?q=term) do not leak into the next.
+  window.history.replaceState({}, '', '/');
   // Mock sessionStorage interface
   Storage.prototype.clear = jest.fn();
   Storage.prototype.getItem = jest.fn();
@@ -47,6 +50,14 @@ afterEach(() => {
   jest.spyOn(console, 'debug').mockImplementation(() => {});
   jest.clearAllMocks();
   server.resetHandlers();
+});
+
+// React Testing Library flushes React's passive effects on a later macrotask after each test; give
+// those callbacks a chance to run while jsdom still exists, otherwise they throw after teardown.
+afterEach(async () => {
+  for (let i = 0; i < 3; i++) {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  }
 });
 
 // Clean up after the tests are finished.
@@ -83,11 +94,6 @@ const matchMedia = () => ({
 });
 window.matchMedia = window.matchMedia || matchMedia;
 
-// Jest 25 has issues with window.location so we are using this to mock
-Object.defineProperty(window, 'location', {
-  writable: true,
-  value: { search: '', assign: jest.fn(), pathname: '', reload: jest.fn() },
-});
-// Mock the location change method
-window.location.assign = jest.fn();
+// jsdom does not allow window.location to be replaced; tests that need a specific path
+// should navigate with window.history.pushState({}, '', '/path?query') instead.
 window.scrollTo = jest.fn();

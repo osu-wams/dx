@@ -6,10 +6,7 @@
       "type": "chrome",
       "request": "launch",
       "url": "http://local.my.oregonstate.edu:3000",
-      "webRoot": "${workspaceRoot}/src",
-      "sourceMapPathOverrides": {
-        "webpack:///src/*": "${webRoot}/*"
-      }
+      "webRoot": "${workspaceRoot}"
     }
   ]
 }

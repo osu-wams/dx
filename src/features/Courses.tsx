@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { faChalkboardTeacher } from '@fortawesome/pro-light-svg-icons';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import { Url, Helpers, Course as CourseUtils, Routes } from '@osu-wams/utils';
 import { Types } from '@osu-wams/lib';
 import { State } from '@osu-wams/hooks';

@@ -8,19 +8,19 @@ import { User } from '@osu-wams/lib';
 import { State, updateQueryClientOptions } from '@osu-wams/hooks';
 import { mobile, desktop } from 'src/hooks/useMediaQuery';
 import { RecoilRoot } from 'recoil';
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { server } from 'src/mocks/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 
+// @reach/menu-button ignores item selection for 400ms after a menu opens; tests that open a
+// menu and immediately click an item must wait this out first.
+export const waitForMenuToSettle = () => new Promise((resolve) => setTimeout(resolve, 450));
+
 // Helper method to change the mock responses by MSW
 export const alterMock = (api: string, mock: any, status: number = 200) => {
-  server.use(
-    rest.get('*' + api, async (req, res, ctx) => {
-      return res(ctx.status(status), ctx.json(mock));
-    })
-  );
+  server.use(http.get('*' + api, () => HttpResponse.json(mock, { status })));
 };
 
 const { mockUser } = User;

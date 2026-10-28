@@ -1,5 +1,4 @@
 import { addDays, eachDayOfInterval, isAfter, isBefore } from 'date-fns';
-import { isNullOrUndefined } from 'util';
 import { Helpers } from '@osu-wams/utils';
 import { Types } from '@osu-wams/lib';
 
@@ -162,12 +161,12 @@ export const courseOnCorvallisCampus = (
   } else {
     meetingTimes = o.attributes.meetingTimes;
   }
-  return !isNullOrUndefined(
+  return (
     meetingTimes
-      .filter((m) => !isNullOrUndefined(m))
+      .filter((m) => m !== null && m !== undefined)
       .find((m: Types.CourseScheduleMeetingTime) => {
         return meetingTimeOnCorvallisCampus(m);
-      })
+      }) !== undefined
   );
 };
 

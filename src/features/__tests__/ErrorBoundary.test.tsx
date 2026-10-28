@@ -45,7 +45,7 @@ describe('<ErrorBoundary />', () => {
     );
     expect(screen.getByText('Error')).toBeInTheDocument();
     expect(screen.queryByText('Success')).not.toBeInTheDocument();
-    expect(mockedPostError).toBeCalledTimes(1);
+    expect(mockedPostError).toHaveBeenCalledTimes(1);
     expect(consoleSpy).toHaveBeenCalledTimes(2);
   });
   it('should call the ErrorHandlerCallback when an error happens', async () => {
@@ -59,9 +59,9 @@ describe('<ErrorBoundary />', () => {
     );
     expect(screen.getByText('Error')).toBeInTheDocument();
     expect(screen.queryByText('Success')).not.toBeInTheDocument();
-    expect(mockedPostError).toBeCalledTimes(1);
+    expect(mockedPostError).toHaveBeenCalledTimes(1);
     await new Promise(setImmediate); // cause Jest to flush inflight promises before checking if the callback had been called
-    expect(mockedErrorCallback).toBeCalledTimes(1);
+    expect(mockedErrorCallback).toHaveBeenCalledTimes(1);
     expect(consoleSpy).toHaveBeenCalledTimes(2);
   });
 });

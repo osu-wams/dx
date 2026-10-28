@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
-import VisuallyHidden from '@reach/visually-hidden';
-import styled, { ThemeContext } from 'styled-components/macro';
+import { VisuallyHidden } from '@reach/visually-hidden';
+import styled, { ThemeContext } from 'styled-components';
 import ReactGA from 'react-ga4';
 import { faMapMarkerAlt, faEnvelope } from '@fortawesome/pro-light-svg-icons';
 import Icon from '../ui/Icon';

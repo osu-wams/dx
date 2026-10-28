@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Event } from 'src/util/gaTracking';
 import logo from 'src/assets/osu-logo.svg';
@@ -22,7 +22,7 @@ import ApplicationSearchBar from 'src/features/application-search/ApplicationSea
 import Icon from './Icon';
 import { faMask, faCheck } from '@fortawesome/pro-light-svg-icons';
 import { faCaretDown } from '@fortawesome/pro-solid-svg-icons';
-import { Menu, MenuPopover, MenuItem, MenuButton } from '@reach/menu-button';
+import { Menu, MenuItem, MenuButton } from '@reach/menu-button';
 import { HeaderNavList } from './HeaderNav/HeaderNavStyles';
 import { useResetScroll } from 'src/hooks/useResetScroll';
 
@@ -241,20 +241,18 @@ const Header = () => {
                   )}
                 </SiteTitle>
               </DashboardTitle>
-              <MenuPopover>
-                <HeaderNavList data-testid="dashboard-toggle-menu">
-                  <ToggleOption
-                    testid="student-toggle-option"
-                    affiliation={'student'}
-                    toggledAffiliation={toggledAffiliation}
-                  />
-                  <ToggleOption
-                    testid="employee-toggle-option"
-                    affiliation={'employee'}
-                    toggledAffiliation={toggledAffiliation}
-                  />
-                </HeaderNavList>
-              </MenuPopover>
+              <HeaderNavList data-testid="dashboard-toggle-menu">
+                <ToggleOption
+                  testid="student-toggle-option"
+                  affiliation={'student'}
+                  toggledAffiliation={toggledAffiliation}
+                />
+                <ToggleOption
+                  testid="employee-toggle-option"
+                  affiliation={'employee'}
+                  toggledAffiliation={toggledAffiliation}
+                />
+              </HeaderNavList>
             </Menu>
           ) : (
             <SiteTitle data-testid="dashboard-title">{title}</SiteTitle>

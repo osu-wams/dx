@@ -1,6 +1,6 @@
 import React from 'react';
 import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
-import { ThemeContext } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
 import { Types } from '@osu-wams/lib';
 import Icon from 'src/ui/Icon';
 import {

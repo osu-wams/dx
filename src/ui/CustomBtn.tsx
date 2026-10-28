@@ -1,5 +1,5 @@
 import React, { FC, InputHTMLAttributes, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import { fontSize } from '@osu-wams/theme';
 import { IconLookup } from 'src/features/resources/resources-utils';
 
@@ -23,7 +23,7 @@ const CustomBtn: FC<BtnProps & InputHTMLAttributes<HTMLButtonElement>> = ({
     if (!icon) return '';
 
     // Return a icon name stripped from the icon URL
-    return 'fal.' + icon.substring(icon.lastIndexOf('/') + 1).split('_' || '.')[0];
+    return 'fal.' + icon.substring(icon.lastIndexOf('/') + 1).split('_')[0];
   };
 
   return (
